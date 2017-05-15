@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - "node"
+sudo: false
+before_install:
+ - export WAPPALYZER_ROOT=$TRAVIS_BUILD_DIR
+ - export WAPPALYZER_NODE_PATH=$TRAVIS_BUILD_DIR
+ - export PATH=$PATH:$TRAVIS_BUILD_DIR/bin
+ - ln -s docker/node/package.json package.json
+after_script: ls -l --block-size=kB build
+cache:
+  directories:
+    - node_modules
+env:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
