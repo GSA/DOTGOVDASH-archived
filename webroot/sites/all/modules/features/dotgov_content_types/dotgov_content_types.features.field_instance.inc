@@ -196,6 +196,47 @@ function dotgov_content_types_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-508_scan_information-field_public'.
+  $field_instances['node-508_scan_information-field_public'] = array(
+    'bundle' => '508_scan_information',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 7,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_public',
+    'label' => 'Public',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 31,
+    ),
+  );
+
   // Exported field_instance: 'node-508_scan_information-field_web_agency_id'.
   $field_instances['node-508_scan_information-field_web_agency_id'] = array(
     'bundle' => '508_scan_information',
@@ -673,6 +714,47 @@ function dotgov_content_types_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-agency-field_public'.
+  $field_instances['node-agency-field_public'] = array(
+    'bundle' => 'agency',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 9,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_public',
+    'label' => 'Public',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 32,
+    ),
+  );
+
   // Exported field_instance: 'node-article-body'.
   $field_instances['node-article-body'] = array(
     'bundle' => 'article',
@@ -1090,6 +1172,47 @@ function dotgov_content_types_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-broken_link_scan-field_public'.
+  $field_instances['node-broken_link_scan-field_public'] = array(
+    'bundle' => 'broken_link_scan',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 9,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_public',
+    'label' => 'Public',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 32,
+    ),
+  );
+
   // Exported field_instance: 'node-broken_link_scan-field_web_agency_id'.
   $field_instances['node-broken_link_scan-field_web_agency_id'] = array(
     'bundle' => 'broken_link_scan',
@@ -1385,6 +1508,47 @@ function dotgov_content_types_field_default_field_instances() {
       ),
       'type' => 'date_popup',
       'weight' => -1,
+    ),
+  );
+
+  // Exported field_instance: 'node-cookie_law_scan-field_public'.
+  $field_instances['node-cookie_law_scan-field_public'] = array(
+    'bundle' => 'cookie_law_scan',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 7,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_public',
+    'label' => 'Public',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 32,
     ),
   );
 
@@ -1867,6 +2031,47 @@ function dotgov_content_types_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-dnssec_ipv6_information-field_public'.
+  $field_instances['node-dnssec_ipv6_information-field_public'] = array(
+    'bundle' => 'dnssec_ipv6_information',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 11,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_public',
+    'label' => 'Public',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 32,
+    ),
+  );
+
   // Exported field_instance:
   // 'node-dnssec_ipv6_information-field_web_agency_id'.
   $field_instances['node-dnssec_ipv6_information-field_web_agency_id'] = array(
@@ -2020,6 +2225,567 @@ function dotgov_content_types_field_default_field_instances() {
       ),
       'type' => 'text_textarea_with_summary',
       'weight' => -4,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_alexa_ranking'.
+  $field_instances['node-domain_scan_information-field_alexa_ranking'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Alexa ranking	',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 35,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_alexa_ranking',
+    'label' => 'Alexa ranking',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 54,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_alexa_raw_output'.
+  $field_instances['node-domain_scan_information-field_alexa_raw_output'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Alexa Raw Output',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 34,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_alexa_raw_output',
+    'label' => 'Alexa Raw Output',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 53,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_cdn_provider_name'.
+  $field_instances['node-domain_scan_information-field_cdn_provider_name'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'CDN Provider name',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 42,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_cdn_provider_name',
+    'label' => 'CDN Provider name',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 61,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_cert_host_name_valid'.
+  $field_instances['node-domain_scan_information-field_cert_host_name_valid'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Certificate Host Name validation	',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 32,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_cert_host_name_valid',
+    'label' => 'Certificate Host Name validation	',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 51,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_certificate_issuer'.
+  $field_instances['node-domain_scan_information-field_certificate_issuer'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Certificate Issuer',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 27,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_certificate_issuer',
+    'label' => 'Certificate Issuer',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 46,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_certificate_ocsp_stapling'.
+  $field_instances['node-domain_scan_information-field_certificate_ocsp_stapling'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Certificate - OCSP Stapling',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 22,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_certificate_ocsp_stapling',
+    'label' => 'Certificate - OCSP Stapling',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 41,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_certificate_provider'.
+  $field_instances['node-domain_scan_information-field_certificate_provider'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Certificate provider',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 31,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_certificate_provider',
+    'label' => 'Certificate provider',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 50,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_certificate_public_key_alg'.
+  $field_instances['node-domain_scan_information-field_certificate_public_key_alg'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Certificate Public Key Algorithm',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 29,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_certificate_public_key_alg',
+    'label' => 'Certificate Public Key Algorithm',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 48,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_certificate_signature_algo'.
+  $field_instances['node-domain_scan_information-field_certificate_signature_algo'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Certificate Signature Algorithm',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 28,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_certificate_signature_algo',
+    'label' => 'Certificate Signature Algorithm',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 47,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_click_jacking_protection'.
+  $field_instances['node-domain_scan_information-field_click_jacking_protection'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'header click jacking protection',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 48,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_click_jacking_protection',
+    'label' => 'click jacking protection',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 67,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_cloud_provider'.
+  $field_instances['node-domain_scan_information-field_cloud_provider'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Cloud Provider',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 43,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_cloud_provider',
+    'label' => 'Cloud Provider',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 62,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_content_security_policy'.
+  $field_instances['node-domain_scan_information-field_content_security_policy'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'header content security policy',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 47,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_content_security_policy',
+    'label' => 'content security policy',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 66,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_deflate_compression'.
+  $field_instances['node-domain_scan_information-field_deflate_compression'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Deflate Compression',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 24,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_deflate_compression',
+    'label' => 'Deflate Compression',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 43,
+    ),
+  );
+
+  // Exported field_instance: 'node-domain_scan_information-field_dns_names'.
+  $field_instances['node-domain_scan_information-field_dns_names'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'DNS Names',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 37,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_dns_names',
+    'label' => 'DNS Names',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 56,
     ),
   );
 
@@ -2206,6 +2972,476 @@ function dotgov_content_types_field_default_field_instances() {
   );
 
   // Exported field_instance:
+  // 'node-domain_scan_information-field_downgrade_attacks'.
+  $field_instances['node-domain_scan_information-field_downgrade_attacks'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Downgrade Attacks',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 21,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_downgrade_attacks',
+    'label' => 'Downgrade Attacks',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 40,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_have_proper_404'.
+  $field_instances['node-domain_scan_information-field_have_proper_404'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Have proper 404',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 46,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_have_proper_404',
+    'label' => 'Have proper 404',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 65,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_hosted_platform'.
+  $field_instances['node-domain_scan_information-field_hosted_platform'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Hosted Platform',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 38,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_hosted_platform',
+    'label' => 'Hosted Platform',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 57,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_http_public_hpkp'.
+  $field_instances['node-domain_scan_information-field_http_public_hpkp'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'HTTP Public Key Pinning (HPKP)',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 23,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_http_public_hpkp',
+    'label' => 'HTTP Public Key Pinning (HPKP)',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 42,
+    ),
+  );
+
+  // Exported field_instance: 'node-domain_scan_information-field_ip_address'.
+  $field_instances['node-domain_scan_information-field_ip_address'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'IP Address',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 36,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_ip_address',
+    'label' => 'IP Address',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 55,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_last_overall_rating'.
+  $field_instances['node-domain_scan_information-field_last_overall_rating'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Last Overall rating',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 40,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_last_overall_rating',
+    'label' => 'Last Overall rating',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 59,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_openssl_ccs_injection'.
+  $field_instances['node-domain_scan_information-field_openssl_ccs_injection'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'OpenSSL CCS Injection',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 19,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_openssl_ccs_injection',
+    'label' => 'OpenSSL CCS Injection',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 38,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_openssl_heartbleed'.
+  $field_instances['node-domain_scan_information-field_openssl_heartbleed'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'OpenSSL Heartbleed',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 20,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_openssl_heartbleed',
+    'label' => 'OpenSSL Heartbleed',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 39,
+    ),
+  );
+
+  // Exported field_instance: 'node-domain_scan_information-field_public'.
+  $field_instances['node-domain_scan_information-field_public'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 13,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_public',
+    'label' => 'Public',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 32,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_session_reneg_client'.
+  $field_instances['node-domain_scan_information-field_session_reneg_client'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Session Renegotiation Client Initiated',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 25,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_session_reneg_client',
+    'label' => 'Session Renegotiation Client Initiated',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 44,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_session_secure_renegotiati'.
+  $field_instances['node-domain_scan_information-field_session_secure_renegotiati'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Session Secure Renegotiation',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 26,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_session_secure_renegotiati',
+    'label' => 'Session Secure Renegotiation',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 45,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_site_inspector_raw_out'.
+  $field_instances['node-domain_scan_information-field_site_inspector_raw_out'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Site Inspector Raw Output',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 50,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_site_inspector_raw_out',
+    'label' => 'Site Inspector Raw Out',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 69,
+    ),
+  );
+
+  // Exported field_instance:
   // 'node-domain_scan_information-field_ssl_certificate_chain'.
   $field_instances['node-domain_scan_information-field_ssl_certificate_chain'] = array(
     'bundle' => 'domain_scan_information',
@@ -2369,6 +3605,122 @@ function dotgov_content_types_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-domain_scan_information-field_ssl_score'.
+  $field_instances['node-domain_scan_information-field_ssl_score'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'SSL Score',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 33,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_ssl_score',
+    'label' => 'SSL Score',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 52,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_ssl_v2_support'.
+  $field_instances['node-domain_scan_information-field_ssl_v2_support'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'SSL V2 Support',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 14,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_ssl_v2_support',
+    'label' => 'SSL V2 Support',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 33,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_ssl_v3_support'.
+  $field_instances['node-domain_scan_information-field_ssl_v3_support'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'SSL V3 Support',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 15,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_ssl_v3_support',
+    'label' => 'SSL V3 Support',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 34,
+    ),
+  );
+
   // Exported field_instance:
   // 'node-domain_scan_information-field_subject_alternative_name'.
   $field_instances['node-domain_scan_information-field_subject_alternative_name'] = array(
@@ -2407,6 +3759,311 @@ function dotgov_content_types_field_default_field_instances() {
       ),
       'type' => 'text_textarea',
       'weight' => -2,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_technology_stacks'.
+  $field_instances['node-domain_scan_information-field_technology_stacks'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Technology Stacks',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 39,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_technology_stacks',
+    'label' => 'Technology Stacks',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 58,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_tls_v1_1_support'.
+  $field_instances['node-domain_scan_information-field_tls_v1_1_support'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'TLS V1.1 Support',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 17,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_tls_v1_1_support',
+    'label' => 'TLS V1.1 Support',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 36,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_tls_v1_2_support'.
+  $field_instances['node-domain_scan_information-field_tls_v1_2_support'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'TLS V1.2 Support',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 18,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_tls_v1_2_support',
+    'label' => 'TLS V1.2 Support',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 37,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_tls_v1_support'.
+  $field_instances['node-domain_scan_information-field_tls_v1_support'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'TLS V1 Support',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 16,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_tls_v1_support',
+    'label' => 'TLS V1 Support',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 35,
+    ),
+  );
+
+  // Exported field_instance: 'node-domain_scan_information-field_uses_cookies'.
+  $field_instances['node-domain_scan_information-field_uses_cookies'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Uses Cookies?',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 51,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_uses_cookies',
+    'label' => 'Uses Cookies',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 70,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_uses_robots_txt'.
+  $field_instances['node-domain_scan_information-field_uses_robots_txt'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Uses Robots txt',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 45,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_uses_robots_txt',
+    'label' => 'Uses Robots txt',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 64,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_uses_secure_cookies'.
+  $field_instances['node-domain_scan_information-field_uses_secure_cookies'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Uses Secure Cookies?',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 52,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_uses_secure_cookies',
+    'label' => 'Uses Secure Cookies',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 71,
+    ),
+  );
+
+  // Exported field_instance: 'node-domain_scan_information-field_uses_sitemap'.
+  $field_instances['node-domain_scan_information-field_uses_sitemap'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Uses Sitemap',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 44,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_uses_sitemap',
+    'label' => 'Uses Sitemap',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 63,
     ),
   );
 
@@ -2522,6 +4179,44 @@ function dotgov_content_types_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance:
+  // 'node-domain_scan_information-field_xss_protection'.
+  $field_instances['node-domain_scan_information-field_xss_protection'] = array(
+    'bundle' => 'domain_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'header xss protection',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 49,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_xss_protection',
+    'label' => 'xss protection',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 68,
+    ),
+  );
+
   // Exported field_instance: 'node-https_dap_scan_information-body'.
   $field_instances['node-https_dap_scan_information-body'] = array(
     'bundle' => 'https_dap_scan_information',
@@ -2563,24 +4258,23 @@ function dotgov_content_types_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => -4,
+      'weight' => 1,
     ),
   );
 
-  // Exported field_instance:
-  // 'node-https_dap_scan_information-field_enforce_hsts'.
-  $field_instances['node-https_dap_scan_information-field_enforce_hsts'] = array(
+  // Exported field_instance: 'node-https_dap_scan_information-field_dap_score'.
+  $field_instances['node-https_dap_scan_information-field_dap_score'] = array(
     'bundle' => 'https_dap_scan_information',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Enforce HSTS',
+    'description' => 'DAP Score',
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
+        'module' => 'text',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 3,
+        'type' => 'text_default',
+        'weight' => 14,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -2590,8 +4284,53 @@ function dotgov_content_types_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_enforce_hsts',
-    'label' => 'Enforce HSTS',
+    'field_name' => 'field_dap_score',
+    'label' => 'DAP Score',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 15,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-https_dap_scan_information-field_enforce_https'.
+  $field_instances['node-https_dap_scan_information-field_enforce_https'] = array(
+    'bundle' => 'https_dap_scan_information',
+    'default_value' => array(
+      0 => array(
+        'value' => 'na',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Enforce HTTPS',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 10,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_enforce_https',
+    'label' => 'Enforce HTTPS',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -2601,7 +4340,7 @@ function dotgov_content_types_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => -1,
+      'weight' => 3,
     ),
   );
 
@@ -2660,7 +4399,7 @@ function dotgov_content_types_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_text',
-      'weight' => 1,
+      'weight' => 7,
     ),
   );
 
@@ -2668,7 +4407,11 @@ function dotgov_content_types_field_default_field_instances() {
   // 'node-https_dap_scan_information-field_hsts_status'.
   $field_instances['node-https_dap_scan_information-field_hsts_status'] = array(
     'bundle' => 'https_dap_scan_information',
-    'default_value' => NULL,
+    'default_value' => array(
+      0 => array(
+        'value' => 'na',
+      ),
+    ),
     'deleted' => 0,
     'description' => 'HSTS Status',
     'display' => array(
@@ -2698,7 +4441,48 @@ function dotgov_content_types_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => -2,
+      'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-https_dap_scan_information-field_https_score'.
+  $field_instances['node-https_dap_scan_information-field_https_score'] = array(
+    'bundle' => 'https_dap_scan_information',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'HTTPS Score',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 13,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_https_score',
+    'label' => 'HTTPS Score',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 14,
     ),
   );
 
@@ -2736,7 +4520,7 @@ function dotgov_content_types_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => -3,
+      'weight' => 2,
     ),
   );
 
@@ -2744,10 +4528,13 @@ function dotgov_content_types_field_default_field_instances() {
   // 'node-https_dap_scan_information-field_preload_status'.
   $field_instances['node-https_dap_scan_information-field_preload_status'] = array(
     'bundle' => 'https_dap_scan_information',
-    'default_value' => NULL,
+    'default_value' => array(
+      0 => array(
+        'value' => 'na',
+      ),
+    ),
     'deleted' => 0,
-    'description' => 'yes|Yes
-no|No',
+    'description' => 'Preload Status',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -2775,7 +4562,89 @@ no|No',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 0,
+      'weight' => 5,
+    ),
+  );
+
+  // Exported field_instance: 'node-https_dap_scan_information-field_public'.
+  $field_instances['node-https_dap_scan_information-field_public'] = array(
+    'bundle' => 'https_dap_scan_information',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 9,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_public',
+    'label' => 'Public',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 12,
+    ),
+  );
+
+  // Exported field_instance: 'node-https_dap_scan_information-field_redirect'.
+  $field_instances['node-https_dap_scan_information-field_redirect'] = array(
+    'bundle' => 'https_dap_scan_information',
+    'default_value' => array(
+      0 => array(
+        'value' => 'na',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Redirect',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 11,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_redirect',
+    'label' => 'Redirect',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 6,
     ),
   );
 
@@ -2813,7 +4682,7 @@ no|No',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 7,
+      'weight' => 10,
     ),
   );
 
@@ -2851,7 +4720,7 @@ no|No',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 3,
+      'weight' => 8,
     ),
   );
 
@@ -2889,7 +4758,7 @@ no|No',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 5,
+      'weight' => 9,
     ),
   );
 
@@ -2978,7 +4847,7 @@ no|No',
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => -4,
+      'weight' => 1,
     ),
   );
 
@@ -3015,7 +4884,7 @@ no|No',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 10,
+      'weight' => 16,
     ),
   );
 
@@ -3052,7 +4921,7 @@ no|No',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 6,
+      'weight' => 12,
     ),
   );
 
@@ -3089,7 +4958,7 @@ no|No',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 11,
+      'weight' => 17,
     ),
   );
 
@@ -3126,7 +4995,7 @@ no|No',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 3,
+      'weight' => 9,
     ),
   );
 
@@ -3163,7 +5032,7 @@ no|No',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 4,
+      'weight' => 10,
     ),
   );
 
@@ -3200,7 +5069,7 @@ no|No',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 8,
+      'weight' => 14,
     ),
   );
 
@@ -3246,7 +5115,7 @@ no|No',
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 1,
+      'weight' => 7,
     ),
   );
 
@@ -3292,7 +5161,48 @@ no|No',
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 0,
+      'weight' => 6,
+    ),
+  );
+
+  // Exported field_instance: 'node-scans-field_public'.
+  $field_instances['node-scans-field_public'] = array(
+    'bundle' => 'scans',
+    'default_value' => array(
+      0 => array(
+        'value' => 1,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 16,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_public',
+    'label' => 'Public',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 19,
     ),
   );
 
@@ -3350,7 +5260,7 @@ no|No',
         'year_range' => '-3:+3',
       ),
       'type' => 'date_text',
-      'weight' => -2,
+      'weight' => 3,
     ),
   );
 
@@ -3392,7 +5302,44 @@ no|No',
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => -1,
+      'weight' => 5,
+    ),
+  );
+
+  // Exported field_instance: 'node-scans-field_scan_serial_id'.
+  $field_instances['node-scans-field_scan_serial_id'] = array(
+    'bundle' => 'scans',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Scan Serial Id',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'serial',
+        'settings' => array(),
+        'type' => 'serial_formatter_default',
+        'weight' => 17,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_scan_serial_id',
+    'label' => 'Scan Serial Id',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'serial',
+      'settings' => array(),
+      'type' => 'serial_widget_default',
+      'weight' => 4,
     ),
   );
 
@@ -3450,7 +5397,7 @@ no|No',
         'year_range' => '-3:+3',
       ),
       'type' => 'date_text',
-      'weight' => -3,
+      'weight' => 2,
     ),
   );
 
@@ -3487,7 +5434,7 @@ no|No',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 5,
+      'weight' => 11,
     ),
   );
 
@@ -3524,7 +5471,7 @@ no|No',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 9,
+      'weight' => 15,
     ),
   );
 
@@ -3561,7 +5508,7 @@ no|No',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 7,
+      'weight' => 13,
     ),
   );
 
@@ -3598,7 +5545,7 @@ no|No',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 2,
+      'weight' => 8,
     ),
   );
 
@@ -3644,6 +5591,47 @@ no|No',
       ),
       'type' => 'text_textarea_with_summary',
       'weight' => -4,
+    ),
+  );
+
+  // Exported field_instance: 'node-seo_scan_information-field_public'.
+  $field_instances['node-seo_scan_information-field_public'] = array(
+    'bundle' => 'seo_scan_information',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 7,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_public',
+    'label' => 'Public',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 32,
     ),
   );
 
@@ -3945,6 +5933,47 @@ no|No',
     ),
   );
 
+  // Exported field_instance: 'node-site_speed_scan-field_public'.
+  $field_instances['node-site_speed_scan-field_public'] = array(
+    'bundle' => 'site_speed_scan',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 7,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_public',
+    'label' => 'Public',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 32,
+    ),
+  );
+
   // Exported field_instance:
   // 'node-site_speed_scan-field_site_speed_overall_rating'.
   $field_instances['node-site_speed_scan-field_site_speed_overall_rating'] = array(
@@ -4239,7 +6268,7 @@ no|No',
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => -4,
+      'weight' => 1,
     ),
   );
 
@@ -4280,7 +6309,47 @@ no|No',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => -1,
+      'weight' => 5,
+    ),
+  );
+
+  // Exported field_instance: 'node-website-field_parent_agency_name'.
+  $field_instances['node-website-field_parent_agency_name'] = array(
+    'bundle' => 'website',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Parent Agency Name',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 7,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_parent_agency_name',
+    'label' => 'Parent Agency Name',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 2,
     ),
   );
 
@@ -4321,7 +6390,48 @@ no|No',
         'size' => 60,
       ),
       'type' => 'options_select',
-      'weight' => 1,
+      'weight' => 7,
+    ),
+  );
+
+  // Exported field_instance: 'node-website-field_public'.
+  $field_instances['node-website-field_public'] = array(
+    'bundle' => 'website',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 8,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_public',
+    'label' => 'Public',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 11,
     ),
   );
 
@@ -4358,7 +6468,7 @@ no|No',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 2,
+      'weight' => 8,
     ),
   );
 
@@ -4395,7 +6505,7 @@ no|No',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => -3,
+      'weight' => 3,
     ),
   );
 
@@ -4445,7 +6555,7 @@ no|No',
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => -2,
+      'weight' => 4,
     ),
   );
 
@@ -4486,466 +6596,7 @@ no|No',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 0,
-    ),
-  );
-
-  // Exported field_instance: 'node-website_scan_info-body'.
-  $field_instances['node-website_scan_info-body'] = array(
-    'bundle' => 'website_scan_info',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'IP Address',
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 0,
-      ),
-      'teaser' => array(
-        'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(
-          'trim_length' => 600,
-        ),
-        'type' => 'text_summary_or_trimmed',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'body',
-    'label' => 'IP Address',
-    'required' => 0,
-    'settings' => array(
-      'display_summary' => 1,
-      'text_processing' => 1,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 20,
-        'summary_rows' => 5,
-      ),
-      'type' => 'text_textarea_with_summary',
-      'weight' => -4,
-    ),
-  );
-
-  // Exported field_instance: 'node-website_scan_info-field_alexa_ranking'.
-  $field_instances['node-website_scan_info-field_alexa_ranking'] = array(
-    'bundle' => 'website_scan_info',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Alexa ranking',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 4,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_alexa_ranking',
-    'label' => 'Alexa ranking',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 0,
-    ),
-  );
-
-  // Exported field_instance: 'node-website_scan_info-field_dns_names'.
-  $field_instances['node-website_scan_info-field_dns_names'] = array(
-    'bundle' => 'website_scan_info',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'DNS Names',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 1,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_dns_names',
-    'label' => 'DNS Names',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 5,
-      ),
-      'type' => 'text_textarea',
-      'weight' => -3,
-    ),
-  );
-
-  // Exported field_instance: 'node-website_scan_info-field_hosted_platform'.
-  $field_instances['node-website_scan_info-field_hosted_platform'] = array(
-    'bundle' => 'website_scan_info',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Hosted Platform',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 2,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_hosted_platform',
-    'label' => 'Hosted Platform',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 5,
-      ),
-      'type' => 'text_textarea',
-      'weight' => -2,
-    ),
-  );
-
-  // Exported field_instance:
-  // 'node-website_scan_info-field_last_web_overall_rating'.
-  $field_instances['node-website_scan_info-field_last_web_overall_rating'] = array(
-    'bundle' => 'website_scan_info',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Last Overall rating',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 6,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_last_web_overall_rating',
-    'label' => 'Last Overall rating',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 2,
-    ),
-  );
-
-  // Exported field_instance: 'node-website_scan_info-field_ssl_protocols'.
-  $field_instances['node-website_scan_info-field_ssl_protocols'] = array(
-    'bundle' => 'website_scan_info',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'SSL Protocols',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 5,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_ssl_protocols',
-    'label' => 'SSL Protocols',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 5,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 1,
-    ),
-  );
-
-  // Exported field_instance: 'node-website_scan_info-field_technology_stacks'.
-  $field_instances['node-website_scan_info-field_technology_stacks'] = array(
-    'bundle' => 'website_scan_info',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Technology Stacks',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 3,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_technology_stacks',
-    'label' => 'Technology Stacks',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 5,
-      ),
-      'type' => 'text_textarea',
-      'weight' => -1,
-    ),
-  );
-
-  // Exported field_instance: 'node-website_scan_info-field_web_agency_id'.
-  $field_instances['node-website_scan_info-field_web_agency_id'] = array(
-    'bundle' => 'website_scan_info',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Agency ID',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'node_reference',
-        'settings' => array(),
-        'type' => 'node_reference_default',
-        'weight' => 8,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_web_agency_id',
-    'label' => 'Agency ID',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_select',
-      'weight' => 4,
-    ),
-  );
-
-  // Exported field_instance: 'node-website_scan_info-field_web_scan_id'.
-  $field_instances['node-website_scan_info-field_web_scan_id'] = array(
-    'bundle' => 'website_scan_info',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Scan ID',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'node_reference',
-        'settings' => array(),
-        'type' => 'node_reference_default',
-        'weight' => 7,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_web_scan_id',
-    'label' => 'Scan ID',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(
-        'autocomplete_match' => 'contains',
-        'autocomplete_path' => 'node_reference/autocomplete',
-        'size' => 60,
-      ),
-      'type' => 'options_select',
-      'weight' => 3,
-    ),
-  );
-
-  // Exported field_instance: 'node-website_scan_info-field_web_scan_time'.
-  $field_instances['node-website_scan_info-field_web_scan_time'] = array(
-    'bundle' => 'website_scan_info',
-    'deleted' => 0,
-    'description' => 'Scan Time',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'date',
-        'settings' => array(
-          'format_type' => 'long',
-          'fromto' => 'both',
-          'multiple_from' => '',
-          'multiple_number' => '',
-          'multiple_to' => '',
-          'show_remaining_days' => FALSE,
-          'show_repeat_rule' => 'show',
-        ),
-        'type' => 'date_default',
-        'weight' => 10,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_web_scan_time',
-    'label' => 'Scan Time',
-    'required' => 0,
-    'settings' => array(
-      'default_value' => 'now',
-      'default_value2' => 'same',
-      'default_value_code' => '',
-      'default_value_code2' => '',
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'date',
-      'settings' => array(
-        'display_all_day' => 0,
-        'increment' => 15,
-        'input_format' => 'm/d/Y - H:i:s',
-        'input_format_custom' => '',
-        'label_position' => 'above',
-        'no_fieldset' => 0,
-        'repeat_collapsed' => 0,
-        'text_parts' => array(),
-        'year_range' => '-3:+3',
-      ),
-      'type' => 'date_text',
       'weight' => 6,
-    ),
-  );
-
-  // Exported field_instance: 'node-website_scan_info-field_website_id'.
-  $field_instances['node-website_scan_info-field_website_id'] = array(
-    'bundle' => 'website_scan_info',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Website ID',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'node_reference',
-        'settings' => array(),
-        'type' => 'node_reference_default',
-        'weight' => 9,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_website_id',
-    'label' => 'Website ID',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_select',
-      'weight' => 5,
     ),
   );
 
@@ -4963,32 +6614,48 @@ no|No',
   t('Agency Logo');
   t('Agency Type');
   t('Agency Website');
+  t('Alexa Raw Output');
   t('Alexa ranking');
+  t('Alexa ranking	');
   t('Body');
   t('Broken Link Analysis');
   t('Broken Link Rating');
+  t('CDN Provider name');
+  t('Certificate - OCSP Stapling');
+  t('Certificate Host Name validation	');
+  t('Certificate Issuer');
+  t('Certificate Public Key Algorithm');
+  t('Certificate Signature Algorithm');
+  t('Certificate provider');
+  t('Cloud Provider');
   t('Common Name');
   t('Cookie Law Report Analysis');
   t('Cookie Law Report Location');
   t('Cookie Law Scan Overall rating');
   t('Cookie Law Scan Status');
   t('DAP Scan  status');
+  t('DAP Score');
   t('DNS Names');
   t('DNSSEC Analysis');
   t('DNSSEC Overall rating');
   t('DNSSEC Raw Ouput');
   t('DNSSEC Scan Time');
   t('DNSSEC Scan status');
+  t('Deflate Compression');
   t('Domain Contact Name');
   t('Domain Expiry');
   t('Domain Info scan  status');
-  t('Enforce HSTS');
+  t('Downgrade Attacks');
+  t('Enforce HTTPS');
   t('Enter a comma-separated list of words to describe your content.');
   t('Expose website Info');
   t('Expose website Info in reports');
   t('HSTS Status');
+  t('HTTP Public Key Pinning (HPKP)');
   t('HTTPS Scan  status');
+  t('HTTPS Score');
   t('HTTPS Status');
+  t('Have proper 404');
   t('Hosted Platform');
   t('IP Address');
   t('IPv6 Overall rating');
@@ -5002,9 +6669,14 @@ no|No',
   t('Number of broken Links');
   t('Number of external Broken Links');
   t('Number of sites Scanned');
+  t('OpenSSL CCS Injection');
+  t('OpenSSL Heartbleed');
   t('Parent Agency');
+  t('Parent Agency Name');
   t('Parent Website');
   t('Preload Status');
+  t('Public');
+  t('Redirect');
   t('SEO Report Analysis');
   t('SEO Report Location');
   t('SEO Scan Overall rating');
@@ -5013,33 +6685,53 @@ no|No',
   t('SSL Certificate Expiry');
   t('SSL Certificate Status');
   t('SSL Certificate Valid from');
-  t('SSL Protocols');
+  t('SSL Score');
+  t('SSL V2 Support');
+  t('SSL V3 Support');
   t('Scan End Time');
   t('Scan ID');
   t('Scan Output File Location');
   t('Scan Partial Raw Output');
   t('Scan Raw Output');
   t('Scan Report Location');
+  t('Scan Serial Id');
   t('Scan Start Time');
   t('Scan Time');
   t('Section 508 Scan  status');
+  t('Session Renegotiation Client Initiated');
+  t('Session Secure Renegotiation');
+  t('Site Inspector Raw Out');
+  t('Site Inspector Raw Output');
   t('Site Speed Overall rating');
   t('Site Speed Report Analysis');
   t('Site Speed Report Location');
   t('Site Speed Scan  status');
   t('Site Speed Scan Overall rating');
   t('Subject Alternative Name');
+  t('TLS V1 Support');
+  t('TLS V1.1 Support');
+  t('TLS V1.2 Support');
   t('Tags');
   t('Technology Stacks');
   t('Technology Tags');
   t('Upload an image to go with this article.');
+  t('Uses Cookies');
+  t('Uses Cookies?');
+  t('Uses Robots txt');
+  t('Uses Secure Cookies');
+  t('Uses Secure Cookies?');
+  t('Uses Sitemap');
   t('WebInfo scan Run Status');
   t('Website ID');
   t('Website Snapshot');
   t('Website Type');
   t('Website URL');
-  t('yes|Yes
-no|No');
+  t('click jacking protection');
+  t('content security policy');
+  t('header click jacking protection');
+  t('header content security policy');
+  t('header xss protection');
+  t('xss protection');
 
   return $field_instances;
 }
