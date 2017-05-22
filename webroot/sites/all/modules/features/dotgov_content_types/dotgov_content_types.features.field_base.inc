@@ -31,6 +31,27 @@ function dotgov_content_types_field_default_field_bases() {
     'type' => 'text_with_summary',
   );
 
+  // Exported field_base: 'comment_body'.
+  $field_bases['comment_body'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(
+      0 => 'comment',
+    ),
+    'field_name' => 'comment_body',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'text_long',
+  );
+
   // Exported field_base: 'field_508_rating'.
   $field_bases['field_508_rating'] = array(
     'active' => 1,
@@ -692,6 +713,21 @@ function dotgov_content_types_field_default_field_bases() {
     'type' => 'datestamp',
   );
 
+  // Exported field_base: 'field_css_response_bytes'.
+  $field_bases['field_css_response_bytes'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_css_response_bytes',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
   // Exported field_base: 'field_dap_scan_status'.
   $field_bases['field_dap_scan_status'] = array(
     'active' => 1,
@@ -724,18 +760,37 @@ function dotgov_content_types_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_dap_score',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
+  // Exported field_base: 'field_dap_status'.
+  $field_bases['field_dap_status'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_dap_status',
     'indexes' => array(
-      'format' => array(
-        0 => 'format',
+      'value' => array(
+        0 => 'value',
       ),
     ),
     'locked' => 0,
-    'module' => 'text',
+    'module' => 'list',
     'settings' => array(
-      'max_length' => 255,
+      'allowed_values' => array(
+        0 => 'No',
+        1 => 'Yes',
+      ),
+      'allowed_values_function' => '',
     ),
     'translatable' => 0,
-    'type' => 'text',
+    'type' => 'list_boolean',
   );
 
   // Exported field_base: 'field_deflate_compression'.
@@ -1184,6 +1239,21 @@ function dotgov_content_types_field_default_field_bases() {
     'type' => 'list_text',
   );
 
+  // Exported field_base: 'field_html_response_bytes'.
+  $field_bases['field_html_response_bytes'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_html_response_bytes',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
   // Exported field_base: 'field_http_public_hpkp'.
   $field_bases['field_http_public_hpkp'] = array(
     'active' => 1,
@@ -1241,18 +1311,12 @@ function dotgov_content_types_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_https_score',
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
+    'indexes' => array(),
     'locked' => 0,
-    'module' => 'text',
-    'settings' => array(
-      'max_length' => 255,
-    ),
+    'module' => 'number',
+    'settings' => array(),
     'translatable' => 0,
-    'type' => 'text',
+    'type' => 'number_integer',
   );
 
   // Exported field_base: 'field_https_status'.
@@ -1303,6 +1367,21 @@ function dotgov_content_types_field_default_field_bases() {
     'type' => 'image',
   );
 
+  // Exported field_base: 'field_image_response_bytes'.
+  $field_bases['field_image_response_bytes'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_image_response_bytes',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
   // Exported field_base: 'field_ip_address'.
   $field_bases['field_ip_address'] = array(
     'active' => 1,
@@ -1317,11 +1396,9 @@ function dotgov_content_types_field_default_field_bases() {
     ),
     'locked' => 0,
     'module' => 'text',
-    'settings' => array(
-      'max_length' => 255,
-    ),
+    'settings' => array(),
     'translatable' => 0,
-    'type' => 'text',
+    'type' => 'text_long',
   );
 
   // Exported field_base: 'field_ipv6_analysis'.
@@ -1438,6 +1515,21 @@ function dotgov_content_types_field_default_field_bases() {
     'type' => 'datestamp',
   );
 
+  // Exported field_base: 'field_js_response_bytes'.
+  $field_bases['field_js_response_bytes'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_js_response_bytes',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
   // Exported field_base: 'field_last_overall_rating'.
   $field_bases['field_last_overall_rating'] = array(
     'active' => 1,
@@ -1459,6 +1551,165 @@ function dotgov_content_types_field_default_field_bases() {
     'type' => 'text',
   );
 
+  // Exported field_base: 'field_mobile_overall_score'.
+  $field_bases['field_mobile_overall_score'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_mobile_overall_score',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
+  // Exported field_base: 'field_mobile_performance_report'.
+  $field_bases['field_mobile_performance_report'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_mobile_performance_report',
+    'indexes' => array(
+      'fid' => array(
+        0 => 'fid',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'file',
+    'settings' => array(
+      'display_default' => 0,
+      'display_field' => 1,
+      'uri_scheme' => 'public',
+    ),
+    'translatable' => 0,
+    'type' => 'file',
+  );
+
+  // Exported field_base: 'field_mobile_performance_score'.
+  $field_bases['field_mobile_performance_score'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_mobile_performance_score',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
+  // Exported field_base: 'field_mobile_scan_time'.
+  $field_bases['field_mobile_scan_time'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_mobile_scan_time',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 255,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
+  );
+
+  // Exported field_base: 'field_mobile_usability_report'.
+  $field_bases['field_mobile_usability_report'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_mobile_usability_report',
+    'indexes' => array(
+      'fid' => array(
+        0 => 'fid',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'file',
+    'settings' => array(
+      'display_default' => 0,
+      'display_field' => 1,
+      'uri_scheme' => 'public',
+    ),
+    'translatable' => 0,
+    'type' => 'file',
+  );
+
+  // Exported field_base: 'field_mobile_usability_result'.
+  $field_bases['field_mobile_usability_result'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_mobile_usability_result',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        0 => 'false',
+        1 => 'true',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_boolean',
+  );
+
+  // Exported field_base: 'field_mobile_usability_score'.
+  $field_bases['field_mobile_usability_score'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_mobile_usability_score',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
+  // Exported field_base: 'field_mobile_websnapshot'.
+  $field_bases['field_mobile_websnapshot'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_mobile_websnapshot',
+    'indexes' => array(
+      'fid' => array(
+        0 => 'fid',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'image',
+    'settings' => array(
+      'default_image' => 0,
+      'uri_scheme' => 'public',
+    ),
+    'translatable' => 0,
+    'type' => 'image',
+  );
+
   // Exported field_base: 'field_number_of_broken_links'.
   $field_bases['field_number_of_broken_links'] = array(
     'active' => 1,
@@ -1466,6 +1717,21 @@ function dotgov_content_types_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_number_of_broken_links',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
+  // Exported field_base: 'field_number_of_css_resources'.
+  $field_bases['field_number_of_css_resources'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_number_of_css_resources',
     'indexes' => array(),
     'locked' => 0,
     'module' => 'number',
@@ -1489,6 +1755,51 @@ function dotgov_content_types_field_default_field_bases() {
     'type' => 'number_integer',
   );
 
+  // Exported field_base: 'field_number_of_hosts'.
+  $field_bases['field_number_of_hosts'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_number_of_hosts',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
+  // Exported field_base: 'field_number_of_js_resources'.
+  $field_bases['field_number_of_js_resources'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_number_of_js_resources',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
+  // Exported field_base: 'field_number_of_resources'.
+  $field_bases['field_number_of_resources'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_number_of_resources',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
   // Exported field_base: 'field_number_of_sites_scanned'.
   $field_bases['field_number_of_sites_scanned'] = array(
     'active' => 1,
@@ -1496,6 +1807,21 @@ function dotgov_content_types_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_number_of_sites_scanned',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
+  // Exported field_base: 'field_number_of_static_resources'.
+  $field_bases['field_number_of_static_resources'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_number_of_static_resources',
     'indexes' => array(),
     'locked' => 0,
     'module' => 'number',
@@ -1552,6 +1878,21 @@ function dotgov_content_types_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'list_boolean',
+  );
+
+  // Exported field_base: 'field_other_response_bytes'.
+  $field_bases['field_other_response_bytes'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_other_response_bytes',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
   );
 
   // Exported field_base: 'field_parent_agency'.
@@ -1714,6 +2055,25 @@ function dotgov_content_types_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'list_text',
+  );
+
+  // Exported field_base: 'field_redirect_url'.
+  $field_bases['field_redirect_url'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_redirect_url',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'text_long',
   );
 
   // Exported field_base: 'field_scan_end_time'.
@@ -2195,18 +2555,12 @@ function dotgov_content_types_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_ssl_score',
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
+    'indexes' => array(),
     'locked' => 0,
-    'module' => 'text',
-    'settings' => array(
-      'max_length' => 255,
-    ),
+    'module' => 'number',
+    'settings' => array(),
     'translatable' => 0,
-    'type' => 'text',
+    'type' => 'number_integer',
   );
 
   // Exported field_base: 'field_ssl_v2_support'.
@@ -2295,7 +2649,7 @@ function dotgov_content_types_field_default_field_bases() {
     'settings' => array(
       'allowed_values' => array(
         0 => array(
-          'vocabulary' => 'tags',
+          'vocabulary' => 'website_tags',
           'parent' => 0,
         ),
       ),
@@ -2422,6 +2776,21 @@ function dotgov_content_types_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'list_boolean',
+  );
+
+  // Exported field_base: 'field_total_request_bytes'.
+  $field_bases['field_total_request_bytes'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_total_request_bytes',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
   );
 
   // Exported field_base: 'field_uses_cookies'.
@@ -2566,38 +2935,6 @@ function dotgov_content_types_field_default_field_bases() {
     'type' => 'node_reference',
   );
 
-  // Exported field_base: 'field_web_parent_agency'.
-  $field_bases['field_web_parent_agency'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_web_parent_agency',
-    'indexes' => array(
-      'nid' => array(
-        0 => 'nid',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'node_reference',
-    'settings' => array(
-      'referenceable_types' => array(
-        'agency' => 'agency',
-        'article' => 0,
-        'page' => 0,
-        'scans' => 0,
-        'website' => 0,
-      ),
-      'view' => array(
-        'args' => array(),
-        'display_name' => '',
-        'view_name' => '',
-      ),
-    ),
-    'translatable' => 0,
-    'type' => 'node_reference',
-  );
-
   // Exported field_base: 'field_web_scan_id'.
   $field_bases['field_web_scan_id'] = array(
     'active' => 1,
@@ -2727,6 +3064,32 @@ function dotgov_content_types_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'node_reference',
+  );
+
+  // Exported field_base: 'field_website_tags'.
+  $field_bases['field_website_tags'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_website_tags',
+    'indexes' => array(
+      'tid' => array(
+        0 => 'tid',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'taxonomy',
+    'settings' => array(
+      'allowed_values' => array(
+        0 => array(
+          'vocabulary' => 'website_tags',
+          'parent' => 0,
+        ),
+      ),
+    ),
+    'translatable' => 0,
+    'type' => 'taxonomy_term_reference',
   );
 
   // Exported field_base: 'field_website_type'.

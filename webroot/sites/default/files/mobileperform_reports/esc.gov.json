@@ -1,26 +1,26 @@
 {
  "kind": "pagespeedonline#result",
- "id": "https://www.esc.gov/",
+ "id": "https://www.esc.gov/index.asp",
  "responseCode": 200,
  "title": "ESC: Enterprise Services Center",
  "ruleGroups": {
   "SPEED": {
-   "score": 69
+   "score": 65
   },
   "USABILITY": {
    "score": 63
   }
  },
  "pageStats": {
-  "numberResources": 12,
+  "numberResources": 13,
   "numberHosts": 5,
-  "totalRequestBytes": "1500",
+  "totalRequestBytes": "1552",
   "numberStaticResources": 1,
-  "htmlResponseBytes": "10355",
+  "htmlResponseBytes": "10493",
   "cssResponseBytes": "17145",
   "imageResponseBytes": "542663",
-  "javascriptResponseBytes": "157112",
-  "otherResponseBytes": "327",
+  "javascriptResponseBytes": "157111",
+  "otherResponseBytes": "377",
   "numberJsResources": 5,
   "numberCssResources": 1
  },
@@ -29,20 +29,72 @@
   "ruleResults": {
    "AvoidLandingPageRedirects": {
     "localizedRuleName": "Avoid landing page redirects",
-    "ruleImpact": 0.0,
+    "ruleImpact": 9.5,
     "groups": [
      "SPEED"
     ],
     "summary": {
-     "format": "Your page has no redirects. Learn more about {{BEGIN_LINK}}avoiding landing page redirects{{END_LINK}}.",
+     "format": "Your page has {{NUM_REDIRECTS}} redirects. Redirects introduce additional delays before the page can be loaded.",
      "args": [
       {
-       "type": "HYPERLINK",
-       "key": "LINK",
-       "value": "https://developers.google.com/speed/docs/insights/AvoidRedirects"
+       "type": "INT_LITERAL",
+       "key": "NUM_REDIRECTS",
+       "value": "2"
       }
      ]
-    }
+    },
+    "urlBlocks": [
+     {
+      "header": {
+       "format": "{{BEGIN_LINK}}Avoid landing page redirects{{END_LINK}} for the following chain of redirected URLs.",
+       "args": [
+        {
+         "type": "HYPERLINK",
+         "key": "LINK",
+         "value": "https://developers.google.com/speed/docs/insights/AvoidRedirects"
+        }
+       ]
+      },
+      "urls": [
+       {
+        "result": {
+         "format": "{{FIRST_URL}}",
+         "args": [
+          {
+           "type": "URL",
+           "key": "FIRST_URL",
+           "value": "http://esc.gov/"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{REDIRECTED_URL}}",
+         "args": [
+          {
+           "type": "URL",
+           "key": "REDIRECTED_URL",
+           "value": "https://www.esc.gov/"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{REDIRECTED_URL}}",
+         "args": [
+          {
+           "type": "URL",
+           "key": "REDIRECTED_URL",
+           "value": "https://www.esc.gov/index.asp"
+          }
+         ]
+        }
+       }
+      ]
+     }
+    ]
    },
    "AvoidPlugins": {
     "localizedRuleName": "Avoid plugins",
@@ -97,7 +149,7 @@
    },
    "LeverageBrowserCaching": {
     "localizedRuleName": "Leverage browser caching",
-    "ruleImpact": 0.7125520833333333,
+    "ruleImpact": 0.7416319444444444,
     "groups": [
      "SPEED"
     ],
@@ -129,7 +181,7 @@
           {
            "type": "DURATION",
            "key": "LIFETIME",
-           "value": "36 minutes"
+           "value": "8 minutes"
           }
          ]
         }
@@ -215,7 +267,7 @@
    },
    "MinifyHTML": {
     "localizedRuleName": "Minify HTML",
-    "ruleImpact": 0.052700000000000004,
+    "ruleImpact": 0.053200000000000004,
     "groups": [
      "SPEED"
     ],
@@ -235,7 +287,7 @@
         {
          "type": "BYTES",
          "key": "SIZE_IN_BYTES",
-         "value": "527B"
+         "value": "532B"
         },
         {
          "type": "PERCENTAGE",
@@ -252,12 +304,12 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.esc.gov/"
+           "value": "https://www.esc.gov/index.asp"
           },
           {
            "type": "BYTES",
            "key": "SIZE_IN_BYTES",
-           "value": "527B"
+           "value": "532B"
           },
           {
            "type": "PERCENTAGE",

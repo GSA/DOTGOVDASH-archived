@@ -73,6 +73,14 @@ function dotgov_content_types_node_info() {
       'title_label' => t('HTTPS/DAP Scan Title'),
       'help' => '',
     ),
+    'mobile_scan_information' => array(
+      'name' => t('Mobile Scan Information'),
+      'base' => 'node_content',
+      'description' => t('Mobile Scan Information'),
+      'has_title' => '1',
+      'title_label' => t('Mobile Scan Title'),
+      'help' => '',
+    ),
     'page' => array(
       'name' => t('Basic page'),
       'base' => 'node_content',

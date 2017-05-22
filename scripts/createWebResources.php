@@ -32,7 +32,7 @@ foreach($csv as $csval){
     //Check if the Agency exists if not create a new agency
     if(($agencyId = findNode($csval[3],'agency')) != FALSE){
         echo "found agency $agencyId";
-        $node->field_web_parent_agency[$node->language][0]['nid'] = $agencyId;
+        $node->field_web_agency_id[$node->language][0]['nid'] = $agencyId;
     }
     else{
         //Create new agnecy
@@ -52,7 +52,7 @@ foreach($csv as $csval){
         if($anode=node_submit($anode)){
             node_save($anode);
         }
-        $node->field_web_parent_agency[$node->language][0]['nid'] = $anode->nid;
+        $node->field_web_agency_id[$node->language][0]['nid'] = $anode->nid;
     }
 
     $node->field_parent_agency_name[$node->language][0]['value'] = $csval[3];

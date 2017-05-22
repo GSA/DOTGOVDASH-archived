@@ -12,15 +12,15 @@
   }
  },
  "pageStats": {
-  "numberResources": 64,
+  "numberResources": 63,
   "numberHosts": 11,
-  "totalRequestBytes": "9234",
+  "totalRequestBytes": "9127",
   "numberStaticResources": 41,
-  "htmlResponseBytes": "167914",
-  "cssResponseBytes": "461077",
-  "imageResponseBytes": "4982555",
-  "javascriptResponseBytes": "1586038",
-  "otherResponseBytes": "295096",
+  "htmlResponseBytes": "133688",
+  "cssResponseBytes": "461079",
+  "imageResponseBytes": "5011371",
+  "javascriptResponseBytes": "1591375",
+  "otherResponseBytes": "295094",
   "numberJsResources": 8,
   "numberCssResources": 4
  },
@@ -80,20 +80,61 @@
    },
    "EnableGzipCompression": {
     "localizedRuleName": "Enable compression",
-    "ruleImpact": 0.0,
+    "ruleImpact": 0.2817,
     "groups": [
      "SPEED"
     ],
     "summary": {
-     "format": "You have compression enabled. Learn more about {{BEGIN_LINK}}enabling compression{{END_LINK}}.",
-     "args": [
-      {
-       "type": "HYPERLINK",
-       "key": "LINK",
-       "value": "https://developers.google.com/speed/docs/insights/EnableCompression"
-      }
-     ]
-    }
+     "format": "Compressing resources with gzip or deflate can reduce the number of bytes sent over the network."
+    },
+    "urlBlocks": [
+     {
+      "header": {
+       "format": "{{BEGIN_LINK}}Enable compression{{END_LINK}} for the following resources to reduce their transfer size by {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction).",
+       "args": [
+        {
+         "type": "HYPERLINK",
+         "key": "LINK",
+         "value": "https://developers.google.com/speed/docs/insights/EnableCompression"
+        },
+        {
+         "type": "BYTES",
+         "key": "SIZE_IN_BYTES",
+         "value": "2.8KiB"
+        },
+        {
+         "type": "PERCENTAGE",
+         "key": "PERCENTAGE",
+         "value": "65%"
+        }
+       ]
+      },
+      "urls": [
+       {
+        "result": {
+         "format": "Compressing {{URL}} could save {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction).",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://platform.twitter.com/js/button.90facfc7dd48c9c8c4f1fc94e137b515.js"
+          },
+          {
+           "type": "BYTES",
+           "key": "SIZE_IN_BYTES",
+           "value": "2.8KiB"
+          },
+          {
+           "type": "PERCENTAGE",
+           "key": "PERCENTAGE",
+           "value": "65%"
+          }
+         ]
+        }
+       }
+      ]
+     }
+    ]
    },
    "LeverageBrowserCaching": {
     "localizedRuleName": "Leverage browser caching",
@@ -264,7 +305,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "http://static.squarespace.com/universal/scripts-compressed/common-bac10ce3948a20d0f0c4-min.js"
+           "value": "http://static.squarespace.com/universal/scripts-compressed/common-e143fb82e4e1018dba5d-min.js"
           }
          ]
         }
@@ -781,7 +822,7 @@
    },
    "SizeTapTargetsAppropriately": {
     "localizedRuleName": "Size tap targets appropriately",
-    "ruleImpact": 0.003873966942148761,
+    "ruleImpact": 0.22684310018903592,
     "groups": [
      "USABILITY"
     ],
@@ -803,17 +844,17 @@
       "urls": [
        {
         "result": {
-         "format": "The tap target {{HTML_TEXT}} is close to {{NUM_TOO_CLOSE}} other tap targets.",
+         "format": "The tap target {{HTML_TEXT}} and {{NUM_OTHERS}} others are close to other tap targets.",
          "args": [
           {
            "type": "STRING_LITERAL",
            "key": "HTML_TEXT",
-           "value": "\u003ca href=\"https://twitte…%23FamiliesDay\" class=\"tweet-url hashtag\"\u003e#FamiliesDay\u003c/a\u003e"
+           "value": "\u003ca href=\"https://twitte…ays2Prosperity\" class=\"tweet-url hashtag\"\u003e#Pathways2Prosperity\u003c/a\u003e"
           },
           {
            "type": "INT_LITERAL",
-           "key": "NUM_TOO_CLOSE",
-           "value": "1"
+           "key": "NUM_OTHERS",
+           "value": "7"
           }
          ]
         }

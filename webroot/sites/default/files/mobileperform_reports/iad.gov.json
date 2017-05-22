@@ -5,10 +5,10 @@
  "title": "The Information Assurance Directorate at the NSA",
  "ruleGroups": {
   "SPEED": {
-   "score": 33
+   "score": 35
   },
   "USABILITY": {
-   "score": 100
+   "score": 96
   }
  },
  "pageStats": {
@@ -16,10 +16,10 @@
   "numberHosts": 2,
   "totalRequestBytes": "16687",
   "numberStaticResources": 48,
-  "htmlResponseBytes": "84217",
+  "htmlResponseBytes": "84221",
   "cssResponseBytes": "129830",
   "imageResponseBytes": "647031",
-  "javascriptResponseBytes": "379089",
+  "javascriptResponseBytes": "378416",
   "otherResponseBytes": "50587",
   "numberJsResources": 15,
   "numberCssResources": 5
@@ -168,7 +168,7 @@
    },
    "EnableGzipCompression": {
     "localizedRuleName": "Enable compression",
-    "ruleImpact": 7.2347,
+    "ruleImpact": 7.2333,
     "groups": [
      "SPEED"
     ],
@@ -861,7 +861,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.iad.gov/TSbd/08e8a2a830ab20005fc4aed0092c9f30b5b1818941cf3d66ef8ef133823103f89f58fbc2ad7aade8?type=2"
+           "value": "https://www.iad.gov/TSbd/08e8a2a830ab20006c982671ad0c1df47afe6c639f2027c52e5201c40cb5816c9091b37359300683?type=2"
           },
           {
            "type": "DURATION",
@@ -877,7 +877,7 @@
    },
    "MainResourceServerResponseTime": {
     "localizedRuleName": "Reduce server response time",
-    "ruleImpact": 47.55,
+    "ruleImpact": 35.01,
     "groups": [
      "SPEED"
     ],
@@ -889,7 +889,7 @@
         {
          "type": "DURATION",
          "key": "RESPONSE_TIME",
-         "value": "3.4 seconds"
+         "value": "2.5 seconds"
         },
         {
          "type": "HYPERLINK",
@@ -1256,7 +1256,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.iad.gov/TSbd/08e8a2a830ab20005fc4aed0092c9f30b5b1818941cf3d66ef8ef133823103f89f58fbc2ad7aade8?type=2"
+           "value": "https://www.iad.gov/TSbd/08e8a2a830ab20006c982671ad0c1df47afe6c639f2027c52e5201c40cb5816c9091b37359300683?type=2"
           }
          ]
         }
@@ -2008,12 +2008,12 @@
    },
    "SizeContentToViewport": {
     "localizedRuleName": "Size content to viewport",
-    "ruleImpact": 0.0,
+    "ruleImpact": 3.0,
     "groups": [
      "USABILITY"
     ],
     "summary": {
-     "format": "The contents of your page fit within the viewport. Learn more about {{BEGIN_LINK}}sizing content to the viewport{{END_LINK}}.",
+     "format": "The page content is too wide for the viewport, forcing the user to scroll horizontally. {{BEGIN_LINK}}Size the page content to the viewport{{END_LINK}} to provide a better user experience.",
      "args": [
       {
        "type": "HYPERLINK",
@@ -2021,7 +2021,26 @@
        "value": "https://developers.google.com/speed/docs/insights/SizeContentToViewport"
       }
      ]
-    }
+    },
+    "urlBlocks": [
+     {
+      "header": {
+       "format": "The page content is {{CONTENT_WIDTH}} CSS pixels wide, but the viewport is only {{VIEWPORT_WIDTH}} CSS pixels wide.",
+       "args": [
+        {
+         "type": "INT_LITERAL",
+         "key": "CONTENT_WIDTH",
+         "value": "594"
+        },
+        {
+         "type": "INT_LITERAL",
+         "key": "VIEWPORT_WIDTH",
+         "value": "412"
+        }
+       ]
+      }
+     }
+    ]
    },
    "SizeTapTargetsAppropriately": {
     "localizedRuleName": "Size tap targets appropriately",
