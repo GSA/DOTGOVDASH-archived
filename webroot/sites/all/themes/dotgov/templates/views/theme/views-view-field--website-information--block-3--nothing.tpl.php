@@ -62,7 +62,7 @@
 $chartdata= $row->_field_data['nid']['entity']->field_https_score['und'][0]['value'];
 if ($chartdata <= 50){
     $chartcolor = '#ff3029';
-}elseif($chartdata>=50 and $chartdata<75){
+}elseif($chartdata>=50 and $chartdata<=75){
     $chartcolor='#ffb900';
 }
 else{
