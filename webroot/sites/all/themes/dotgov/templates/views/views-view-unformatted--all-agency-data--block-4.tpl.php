@@ -42,6 +42,6 @@ foreach($view->style_plugin->rendered_fields as $key=>$val){
         chart.draw(view, options);
     }
 </script>
-<div id="columnchart_values4" style="width: 900px; height: 300px;"></div>
+<div id="columnchart_values4"></div>
 <p><button id="link-all-reports"><a href="/agency/all/data/ssl">Complete List</a></button>
 </p>
