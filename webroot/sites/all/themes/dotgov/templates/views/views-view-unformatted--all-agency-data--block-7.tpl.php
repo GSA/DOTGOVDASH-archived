@@ -13,7 +13,6 @@ foreach($view->style_plugin->rendered_fields as $key=>$val){
     $chartData .= "[\"".$val['field_agency_code']."\",".$val['field_mobile_overall_score'].",\"".$chartColors[$key]."\"],";
 }
 ?>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
     google.charts.load("current", {packages:['corechart']});
     google.charts.setOnLoadCallback(drawChart);
@@ -32,8 +31,8 @@ foreach($view->style_plugin->rendered_fields as $key=>$val){
 
         var options = {
             title: "Top Mobile Compliant Agencies",
-            width: 600,
-            height: 400,
+            width: '100%',
+            height:250,
             bar: {groupWidth: "95%"},
             legend: { position: "top" },
         };
@@ -41,6 +40,6 @@ foreach($view->style_plugin->rendered_fields as $key=>$val){
         chart.draw(view, options);
     }
 </script>
-<button id="link-all-reports"><a href="/agency/all/data/mobile">Complete List</a></button>
-<div id="columnchart_values7" style="width: 900px; height: 300px;"></div>
-<p><br><br><br><br><br><br><br><br></p>
+<div id="columnchart_values7" ></div>
+<p><button id="link-all-reports"><a href="/agency/all/data/mobile">Complete List</a></button>
+</p>

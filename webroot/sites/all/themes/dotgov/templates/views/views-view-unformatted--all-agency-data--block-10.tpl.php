@@ -22,7 +22,7 @@ foreach($view->style_plugin->rendered_fields[0] as $key=>$val){
     }
 }
 ?>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 <script type="text/javascript">
     google.charts.load('current', {'packages':['bar']});
     google.charts.setOnLoadCallback(drawChart);
@@ -42,8 +42,8 @@ foreach($view->style_plugin->rendered_fields[0] as $key=>$val){
             legend: { position: "left" },
             bars: 'vertical',
             vAxis: {format: 'decimal'},
-            height: 400,
-            width: 400
+            width: '100%',
+            height:250
         };
 
         var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
@@ -51,6 +51,6 @@ foreach($view->style_plugin->rendered_fields[0] as $key=>$val){
         chart.draw(data, google.charts.Bar.convertOptions(options));
     }
 </script>
-<button id="link-all-reports"><a href="/website/all/reports">Complete List</a></button>
-<div id="columnchart_material" style="width: 900px; height: 300px;"></div>
-<p><br><br><br><br><br><br><br><br></p>
+<div id="columnchart_material" ></div>
+<p><button id="link-all-reports"><a href="/website/all/reports">Complete List</a></button>
+</p>
