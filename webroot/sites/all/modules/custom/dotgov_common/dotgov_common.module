@@ -1,0 +1,28 @@
+<?php
+/*
+* Dotgov Dashboard common functions module
+*/
+
+function dotgov_common_siteAsocScanids($websiteid){
+    $node = node_load($websiteid);
+
+    $query = db_query("select bundle,entity_id from field_data_field_website_id where field_website_id_nid=:nid", array(':nid' => $websiteid));
+    foreach ($query as $result) {
+        $websites[$result->bundle] = $result->entity_id;
+    }
+    return $websites;
+}
+
+/**
+ * Implements hook_action_info().
+ */
+function dotgov_common_getNodeTaxonomy($nid)
+{
+    $terms = array();
+    $results = db_query('SELECT b.tid tid ,b.name name  FROM {taxonomy_index} a, {taxonomy_term_data b}  WHERE a.tid=b.tid and a.nid=:nid', array(':nid' => $nid));
+    foreach ($results as $result) {
+        $terms[$result->tid] = $result->name;
+    }
+  return $terms;
+
+}
