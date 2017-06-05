@@ -43,5 +43,5 @@ foreach($view->style_plugin->rendered_fields as $key=>$val){
     }
 </script>
 <div id="columnchart_values4"></div>
-<p><button id="link-all-reports"><a href="/agency/all/data/ssl">Complete List</a></button>
+<p><button id="link-all-reports"><a href="/agency/all/ssl_data">Complete List</a></button>
 </p>

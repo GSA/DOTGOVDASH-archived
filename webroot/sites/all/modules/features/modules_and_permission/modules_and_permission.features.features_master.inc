@@ -36,6 +36,7 @@ function modules_and_permission_features_master_defaults() {
     'contexts' => 'contexts',
     'contextual' => 'contextual',
     'ctools' => 'ctools',
+    'ctools_custom_content' => 'ctools_custom_content',
     'current_search' => 'current_search',
     'dashboard' => 'dashboard',
     'datatables' => 'datatables',
@@ -79,15 +80,24 @@ function modules_and_permission_features_master_defaults() {
     'image_captcha' => 'image_captcha',
     'job_scheduler' => 'job_scheduler',
     'job_scheduler_trigger' => 'job_scheduler_trigger',
+    'jquery_update' => 'jquery_update',
     'libraries' => 'libraries',
     'list' => 'list',
     'menu' => 'menu',
+    'menus' => 'menus',
     'modules_and_permission' => 'modules_and_permission',
     'node' => 'node',
     'node_reference' => 'node_reference',
     'number' => 'number',
     'options' => 'options',
     'overlay' => 'overlay',
+    'page_manager' => 'page_manager',
+    'panelizer' => 'panelizer',
+    'panels' => 'panels',
+    'panels_extra_layouts' => 'panels_extra_layouts',
+    'panels_ipe' => 'panels_ipe',
+    'panels_mini' => 'panels_mini',
+    'panels_node' => 'panels_node',
     'password_policy' => 'password_policy',
     'path' => 'path',
     'pathauto' => 'pathauto',
@@ -111,6 +121,9 @@ function modules_and_permission_features_master_defaults() {
     'users_permissions' => 'users_permissions',
     'views' => 'views',
     'views_all' => 'views_all',
+    'views_bootstrap' => 'views_bootstrap',
+    'views_content' => 'views_content',
+    'views_php' => 'views_php',
     'views_revisions' => 'views_revisions',
     'views_ui' => 'views_ui',
     'views_url_path_arguments' => 'views_url_path_arguments',
@@ -236,6 +249,12 @@ function modules_and_permission_features_master_defaults() {
         'administrator' => 'administrator',
       ),
     ),
+    'administer advanced pane settings' => array(
+      'name' => 'administer advanced pane settings',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
     'administer analytics dashboard' => array(
       'name' => 'administer analytics dashboard',
       'roles' => array(
@@ -282,6 +301,12 @@ function modules_and_permission_features_master_defaults() {
     ),
     'administer contexts' => array(
       'name' => 'administer contexts',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
+    'administer custom content' => array(
+      'name' => 'administer custom content',
       'roles' => array(
         'administrator' => 'administrator',
       ),
@@ -340,6 +365,12 @@ function modules_and_permission_features_master_defaults() {
         'administrator' => 'administrator',
       ),
     ),
+    'administer mini panels' => array(
+      'name' => 'administer mini panels',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
     'administer modules' => array(
       'name' => 'administer modules',
       'roles' => array(
@@ -348,6 +379,60 @@ function modules_and_permission_features_master_defaults() {
     ),
     'administer nodes' => array(
       'name' => 'administer nodes',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
+    'administer page manager' => array(
+      'name' => 'administer page manager',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
+    'administer pane access' => array(
+      'name' => 'administer pane access',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
+    'administer panel-nodes' => array(
+      'name' => 'administer panel-nodes',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
+    'administer panelizer' => array(
+      'name' => 'administer panelizer',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
+    'administer panels display styles' => array(
+      'name' => 'administer panels display styles',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
+    'administer panels layouts' => array(
+      'name' => 'administer panels layouts',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
+    'administer panels pane styles' => array(
+      'name' => 'administer panels pane styles',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
+    'administer panels region styles' => array(
+      'name' => 'administer panels region styles',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
+    'administer panels styles' => array(
+      'name' => 'administer panels styles',
       'roles' => array(
         'administrator' => 'administrator',
       ),
@@ -440,6 +525,12 @@ function modules_and_permission_features_master_defaults() {
         'administrator' => 'administrator',
       ),
     ),
+    'bypass access in place editing' => array(
+      'name' => 'bypass access in place editing',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
     'bypass node access' => array(
       'name' => 'bypass node access',
       'roles' => array(
@@ -448,6 +539,12 @@ function modules_and_permission_features_master_defaults() {
     ),
     'cancel account' => array(
       'name' => 'cancel account',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
+    'change layouts in place editing' => array(
+      'name' => 'change layouts in place editing',
       'roles' => array(
         'administrator' => 'administrator',
       ),
@@ -504,6 +601,12 @@ function modules_and_permission_features_master_defaults() {
       'name' => 'create https_dap_scan_information content',
       'roles' => array(),
     ),
+    'create mini panels' => array(
+      'name' => 'create mini panels',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
     'create mobile_scan_information content' => array(
       'name' => 'create mobile_scan_information content',
       'roles' => array(),
@@ -513,6 +616,10 @@ function modules_and_permission_features_master_defaults() {
       'roles' => array(
         'administrator' => 'administrator',
       ),
+    ),
+    'create panel content' => array(
+      'name' => 'create panel content',
+      'roles' => array(),
     ),
     'create scans content' => array(
       'name' => 'create scans content',
@@ -590,6 +697,10 @@ function modules_and_permission_features_master_defaults() {
         'administrator' => 'administrator',
       ),
     ),
+    'delete any panel content' => array(
+      'name' => 'delete any panel content',
+      'roles' => array(),
+    ),
     'delete any scans content' => array(
       'name' => 'delete any scans content',
       'roles' => array(),
@@ -657,6 +768,10 @@ function modules_and_permission_features_master_defaults() {
       'roles' => array(
         'administrator' => 'administrator',
       ),
+    ),
+    'delete own panel content' => array(
+      'name' => 'delete own panel content',
+      'roles' => array(),
     ),
     'delete own scans content' => array(
       'name' => 'delete own scans content',
@@ -756,6 +871,10 @@ function modules_and_permission_features_master_defaults() {
         'administrator' => 'administrator',
       ),
     ),
+    'edit any panel content' => array(
+      'name' => 'edit any panel content',
+      'roles' => array(),
+    ),
     'edit any scans content' => array(
       'name' => 'edit any scans content',
       'roles' => array(),
@@ -825,6 +944,10 @@ function modules_and_permission_features_master_defaults() {
       'roles' => array(
         'administrator' => 'administrator',
       ),
+    ),
+    'edit own panel content' => array(
+      'name' => 'edit own panel content',
+      'roles' => array(),
     ),
     'edit own scans content' => array(
       'name' => 'edit own scans content',
@@ -984,6 +1107,42 @@ function modules_and_permission_features_master_defaults() {
         'administrator' => 'administrator',
       ),
     ),
+    'use ipe with page manager' => array(
+      'name' => 'use ipe with page manager',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
+    'use page manager' => array(
+      'name' => 'use page manager',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
+    'use panels caching features' => array(
+      'name' => 'use panels caching features',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
+    'use panels dashboard' => array(
+      'name' => 'use panels dashboard',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
+    'use panels in place editing' => array(
+      'name' => 'use panels in place editing',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
+    'use panels locks' => array(
+      'name' => 'use panels locks',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
     'use text format filtered_html' => array(
       'name' => 'use text format filtered_html',
       'roles' => array(
@@ -1016,6 +1175,12 @@ function modules_and_permission_features_master_defaults() {
         'administrator' => 'administrator',
       ),
     ),
+    'view pane admin links' => array(
+      'name' => 'view pane admin links',
+      'roles' => array(
+        'administrator' => 'administrator',
+      ),
+    ),
     'view revisions' => array(
       'name' => 'view revisions',
       'roles' => array(
@@ -1031,6 +1196,8 @@ function modules_and_permission_features_master_defaults() {
   );
   $features_master['themes'] = array(
     'bartik' => 'bartik',
+    'bootstrap' => 'bootstrap',
+    'dotgov' => 'dotgov',
     'seven' => 'seven',
   );
 

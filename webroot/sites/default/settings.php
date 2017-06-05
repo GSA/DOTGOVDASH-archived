@@ -249,9 +249,9 @@ $databases = array (
   array (
     'default' => 
     array (
-      'database' => 'dotgov',
+      'database' => 'dotgovnew',
       'username' => 'root',
-      'password' => 'root',
+      'password' => 'Web*Portfolio!Mysql2017',
       'host' => 'localhost',
       'port' => '',
       'driver' => 'mysql',

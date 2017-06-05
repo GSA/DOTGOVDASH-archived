@@ -467,7 +467,7 @@ function getSiteInspectorOutput($domain){
     //print_r($spRawOut);
     $spRaw['raw'] = $spout;
     $spRaw['cookie'] = $spRawOut['canonical_endpoint']['cookies']['cookie?'];
-    $spRaw['secure_cookie'] = $spRawOut['canonical_endpoint']['cookies']['cookie?'];
+    $spRaw['secure_cookie'] = $spRawOut['canonical_endpoint']['cookies']['secure?'];
     $spRaw['content_security_policy'] = $spRawOut['canonical_endpoint']['headers']['content_security_policy'];
     $spRaw['click_jacking_protection'] = $spRawOut['canonical_endpoint']['headers']['click_jacking_protection'];
     $spRaw['xss_protection'] = $spRawOut['canonical_endpoint']['headers']['xss_protection'];
