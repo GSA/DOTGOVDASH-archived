@@ -36,7 +36,7 @@ $outputorig =  	file_create_url($mobsnap['uri']);
 <p><?php print($row->field_field_parent_agency_name[0]['rendered']['#markup']); ?></p>
 </div>
 
-<div class="col-xs-4 text-center"><a href="<?=$outputorig?>"><img src="<?php echo $output?>" /></a> </div>
+<div class="col-xs-4 text-center"><a href="<?=$outputorig?>"><img src="<?php echo $output?>" title="agency-logo" alt="agency-logo" /></a> </div>
 
 <div class="col-xs-3 text-center"><h3>Domain</h3>
 <p><?php print($row->field_body[0]['rendered']['#markup']); ?></p>

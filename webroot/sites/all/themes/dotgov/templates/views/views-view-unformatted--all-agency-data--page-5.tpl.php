@@ -8,18 +8,20 @@
  */
 //print_r($view->style_plugin->rendered_fields);
 if(isset($_GET['field_web_agency_id_nid'])){
-	if($_GET['field_web_agency_id_nid'] == 'All') 
-		$agtit = "Compliance Report";
-	else{
-	$agnode = node_load($_GET['field_web_agency_id_nid']);
-	$agtit = "Compliance Report for ".$agnode->title;
-	}
+   if($_GET['field_web_agency_id_nid'] == 'All') 
+      $agtit = "Government-Wide Compliance Report";
+   else{
+   $agnode = node_load($_GET['field_web_agency_id_nid']);
+   $agtit = "Compliance Report for ".$agnode->title;
+   }
 }
 else
-	 $agtit = "Compliance Report";
+    $agtit = "Compliance Report";
 $chartData = "[\"Scan Criteria\", \"Overall Compliance Report\", { role: \"style\" } ],";
-$chartColors = array('#91cee5','#e61638', '#00a5d4', '#ffb900', '#44a560', '#aeb0b5');
-$chartCrit = array("field_ssl_score"=>"SSL","field_dap_score"=>"DAP","field_https_score"=>"HTTPS","field_mobile_overall_score"=>"MOBILE","field_mobile_performance_score"=>"MOBILE PERFORMANCE","field_mobile_usability_score"=>"MOBILE FRIENDLY");
+#$chartColors = array('#0071bc','#205493', '#112e51', '#212121', '#323a45', '#aeb0b5','#046b99','#00a6d2');
+$chartColors = array('#0071bc', '#e31c3d', '#00a6d2', '#fdb81e', '#48a463','#5b616b','#e59393');
+#$chartCrit = array("field_ssl_score"=>"SSL","field_dap_score"=>"DAP","field_https_score"=>"HTTPS","field_mobile_overall_score"=>"MOBILE","field_mobile_performance_score"=>"MOBILE PERFORMANCE","field_mobile_usability_score"=>"MOBILE FRIENDLY");
+$chartCrit = array("field_dap_score"=>"DAP","field_https_score"=>"HTTPS","field_mobile_overall_score"=>"MOBILE","field_mobile_performance_score"=>"MOBILE PERFORMANCE","field_mobile_usability_score"=>"MOBILE FRIENDLY","field_dnssec_score"=>'DNSSEC',"field_ipv6_score"=>"IPv6");
 $i = 0;
 $chartData1 = "";
 foreach($view->style_plugin->rendered_fields[0] as $key=>$val){
@@ -31,6 +33,8 @@ foreach($view->style_plugin->rendered_fields[0] as $key=>$val){
         $i += 1;
     }
 }
+$chartCritval = array_values($chartCrit);
+sort($chartCritval);
 ?>
 <script type="text/javascript">
     google.charts.load('current', {packages:['corechart']});
@@ -38,7 +42,7 @@ foreach($view->style_plugin->rendered_fields[0] as $key=>$val){
 
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
-            ['Scans', '<?=implode("','",array_values($chartCrit))?>'],
+            ['Scans', '<?=implode("','",$chartCritval)?>'],
             ['Overall Score', <?=$chartData1?>],
         ]);
 
@@ -47,17 +51,24 @@ foreach($view->style_plugin->rendered_fields[0] as $key=>$val){
         var options = {
            chartArea: {
       left: '15%',
-      top: 30,
-      width: '70%',
-      height: '70%'
+      top: 10,
+      bottom: 5,
+      width: '40%',
+      height: '100%'
     },
                            
             colors: ['<?=implode("','",array_values($chartColors))?>'],
-            legend: { position: 'top' },
+            legend: { position: 'right' },
             bars: 'vertical',
-            vAxis: {format: 'decimal'},
+            vAxis: {format: 'decimal',
+    
+        viewWindow: {
+            min:0,
+       max:100
+        }
+       },
             width: '50%',
-            bar: {groupWidth: '50%'},
+            bar: {groupWidth: '100%'},
         };
 
         var chart = new google.visualization.ColumnChart(document.getElementById('columnchart_material'));
@@ -70,7 +81,5 @@ foreach($view->style_plugin->rendered_fields[0] as $key=>$val){
 <h3><?=$agtit ;?></h3>
 <p>Average score of all <?=$totWebsites?> websites scanned</p>
 <div id="columnchart_material"></div>
-<p><button id="link-all-reports"><a href="/website/all/reports">Complete List</a></button>
-</p>
-</div>
+<a href="/website/all/reports" id="link-all-reports">Complete List</a> (Last Scan Date: <?=dotgov_common_lastScanDate()?>)</div>
 </div>

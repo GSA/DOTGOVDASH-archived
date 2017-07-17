@@ -12,7 +12,7 @@ function getSites()
 {
     $websites = array();
 
-    //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value LIKE '%census.gov%' and b.nid=a.entity_id", array(':bundle' => 'website'));
+    //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value LIKE '%ncd.gov%' and b.nid=a.entity_id", array(':bundle' => 'website'));
    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id", array(':bundle' => 'website'));
     //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id and b.nid not in (select c.field_website_id_nid from field_data_body a , node b, field_data_field_website_id c  where b.type='mobile_scan_information' and b.nid=a.entity_id and b.nid=c.entity_id and (UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - b.changed)/3600 >= 3)", array(':bundle' => 'website'));
     foreach ($query as $result) {
@@ -315,6 +315,70 @@ function getSSLInfo($domain){
     return $sslinfo;
 }
 
+
+/*
+ *
+ *Initiatte all SSL labs domain scans at once
+ */
+function initiateSslLabsHostScan(){
+    $listWebsites = getSites();
+    foreach($listWebsites as $key=>$website){
+        print $website['domain']." Scan Initiated at SSLlabs\n";
+        //collectSslLabsDomInfo($website['domain']);
+        $spout = shell_exec("../tools/ssllabs-scan/ssllabs-scan -grade -usecache=true ".$website['domain']);
+    }
+}
+
+/*
+ * SSL labs scan collect report info
+ */
+
+function collectSslLabsDomInfo($domain){
+  include("../scripts/configSettings.php");
+  require_once '../tools/ssllabs/sslLabsApi.php';
+    //Return API response as JSON string
+    $api = new sslLabsApi();
+    $apiinfo = $api->fetchHostInformation($domain,false,false,true,24);
+
+    //Set content-type header for JSON output
+    writeToLogs("Starting  SSLlabs scan for website $domain \n",$logFile);
+
+  $ip = getIPInfo($domain);
+    $sslapi  = $api->fetchHostInformationCached($domain,24,false);
+    $sslapiobj = json_decode($sslapi);
+    //Consider results only if status is READY and not In Progress
+    //print_r($sslapiobj);
+    if($sslapiobj->status == 'READY'){
+        foreach($sslapiobj->endpoints as $ekey=>$eval){
+            //ignore capture grade from any endpoint where its available
+            if($eval->grade != '') {
+                print $eval->ipAddress."-".$eval->grade."\n";
+                $grade = $eval->grade;
+            }
+        }
+    }
+    $sslData = array("raw"=>$apiinfo,"reportcontent"=>$sslapi,"grade"=>$grade);
+    return $sslData;
+}
+
+/*
+ * SSL labs scan collect report info
+ */
+
+function collectSslLabsDomRepInfo($domain){
+    require_once '../tools/ssllabs/sslLabsApi.php';
+    //Return API response as JSON string
+    $api = new sslLabsApi();
+
+    //Return API response as JSON object
+    //$api = new sslLabsApi(true);
+
+    //Set content-type header for JSON output
+    print "Collecting ". $domain." Information from SSLlabs\n";
+    $ip = getIPInfo($domain);
+    $sslapi  = $api->fetchEndpointData($domain,(int)$ip[0],true);
+    return $sslapi;
+}
 /*
  * Run Mobile API calls to Google and get the data
  */
@@ -475,7 +539,10 @@ function getSiteInspectorOutput($domain){
     $spRaw['cloud_provider'] = $spRawOut['canonical_endpoint']['dns']['cloud_provider'];
     $spRaw['sitemap_xml'] = $spRawOut['canonical_endpoint']['content']['sitemap_xml'];
     $spRaw['robots_txt'] = $spRawOut['canonical_endpoint']['content']['robots_txt'];
+    $spRaw['humans_txt'] = $spRawOut['canonical_endpoint']['content']['humans_txt'];
     $spRaw['proper_404s'] = $spRawOut['canonical_endpoint']['content']['proper_404s'];
+    $spRaw['dnssec'] = $spRawOut['canonical_endpoint']['dns']['dnssec'];
+    $spRaw['ipv6'] = $spRawOut['canonical_endpoint']['dns']['ipv6'];
 
     return $spRaw;
 }
@@ -538,11 +605,19 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
             $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
             $node->field_website_id['und'][0]['nid'] = $siteid;
             $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteid);
-            $node->field_dap_status['und'][0]['value'] = ($result->dap == 'Yes')?1:0;
+            if($result->dap == 'Yes')
+              $dapstatus = 1;
+            elseif($result->dap == 'No')
+              $dapstatus = 0;
+            else
+              $dapstatus = NULL;
+            $node->field_dap_status['und'][0]['value'] = $dapstatus;
             if($result->dap == 'Yes')
                 $node->field_dap_score['und'][0]['value'] = '100';
-            else
+            elseif($result->dap == 'No')
                 $node->field_dap_score['und'][0]['value'] = '0';
+            else
+              $node->field_dap_score['und'][0]['value'] = NULL;
 
             $https_score = 0;
             if($result->HTTPS == 'Yes') {
@@ -692,7 +767,16 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
         $node->field_uses_cookies['und'][0]['value'] = ($siInfo['cookie'] == '')?0:1;
         $node->field_uses_secure_cookies['und'][0]['value'] = ($siInfo['secure_cookie'] == '')?0:1;
         $node->field_site_inspector_raw_out['und'][0]['value'] = $siInfo['raw'];
+        $node->field_ipv6_compliance['und'][0]['value'] = ($siInfo['ipv6'] == '')?0:1;
+        $node->field_dnssec_compliance['und'][0]['value'] = ($siInfo['dnssec'] == '')?0:1;
 
+        //Get SSL labs scan ouput
+        $ssllabsInfo = collectSslLabsDomInfo($website['domain']);
+        $node->field_ssl_labs_score['und'][0]['value'] = $ssllabsInfo['grade'];
+        $node->field_ssl_labs_raw_out['und'][0]['value'] = $ssllabsInfo['raw'];
+        $sslLabsFile = file_save_data($ssllabsInfo['reportcontent'],file_default_scheme().'://ssl_labs_reports/'.$website["domain"].'.json', FILE_EXISTS_REPLACE);
+        $sslLabsFileArr = array('fid' => $sslLabsFile->fid,'display' => 1, 'description' => '');
+        $node->field_ssl_labs_report['und'][0] = $sslLabsFileArr;
 
         $sslScore = 0;
         //Calculate SSL Score
@@ -715,6 +799,12 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
         if($sslInfo['tlsv12'] == '1') {
             $sslScore += 15;
             $tags[] = 'TLSV1.2';
+        }
+        if($sslInfo['ipv6'] == '1') {
+            $tags[] = 'IPV6';
+        }
+        if($sslInfo['dnssec'] == '1') {
+            $tags[] = 'DNSSEC';
         }
         if($sslInfo['opensslccs'] == '0')
             $sslScore += 10;

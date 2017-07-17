@@ -32,16 +32,21 @@ foreach($view->style_plugin->rendered_fields as $key=>$val){
             2]);
 
         var options = {
-            title: "Top SSL Compliant Agencies",
+            title: "Top 5 SSL Compliant Agencies",
             width: '100%',
             height:250,
             bar: {groupWidth: "95%"},
             legend: { position: "top" },
+ 
+        vAxis: {  viewWindow: {
+            min:0,
+	    max:100
+        }
+}
         };
         var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values4"));
         chart.draw(view, options);
     }
 </script>
 <div id="columnchart_values4"></div>
-<p><button id="link-all-reports"><a href="/agency/all/ssl_data">Complete List</a></button>
-</p>
+<a id="link-all-reports" href="/agency/all/ssl_data">Complete List</a> (Last scan date: <?=dotgov_common_lastScanDate()?>)

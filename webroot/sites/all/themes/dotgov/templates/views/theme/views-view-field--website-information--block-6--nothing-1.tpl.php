@@ -53,7 +53,7 @@ $scanids = dotgov_common_siteAsocScanids(arg(1));
 $scanpath = drupal_get_path_alias("node/".$scanids['mobile_scan_information']);
 ?>
 <?php print $output; ?>
-<div><p><button class="link-all-reports"><a href="/<?=$scanpath?>">Go to Full Report</a></button></p></div>
+<div><p><a class="link-all-reports" href="/<?=$scanpath?>">Go to Full Report</a></p></div>
 <?php 
 $chartdata= $row->_field_data['nid']['entity']->field_mobile_overall_score['und'][0]['value'];
 
@@ -134,7 +134,7 @@ else{
                     y:<?php echo ($chartdata); ?>
                 }]
             }]
-        },
+        }
 
 
     );

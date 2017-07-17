@@ -59,7 +59,7 @@ $scanpath = drupal_get_path_alias("node/".$scanids['https_dap_scan_information']
 //drupal_add_js(drupal_get_path('module', 'activity_chart') . '/activity_chart.js');
 ?>
 <?php print $output; ?>
-<div><p><button class="link-all-reports"><a href="/<?=$scanpath?>">Go to Full Report</a></button></p></div>
+<div><p><a class="link-all-reports" href="/<?=$scanpath?>">Go to Full Report</a></p></div>
 <?php //dsm($view->result);
 //dsm ($row->_field_data['nid']['entity']->field_https_score['und'][0]['safe_value']);
 $chartdata= $row->_field_data['nid']['entity']->field_https_score['und'][0]['value'];
@@ -140,7 +140,7 @@ else{
                     y:<?php echo ($chartdata); ?>
                 }]
             }]
-        },
+        }
 
 
     );

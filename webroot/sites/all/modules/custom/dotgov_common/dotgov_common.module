@@ -26,3 +26,14 @@ function dotgov_common_getNodeTaxonomy($nid)
   return $terms;
 
 }
+
+/*
+ * Find Last scan date
+ */
+function dotgov_common_lastScanDate(){
+  $query = db_query("select nid,created from node where type='agency' order by nid desc limit 1");
+  foreach ($query as $result) {
+    $lastscantime = $result->created;
+  }
+  print date("m/d/Y",$lastscantime);
+}

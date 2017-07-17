@@ -19,7 +19,6 @@ foreach($listWebsites as $key=>$website){
     //Generate Snapshot
     //writeToLogs("Generating Latest Snapshot for site $website",$logFile);
     //getWebSnapshots($website, $storage);
-
     //Update HTTPS and DAP info in Drupal
     writeToLogs("\nStart HTTPS and DAP Scan ".$website['domain'],$logFile);
     updateHttpsDAPInfo($key,$scanId,$website);

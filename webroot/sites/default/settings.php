@@ -249,12 +249,13 @@ $databases = array (
   array (
     'default' => 
     array (
-      'database' => 'dotgovnew',
+      'database' => 'dotgov',
       'username' => 'root',
-      'password' => 'Web*Portfolio!Mysql2017',
+      'password' => 'root',
       'host' => 'localhost',
       'port' => '',
       'driver' => 'mysql',
+        'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',
       'prefix' => '',
 	'pdo' => array(PDO::MYSQL_ATTR_LOCAL_INFILE => 1 ),	
     ),
@@ -643,3 +644,5 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
  * @see drupal_clean_css_identifier()
  */
 # $conf['allow_css_double_underscores'] = TRUE;
+$conf['theme_debug'] = TRUE;
+

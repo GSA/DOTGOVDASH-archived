@@ -36,7 +36,7 @@ foreach($view->style_plugin->rendered_fields[0] as $key=>$val){
         var options = {
             chart: {
                 title: 'Compliance Report',
-                subtitle: 'Average score of all <?=$totWebsites?> websites scanned',
+                subtitle: 'Average score of all <?=$totWebsites?> websites scanned (Last scan date: <?=dotgov_common_lastScanDate()?>)',
             },
             colors: ['<?=implode("','",array_values($chartColors))?>'],
             legend: { position: "left" },
@@ -52,5 +52,4 @@ foreach($view->style_plugin->rendered_fields[0] as $key=>$val){
     }
 </script>
 <div id="columnchart_material" ></div>
-<p><button id="link-all-reports"><a href="/website/all/reports">Complete List</a></button>
-</p>
+<a id="link-all-reports" href="/website/all/reports">Complete List</a>

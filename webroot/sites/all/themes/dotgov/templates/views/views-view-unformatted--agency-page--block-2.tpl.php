@@ -54,5 +54,4 @@ foreach($view->style_plugin->rendered_fields[0] as $key=>$val){
     }
 </script>
 <div id="columnchart_material"></div>
-<p><button id="link-all-reports"><a href="/website/all/reports">Complete List</a></button>
-</p>
+<a id="link-all-reports" href="/website/all/reports">Complete List</a> (Last scan date: <?=dotgov_common_lastScanDate()?>)
