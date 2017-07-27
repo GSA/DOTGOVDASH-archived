@@ -12,8 +12,10 @@ function getSites()
 {
     $websites = array();
 
-    //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value LIKE '%ncd.gov%' and b.nid=a.entity_id", array(':bundle' => 'website'));
+    //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value LIKE '%abilityone.gov%' and b.nid=a.entity_id", array(':bundle' => 'website'));
    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id", array(':bundle' => 'website'));
+
+    //Final Query	
     //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id and b.nid not in (select c.field_website_id_nid from field_data_body a , node b, field_data_field_website_id c  where b.type='mobile_scan_information' and b.nid=a.entity_id and b.nid=c.entity_id and (UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - b.changed)/3600 >= 3)", array(':bundle' => 'website'));
     foreach ($query as $result) {
         $websites[$result->entity_id] = array("domain"=>$result->title,"url"=>$result->body_value);
@@ -605,19 +607,20 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
             $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
             $node->field_website_id['und'][0]['nid'] = $siteid;
             $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteid);
-            if($result->dap == 'Yes')
-              $dapstatus = 1;
-            elseif($result->dap == 'No')
-              $dapstatus = 0;
-            else
-              $dapstatus = NULL;
+            if($result->dap == 'Yes') {
+                $dapstatus = 1;
+                $dapscore = '100';
+            }
+            elseif($result->dap == 'No') {
+                $dapstatus = 0;
+                $dapscore = '0';
+            }
+            else {
+                $dapstatus = NULL;
+                $dapscore = NULL;
+            }
             $node->field_dap_status['und'][0]['value'] = $dapstatus;
-            if($result->dap == 'Yes')
-                $node->field_dap_score['und'][0]['value'] = '100';
-            elseif($result->dap == 'No')
-                $node->field_dap_score['und'][0]['value'] = '0';
-            else
-              $node->field_dap_score['und'][0]['value'] = NULL;
+            $node->field_dap_score['und'][0]['value'] = $dapscore;
 
             $https_score = 0;
             if($result->HTTPS == 'Yes') {
@@ -644,10 +647,8 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
     //Save parent website node
     $wnode = node_load($siteid);
     $wnode->field_https_score['und'][0]['value'] = round($https_score);
-    if($result->dap == 'Yes')
-        $wnode->field_dap_score['und'][0]['value'] = '100';
-    else
-        $wnode->field_dap_score['und'][0]['value'] = '0';
+    $wnode->field_dap_score['und'][0]['value'] = $dapscore;
+
 
     //Save Tags to parent website
     if(!empty($tags)) {
@@ -771,12 +772,12 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
         $node->field_dnssec_compliance['und'][0]['value'] = ($siInfo['dnssec'] == '')?0:1;
 
         //Get SSL labs scan ouput
-        $ssllabsInfo = collectSslLabsDomInfo($website['domain']);
-        $node->field_ssl_labs_score['und'][0]['value'] = $ssllabsInfo['grade'];
-        $node->field_ssl_labs_raw_out['und'][0]['value'] = $ssllabsInfo['raw'];
-        $sslLabsFile = file_save_data($ssllabsInfo['reportcontent'],file_default_scheme().'://ssl_labs_reports/'.$website["domain"].'.json', FILE_EXISTS_REPLACE);
-        $sslLabsFileArr = array('fid' => $sslLabsFile->fid,'display' => 1, 'description' => '');
-        $node->field_ssl_labs_report['und'][0] = $sslLabsFileArr;
+        //$ssllabsInfo = collectSslLabsDomInfo($website['domain']);
+        //$node->field_ssl_labs_score['und'][0]['value'] = $ssllabsInfo['grade'];
+        //$node->field_ssl_labs_raw_out['und'][0]['value'] = $ssllabsInfo['raw'];
+        //$sslLabsFile = file_save_data($ssllabsInfo['reportcontent'],file_default_scheme().'://ssl_labs_reports/'.$website["domain"].'.json', FILE_EXISTS_REPLACE);
+        //$sslLabsFileArr = array('fid' => $sslLabsFile->fid,'display' => 1, 'description' => '');
+        //$node->field_ssl_labs_report['und'][0] = $sslLabsFileArr;
 
         $sslScore = 0;
         //Calculate SSL Score
@@ -1024,3 +1025,4 @@ function writeToLogs($content,$logFile){
         file_put_contents($logFile, $log_content);
     }
 }
+
