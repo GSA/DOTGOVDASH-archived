@@ -31,9 +31,36 @@ function dotgov_common_getNodeTaxonomy($nid)
  * Find Last scan date
  */
 function dotgov_common_lastScanDate(){
-  $query = db_query("select nid,created from node where type='agency' order by nid desc limit 1");
+  $query = db_query("select nid,created from node where type='scans' order by nid desc limit 1");
   foreach ($query as $result) {
     $lastscantime = $result->created;
   }
   print date("m/d/Y",$lastscantime);
+}
+
+/*
+* Hook Facet Alter
+*/
+
+function dotgov_common_facet_items_alter(&$build, &$settings) {
+$enabled_fields =  array("sm_field_hsts_status","ism_field_https_status","sm_field_redirect","bm_field_ssl_v2_support","bm_field_ssl_v3_support","bm_field_tls_v1_support","bm_field_tls_v1_1_support","bm_field_tls_v1_2_support","bm_field_certificate_ocsp_stapli","bm_field_http_public_hpkp","bm_field_deflate_compression","bm_field_session_secure_renegoti","bm_field_have_proper_404","sm_field_enforce_https","bm_field_dap_status","bm_field_xss_protection");
+$vulnerable_fields = array("bm_field_openssl_ccs_injection","bm_field_openssl_heartbleed","bm_field_downgrade_attacks");
+                        if (in_array($settings->facet,$enabled_fields)) {
+                          foreach($build as $key => $item) {
+				if($key == 'true')	
+                            		$build[$key]["#markup"] = "Enabled";
+				elseif($key == 'false')	
+                            		$build[$key]["#markup"] = "Disabled";
+                          }
+                        }
+			if(in_array($settings->facet,$vulnerable_fields)) {
+                          foreach($build as $key => $item) {
+                                if($key == 'true')
+                                        $build[$key]["#markup"] = "Vulnerable";
+                                elseif($key == 'false')
+                                        $build[$key]["#markup"] = "Not Vulnerable";
+                          }
+                        }
+
+
 }

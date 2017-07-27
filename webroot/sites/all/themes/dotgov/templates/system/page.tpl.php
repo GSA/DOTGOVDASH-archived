@@ -77,8 +77,10 @@
 			<!-- top header-->
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-xs-12 col-md-12 contacts col">
+					<div class="col-xs-7 col-md-7 contacts col">
 						<span class="item">An Official Website Of The United States Government</span> </div>
+<div class="col-xs-5 col-md-5 contacts col" style="text-align:right;font-weight:bold;">
+						<span style="background:yellow;">This site is currently in <a href="//18f.gsa.gov/dashboard/stages/#alpha">alpha</a></span> </div>
 				</div>
 			</div>
 		</div>
@@ -125,6 +127,16 @@
   
 </header>
 
+
+<div class="full" style="background-image:url('/sites/all/themes/dotgov/images/back-image-dotgov.png');height:350px;background-position: center center; background-repeat: no-repeat;">
+     <div style="padding: 0px 60px; max-width: 1000px; float: right">
+                        <h1  class="srt-blue" style="font-weight: 600; border-bottom: 0.5px solid #112e51; padding-bottom: 10px">.Gov Dashboard</h1>
+                        <h3  class="srt-blue" style="padding-left: 100px; padding-top: 20px">
+                        .Gov Dashboard - a comprehensive suite of analytics for the U.S. Federal government to help agencies understand their .gov footprint and compliance with federal policies
+			</h3>
+                    </div>
+    
+</div>
 <div class="main-container <?php print $container_class; ?>">
 
   <header role="banner" id="page-header">

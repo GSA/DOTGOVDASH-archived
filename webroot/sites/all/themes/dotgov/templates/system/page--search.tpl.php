@@ -72,14 +72,20 @@
  *
  * @ingroup templates
  */
+if(arg(1) == "website_search")
+	$searchtitle = "Search";
+else
+	$searchtitle = "Data Discovery";
 ?>
 <div class="top-bar">
 			<!-- top header-->
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-xs-12 col-md-12 contacts col">
+					<div class="col-xs-7 col-md-7 contacts col">
 						<span class="item">An Official Website Of The United States Government</span> </div>
-				</div>
+<div class="col-xs-5 col-md-5 contacts col" style="text-align:right;font-weight:bold;">
+						<span style="background:yellow;">This site is currently in <a href="//18f.gsa.gov/dashboard/stages/#alpha">alpha</a></span> </div>
+				</div>				</div>
 			</div>
 		</div>
 <div class="<?php print $container_class; ?>">
@@ -130,7 +136,7 @@
       <a id="main-content"></a>
       <?php print render($title_prefix); ?>
       <?php if (!empty($title)): ?>
-        <h1 class="page-header">Data Discovery and Search</h1>
+        <h1 class="page-header"><?=$searchtitle?></h1>
       <?php endif; ?>
       <?php print render($title_suffix); ?>
   <div class="container white-back">
