@@ -12,8 +12,8 @@ function getSites()
 {
     $websites = array();
 
-    //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value LIKE '%abilityone.gov%' and b.nid=a.entity_id", array(':bundle' => 'website'));
-   $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id", array(':bundle' => 'website'));
+    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value LIKE '%acquisition.gov%' and b.nid=a.entity_id", array(':bundle' => 'website'));
+   //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id", array(':bundle' => 'website'));
 
     //Final Query	
     //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id and b.nid not in (select c.field_website_id_nid from field_data_body a , node b, field_data_field_website_id c  where b.type='mobile_scan_information' and b.nid=a.entity_id and b.nid=c.entity_id and (UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - b.changed)/3600 >= 3)", array(':bundle' => 'website'));
@@ -484,6 +484,23 @@ function mobilePerformApidata($url, $apiKey)
 }
 
 /*
+ * Get Site Page Speed API through Curl calls
+ */
+
+function sitePerformApidata($url, $apiKey)
+{
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_URL => 'https://www.googleapis.com/pagespeedonline/v2/runPagespeed?screenshot=true&key='.$apiKey.'&strategy=desktop&url='.$url.'',
+    ));
+    $resp = curl_exec($curl);
+    curl_close($curl);
+
+    return $resp;
+}
+
+/*
  * Get Alexa rank in an Array for Current Rank, delta Change of rank in last 3 months and Ranking in US
  */
 
@@ -572,7 +589,11 @@ function getPulseData(){
     db_query("LOAD DATA LOCAL INFILE '".$localdapfile."' INTO TABLE `custom_pulse_dap_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
     db_query("update custom_pulse_https_data a , custom_pulse_dap_data b set a.dap=b.dap where a.domain=b.domain");
 
+    //Update Agency information from CSV file
+    updatePulseAgencyInfo("$localhttpsfile");
 
+    //Update Website information from CSV file
+    updatePulseWebsiteInfo("$localhttpsfile");
 }
 
 /*
@@ -976,6 +997,110 @@ function updateMobileScanInfo($siteid,$webscanId,$website){
 }
 
 /*
+ * Update site speed scan Info in content type site_speed_scan
+ */
+
+function updateSiteScanInfo($siteid,$webscanId,$website){
+    $tags = array();
+    $start = microtime(true);
+    $date = date("m-d-Y");
+    $node = new stdClass();
+    $node->type = "site_speed_scan";
+    $node->language = LANGUAGE_NONE;
+    $node->uid = "1";
+    $node->name = "admin";
+    $node->status = 1;
+    $node->title = "Site Performance Scan ".$website['domain'];
+    if(($nodeId = findNode($node->title,'site_speed_scan')) != FALSE){
+        echo "found node $node->title $nodeId";
+        $node->nid = $nodeId;
+    }
+    $node->promote = 0;
+    $siteInfo = getSitePerformanceAPIdata($website['domain']);
+    //print_r($mobInfo);
+    $node->body['und'][0]['value'] = '';
+    $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
+    $node->field_website_id['und'][0]['nid'] = $siteid;
+    $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteid);
+    $node->field_site_speed_score['und'][0]['value'] = round($siteInfo['siteFriendlyScore']);
+    $node->field_site_speed_report_location['und'][0] = $siteInfo['sitePerformFile'];
+    $node->field_website_desktop_snapshot['und'][0] = $siteInfo['siteSnapshotFile'];
+    $node->field_html_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['htmlResponseBytes'];
+    $node->field_text_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['textResponseBytes'];
+    $node->field_css_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['cssResponseBytes'];
+    $node->field_image_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['imageResponseBytes'];
+    $node->field_js_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['javascriptResponseBytes'];
+    $node->field_other_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['otherResponseBytes'];
+    $node->field_number_of_js_resources['und'][0]['value'] = $siteInfo['mPStats']['numberJsResources'];
+    $node->field_number_of_css_resources['und'][0]['value'] = $siteInfo['mPStats']['numberCssResources'];
+    $node->field_number_of_resources['und'][0]['value'] = $siteInfo['mPStats']['numberResources'];
+    $node->field_number_of_hosts['und'][0]['value'] = $siteInfo['mPStats']['numberHosts'];
+    $node->field_total_request_bytes['und'][0]['value'] = $siteInfo['mPStats']['totalRequestBytes'];
+    $node->field_number_of_static_resources['und'][0]['value'] = $siteInfo['mPStats']['numberStaticResources'];
+
+
+    //Load Parent website id
+    $wnode = node_load($siteid);
+    $wnode->field_site_speed_score['und'][0]['value'] = round($siteInfo['mPScore']);
+
+
+    //Update Parent Website Node
+    node_object_prepare($wnode);
+    if ($wnode = node_submit($wnode)) {
+        node_save($wnode);
+    }
+
+    node_object_prepare($node);
+    if ($node = node_submit($node)) {
+        node_save($node);
+    }
+    $end = microtime(true);
+    print "Site speed scan for ".$website['domain']." took " . ($end - $start) . ' seconds';
+}
+
+
+/*
+ * Run Site performance API calls to Google and get the data
+ */
+
+function getSitePerformanceAPIdata($domain){
+    include("../scripts/configSettings.php");
+    $siteSpeedAPIdataArr = array();
+    //We are not using drupal system_retrieve_file because it failed url calls to google randomly
+    $http_domain = "http://".$domain;
+    $https_domain = "https://".$domain;
+    $googleApiKey = "AIzaSyDXNreglPI5GTgZRi2Le71DZUGQe2o77h4";
+
+    //Call to Google Inights Speed API
+    if(!$googSitePerformApiData = sitePerformApidata("$http_domain","$googleApiKey")) {
+        $error = error_get_last();
+        writeToLogs("API request failed to $http_domain . Error was: " . $error['message'],$logFile);
+    }
+    else{
+        $sitePerformFile = file_save_data($googSitePerformApiData,file_default_scheme().'://sitespeed_reports/'.$domain.'.json', FILE_EXISTS_REPLACE);
+        $siteSpeedAPIdataArr['sitePerformFile'] = array('fid' => $sitePerformFile->fid,'display' => 1, 'description' => '');
+
+        $jsonMParr = json_decode($googSitePerformApiData, true);
+        if($siteSpeedAPIdataArr['siteSnapshotData'] == ''){
+            $siteSnapshotData = str_replace('_', '/', $jsonMParr['screenshot']['data']);
+            $siteSnapshotData = str_replace('-', '+', $siteSnapshotData);
+            $siteSnapshotData = base64_decode($siteSnapshotData);
+            $siteSpeedAPIdataArr['siteSnapshotData'] = $siteSnapshotData;
+            $snapshotfile = file_save_data($siteSnapshotData,file_default_scheme().'://desktop_snapshots/'.$domain.'.jpg', FILE_EXISTS_REPLACE);
+            $siteSpeedAPIdataArr['siteSnapshotFile'] = array('fid' => $snapshotfile->fid,'display' => 1, 'description' => '');
+        }
+        $siteSpeedAPIdataArr['mPScore'] = $jsonMParr['ruleGroups']['SPEED']['score'];
+        if(($siteSpeedAPIdataArr['siteFriendlyScore'] == '') || ($siteSpeedAPIdataArr['siteFriendlyScore'] == '0'))
+            $siteSpeedAPIdataArr['siteFriendlyScore'] = $jsonMParr['ruleGroups']['USABILITY']['score'];
+        $siteSpeedAPIdataArr['mPStats'] = $jsonMParr['pageStats'];
+
+
+    }
+    return $siteSpeedAPIdataArr;
+}
+
+
+/*
  * Find if node exists form title then return nid else return false
  */
 
@@ -1026,3 +1151,346 @@ function writeToLogs($content,$logFile){
     }
 }
 
+/*
+ * Update the pulse Agency Information
+ */
+function updatePulseAgencyInfo($csvfile){
+    // Set path to CSV file
+    //$csvFile = '../scripts/websiteListing.csv';
+
+    $csv = readCSV("$csvfile");
+
+    $i =1;
+    foreach($csv as $csval){
+        print "$csval[3] \n";
+        if(trim($csval[3]) != ''){
+            //Check if the Agency exists if not create a new agency
+            if(($agencyId = findNode($csval[3],'agency')) != FALSE){
+                echo "found agency $agencyId";
+                $anode = node_load($agencyId);
+                //Update only branch info for agency in case it changed
+                if($anode->field_agency_branch[$anode->language][0]['value'] != $csval[2]) {
+                    $anode->field_agency_branch[$anode->language][0]['value'] = $csval[2];
+                    node_object_prepare($anode);
+                    if ($anode = node_submit($anode)) {
+                        node_save($anode);
+                    }
+                }
+            }
+            else{
+                //Create new agnecy
+                $anode = new stdClass();  // Create a new node object
+                $anode->type = 'agency';  // Content type
+                $anode->language = LANGUAGE_NONE;  // Or e.g. 'en' if locale is enabled
+
+                $anode->title = $csval[3];
+                $anode->status = 1;   // (1 or 0): published or unpublished
+                $anode->promote = 0;  // (1 or 0): promoted to front page or not
+                $anode->sticky = 0;  // (1 or 0): sticky at top of lists or not
+                $anode->comment = 0;  // 2 = comments open, 1 = comments closed, 0 = comments hidden
+// Add author of the node
+                $anode->uid = "1";
+                $anode->name = "admin";
+                $anode->field_agency_branch[$anode->language][0]['value'] = $csval[2];
+                node_object_prepare($anode);
+                if($anode=node_submit($anode)){
+                    node_save($anode);
+                }
+            }
+            $i++;
+        }
+        }
+
+}
+
+/*
+ * Update the pulse Website Information
+ */
+function updatePulseWebsiteInfo($csvfile){
+    // Set path to CSV file
+    //$csvFile = '../scripts/websiteListing.csv';
+
+    $csv = readCSV("$csvfile");
+
+    $i =1;
+    foreach($csv as $csval){
+        print "$csval[0] \n";
+        //if((($nodeId = findNode($csval[0],'website')) == FALSE) && ($csval[0] != '')){
+        if(trim($csval[0]) != ''){
+        $node = new stdClass();  // Create a new node object
+        $node->type = 'website';  // Content type
+        $node->language = LANGUAGE_NONE;  // Or e.g. 'en' if locale is enabled
+
+        if(($nodeId = findNode($csval[0],'website')) != FALSE){
+            echo "Found node ".$node->title." $nodeId";
+            $node->nid = $nodeId;
+        }
+
+            $node->title = $csval[0];
+
+            $node->body[$node->language][0]['value'] = $csval[1];
+            $node->field_agency_branch[$node->language][0]['value'] = $csval[2];
+
+            //Check if the Agency exists if not create a new agency
+            if(($agencyId = findNode($csval[3],'agency')) != FALSE){
+                echo "found agency $agencyId";
+                $node->field_web_agency_id[$node->language][0]['nid'] = $agencyId;
+            }
+
+            $node->field_parent_agency_name[$node->language][0]['value'] = $csval[3];
+
+            $node->field_website_type[$node->language][0]['value'] = "full";
+
+            $node->status = 1;   // (1 or 0): published or unpublished
+            $node->promote = 0;  // (1 or 0): promoted to front page or not
+            $node->sticky = 0;  // (1 or 0): sticky at top of lists or not
+            $node->comment = 0;  // 2 = comments open, 1 = comments closed, 0 = comments hidden
+// Add author of the node
+            $node->uid = "1";
+            $node->name = "admin";
+            node_object_prepare($node);  //Set some default values
+
+// Save the node
+            if($node=node_submit($node)){
+                node_save($node);
+            }
+
+            $i++;
+
+    }
+    }
+
+}
+
+function readCSV($csvFile){
+    $file_handle = fopen($csvFile, 'r');
+    while (!feof($file_handle) ) {
+        $line_of_text[] = fgetcsv($file_handle, 1024);
+    }
+    fclose($file_handle);
+    return $line_of_text;
+}
+
+function findCDNProvider($website){
+    //List of Potential Domains matching CDN providers. Borrowed from https://github.com/turbobytes/cdnfinder
+    $cdnMatchList = array(
+        ".clients.turbobytes.net"=>"TurboBytes",
+        ".turbobytes-cdn.com"=>"TurboBytes",
+        ".afxcdn.net"=>"afxcdn.net",
+        ".akamai.net"=>"Akamai",
+        ".akam.net"=>"Akamai",
+        ".akamaiedge.net"=>"Akamai",
+        ".akamaized.net"=>"Akamai",
+        ".akamaihd.net"=>"Akamai",
+        ".akamaistream.net"=>"Akamai",
+        ".edgekey.net"=>"Akamai",
+        ".edgesuite.net"=>"Akamai",
+        ".akadns.net"=>"Akamai",
+        ".akamaitech.net"=>"Akamai",
+        ".akamaitechnologies."=>"Akamai",
+        ".gslb.tbcache.com"=>"Alimama",
+        ".cloudfront.net"=>"Amazon Cloudfront",
+        ".anankecdn.com.br"=>"Ananke",
+        ".att-dsa.net"=>"AT&T",
+        ".azioncdn.net"=>"Azion",
+        ".belugacdn.com"=>"BelugaCDN",
+        ".bluehatnetwork.com"=>"Blue Hat Network",
+        ".systemcdn.net"=>"EdgeCast",
+        ".cachefly.net"=>"Cachefly",
+        ".cdn77.net"=>"CDN77",
+        ".cdn77.org"=>"CDN77",
+        ".panthercdn.com"=>"CDNetworks",
+        ".cdngc.net"=>"CDNetworks",
+        ".gccdn.net"=>"CDNetworks",
+        ".gccdn.cn"=>"CDNetworks",
+        ".cdnify.io"=>"CDNify",
+        ".ccgslb.com"=>"ChinaCache",
+        ".ccgslb.net"=>"ChinaCache",
+        ".c3cache.net"=>"ChinaCache",
+        ".chinacache.net"=>"ChinaCache",
+        ".c3cdn.net"=>"ChinaCache",
+        ".lxdns.com"=>"ChinaNetCenter",
+        ".speedcdns.com"=>"QUANTIL/ChinaNetCenter",
+        ".cloudflare.com"=>"Cloudflare",
+        ".cloudflare.net"=>"Cloudflare",
+        ".edgecastcdn.net"=>"EdgeCast",
+        ".adn."=>"EdgeCast",
+        ".wac."=>"EdgeCast",
+        ".wpc."=>"EdgeCast",
+        ".fastly.net"=>"Fastly",
+        ".fastlylb.net"=>"Fastly",
+        ".google."=>"Google",
+        "googlesyndication."=>"Google",
+        "youtube."=>"Google",
+        ".googleusercontent.com"=>"Google",
+        ".l.doubleclick.net"=>"Google",
+        ".hiberniacdn.com"=>"Hibernia",
+        ".hwcdn.net"=>"Highwinds",
+        ".incapdns.net"=>"Incapsula",
+        ".inscname.net"=>"Instartlogic",
+        ".insnw.net"=>"Instartlogic",
+        ".internapcdn.net"=>"Internap",
+        ".kxcdn.com"=>"KeyCDN",
+        ".lswcdn.net"=>"LeaseWeb CDN",
+        ".footprint.net"=>"Level3",
+        ".llnwd.net"=>"Limelight",
+        ".lldns.net"=>"Limelight",
+        ".netdna-cdn.com"=>"MaxCDN",
+        ".netdna-ssl.com"=>"MaxCDN",
+        ".netdna.com"=>"MaxCDN",
+        ".mncdn.com"=>"Medianova",
+        ".instacontent.net"=>"Mirror Image",
+        ".mirror-image.net"=>"Mirror Image",
+        ".cap-mii.net"=>"Mirror Image",
+        ".rncdn1.com"=>"Reflected Networks",
+        ".simplecdn.net"=>"Simple CDN",
+        ".swiftcdn1.com"=>"SwiftCDN",
+        ".swiftserve.com"=>"SwiftServe",
+        ".gslb.taobao.com"=>"Taobao",
+        ".cdn.bitgravity.com"=>"Tata communications",
+        ".cdn.telefonica.com"=>"Telefonica",
+        ".vo.msecnd.net"=>"Windows Azure",
+        ".ay1.b.yahoo.com"=>"Yahoo",
+        ".yimg."=>"Yahoo",
+        ".zenedge.net"=>"Zenedge"
+    );
+    $comout = shell_exec("dig +trace $website");
+    $cdnMatched = array();
+    $match = "false";
+    //print $comout;
+    foreach($cdnMatchList as $key=>$val){
+        if (strpos($comout, $key) !== false) {
+            $cdnMatched[$val] = $val;
+            $match = true;
+        }
+    }
+    if(($match == "false") && (strpos($website, "www.") === false)){
+        $www_website = "www.".$website;
+        $cdnMatched = findCDNProvider($www_website);
+    }
+    return $cdnMatched;
+}
+
+/*
+ * Run Scan to collect Website information
+ */
+
+function updateTechStackInfo($website){
+    //Associate field names with categories of technology
+    $varCatassoc = array("CMS"=>"field_cms_applications",
+        "Widgets"=>"field_widget_applications",
+        "Analytics"=>"field_analytics_applications",
+        "Font Scripts"=>"field_font_script_applications",
+        "Web Servers"=>"field_web_server",
+        "Cache Tools"=>"field_cache_tools",
+        "Javascript Frameworks"=>"field_javascript_frameworks",
+        "Programming Languages"=>"field_programming_languages",
+        "Advertising Networks"=>"field_advertising_networks",
+        "Blogs"=>"field_blog_applications",
+        "Build CI Systems"=>"field_build_ci_systems",
+        "Captchas"=>"field_captcha_applications",
+        "CDN"=>"field_cdn_applications",
+        "Comment Systems"=>"field_comment_systems_applicatio",
+        "Control Systems"=>"field_control_systems_applicatio",
+        "CRM"=>"field_crm_applications",
+        "Database Managers"=>"field_database_managers",
+        "Databases"=>"field_databases",
+        "Dev Tools"=>"field_dev_tools",
+        "Document Management Systems"=>"field_document_management_system",
+        "Documentation Tools"=>"field_documentation_tools",
+        "Ecommerce"=>"field_ecommerce_applications",
+        "Editors"=>"field_editor_applications",
+        "Feed Readers"=>"field_feed_readers",
+        "Hosting Panels"=>"field_hosting_panels",
+        "Issue Trackers"=>"field_issue_trackers",
+        "JavaScript Graphics"=>"field_javascript_graphics_applic",
+        "Landing Page Builders"=>"field_landing_page_builders",
+        "Live Chat"=>"field_live_chat_applications",
+        "LMS"=>"field_lms_applications",
+        "Maps"=>"field_maps_applications",
+        "Marketing Automation"=>"field_marketing_automation",
+        "Media Servers"=>"field_media_servers",
+        "Message Boards"=>"field_message_boards",
+        "Miscellaneous"=>"field_miscellaneous_application",
+        "Mobile Frameworks"=>"field_mobile_frameworks",
+        "Network Devices"=>"field_network_devices",
+        "Network Storage"=>"field_network_storage",
+        "Operating Systems"=>"field_operating_systems",
+        "Payment Processors"=>"field_payment_processors",
+        "Photo Galleries"=>"field_photo_galleries",
+        "Remote Access"=>"field_remote_access",
+        "Rich Text Editors"=>"field_rich_text_editors",
+        "Search Engines"=>"field_search_engines",
+        "Tag Managers"=>"field_tag_managers",
+        "Video Players"=>"field_video_players",
+        "Web Frameworks"=>"field_web_frameworks",
+        "Web Mail"=>"field_web_mail_applications",
+        "Web Server Extensions"=>"field_web_server_extensions",
+        "Wikis"=>"field_wiki_applications");
+    $weburl = "https://".$website;
+    $command = "node index.js $weburl";
+    $tsout = shell_exec("export npm_config_loglevel=silent;cd ../tools/wappalyzer/;$command");
+    $tsobj = json_decode($tsout);
+    $tags = array();
+    foreach($tsobj->applications as $tskey=>$tsobj){
+        $tsAppname = $tsobj->name;
+        $tsAppCat = $tsobj->categories[0];
+        $tags[$tsAppCat] = array();
+        //if version is present append version to technology
+        if(trim($tsobj->version) != '')
+            $tsAppname .= "_".$tsobj->version;
+        if(!in_array($tsAppname,$tags[$tsAppCat]))
+            $tags[$tsAppCat][] = $tsAppname;
+        if(!in_array($tsobj->name,$tags[$tsAppCat]))
+            $tags[$tsAppCat][] = $tsobj->name;
+        //print $tsAppCat.",".$tsAppname;
+    }
+    $curNodeid = findNode($website,'website');
+    $webnode = node_load($curNodeid);
+    $webnode->field_technology_scan_raw['und'][0]['value'] = $tsout;
+    $cdnproviders = findCDNProvider("$website");
+    if(!empty($cdnproviders)){
+        $tags['CDN'] = array_values($cdnproviders);
+    }
+    foreach ($tags as $key => $tagarr) {
+        $i = 0;
+        foreach ($tagarr as $tkey => $tag) {
+            if(array_key_exists($key,$varCatassoc)){
+            //Check if term exists
+            if ($term = taxonomy_get_term_by_name($tag)) {
+                $terms_array = array_keys($term);
+
+                    $webnode->{$varCatassoc["$key"]}['und'][$i]['tid'] = $terms_array['0'];
+
+            } else {
+                //Create a new term and assign
+                $term = new STDClass();
+                $term->name = $tag;
+                $term->vid = 2;
+                if (!empty($term->name)) {
+                    taxonomy_term_save($term);
+                    $webnode->{$varCatassoc["$key"]}['und'][$i]['tid'] = $term->tid;
+                }
+            }
+
+             }
+            $i += 1;
+        }
+
+    }
+    //print_r($webnode);
+    node_object_prepare($webnode);
+    if ($webnode = node_submit($webnode)) {
+        node_save($webnode);
+    }
+}
+
+function recursive_array_search($needle,$haystack) {
+    foreach($haystack as $key=>$value) {
+        $current_key=$key;
+        if($needle===$value OR (is_array($value) && recursive_array_search($needle,$value) !== false)) {
+            return $current_key;
+        }
+    }
+    return false;
+}
