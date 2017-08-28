@@ -12,10 +12,10 @@ function getSites()
 {
     $websites = array();
 
-    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value LIKE '%acquisition.gov%' and b.nid=a.entity_id", array(':bundle' => 'website'));
-   //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id", array(':bundle' => 'website'));
+    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value LIKE '%abilityone.gov%' and b.nid=a.entity_id", array(':bundle' => 'website'));
+    //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id", array(':bundle' => 'website'));
 
-    //Final Query	
+    //Final Query
     //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id and b.nid not in (select c.field_website_id_nid from field_data_body a , node b, field_data_field_website_id c  where b.type='mobile_scan_information' and b.nid=a.entity_id and b.nid=c.entity_id and (UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - b.changed)/3600 >= 3)", array(':bundle' => 'website'));
     foreach ($query as $result) {
         $websites[$result->entity_id] = array("domain"=>$result->title,"url"=>$result->body_value);
@@ -336,8 +336,8 @@ function initiateSslLabsHostScan(){
  */
 
 function collectSslLabsDomInfo($domain){
-  include("../scripts/configSettings.php");
-  require_once '../tools/ssllabs/sslLabsApi.php';
+    include("../scripts/configSettings.php");
+    require_once '../tools/ssllabs/sslLabsApi.php';
     //Return API response as JSON string
     $api = new sslLabsApi();
     $apiinfo = $api->fetchHostInformation($domain,false,false,true,24);
@@ -345,7 +345,7 @@ function collectSslLabsDomInfo($domain){
     //Set content-type header for JSON output
     writeToLogs("Starting  SSLlabs scan for website $domain \n",$logFile);
 
-  $ip = getIPInfo($domain);
+    $ip = getIPInfo($domain);
     $sslapi  = $api->fetchHostInformationCached($domain,24,false);
     $sslapiobj = json_decode($sslapi);
     //Consider results only if status is READY and not In Progress
@@ -419,12 +419,12 @@ function getMobileAPIdata($domain){
     }
     //Call to Google Inights Speed API
     //$googMobilePerformApi = "https://www.googleapis.com/pagespeedonline/v2/runPagespeed?screenshot=true&key=AIzaSyDXNreglPI5GTgZRi2Le71DZUGQe2o77h4&strategy=mobile&url=".$domain."";
-        //if(!$googMobilePerformApiData = file_get_contents("$googMobilePerformApi")) {
-        if(!$googMobilePerformApiData = mobilePerformApidata("$http_domain","$googleApiKey")) {
-            $error = error_get_last();
-            writeToLogs("API request failed to $http_domain . Error was: " . $error['message'],$logFile);
-        }
-        else{
+    //if(!$googMobilePerformApiData = file_get_contents("$googMobilePerformApi")) {
+    if(!$googMobilePerformApiData = mobilePerformApidata("$http_domain","$googleApiKey")) {
+        $error = error_get_last();
+        writeToLogs("API request failed to $http_domain . Error was: " . $error['message'],$logFile);
+    }
+    else{
         //$mobileAPIdataArr['mobPerformFile'] = "sites/default/files/mobileperform_reports/" . $domain . ".json";
         //Get Json data and enter to a file
         //file_put_contents($mobileAPIdataArr['mobPerformFile'], $googMobilePerformApiData);
@@ -613,57 +613,57 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
         echo "found node $node->title $nodeId";
         $node->nid = $nodeId;
     }
-        $node->promote = 0;
-        $query = db_query("select * from  custom_pulse_https_data where domain=:domain", array(':domain' => $website['domain']));
-        foreach ($query as $result) {
-            $tags = array();
-            $node->field_https_status['und'][0]['value'] = $result->HTTPS;
-            $node->field_enforce_https['und'][0]['value'] = $result->EnfHTTPS;
-            $node->field_hsts_status['und'][0]['value'] = $result->HSTS;
-            $node->field_preload_status['und'][0]['value'] = $result->preloaded;
-            $node->field_redirect['und'][0]['value'] = $result->redirect;
-            if($result->redirect == 'Yes')
-                $node->field_redirect_url['und'][0]['value'] = getSiteRedirectDest($website['domain']);
-            $node->field_hsts_scan_time['und'][0]['value'] = (int)time();
-            $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
-            $node->field_website_id['und'][0]['nid'] = $siteid;
-            $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteid);
-            if($result->dap == 'Yes') {
-                $dapstatus = 1;
-                $dapscore = '100';
-            }
-            elseif($result->dap == 'No') {
-                $dapstatus = 0;
-                $dapscore = '0';
-            }
-            else {
-                $dapstatus = NULL;
-                $dapscore = NULL;
-            }
-            $node->field_dap_status['und'][0]['value'] = $dapstatus;
-            $node->field_dap_score['und'][0]['value'] = $dapscore;
-
-            $https_score = 0;
-            if($result->HTTPS == 'Yes') {
-                $https_score += 50;
-                $tags[] = 'HTTPS';
-            }
-            if($result->EnfHTTPS == 'Yes') {
-                $https_score += 10;
-                $tags[] = 'FORCE HTTPS';
-            }
-            if($result->HSTS == 'Yes') {
-                $https_score += 30;
-                $tags[] = 'HSTS';
-            }
-            if($result->preloaded == 'Yes') {
-                $https_score += 10;
-                $tags[] = 'PRELOAD';
-            }
-            if($result->dap == 'Yes')
-                $tags[] = 'DAP';
-            $node->field_https_score['und'][0]['value'] = round($https_score);
+    $node->promote = 0;
+    $query = db_query("select * from  custom_pulse_https_data where domain=:domain", array(':domain' => $website['domain']));
+    foreach ($query as $result) {
+        $tags = array();
+        $node->field_https_status['und'][0]['value'] = $result->HTTPS;
+        $node->field_enforce_https['und'][0]['value'] = $result->EnfHTTPS;
+        $node->field_hsts_status['und'][0]['value'] = $result->HSTS;
+        $node->field_preload_status['und'][0]['value'] = $result->preloaded;
+        $node->field_redirect['und'][0]['value'] = $result->redirect;
+        if($result->redirect == 'Yes')
+            $node->field_redirect_url['und'][0]['value'] = getSiteRedirectDest($website['domain']);
+        $node->field_hsts_scan_time['und'][0]['value'] = (int)time();
+        $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
+        $node->field_website_id['und'][0]['nid'] = $siteid;
+        $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteid);
+        if($result->dap == 'Yes') {
+            $dapstatus = 1;
+            $dapscore = '100';
         }
+        elseif($result->dap == 'No') {
+            $dapstatus = 0;
+            $dapscore = '0';
+        }
+        else {
+            $dapstatus = NULL;
+            $dapscore = NULL;
+        }
+        $node->field_dap_status['und'][0]['value'] = $dapstatus;
+        $node->field_dap_score['und'][0]['value'] = $dapscore;
+
+        $https_score = 0;
+        if($result->HTTPS == 'Yes') {
+            $https_score += 50;
+            $tags[] = 'HTTPS';
+        }
+        if($result->EnfHTTPS == 'Yes') {
+            $https_score += 10;
+            $tags[] = 'FORCE HTTPS';
+        }
+        if($result->HSTS == 'Yes') {
+            $https_score += 30;
+            $tags[] = 'HSTS';
+        }
+        if($result->preloaded == 'Yes') {
+            $https_score += 10;
+            $tags[] = 'PRELOAD';
+        }
+        if($result->dap == 'Yes')
+            $tags[] = 'DAP';
+        $node->field_https_score['und'][0]['value'] = round($https_score);
+    }
 
     //Save parent website node
     $wnode = node_load($siteid);
@@ -709,10 +709,10 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
         node_save($wnode);
     }
     //print_r($node);
-        node_object_prepare($node);
-        if ($node = node_submit($node)) {
-            node_save($node);
-        }
+    node_object_prepare($node);
+    if ($node = node_submit($node)) {
+        node_save($node);
+    }
 }
 
 /*
@@ -733,117 +733,117 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
         echo "found node $node->title $nodeId";
         $node->nid = $nodeId;
     }
-        $node->promote = 0;
-        $sslInfo = getSSLInfo($website['domain']);
-        $node->body['und'][0]['value'] = $sslInfo['raw'];
-        $node->field_dom_common_name['und'][0]['value'] = $sslInfo['cname'];
-        $node->field_subject_alternative_name['und'][0]['value'] = $sslInfo['sanname'];
-        //$node->field_domain_expiry['und'][0]['value'] = $sslInfo[''];
-        //$node->field_domain_contact_name['und'][0]['value'] = $sslInfo[''];
-        $node->field_ssl_certificate_valid_from['und'][0]['value'] = $sslInfo['certfromdate'];
-        $node->field_ssl_certificate_expiry['und'][0]['value'] = $sslInfo['certtodate'];
-        $node->field_ssl_certificate_status['und'][0]['value'] = $sslInfo['cert_status'];
-        $node->field_ssl_certificate_chain['und'][0]['value'] = $sslInfo['cert_verfied_chain'];
-        $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
-        $node->field_website_id['und'][0]['nid'] = $siteid;
-        $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteid);
-        $node->field_dom_scan_time['und'][0]['value'] = (int)time();
-        $node->field_ssl_v2_support['und'][0]['value'] = ($sslInfo['sslv2'] == '')?0:1;
-        $node->field_ssl_v3_support['und'][0]['value'] = ($sslInfo['sslv3'] == '')?0:1;
-        $node->field_tls_v1_support['und'][0]['value'] = ($sslInfo['tlsv1'] == '')?0:1;
-        $node->field_tls_v1_1_support['und'][0]['value'] = ($sslInfo['tlsv11'] == '')?0:1;
-        $node->field_tls_v1_2_support['und'][0]['value'] = ($sslInfo['tlsv12'] == '')?0:1;
-        $node->field_openssl_ccs_injection['und'][0]['value'] = ($sslInfo['opensslccs'] == '')?0:1;
-        $node->field_openssl_heartbleed['und'][0]['value'] = ($sslInfo['opensslhb'] == '')?0:1;
-        $node->field_downgrade_attacks['und'][0]['value'] = ($sslInfo['downgrade'] == '')?0:1;
-        $node->field_certificate_ocsp_stapling['und'][0]['value'] = ($sslInfo['ocspstaple'] == '')?0:1;
-        $node->field_http_public_hpkp['und'][0]['value'] = ($sslInfo['hpkp'] == '')?0:1;
-        $node->field_deflate_compression['und'][0]['value'] = ($sslInfo['deflatecomp'] == '')?0:1;
-        $node->field_session_reneg_client['und'][0]['value'] = ($sslInfo['sesre_client'] == '')?0:1;
-        $node->field_session_secure_renegotiati['und'][0]['value'] = ($sslInfo['sesre_client_secure'] == '')?0:1;
-        $node->field_certificate_issuer['und'][0]['value'] = $sslInfo['issuer'];
-        $node->field_certificate_signature_algo['und'][0]['value'] = $sslInfo['sigalgorithm'];
-        $node->field_certificate_public_key_alg['und'][0]['value'] = $sslInfo['pkeyalgorithm'];
-        $node->field_cert_host_name_valid['und'][0]['value'] = $sslInfo['host_validation'];
-        $node->field_certificate_provider['und'][0]['value'] = $sslInfo['cert_provider'];
-        $alexaInfo = getAlexaRank($website['domain']);
-        $node->field_alexa_raw_output['und'][0]['value'] = json_encode($alexaInfo['raw']);
-        $node->field_alexa_ranking['und'][0]['value'] = $alexaInfo['rank'];
-        $node->field_ip_address['und'][0]['value'] = implode(",",getIPInfo($website['domain']));
-        $node->field_dns_names['und'][0]['value'] = implode(",",getNSInfo($website['domain']));
-        $node->field_hosted_platform['und'][0]['value'] = $sslInfo['cert_provider'];
-        //$node->field_technology_stacks['und'][0]['value'] = $sslInfo['cert_provider'];
-        //$node->field_last_overall_rating['und'][0]['value'] = $sslInfo['cert_provider'];
+    $node->promote = 0;
+    $sslInfo = getSSLInfo($website['domain']);
+    $node->body['und'][0]['value'] = $sslInfo['raw'];
+    $node->field_dom_common_name['und'][0]['value'] = $sslInfo['cname'];
+    $node->field_subject_alternative_name['und'][0]['value'] = $sslInfo['sanname'];
+    //$node->field_domain_expiry['und'][0]['value'] = $sslInfo[''];
+    //$node->field_domain_contact_name['und'][0]['value'] = $sslInfo[''];
+    $node->field_ssl_certificate_valid_from['und'][0]['value'] = $sslInfo['certfromdate'];
+    $node->field_ssl_certificate_expiry['und'][0]['value'] = $sslInfo['certtodate'];
+    $node->field_ssl_certificate_status['und'][0]['value'] = $sslInfo['cert_status'];
+    $node->field_ssl_certificate_chain['und'][0]['value'] = $sslInfo['cert_verfied_chain'];
+    $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
+    $node->field_website_id['und'][0]['nid'] = $siteid;
+    $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteid);
+    $node->field_dom_scan_time['und'][0]['value'] = (int)time();
+    $node->field_ssl_v2_support['und'][0]['value'] = ($sslInfo['sslv2'] == '')?0:1;
+    $node->field_ssl_v3_support['und'][0]['value'] = ($sslInfo['sslv3'] == '')?0:1;
+    $node->field_tls_v1_support['und'][0]['value'] = ($sslInfo['tlsv1'] == '')?0:1;
+    $node->field_tls_v1_1_support['und'][0]['value'] = ($sslInfo['tlsv11'] == '')?0:1;
+    $node->field_tls_v1_2_support['und'][0]['value'] = ($sslInfo['tlsv12'] == '')?0:1;
+    $node->field_openssl_ccs_injection['und'][0]['value'] = ($sslInfo['opensslccs'] == '')?0:1;
+    $node->field_openssl_heartbleed['und'][0]['value'] = ($sslInfo['opensslhb'] == '')?0:1;
+    $node->field_downgrade_attacks['und'][0]['value'] = ($sslInfo['downgrade'] == '')?0:1;
+    $node->field_certificate_ocsp_stapling['und'][0]['value'] = ($sslInfo['ocspstaple'] == '')?0:1;
+    $node->field_http_public_hpkp['und'][0]['value'] = ($sslInfo['hpkp'] == '')?0:1;
+    $node->field_deflate_compression['und'][0]['value'] = ($sslInfo['deflatecomp'] == '')?0:1;
+    $node->field_session_reneg_client['und'][0]['value'] = ($sslInfo['sesre_client'] == '')?0:1;
+    $node->field_session_secure_renegotiati['und'][0]['value'] = ($sslInfo['sesre_client_secure'] == '')?0:1;
+    $node->field_certificate_issuer['und'][0]['value'] = $sslInfo['issuer'];
+    $node->field_certificate_signature_algo['und'][0]['value'] = $sslInfo['sigalgorithm'];
+    $node->field_certificate_public_key_alg['und'][0]['value'] = $sslInfo['pkeyalgorithm'];
+    $node->field_cert_host_name_valid['und'][0]['value'] = $sslInfo['host_validation'];
+    $node->field_certificate_provider['und'][0]['value'] = $sslInfo['cert_provider'];
+    $alexaInfo = getAlexaRank($website['domain']);
+    $node->field_alexa_raw_output['und'][0]['value'] = json_encode($alexaInfo['raw']);
+    $node->field_alexa_ranking['und'][0]['value'] = $alexaInfo['rank'];
+    $node->field_ip_address['und'][0]['value'] = implode(",",getIPInfo($website['domain']));
+    $node->field_dns_names['und'][0]['value'] = implode(",",getNSInfo($website['domain']));
+    $node->field_hosted_platform['und'][0]['value'] = $sslInfo['cert_provider'];
+    //$node->field_technology_stacks['und'][0]['value'] = $sslInfo['cert_provider'];
+    //$node->field_last_overall_rating['und'][0]['value'] = $sslInfo['cert_provider'];
 
-        $siInfo = getSiteInspectorOutput($website['domain']);
-        //Update Site Inspector details
+    $siInfo = getSiteInspectorOutput($website['domain']);
+    //Update Site Inspector details
 
-        $node->field_cdn_provider_name['und'][0]['value'] = $siInfo['cdn'];
-        $node->field_cloud_provider['und'][0]['value'] = $siInfo['cloud_provider'];
-        $node->field_uses_sitemap['und'][0]['value'] = ($siInfo['sitemap_xml'] == '')?0:1;
-        $node->field_uses_robots_txt['und'][0]['value'] = ($siInfo['robots_txt'] == '')?0:1;
-        $node->field_have_proper_404['und'][0]['value'] = ($siInfo['proper_404s'] == '')?0:1;
-        $node->field_content_security_policy['und'][0]['value'] = ($siInfo['content_security_policy'] == '')?0:1;
-        $node->field_click_jacking_protection['und'][0]['value'] = ($siInfo['click_jacking_protection'] == '')?0:1;
-        $node->field_xss_protection['und'][0]['value'] = ($siInfo['xss_protection'] == '')?0:1;
-        $node->field_uses_cookies['und'][0]['value'] = ($siInfo['cookie'] == '')?0:1;
-        $node->field_uses_secure_cookies['und'][0]['value'] = ($siInfo['secure_cookie'] == '')?0:1;
-        $node->field_site_inspector_raw_out['und'][0]['value'] = $siInfo['raw'];
-        $node->field_ipv6_compliance['und'][0]['value'] = ($siInfo['ipv6'] == '')?0:1;
-        $node->field_dnssec_compliance['und'][0]['value'] = ($siInfo['dnssec'] == '')?0:1;
+    $node->field_cdn_provider_name['und'][0]['value'] = $siInfo['cdn'];
+    $node->field_cloud_provider['und'][0]['value'] = $siInfo['cloud_provider'];
+    $node->field_uses_sitemap['und'][0]['value'] = ($siInfo['sitemap_xml'] == '')?0:1;
+    $node->field_uses_robots_txt['und'][0]['value'] = ($siInfo['robots_txt'] == '')?0:1;
+    $node->field_have_proper_404['und'][0]['value'] = ($siInfo['proper_404s'] == '')?0:1;
+    $node->field_content_security_policy['und'][0]['value'] = ($siInfo['content_security_policy'] == '')?0:1;
+    $node->field_click_jacking_protection['und'][0]['value'] = ($siInfo['click_jacking_protection'] == '')?0:1;
+    $node->field_xss_protection['und'][0]['value'] = ($siInfo['xss_protection'] == '')?0:1;
+    $node->field_uses_cookies['und'][0]['value'] = ($siInfo['cookie'] == '')?0:1;
+    $node->field_uses_secure_cookies['und'][0]['value'] = ($siInfo['secure_cookie'] == '')?0:1;
+    $node->field_site_inspector_raw_out['und'][0]['value'] = $siInfo['raw'];
+    $node->field_ipv6_compliance['und'][0]['value'] = ($siInfo['ipv6'] == '')?0:1;
+    $node->field_dnssec_compliance['und'][0]['value'] = ($siInfo['dnssec'] == '')?0:1;
 
-        //Get SSL labs scan ouput
-        //$ssllabsInfo = collectSslLabsDomInfo($website['domain']);
-        //$node->field_ssl_labs_score['und'][0]['value'] = $ssllabsInfo['grade'];
-        //$node->field_ssl_labs_raw_out['und'][0]['value'] = $ssllabsInfo['raw'];
-        //$sslLabsFile = file_save_data($ssllabsInfo['reportcontent'],file_default_scheme().'://ssl_labs_reports/'.$website["domain"].'.json', FILE_EXISTS_REPLACE);
-        //$sslLabsFileArr = array('fid' => $sslLabsFile->fid,'display' => 1, 'description' => '');
-        //$node->field_ssl_labs_report['und'][0] = $sslLabsFileArr;
+    //Get SSL labs scan ouput
+    //$ssllabsInfo = collectSslLabsDomInfo($website['domain']);
+    //$node->field_ssl_labs_score['und'][0]['value'] = $ssllabsInfo['grade'];
+    //$node->field_ssl_labs_raw_out['und'][0]['value'] = $ssllabsInfo['raw'];
+    //$sslLabsFile = file_save_data($ssllabsInfo['reportcontent'],file_default_scheme().'://ssl_labs_reports/'.$website["domain"].'.json', FILE_EXISTS_REPLACE);
+    //$sslLabsFileArr = array('fid' => $sslLabsFile->fid,'display' => 1, 'description' => '');
+    //$node->field_ssl_labs_report['und'][0] = $sslLabsFileArr;
 
-        $sslScore = 0;
-        //Calculate SSL Score
-        if($sslInfo['sslv2'] == '0')
-            $sslScore += 20;
-        else
-            $tags[] = 'SSLV2';
-        if($sslInfo['sslv3'] == '0')
-            $sslScore += 15;
-        else
-            $tags[] = 'SSLV3';
-        if($sslInfo['tlsv1'] == '0')
-            $sslScore += 5;
-        else
-            $tags[] = 'TLSV1';
-        if($sslInfo['tlsv11'] == '1') {
-            $sslScore += 15;
-            $tags[] = 'TLSV1.1';
-        }
-        if($sslInfo['tlsv12'] == '1') {
-            $sslScore += 15;
-            $tags[] = 'TLSV1.2';
-        }
-        if($sslInfo['ipv6'] == '1') {
-            $tags[] = 'IPV6';
-        }
-        if($sslInfo['dnssec'] == '1') {
-            $tags[] = 'DNSSEC';
-        }
-        if($sslInfo['opensslccs'] == '0')
-            $sslScore += 10;
-        else
-            $tags[] = 'VULNERABLE';
-        if($sslInfo['opensslhb'] == '0')
-            $sslScore += 10;
-        else
-            $tags[] = 'VULNERABLE';
-        if($sslInfo['downgrade'] == '0')
-            $sslScore += 5;
-        else
-            $tags[] = 'VULNERABLE';
-        if($sslInfo['hpkp'] == '1')
-            $sslScore += 5;
-        //Assign node Value
-        $node->field_ssl_score['und'][0]['value'] = round($sslScore);
+    $sslScore = 0;
+    //Calculate SSL Score
+    if($sslInfo['sslv2'] == '0')
+        $sslScore += 20;
+    else
+        $tags[] = 'SSLV2';
+    if($sslInfo['sslv3'] == '0')
+        $sslScore += 15;
+    else
+        $tags[] = 'SSLV3';
+    if($sslInfo['tlsv1'] == '0')
+        $sslScore += 5;
+    else
+        $tags[] = 'TLSV1';
+    if($sslInfo['tlsv11'] == '1') {
+        $sslScore += 15;
+        $tags[] = 'TLSV1.1';
+    }
+    if($sslInfo['tlsv12'] == '1') {
+        $sslScore += 15;
+        $tags[] = 'TLSV1.2';
+    }
+    if($sslInfo['ipv6'] == '1') {
+        $tags[] = 'IPV6';
+    }
+    if($sslInfo['dnssec'] == '1') {
+        $tags[] = 'DNSSEC';
+    }
+    if($sslInfo['opensslccs'] == '0')
+        $sslScore += 10;
+    else
+        $tags[] = 'VULNERABLE';
+    if($sslInfo['opensslhb'] == '0')
+        $sslScore += 10;
+    else
+        $tags[] = 'VULNERABLE';
+    if($sslInfo['downgrade'] == '0')
+        $sslScore += 5;
+    else
+        $tags[] = 'VULNERABLE';
+    if($sslInfo['hpkp'] == '1')
+        $sslScore += 5;
+    //Assign node Value
+    $node->field_ssl_score['und'][0]['value'] = round($sslScore);
 
     //Save parent website node
     $wnode = node_load($siteid);
@@ -887,12 +887,12 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
         node_save($wnode);
     }
 
-        node_object_prepare($node);
-        if ($node = node_submit($node)) {
-            node_save($node);
-        }
-        $end = microtime(true);
-        print "Domain SSL scan for ".$website['domain']." took " . ($end - $start) . ' seconds';
+    node_object_prepare($node);
+    if ($node = node_submit($node)) {
+        node_save($node);
+    }
+    $end = microtime(true);
+    print "Domain SSL scan for ".$website['domain']." took " . ($end - $start) . ' seconds';
 }
 
 /*
@@ -914,32 +914,32 @@ function updateMobileScanInfo($siteid,$webscanId,$website){
         echo "found node $node->title $nodeId";
         $node->nid = $nodeId;
     }
-        $node->promote = 0;
-        $mobInfo = getMobileAPIdata($website['domain']);
-        //print_r($mobInfo);
-        $node->body['und'][0]['value'] = '';
-        $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
-        $node->field_website_id['und'][0]['nid'] = $siteid;
-        $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteid);
-        $node->field_mobile_usability_score['und'][0]['value'] = round($mobInfo['mobFriendlyScore']);
-        $node->field_mobile_usability_result['und'][0]['value'] = ($mobInfo['mobFriendlyResult'] == 'true')?1:0;
-        $node->field_mobile_performance_score['und'][0]['value'] = round($mobInfo['mPScore']);
-        $node->field_mobile_usability_report['und'][0] = $mobInfo['mobFriendlyFile'];
-        $node->field_mobile_performance_report['und'][0] = $mobInfo['mobPerformFile'];
-        $node->field_mobile_websnapshot['und'][0] = $mobInfo['mobSnapshotFile'];
-        $node->field_html_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['htmlResponseBytes'];
-        $node->field_text_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['textResponseBytes'];
-        $node->field_css_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['cssResponseBytes'];
-        $node->field_image_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['imageResponseBytes'];
-        $node->field_js_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['javascriptResponseBytes'];
-        $node->field_other_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['otherResponseBytes'];
-        $node->field_number_of_js_resources['und'][0]['value'] = $mobInfo['mPStats']['numberJsResources'];
-        $node->field_number_of_css_resources['und'][0]['value'] = $mobInfo['mPStats']['numberCssResources'];
-        $node->field_number_of_resources['und'][0]['value'] = $mobInfo['mPStats']['numberResources'];
-        $node->field_number_of_hosts['und'][0]['value'] = $mobInfo['mPStats']['numberHosts'];
-        $node->field_total_request_bytes['und'][0]['value'] = $mobInfo['mPStats']['totalRequestBytes'];
-        $node->field_number_of_static_resources['und'][0]['value'] = $mobInfo['mPStats']['numberStaticResources'];
-        $node->field_mobile_overall_score['und'][0]['value'] = round(($mobInfo['mobFriendlyScore']+$mobInfo['mPScore'])/2);
+    $node->promote = 0;
+    $mobInfo = getMobileAPIdata($website['domain']);
+    //print_r($mobInfo);
+    $node->body['und'][0]['value'] = '';
+    $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
+    $node->field_website_id['und'][0]['nid'] = $siteid;
+    $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteid);
+    $node->field_mobile_usability_score['und'][0]['value'] = round($mobInfo['mobFriendlyScore']);
+    $node->field_mobile_usability_result['und'][0]['value'] = ($mobInfo['mobFriendlyResult'] == 'true')?1:0;
+    $node->field_mobile_performance_score['und'][0]['value'] = round($mobInfo['mPScore']);
+    $node->field_mobile_usability_report['und'][0] = $mobInfo['mobFriendlyFile'];
+    $node->field_mobile_performance_report['und'][0] = $mobInfo['mobPerformFile'];
+    $node->field_mobile_websnapshot['und'][0] = $mobInfo['mobSnapshotFile'];
+    $node->field_html_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['htmlResponseBytes'];
+    $node->field_text_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['textResponseBytes'];
+    $node->field_css_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['cssResponseBytes'];
+    $node->field_image_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['imageResponseBytes'];
+    $node->field_js_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['javascriptResponseBytes'];
+    $node->field_other_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['otherResponseBytes'];
+    $node->field_number_of_js_resources['und'][0]['value'] = $mobInfo['mPStats']['numberJsResources'];
+    $node->field_number_of_css_resources['und'][0]['value'] = $mobInfo['mPStats']['numberCssResources'];
+    $node->field_number_of_resources['und'][0]['value'] = $mobInfo['mPStats']['numberResources'];
+    $node->field_number_of_hosts['und'][0]['value'] = $mobInfo['mPStats']['numberHosts'];
+    $node->field_total_request_bytes['und'][0]['value'] = $mobInfo['mPStats']['totalRequestBytes'];
+    $node->field_number_of_static_resources['und'][0]['value'] = $mobInfo['mPStats']['numberStaticResources'];
+    $node->field_mobile_overall_score['und'][0]['value'] = round(($mobInfo['mobFriendlyScore']+$mobInfo['mPScore'])/2);
 
     if($mobInfo['mobFriendlyResult'] == 'true'){
         $tags[] = "MOBILE";
@@ -988,12 +988,12 @@ function updateMobileScanInfo($siteid,$webscanId,$website){
         node_save($wnode);
     }
 
-        node_object_prepare($node);
-        if ($node = node_submit($node)) {
-            node_save($node);
-        }
-        $end = microtime(true);
-        print "Mobile scan for ".$website['domain']." took " . ($end - $start) . ' seconds';
+    node_object_prepare($node);
+    if ($node = node_submit($node)) {
+        node_save($node);
+    }
+    $end = microtime(true);
+    print "Mobile scan for ".$website['domain']." took " . ($end - $start) . ' seconds';
 }
 
 /*
@@ -1022,7 +1022,7 @@ function updateSiteScanInfo($siteid,$webscanId,$website){
     $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
     $node->field_website_id['und'][0]['nid'] = $siteid;
     $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteid);
-    $node->field_site_speed_score['und'][0]['value'] = round($siteInfo['siteFriendlyScore']);
+    $node->field_site_speed_score['und'][0]['value'] = round($siteInfo['mPScore']);
     $node->field_site_speed_report_location['und'][0] = $siteInfo['sitePerformFile'];
     $node->field_website_desktop_snapshot['und'][0] = $siteInfo['siteSnapshotFile'];
     $node->field_html_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['htmlResponseBytes'];
@@ -1090,8 +1090,6 @@ function getSitePerformanceAPIdata($domain){
             $siteSpeedAPIdataArr['siteSnapshotFile'] = array('fid' => $snapshotfile->fid,'display' => 1, 'description' => '');
         }
         $siteSpeedAPIdataArr['mPScore'] = $jsonMParr['ruleGroups']['SPEED']['score'];
-        if(($siteSpeedAPIdataArr['siteFriendlyScore'] == '') || ($siteSpeedAPIdataArr['siteFriendlyScore'] == '0'))
-            $siteSpeedAPIdataArr['siteFriendlyScore'] = $jsonMParr['ruleGroups']['USABILITY']['score'];
         $siteSpeedAPIdataArr['mPStats'] = $jsonMParr['pageStats'];
 
 
@@ -1199,7 +1197,7 @@ function updatePulseAgencyInfo($csvfile){
             }
             $i++;
         }
-        }
+    }
 
 }
 
@@ -1217,14 +1215,14 @@ function updatePulseWebsiteInfo($csvfile){
         print "$csval[0] \n";
         //if((($nodeId = findNode($csval[0],'website')) == FALSE) && ($csval[0] != '')){
         if(trim($csval[0]) != ''){
-        $node = new stdClass();  // Create a new node object
-        $node->type = 'website';  // Content type
-        $node->language = LANGUAGE_NONE;  // Or e.g. 'en' if locale is enabled
+            $node = new stdClass();  // Create a new node object
+            $node->type = 'website';  // Content type
+            $node->language = LANGUAGE_NONE;  // Or e.g. 'en' if locale is enabled
 
-        if(($nodeId = findNode($csval[0],'website')) != FALSE){
-            echo "Found node ".$node->title." $nodeId";
-            $node->nid = $nodeId;
-        }
+            if(($nodeId = findNode($csval[0],'website')) != FALSE){
+                echo "Found node ".$node->title." $nodeId";
+                $node->nid = $nodeId;
+            }
 
             $node->title = $csval[0];
 
@@ -1257,7 +1255,7 @@ function updatePulseWebsiteInfo($csvfile){
 
             $i++;
 
-    }
+        }
     }
 
 }
@@ -1456,24 +1454,24 @@ function updateTechStackInfo($website){
         $i = 0;
         foreach ($tagarr as $tkey => $tag) {
             if(array_key_exists($key,$varCatassoc)){
-            //Check if term exists
-            if ($term = taxonomy_get_term_by_name($tag)) {
-                $terms_array = array_keys($term);
+                //Check if term exists
+                if ($term = taxonomy_get_term_by_name($tag)) {
+                    $terms_array = array_keys($term);
 
                     $webnode->{$varCatassoc["$key"]}['und'][$i]['tid'] = $terms_array['0'];
 
-            } else {
-                //Create a new term and assign
-                $term = new STDClass();
-                $term->name = $tag;
-                $term->vid = 2;
-                if (!empty($term->name)) {
-                    taxonomy_term_save($term);
-                    $webnode->{$varCatassoc["$key"]}['und'][$i]['tid'] = $term->tid;
+                } else {
+                    //Create a new term and assign
+                    $term = new STDClass();
+                    $term->name = $tag;
+                    $term->vid = 2;
+                    if (!empty($term->name)) {
+                        taxonomy_term_save($term);
+                        $webnode->{$varCatassoc["$key"]}['und'][$i]['tid'] = $term->tid;
+                    }
                 }
-            }
 
-             }
+            }
             $i += 1;
         }
 
