@@ -12,8 +12,8 @@ function getSites()
 {
     $websites = array();
 
-    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value LIKE '%abilityone.gov%' and b.nid=a.entity_id", array(':bundle' => 'website'));
-    //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id", array(':bundle' => 'website'));
+ $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value LIKE '%obamalibrary.gov%' and b.nid=a.entity_id", array(':bundle' => 'website'));
+   // $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id", array(':bundle' => 'website'));
 
     //Final Query
     //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id and b.nid not in (select c.field_website_id_nid from field_data_body a , node b, field_data_field_website_id c  where b.type='mobile_scan_information' and b.nid=a.entity_id and b.nid=c.entity_id and (UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - b.changed)/3600 >= 3)", array(':bundle' => 'website'));
@@ -704,15 +704,20 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
         }
 
     }
-    node_object_prepare($wnode);
-    if ($wnode = node_submit($wnode)) {
-        node_save($wnode);
-    }
+
     //print_r($node);
     node_object_prepare($node);
     if ($node = node_submit($node)) {
         node_save($node);
     }
+
+    $wnode->field_https_scan_node['und'][0]['target_id'] = $node->nid;
+
+    node_object_prepare($wnode);
+    if ($wnode = node_submit($wnode)) {
+        node_save($wnode);
+    }
+
 }
 
 /*
@@ -800,6 +805,9 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
     //$sslLabsFileArr = array('fid' => $sslLabsFile->fid,'display' => 1, 'description' => '');
     //$node->field_ssl_labs_report['und'][0] = $sslLabsFileArr;
 
+//Save parent website node
+    $wnode = node_load($siteid);
+
     $sslScore = 0;
     //Calculate SSL Score
     if($sslInfo['sslv2'] == '0')
@@ -822,12 +830,20 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
         $sslScore += 15;
         $tags[] = 'TLSV1.2';
     }
-    if($sslInfo['ipv6'] == '1') {
+    if($siInfo['ipv6'] == '1') {
         $tags[] = 'IPV6';
+        $wnode->field_ipv6_score['und'][0]['value'] = '100';
     }
-    if($sslInfo['dnssec'] == '1') {
+    else
+        $wnode->field_ipv6_score['und'][0]['value'] = '0';
+
+    if($siInfo['dnssec'] == '1') {
         $tags[] = 'DNSSEC';
+        $wnode->field_dnssec_score['und'][0]['value'] = '100';
     }
+    else
+        $wnode->field_dnssec_score['und'][0]['value'] = '0';
+
     if($sslInfo['opensslccs'] == '0')
         $sslScore += 10;
     else
@@ -845,9 +861,7 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
     //Assign node Value
     $node->field_ssl_score['und'][0]['value'] = round($sslScore);
 
-    //Save parent website node
-    $wnode = node_load($siteid);
-    $wnode->field_ssl_score['und'][0]['value'] = round($sslScore);
+        $wnode->field_ssl_score['und'][0]['value'] = round($sslScore);
 
     //Save Tags to parent website
     if(!empty($tags)) {
@@ -882,15 +896,19 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
         }
 
     }
-    node_object_prepare($wnode);
-    if ($wnode = node_submit($wnode)) {
-        node_save($wnode);
-    }
 
     node_object_prepare($node);
     if ($node = node_submit($node)) {
         node_save($node);
     }
+
+    $wnode->field_domain_scan_node['und'][0]['target_id'] = $node->nid;
+    node_object_prepare($wnode);
+    if ($wnode = node_submit($wnode)) {
+        node_save($wnode);
+    }
+
+
     $end = microtime(true);
     print "Domain SSL scan for ".$website['domain']." took " . ($end - $start) . ' seconds';
 }
@@ -982,16 +1000,19 @@ function updateMobileScanInfo($siteid,$webscanId,$website){
             $i += 1;
         }
     }
+    node_object_prepare($node);
+    if ($node = node_submit($node)) {
+        node_save($node);
+    }
+
     //Update Parent Website Node
+    $wnode->field_mobile_scan_node['und'][0]['target_id'] = $node->nid;
     node_object_prepare($wnode);
     if ($wnode = node_submit($wnode)) {
         node_save($wnode);
     }
 
-    node_object_prepare($node);
-    if ($node = node_submit($node)) {
-        node_save($node);
-    }
+
     $end = microtime(true);
     print "Mobile scan for ".$website['domain']." took " . ($end - $start) . ' seconds';
 }
@@ -1044,16 +1065,20 @@ function updateSiteScanInfo($siteid,$webscanId,$website){
     $wnode->field_site_speed_score['und'][0]['value'] = round($siteInfo['mPScore']);
 
 
-    //Update Parent Website Node
-    node_object_prepare($wnode);
-    if ($wnode = node_submit($wnode)) {
-        node_save($wnode);
-    }
-
     node_object_prepare($node);
     if ($node = node_submit($node)) {
         node_save($node);
     }
+
+    //Update Parent Website Node
+    $wnode->field_site_speed_scan_node['und'][0]['target_id'] = $node->nid;
+    node_object_prepare($wnode);
+
+    if ($wnode = node_submit($wnode)) {
+        node_save($wnode);
+    }
+
+
     $end = microtime(true);
     print "Site speed scan for ".$website['domain']." took " . ($end - $start) . ' seconds';
 }
@@ -1430,18 +1455,20 @@ function updateTechStackInfo($website){
     $tsout = shell_exec("export npm_config_loglevel=silent;cd ../tools/wappalyzer/;$command");
     $tsobj = json_decode($tsout);
     $tags = array();
+    $k = 1;
     foreach($tsobj->applications as $tskey=>$tsobj){
         $tsAppname = $tsobj->name;
         $tsAppCat = $tsobj->categories[0];
-        $tags[$tsAppCat] = array();
+        //$tags[$tsAppCat] = array();
         //if version is present append version to technology
-        if(trim($tsobj->version) != '')
-            $tsAppname .= "_".$tsobj->version;
-        if(!in_array($tsAppname,$tags[$tsAppCat]))
-            $tags[$tsAppCat][] = $tsAppname;
-        if(!in_array($tsobj->name,$tags[$tsAppCat]))
+
+        if(trim($tsobj->version) != '') {
+            $tsAppname .= "_" . $tsobj->version;
+            //if (!in_array($tsAppname, $tags[$tsAppCat]))
+                $tags[$tsAppCat][] = $tsAppname;
+        }
+
             $tags[$tsAppCat][] = $tsobj->name;
-        //print $tsAppCat.",".$tsAppname;
     }
     $curNodeid = findNode($website,'website');
     $webnode = node_load($curNodeid);
@@ -1450,6 +1477,7 @@ function updateTechStackInfo($website){
     if(!empty($cdnproviders)){
         $tags['CDN'] = array_values($cdnproviders);
     }
+    //print_r($tags);
     foreach ($tags as $key => $tagarr) {
         $i = 0;
         foreach ($tagarr as $tkey => $tag) {
@@ -1476,7 +1504,7 @@ function updateTechStackInfo($website){
         }
 
     }
-    //print_r($webnode);
+    //print_r($webnode->field_analytics_applications);
     node_object_prepare($webnode);
     if ($webnode = node_submit($webnode)) {
         node_save($webnode);

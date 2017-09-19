@@ -14,14 +14,14 @@ function dotgov_common_siteAsocScanids($websiteid){
 }
 
 /**
- * Implements hook_action_info().
+ * Get taxonomy terms associated to ().
  */
 function dotgov_common_getNodeTaxonomy($nid)
 {
     $terms = array();
-    $results = db_query('SELECT b.tid tid ,b.name name  FROM {taxonomy_index} a, {taxonomy_term_data b}  WHERE a.tid=b.tid and a.nid=:nid', array(':nid' => $nid));
+    $results = db_query("SELECT  a.name as taxKey,a.tid as taxId, b.name as taxVoc FROM    taxonomy_term_data a, taxonomy_vocabulary b, taxonomy_index c WHERE   c.tid = a.tid AND     a.vid = b.vid AND     c.nid =:nid and b.name='website tags'", array(':nid' => $nid));
     foreach ($results as $result) {
-        $terms[$result->tid] = $result->name;
+        $terms[$result->taxId] = $result->taxKey;
     }
   return $terms;
 
@@ -63,4 +63,98 @@ $vulnerable_fields = array("bm_field_openssl_ccs_injection","bm_field_openssl_he
                         }
 
 
+}
+
+/*
+ * Fast Function to get the technology tags associated to a node
+ */
+
+function dotgov_commmon_get_techTerms($nid){
+    $terms = array();
+    $results = db_query("SELECT  a.name as taxKey,a.tid as taxId, b.name as taxVoc FROM    taxonomy_term_data a, taxonomy_vocabulary b, taxonomy_index c WHERE   c.tid = a.tid AND     a.vid = b.vid AND     c.nid =:nid and b.name='technology'", array(':nid' => $nid));
+    foreach ($results as $result) {
+        $terms[$result->taxKey] = $result->taxVoc;
+    }
+    $techInfo = dotgov_common_loadJson($terms);
+    return $techInfo;
+
+}
+
+/*
+ * Get Apps Json Data
+ */
+function dotgov_common_loadJson($terms){
+    $string = file_get_contents(drupal_get_path('module', 'dotgov_common')."/apps.json");
+    $json_a = json_decode($string, true);
+
+    $techstack = array();
+    //print_r($terms);
+    foreach($terms as $key=>$value){
+        $version = '';
+        if (strpos($key, "_") !== false) {
+            $spstring = explode("_",$key);
+            $key = $spstring[0];
+            $version = $spstring[1];
+        }
+        $techstack[$key] = $json_a['apps'][$key];
+        $cat = $json_a['apps'][$key]['cats'][0];
+        $catg = $json_a['categories'][$cat];
+        $techstack[$key]['category'] = $catg;
+        if($version != '')
+            $techstack[$key]['appversion'] = $version;
+    }
+    //print_r($techstack);
+    return $techstack;
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function dotgov_common_block_info() {
+    $blocks['technology_stack'] = array(
+        // The name that will appear in the block list.
+        'info' => t('Technology Information'),
+        // Default setting.
+        'cache' => DRUPAL_CACHE_PER_ROLE,
+        'status' => TRUE,
+        'region' => 'content'
+    );
+    return $blocks;
+}
+/*
+ * Implements Hook Block view
+ */
+function dotgov_common_block_view($delta = '')
+{
+    switch ($delta) {
+        case 'technology_stack':
+            $block['subject'] = t('Technology Information');
+            if (user_access('access content')) {
+                // Retrieve and process data here.
+                if(arg(1) != '') {
+                    $websiteNodeid = arg(1);
+                    $block['content'] = dotgov_commmon_getTechStackInfo($websiteNodeid);
+                }
+                else{
+                    $block['content'] = "Sorry No Data to display";
+                }
+            }
+    }
+    return $block;
+}
+
+/*
+ *
+ * Get technology stack information for a single domain
+ */
+function dotgov_commmon_getTechStackInfo($nid){
+    $techterms = dotgov_commmon_get_techTerms($nid);
+    $output = "<div id='techstack'>";
+    foreach($techterms as $techkey=>$techval) {
+        $output .=  "<div id='techcategory' class='techcategory'>".$techval['category']['name']."</div>";
+        $output .= "<a id='app-button' class='app-button'><img class='app-icon' src='/".drupal_get_path('module', 'dotgov_common')."/images/icons/".$techval['icon']."'>$techkey ".$techval['appversion']."</a>";
+    }
+    $output .= "</div>";
+
+    return $output;
 }

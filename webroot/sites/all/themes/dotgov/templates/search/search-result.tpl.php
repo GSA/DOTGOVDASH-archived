@@ -64,7 +64,11 @@
  * @ingroup themeable
  */
     $websiteurl = "/website/".$result['node']->entity_id."/information";	
-if(arg(1) == "website_search") {
+//if(arg(1) == "website_search") {
+if($result['node']->bundle == 'website'){
+    $techterms = dotgov_commmon_get_techTerms($result['node']->entity_id);
+    //print "<pre>";
+    //print_r($techterms);
     $webScanIds = dotgov_common_siteAsocScanids($result['node']->entity_id);
     $taxoTerms = dotgov_common_getNodeTaxonomy($result['node']->entity_id);
     $httpnode = node_load($webScanIds['domain_scan_information']);
@@ -112,11 +116,21 @@ if(arg(1) == "website_search") {
                  }
              ?>
              </ul>
+             <div id='techstack'>
+             <?php
+//             print "<pre>";
+//             print_r($techterms);
+             foreach($techterms as $techkey=>$techval) {
+                 print "<div id='techcategory' class='techcategory'>".$techval['category']['name']."</div>";
+                 print "<a id='app-button' class='app-button'><img class='app-icon' src='/".drupal_get_path('module', 'dotgov_common')."/images/icons/".$techval['icon']."'>$techkey ".$techval['appversion']."</a>";
+             }
+             ?>
+            </div>
          </div>
     <?php
 }
 else {
-if($result['node']->bundle != 'website')
+//if($result['node']->bundle != 'website')
 	$websiteurl = $url;
     ?>
     <li class="<?php print $classes; ?>"<?php print $attributes; ?>>

@@ -12,7 +12,7 @@ writeToLogs("Starting Scan",$logFile);
 $scanId = startScan();
 //Below are the full scans run for all websites at once. DAP and HTTPS info are collected from pulse site at once for perforamnce optimization
 writeToLogs("Collecting HTTPS and DAP data from Pulse",$logFile);
-getPulseData();
+//getPulseData();
 //Below are scans that are run individually for each site.
 $listWebsites = getSites();
 foreach($listWebsites as $key=>$website){
@@ -21,13 +21,13 @@ foreach($listWebsites as $key=>$website){
     writeToLogs("Running Technology Scan for site ".$website['domain'],$logFile);
     updateTechStackInfo($website['domain']);
     //Update HTTPS and DAP info in Drupal
-    writeToLogs("\nStart HTTPS and DAP Scan ".$website['domain'],$logFile);
+//    writeToLogs("\nStart HTTPS and DAP Scan ".$website['domain'],$logFile);
     updateHttpsDAPInfo($key,$scanId,$website);
-    writeToLogs("\nStart Domain and SSL Scan for ".$website['domain'],$logFile);
+//    writeToLogs("\nStart Domain and SSL Scan for ".$website['domain'],$logFile);
     updateDomainSSLInfo($key,$scanId,$website);
-    writeToLogs("\nStart Mobile Scan for ".$website['domain'],$logFile);
+//    writeToLogs("\nStart Mobile Scan for ".$website['domain'],$logFile);
     updateMobileScanInfo($key,$scanId,$website);
-    writeToLogs("\nStart Site Speed Scan for ".$website['domain'],$logFile);
+//    writeToLogs("\nStart Site Speed Scan for ".$website['domain'],$logFile);
     updateSiteScanInfo($key,$scanId,$website);
 
     //TODO

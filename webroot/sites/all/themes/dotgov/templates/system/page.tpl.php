@@ -87,8 +87,9 @@
 <div class="<?php print $container_class; ?>">
     <div class="navbar-header">
       <?php if ($logo): ?>
-        <a class="logo navbar-btn pull-left" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
-          <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
+        <a class="logo navbar-btn pull-left" href="<?php print $front_page; ?>" title="Digital Dashboard.gov - Home">
+<h1 class="site-logo">Digital Dashboard</h1>
+          <img src="<?php print $logo; ?>" alt="Digital Dashboard.gov - Home" />
         </a>
       <?php endif; ?>
 
@@ -129,11 +130,11 @@
 
 
 <div class="full" style="background-image:url('/sites/all/themes/dotgov/images/back-image-dotgov.png');height:350px;background-position: center center; background-repeat: no-repeat;">
-     <div style="padding: 0px 60px; max-width: 1000px; float: right">
-                        <h1  class="srt-blue" style="font-weight: 600; border-bottom: 0.5px solid #112e51; padding-bottom: 10px">.Gov Dashboard</h1>
-                        <h3  class="srt-blue" style="padding-top: 20px">
-                        .Gov Dashboard - a comprehensive suite of analytics for the U.S. Federal government to help agencies understand their .gov footprint and compliance with federal policies
-			</h3>
+     <div style="max-width: 1000px; float: right" class="container-fluid">
+                        <h1  class="srt-blue" style="border-bottom: 0.5px solid #112e51; padding-bottom: 10px">DIGITALDASHBOARD.GOV</h1>
+                        <h2  class="srt-blue" style="padding-top: 20px">
+                        DIGITALDASHBOARD.GOV - a suite of analytics for the U.S. Federal government to help agencies understand their .gov footprint and compliance with federal policies
+			</h2>
                     </div>
     
 </div>
