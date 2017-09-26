@@ -60,9 +60,9 @@ $scanpath = drupal_get_path_alias("node/".$scanids['domain_scan_information']);
 $chartdata= $row->_field_data['nid']['entity']->field_ipv6_compliance['und'][0]['value'];
 //dsm ($chartdata);
 if ($chartdata == 0){
-    $chartcolor = '#ff3029';
+    $chartcolor = '#ac0600';
 }elseif ($chartdata > 0){
-    $chartcolor = '#44a560';
+    $chartcolor = '#29643a';
     $chartdata = 100;
 }
 ?>

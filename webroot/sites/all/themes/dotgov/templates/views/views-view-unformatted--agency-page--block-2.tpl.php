@@ -7,7 +7,7 @@
  * @ingroup views_templates
  */
 print_r($view->style_plugin->rendered_fields);
-$chartData = "[\"Scan Criteria\", \"Overall Compliance Report\", { role: \"style\" } ],";
+$chartData = "[\"Scan Criteria\", \"Overall Report\", { role: \"style\" } ],";
 $chartColors = array('#2e8540', '#94bfa2', '#4773aa', '#8ba6ca', '#00a6d2','#205493');
 $chartCrit = array("field_ssl_score"=>"SSL","field_dap_score"=>"DAP","field_https_score"=>"HTTPS","field_mobile_overall_score"=>"MOBILE","field_mobile_performance_score"=>"MOBILE PERFORMANCE","field_mobile_usability_score"=>"MOBILE FRIENDLY");
 $i = 0;

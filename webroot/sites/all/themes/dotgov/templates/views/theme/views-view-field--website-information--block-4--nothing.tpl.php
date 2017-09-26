@@ -81,12 +81,12 @@ elseif($row->_field_data['nid']['entity']->field_dap_status['und'][0]['value'] =
 $chartdata= $row->_field_data['nid']['entity']->field_dap_score['und'][0]['value'];
 //dsm($chardata);
 if ($chartdata <= 50){
-    $chartcolor = '#ff3029';
+    $chartcolor = '#ac0600';
 }elseif($chartdata>=50 and $chartdata<=75){
-    $chartcolor='#ffb900';
+    $chartcolor='#654f00';
 }
 else{
-    $chartcolor='#44a560';
+    $chartcolor='#29643a';
 }
 ?>
 <script type="text/javascript">

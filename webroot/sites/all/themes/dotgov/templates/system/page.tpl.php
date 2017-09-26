@@ -84,7 +84,9 @@
 				</div>
 			</div>
 		</div>
-<div class="<?php print $container_class; ?>">
+  <div class="<?php print $container_class; ?>">
+    <div class="row">
+      <div class="col-sm-7">
     <div class="navbar-header">
       <?php if ($logo): ?>
         <a class="logo navbar-btn pull-left" href="<?php print $front_page; ?>" title="Digital Dashboard.gov - Home">
@@ -99,7 +101,25 @@
 
   
     </div>
+
+      </div>
+      <div class="col-sm-5">
+
+    <div class="header_block row">
+      <div class="col-xs-12 pull-right">
+      <?php if (!empty($secondary_nav)): ?>
+        <?php print render($secondary_nav); ?>
+      <?php endif; ?>
+      </div>
+      <div class="col-xs-12">
+      <?php if (!empty($page['navigation'])): ?>
+        <?php print render($page['navigation']); ?>
+      <?php endif; ?>
+      </div>
     </div>
+      </div>
+    </div>
+</div>
 <header id="navbar" role="banner" class="<?php print $navbar_classes; ?>">
   
         <?php if (!empty($primary_nav) || !empty($secondary_nav) || !empty($page['navigation'])): ?>
@@ -116,27 +136,21 @@
           <?php if (!empty($primary_nav)): ?>
             <?php print render($primary_nav); ?>
           <?php endif; ?>
-          <?php if (!empty($secondary_nav)): ?>
-            <?php print render($secondary_nav); ?>
-          <?php endif; ?>
-          <?php if (!empty($page['navigation'])): ?>
-            <?php print render($page['navigation']); ?>
-          <?php endif; ?>
-        </nav>
+                  </nav>
       </div>
     <?php endif; ?>
   
 </header>
 
 
-<div class="full" style="background-image:url('/sites/all/themes/dotgov/images/back-image-dotgov.png');height:350px;background-position: center center; background-repeat: no-repeat;">
-     <div style="max-width: 1000px; float: right" class="container-fluid">
-                        <h1  class="srt-blue" style="border-bottom: 0.5px solid #112e51; padding-bottom: 10px">DIGITALDASHBOARD.GOV</h1>
-                        <h2  class="srt-blue" style="padding-top: 20px">
-                        DIGITALDASHBOARD.GOV - a suite of analytics for the U.S. Federal government to help agencies understand their .gov footprint and compliance with federal policies
-			</h2>
+<div class="full full-banner">
+<div class="col-sm-12">
+     <div class="container-fluid">
+                        <h1  class="srt-blue">DIGITALDASHBOARD.GOV</h1>
+                        <h2  class="srt-blue">
+A suite of analytics for the U.S. Federal Government to help agencies measure compliance with federal policy and conformance with best practices and industry standards.			</h2>
                     </div>
-    
+    </div>
 </div>
 <div class="main-container <?php print $container_class; ?>">
 

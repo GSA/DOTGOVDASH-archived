@@ -5,22 +5,22 @@
  "title": "INL",
  "ruleGroups": {
   "SPEED": {
-   "score": 42
+   "score": 41
   },
   "USABILITY": {
    "score": 98
   }
  },
  "pageStats": {
-  "numberResources": 54,
-  "numberHosts": 6,
-  "totalRequestBytes": "5343",
-  "numberStaticResources": 29,
-  "htmlResponseBytes": "76215",
-  "cssResponseBytes": "104064",
-  "imageResponseBytes": "1895033",
-  "javascriptResponseBytes": "383026",
-  "otherResponseBytes": "47733",
+  "numberResources": 60,
+  "numberHosts": 7,
+  "totalRequestBytes": "5755",
+  "numberStaticResources": 35,
+  "htmlResponseBytes": "76261",
+  "cssResponseBytes": "110706",
+  "imageResponseBytes": "1851929",
+  "javascriptResponseBytes": "451197",
+  "otherResponseBytes": "34538",
   "numberJsResources": 20,
   "numberCssResources": 9
  },
@@ -29,20 +29,72 @@
   "ruleResults": {
    "AvoidLandingPageRedirects": {
     "localizedRuleName": "Avoid landing page redirects",
-    "ruleImpact": 0.0,
+    "ruleImpact": 33.5,
     "groups": [
      "SPEED"
     ],
     "summary": {
-     "format": "Your page has no redirects. Learn more about {{BEGIN_LINK}}avoiding landing page redirects{{END_LINK}}.",
+     "format": "Your page has {{NUM_REDIRECTS}} redirects. Redirects introduce additional delays before the page can be loaded.",
      "args": [
       {
-       "type": "HYPERLINK",
-       "key": "LINK",
-       "value": "https://developers.google.com/speed/docs/insights/AvoidRedirects"
+       "type": "INT_LITERAL",
+       "key": "NUM_REDIRECTS",
+       "value": "2"
       }
      ]
-    }
+    },
+    "urlBlocks": [
+     {
+      "header": {
+       "format": "{{BEGIN_LINK}}Avoid landing page redirects{{END_LINK}} for the following chain of redirected URLs.",
+       "args": [
+        {
+         "type": "HYPERLINK",
+         "key": "LINK",
+         "value": "https://developers.google.com/speed/docs/insights/AvoidRedirects"
+        }
+       ]
+      },
+      "urls": [
+       {
+        "result": {
+         "format": "{{FIRST_URL}}",
+         "args": [
+          {
+           "type": "URL",
+           "key": "FIRST_URL",
+           "value": "http://inl.gov/"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{REDIRECTED_URL}}",
+         "args": [
+          {
+           "type": "URL",
+           "key": "REDIRECTED_URL",
+           "value": "https://inl.gov/"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{REDIRECTED_URL}}",
+         "args": [
+          {
+           "type": "URL",
+           "key": "REDIRECTED_URL",
+           "value": "https://www.inl.gov/"
+          }
+         ]
+        }
+       }
+      ]
+     }
+    ]
    },
    "AvoidPlugins": {
     "localizedRuleName": "Avoid plugins",
@@ -97,7 +149,7 @@
    },
    "LeverageBrowserCaching": {
     "localizedRuleName": "Leverage browser caching",
-    "ruleImpact": 20.84375,
+    "ruleImpact": 23.09375,
     "groups": [
      "SPEED"
     ],
@@ -124,31 +176,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/themes/inl/img/bg-numbers.jpg"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
            "value": "https://www.inl.gov/wp-content/themes/inl/img/bg-twitter.jpg"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.inl.gov/wp-content/themes/inl/img/header-decor.png"
           }
          ]
         }
@@ -220,31 +248,31 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/themes/inl/js/plugins/imagesloaded.pkgd.min.js"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.inl.gov/wp-content/themes/inl/js/plugins/jquery.bxslider.min.js"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
            "value": "https://www.inl.gov/wp-content/themes/inl/js/plugins/jquery.dcjqaccordion.2.9.js"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} (expiration not specified)",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.inl.gov/wp-content/themes/inl/js/plugins/jquery.debounce.js"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} (expiration not specified)",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.inl.gov/wp-content/themes/inl/js/plugins/jquery.debouncedresize.js"
           }
          ]
         }
@@ -268,7 +296,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/themes/inl/js/plugins/jquery.html5-placeholder-shim.js"
+           "value": "https://www.inl.gov/wp-content/themes/inl/js/plugins/jquery.superslides.js"
           }
          ]
         }
@@ -280,7 +308,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/themes/inl/js/scripts/core.js"
+           "value": "https://www.inl.gov/wp-content/themes/inl/js/plugins/masonry.pkgd.js"
           }
          ]
         }
@@ -304,7 +332,19 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/uploads/2016/08/Changing-the-worlds-energy-future-by-advancing-nuclear-energy-1.jpg"
+           "value": "https://www.inl.gov/wp-content/uploads/2016/08/Changing-the-worlds-energy-future-by-advancing-nuclear-energy-1-500x281.jpg"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} (expiration not specified)",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.inl.gov/wp-content/uploads/2016/08/Changing-the-worlds-energy-future-by-enabling-clean-energy-deployment-1-500x281.jpg"
           }
          ]
         }
@@ -328,31 +368,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/uploads/2016/08/Changing-the-worlds-energy-future-by-securing-and-modernizing-critical-infrastructure-1-500x281.jpg"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
            "value": "https://www.inl.gov/wp-content/uploads/2016/08/Changing-the-worlds-energy-future-by-securing-and-modernizing-critical-infrastructure-1.jpg"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.inl.gov/wp-content/uploads/2016/08/Explore2-1024x776.jpg"
           }
          ]
         }
@@ -376,7 +392,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/uploads/2016/08/explore10-1024x768.jpg"
+           "value": "https://www.inl.gov/wp-content/uploads/2016/08/Incredible-careers-amazing-lifestyle.-Were-Hiring.-Where-do-you-fit-in-1-1.jpg"
           }
          ]
         }
@@ -388,7 +404,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/uploads/2016/08/explore3-1024x768.jpg"
+           "value": "https://www.inl.gov/wp-content/uploads/2016/08/explore10-1024x768.jpg"
           }
          ]
         }
@@ -425,6 +441,78 @@
            "type": "URL",
            "key": "URL",
            "value": "https://www.inl.gov/wp-content/uploads/2016/08/logo-gain.png"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} (expiration not specified)",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.inl.gov/wp-content/uploads/2016/08/logo-lwrs.png"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} (expiration not specified)",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.inl.gov/wp-content/uploads/2016/08/logo-neup.png"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} (expiration not specified)",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.inl.gov/wp-content/uploads/2016/08/logo-nsuf.png"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} (expiration not specified)",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.inl.gov/wp-content/uploads/2017/07/Cyber-Camp-2017-11-500x333.jpg"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} (expiration not specified)",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.inl.gov/wp-content/uploads/2017/07/P-9044-03-500x334.jpg"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} (expiration not specified)",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.inl.gov/wp-content/uploads/2017/07/UO2_MagneticStructure_rev2-500x281.jpg"
           }
          ]
         }
@@ -469,7 +557,7 @@
    },
    "MainResourceServerResponseTime": {
     "localizedRuleName": "Reduce server response time",
-    "ruleImpact": 8.88,
+    "ruleImpact": 8.625,
     "groups": [
      "SPEED"
     ],
@@ -481,7 +569,7 @@
         {
          "type": "DURATION",
          "key": "RESPONSE_TIME",
-         "value": "0.79 seconds"
+         "value": "0.78 seconds"
         },
         {
          "type": "HYPERLINK",
@@ -532,7 +620,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/themes/inl/style.css?ver=4.7.3"
+           "value": "https://www.inl.gov/wp-content/themes/inl/style.css?ver=4.8"
           },
           {
            "type": "BYTES",
@@ -554,7 +642,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/themes/inl/layouts/main.css?ver=4.7.3"
+           "value": "https://www.inl.gov/wp-content/themes/inl/layouts/main.css?ver=4.8"
           },
           {
            "type": "BYTES",
@@ -592,7 +680,7 @@
    },
    "MinifyJavaScript": {
     "localizedRuleName": "Minify JavaScript",
-    "ruleImpact": 0.4071,
+    "ruleImpact": 1.6571,
     "groups": [
      "SPEED"
     ],
@@ -612,16 +700,60 @@
         {
          "type": "BYTES",
          "key": "SIZE_IN_BYTES",
-         "value": "3.3KiB"
+         "value": "15.4KiB"
         },
         {
          "type": "PERCENTAGE",
          "key": "PERCENTAGE",
-         "value": "36%"
+         "value": "49%"
         }
        ]
       },
       "urls": [
+       {
+        "result": {
+         "format": "Minifying {{URL}} could save {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction) after compression.",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.inl.gov/wp-content/themes/inl/js/plugins/masonry.pkgd.js"
+          },
+          {
+           "type": "BYTES",
+           "key": "SIZE_IN_BYTES",
+           "value": "9.4KiB"
+          },
+          {
+           "type": "PERCENTAGE",
+           "key": "PERCENTAGE",
+           "value": "51%"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "Minifying {{URL}} could save {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction) after compression.",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.inl.gov/wp-content/themes/inl/js/plugins/jquery.debounce.js"
+          },
+          {
+           "type": "BYTES",
+           "key": "SIZE_IN_BYTES",
+           "value": "2.6KiB"
+          },
+          {
+           "type": "PERCENTAGE",
+           "key": "PERCENTAGE",
+           "value": "85%"
+          }
+         ]
+        }
+       },
        {
         "result": {
          "format": "Minifying {{URL}} could save {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction) after compression.",
@@ -695,17 +827,17 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/themes/inl/js/scripts/core.js"
+           "value": "https://www.inl.gov/wp-content/themes/inl/js/plugins/jquery.superslides.js"
           },
           {
            "type": "BYTES",
            "key": "SIZE_IN_BYTES",
-           "value": "543B"
+           "value": "650B"
           },
           {
            "type": "PERCENTAGE",
            "key": "PERCENTAGE",
-           "value": "24%"
+           "value": "18%"
           }
          ]
         }
@@ -822,7 +954,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/themes/inl/layouts/jquery.fullPage.css?ver=4.7.3"
+           "value": "https://www.inl.gov/wp-content/themes/inl/layouts/jquery.fullPage.css?ver=4.8"
           }
          ]
         }
@@ -834,7 +966,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/plugins/rotatingtweets/css/style.css?ver=4.7.3"
+           "value": "https://www.inl.gov/wp-content/plugins/rotatingtweets/css/style.css?ver=4.8"
           }
          ]
         }
@@ -846,7 +978,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/themes/inl/style.css?ver=4.7.3"
+           "value": "https://www.inl.gov/wp-content/themes/inl/style.css?ver=4.8"
           }
          ]
         }
@@ -858,7 +990,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/themes/inl/layouts/main.css?ver=4.7.3"
+           "value": "https://www.inl.gov/wp-content/themes/inl/layouts/main.css?ver=4.8"
           }
          ]
         }
@@ -870,7 +1002,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/themes/inl/layouts/component.css?ver=4.7.3"
+           "value": "https://www.inl.gov/wp-content/themes/inl/layouts/component.css?ver=4.8"
           }
          ]
         }
@@ -882,7 +1014,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/themes/inl/layouts/superslides.css?ver=4.7.3"
+           "value": "https://www.inl.gov/wp-content/themes/inl/layouts/superslides.css?ver=4.8"
           }
          ]
         }
@@ -894,7 +1026,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/themes/inl/css/jquery.bxslider.css?ver=4.7.3"
+           "value": "https://www.inl.gov/wp-content/themes/inl/css/jquery.bxslider.css?ver=4.8"
           }
          ]
         }
@@ -906,7 +1038,7 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/themes/inl/layouts/responsive.css?ver=4.7.3"
+           "value": "https://www.inl.gov/wp-content/themes/inl/layouts/responsive.css?ver=4.8"
           }
          ]
         }
@@ -917,7 +1049,7 @@
    },
    "OptimizeImages": {
     "localizedRuleName": "Optimize images",
-    "ruleImpact": 92.24340000000001,
+    "ruleImpact": 61.480199999999996,
     "groups": [
      "SPEED"
     ],
@@ -937,12 +1069,12 @@
         {
          "type": "BYTES",
          "key": "SIZE_IN_BYTES",
-         "value": "900.5KiB"
+         "value": "600.4KiB"
         },
         {
          "type": "PERCENTAGE",
          "key": "PERCENTAGE",
-         "value": "62%"
+         "value": "53%"
         }
        ]
       },
@@ -976,61 +1108,17 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/uploads/2016/08/Explore2-1024x776.jpg"
-          },
-          {
-           "type": "BYTES",
-           "key": "SIZE_IN_BYTES",
-           "value": "169.4KiB"
-          },
-          {
-           "type": "PERCENTAGE",
-           "key": "PERCENTAGE",
-           "value": "97%"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "Compressing and resizing {{URL}} could save {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction).",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.inl.gov/wp-content/uploads/2016/08/explore3-1024x768.jpg"
-          },
-          {
-           "type": "BYTES",
-           "key": "SIZE_IN_BYTES",
-           "value": "129.1KiB"
-          },
-          {
-           "type": "PERCENTAGE",
-           "key": "PERCENTAGE",
-           "value": "97%"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "Compressing and resizing {{URL}} could save {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction).",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
            "value": "https://www.inl.gov/wp-content/uploads/2016/08/explore7-1024x768.jpg"
           },
           {
            "type": "BYTES",
            "key": "SIZE_IN_BYTES",
-           "value": "118.6KiB"
+           "value": "116.5KiB"
           },
           {
            "type": "PERCENTAGE",
            "key": "PERCENTAGE",
-           "value": "96%"
+           "value": "95%"
           }
          ]
         }
@@ -1064,17 +1152,17 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/uploads/2016/08/Changing-the-worlds-energy-future-by-advancing-nuclear-energy-1.jpg"
+           "value": "https://www.inl.gov/wp-content/uploads/2017/07/P-9044-03-500x334.jpg"
           },
           {
            "type": "BYTES",
            "key": "SIZE_IN_BYTES",
-           "value": "27.6KiB"
+           "value": "11.8KiB"
           },
           {
            "type": "PERCENTAGE",
            "key": "PERCENTAGE",
-           "value": "22%"
+           "value": "26%"
           }
          ]
         }
@@ -1086,17 +1174,39 @@
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.inl.gov/wp-content/themes/inl/img/bg-numbers.jpg"
+           "value": "https://www.inl.gov/wp-content/uploads/2016/08/Changing-the-worlds-energy-future-by-enabling-clean-energy-deployment-1-500x281.jpg"
           },
           {
            "type": "BYTES",
            "key": "SIZE_IN_BYTES",
-           "value": "8.2KiB"
+           "value": "11.4KiB"
           },
           {
            "type": "PERCENTAGE",
            "key": "PERCENTAGE",
-           "value": "30%"
+           "value": "29%"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "Compressing {{URL}} could save {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction).",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.inl.gov/wp-content/uploads/2017/07/Cyber-Camp-2017-11-500x333.jpg"
+          },
+          {
+           "type": "BYTES",
+           "key": "SIZE_IN_BYTES",
+           "value": "9.6KiB"
+          },
+          {
+           "type": "PERCENTAGE",
+           "key": "PERCENTAGE",
+           "value": "27%"
           }
          ]
         }
@@ -1119,6 +1229,28 @@
            "type": "PERCENTAGE",
            "key": "PERCENTAGE",
            "value": "35%"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "Compressing {{URL}} could save {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction).",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.inl.gov/wp-content/uploads/2016/08/Changing-the-worlds-energy-future-by-advancing-nuclear-energy-1-500x281.jpg"
+          },
+          {
+           "type": "BYTES",
+           "key": "SIZE_IN_BYTES",
+           "value": "3.5KiB"
+          },
+          {
+           "type": "PERCENTAGE",
+           "key": "PERCENTAGE",
+           "value": "23%"
           }
          ]
         }
@@ -1251,7 +1383,7 @@
    },
    "SizeTapTargetsAppropriately": {
     "localizedRuleName": "Size tap targets appropriately",
-    "ruleImpact": 1.2000000000000002,
+    "ruleImpact": 0.9481481481481483,
     "groups": [
      "USABILITY"
     ],
@@ -1273,50 +1405,12 @@
       "urls": [
        {
         "result": {
-         "format": "The tap target {{HTML_TEXT}} is close to {{NUM_TOO_CLOSE}} other tap targets {{SCREENSHOT}}.",
-         "args": [
-          {
-           "type": "STRING_LITERAL",
-           "key": "HTML_TEXT",
-           "value": "\u003clabel\u003eSearch for:\u003c/label\u003e"
-          },
-          {
-           "type": "INT_LITERAL",
-           "key": "NUM_TOO_CLOSE",
-           "value": "1"
-          },
-          {
-           "type": "SNAPSHOT_RECT",
-           "key": "SCREENSHOT",
-           "value": "final",
-           "rects": [
-            {
-             "left": 377,
-             "top": 20,
-             "width": 1,
-             "height": 1
-            }
-           ],
-           "secondary_rects": [
-            {
-             "left": 377,
-             "top": 29,
-             "width": 27,
-             "height": 27
-            }
-           ]
-          }
-         ]
-        }
-       },
-       {
-        "result": {
          "format": "The tap target {{HTML_TEXT}} and {{NUM_OTHERS}} others are close to other tap targets.",
          "args": [
           {
            "type": "STRING_LITERAL",
            "key": "HTML_TEXT",
-           "value": "\u003ca href=\"https://t.co/r7G6Kc5Icl\" class=\"rtw_media_link\"\u003epic.twitter.com/r7G6Kc5Icl\u003c/a\u003e"
+           "value": "\u003ca href=\"https://twitte…er_id=19693586\"\u003e@bikebuild\u003c/a\u003e"
           },
           {
            "type": "INT_LITERAL",
@@ -1372,7 +1466,7 @@
  },
  "screenshot": {
   "mime_type": "image/jpeg",
-  "data": "_9j_4AAQSkZJRgABAQAAAQABAAD_2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj_2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj_wAARCAI4AUADASIAAhEBAxEB_8QAHAABAAEFAQEAAAAAAAAAAAAAAAYDBAUHCAIB_8QARRABAAIBAgQDAQgOCQUAAAAAAAECAwQRBQYSIQcxURMIFBUXIkFhkSMyUlRVcXSTlKOy0dLTFiQ0N1ZXgZKhYnKCsfD_xAAaAQEAAwEBAQAAAAAAAAAAAAAAAQIEAwUG_8QALBEBAAIBAQQIBwEAAAAAAAAAAAECAxEEEiFBBRQxUVKBkaETMjM0U5LBsf_aAAwDAQACEQMRAD8A6pAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFtqtdpNJatdVqcGG1o3iMmStd_rlR-GeGfhHR_n6fvTuzPJE2iOa_Fh8M8M_COj_AD9P3nwzwz8I6P8AP0_endnuRvV71-LfS63S6ubRpdThzdP23s8kW2_HtK4VmNFonXsAAAAAeNRjjNgyY5tasXrNZms7TG8bdp9QR7Xc8cuaHVZdPqeLYK5cVprkisWtFJjziZiJiJXHKvNXB-atNqM_A9X75x4Mnssk9Fq7T5x2mI7THlK00_EcnDdDl4br4pg1uLDf3vliu2PVRFZ2tX5ur1p5777bx3aC5a5241wzw843reG5NLpNRXiWCInBpaVieut5tvERtO_TH4tuzdj2WMtZ3e3hz7_JhybVOK0b3ZOvLu83Um5u5p1fitx-3KfAM-h4hGPiE6jLp9bvjrbq2ms0naY7b1t9cSmXLPOvHNZ40a_gOt1tJ4ZinLFcPRWNumsTHytt0W2HJWJmdOGvsmu347TERrx0925BS1OfHptPkz5rdOPHWb2nbyiPNRya_Djx6u9uvbTTEZNq_wDTFu3r2tDHETLZMxC7FDWavBotLk1OqyVxYMcdV728qx6vsarDNctuuIrit0Xme209u3_MGkmsKw80vF6VvXvW0bxO3zLanEMF9RkwdVoyUzxp5iY87-zjJtH_AIyaSawuxSx563zZMVerqx7dW8du8Pd8ladPXaK9U9Mb_PPohL0G4AAAAAAAAAAAAAADk_3QVpv4ma2Lz1RXBgisW77fI37NcdNfua_VDZXjzaaeKuqtWvVNcenmK-vyY7NlfGjzP_lrxX9b_JfR0y3x4abtdeHfEPmMmGmXPk37ace6Z_xzX01-5r9UHTX7mv1Q6U-NHmf_AC14r-t_kvGbxQ5mtivWfDbilYmsxMz7Xt-pOtZfxx-0HVMX5J_WUD9zdaa-IOWtZ6a20OXqiO0Ttam27qJy37m_-8O35Bl_axupHmdJ_X8nq9Ffb-cjAcR5y5d4brPemt41ocOo32nHbLG8T6T6MR4s8U1mh5e02k4ZlnBrOKavHoKZo7Tj6_OY-naF7wbkLlzhfDY0leFaTUdtsmXUYoyZMk_PMzPf6mWtKxXevz7m2bWm27VJNNqMOqwUzabLjzYbxvXJjtFq2j6JhVaz4HpK8m-JeLgfDr3jgvGNNk1GLTTaZjT5afbdO_lEx_8AdmzFclIpMadkrUtvRx7YAHNdjuYNPh1PBdbTUY6ZKexvba0b7TFZmJ_HHq5S0Gs9--HPGsnEOn2UcQ00ZL4aRXLa3Tk6bT36Z-eJ7RM7-fbZ17etb0mt4i1bRtMTG8TDEV5Y4FXS5NNXg3Do0-S0XvijTU6bWjymY27zG8_W2bNtMYYmJjXjHsx7Ts05rRMTpwn3cg67l_NodVoYw5q5MWox4tVipktGLJalttrRWZ794nymZ7d9k7w8f0XLHjdxjjHFaZ7cOm-anXix9cW6qxEbfNMf6uhdTy3wTVVwV1PCOH5q4KRjxRk09LezrHlWu8do-h9vy7wa97XvwrQ2tad53wVnefqabdI1vGlo5THqy06NtSdaW5xPoo5bxxLgvs9JfbFxDSzbBbJ506q7xvHptP8Ap5I__RHWXvkjJOD2eW09X2a-8R0dNp2jzm87TPptGyaabR6bS_2fBjxdtvkViO3orvOjJNflejOKLfMiun5f1cabX4M98V66jHFOq17Wi8dW8RaJ7RFa_J-mI7rXUcq6q-sjqyYs2CMl7VvfJeLVptHTjmsdp2mInq8_kwmgmM1oJw1lBo5T4lOW2S2sr1VxdMfZb_LyTv1ZJ9JtWYr9EVifnZDS8D1mDRzSsYK3tqYy9EZLTFK-94xbdU952n_hKQnNaSMNYQTBytr8dJ-xaaInbfHGqy7TTrtaMUz6RvE7_RsrZuVNVkvtOTFe0W9p7a2W_V1bW7bf909W_wBOyah8ayPgVRDh_BdVotdpptktT2uo9pemO1r1rhpjr04-qfS8Rt6xMpfAKWvNu10rSK9gAqsAAAAAAAAAAAA5S8eJtHirqpxxE3jHp-mJ-eemNmzPhzxi_wAM8H_31_nNY-Ptpp4o621Z2tXDp5ifpikLL42ud_w7f9Hw_wAD6D4NsuHHuxE8Oev8fNznpiz5N6bRrPLT-tufDnjF_hng_wDvr_OeM3HPGGcV-vlnhEV6Z3mL18vzzU3xtc7_AIdv-jYf4Hy3ixztas1tx28xMbT_AFfD_Ap1PJ4ae6_XsXjv7Mz7m_8AvDt-QZf2sbqRy37m_t4h2_IM37VHUjH0n9fyb-ivt_OUZ8QuXcnMnL9tNpMsYdfgyV1Olyz5Vy0neN_onyRzT-JOfh-Gul5j5d4xg4tWOm1dPp_aY8tvWtonylsk2Y65Iiu7aNYbrUnXerOjSeh5ny08UtLxTnPh-o4TizaWcHDYzdq4otPebz6z5T6bxv27t2RMTG8d4YXmzlvh_NHCMmg4nj6qT3x5K_b4rfNas-v_AL-dW5Y4T8BcB0fDPfWbVRpqdEZs23VaN5mN9vTfb8ULZb0yViY4THDRXHW1JmJ4wygDg7AAAAAAAAAAAAAAAAAAAAAAAAAAAAIZzX4a8uc0cU-EOKaXNOrmkUtfFmtj6ojy3iPNhviS5O-9tb-l3bMHau05axpFp0cLbNitOs1jVrP4kuTvvbW_pdz4kuTvvbW_pd2zBbrWbxz6o6ph8EeiIcoeHnL_ACnr8us4RpstdTkx-z68ua2SYrvvMRv5b7R9SXg43va862nWXalK0jdrGkACqwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD_9k=",
+  "data": "_9j_4AAQSkZJRgABAQAAAQABAAD_2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj_2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj_wAARCAI4AUADASIAAhEBAxEB_8QAHAABAAEFAQEAAAAAAAAAAAAAAAYDBAUHCAIB_8QAQxABAAIBAgQDAgcNBgcAAAAAAAECAwQRBQYSIQcxURNBCBQVFyJhkTJSVFVxdJOUo7LR0tMjN1ZXgZIkNHKCobHw_8QAGgEBAAMBAQEAAAAAAAAAAAAAAAECBAMFBv_EACwRAQACAQEECAcBAAAAAAAAAAABAgMRBBIhQQUUMVFSgZGhEzIzNFOSwbH_2gAMAwEAAhEDEQA_AOqQAAAAAAAAAAAAAAAAAAAAAAAAAAAAABbarXaTSWrXVanBhtaN4jJkrXf7ZUflnhn4x0f6en8U7szyRNojmvxYfLPDPxjo_wBPT-J8s8M_GOj_AE9P4p3Z7kb1e9fi30ut0urm0aXU4c3T917PJFtvy7SuFZjRaJ17AAAAAHjUY4zYcmOZtWL1mszWdpjeNu0-oI_rud-XNDqsun1PFcFcuK01yRWLWikx5xMxExEq_KvNXB-atNqM_A9X8Zx4Mnssk9Fq7Ttv5TEdpjylaYOI5eG6DNw3XRTBrcWG_wAXyxXbHqYiszFq-7q9aee--28d2geWudeNcM8PON63huXTaTPXiWCInDpqVieut5tvER7-mPybdm7HssZazu9vDn3-TDl2qcVo3uydeXd5updzdzTq_FXj9uVOXs2h4j7PX21GXT63fHW3X0zWaTtMdt62-2JTHljnTjms8aOI8C1utpPDMU5oph6KxEdMRMfS23RbYclYmZ04a-ya7fjvMRGvHT3blFLUZ8em0-TNmt048dZtadvKIUcmvw46au1uvbTTEZPo-tYt29e1oY4iZbJmIXYoazV4NFpcmp1WSMWDHHVe9vKser7GqwzXLbriK4rdF5nttPbt_wCYNJNYVh5peL0reu81tG8dvctqcQwX1GXDFrRkx5_i8xMed_Zxk2j_ALZNJNYXYpY89b5suKOrqx7dW8esbvd8ladPXaK9U9Mb--fRCdXoNwAAAAAAAAAAAAAAHJ_wgrTfxM1sXnqiuDBFYt32-hv2a46a_e1-yGyvHm008VdVateqa49PMV9fox2bK-dHmf8Ay14r-1_ovo6Zb48NN2uvDviHzGTDTLnyb9tOPdM_45r6a_e1-yDpr97X7IdKfOjzP_lrxX9r_ReM3ihzNbFes-G3FKxNZiZn2vb9iday_jj9oOqYvyT-soH8G6018Qctaz01tocvVEdona1Nt3UTlv4N_wDeHb8wy_vY3UjzOk_r-T1eivt_ORgOI85cu8N1nxTW8a0OHUb7TjtljeJ9J9GI8WeKazQ8vabScMyzg1nFNXj0FM0dpx9fnMfXtC94NyFy5wvhsaSvCtJqO22TLqMUZMmSffMzPf7GWtKxXevz7m2bWm27VJNNqMOqwUzabLjzYbxvXJjtFq2j6phVaz4HpK8m-JeLgfDr3jgvGNNk1GLTTaZjT5afddO_lEx_92bMVyUikxp2StS29HHtgAc12O5i0-HUcE11NRjpkp7G9trRvtMVmYn8serlHQaydb4c8ZycQ6ZxfKGmjJfDSK5bW6cnTaZ36Z98T2iZ38-zr69a3pat6xato2mJjeJhia8scCrpr6avBuHRp8lovfFGmp02tHlMxttvG8_a2bNtMYYmJjXjHsx7Ts05rRMTpwn3cga3l_NotXofY5qZMWox4tVipktGPJalttrRWZ799_KZnt32TvDx_RcseNvGuM8Upntw6b5qdeHH1xbqrG23umP9XQ2p5c4Lqq4I1PCOH5owUjHijJp6W6Kx5VjeO0fUX5d4Ne82vwrQ2mZ3nfBWd5-xpt0jW8aWjlMerLXo61J1pPOJ9FHJeOJcGjHpb7YtfpZtgtk86dVd43j02n_TyR-OUdbe-SMs4PZZbT1f21-0dHTafrm87TPptGyaabR6bS_8tgxYu230KxHb0V3nRkmvyvRnFFvmRTT8vauNLxDBnyYrxqMcU6rXtaLx1bxFqz2iK1-j9cR3W2o5U1d9bEzlxZcEZb3re-S8Wrj2-jjmsdp2mInqnv8ARhNBMZrQThrKCxynxKc05Lays2rj6Y_tb_Tv36sk-k2rMVn0isTHmyOl4FrcGimlYwVvbUxl6IyWmKV-Lxi26p7ztMfYlITmtJGGsIJg5W1-Okx7LTRE-eONVl2mntLWjFM_exExO_1bK-flTVZMn3eK0xb2ntrZcnVNtrdtv-qerf600D41kfAqiHD-C6rR67S9WS1Pa5_aXpjm161xUx16cfVPlteI29YmUvBS1pt2ulaRXsAFVgAAAAAAAAAAAHKXjxNo8VdVOOIm8Y9P0xPvnpjZsz5c8Yv8M8H_AN9f6zWPj7aaeKOttWdrVw6eYn64pCy-drnf8e3_AFfD_I-g-DbLhx7sRPDnr_Hzc56Ys-Tem0azy0_rbny54xf4Z4P_AL6_1njNxzxhnFfr5Z4RFemd5i9fL9M1N87XO_49v-rYf5Hy3ixztas1tx28xMbT_wAPh_kU6nk8NPdfr2Lx39mZ-Df_AHh2_MMv72N1I5b-Df28Q7fmGb96jqRj6T-v5N_RX2_nKM-IXLuTmTl-2m0mWMOvwZK6nS5Z8q5aTvG_1T5I5p_EnPw_DXS8x8u8YwcWrHTaun0_tMeW3rW0T5S2SbMdckRXdtGsN1qTrvVnRpPQ8z5aeKWl4pznw_UcJxZtLODhsZu1cUWnvN59Z8p9N437d27ImJjeO8MLzZy3w_mjhGTQcTx9VJ748lfu8Vvdas-v_v3q3LHCfkLgOj4Z8azaqNNTojNm26rRvMxvt6b7fkhbLemSsTHCY4aK462pMxPGGUAcHYAAAAAAAAAAAAAAAAAAAAAAAAAAABDOa_DXlzmjinyhxTS5p1c0ilr4s1sfVEeW8R5sN8yXJ34Nrf1u7Zg7V2nLWNItOjhbZsVp1msatZ_Mlyd-Da39bufMlyd-Da39bu2YLdazeOfVHVMPgj0RDlDw85f5T1-XWcI02WupyY_Z9eXNbJMV33mI38t9o-xLwcb3tedbTrLtSlaRu1jSABVYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB__2Q==",
   "width": 320,
   "height": 568,
   "page_rect": {

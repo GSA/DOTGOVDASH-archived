@@ -149,10 +149,9 @@ function dotgov_common_block_view($delta = '')
  */
 function dotgov_commmon_getTechStackInfo($nid){
     $techterms = dotgov_commmon_get_techTerms($nid);
-    $output = "<div id='techstack'>";
+    $output = "<div id='techstack' class='row dataset-resources'>";
     foreach($techterms as $techkey=>$techval) {
-        $output .=  "<div id='techcategory' class='techcategory'>".$techval['category']['name']."</div>";
-        $output .= "<a id='app-button' class='app-button'><img class='app-icon' src='/".drupal_get_path('module', 'dotgov_common')."/images/icons/".$techval['icon']."'>$techkey ".$techval['appversion']."</a>";
+        $output .= "<div class='col-xs-12 nopadding dataset-resources'><a id='app-button' class='app-button'>".$techval['category']['name']." :&nbsp;<img class='app-icon' src='/".drupal_get_path('module', 'dotgov_common')."/images/icons/".$techval['icon']."'>$techkey ".$techval['appversion']."</a></div>";
     }
     $output .= "</div>";
 

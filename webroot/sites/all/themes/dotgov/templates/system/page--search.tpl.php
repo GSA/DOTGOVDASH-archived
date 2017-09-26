@@ -75,7 +75,7 @@
 if(arg(1) == "website_search")
 	$searchtitle = "Search";
 else
-	$searchtitle = "Data Discovery";
+	$searchtitle = "Site Search";
 ?>
 <div class="top-bar">
 			<!-- top header-->
@@ -88,13 +88,14 @@ else
 				</div>				</div>
 			</div>
 		</div>
-<div class="<?php print $container_class; ?>">
+  <div class="<?php print $container_class; ?>">
+    <div class="row">
+      <div class="col-sm-7">
     <div class="navbar-header">
       <?php if ($logo): ?>
-        <a class="logo navbar-btn pull-left" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
+        <a class="logo navbar-btn pull-left" href="<?php print $front_page; ?>" title="Digital Dashboard.gov - Home">
 <h1 class="site-logo">Digital Dashboard</h1>
-
-          <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
+          <img src="<?php print $logo; ?>" alt="Digital Dashboard.gov - Home" />
         </a>
       <?php endif; ?>
 
@@ -104,7 +105,25 @@ else
 
   
     </div>
+
+      </div>
+      <div class="col-sm-5">
+
+    <div class="header_block row">
+      <div class="col-xs-12 pull-right">
+      <?php if (!empty($secondary_nav)): ?>
+        <?php print render($secondary_nav); ?>
+      <?php endif; ?>
+      </div>
+      <div class="col-xs-12">
+      <?php if (!empty($page['navigation'])): ?>
+        <?php print render($page['navigation']); ?>
+      <?php endif; ?>
+      </div>
     </div>
+      </div>
+    </div>
+</div>
 <header id="navbar" role="banner" class="<?php print $navbar_classes; ?>">
   
         <?php if (!empty($primary_nav) || !empty($secondary_nav) || !empty($page['navigation'])): ?>
@@ -121,13 +140,7 @@ else
           <?php if (!empty($primary_nav)): ?>
             <?php print render($primary_nav); ?>
           <?php endif; ?>
-          <?php if (!empty($secondary_nav)): ?>
-            <?php print render($secondary_nav); ?>
-          <?php endif; ?>
-          <?php if (!empty($page['navigation'])): ?>
-            <?php print render($page['navigation']); ?>
-          <?php endif; ?>
-        </nav>
+                  </nav>
       </div>
     <?php endif; ?>
   

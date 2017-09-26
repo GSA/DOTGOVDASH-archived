@@ -65,12 +65,12 @@ $scanpath = drupal_get_path_alias("node/".$scanids['domain_scan_information']);
 $chartdata= $row->_field_data['nid']['entity']->field_ssl_score['und'][0]['value'];
 //dsm($chardata);
 if ($chartdata <= 50){
-    $chartcolor = '#ff3029';
+    $chartcolor = '#ac0600';
 }elseif($chartdata>=50 and $chartdata<=75){
-    $chartcolor='#ffb900';
+    $chartcolor='#654f00';
 }
 else{
-    $chartcolor='#44a560';
+    $chartcolor='#29643a';
 }
 ?>
 <!--

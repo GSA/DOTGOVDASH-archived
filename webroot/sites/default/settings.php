@@ -249,7 +249,7 @@ $databases = array (
   array (
     'default' => 
     array (
-      'database' => 'dotgov',
+      'database' => 'dotgovuat',
       'username' => 'root',
       'password' => 'root',
       'host' => 'localhost',

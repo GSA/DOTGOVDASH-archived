@@ -116,13 +116,12 @@ if($result['node']->bundle == 'website'){
                  }
              ?>
              </ul>
-             <div id='techstack'>
+             <div id="techstack" class="row dataset-resources">
              <?php
 //             print "<pre>";
 //             print_r($techterms);
              foreach($techterms as $techkey=>$techval) {
-                 print "<div id='techcategory' class='techcategory'>".$techval['category']['name']."</div>";
-                 print "<a id='app-button' class='app-button'><img class='app-icon' src='/".drupal_get_path('module', 'dotgov_common')."/images/icons/".$techval['icon']."'>$techkey ".$techval['appversion']."</a>";
+                 print "<div class='col-xs-3 nopadding dataset-resources'><a id='app-button' class='app-button'>".$techval['category']['name']." :&nbsp;<img class='app-icon' src='/".drupal_get_path('module', 'dotgov_common')."/images/icons/".$techval['icon']."'>$techkey ".$techval['appversion']."</a></div>";
              }
              ?>
             </div>
