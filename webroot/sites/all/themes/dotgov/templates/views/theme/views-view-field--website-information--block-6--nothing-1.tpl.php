@@ -66,6 +66,8 @@ else{
     $chartcolor='#29643a';
 }
 ?>
+<div class="sr-only">The graphic below indicates the level of Mobile score, and this score is <?php echo $chartdata; ?>%.</div>
+
 <script type="text/javascript">
     Highcharts.chart('mobile_chart', {
 

@@ -66,6 +66,8 @@ if ($chartdata == 0){
     $chartdata = 100;
 }
 ?>
+<div class="sr-only">The graphic below indicates the level of DNSSEC compliance, and this score is <?php echo $chartdata; ?>%.</div>
+
 <script type="text/javascript">
     Highcharts.chart('dnssec_chart', {
 

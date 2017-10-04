@@ -19,7 +19,7 @@ else
     $agtit = "Report";
 $chartData = "[\"Scan Criteria\", \"Overall Report\", { role: \"style\" } ],";
 #$chartColors = array('#0071bc','#205493', '#112e51', '#212121', '#323a45', '#aeb0b5','#046b99','#00a6d2');
-$chartColors = array('#0071bc', '#e31c3d', '#00a6d2', '#fdb81e', '#48a463','#5b616b','#e59393');
+$chartColors = array('#0071bc', '#e31c3d', '#00a6d2', '#fdb81e', '#48a463','#5b616b','#9e3131','#e59393');
 #$chartCrit = array("field_ssl_score"=>"SSL","field_dap_score"=>"DAP","field_https_score"=>"HTTPS","field_mobile_overall_score"=>"MOBILE","field_mobile_performance_score"=>"MOBILE PERFORMANCE","field_mobile_usability_score"=>"MOBILE FRIENDLY");
 $chartCrit = array("field_dap_score"=>"DAP","field_https_score"=>"HTTPS","field_mobile_overall_score"=>"MOBILE","field_mobile_performance_score"=>"MOBILE PERFORMANCE","field_mobile_usability_score"=>"MOBILE FRIENDLY","field_dnssec_score"=>'DNSSEC',"field_ipv6_score"=>"IPv6","field_site_speed_score"=>"SITE SPEED");
 $i = 0;

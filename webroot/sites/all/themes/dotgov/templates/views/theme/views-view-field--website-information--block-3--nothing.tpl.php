@@ -72,6 +72,7 @@ else{
     $chartcolor='#29643a';
 }
 ?>
+<div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is <?php echo $chartdata; ?>%.</div>
 <script type="text/javascript">
     Highcharts.chart('https_chart', {
 
