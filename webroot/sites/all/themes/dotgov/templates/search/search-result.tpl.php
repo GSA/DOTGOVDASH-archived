@@ -63,7 +63,12 @@
  *
  * @ingroup themeable
  */
-if(arg(1) == "website_search") {
+    $websiteurl = "/website/".$result['node']->entity_id."/information";	
+//if(arg(1) == "website_search") {
+if($result['node']->bundle == 'website'){
+    $techterms = dotgov_commmon_get_techTerms($result['node']->entity_id);
+    //print "<pre>";
+    //print_r($techterms);
     $webScanIds = dotgov_common_siteAsocScanids($result['node']->entity_id);
     $taxoTerms = dotgov_common_getNodeTaxonomy($result['node']->entity_id);
     $httpnode = node_load($webScanIds['domain_scan_information']);
@@ -84,7 +89,7 @@ if(arg(1) == "website_search") {
     <li class="<?php print $classes; ?>"<?php print $attributes; ?>>
     <?php print render($title_prefix); ?>
     <h3 class="pane-title"<?php print $title_attributes; ?>>
-        <a href="<?php print $url; ?>"><?php print $title; ?></a>
+        <a href="<?php print $websiteurl; ?>"><?php print $title; ?></a>
     </h3>
     </li>
          <div class="search-snippet-info">
@@ -106,28 +111,44 @@ if(arg(1) == "website_search") {
              <ul class="dataset-resources unstyled">
                  <?php
                  foreach($taxoTerms as $tkey=>$tval) {
-			print "<li> <a class=\"label\" data-format=\"$tval\" href='/search/website_search/%2A?f[0]=im_field_website_tags%3A".$tkey."'>$tval</a></li>";
+			//print "<li> <a class=\"label\" data-format=\"$tval\" href='/search/website_search/%2A?f[0]=im_field_website_tags%3A".$tkey."'>$tval</a></li>";
+			print "<li> <a class=\"label\" data-format=\"$tval\">$tval</a></li>";
                  }
              ?>
              </ul>
+             <div id="techstack" class="row dataset-resources">
+             <?php
+//             print "<pre>";
+//             print_r($techterms);
+             foreach($techterms as $techkey=>$techval) {
+                 print "<div class='col-xs-3 nopadding dataset-resources'><a id='app-button' class='app-button'>".$techval['category']['name']." :&nbsp;<img class='app-icon' src='/".drupal_get_path('module', 'dotgov_common')."/images/icons/".$techval['icon']."'>$techkey ".$techval['appversion']."</a></div>";
+             }
+             ?>
+            </div>
          </div>
     <?php
 }
 else {
+//if($result['node']->bundle != 'website')
+	$websiteurl = $url;
     ?>
     <li class="<?php print $classes; ?>"<?php print $attributes; ?>>
         <?php print render($title_prefix); ?>
         <h3 class="title"<?php print $title_attributes; ?>>
-            <a href="<?php print $url; ?>"><?php print $title; ?></a>
+            <a href="<?php print $websiteurl; ?>"><?php print $title; ?></a>
         </h3>
         <?php print render($title_suffix); ?>
         <div class="search-snippet-info">
-            <?php if ($snippet): ?>
-                <p class="search-snippet"<?php print $content_attributes; ?>><?php print $snippet; ?></p>
-            <?php endif; ?>
-            <?php if ($info): ?>
-                <p class="search-info"><?php print $info; ?></p>
-            <?php endif; ?>
+	    <div class="row clearfix">	
+            <?php if ($snippet): 
+                //print "<p class='search-snippet'".$content_attributes.">$snippet</p>";
+		 print "<div class=\"col-lg-6\">Record Type: ".$result['node']->bundle_name." </div>";	
+		 print "<div class=\"col-lg-6\">Record Title: ".$result['node']->label." </div>";	
+		 print "<div class=\"col-lg-6\">Record Number: ".$result['node']->entity_id." </div>";	
+		 print "<div class=\"col-lg-6\">Record Created Date: ".date('m/d/Y h:i:s',$result['node']->created)." </div>";	
+		 print "<div class=\"col-lg-6\">Record Changed Date: ".date('m/d/Y h:i:s',$result['node']->changed)." </div>";	
+            endif; ?>
+            </div>
         </div>
     </li>
     <?php

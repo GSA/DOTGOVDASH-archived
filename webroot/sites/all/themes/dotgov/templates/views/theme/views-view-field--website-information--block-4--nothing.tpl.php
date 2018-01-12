@@ -58,19 +58,35 @@ $scanpath = drupal_get_path_alias("node/".$scanids['https_dap_scan_information']
 //drupal_add_js('https://code.highcharts.com/modules/solid-gauge.js');
 //drupal_add_js(drupal_get_path('module', 'activity_chart') . '/activity_chart.js');
 ?>
-<?php print $output; ?>
-<div><p><button class="link-all-reports"><a href="/<?=$scanpath?>">Go to Full Report</a></button></p></div>
+<div class="col-lg-6">
+<?php
+if($row->_field_data['nid']['entity']->field_dap_score['und'][0]['value'] == NULL)
+  print "DAP Score: NULL<br>";
+else
+  print "DAP Score: ".$row->_field_data['nid']['entity']->field_dap_score['und'][0]['value']."%<br>";
+if($row->_field_data['nid']['entity']->field_dap_status['und'][0]['value'] == NULL)
+  print "DAP Status: NA<br>";
+elseif($row->_field_data['nid']['entity']->field_dap_status['und'][0]['value'] == '1')
+  print "DAP Status: Implemented<br>";
+elseif($row->_field_data['nid']['entity']->field_dap_status['und'][0]['value'] == '0')
+  print "DAP Status: Not Implemented<br>";
+?>
+</div>
+<?php print $output;?>
+
+<br clear="all" />
+<div><p><a class="link-all-reports" href="/<?=$scanpath?>">Go to Full Report</a></p></div>
 <?php //dsm($view->result);
 //dsm ($row->_field_data['nid']['entity']->field_https_score['und'][0]['safe_value']);
 $chartdata= $row->_field_data['nid']['entity']->field_dap_score['und'][0]['value'];
 //dsm($chardata);
 if ($chartdata <= 50){
-    $chartcolor = '#ff3029';
+    $chartcolor = '#ac0600';
 }elseif($chartdata>=50 and $chartdata<=75){
-    $chartcolor='#ffb900';
+    $chartcolor='#654f00';
 }
 else{
-    $chartcolor='#44a560';
+    $chartcolor='#29643a';
 }
 ?>
 <script type="text/javascript">
@@ -141,7 +157,7 @@ else{
                     y:<?php echo ($chartdata); ?>
                 }]
             }]
-        },
+        }
 
 
     );

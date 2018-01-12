@@ -30,16 +30,24 @@ foreach($view->style_plugin->rendered_fields as $key=>$val){
             2]);
 
         var options = {
-            title: "Top HTTPS Compliant Agencies",
+            title: "Top 5 HTTPS Compliant Agencies",
             width: '100%',
             height:250,
             bar: {groupWidth: "95%"},
-            legend: { position: "top" },
+legend: { position: "top" },
+vAxis: {  viewWindow: {
+            min:0,
+	    max:100
+        }
+}
+
+            
+
         };
         var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values5"));
         chart.draw(view, options);
     }
 </script>
 <div id="columnchart_values5"></div>
-<p><button id="link-all-reports"><a href="/agency/all/https_data">Complete List</a></button>
-</p>
+<span class="field-content col-lg-12"><a href="/content/scoring-methods" title="" data-toggle="tooltip" class="infor" ''="" data-original-title="Click Here to see the scoring methods used to calculate the scores"><i class="icon glyphicon glyphicon-info-sign"></i><span class="sr-only">information</span></a></span>
+<a id="link-all-reports" href="/agency/all/https_data">Complete List</a> (Last scan date: <?=dotgov_common_lastScanDate()?>)

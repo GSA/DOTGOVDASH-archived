@@ -5,22 +5,22 @@
  "title": "Our Documents - Home",
  "ruleGroups": {
   "SPEED": {
-   "score": 60
+   "score": 54
   },
   "USABILITY": {
    "score": 62
   }
  },
  "pageStats": {
-  "numberResources": 40,
+  "numberResources": 41,
   "numberHosts": 5,
-  "totalRequestBytes": "3719",
-  "numberStaticResources": 33,
-  "htmlResponseBytes": "13253",
-  "cssResponseBytes": "10071",
-  "imageResponseBytes": "91972",
-  "javascriptResponseBytes": "88502",
-  "otherResponseBytes": "596",
+  "totalRequestBytes": "3809",
+  "numberStaticResources": 34,
+  "htmlResponseBytes": "13254",
+  "cssResponseBytes": "10179",
+  "imageResponseBytes": "92745",
+  "javascriptResponseBytes": "88719",
+  "otherResponseBytes": "947",
   "numberJsResources": 4,
   "numberCssResources": 2
  },
@@ -29,7 +29,7 @@
   "ruleResults": {
    "AvoidLandingPageRedirects": {
     "localizedRuleName": "Avoid landing page redirects",
-    "ruleImpact": 9.5,
+    "ruleImpact": 43.0,
     "groups": [
      "SPEED"
     ],
@@ -39,7 +39,7 @@
       {
        "type": "INT_LITERAL",
        "key": "NUM_REDIRECTS",
-       "value": "2"
+       "value": "3"
       }
      ]
     },
@@ -64,6 +64,18 @@
            "type": "URL",
            "key": "FIRST_URL",
            "value": "http://ourdocuments.gov/"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{REDIRECTED_URL}}",
+         "args": [
+          {
+           "type": "URL",
+           "key": "REDIRECTED_URL",
+           "value": "https://ourdocuments.gov/"
           }
          ]
         }
@@ -139,131 +151,24 @@
    },
    "EnableGzipCompression": {
     "localizedRuleName": "Enable compression",
-    "ruleImpact": 4.1232999999999995,
+    "ruleImpact": 0.0,
     "groups": [
      "SPEED"
     ],
     "summary": {
-     "format": "Compressing resources with gzip or deflate can reduce the number of bytes sent over the network."
-    },
-    "urlBlocks": [
-     {
-      "header": {
-       "format": "{{BEGIN_LINK}}Enable compression{{END_LINK}} for the following resources to reduce their transfer size by {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction).",
-       "args": [
-        {
-         "type": "HYPERLINK",
-         "key": "LINK",
-         "value": "https://developers.google.com/speed/docs/insights/EnableCompression"
-        },
-        {
-         "type": "BYTES",
-         "key": "SIZE_IN_BYTES",
-         "value": "40KiB"
-        },
-        {
-         "type": "PERCENTAGE",
-         "key": "PERCENTAGE",
-         "value": "76%"
-        }
-       ]
-      },
-      "urls": [
-       {
-        "result": {
-         "format": "Compressing {{URL}} could save {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction).",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/global_includes/Universal-Federated-Analytics.1.0.js?agency=NARA&subagency=OURDOCS"
-          },
-          {
-           "type": "BYTES",
-           "key": "SIZE_IN_BYTES",
-           "value": "24.1KiB"
-          },
-          {
-           "type": "PERCENTAGE",
-           "key": "PERCENTAGE",
-           "value": "78%"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "Compressing {{URL}} could save {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction).",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/index.php?flash=false&"
-          },
-          {
-           "type": "BYTES",
-           "key": "SIZE_IN_BYTES",
-           "value": "8.9KiB"
-          },
-          {
-           "type": "PERCENTAGE",
-           "key": "PERCENTAGE",
-           "value": "70%"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "Compressing {{URL}} could save {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction).",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/global_includes/css.css"
-          },
-          {
-           "type": "BYTES",
-           "key": "SIZE_IN_BYTES",
-           "value": "4.5KiB"
-          },
-          {
-           "type": "PERCENTAGE",
-           "key": "PERCENTAGE",
-           "value": "76%"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "Compressing {{URL}} could save {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction).",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/global_includes/css_ns4.css"
-          },
-          {
-           "type": "BYTES",
-           "key": "SIZE_IN_BYTES",
-           "value": "2.5KiB"
-          },
-          {
-           "type": "PERCENTAGE",
-           "key": "PERCENTAGE",
-           "value": "75%"
-          }
-         ]
-        }
-       }
-      ]
-     }
-    ]
+     "format": "You have compression enabled. Learn more about {{BEGIN_LINK}}enabling compression{{END_LINK}}.",
+     "args": [
+      {
+       "type": "HYPERLINK",
+       "key": "LINK",
+       "value": "https://developers.google.com/speed/docs/insights/EnableCompression"
+      }
+     ]
+    }
    },
    "LeverageBrowserCaching": {
     "localizedRuleName": "Leverage browser caching",
-    "ruleImpact": 23.875,
+    "ruleImpact": 22.635295138888893,
     "groups": [
      "SPEED"
     ],
@@ -285,378 +190,6 @@
       "urls": [
        {
         "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/global_includes/css.css"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/global_includes/css_ns4.css"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/btn_check_it_out_off.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/btn_doc_next_on.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/btn_doc_previous_on.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/btn_print-friendly_on.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/btn_top_of_page_on.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/clear_pixel.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/doc_nav_next_document.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/doc_nav_previous_document.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/global_no_flash_top_header.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/home_bottom_org_logos.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/home_brown_title_welcome.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/home_page_main_image_no_flash_02.jpg"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/home_sponsor_logo_history_channel.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/home_sponsor_logo_siemens.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/home_sponsor_logo_us_news.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/home_sponsor_logo_us_news_classroom.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/main_bg_bar_bg_02.jpg"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/navarrow_off.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/navarrow_on.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/navbox_off.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/navbox_on.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/navbox_over.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/navigate_heading_03.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/new_book_ad_in_main_nav.jpg"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/organizations_heading.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/participate_in_national_competitions.jpg"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/right_bar_nav_bg.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/right_bar_page_bg.gif"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
-         "format": "{{URL}} (expiration not specified)",
-         "args": [
-          {
-           "type": "URL",
-           "key": "URL",
-           "value": "https://www.ourdocuments.gov/images/vote_for_your_top_docs.jpg"
-          }
-         ]
-        }
-       },
-       {
-        "result": {
          "format": "{{URL}} ({{LIFETIME}})",
          "args": [
           {
@@ -671,94 +204,282 @@
           }
          ]
         }
-       }
-      ]
-     }
-    ]
-   },
-   "MainResourceServerResponseTime": {
-    "localizedRuleName": "Reduce server response time",
-    "ruleImpact": 5.385,
-    "groups": [
-     "SPEED"
-    ],
-    "urlBlocks": [
-     {
-      "header": {
-       "format": "In our test, your server responded in {{RESPONSE_TIME}}. There are many factors that can slow down your server response time. {{BEGIN_LINK}}Please read our recommendations{{END_LINK}} to learn how you can monitor and measure where your server is spending the most time.",
-       "args": [
-        {
-         "type": "DURATION",
-         "key": "RESPONSE_TIME",
-         "value": "0.56 seconds"
-        },
-        {
-         "type": "HYPERLINK",
-         "key": "LINK",
-         "value": "https://developers.google.com/speed/docs/insights/Server"
-        }
-       ]
-      }
-     }
-    ]
-   },
-   "MinifyCss": {
-    "localizedRuleName": "Minify CSS",
-    "ruleImpact": 0.1832,
-    "groups": [
-     "SPEED"
-    ],
-    "summary": {
-     "format": "Compacting CSS code can save many bytes of data and speed up download and parse times."
-    },
-    "urlBlocks": [
-     {
-      "header": {
-       "format": "{{BEGIN_LINK}}Minify CSS{{END_LINK}} for the following resources to reduce their size by {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction).",
-       "args": [
-        {
-         "type": "HYPERLINK",
-         "key": "LINK",
-         "value": "https://developers.google.com/speed/docs/insights/MinifyResources"
-        },
-        {
-         "type": "BYTES",
-         "key": "SIZE_IN_BYTES",
-         "value": "1.8KiB"
-        },
-        {
-         "type": "PERCENTAGE",
-         "key": "PERCENTAGE",
-         "value": "20%"
-        }
-       ]
-      },
-      "urls": [
+       },
        {
         "result": {
-         "format": "Minifying {{URL}} could save {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction).",
+         "format": "{{URL}} ({{LIFETIME}})",
          "args": [
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.ourdocuments.gov/global_includes/css.css"
+           "value": "https://www.ourdocuments.gov/images/new_book_ad_in_main_nav.jpg"
           },
           {
-           "type": "BYTES",
-           "key": "SIZE_IN_BYTES",
-           "value": "1.2KiB"
-          },
-          {
-           "type": "PERCENTAGE",
-           "key": "PERCENTAGE",
-           "value": "21%"
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.7 hours"
           }
          ]
         }
        },
        {
         "result": {
-         "format": "Minifying {{URL}} could save {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction).",
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/btn_top_of_page_on.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.7 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/doc_nav_previous_document.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.7 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/navbox_over.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.7 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/global_includes/Universal-Federated-Analytics.1.0.js?agency=NARA&subagency=OURDOCS"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.7 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/clear_pixel.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.7 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/navbox_off.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.7 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/right_bar_page_bg.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.7 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/doc_nav_next_document.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.7 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/navbox_on.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.7 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/global_no_flash_top_header.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.7 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/btn_check_it_out_off.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.8 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/btn_doc_previous_on.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.8 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/navarrow_on.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.8 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/navarrow_off.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.8 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/vote_for_your_top_docs.jpg"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.8 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
          "args": [
           {
            "type": "URL",
@@ -766,72 +487,264 @@
            "value": "https://www.ourdocuments.gov/global_includes/css_ns4.css"
           },
           {
-           "type": "BYTES",
-           "key": "SIZE_IN_BYTES",
-           "value": "572B"
-          },
-          {
-           "type": "PERCENTAGE",
-           "key": "PERCENTAGE",
-           "value": "17%"
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.8 hours"
           }
          ]
         }
-       }
-      ]
-     }
-    ]
-   },
-   "MinifyHTML": {
-    "localizedRuleName": "Minify HTML",
-    "ruleImpact": 0.14120000000000002,
-    "groups": [
-     "SPEED"
-    ],
-    "summary": {
-     "format": "Compacting HTML code, including any inline JavaScript and CSS contained in it, can save many bytes of data and speed up download and parse times."
-    },
-    "urlBlocks": [
-     {
-      "header": {
-       "format": "{{BEGIN_LINK}}Minify HTML{{END_LINK}} for the following resources to reduce their size by {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction).",
-       "args": [
-        {
-         "type": "HYPERLINK",
-         "key": "LINK",
-         "value": "https://developers.google.com/speed/docs/insights/MinifyResources"
-        },
-        {
-         "type": "BYTES",
-         "key": "SIZE_IN_BYTES",
-         "value": "1.4KiB"
-        },
-        {
-         "type": "PERCENTAGE",
-         "key": "PERCENTAGE",
-         "value": "12%"
-        }
-       ]
-      },
-      "urls": [
+       },
        {
         "result": {
-         "format": "Minifying {{URL}} could save {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction).",
+         "format": "{{URL}} ({{LIFETIME}})",
          "args": [
           {
            "type": "URL",
            "key": "URL",
-           "value": "https://www.ourdocuments.gov/index.php?flash=false&"
+           "value": "https://www.ourdocuments.gov/images/navigate_heading_03.gif"
           },
           {
-           "type": "BYTES",
-           "key": "SIZE_IN_BYTES",
-           "value": "1.4KiB"
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.8 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/global_includes/css.css"
           },
           {
-           "type": "PERCENTAGE",
-           "key": "PERCENTAGE",
-           "value": "12%"
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.8 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/right_bar_nav_bg.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.8 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/btn_print-friendly_on.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.8 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/main_bg_bar_bg_02.jpg"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.8 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/btn_doc_next_on.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.9 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/home_sponsor_logo_history_channel.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.9 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/home_sponsor_logo_us_news.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.9 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/organizations_heading.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.9 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/participate_in_national_competitions.jpg"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "13.9 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/home_sponsor_logo_us_news_classroom.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "14.2 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/home_sponsor_logo_siemens.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "14.2 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/home_page_main_image_no_flash_02.jpg"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "14.4 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/home_brown_title_welcome.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "15.2 hours"
+          }
+         ]
+        }
+       },
+       {
+        "result": {
+         "format": "{{URL}} ({{LIFETIME}})",
+         "args": [
+          {
+           "type": "URL",
+           "key": "URL",
+           "value": "https://www.ourdocuments.gov/images/home_bottom_org_logos.gif"
+          },
+          {
+           "type": "DURATION",
+           "key": "LIFETIME",
+           "value": "15.4 hours"
           }
          ]
         }
@@ -840,9 +753,60 @@
      }
     ]
    },
+   "MainResourceServerResponseTime": {
+    "localizedRuleName": "Reduce server response time",
+    "ruleImpact": 0.0,
+    "groups": [
+     "SPEED"
+    ],
+    "summary": {
+     "format": "Your server responded quickly. Learn more about {{BEGIN_LINK}}server response time optimization{{END_LINK}}.",
+     "args": [
+      {
+       "type": "HYPERLINK",
+       "key": "LINK",
+       "value": "https://developers.google.com/speed/docs/insights/Server"
+      }
+     ]
+    }
+   },
+   "MinifyCss": {
+    "localizedRuleName": "Minify CSS",
+    "ruleImpact": 0.0,
+    "groups": [
+     "SPEED"
+    ],
+    "summary": {
+     "format": "Your CSS is minified. Learn more about {{BEGIN_LINK}}minifying CSS{{END_LINK}}.",
+     "args": [
+      {
+       "type": "HYPERLINK",
+       "key": "LINK",
+       "value": "https://developers.google.com/speed/docs/insights/MinifyResources"
+      }
+     ]
+    }
+   },
+   "MinifyHTML": {
+    "localizedRuleName": "Minify HTML",
+    "ruleImpact": 0.0,
+    "groups": [
+     "SPEED"
+    ],
+    "summary": {
+     "format": "Your HTML is minified. Learn more about {{BEGIN_LINK}}minifying HTML{{END_LINK}}.",
+     "args": [
+      {
+       "type": "HYPERLINK",
+       "key": "LINK",
+       "value": "https://developers.google.com/speed/docs/insights/MinifyResources"
+      }
+     ]
+    }
+   },
    "MinifyJavaScript": {
     "localizedRuleName": "Minify JavaScript",
-    "ruleImpact": 1.2007,
+    "ruleImpact": 0.22390000000000002,
     "groups": [
      "SPEED"
     ],
@@ -862,19 +826,19 @@
         {
          "type": "BYTES",
          "key": "SIZE_IN_BYTES",
-         "value": "11.7KiB"
+         "value": "2.2KiB"
         },
         {
          "type": "PERCENTAGE",
          "key": "PERCENTAGE",
-         "value": "38%"
+         "value": "33%"
         }
        ]
       },
       "urls": [
        {
         "result": {
-         "format": "Minifying {{URL}} could save {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction).",
+         "format": "Minifying {{URL}} could save {{SIZE_IN_BYTES}} ({{PERCENTAGE}} reduction) after compression.",
          "args": [
           {
            "type": "URL",
@@ -884,12 +848,12 @@
           {
            "type": "BYTES",
            "key": "SIZE_IN_BYTES",
-           "value": "11.7KiB"
+           "value": "2.2KiB"
           },
           {
            "type": "PERCENTAGE",
            "key": "PERCENTAGE",
-           "value": "38%"
+           "value": "33%"
           }
          ]
         }

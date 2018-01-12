@@ -53,19 +53,21 @@ $scanids = dotgov_common_siteAsocScanids(arg(1));
 $scanpath = drupal_get_path_alias("node/".$scanids['mobile_scan_information']);
 ?>
 <?php print $output; ?>
-<div><p><button class="link-all-reports"><a href="/<?=$scanpath?>">Go to Full Report</a></button></p></div>
+<div><p><a class="link-all-reports" href="/<?=$scanpath?>">Go to Full Report</a></p></div>
 <?php 
 $chartdata= $row->_field_data['nid']['entity']->field_mobile_overall_score['und'][0]['value'];
 
 if ($chartdata <= 50){
-    $chartcolor = '#ff3029';
+    $chartcolor = '#ac0600';
 }elseif($chartdata>=50 and $chartdata<=75){
-    $chartcolor='#ffb900';
+    $chartcolor='#654f00';
 }
 else{
-    $chartcolor='#44a560';
+    $chartcolor='#29643a';
 }
 ?>
+<div class="sr-only">The graphic below indicates the level of Mobile score, and this score is <?php echo $chartdata; ?>%.</div>
+
 <script type="text/javascript">
     Highcharts.chart('mobile_chart', {
 
@@ -134,7 +136,7 @@ else{
                     y:<?php echo ($chartdata); ?>
                 }]
             }]
-        },
+        }
 
 
     );

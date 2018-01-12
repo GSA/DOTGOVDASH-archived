@@ -7,7 +7,7 @@
  * @ingroup views_templates
  */
 //print_r($view->style_plugin->rendered_fields);
-$chartData = "[\"Scan Criteria\", \"Overall Compliance Report\", { role: \"style\" } ],";
+$chartData = "[\"Scan Criteria\", \"Overall Report\", { role: \"style\" } ],";
 $chartColors = array('#2e8540', '#94bfa2', '#4773aa', '#8ba6ca', '#00a6d2','#205493');
 $chartCrit = array("field_ssl_score"=>"SSL","field_dap_score"=>"DAP","field_https_score"=>"HTTPS","field_mobile_overall_score"=>"MOBILE","field_mobile_performance_score"=>"MOBILE PERFORMANCE","field_mobile_usability_score"=>"MOBILE FRIENDLY");
 $i = 0;
@@ -35,8 +35,8 @@ foreach($view->style_plugin->rendered_fields[0] as $key=>$val){
 
         var options = {
             chart: {
-                title: 'Compliance Report',
-                subtitle: 'Average score of all <?=$totWebsites?> websites scanned',
+                title: 'Report',
+                subtitle: 'Average score of all <?=$totWebsites?> websites scanned (Last scan date: <?=dotgov_common_lastScanDate()?>)',
             },
             colors: ['<?=implode("','",array_values($chartColors))?>'],
             legend: { position: "left" },
@@ -52,5 +52,5 @@ foreach($view->style_plugin->rendered_fields[0] as $key=>$val){
     }
 </script>
 <div id="columnchart_material" ></div>
-<p><button id="link-all-reports"><a href="/website/all/reports">Complete List</a></button>
-</p>
+<span class="field-content col-lg-12"><a href="/content/scoring-methods" title="" data-toggle="tooltip" class="infor" ''="" data-original-title="Click Here to see the scoring methods used to calculate the scores"><i class="icon glyphicon glyphicon-info-sign"></i><span class="sr-only">information</span></a></span>
+<a id="link-all-reports" href="/website/all/reports">Complete List</a>
