@@ -12,26 +12,29 @@ writeToLogs("Starting Scan",$logFile);
 $scanId = startScan();
 //Below are the full scans run for all websites at once. DAP and HTTPS info are collected from pulse site at once for perforamnce optimization
 writeToLogs("Collecting HTTPS and DAP data from Pulse",$logFile);
-//getPulseData();
+#getPulseData();
+//Get the latest reports from pulse accessibility to local.
+#updateAccessibleScanInfo($scanId);
 //Below are scans that are run individually for each site.
 $listWebsites = getSites();
 foreach($listWebsites as $key=>$website){
 
-    //Update technology Stack Infomration
-    writeToLogs("Running Technology Scan for site ".$website['domain'],$logFile);
-    updateTechStackInfo($website['domain']);
-    //Update HTTPS and DAP info in Drupal
-//    writeToLogs("\nStart HTTPS and DAP Scan ".$website['domain'],$logFile);
-    updateHttpsDAPInfo($key,$scanId,$website);
-//    writeToLogs("\nStart Domain and SSL Scan for ".$website['domain'],$logFile);
-    updateDomainSSLInfo($key,$scanId,$website);
-//    writeToLogs("\nStart Mobile Scan for ".$website['domain'],$logFile);
-    updateMobileScanInfo($key,$scanId,$website);
-//    writeToLogs("\nStart Site Speed Scan for ".$website['domain'],$logFile);
-    updateSiteScanInfo($key,$scanId,$website);
+//    //Update technology Stack Infomration
+writeToLogs("Running Technology Scan for site ".$website['domain'],$logFile);
+updateTechStackInfo($website['domain']);
+//    //Update HTTPS and DAP info in Drupal
+writeToLogs("\nStart HTTPS and DAP Scan ".$website['domain'],$logFile);
+updateHttpsDAPInfo($key,$scanId,$website);
+writeToLogs("\nStart Domain and SSL Scan for ".$website['domain'],$logFile);
+updateDomainSSLInfo($key,$scanId,$website);
+writeToLogs("\nStart Mobile Scan for ".$website['domain'],$logFile);
+updateMobileScanInfo($key,$scanId,$website);
+writeToLogs("\nStart Site Speed Scan for ".$website['domain'],$logFile);
+updateSiteScanInfo($key,$scanId,$website);
 
     //TODO
     //After scan is done. Run the taxonomy processor. This will parse all taxonomy data and create/edit taxonomies and tag appropriate content.
 
 }
 print "Finished Processing!\n";
+

@@ -112,7 +112,7 @@ if($result['node']->bundle == 'website'){
                  <?php
                  foreach($taxoTerms as $tkey=>$tval) {
 			//print "<li> <a class=\"label\" data-format=\"$tval\" href='/search/website_search/%2A?f[0]=im_field_website_tags%3A".$tkey."'>$tval</a></li>";
-			print "<li> <a class=\"label\" data-format=\"$tval\">$tval</a></li>";
+			print "<li> <span class=\"label\" data-format=\"$tval\">$tval</span></li>";
                  }
              ?>
              </ul>
@@ -121,7 +121,7 @@ if($result['node']->bundle == 'website'){
 //             print "<pre>";
 //             print_r($techterms);
              foreach($techterms as $techkey=>$techval) {
-                 print "<div class='col-xs-3 nopadding dataset-resources'><a id='app-button' class='app-button'>".$techval['category']['name']." :&nbsp;<img class='app-icon' src='/".drupal_get_path('module', 'dotgov_common')."/images/icons/".$techval['icon']."'>$techkey ".$techval['appversion']."</a></div>";
+                 print "<div class='col-sm-4 nopadding dataset-resources clearfix'><span id='app-button' class='app-button'>".$techval['category']['name']." :&nbsp;<img alt='app-icon' class='app-icon' src='/".drupal_get_path('module', 'dotgov_common')."/images/icons/".$techval['icon']."'>$techkey ".$techval['appversion']."</span></div>";
              }
              ?>
             </div>
