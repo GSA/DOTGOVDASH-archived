@@ -245,26 +245,22 @@
  * @endcode
  */
 $databases = array (
-  'default' => 
-  array (
-    'default' => 
-    array (
-      'database' => 'dotgov',
-      'username' => 'dotgovuser',
-      'password' => 'd*@%gv#Pr@d$%Cess',
-      'host' => '172.30.64.18',
-      'port' => '',
-      'driver' => 'mysql',
-      'prefix' => '',
-'driver options' => array(
-              PDO::MYSQL_ATTR_SSL_KEY => '/etc/dbcerts/client-key.pem',
-              PDO::MYSQL_ATTR_SSL_CERT => '/etc/dbcerts/client-cert.pem',
-              PDO::MYSQL_ATTR_SSL_CA =>'/etc/dbcerts/ca-cert.pem',
-           ),
-    ),
-  ),
+    'default' =>
+        array (
+            'default' =>
+                array (
+                    'database' => 'dotgovprod',
+                    'username' => 'root',
+                    'password' => 'root',
+                    'host' => 'localhost',
+                    'port' => '',
+                    'driver' => 'mysql',
+                    'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',
+                    'prefix' => '',
+                    'pdo' => array(PDO::MYSQL_ATTR_LOCAL_INFILE => 1 ),
+                ),
+        ),
 );
-
 /**
  * Access control for update.php script.
  *
@@ -295,7 +291,7 @@ $update_free_access = FALSE;
  *   $drupal_hash_salt = file_get_contents('/home/example/salt.txt');
  *
  */
-$drupal_hash_salt = '-D4yzJOmcnG53IPOl70gYv51vsEZwK-eLZQN34kFDzM';
+$drupal_hash_salt = 'L_3VXJCvkZxVbsKIyK67IYl9UtXHMJcYImAZMDvBYvo';
 
 /**
  * Base URL (optional).
@@ -634,7 +630,7 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
  *
  * Remove the leading hash sign to enable.
  */
- $conf['theme_debug'] = TRUE;
+# $conf['theme_debug'] = TRUE;
 
 /**
  * CSS identifier double underscores allowance:
@@ -647,6 +643,5 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
  * @see drupal_clean_css_identifier()
  */
 # $conf['allow_css_double_underscores'] = TRUE;
-$conf['mail_system'] = array(
-  'default-system' => 'DevelMailLog',
-);
+$conf['theme_debug'] = TRUE;
+

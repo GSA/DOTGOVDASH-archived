@@ -73,130 +73,132 @@
  * @ingroup templates
  */
 if(arg(1) == "website_search")
-	$searchtitle = "Search";
+    $searchtitle = "Search";
 else
-	$searchtitle = "Site Search";
+    $searchtitle = "Site Search";
 ?>
 <div class="top-bar">
-			<!-- top header-->
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-xs-7 col-md-7 contacts col">
-						<span class="item">An Official Website Of The United States Government</span> </div>
-<div class="col-xs-5 col-md-5 contacts col" style="text-align:right;font-weight:bold;">
-						<span style="background:yellow;">This site is currently in <a href="//18f.gsa.gov/dashboard/stages/#alpha">alpha</a></span> </div>
-				</div>				</div>
-			</div>
-		</div>
-  <div class="<?php print $container_class; ?>">
+    <!-- top header-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-7 col-md-7 contacts col">
+                <span class="item">An Official Website Of The United States Government</span> </div>
+            <div class="col-xs-5 col-md-5 contacts col" style="text-align:right;font-weight:bold;">
+                <span style="background:yellow;">This site is currently in <a href="//18f.gsa.gov/dashboard/stages/#alpha">alpha</a></span> </div>
+        </div>				</div>
+</div>
+</div>
+<div class="<?php print $container_class; ?>">
     <div class="row">
-      <div class="col-sm-7">
-    <div class="navbar-header">
-      <?php if ($logo): ?>
-        <a class="logo navbar-btn pull-left" href="<?php print $front_page; ?>" title="Digital Dashboard.gov - Home">
-<h1 class="site-logo">Digital Dashboard</h1>
-          <img src="<?php print $logo; ?>" alt="Digital Dashboard.gov - Home" />
-        </a>
-      <?php endif; ?>
+        <div class="col-sm-7">
+            <div class="navbar-header">
+                <?php if ($logo): ?>
+                    <a class="logo navbar-btn pull-left" href="<?php print $front_page; ?>" title="Digital Dashboard.gov - Home">
+                        <h1 class="site-logo">Digital Dashboard</h1>
+                        <img src="<?php print $logo; ?>" alt="Digital Dashboard.gov - Home" />
+                    </a>
+                <?php endif; ?>
 
-      <?php if (!empty($site_name)): ?>
-        <a class="name navbar-brand" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>"><?php print $site_name; ?></a>
-      <?php endif; ?>
+                <?php if (!empty($site_name)): ?>
+                    <a class="name navbar-brand" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>"><?php print $site_name; ?></a>
+                <?php endif; ?>
 
-  
-    </div>
 
-      </div>
-      <div class="col-sm-5">
+            </div>
 
-    <div class="header_block row">
-      <div class="col-xs-12 pull-right">
-      <?php if (!empty($secondary_nav)): ?>
-        <?php print render($secondary_nav); ?>
-      <?php endif; ?>
-      </div>
-      <div class="col-xs-12">
-      <?php if (!empty($page['navigation'])): ?>
-        <?php print render($page['navigation']); ?>
-      <?php endif; ?>
-      </div>
-    </div>
-      </div>
+        </div>
+        <div class="col-sm-5">
+
+            <div class="header_block row">
+                <div class="col-xs-12 pull-right">
+                    <?php if (!empty($secondary_nav)): ?>
+                        <?php print render($secondary_nav); ?>
+                    <?php endif; ?>
+                </div>
+                <div class="col-xs-12">
+                    <?php if (!empty($page['navigation'])): ?>
+                        <?php print render($page['navigation']); ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <header id="navbar" role="banner" class="<?php print $navbar_classes; ?>">
-  
-        <?php if (!empty($primary_nav) || !empty($secondary_nav) || !empty($page['navigation'])): ?>
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
-          <span class="sr-only"><?php print t('Toggle navigation'); ?></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-      <?php endif; ?>
+
     <?php if (!empty($primary_nav) || !empty($secondary_nav) || !empty($page['navigation'])): ?>
-      <div class="navbar-collapse collapse" id="navbar-collapse">
-        <nav role="navigation">
-<h2 id="mainmenulabel" class="sr-only">Main Menu</h2>
-          <?php if (!empty($primary_nav)): ?>
-            <?php print render($primary_nav); ?>
-          <?php endif; ?>
-                  </nav>
-      </div>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only"><?php print t('Toggle navigation'); ?></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
     <?php endif; ?>
-  
+    <?php if (!empty($primary_nav) || !empty($secondary_nav) || !empty($page['navigation'])): ?>
+        <div class="navbar-collapse collapse" id="navbar-collapse">
+            <nav role="navigation">
+                <h2 id="mainmenulabel" class="sr-only">Main Menu</h2>
+                <?php if (!empty($primary_nav)): ?>
+                    <?php print render($primary_nav); ?>
+                <?php endif; ?>
+            </nav>
+        </div>
+    <?php endif; ?>
+
 </header>
 
 <div class="main-container <?php print $container_class; ?>">
- 
-      <a id="main-content"></a>
-      <?php print render($title_prefix); ?>
-      <?php if (!empty($title)): ?>
+
+    <a id="main-content"></a>
+    <?php print render($title_prefix); ?>
+    <?php if (!empty($title)): ?>
         <h1 class="page-header"><?=$searchtitle?></h1>
-      <?php endif; ?>
-      <?php print render($title_suffix); ?>
-  <div class="container white-back">
-<?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
-  <div class="row">
-
-    <?php if (!empty($page['sidebar_first'])): ?>
-      <aside class="col-sm-3" role="complementary">
-        <?php print render($page['sidebar_first']); ?>
-      </aside>  <!-- /#sidebar-first -->
     <?php endif; ?>
+    <?php print render($title_suffix); ?>
+    <div class="container white-back">
+        <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
+        <div class="row">
 
-    <section<?php print $content_column_class; ?>>
-      <?php if (!empty($page['highlighted'])): ?>
-        <div class="highlighted jumbotron"><?php print render($page['highlighted']); ?></div>
-      <?php endif; ?>
-     
-      <?php print $messages; ?>
-      <?php if (!empty($tabs)): ?>
-        <?php print render($tabs); ?>
-      <?php endif; ?>
-      <?php if (!empty($page['help'])): ?>
-        <?php print render($page['help']); ?>
-      <?php endif; ?>
-      <?php if (!empty($action_links)): ?>
-        <ul class="action-links"><?php print render($action_links); ?></ul>
-      <?php endif; ?>
-      <?php print render($page['content']); ?>
-    </section>
+            <?php if (!empty($page['sidebar_first'])): ?>
+                <aside class="col-sm-3" role="complementary">
+                    <?php print render($page['sidebar_first']); ?>
+                </aside>  <!-- /#sidebar-first -->
+            <?php endif; ?>
 
-    <?php if (!empty($page['sidebar_second'])): ?>
-      <aside class="col-sm-3" role="complementary">
-        <?php print render($page['sidebar_second']); ?>
-      </aside>  <!-- /#sidebar-second -->
-    <?php endif; ?>
+            <section<?php print $content_column_class; ?>>
+                <?php if (!empty($page['highlighted'])): ?>
+                    <div class="highlighted jumbotron"><?php print render($page['highlighted']); ?></div>
+                <?php endif; ?>
 
-  </div>
+                <?php print $messages; ?>
+                <?php if (!empty($tabs)): ?>
+                    <?php print render($tabs); ?>
+                <?php endif; ?>
+                <?php if (!empty($page['help'])): ?>
+                    <?php print render($page['help']); ?>
+                <?php endif; ?>
+                <?php if (!empty($action_links)): ?>
+                    <ul class="action-links"><?php print render($action_links); ?></ul>
+                <?php endif; ?>
+                <?php print render($page['content']); ?>
+            </section>
+
+            <?php if (!empty($page['sidebar_second'])): ?>
+                <aside class="col-sm-3" role="complementary">
+                    <?php print render($page['sidebar_second']); ?>
+                </aside>  <!-- /#sidebar-second -->
+            <?php endif; ?>
+
+        </div>
+    </div>
 </div>
+<div id="bottom-sticky">
+    <a class="view_bookmark" title="Add/View Bookmarks">View Bookmarks</a>
 </div>
-
 <?php if (!empty($page['footer'])): ?>
-  
-  <footer class="footer <?php print $container_class; ?>">
-    <?php print render($page['footer']); ?>
-  </footer>
-  
+
+    <footer class="footer <?php print $container_class; ?>">
+        <?php print render($page['footer']); ?>
+    </footer>
+
 <?php endif; ?>

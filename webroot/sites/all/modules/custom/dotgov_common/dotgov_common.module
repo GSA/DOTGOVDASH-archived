@@ -150,9 +150,13 @@ function dotgov_common_block_view($delta = '')
 function dotgov_commmon_getTechStackInfo($nid){
     $techterms = dotgov_commmon_get_techTerms($nid);
     $output = "<div id='techstack' class='row dataset-resources'>";
-    foreach($techterms as $techkey=>$techval) {
-        $output .= "<div class='col-sm-12 nopadding dataset-resources'><span id='app-button' class='app-button'>".$techval['category']['name']." :&nbsp;<img alt='app-icon' class='app-icon' src='/".drupal_get_path('module', 'dotgov_common')."/images/icons/".$techval['icon']."'>$techkey ".$techval['appversion']."</span></div>";
+    if(count($techterms) != 0) {
+        foreach ($techterms as $techkey => $techval) {
+            $output .= "<div class='col-sm-12 nopadding dataset-resources'><span id='app-button' class='app-button'>" . $techval['category']['name'] . " :&nbsp;<img alt='app-icon' class='app-icon' src='/" . drupal_get_path('module', 'dotgov_common') . "/images/icons/" . $techval['icon'] . "'>$techkey " . $techval['appversion'] . "</span></div>";
+        }
     }
+    else
+        $output .= '<div>No Technology Stack Information available.</div>';
     $output .= "</div>";
 
     return $output;

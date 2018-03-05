@@ -48,4 +48,4 @@ vAxis: {  viewWindow: {
 </script>
 <div id="columnchart_values7" ></div>
 <span class="field-content col-lg-12"><a href="/content/scoring-methods" title="" data-toggle="tooltip" class="infor" data-original-title="Click Here to see the scoring methods used to calculate the scores"><i class="icon glyphicon glyphicon-info-sign"></i><span class="sr-only">Click Here to see the scoring methods used to calculate the scores</span></a></span>
-<a id="link-all-reports" href="/agency/all/mobile_data">Complete List</a> (Last scan date: <?=dotgov_common_lastScanDate()?>)
+<?php if (arg(2) == 'reports-data') print '<a id="link-all-reports" href="/agency/all/mobile_data">Complete List</a>';?> (Last scan date: <?=dotgov_common_lastScanDate()?>)<div><br>*Only the Top 5 Performing Agencies are shown</div>

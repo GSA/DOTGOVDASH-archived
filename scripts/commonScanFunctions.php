@@ -12,9 +12,11 @@ function getSites()
 {
     $websites = array();
 
-//$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value LIKE '%aff.gov%' and b.nid=a.entity_id", array(':bundle' => 'website'));
+#$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id and b.status='1'", array(':bundle' => 'website'));
+//$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value LIKE 'access-board.gov' and b.nid=a.entity_id", array(':bundle' => 'website'));
 //    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id", array(':bundle' => 'website'));
-   $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id  and  a.entity_id > 4779", array(':bundle' => 'website'));
+//$query = db_query("select b.field_website_id_nid entity_id,d.body_value,c.title from field_data_field_site_inspector_raw_out a , field_data_field_website_id b , node c , field_data_body d where a.field_site_inspector_raw_out_value like '%Error:%' and a.entity_id=b.entity_id and b.field_website_id_nid = c.nid and c.nid = d.entity_id");
+  $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id  and  b.status='1' and a.entity_id > '634'", array(':bundle' => 'website'));
 
     //Final Query
 //    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id and b.nid not in (select c.field_website_id_nid from field_data_body a , node b, field_data_field_website_id c  where b.type='mobile_scan_information' and b.nid=a.entity_id and b.nid=c.entity_id and (UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - b.changed)/3600 >= 3)", array(':bundle' => 'website'));
@@ -545,9 +547,9 @@ function getBaseDomain($domain){
  */
 
 function getSiteInspectorOutput($domain){
-    //$command = "../tools/site_inspector/bin/site-inspector  inspect -j $domain";
+    $command = "../tools/site_inspector/bin/site-inspector  inspect -j $domain";
     //Pass Site Inspector
-    $command = " /usr/local/lib/ruby/gems/2.4.0/gems/site-inspector-3.1.1/bin/site-inspector inspect -j $domain";
+    //$command = "/usr/local/lib/ruby/gems/2.4.0/gems/site-inspector-3.1.1/bin/site-inspector inspect -j $domain";
     $spout = shell_exec("export RUBYOPT=-W0;$command");
     $spRawOut = json_decode($spout,true);
     //print_r($spRawOut);
@@ -570,6 +572,26 @@ function getSiteInspectorOutput($domain){
 }
 
 /*
+ * Get dnssec status of a domain. Domains with dnssec will return output with RRSIG data (DNNSEC cryptographic signature)
+ * dig +dnssec pic.gov @8.8.8.8|grep -i 'rrsig'
+ */
+
+function getDnssecStatus($domain){
+  $dnsseccom = "dig +dnssec $domain @8.8.8.8|grep -i 'rrsig'";
+  $outp = array();
+  $comret = "";
+  execCommand("$dnsseccom",$outp,$comret);
+  $commandString = implode(" ", $outp);
+  //If the command output is null there is no RRSIG (DNNSEC cryptographic signature) info for the domain
+  if(trim($commandString) == '')
+    $dnssecstat = '0';
+  else
+    $dnssecstat = '1';
+  return $dnssecstat;
+}
+
+
+/*
  * Get Pulse data into a custom table
  * To import CSV the following line must be added to settings.php
  */
@@ -580,7 +602,7 @@ function getPulseData(){
     $localhttpsfile = "/tmp/pulsehttp.csv";
     $localdapfile = "/tmp/pulsedap.csv";
     $pulsehttpsurl = "https://pulse.cio.gov/data/domains/https.csv";
-    $pulsedapurl = "https://pulse.cio.gov/data/domains/analytics.csv";
+    $pulsedapurl = "https://pulse.cio.gov/data/hosts/analytics.csv";
     //Get Pulse https data and enter to a temp table
     file_put_contents("$localhttpsfile", file_get_contents("$pulsehttpsurl"));
     db_query("truncate table custom_pulse_https_data");
@@ -591,6 +613,9 @@ function getPulseData(){
     db_query("truncate table custom_pulse_dap_data");
     db_query("LOAD DATA LOCAL INFILE '".$localdapfile."' INTO TABLE `custom_pulse_dap_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
     db_query("update custom_pulse_https_data a , custom_pulse_dap_data b set a.dap=b.dap where a.domain=b.domain");
+
+  //Update branch information since pulse is not giving that data any more
+  updateBranchInfo();
 
     //Update Agency information from CSV file
     updatePulseAgencyInfo("$localhttpsfile");
@@ -617,6 +642,28 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
         $node->nid = $nodeId;
     }
     $node->promote = 0;
+
+  //Collect HTTPS and Redirect status from Domain scan and update HTTPS
+    $domainScanNodeTit = "Domain Scan ".$website['domain'];
+    if(($domainNodeId = findNode($domainScanNodeTit,'domain_scan_information')) != FALSE){
+        $domquery = db_query("select field_site_inspector_raw_out_value from  field_data_field_site_inspector_raw_out where entity_id=:nid", array(':nid' => $domainNodeId));
+        foreach ($domquery as $domresult) {
+            $domjson = json_decode($domresult->field_site_inspector_raw_out_value);
+            $domjsonHttp =  $domjson->https;
+            $domjsonRed =  $domjson->redirect;
+            if($domjsonHttp == '1')
+              $domjsonHttp = 'Yes';
+            else
+              $domjsonHttp = 'No';
+          if($domjsonRed == '1')
+            $domjsonRed = 'Yes';
+          else
+            $domjsonRed = 'No';
+
+            db_query("update custom_pulse_https_data set HTTPS = '$domjsonHttp' , redirect = '$domjsonRed' where domain=:domain",array(':domain' => $website['domain']));
+        }
+    }
+
     $query = db_query("select * from  custom_pulse_https_data where domain=:domain", array(':domain' => $website['domain']));
     foreach ($query as $result) {
         $tags = array();
@@ -624,6 +671,12 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
         $node->field_enforce_https['und'][0]['value'] = $result->EnfHTTPS;
         $node->field_hsts_status['und'][0]['value'] = $result->HSTS;
         $node->field_preload_status['und'][0]['value'] = $result->preloaded;
+        $node->field_compl_m_15_13_bod['und'][0]['value'] = $result->Compliant_mbod;
+        $node->field_free_of_rc4_3des_and_sslv2['und'][0]['value'] = $result->freeofunsecure;
+        $node->field_3des_status['und'][0]['value'] = $result->des3;
+        $node->field_rc4_status['und'][0]['value'] = $result->rc4;
+        $node->field_ssl_v2_from_pulse['und'][0]['value'] = $result->sslv2;
+        $node->field_ssl_v3_from_pulse['und'][0]['value'] = $result->sslv3;
         $node->field_redirect['und'][0]['value'] = $result->redirect;
         if($result->redirect == 'Yes')
             $node->field_redirect_url['und'][0]['value'] = getSiteRedirectDest($website['domain']);
@@ -785,7 +838,9 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
 
     $siInfo = getSiteInspectorOutput($website['domain']);
     //Update Site Inspector details
-
+    //Override Siteinspector dnssec with custom dnssec result
+     $siInfo['dnssec'] = getDnssecStatus($website['domain']);
+	
     $node->field_cdn_provider_name['und'][0]['value'] = $siInfo['cdn'];
     $node->field_cloud_provider['und'][0]['value'] = $siInfo['cloud_provider'];
     $node->field_uses_sitemap['und'][0]['value'] = ($siInfo['sitemap_xml'] == '')?0:1;
@@ -1190,13 +1245,15 @@ function updatePulseAgencyInfo($csvfile){
     foreach($csv as $csval){
         print "$csval[3] \n";
         if(trim($csval[3]) != ''){
+          $branchname = getBranchInfo($csval[3]);
             //Check if the Agency exists if not create a new agency
             if(($agencyId = findNode($csval[3],'agency')) != FALSE){
                 echo "found agency $agencyId";
                 $anode = node_load($agencyId);
                 //Update only branch info for agency in case it changed
-                if($anode->field_agency_branch[$anode->language][0]['value'] != $csval[2]) {
-                    $anode->field_agency_branch[$anode->language][0]['value'] = $csval[2];
+
+                if($anode->field_agency_branch[$anode->language][0]['value'] != $branchname) {
+                    $anode->field_agency_branch[$anode->language][0]['value'] = $branchname;
                     node_object_prepare($anode);
                     if ($anode = node_submit($anode)) {
                         node_save($anode);
@@ -1217,7 +1274,7 @@ function updatePulseAgencyInfo($csvfile){
 // Add author of the node
                 $anode->uid = "1";
                 $anode->name = "admin";
-                $anode->field_agency_branch[$anode->language][0]['value'] = $csval[2];
+                $anode->field_agency_branch[$anode->language][0]['value'] = $branchname;
                 node_object_prepare($anode);
                 if($anode=node_submit($anode)){
                     node_save($anode);
@@ -1255,7 +1312,7 @@ function updatePulseWebsiteInfo($csvfile){
             $node->title = $csval[0];
 
             $node->body[$node->language][0]['value'] = $csval[1];
-            $node->field_agency_branch[$node->language][0]['value'] = $csval[2];
+            $node->field_agency_branch[$node->language][0]['value'] = getBranchInfo($csval[3]);
 
             //Check if the Agency exists if not create a new agency
             if(($agencyId = findNode($csval[3],'agency')) != FALSE){
@@ -1453,12 +1510,16 @@ function updateTechStackInfo($website){
         "Web Mail"=>"field_web_mail_applications",
         "Web Server Extensions"=>"field_web_server_extensions",
         "Wikis"=>"field_wiki_applications");
-    $weburl = "https://".$website;
+    $weburl = "http://".$website;
     //$command = "node index.js $weburl";
     //$tsout = shell_exec("export npm_config_loglevel=silent;cd ../tools/wappalyzer/;$command");
-    $command = "node /usr/lib/node_modules/wappalyzer/index.js $website";
+    $command = "node /usr/lib/node_modules/wappalyzer/index.js $weburl";
+    shell_exec("export npm_config_loglevel=silent");
     $tsout = shell_exec("export npm_config_loglevel=silent;$command");
-
+if (strpos($tsout, 'JQMIGRATE:') !== false) {
+    $tsout1 = explode(" version 1.4.1",$tsout);
+    $tsout = $tsout1[1];
+}
     $tsobj = json_decode($tsout);
     $tags = array();
     $k = 1;
@@ -1480,14 +1541,19 @@ function updateTechStackInfo($website){
 
             $tags[$tsAppCat][] = $tsobj->name;
     }
+    print_r($tags);
     $curNodeid = findNode($website,'website');
     $webnode = node_load($curNodeid);
     $webnode->field_technology_scan_raw['und'][0]['value'] = $tsout;
     $cdnproviders = findCDNProvider("$website");
+foreach($varCatassoc as $vkey=>$vval){
+		 $webnode->{$vval} = array();
+		//print "$vkey -- $vval \n";
+	}
     if(!empty($cdnproviders)){
         $tags['CDN'] = array_values($cdnproviders);
     }
-    //print_r($tags);
+    print_r($tags);
     foreach ($tags as $key => $tagarr) {
         $i = 0;
         foreach ($tagarr as $tkey => $tag) {
@@ -1804,4 +1870,148 @@ function getAccessibleAPIdata(){
         $allAgenciesFile = file_save_data($agencyAccessApiData, file_default_scheme() . '://accessibility_reports/all_agencies.json', FILE_EXISTS_REPLACE);
     }
 
+}
+
+/*
+ * Update Branch Info. Previously pulse was giving this data
+ */
+
+function updateBranchInfo(){
+  //Update Legislative Branch sites
+  db_query("update custom_pulse_https_data set branch='legislative' where agency in 
+	('Architect of the Capitol','Congressional Office of Compliance','Government Publishing Office','Library of Congress','Stennis Center for Public Service','The Legislative Branch (Congress)','U.S. Capitol Police')");
+  //Update Judicial Branch Sites
+  db_query("update custom_pulse_https_data set branch='judicial' where  agency in ('The Supreme Court','U.S Courts')");
+  //Update Executive Bracnh Sites
+  db_query("update custom_pulse_https_data set branch='executive' where agency in 
+	(('Administrative Conference of the United States'),('Advisory Council on Historic Preservation'),
+	('African Development Foundation'),
+	('American Battle Monuments Commission'),
+	('AMTRAK'),
+	('Appalachian Regional Commission'),
+	('Appraisal Subcommittee'),
+	('Armed Forces Retirement Home'),
+	('Central Intelligence Agency'),
+	('Civil Air Patrol'),
+	('Comm for People Who Are Blind/Severly Disabled'),
+	('Commodity Futures Trading Commission'),
+	('Consumer Financial Protection Bureau'),
+	('Consumer Product Safety Commission'),
+	('Corporation for National & Community Service'),
+	('Council of Inspector General on Integrity and Efficiency'),
+	('Court Services and Offender Supervision'),
+	('Defense Nuclear Facilities Safety Board'),
+	('Delta Regional Authority'),
+	('Denali Commission'),
+	('Department of Agriculture'),
+	('Department of Commerce'),
+	('Department of Defense'),
+	('Department of Education'),
+	('Department of Energy'),
+	('Department of Health And Human Services'),
+	('Department of Homeland Security'),
+	('Department of Housing And Urban Development'),
+	('Department of Justice'),
+	('Department of Labor'),
+	('Department of State'),
+	('Department of State OIG'),
+	('Department of the Interior'),
+	('Department of the Treasury'),
+	('Department of Transportation'),
+	('Department of Veterans Affairs'),
+	('Director of National Intelligence'),
+	('Environmental Protection Agency'),
+	('Equal Employment Opportunity Commission'),
+	('Executive Office of the President'),
+	('Export/Import Bank of the U.S.'),
+	('Federal Communications Commission'),
+	('Federal Deposit Insurance Corporation'),
+	('Federal Elections Commission'),
+	('Federal Energy Regulatory Commission'),
+	('Federal Housing Finance Agency'),
+	('Federal Housing Finance Agency Office of Inspector General'),
+	('Federal Labor Relations Authority'),
+	('Federal Maritime Commission'),
+	('Federal Mediation and Conciliation Service'),
+	('Federal Mine Safety and Health Review Company'),
+	('Federal Reserve System'),
+	('Federal Retirement Thrift Investment Board'),
+	('Federal Trade Commission'),
+	('General Services Administration'),
+	('Gulf Coast Ecosystem Restoration Council (GCERC)'),
+	('Harry S. Truman Scholarship Foundation'),
+	('Institute of Museum and Library Services'),
+	('Inter-American Foundation'),
+	('International Broadcasting Bureau'),
+	('James Madison Memorial Fellowship Foundation'),
+	('Legal Services Corporation'),
+	('Marine Mammal Commission'),
+	('Medicaid and CHIP Payment and Access Commission'),
+	('Medical Payment Advisory Commission'),
+	('Merit Systems Protection Board'),
+	('Millennium Challenge Corporation'),
+	('Morris K. Udall Foundation'),
+	('National Aeronautics and Space Administration'),
+	('National Archives and Records Administration'),
+	('National Capital Planning Commission'),
+	('National Council on Disability'),
+	('National Credit Union Administration'),
+	('National Endowment for the Arts'),
+	('National Endowment for the Humanities'),
+	('National Gallery of Art'),
+	('National Indian Gaming Commission'),
+	('National Labor Relations Board'),
+	('National Mediation Board'),
+	('National Nanotechnology Coordination Office'),
+	('National Nuclear Security Administration'),
+	('National Science Foundation'),
+	('National Security Agency'),
+	('National Transportation Safety Board'),
+	('Networking Information Technology Research and Development (NITRD)'),
+	('Nuclear Regulatory Commission'),
+	('Occupational Safety & Health Review Commission'),
+	('Office of Government Ethics'),
+	('Office of Personnel Management'),
+	('Overseas Private Investment Corporation'),
+	('Pension Benefit Guaranty Corporation'),
+	('Postal Rate Commission'),
+	('Railroad Retirement Board'),
+	('Securities and Exchange Commission'),
+	('Selective Service System'),
+	('Small Business Administration'),
+	('Smithsonian Institution'),
+	('Social Security Administration'),
+	('Social Security Advisory Board'),
+	('Special IG for Afghanistan Reconstruction'),
+	('State Justice Institute (SJI)'),
+	('Surface Transportation Board (STB)'),
+	('Tennessee Valley Authority'),
+	('Terrorist Screening Center'),
+	('The Intelligence Community'),
+	('The United States World War One Centennial Commission'),
+	('U. S. Access Board'),
+	('U. S. International Trade Commission'),
+	('U. S. Office of Special Counsel'),
+	('U. S. Peace Corps'),
+	('U. S. Postal Service'),
+	('U.S. Agency for International Development'),
+	('U.S. Chemical Safety and Hazard Investigation Board'),
+	('U.S. Commission of Fine Arts'),
+	('U.S. Commission on Civil Rights'),
+	('U.S. Postal Service, Office of Inspector General'),
+	('U.S. Trade and Development Agency'),
+	('United Stated Global Change Research Program'),
+	('United States Office of Government Ethics'),
+	('US Interagency Council on Homelessness'))");
+}
+
+/*
+ * Get Branch Info from Agency name
+ */
+function getBranchInfo($agencyname){
+
+  $branchname = db_query("select branch from custom_pulse_https_data where agency=:agencyname limit 1", array(':agencyname' => $agencyname))->fetchField();
+  if($branchname == '')
+    $branchname = 'NA';
+  return $branchname;
 }
