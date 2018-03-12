@@ -78,16 +78,22 @@ elseif($row->_field_data['nid']['entity']->field_dap_status['und'][0]['value'] =
 <div><p><a class="link-all-reports" href="/<?=$scanpath?>">Go to Full Report</a></p></div>
 <?php //dsm($view->result);
 //dsm ($row->_field_data['nid']['entity']->field_https_score['und'][0]['safe_value']);
+
 $chartdata= $row->_field_data['nid']['entity']->field_dap_score['und'][0]['value'];
-//dsm($chardata);
+if($chartdata == NULL){
+	$chartdata = 0;
+}
+
 if ($chartdata <= 50){
     $chartcolor = '#ac0600';
 }elseif($chartdata>=50 and $chartdata<=75){
     $chartcolor='#654f00';
 }
+
 else{
     $chartcolor='#29643a';
 }
+
 ?>
 <script type="text/javascript">
     Highcharts.chart('dap_chart', {
@@ -149,7 +155,7 @@ else{
             },
 
             series: [{
-                name: 'HTTPS',
+                name: 'DAP',
                 data: [{
                     color: '<?php echo $chartcolor; ?>',
                     radius: '118%',

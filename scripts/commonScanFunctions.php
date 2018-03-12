@@ -1460,56 +1460,56 @@ function findCDNProvider($website){
 
 function updateTechStackInfo($website){
     //Associate field names with categories of technology
-    $varCatassoc = array("CMS"=>"field_cms_applications",
-        "Widgets"=>"field_widget_applications",
-        "Analytics"=>"field_analytics_applications",
-        "Font Scripts"=>"field_font_script_applications",
-        "Web Servers"=>"field_web_server",
-        "Cache Tools"=>"field_cache_tools",
-        "Javascript Frameworks"=>"field_javascript_frameworks",
-        "Programming Languages"=>"field_programming_languages",
-        "Advertising Networks"=>"field_advertising_networks",
-        "Blogs"=>"field_blog_applications",
-        "Build CI Systems"=>"field_build_ci_systems",
-        "Captchas"=>"field_captcha_applications",
-        "CDN"=>"field_cdn_applications",
-        "Comment Systems"=>"field_comment_systems_applicatio",
-        "Control Systems"=>"field_control_systems_applicatio",
-        "CRM"=>"field_crm_applications",
-        "Database Managers"=>"field_database_managers",
-        "Databases"=>"field_databases",
-        "Dev Tools"=>"field_dev_tools",
-        "Document Management Systems"=>"field_document_management_system",
-        "Documentation Tools"=>"field_documentation_tools",
-        "Ecommerce"=>"field_ecommerce_applications",
-        "Editors"=>"field_editor_applications",
-        "Feed Readers"=>"field_feed_readers",
-        "Hosting Panels"=>"field_hosting_panels",
-        "Issue Trackers"=>"field_issue_trackers",
-        "JavaScript Graphics"=>"field_javascript_graphics_applic",
-        "Landing Page Builders"=>"field_landing_page_builders",
-        "Live Chat"=>"field_live_chat_applications",
-        "LMS"=>"field_lms_applications",
-        "Maps"=>"field_maps_applications",
-        "Marketing Automation"=>"field_marketing_automation",
-        "Media Servers"=>"field_media_servers",
-        "Message Boards"=>"field_message_boards",
-        "Miscellaneous"=>"field_miscellaneous_application",
-        "Mobile Frameworks"=>"field_mobile_frameworks",
-        "Network Devices"=>"field_network_devices",
-        "Network Storage"=>"field_network_storage",
-        "Operating Systems"=>"field_operating_systems",
-        "Payment Processors"=>"field_payment_processors",
-        "Photo Galleries"=>"field_photo_galleries",
-        "Remote Access"=>"field_remote_access",
-        "Rich Text Editors"=>"field_rich_text_editors",
-        "Search Engines"=>"field_search_engines",
-        "Tag Managers"=>"field_tag_managers",
-        "Video Players"=>"field_video_players",
-        "Web Frameworks"=>"field_web_frameworks",
-        "Web Mail"=>"field_web_mail_applications",
-        "Web Server Extensions"=>"field_web_server_extensions",
-        "Wikis"=>"field_wiki_applications");
+    $varCatassoc = array("cms"=>"field_cms_applications",
+        "widgets"=>"field_widget_applications",
+        "analytics"=>"field_analytics_applications",
+        "font scripts"=>"field_font_script_applications",
+        "web servers"=>"field_web_server",
+        "cache tools"=>"field_cache_tools",
+        "javascript frameworks"=>"field_javascript_frameworks",
+        "programming languages"=>"field_programming_languages",
+        "advertising networks"=>"field_advertising_networks",
+        "blogs"=>"field_blog_applications",
+        "build ci systems"=>"field_build_ci_systems",
+        "captchas"=>"field_captcha_applications",
+        "cdn"=>"field_cdn_applications",
+        "comment systems"=>"field_comment_systems_applicatio",
+        "control systems"=>"field_control_systems_applicatio",
+        "crm"=>"field_crm_applications",
+        "database managers"=>"field_database_managers",
+        "databases"=>"field_databases",
+        "dev tools"=>"field_dev_tools",
+        "document management systems"=>"field_document_management_system",
+        "documentation tools"=>"field_documentation_tools",
+        "ecommerce"=>"field_ecommerce_applications",
+        "editors"=>"field_editor_applications",
+        "feed readers"=>"field_feed_readers",
+        "hosting panels"=>"field_hosting_panels",
+        "issue trackers"=>"field_issue_trackers",
+        "javascript graphics"=>"field_javascript_graphics_applic",
+        "landing page builders"=>"field_landing_page_builders",
+        "live chat"=>"field_live_chat_applications",
+        "lms"=>"field_lms_applications",
+        "maps"=>"field_maps_applications",
+        "marketing automation"=>"field_marketing_automation",
+        "media servers"=>"field_media_servers",
+        "message boards"=>"field_message_boards",
+        "miscellaneous"=>"field_miscellaneous_application",
+        "mobile frameworks"=>"field_mobile_frameworks",
+        "network devices"=>"field_network_devices",
+        "network storage"=>"field_network_storage",
+        "operating systems"=>"field_operating_systems",
+        "payment processors"=>"field_payment_processors",
+        "photo galleries"=>"field_photo_galleries",
+        "remote access"=>"field_remote_access",
+        "rich text editors"=>"field_rich_text_editors",
+        "search engines"=>"field_search_engines",
+        "tag managers"=>"field_tag_managers",
+        "video players"=>"field_video_players",
+        "web frameworks"=>"field_web_frameworks",
+        "web mail"=>"field_web_mail_applications",
+        "web server extensions"=>"field_web_server_extensions",
+        "wikis"=>"field_wiki_applications");
     $weburl = "http://".$website;
     //$command = "node index.js $weburl";
     //$tsout = shell_exec("export npm_config_loglevel=silent;cd ../tools/wappalyzer/;$command");
@@ -1520,7 +1520,11 @@ if (strpos($tsout, 'JQMIGRATE:') !== false) {
     $tsout1 = explode(" version 1.4.1",$tsout);
     $tsout = $tsout1[1];
 }
-    $tsobj = json_decode($tsout);
+    $tsout2 = strstr($tsout,'[{"');
+    $tsout2 = str_replace('\'', '\\\'', $tsout2);
+    $tsout2 = str_replace("\\n","",$tsout2);
+
+    $tsobj = json_decode($tsout2);
     $tags = array();
     $k = 1;
     //foreach($tsobj->applications as $tskey=>$tsobj){
@@ -1536,22 +1540,22 @@ if (strpos($tsout, 'JQMIGRATE:') !== false) {
         if(trim($tsobj->version) != '') {
             $tsAppname .= "_" . $tsobj->version;
             //if (!in_array($tsAppname, $tags[$tsAppCat]))
-                $tags[$tsAppCat][] = $tsAppname;
+                $tags[strtolower($tsAppCat)][] = $tsAppname;
         }
 
-            $tags[$tsAppCat][] = $tsobj->name;
+            $tags[strtolower($tsAppCat)][] = $tsobj->name;
     }
-    print_r($tags);
+    //print_r($tags);
     $curNodeid = findNode($website,'website');
     $webnode = node_load($curNodeid);
-    $webnode->field_technology_scan_raw['und'][0]['value'] = $tsout;
+    $webnode->field_technology_scan_raw['und'][0]['value'] = $tsout2;
     $cdnproviders = findCDNProvider("$website");
 foreach($varCatassoc as $vkey=>$vval){
 		 $webnode->{$vval} = array();
 		//print "$vkey -- $vval \n";
 	}
     if(!empty($cdnproviders)){
-        $tags['CDN'] = array_values($cdnproviders);
+        $tags['cdn'] = array_values($cdnproviders);
     }
     print_r($tags);
     foreach ($tags as $key => $tagarr) {
