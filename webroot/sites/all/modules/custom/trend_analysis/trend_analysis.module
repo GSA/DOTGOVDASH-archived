@@ -12,7 +12,22 @@ function trend_analysis_theme($existing, $type, $theme, $path) {
             'template' => 'trend-analysis-graph-page',
             'variables' => array('nid' => NULL),
             'path' => drupal_get_path('module', 'trend_analysis') . '/templates',
-        )
+        ),
+      'trend_analysis_sparkline_page' => array(
+        'template' => 'trend-analysis-sparkline-page',
+        'variables' => array('nid' => NULL),
+        'path' => drupal_get_path('module', 'trend_analysis') . '/templates',
+      ),
+      'trend_analysis_multivalgraph_page' => array(
+        'template' => 'trend-analysis-multivalgraph-page',
+        'variables' => array('nid' => NULL),
+        'path' => drupal_get_path('module', 'trend_analysis') . '/templates',
+      ),
+      'trend_analysis_multivalspark_page' => array(
+        'template' => 'trend-analysis-multivalspark-page',
+        'variables' => array('nid' => NULL),
+        'path' => drupal_get_path('module', 'trend_analysis') . '/templates',
+      )
     );
 }
 
@@ -21,23 +36,64 @@ function trend_analysis_block_info() {
         // info: The name of the block.
         'info' => t('DNSSEC Trend Analysis Chart'),
         'cache' => DRUPAL_NO_CACHE
-);
-    $blocks['trends_dap'] = array(
-        'info' => t('DAP Trend Analysis Chart'),
-        'cache' => DRUPAL_NO_CACHE
     );
+  $blocks['trends_dnssec_sparkline'] = array(
+    // info: The name of the block.
+    'info' => t('DNSSEC Trend Analysis Sparkline'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+  $blocks['trends_dap'] = array(
+    'info' => t('DAP Trend Analysis Chart'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+  $blocks['trends_dap_sparkline'] = array(
+    'info' => t('DAP Trend Analysis Sparkline'),
+    'cache' => DRUPAL_NO_CACHE
+  );
     $blocks['trends_ipv6'] = array(
         'info' => t('IPv6 Trend Analysis Chart'),
         'cache' => DRUPAL_NO_CACHE
     );
+  $blocks['trends_ipv6_sparkline'] = array(
+    'info' => t('IPv6 Trend Analysis Sparkline'),
+    'cache' => DRUPAL_NO_CACHE
+  );
     $blocks['trends_m1513'] = array(
         'info' => t('M-15-13 and BOD 18-01 Trend Analysis Chart'),
         'cache' => DRUPAL_NO_CACHE
     );
+  $blocks['trends_m1513_sparkline'] = array(
+    'info' => t('M-15-13 and BOD 18-01 Trend Analysis Sparkline'),
+    'cache' => DRUPAL_NO_CACHE
+  );
     $blocks['trends_freerc4'] = array(
         'info' => t('Free of RC4/3DES and SSLv2/SSLv3 Trend Analysis Chart'),
         'cache' => DRUPAL_NO_CACHE
     );
+  $blocks['trends_freerc4_sparkline'] = array(
+    'info' => t('Free of RC4/3DES and SSLv2/SSLv3 Trend Analysis Sparkline'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+  $blocks['trends_accessible_chart'] = array(
+    'info' => t('Accessibility Trend Analysis Chart'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+  $blocks['trends_accessible_chart'] = array(
+    'info' => t('Accessibility Trend Analysis Chart'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+  $blocks['trends_ssl'] = array(
+    'info' => t('SSL Trend Analysis Chart'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+  $blocks['trends_https'] = array(
+    'info' => t('HTTPS Trend Analysis Chart'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+  $blocks['trends_mobile_spark'] = array(
+    'info' => t('Mobile Sparkline Trend Analysis Chart'),
+    'cache' => DRUPAL_NO_CACHE
+  );
 
 
     return $blocks;
@@ -50,7 +106,7 @@ function trend_analysis_block_view($delta = 0) {
 
     switch ($delta) {
         case 'trends_dnssec':
-            $query = db_query("select FROM_UNIXTIME(timestamp,'%M-%D-%Y') as scandate,field_dnssec_score_value as score_val from node_revision a , field_revision_field_dnssec_score b where a.nid=b.entity_id  and a.nid=:nid group by scandate order by a.timestamp desc;", array(':nid' => 7288));
+            $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_dnssec_score_value as score_val from node_revision a , field_revision_field_dnssec_score b where a.nid=b.entity_id  and a.nid=:nid group by scandate order by a.timestamp desc;", array(':nid' => arg(1)));
             $trend_arr = array();
             foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -65,6 +121,7 @@ function trend_analysis_block_view($delta = 0) {
             $trend_vars['noncompliance'] = $noncompliance;
             $trend_vars['dates'] = $dates;
             $trend_vars['container'] = 'container1';
+          $trend_vars['blockname'] = 'trends_dnssec';
 
             $analysis_output =  theme('trend_analysis_graph_page', array('trend_vars' => $trend_vars));
             $block = array(
@@ -75,7 +132,7 @@ function trend_analysis_block_view($delta = 0) {
 
         case 'trends_dap':
 
-            $query = db_query("select FROM_UNIXTIME(timestamp,'%M-%D-%Y') as scandate,max(field_dap_score_value) as score_val from node_revision a , field_revision_field_dap_score b where a.vid=b.revision_id and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => 7288));
+            $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,max(field_dap_score_value) as score_val from node_revision a , field_revision_field_dap_score b where a.vid=b.revision_id and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
             $trend_arr = array();
             foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -90,6 +147,7 @@ function trend_analysis_block_view($delta = 0) {
             $trend_vars['noncompliance'] = $noncompliance;
             $trend_vars['dates'] = $dates;
             $trend_vars['container'] = 'container2';
+          $trend_vars['blockname'] = 'trends_dap';
 
             $analysis_output =  theme('trend_analysis_graph_page', array('trend_vars' => $trend_vars));
             $block = array(
@@ -99,7 +157,7 @@ function trend_analysis_block_view($delta = 0) {
             break;
         case 'trends_ipv6':
 
-            $query = db_query("select FROM_UNIXTIME(timestamp,'%M-%D-%Y') as scandate,field_ipv6_score_value as score_val from node_revision a , field_revision_field_ipv6_score b where  b.entity_id=a.nid  and a.nid=:nid group by scandate order by a.timestamp desc;", array(':nid' => 7288));
+            $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_ipv6_score_value as score_val from node_revision a , field_revision_field_ipv6_score b where  b.entity_id=a.nid  and a.nid=:nid group by scandate order by a.timestamp desc;", array(':nid' => arg(1)));
             $trend_arr = array();
             foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -114,7 +172,8 @@ function trend_analysis_block_view($delta = 0) {
             $trend_vars['noncompliance'] = $noncompliance;
             $trend_vars['dates'] = $dates;
             $trend_vars['container'] = 'container3';
-            $analysis_output =  theme('trend_analysis_graph_page', array('trend_vars' => $trend_vars));
+          $trend_vars['blockname'] = 'trends_ipv6';
+          $analysis_output =  theme('trend_analysis_graph_page', array('trend_vars' => $trend_vars));
             $block = array(
                 'subject' => t('IPV6 Trend Analysis Chart'),
                 'content' => $analysis_output,
@@ -122,7 +181,7 @@ function trend_analysis_block_view($delta = 0) {
             break;
         case 'trends_m1513':
 
-            $query = db_query("select FROM_UNIXTIME(timestamp,'%M-%D-%Y') as scandate,field_ipv6_score_value as score_val from node_revision a , field_revision_field_ipv6_score b where  b.entity_id=a.nid  and a.nid=:nid group by scandate order by a.timestamp desc;", array(':nid' => 7288));
+            $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_m15_13_compliance_score_value as score_val from node_revision a , field_revision_field_m15_13_compliance_score b where  b.entity_id=a.nid  and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
             $trend_arr = array();
             foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -137,7 +196,8 @@ function trend_analysis_block_view($delta = 0) {
             $trend_vars['noncompliance'] = $noncompliance;
             $trend_vars['dates'] = $dates;
             $trend_vars['container'] = 'container4';
-            $analysis_output =  theme('trend_analysis_graph_page', array('trend_vars' => $trend_vars));
+          $trend_vars['blockname'] = 'trends_m1513';
+          $analysis_output =  theme('trend_analysis_graph_page', array('trend_vars' => $trend_vars));
             $block = array(
                 'subject' => t('M-15-13 Trend Analysis Chart'),
                 'content' => $analysis_output,
@@ -145,7 +205,7 @@ function trend_analysis_block_view($delta = 0) {
             break;
         case 'trends_freerc4':
 
-            $query = db_query("select FROM_UNIXTIME(timestamp,'%M-%D-%Y') as scandate,field_free_of_insecr_prot_score_value as score_val from node_revision a , field_revision_field_free_of_insecr_prot_score b where  b.entity_id=a.nid  and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => 7288));
+            $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_free_of_insecr_prot_score_value as score_val from node_revision a , field_revision_field_free_of_insecr_prot_score b where  b.entity_id=a.nid  and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
             $trend_arr = array();
             foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -160,12 +220,286 @@ function trend_analysis_block_view($delta = 0) {
             $trend_vars['noncompliance'] = $noncompliance;
             $trend_vars['dates'] = $dates;
             $trend_vars['container'] = 'container5';
-            $analysis_output =  theme('trend_analysis_graph_page', array('trend_vars' => $trend_vars));
+          $trend_vars['blockname'] = 'trends_freerc4';
+          $analysis_output =  theme('trend_analysis_graph_page', array('trend_vars' => $trend_vars));
             $block = array(
                 'subject' => t('Free of RC4/3DES and SSLv2/SSLv3 Trend Analysis Chart'),
                 'content' => $analysis_output,
             );
             break;
+      case 'trends_dnssec_sparkline':
+        $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_dnssec_score_value as score_val from node_revision a , field_revision_field_dnssec_score b where a.nid=b.entity_id  and a.nid=:nid group by scandate order by a.timestamp desc;", array(':nid' => arg(1)));
+        $trend_arr = array();
+        foreach ($query as $result) {
+//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+          if($result->score_val == '100')
+            $trend_arr[$result->scandate] = '1';
+          else
+            $trend_arr[$result->scandate] = '-1';
+        }
+        $trend_vars['trend_arr'] = $trend_arr;
+        $dates = array_keys($trend_vars['trend_arr']);
+        $compliance = array_values($trend_vars['trend_arr']);
+        $noncompliance = array_replace($compliance, array_fill_keys(array_keys($compliance, 0), -1));
+        $noncompliance = array_replace($noncompliance, array_fill_keys(array_keys($noncompliance, 1), 0));
+        $trend_vars['compliance'] = $compliance;
+        $trend_vars['noncompliance'] = $noncompliance;
+        $trend_vars['dates'] = $dates;
+        $trend_vars['container'] = 'container10';
+        $trend_vars['blockname'] = 'trends_dnssec_sparkline';
+
+        $analysis_output =  theme('trend_analysis_sparkline_page', array('trend_vars' => $trend_vars));
+        $block = array(
+          'subject' => NULL,
+          'content' => $analysis_output,
+        );
+        break;
+      case 'trends_dap_sparkline':
+
+        $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,max(field_dap_score_value) as score_val from node_revision a , field_revision_field_dap_score b where a.vid=b.revision_id and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
+        $trend_arr = array();
+        foreach ($query as $result) {
+//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+          if($result->score_val == '100')
+            $trend_arr[$result->scandate] = '1';
+          else
+            $trend_arr[$result->scandate] = '-1';
+        }
+        $trend_vars['trend_arr'] = $trend_arr;
+        $dates = array_keys($trend_vars['trend_arr']);
+        $compliance = array_values($trend_vars['trend_arr']);
+        $noncompliance = array_replace($compliance, array_fill_keys(array_keys($compliance, 0), -1));
+        $noncompliance = array_replace($noncompliance, array_fill_keys(array_keys($noncompliance, 1), 0));
+        $trend_vars['compliance'] = $compliance;
+        $trend_vars['noncompliance'] = $noncompliance;
+        $trend_vars['dates'] = $dates;
+        $trend_vars['container'] = 'container11';
+        $trend_vars['blockname'] = 'trends_dap_sparkline';
+        $analysis_output =  theme('trend_analysis_sparkline_page', array('trend_vars' => $trend_vars));
+        $block = array(
+          'subject' => NULL,
+          'content' => $analysis_output,
+        );
+        break;
+      case 'trends_ipv6_sparkline':
+
+        $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_ipv6_score_value as score_val from node_revision a , field_revision_field_ipv6_score b where  b.entity_id=a.nid  and a.nid=:nid group by scandate order by a.timestamp desc;", array(':nid' => arg(1)));
+        $trend_arr = array();
+        foreach ($query as $result) {
+//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+          if($result->score_val == '100')
+            $trend_arr[$result->scandate] = '1';
+          else
+            $trend_arr[$result->scandate] = '-1';
+        }
+        $trend_vars['trend_arr'] = $trend_arr;
+        $dates = array_keys($trend_vars['trend_arr']);
+        $compliance = array_values($trend_vars['trend_arr']);
+        $noncompliance = array_replace($compliance, array_fill_keys(array_keys($compliance, 0), -100));
+        $noncompliance = array_replace($noncompliance, array_fill_keys(array_keys($noncompliance, 100), 0));
+        $trend_vars['compliance'] = $compliance;
+        $trend_vars['noncompliance'] = $noncompliance;
+        $trend_vars['dates'] = $dates;
+        $trend_vars['container'] = 'container12';
+        $trend_vars['blockname'] = 'trends_ipv6_sparkline';
+        $analysis_output =  theme('trend_analysis_sparkline_page', array('trend_vars' => $trend_vars));
+        $block = array(
+          'subject' => NULL,
+          'content' => $analysis_output,
+        );
+        break;
+      case 'trends_m1513_sparkline':
+
+        $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_m15_13_compliance_score_value as score_val from node_revision a , field_revision_field_m15_13_compliance_score b where  b.entity_id=a.nid  and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
+        $trend_arr = array();
+        foreach ($query as $result) {
+//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+          if($result->score_val == '100')
+            $trend_arr[$result->scandate] = '1';
+          else
+            $trend_arr[$result->scandate] = '-1';
+        }
+        $trend_vars['trend_arr'] = $trend_arr;
+        $dates = array_keys($trend_vars['trend_arr']);
+        $compliance = array_values($trend_vars['trend_arr']);
+        $noncompliance = array_replace($compliance, array_fill_keys(array_keys($compliance, 0), -100));
+        $noncompliance = array_replace($noncompliance, array_fill_keys(array_keys($noncompliance, 100), 0));
+        $trend_vars['compliance'] = $compliance;
+        $trend_vars['noncompliance'] = $noncompliance;
+        $trend_vars['dates'] = $dates;
+        $trend_vars['container'] = 'container13';
+        $trend_vars['blockname'] = 'trends_m1513_sparkline';
+        $analysis_output =  theme('trend_analysis_sparkline_page', array('trend_vars' => $trend_vars));
+        $block = array(
+          'subject' => NULL,
+          'content' => $analysis_output,
+        );
+        break;
+      case 'trends_freerc4_sparkline':
+
+        $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_free_of_insecr_prot_score_value as score_val from node_revision a , field_revision_field_free_of_insecr_prot_score b where  b.entity_id=a.nid  and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
+        $trend_arr = array();
+        foreach ($query as $result) {
+//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+          if($result->score_val == '100')
+            $trend_arr[$result->scandate] = '1';
+          else
+            $trend_arr[$result->scandate] = '-1';
+        }
+        $trend_vars['trend_arr'] = $trend_arr;
+        $dates = array_keys($trend_vars['trend_arr']);
+        $compliance = array_values($trend_vars['trend_arr']);
+        $noncompliance = array_replace($compliance, array_fill_keys(array_keys($compliance, 0), -100));
+        $noncompliance = array_replace($noncompliance, array_fill_keys(array_keys($noncompliance, 100), 0));
+        $trend_vars['compliance'] = $compliance;
+        $trend_vars['noncompliance'] = $noncompliance;
+        $trend_vars['dates'] = $dates;
+        $trend_vars['container'] = 'container14';
+        $trend_vars['blockname'] = 'trends_freerc4_sparkline';
+        $analysis_output =  theme('trend_analysis_sparkline_page', array('trend_vars' => $trend_vars));
+        $block = array(
+          'subject' => NULL,
+          'content' => $analysis_output,
+        );
+        break;
+      case 'trends_accessible_chart':
+        $allscanids = dotgov_common_siteAsocScanids(arg(1));
+        $query = db_query("select FROM_UNIXTIME(a.timestamp,'%b-%D-%Y') as scandate, a.vid from node_revision a, node b  where  a.nid=b.nid and b.type='508_scan_information' and a.nid=:nid  group by scandate order by a.timestamp desc", array(':nid' => $allscanids['508_scan_information']));
+        $trend_arr = array();
+        foreach ($query as $result) {
+//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+          $trend_arr[$result->scandate] = (int)$result->vid;
+        }
+        $query1 = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_accessible_group_colorcont_value as score_val from node_revision a , field_revision_field_accessible_group_colorcont b where  b.entity_id=a.nid  and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => $allscanids['508_scan_information']));
+        $trend_color = array();
+        foreach ($query1 as $result1) {
+//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+          $trend_color[$result1->scandate] = (int)$result1->score_val;
+        }
+
+        $query2 = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_accessible_group_htmlattri_value as score_val from node_revision a , field_revision_field_accessible_group_htmlattri b where  b.entity_id=a.nid  and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => $allscanids['508_scan_information']));
+        $trend_htmlattrib = array();
+        foreach ($query2 as $result2) {
+//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+          $trend_htmlattrib[$result2->scandate] = (int)$result2->score_val;
+        }
+
+        $query3 = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_accessible_group_missingim_value as score_val from node_revision a , field_revision_field_accessible_group_missingim b where  b.entity_id=a.nid  and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => $allscanids['508_scan_information']));
+        $trend_missing = array();
+        foreach ($query3 as $result3) {
+//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+          $trend_missing[$result3->scandate] = (int)$result3->score_val;
+        }
+
+        $trend_vars['trend_arr'] = $trend_arr;
+        $dates = array_keys($trend_vars['trend_arr']);
+        $compliance = array_values($trend_vars['trend_arr']);
+        $trend_vars['col_contrast'] = $trend_color;
+        $trend_vars['html_attrib'] = $trend_htmlattrib;
+        $trend_vars['miss_image'] = $trend_missing;
+        $trend_vars['compliance'] = $compliance;
+        $trend_vars['dates'] = $dates;
+        $trend_vars['container'] = 'container15';
+        $trend_vars['blockname'] = 'trends_accessible_chart';
+        $analysis_output =  theme('trend_analysis_multivalgraph_page', array('trend_vars' => $trend_vars));
+        $block = array(
+          'subject' => NULL,
+          'content' => $analysis_output,
+        );
+        break;
+      case 'trends_ssl':
+
+        $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,max(field_ssl_score_value) as score_val from node_revision a , field_revision_field_ssl_score b where  b.entity_id=a.nid  and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
+        $trend_arr = array();
+        foreach ($query as $result) {
+//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+          $trend_arr[$result->scandate] = (int)$result->score_val;
+        }
+        $trend_vars['trend_arr'] = $trend_arr;
+        $dates = array_keys($trend_vars['trend_arr']);
+        $compliance = array_values($trend_vars['trend_arr']);
+        //$noncompliance = array_replace($compliance, array_fill_keys(array_keys($compliance, 0), -100));
+        //$noncompliance = array_replace($noncompliance, array_fill_keys(array_keys($noncompliance, 100), 0));
+        $trend_vars['compliance'] = $compliance;
+        $trend_vars['dates'] = $dates;
+        $trend_vars['blockname'] = 'trends_ssl';
+        $trend_vars['container'] = 'container16';
+        $analysis_output =  theme('trend_analysis_sparkline_page', array('trend_vars' => $trend_vars));
+        $block = array(
+          'subject' => NULL,
+          'content' => $analysis_output,
+        );
+        break;
+      case 'trends_https':
+
+        $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,max(field_https_score_value) as score_val from node_revision a , field_revision_field_https_score b where  b.entity_id=a.nid  and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
+        $trend_arr = array();
+        foreach ($query as $result) {
+//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+          $trend_arr[$result->scandate] = (int)$result->score_val;
+        }
+        $trend_vars['trend_arr'] = $trend_arr;
+        $dates = array_keys($trend_vars['trend_arr']);
+        $compliance = array_values($trend_vars['trend_arr']);
+        //$noncompliance = array_replace($compliance, array_fill_keys(array_keys($compliance, 0), -100));
+        //$noncompliance = array_replace($noncompliance, array_fill_keys(array_keys($noncompliance, 100), 0));
+        $trend_vars['compliance'] = $compliance;
+        $trend_vars['dates'] = $dates;
+        $trend_vars['blockname'] = 'trends_https';
+        $trend_vars['container'] = 'container17';
+        $analysis_output =  theme('trend_analysis_sparkline_page', array('trend_vars' => $trend_vars));
+        $block = array(
+          'subject' => NULL,
+          'content' => $analysis_output,
+        );
+        break;
+      case 'trends_mobile_spark':
+        $allscanids = dotgov_common_siteAsocScanids(arg(1));
+        //dsm($allscanids);
+        $query = db_query("select FROM_UNIXTIME(a.timestamp,'%b-%D-%Y') as scandate, a.vid from node_revision a, node b  where  a.nid=b.nid and b.type='mobile_scan_information' and a.nid=:nid  group by scandate order by a.timestamp desc", array(':nid' => $allscanids['mobile_scan_information']));
+        $trend_arr = array();
+        foreach ($query as $result) {
+//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+          $trend_arr[$result->scandate] = (int)$result->vid;
+        }
+        $query1 = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_mobile_overall_score_value as score_val from node_revision a , field_revision_field_mobile_overall_score b where  b.entity_id=a.nid  and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => $allscanids['mobile_scan_information']));
+        $trend_moboverall = array();
+        foreach ($query1 as $result1) {
+//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+          $trend_moboverall[$result1->scandate] = (int)$result1->score_val;
+        }
+
+        $query2 = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_mobile_performance_score_value as score_val from node_revision a , field_revision_field_mobile_performance_score b where  b.entity_id=a.nid  and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => $allscanids['mobile_scan_information']));
+        $trend_mobperfrm = array();
+        foreach ($query2 as $result2) {
+//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+          $trend_mobperfrm[$result2->scandate] = (int)$result2->score_val;
+        }
+
+        $query3 = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_mobile_usability_score_value as score_val from node_revision a , field_revision_field_mobile_usability_score b where  b.entity_id=a.nid  and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => $allscanids['mobile_scan_information']));
+        $trend_mobusab = array();
+        foreach ($query3 as $result3) {
+//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+          $trend_mobusab[$result3->scandate] = (int)$result3->score_val;
+        }
+
+        $trend_vars['trend_arr'] = $trend_arr;
+        $dates = array_keys($trend_vars['trend_arr']);
+        $compliance = array_values($trend_vars['trend_arr']);
+        $trend_vars['moboverall'] = $trend_moboverall;
+        $trend_vars['mobperfrm'] = $trend_mobperfrm;
+        $trend_vars['mobusab'] = $trend_mobusab;
+        $trend_vars['compliance'] = $compliance;
+        $trend_vars['dates'] = $dates;
+        $trend_vars['container'] = 'container18';
+        $trend_vars['scanreportid'] = $allscanids['mobile_scan_information'];
+        $trend_vars['blockname'] = 'trends_mobile_spark';
+        $analysis_output =  theme('trend_analysis_multivalspark_page', array('trend_vars' => $trend_vars));
+        $block = array(
+          'subject' => NULL,
+          'content' => $analysis_output,
+        );
+        break;
     }
 
 

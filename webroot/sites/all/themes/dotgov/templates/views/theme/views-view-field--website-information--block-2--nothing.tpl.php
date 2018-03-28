@@ -148,3 +148,9 @@ else{
     );
 </script>
 -->
+<?php
+$blockObject = block_load('trend_analysis', 'trends_ssl');
+$block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+$output = drupal_render($block);
+print "$output";
+?>

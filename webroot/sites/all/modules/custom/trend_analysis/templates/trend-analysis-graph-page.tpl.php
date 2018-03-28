@@ -3,6 +3,17 @@
 <script type="text/javascript">//<![CDATA[
 
     Highcharts.chart('<?=$trend_vars['container']?>', {
+        colors: ['#2e8540','#f45b5b'],
+        tooltip: {
+            formatter: function()
+            {
+                if(this.y == '100')
+                    return  'Compliant on '+this.x;
+                else
+                    return 'Non Compliant on '+this.x;
+
+            }
+        },
         chart: {
             type: 'column'
         },
@@ -10,12 +21,19 @@
             text: 'Trend Analysis'
         },
         xAxis: {
-            categories: <?php echo json_encode($trend_vars['dates']); ?>
+            categories: <?php echo json_encode($trend_vars['dates']); ?>,
+            labels: {
+                rotation: 90
+            }
         },
         yAxis: {
             labels:
             {
                 enabled: false
+            },
+            title: {
+                enabled: true,
+                text: 'Compliance'
             }
         },
         credits: {
@@ -23,7 +41,8 @@
         },
         series: [{
             name: 'Compliance',
-            data: <?php echo json_encode($trend_vars['compliance']); ?>
+          showInLegend: false,
+          data: <?php echo json_encode($trend_vars['compliance']); ?>
         }, {
             name: 'Non Compliance',
             data: <?php echo json_encode($trend_vars['noncompliance']); ?>

@@ -4,8 +4,6 @@
 */
 
 function dotgov_common_siteAsocScanids($websiteid){
-    $node = node_load($websiteid);
-
     $query = db_query("select bundle,entity_id from field_data_field_website_id where field_website_id_nid=:nid", array(':nid' => $websiteid));
     foreach ($query as $result) {
         $websites[$result->bundle] = $result->entity_id;
