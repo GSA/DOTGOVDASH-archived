@@ -55,8 +55,6 @@ $scanpath = drupal_get_path_alias("node/".$scanids['domain_scan_information']);
 
 <?php print $output; ?>
   <br clear="all" />
-<div><p><a class="link-all-reports" href="/<?=$scanpath?>">Go to Full Report</a></p></div>
-
 <?php //dsm($view->result);
 $chartdata= $row->_field_data['nid']['entity']->field_ipv6_compliance['und'][0]['value'];
 //dsm ($chartdata);
@@ -141,9 +139,3 @@ if ($chartdata == 0){
 
     );
 </script>
-<?php
-$blockObject = block_load('trend_analysis', 'trends_ipv6_sparkline');
-$block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
-$output = drupal_render($block);
-print "$output";
-?>

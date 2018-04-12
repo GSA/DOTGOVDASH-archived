@@ -52,12 +52,7 @@
 $scanids = dotgov_common_siteAsocScanids(arg(1));
 $scanpath = drupal_get_path_alias("node/".$scanids['https_dap_scan_information']);
 ?>
-  <div class="col-lg-6">
 <?php print $output; ?>
-  </div>
-
-<div><p><a class="link-all-reports" href="/<?=$scanpath?>">Go to Full Report</a></p></div>
-
 <?php
 //dsm($row->_field_data['nid']['entity']);
 $chartdata= $row->_field_data['nid']['entity']->field_compl_m_15_13_bod['und'][0]['value'];
@@ -146,9 +141,3 @@ else{
 
     );
 </script>
-<?php
-$blockObject = block_load('trend_analysis', 'trends_m1513_sparkline');
-$block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
-$output = drupal_render($block);
-print "$output";
-?>

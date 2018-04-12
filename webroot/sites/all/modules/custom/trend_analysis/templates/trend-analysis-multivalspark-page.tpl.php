@@ -1,7 +1,13 @@
 <?php
-dsm($trend_vars);
+drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
 ?>
-<div id="<?=$trend_vars['container']?>" style="min-width: 300px; height: 150px; margin: 0 auto"></div>
+<div id="<?=$trend_vars['container']?>" style="min-width: 100px; min-height: 60px; margin: 0 auto"></div>
+<style>
+    .highcharts-tooltip>span {
+        height:10px;
+        width:10px;
+    }
+</style>
 
 <script type="text/javascript">//<![CDATA[
 
@@ -64,6 +70,16 @@ dsm($trend_vars);
     }, {
       name: 'Performance Score',
       data: <?php echo json_encode(array_values($trend_vars['mobperfrm'])); ?>
-    }]
+    }],
+        lang: {
+        noData: "No Data to Show"
+    },
+    noData: {
+        style: {
+            fontWeight: 'bold',
+                fontSize: '15px',
+                color: '#303030'
+        }
+    }
   });
 </script>

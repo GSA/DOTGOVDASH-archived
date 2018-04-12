@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * Implements hook_views_api()
+ */
+function views_table_row_headers_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'views_table_row_headers') . '/views',
+  );
+}
+
+/**
+ * Implements hook_help().
+ */
+function views_table_row_headers_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#views_table_row_headers':
+      $output = '<p>' . t('The Views Table Row Headers module is a Views style plugin that displays the results in a table that has both column and row headers, as opposed to default views tables, which only displays row header.') . '</p>';
+
+      $output .= '<p>' . t('For accessibility information on when a table needs both row and column headers, please see !wcag_table_tutorial', array('!wcag_table_tutorial' => l(t('WCAG\'s Web Accessibility Tutorial on Tables'), 'https://www.w3.org/WAI/tutorials/tables/', array('absolute' => TRUE)))) . '</p>';
+
+      $output .= '<p>' . t('After setting the view to the "Table with rows headers" format, the format settings will be identical to the "Table" format settings, with the addition of a select element populated with the fields. The selected field will be marked up as a table heading for the row.') . '</p>';
+
+      $output .= '<p>' . t('The implementation of this plugin stays as close to the default table plugin as possible.') . '</p>';
+      return $output;
+  }
+}

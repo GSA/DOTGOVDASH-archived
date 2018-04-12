@@ -577,7 +577,7 @@ function getSiteInspectorOutput($domain){
  */
 
 function getDnssecStatus($domain){
-  $dnsseccom = "dig +dnssec $domain @8.8.8.8|grep -i 'rrsig'";
+      $dnsseccom = "dig +dnssec $domain @8.8.8.8|grep -i 'rrsig'";
   $outp = array();
   $comret = "";
   execCommand("$dnsseccom",$outp,$comret);
@@ -853,7 +853,7 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
     $node->field_uses_secure_cookies['und'][0]['value'] = ($siInfo['secure_cookie'] == '')?0:1;
     $node->field_site_inspector_raw_out['und'][0]['value'] = $siInfo['raw'];
     $node->field_ipv6_compliance['und'][0]['value'] = ($siInfo['ipv6'] == '')?0:1;
-    $node->field_dnssec_compliance['und'][0]['value'] = ($siInfo['dnssec'] == '')?0:1;
+    $node->field_dnssec_compliance['und'][0]['value'] = $siInfo['dnssec'];
 
     //Get SSL labs scan ouput
     //$ssllabsInfo = collectSslLabsDomInfo($website['domain']);

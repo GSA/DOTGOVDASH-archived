@@ -25,7 +25,7 @@
 
 <?php //print $output;
 ?>
-<div id="access_chart" style="">&nbsp;</div>
+<div id="access_chart" class="gov-wide-chart" style="">&nbsp;</div>
 <script type="text/javascript">
 Highcharts.chart('access_chart', {
     chart: {

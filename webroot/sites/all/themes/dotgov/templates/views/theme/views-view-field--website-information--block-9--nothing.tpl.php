@@ -32,8 +32,6 @@ $scanpath = drupal_get_path_alias("node/".$scanids['508_scan_information']);
 <?php 
 //dsm($view->result[0]->_field_data['nid']['entity']);
 ?>
-<div><p><a class="link-all-reports" href="/<?=$scanpath?>">Go to Full Report</a></p></div>
-
 <script type="text/javascript">
 Highcharts.chart('access_chart', {
     chart: {

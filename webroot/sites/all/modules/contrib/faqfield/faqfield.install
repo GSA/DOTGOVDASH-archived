@@ -41,7 +41,6 @@ function faqfield_update_7110() {
   $faqfields = field_read_fields(array(
     'type' => 'faqfield',
   ));
-
   // Iterate through all existing field tables and alter them as needed.
   foreach ($faqfields as $field) {
     // We move the old setting to its new position.
@@ -55,7 +54,6 @@ function faqfield_update_7110() {
     $field['settings']['advanced']['question_title'] = t('Question');
     $field['settings']['advanced']['answer_title'] = t('Answer');
     field_update_field($field);
-
     if ($field['settings']['answer_widget'] == 'text_format') {
       // In order to move the old format setting to the instance default value
       // we got to find out all instances and alter them.
@@ -87,18 +85,15 @@ function faqfield_update_7120() {
       'not null' => FALSE,
     ),
   );
-
   // Get all faqfields.
   $faqfields = field_read_fields(array(
     'type' => 'faqfield',
   ));
-
   // Iterate through all existing field tables and alter them as needed.
   foreach ($faqfields as $faqfield) {
     $field = field_info_field($faqfield['field_name']);
     if (isset($field['storage']['details']['sql'])) {
       $tables = $field['storage']['details']['sql'];
-
       // Iterate through current data tables.
       foreach ($tables['FIELD_LOAD_CURRENT'] as $data_table => $table_fields) {
         if (!db_field_exists($data_table, $field['field_name'] . '_answer_format')) {
@@ -126,13 +121,11 @@ function faqfield_update_7130() {
   $faqfields = field_read_fields(array(
     'type' => 'faqfield',
   ));
-
   foreach ($faqfields as $faqfield) {
     // Get all instances of this field.
     $instances = field_read_instances(array(
       'field_name' => $faqfield['field_name'],
     ));
-
     foreach ($instances as $instance) {
       // If a default value is set we move it to it's new place.
       if (isset($instance['default_value'])) {

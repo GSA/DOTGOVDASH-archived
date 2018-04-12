@@ -10,7 +10,6 @@ foreach ($query as $result) {
   $ipv6 = $spRawOut['canonical_endpoint']['dns']['ipv6'];
   print "$dnsssec - $ipv6 \n";
   $dnode->field_ipv6_compliance['und'][0]['value'] = ($ipv6 == '')?0:1;
-  $dnode->field_dnssec_compliance['und'][0]['value'] = ($dnsssec == '')?0:1;
   node_object_prepare($dnode);
   if ($dnode = node_submit($dnode)) {
     node_save($dnode);

@@ -1,4 +1,7 @@
-<div id="<?=$trend_vars['container']?>" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<?php
+drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
+?>
+<div id="<?=$trend_vars['container']?>"  style="min-width: 300px; min-height: 300px; margin: 0 auto"></div>
 
 <script type="text/javascript">//<![CDATA[
 
@@ -41,12 +44,21 @@
         },
         series: [{
             name: 'Compliance',
-          showInLegend: false,
           data: <?php echo json_encode($trend_vars['compliance']); ?>
         }, {
             name: 'Non Compliance',
             data: <?php echo json_encode($trend_vars['noncompliance']); ?>
-        }]
+        }],
+        lang: {
+        noData: "No Data to Show"
+    },
+    noData: {
+        style: {
+            fontWeight: 'bold',
+                fontSize: '15px',
+                color: '#303030'
+        }
+    }
     });
 
     //]]>

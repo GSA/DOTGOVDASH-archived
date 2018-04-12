@@ -159,3 +159,56 @@ function dotgov_commmon_getTechStackInfo($nid){
 
     return $output;
 }
+/*
+ * Create Nice Looking Tooltip on any div or class. Just pass the id and type(class or id). This will genrate the dynamic css
+ */
+function dotgov_common_tooltip($id,$type){
+    if($type == 'id')
+        $cssid = "#".$id;
+    elseif($type == 'class')
+        $cssid = ".".$id;
+
+    $dyncss = "<style>
+$cssid {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+$cssid .tooltiptext {
+    visibility: hidden;
+    position: absolute;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+$cssid .tooltiptext::after {
+    content: \"\";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+$cssid:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+$cssid .tooltip-left {
+    top: -5px;
+    bottom: auto;
+    right: 128%;
+}
+</style>";
+print $dyncss;
+}

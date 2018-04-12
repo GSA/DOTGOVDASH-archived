@@ -59,13 +59,12 @@ $scanpath = drupal_get_path_alias("node/".$scanids['https_dap_scan_information']
 //drupal_add_js(drupal_get_path('module', 'activity_chart') . '/activity_chart.js');
 ?>
 <?php print $output; ?>
-<div><p><a class="link-all-reports" href="/<?=$scanpath?>">Go to Full Report</a></p></div>
 <?php //dsm($view->result);
 //dsm ($row->_field_data['nid']['entity']->field_https_score['und'][0]['safe_value']);
 $chartdata= $row->_field_data['nid']['entity']->field_https_score['und'][0]['value'];
 if ($chartdata <= 50){
     $chartcolor = '#ac0600';
-}elseif($chartdata>=50 and $chartdata<=75){
+}elseif($chartdata>50 and $chartdata<=75){
     $chartcolor='#654f00';
 }
 else{
@@ -146,9 +145,3 @@ else{
 
     );
 </script>
-  <?php
-  $blockObject = block_load('trend_analysis', 'trends_https');
-  $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
-  $output = drupal_render($block);
-  print "$output";
-  ?>

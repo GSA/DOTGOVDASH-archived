@@ -1,11 +1,36 @@
 <?php
-$score_arr = array('trends_ssl','trends_https');
+drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
+$score_arr = array('trends_ssl','trends_https','trends_mobile_spark');
+$negativecolor = '#ac0600';
+$positivecolor = '#2a633b';
+$threshold = '0';
+
 if (in_array($trend_vars['blockname'],$score_arr)){
-  $compliancetext = 'Score';
+    $compliancetext = 'Score';
+    $negativecolor = '#ac0600';
+    $positivecolor = '#0071bc';
 }
 else{
-  $compliancetext = 'Compliance';
+    $compliancetext = 'Compliance';
+    $negativecolor = '#ac0600';
+    $positivecolor = '#2a633b';
 }
+//if (in_array($trend_vars['blockname'],$score_arr)){
+//  $compliancetext = 'Score';
+//    $threshold = '75';
+//    if((end($trend_vars['compliance']) <= '75') && (end($trend_vars['compliance']) > '50')){
+//        $threshold = '50';
+//        $negativecolor = '#ac0600';
+//        $positivecolor = '#654f00';
+//    }
+//    elseif(end($trend_vars['compliance']) <= '50'){
+//        $negativecolor = '#ac0600';
+//    }
+//}
+//else{
+//  $compliancetext = 'Compliance';
+//    $threshold = '0';
+//}
 ?>
 <div id="<?=$trend_vars['container']?>" style="min-width: 150px; height: 50px; margin: 0 auto"></div>
 
@@ -13,7 +38,13 @@ else{
 
   Highcharts.chart('<?=$trend_vars['container']?>', {
     chart: {
-          type: 'area'
+          type: 'area',
+        events: {
+            load: function(){
+                var p = this.series[0].points[<?=(count($trend_vars['compliance'])-1)?>];
+                this.tooltip.refresh(p);
+            }
+        }
         },
     title: {
       useHTML: true,
@@ -27,7 +58,7 @@ else{
       tooltip: {
         formatter: function()
         {
-return 'Compliance';
+            return 'Compliance';
         }
       },
       lineWidth: 0,
@@ -53,22 +84,38 @@ return 'Compliance';
         rotation: 0,
       }
     },
-      series: [{
-        tooltip: {
+<?php
+      if (!in_array($trend_vars['blockname'],$score_arr)){
+      ?>
+      tooltip: {
           formatter: function()
           {
-            return 'Compliance';
+              if(this.y == 0 || this.y == -1)
+                  return 'On '+this.x+' was Not Compliant';
+              else
+                  return 'On '+this.x+' was Compliant';
           }
-        },
-      threshold: 0,
-      negativeColor: 'red',
-      color: 'green',
+      },
+      <?php } ?>
+      series: [{
+      threshold: <?=$threshold?>,
+      negativeColor: '<?=$negativecolor?>',
+      color: '<?=$positivecolor?>',
       type: 'area',
         name: '<?=$compliancetext?>',
         showInLegend: false,
-        data: <?php echo json_encode($trend_vars['compliance'],JSON_NUMERIC_CHECK); ?>
-
-    }]
+        data: <?php echo json_encode($trend_vars['compliance'],JSON_NUMERIC_CHECK); ?>,
+    }],
+        lang: {
+        noData: "No Data to Show"
+    },
+    noData: {
+        style: {
+            fontWeight: 'bold',
+                fontSize: '15px',
+                color: '#303030'
+        }
+    }
       });
     //]]>
 
