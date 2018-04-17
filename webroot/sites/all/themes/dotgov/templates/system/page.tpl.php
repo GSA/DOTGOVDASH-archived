@@ -146,10 +146,12 @@
 
 <div class="full full-banner">
 <div class="col-sm-12">
+        <div class="highlighted jumbotron"><?php print render($page['highlighted']); ?></div>
+
      <div class="container-fluid">
                         <h1  class="srt-blue">DIGITALDASHBOARD.GOV</h1>
                         <h2  class="srt-blue">
-A suite of analytics for the U.S. Federal Government to help agencies measure compliance with federal policy and conformance with best practices and industry standards.			</h2>
+Helping Federal Agencies Do Digital Better			</h2>
                     </div>
     </div>
 </div>
@@ -172,9 +174,7 @@ A suite of analytics for the U.S. Federal Government to help agencies measure co
     <?php endif; ?>
 
     <section<?php print $content_column_class; ?>>
-      <?php if (!empty($page['highlighted'])): ?>
-        <div class="highlighted jumbotron"><?php print render($page['highlighted']); ?></div>
-      <?php endif; ?>
+     
       <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
       <a id="main-content"></a>
       <?php print render($title_prefix); ?>
@@ -211,3 +211,4 @@ A suite of analytics for the U.S. Federal Government to help agencies measure co
   </footer>
   
 <?php endif; ?>
+<script language="javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=GSA"></script>

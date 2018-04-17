@@ -49,17 +49,14 @@
  *
  * @ingroup themeable
  */
-$scanids = dotgov_common_siteAsocScanids(arg(1));
-$scanpath = drupal_get_path_alias("node/".$scanids['mobile_scan_information']);
 ?>
 <?php print $output; ?>
-<div><p><a class="link-all-reports" href="/<?=$scanpath?>">Go to Full Report</a></p></div>
 <?php 
 $chartdata= $row->_field_data['nid']['entity']->field_mobile_overall_score['und'][0]['value'];
 
 if ($chartdata <= 50){
     $chartcolor = '#ac0600';
-}elseif($chartdata>=50 and $chartdata<=75){
+}elseif($chartdata>50 and $chartdata<=75){
     $chartcolor='#654f00';
 }
 else{

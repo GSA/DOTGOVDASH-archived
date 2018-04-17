@@ -54,8 +54,6 @@ $scanpath = drupal_get_path_alias("node/".$scanids['domain_scan_information']);
 ?>
 
 <?php print $output; ?>
-<div><p><a class="link-all-reports" href="/<?=$scanpath?>">Go to Full Report</a></p></div>
-
 <?php //dsm($view->result);
 $chartdata= $row->_field_data['nid']['entity']->field_dnssec_compliance['und'][0]['value'];
 //dsm ($chartdata);

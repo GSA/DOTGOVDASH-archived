@@ -54,8 +54,7 @@ $scanpath = drupal_get_path_alias("node/".$scanids['domain_scan_information']);
 ?>
 
 <?php print $output; ?>
-<div><p><a class="link-all-reports" href="/<?=$scanpath?>">Go to Full Report</a></p></div>
-
+  <br clear="all" />
 <?php //dsm($view->result);
 $chartdata= $row->_field_data['nid']['entity']->field_ipv6_compliance['und'][0]['value'];
 //dsm ($chartdata);
@@ -140,5 +139,3 @@ if ($chartdata == 0){
 
     );
 </script>
-
-

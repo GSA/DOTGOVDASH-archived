@@ -10,8 +10,10 @@
 $chartData = "[\"Agency\", \"Average DAP Score\", { role: \"style\" } ],";
 $chartColors = array('#0071bc', '#e31c3d', '#00a6d2', '#fdb81e', '#48a463');
 foreach($view->style_plugin->rendered_fields as $key=>$val){
-    $chartData .= "[\"".$val['field_agency_code']."\",".$val['field_dap_score'].",\"".$chartColors[$key]."\"],";
+    $chartData .= "[\"".$val['field_agency_code']."\",".(int)($val['field_dap_score']?$val['field_dap_score']:0).",\"".$chartColors[$key]."\"],";
 }
+// echo $chartData;
+// $chartData = "";
 ?>
 <script type="text/javascript">
     google.charts.load("current", {packages:['corechart']});
@@ -47,5 +49,5 @@ vAxis: {  viewWindow: {
     }
 </script>
 <div id="columnchart_values6"></div>
-<span class="field-content col-lg-12"><a href="/content/scoring-methods" title="" data-toggle="tooltip" class="infor" ''="" data-original-title="Click Here to see the scoring methods used to calculate the scores"><i class="icon glyphicon glyphicon-info-sign"></i><span class="sr-only">information</span></a></span>
-<a id="link-all-reports" href="/agency/all/dap_data">Complete List</a> (Last scan date: <?=dotgov_common_lastScanDate()?>)
+<span class="field-content col-lg-12"><a href="/content/scoring-methods" title="" data-toggle="tooltip" class="infor" data-original-title="Click Here to see the scoring methods used to calculate the scores"><i class="icon glyphicon glyphicon-info-sign"></i><span class="sr-only">information</span></a></span>
+<?php if (arg(2) == 'reports-data') print '<a id="link-all-reports" href="/agency/all/dap_data">Complete List</a>';?> (Last scan date: <?=dotgov_common_lastScanDate()?>)<div><br>*Only the Top Major Agencies are shown in the graph</div>

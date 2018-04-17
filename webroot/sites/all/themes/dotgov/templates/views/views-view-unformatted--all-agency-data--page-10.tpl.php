@@ -20,9 +20,9 @@ else
     $agtit = "Report";
 $chartData = "[\"Scan Criteria\", \"Overall Report\", { role: \"style\" } ],";
 #$chartColors = array('#0071bc','#205493', '#112e51', '#212121', '#323a45', '#aeb0b5','#046b99','#00a6d2');
-$chartColors = array('#0071bc', '#e31c3d', '#00a6d2', '#fdb81e', '#48a463','#5b616b','#e59393');
+$chartColors = array('#0071bc', '#e31c3d', '#00a6d2', '#fdb81e', '#48a463','#5b616b','#e59393','#e31c3d','#48a463');
 #$chartCrit = array("field_ssl_score"=>"SSL","field_dap_score"=>"DAP","field_https_score"=>"HTTPS","field_mobile_overall_score"=>"MOBILE","field_mobile_performance_score"=>"MOBILE PERFORMANCE","field_mobile_usability_score"=>"MOBILE FRIENDLY");
-$chartCrit = array("field_dap_score"=>"DAP","field_https_score"=>"HTTPS","field_mobile_overall_score"=>"MOBILE","field_mobile_performance_score"=>"MOBILE PERFORMANCE","field_mobile_usability_score"=>"MOBILE FRIENDLY","field_dnssec_score"=>'DNSSEC',"field_ipv6_score"=>"IPv6","field_site_speed_score"=>"SITE SPEED");
+$chartCrit = array("field_dap_score"=>"DAP","field_https_score"=>"HTTPS","field_mobile_overall_score"=>"MOBILE","field_mobile_performance_score"=>"MOBILE PERFORMANCE","field_mobile_usability_score"=>"MOBILE FRIENDLY","field_dnssec_score"=>'DNSSEC',"field_ipv6_score"=>"IPv6","field_site_speed_score"=>"SITE SPEED",'field_free_of_insecr_prot_score'=>'Free of RC4/3DES and SSLv2/SSLv3','field_m15_13_compliance_score'=>'M-15-13 and BOD 18-01 Compliance');
 $i = 0;
 $chartData1 = "";
 foreach($view->style_plugin->rendered_fields[0] as $key=>$val){
@@ -85,5 +85,5 @@ $chartCritval = array_values($chartCrit);
 <p>Average score of all <?=$totWebsites?> websites scanned</p>
 <div id="columnchart_material"></div>
 <a href="/website/all/reports" id="link-all-reports">Complete List</a> (Last Scan Date: <?=dotgov_common_lastScanDate()?>)</div>
-<span class="field-content col-lg-12"><a href="/content/scoring-methods" title="" data-toggle="tooltip" class="infor" ''="" data-original-title="Click Here to see the scoring methods used to calculate the scores"><i class="icon glyphicon glyphicon-info-sign"></i><span class="sr-only">information</span></a></span>
+<span class="field-content col-lg-12"><a href="/content/scoring-methods" title="" data-toggle="tooltip" class="infor" data-original-title="Click Here to see the scoring methods used to calculate the scores"><i class="icon glyphicon glyphicon-info-sign"></i><span class="sr-only">Click Here to see the scoring methods used to calculate the scores</span></a></span>
 </div>

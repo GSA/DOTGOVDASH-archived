@@ -74,17 +74,27 @@ if($result['node']->bundle == 'website'){
     $httpnode = node_load($webScanIds['domain_scan_information']);
     $ip = $httpnode->field_ip_address['und']['0']['value'];
     $ip = str_replace(",",",&nbsp;",$ip);
-
+    ($ip == '')?$ip='N/A':$ip=$ip;
     $dns = $httpnode->field_dns_names['und']['0']['value'];
+    ($dns == '')?$dns='N/A':$dns=$dns;
     $commonname = $httpnode->field_dom_common_name['und']['0']['value'];
+    ($commonname == '')?$commonname='N/A':$commonname=$commonname;
     $san = $httpnode->field_subject_alternative_name['und']['0']['value'];
+    ($san == '')?$san='N/A':$san=$san;
     $ssl_from = $httpnode->field_ssl_certificate_valid_from['und']['0']['value'];
+    ($ssl_from == '')?$ssl_from='N/A':$ssl_from=$ssl_from;
     $ssl_to = $httpnode->field_ssl_certificate_expiry['und']['0']['value'];
+    ($ssl_to == '')?$ssl_to='N/A':$ssl_to=$ssl_to;
     $ssl_stat = $httpnode->field_ssl_certificate_status['und']['0']['value'];
+    ($ssl_stat == '')?$ssl_stat='N/A':$ssl_stat=$ssl_stat;
     $ssl_chain = $httpnode->field_ssl_certificate_chain['und']['0']['value'];
+    ($ssl_chain == '')?$ssl_chain='N/A':$ssl_chain=$ssl_chain;
     $ssl_prov = $httpnode->field_certificate_provider['und']['0']['value'];
+    ($ssl_prov == '')?$ssl_prov='N/A':$ssl_prov=$ssl_prov;
     $cloud_prov = $httpnode->field_cloud_provider['und']['0']['value'];
+    ($cloud_prov == '')?$cloud_prov='N/A':$cloud_prov=$cloud_prov;
     $cdn_prov = $httpnode->field_cdn_provider_name['und']['0']['value'];
+    ($cdn_prov == '')?$cdn_prov='N/A':$cdn_prov=$cdn_prov;
     ?>
     <li class="<?php print $classes; ?>"<?php print $attributes; ?>>
     <?php print render($title_prefix); ?>
@@ -112,7 +122,7 @@ if($result['node']->bundle == 'website'){
                  <?php
                  foreach($taxoTerms as $tkey=>$tval) {
 			//print "<li> <a class=\"label\" data-format=\"$tval\" href='/search/website_search/%2A?f[0]=im_field_website_tags%3A".$tkey."'>$tval</a></li>";
-			print "<li> <a class=\"label\" data-format=\"$tval\">$tval</a></li>";
+			print "<li> <span class=\"label\" data-format=\"$tval\">$tval</span></li>";
                  }
              ?>
              </ul>
@@ -121,7 +131,7 @@ if($result['node']->bundle == 'website'){
 //             print "<pre>";
 //             print_r($techterms);
              foreach($techterms as $techkey=>$techval) {
-                 print "<div class='col-xs-3 nopadding dataset-resources'><a id='app-button' class='app-button'>".$techval['category']['name']." :&nbsp;<img class='app-icon' src='/".drupal_get_path('module', 'dotgov_common')."/images/icons/".$techval['icon']."'>$techkey ".$techval['appversion']."</a></div>";
+                 print "<div class='col-sm-4 nopadding dataset-resources clearfix'><span id='app-button' class='app-button'>".$techval['category']['name']." :&nbsp;<img alt='app-icon' class='app-icon' src='/".drupal_get_path('module', 'dotgov_common')."/images/icons/".$techval['icon']."'>$techkey ".$techval['appversion']."</span></div>";
              }
              ?>
             </div>
@@ -154,3 +164,4 @@ else {
     <?php
 }
     ?>
+

@@ -4,8 +4,6 @@
 */
 
 function dotgov_common_siteAsocScanids($websiteid){
-    $node = node_load($websiteid);
-
     $query = db_query("select bundle,entity_id from field_data_field_website_id where field_website_id_nid=:nid", array(':nid' => $websiteid));
     foreach ($query as $result) {
         $websites[$result->bundle] = $result->entity_id;
@@ -150,10 +148,63 @@ function dotgov_common_block_view($delta = '')
 function dotgov_commmon_getTechStackInfo($nid){
     $techterms = dotgov_commmon_get_techTerms($nid);
     $output = "<div id='techstack' class='row dataset-resources'>";
-    foreach($techterms as $techkey=>$techval) {
-        $output .= "<div class='col-xs-12 nopadding dataset-resources'><a id='app-button' class='app-button'>".$techval['category']['name']." :&nbsp;<img class='app-icon' src='/".drupal_get_path('module', 'dotgov_common')."/images/icons/".$techval['icon']."'>$techkey ".$techval['appversion']."</a></div>";
+    if(count($techterms) != 0) {
+        foreach ($techterms as $techkey => $techval) {
+            $output .= "<div class='col-sm-12 nopadding dataset-resources'><span id='app-button' class='app-button'>" . $techval['category']['name'] . " :&nbsp;<img alt='app-icon' class='app-icon' src='/" . drupal_get_path('module', 'dotgov_common') . "/images/icons/" . $techval['icon'] . "'>$techkey " . $techval['appversion'] . "</span></div>";
+        }
     }
+    else
+        $output .= '<div>No Technology Stack Information available.</div>';
     $output .= "</div>";
 
     return $output;
+}
+/*
+ * Create Nice Looking Tooltip on any div or class. Just pass the id and type(class or id). This will genrate the dynamic css
+ */
+function dotgov_common_tooltip($id,$type){
+    if($type == 'id')
+        $cssid = "#".$id;
+    elseif($type == 'class')
+        $cssid = ".".$id;
+
+    $dyncss = "<style>
+$cssid {
+    position: relative;
+    display: inline-block;
+}
+
+$cssid .tooltiptext {
+    visibility: hidden;
+    position: absolute;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+$cssid .tooltiptext::after {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+$cssid:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+$cssid .tooltip-left {
+    top: -5px;
+    bottom: auto;
+    right: 128%;
+}
+</style>";
+print $dyncss;
 }
