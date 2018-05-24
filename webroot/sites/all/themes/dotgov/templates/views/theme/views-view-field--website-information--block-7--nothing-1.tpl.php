@@ -55,8 +55,7 @@ $scanpath = drupal_get_path_alias("node/".$scanids['domain_scan_information']);
 
 <?php print $output; ?>
 <?php //dsm($view->result);
-$chartdata= $row->_field_data['nid']['entity']->field_dnssec_compliance['und'][0]['value'];
-//dsm ($chartdata);
+$chartdata= $row->_field_data['nid']['entity']->field_dnssec_score['und'][0]['value'];
 if ($chartdata == 0){
     $chartcolor = '#ac0600';
 }elseif ($chartdata > 0){

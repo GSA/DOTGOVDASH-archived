@@ -51,19 +51,27 @@
  */
 ?>
 
-<?php print $output; ?>
 <?php
+print $output;
 //dsm($row->_field_data['nid']['entity']);
-$chartdata= $row->_field_data['nid']['entity']->field_free_of_rc4_3des_and_sslv2['und'][0]['value'];
-
+$chartdata= $row->_field_data['nid']['entity']->field_free_of_insecr_prot_score['und'][0]['value'];
+$chartdatafont = "22px";
 //dsm($chartdata);
-if (trim($chartdata) == 'Yes'){
+if (trim($chartdata) == '100'){
     $chartcolor = '#29643a';
+    $chartdatatext = '100%';
     $chartdata = 100;
 }
-else{
+elseif(trim($chartdata) == '0'){
     $chartcolor = '#ac0600';
-    $chartdata = 0;
+    $chartdatatext = '0%';
+    $chartdata = '0';
+}
+elseif(trim($chartdata) == ''){
+    $chartcolor = '#ac0600';
+    $chartdatatext = 'Not Available';
+    $chartdata = '0';
+    $chartdatafont = "12px";
 }
 ?>
 <div class="sr-only">The graphic below indicates the level of Free of RC4/3DES and SSLv2/SSLv3 compliance, and this score is <?php echo $chartdata; ?>%.</div>
@@ -103,9 +111,9 @@ else{
                 tickPositions: [],
 
                 title: {
-                    text: '<?php echo ($chartdata); ?> %',
+                    text: '<?php echo $chartdatatext; ?>',
                     style: {
-                        fontSize: '22px',
+                        fontSize: '<?=$chartdatafont?>',
                         color:'<?php echo $chartcolor; ?>',
                     },
                     y: 30
@@ -132,7 +140,7 @@ else{
                     color: '<?php echo $chartcolor; ?>',
                     radius: '118%',
                     innerRadius: '80%',
-                    y:<?php echo ($chartdata); ?>
+                    y:<?php echo $chartdata; ?>
                 }]
             }]
         }

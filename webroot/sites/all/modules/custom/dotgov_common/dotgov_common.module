@@ -3,6 +3,21 @@
 * Dotgov Dashboard common functions module
 */
 
+function dotgov_common_theme($existing, $type, $theme, $path) {
+    return array(
+        'govwide_reports_page' => array(
+            'template' => 'dotgov-common-govwide-page',
+            'variables' => array('nid' => NULL),
+            'path' => drupal_get_path('module', 'dotgov_common') . '/templates',
+        ),
+        'govwide_graphs_page' => array(
+            'template' => 'dotgov-common-govwide-graphspage',
+            'variables' => array('nid' => NULL),
+            'path' => drupal_get_path('module', 'dotgov_common') . '/templates',
+        )
+    );
+}
+
 function dotgov_common_siteAsocScanids($websiteid){
     $query = db_query("select bundle,entity_id from field_data_field_website_id where field_website_id_nid=:nid", array(':nid' => $websiteid));
     foreach ($query as $result) {
@@ -112,18 +127,29 @@ function dotgov_common_block_info() {
     $blocks['technology_stack'] = array(
         // The name that will appear in the block list.
         'info' => t('Technology Information'),
-        // Default setting.
-        'cache' => DRUPAL_CACHE_PER_ROLE,
-        'status' => TRUE,
-        'region' => 'content'
+        'cache' => DRUPAL_NO_CACHE,
+        'status' => FALSE
+    );
+    $blocks['govwide_tabular'] = array(
+        // The name that will appear in the block list.
+        'info' => t('Government-Wide Tabular Report'),
+        'cache' => DRUPAL_NO_CACHE,
+        'status' => FALSE
+    );
+    $blocks['govwide_graph'] = array(
+        // The name that will appear in the block list.
+        'info' => t('Government-Wide Chart'),
+        'cache' => DRUPAL_NO_CACHE,
+        'status' => FALSE
     );
     return $blocks;
 }
 /*
  * Implements Hook Block view
  */
-function dotgov_common_block_view($delta = '')
+function dotgov_common_block_view($delta = 0)
 {
+    $block = array();
     switch ($delta) {
         case 'technology_stack':
             $block['subject'] = t('Technology Information');
@@ -137,6 +163,31 @@ function dotgov_common_block_view($delta = '')
                     $block['content'] = "Sorry No Data to display";
                 }
             }
+            break;
+
+        case 'govwide_tabular':
+            $block['subject'] = t('Government-Wide Tabular Report');
+                // Retrieve and process data here.
+                $govwidedata['actualdata'] = dotgov_common_govwideTrendData();
+                $govwidedata['graph_title'] = "Government-Wide Tabular Report";
+                $analysis_output =  theme('govwide_reports_page', array('govwidedata' => $govwidedata));
+                $block = array(
+                    'subject' => NULL,
+                    'content' => $analysis_output,
+                );
+            break;
+
+        case 'govwide_graph':
+            $block['subject'] = t('Government-Wide Chart');
+                // Retrieve and process data here.
+                $govwidedata['actualdata'] = dotgov_common_govwideTrendData();
+                $govwidedata['graph_title'] = "Government-Wide Chart";
+                $analysis_output =  theme('govwide_graphs_page', array('govwidedata' => $govwidedata));
+                $block = array(
+                    'subject' => NULL,
+                    'content' => $analysis_output,
+                );
+            break;
     }
     return $block;
 }
@@ -208,3 +259,35 @@ $cssid .tooltip-left {
 </style>";
 print $dyncss;
 }
+
+function dotgov_common_govwideTrendData(){
+    //Find Number of published websites
+    $curdate = date("Y-m-d");
+    $websitenos = db_query("select count(*) from node a, field_data_field_agency_branch b where a.type='website' and a.status ='1' and a.nid=b.entity_id and  b.field_agency_branch_value='executive'")->fetchField();
+    $agencynos = db_query("select count(*) from node a, field_data_field_agency_branch b where a.type='agency' and a.status ='1' and a.nid=b.entity_id and  b.field_agency_branch_value='executive'")->fetchField();
+    $avg_https = round(db_query("select avg(a.field_https_score_value) as avg_value from field_data_field_https_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_dap = round(db_query("select avg(a.field_dap_score_value) as avg_value from field_data_field_dap_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_mob_overall = round(db_query("select avg(a.field_mobile_overall_score_value) as avg_value from field_data_field_mobile_overall_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_mob_perform = round(db_query("select avg(a.field_mobile_performance_score_value) as avg_value from field_data_field_mobile_performance_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_mob_usab = round(db_query("select avg(a.field_mobile_usability_score_value) as avg_value from field_data_field_mobile_usability_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_sitespeed = round(db_query("select avg(a.field_site_speed_score_value) as avg_value from field_data_field_site_speed_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_ipv6 = round(db_query("select avg(a.field_ipv6_score_value) as avg_value from field_data_field_ipv6_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_dnssec = round(db_query("select avg(a.field_dnssec_score_value) as avg_value from field_data_field_dnssec_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_rc4 = round(db_query("select avg(a.field_free_of_insecr_prot_score_value) as avg_value from field_data_field_free_of_insecr_prot_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_m15 = round(db_query("select avg(a.field_m15_13_compliance_score_value) as avg_value from field_data_field_m15_13_compliance_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+
+    $govwidewebsite['websitenos'] = $websitenos;
+    $govwidewebsite['agencynos'] = $agencynos;
+    $govwidewebsite['avg_https'] = $avg_https;
+    $govwidewebsite['avg_dap'] = $avg_dap;
+    $govwidewebsite['avg_mob_overall'] = $avg_mob_overall;
+    $govwidewebsite['avg_mob_perform'] = $avg_mob_perform;
+    $govwidewebsite['avg_mob_usab'] = $avg_mob_usab;
+    $govwidewebsite['avg_sitespeed'] = $avg_sitespeed;
+    $govwidewebsite['avg_ipv6'] = $avg_ipv6;
+    $govwidewebsite['avg_dnssec'] = $avg_dnssec;
+    $govwidewebsite['avg_rc4'] = $avg_rc4;
+    $govwidewebsite['avg_m15'] = $avg_m15;
+    return $govwidewebsite;
+}
+

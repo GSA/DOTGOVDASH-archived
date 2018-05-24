@@ -57,19 +57,33 @@ $scanpath = drupal_get_path_alias("node/".$scanids['https_dap_scan_information']
 //drupal_add_js('https://code.highcharts.com/highcharts-more.js');
 //drupal_add_js('https://code.highcharts.com/modules/solid-gauge.js');
 //drupal_add_js(drupal_get_path('module', 'activity_chart') . '/activity_chart.js');
+$chartdatafont = "22px";
 ?>
 <div class="col-lg-6">
 <?php
 if($row->_field_data['nid']['entity']->field_dap_score['und'][0]['value'] == NULL)
-  print "DAP Score: N/A<br>";
+  print "DAP Score: Not Available<br>";
+elseif($row->_field_data['nid']['entity']->field_dap_score['und'][0]['value'] == '0')
+    print "DAP Score: 0%<br>";
 else
   print "DAP Score: ".$row->_field_data['nid']['entity']->field_dap_score['und'][0]['value']."%<br>";
-if($row->_field_data['nid']['entity']->field_dap_status['und'][0]['value'] == NULL)
-  print "DAP Status: N/A<br>";
-elseif($row->_field_data['nid']['entity']->field_dap_status['und'][0]['value'] == '1')
-  print "DAP Status: Implemented<br>";
-elseif($row->_field_data['nid']['entity']->field_dap_status['und'][0]['value'] == '0')
-  print "DAP Status: Not Implemented<br>";
+
+if($row->_field_data['nid']['entity']->field_dap_status['und'][0]['value'] == NULL) {
+    print "DAP Status: Not Available<br>";
+    $chartdatatext = "Not Available";
+    $chartdatafont = "12px";
+    $chartdata = "0";
+}
+elseif($row->_field_data['nid']['entity']->field_dap_status['und'][0]['value'] == '1') {
+    print "DAP Status: Implemented<br>";
+    $chartdatatext = "100%";
+    $chartdata = "100";
+}
+elseif($row->_field_data['nid']['entity']->field_dap_status['und'][0]['value'] == '0') {
+    print "DAP Status: Not Implemented<br>";
+    $chartdatatext = "0%";
+    $chartdata = "0";
+}
 ?>
 </div>
 <?php print $output;?>
@@ -77,10 +91,6 @@ elseif($row->_field_data['nid']['entity']->field_dap_status['und'][0]['value'] =
 <?php //dsm($view->result);
 //dsm ($row->_field_data['nid']['entity']->field_https_score['und'][0]['safe_value']);
 
-$chartdata= $row->_field_data['nid']['entity']->field_dap_score['und'][0]['value'];
-if($chartdata == NULL){
-	$chartdata = 0;
-}
 
 if ($chartdata <= 50){
     $chartcolor = '#ac0600';
@@ -129,9 +139,9 @@ else{
                 tickPositions: [],
 
                 title: {
-                    text: '<?php echo ($chartdata); ?> %',
+                    text: '<?php echo ($chartdatatext); ?>',
                     style: {
-                        fontSize: '22px',
+                        fontSize: '<?=$chartdatafont?>',
                         color:'<?php echo $chartcolor; ?>',
                     },
                     y: 30
@@ -158,7 +168,7 @@ else{
                     color: '<?php echo $chartcolor; ?>',
                     radius: '118%',
                     innerRadius: '80%',
-                    y:<?php echo ($chartdata); ?>
+                    y:<?=$chartdata?>
                 }]
             }]
         }
@@ -166,3 +176,5 @@ else{
 
     );
 </script>
+
+
