@@ -83,7 +83,7 @@ $custom_class = 'node-style';
 else
 $custom_class = '';
 ?>
-<article id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> <?=$custom_class?> clearfix"<?php print $attributes; ?>>
+<article id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> <?php print $node->type.' '.$custom_class;?> clearfix"<?php print $attributes; ?>>
   <?php if ((!$page && !empty($title)) || !empty($title_prefix) || !empty($title_suffix) || $display_submitted): ?>
   <header>
     <?php print render($title_prefix); ?>
@@ -104,6 +104,7 @@ $custom_class = '';
     hide($content['comments']);
     hide($content['links']);
     hide($content['field_tags']);
+	hide($content['field_accessibility_raw_scan']);
     print render($content);
   ?>
   <?php
@@ -118,4 +119,52 @@ $custom_class = '';
   </footer>
   <?php endif; ?>
   <?php print render($content['comments']); ?>
+  <?php  if($node->type == '508_scan_information'){
+	/*Page tpl code copy paste*/
+		//print_r($node->field_accessibility_raw_scan);
+				if (arg(0) == 'node' && is_numeric(arg(1))) {     
+					$node = node_load(arg(1), NULL, TRUE);
+				}
+				if ($node) {
+					$field_accessibility_raw_scan= $node->field_accessibility_raw_scan['und'][0]['value'];
+					$json = json_decode($field_accessibility_raw_scan, true);
+					$html_attr_count=count($json['HTML Attribute - Initial Findings']);
+					$color_cont_count=count($json['Color Contrast - Initial Findings']);
+					$missing_image_count=count($json['Missing Image Descriptions']);
+					if ($html_attr_count > 0){
+						print '<div class="category"><h2>HTML Attribute - Initial Findings&nbsp;('.$html_attr_count.')</h2>';
+						foreach($json['HTML Attribute - Initial Findings'] as $item) {
+							print "<h4>".$item['code']."</h4>";
+							print "<strong>Selector:&nbsp;</strong>".$item['selector']."<br/>";
+							print "<strong>Context:&nbsp;</strong>".htmlspecialchars($item['context'])."<br/>";
+							print "<strong>Description:&nbsp;</strong>".$item['message']."<br/>";
+
+						}
+						print'</div>';
+					}
+					if ($color_cont_count > 0){
+						print '<div class="category"><h2>Color Contrast - Initial Findings&nbsp;('.$color_cont_count.')</h2>';
+						foreach($json['Color Contrast - Initial Findings'] as $item) {
+							print "<h4>".$item['code']."</h4>";
+							print "<strong>Selector:&nbsp;</strong>".$item['selector']."<br/>";
+							print "<strong>Context:&nbsp;</strong>".htmlspecialchars($item['context'])."<br/>";
+							print "<strong>Description:&nbsp;</strong>".$item['message']."<br/>";
+
+						}
+						print '</div>';
+					}
+					if ($missing_image_count > 0){
+						print '<div class="category"><h2>Missing Image Descriptions&nbsp;('.$missing_image_count.')</h2>';
+						foreach($json['Missing Image Descriptions'] as $item) {
+							print "<h4>".$item['code']."</h4>";
+							print "<strong>Selector:&nbsp;</strong>".$item['selector']."<br/>";
+							print "<strong>Context:&nbsp;</strong>".htmlspecialchars($item['context'])."<br/>";
+							print "<strong>Description:&nbsp;</strong>".$item['message']."<br/>";
+
+						}
+						print '</div>';
+					}
+				}
+  }
+?>
 </article>
