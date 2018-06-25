@@ -1,13 +1,15 @@
 <?php
 include_once("../scripts/commonScanFunctions.php");
 
- $query = db_query("select b.nid,b.title,a.field_technology_scan_raw_value from field_data_field_technology_scan_raw a , node b where b.nid=a.entity_id and b.status='1' and b.nid='13'");
+ $query = db_query("select b.nid,b.title,a.field_technology_scan_raw_value from field_data_field_technology_scan_raw a , node b where b.nid=a.entity_id and b.status='1'");
 
  foreach ($query as $result) {
     print $result->nid."--".$result->field_technology_scan_raw_value."\n";
-     $rawval = $result->field_technology_scan_raw_value;
          $nid = $result->nid;
              $website = $result->title;
+$a = strstr($result->field_technology_scan_raw_value,'[{"');
+$b = str_replace('\'', '\\\'', $a);
+$rawval = str_replace("\\n","",$b);
      updateTechStackInfo1($rawval,$website,$nid);
  }
 
@@ -96,7 +98,7 @@ function updateTechStackInfo1($rawval,$website,$nid){
     if(!empty($cdnproviders)){
         $tags['cdn'] = array_values($cdnproviders);
     }
-    print_r($tags);
+#    print_r($tags);
     foreach ($tags as $key => $tagarr) {
         $i = 0;
         foreach ($tagarr as $tkey => $tag) {

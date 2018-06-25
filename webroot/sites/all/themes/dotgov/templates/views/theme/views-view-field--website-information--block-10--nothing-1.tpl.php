@@ -54,21 +54,27 @@ $scanpath = drupal_get_path_alias("node/".$scanids['https_dap_scan_information']
 ?>
 <?php print $output; ?>
 <?php
-//dsm($row->_field_data['nid']['entity']);
-$chartdata= $row->_field_data['nid']['entity']->field_compl_m_15_13_bod['und'][0]['value'];
-
+$chartdata= $row->_field_data['nid']['entity']->field_m15_13_compliance_score['und'][0]['value'];
+$chartdatafont = "22px";
 //dsm($chartdata);
-if (trim($chartdata) == 'Yes'){
+if (trim($chartdata) == '100'){
     $chartcolor = '#29643a';
+    $chartdatatext = '100%';
     $chartdata = 100;
 }
-else{
+elseif(trim($chartdata) == '0'){
     $chartcolor = '#ac0600';
+    $chartdatatext = '0%';
     $chartdata = '0';
+}
+elseif(trim($chartdata) == ''){
+    $chartcolor = '#ac0600';
+    $chartdatatext = 'Not Available';
+    $chartdata = '0';
+    $chartdatafont = "12px";
 }
 ?>
 <div class="sr-only">The graphic below indicates the level of M-15-13 and BOD 18-01 compliance, and this score is <?php echo $chartdata; ?>%.</div>
-
 <script type="text/javascript">
     Highcharts.chart('m1513_chart', {
 
@@ -104,9 +110,9 @@ else{
                 tickPositions: [],
 
                 title: {
-                    text: '<?php echo ($chartdata); ?> %',
+                    text: '<?php echo $chartdatatext; ?>',
                     style: {
-                        fontSize: '22px',
+                        fontSize: '<?=$chartdatafont?>',
                         color:'<?php echo $chartcolor; ?>',
                     },
                     y: 30
@@ -133,7 +139,7 @@ else{
                     color: '<?php echo $chartcolor; ?>',
                     radius: '118%',
                     innerRadius: '80%',
-                    y:<?php echo ($chartdata); ?>
+                    y:<?php echo $chartdata; ?>
                 }]
             }]
         }
@@ -141,3 +147,4 @@ else{
 
     );
 </script>
+

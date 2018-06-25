@@ -122,10 +122,12 @@ $custom_class = '';
   <?php  if($node->type == '508_scan_information'){
 	/*Page tpl code copy paste*/
 		//print_r($node->field_accessibility_raw_scan);
-				if (arg(0) == 'node' && is_numeric(arg(1))) {     
-					$node = node_load(arg(1), NULL, TRUE);
-				}
-				if ($node) {
+					if (arg(0) == 'node' && is_numeric(arg(1))) {     
+						$node = node_load(arg(1), NULL, TRUE);
+					}
+					if ($node) {
+						
+					
 					$field_accessibility_raw_scan= $node->field_accessibility_raw_scan['und'][0]['value'];
 					$json = json_decode($field_accessibility_raw_scan, true);
 					$html_attr_count=count($json['HTML Attribute - Initial Findings']);
@@ -164,7 +166,7 @@ $custom_class = '';
 						}
 						print '</div>';
 					}
-				}
+}
   }
-?>
+				?>
 </article>

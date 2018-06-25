@@ -76,7 +76,7 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
     responsive: {
         rules: [{
             condition: {
-                maxWidth: 450
+                maxWidth: 500
             },
             chartOptions: {
                 legend: {
@@ -134,7 +134,6 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
 			name: 'Average of <?=$govwidedata['actualdata']['websitenos']?> Websites',
             'colorByPoint': true,
            // colors: ['#0e243a','#8bbd22','#900000','#1cadce','#482a6f','#f28e42','#76a0e6','#c42626','#a6ca6a','#000000'],
-		  		   
             data: <?php echo "[".$chartseries1."]";?>,
             showInLegend: false,
 			}],

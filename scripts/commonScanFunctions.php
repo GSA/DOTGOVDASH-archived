@@ -12,11 +12,18 @@ function getSites()
 {
     $websites = array();
 
-#$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id and b.status='1'", array(':bundle' => 'website'));
-//$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value LIKE 'access-board.gov' and b.nid=a.entity_id", array(':bundle' => 'website'));
+//Remove ice.gov from scan as there is a firewall blocking it
+//$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id and b.status='1'", array(':bundle' => 'website'));
+//$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id and b.status='1' and a.entity_id >'1071'", array(':bundle' => 'website'));
+    //$query = db_query("select a.field_website_id_nid as entity_id,c.title,d.body_value from field_data_field_website_id a , field_data_field_site_inspector_raw_out b , node c , field_data_body d where a.entity_id=b.entity_id and a.bundle='domain_scan_information' and a.field_website_id_nid=c.nid and c.nid=d.entity_id and b.field_site_inspector_raw_out_value like '%site-inspector 3.1.1%'");
+#    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value not LIKE 'ice.gov' and b.nid=a.entity_id  and b.status='1'", array(':bundle' => 'website'));
 //    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id", array(':bundle' => 'website'));
 //$query = db_query("select b.field_website_id_nid entity_id,d.body_value,c.title from field_data_field_site_inspector_raw_out a , field_data_field_website_id b , node c , field_data_body d where a.field_site_inspector_raw_out_value like '%Error:%' and a.entity_id=b.entity_id and b.field_website_id_nid = c.nid and c.nid = d.entity_id");
-  $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id  and  b.status='1' and a.entity_id > '634'", array(':bundle' => 'website'));
+
+//Find all failed mobile scan sites and run mobile scan for them
+$query = db_query("select b.field_website_id_nid entity_id,d.body_value,c.title from field_data_field_mobile_perf_error_code a , field_data_field_website_id b , node c , field_data_body d where a.field_mobile_perf_error_code_value is not null and a.entity_id=b.entity_id and b.field_website_id_nid = c.nid and c.nid = d.entity_id UNION select b.field_website_id_nid entity_id,d.body_value,c.title from field_data_field_mobile_usab_error_code a , field_data_field_website_id b , node c , field_data_body d where a.field_mobile_usab_error_code_value is not null and a.entity_id=b.entity_id and b.field_website_id_nid = c.nid and c.nid = d.entity_id");
+
+  #$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id  and  b.status='1' and a.entity_id > '634'", array(':bundle' => 'website'));
 
     //Final Query
 //    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id and b.nid not in (select c.field_website_id_nid from field_data_body a , node b, field_data_field_website_id c  where b.type='mobile_scan_information' and b.nid=a.entity_id and b.nid=c.entity_id and (UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - b.changed)/3600 >= 3)", array(':bundle' => 'website'));
@@ -42,6 +49,27 @@ function startScan(){
     $node->title = "Scan $date";
     $node->field_scan_start_time['und'][0]['value'] = time();
     $node->promote = 0;
+
+    $httpdir = file_default_scheme().'://pulsehttps';
+    $pulsedir = file_default_scheme().'://pulsedap';
+    file_prepare_directory($httpdir, FILE_CREATE_DIRECTORY);
+    file_prepare_directory($pulsedir, FILE_CREATE_DIRECTORY);
+    $httpfiledata = file_get_contents('/tmp/pulsehttp.csv', true);
+    $dapfiledata = file_get_contents('/tmp/pulsedap.csv', true);
+
+    $httpsdatafile = file_save_data($httpfiledata,file_default_scheme().'://pulsehttps/'.pulse_http_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
+    $dapdatafile = file_save_data($dapfiledata,file_default_scheme().'://pulsedap/'.pulse_dap_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
+
+    //Get NIST Ipv6 data
+    $ipv6dir = file_default_scheme().'://ipv6_nist_source';
+    exec("wget --no-check-certificate -O /tmp/nist_ipv6.html https://usgv6-deploymon.antd.nist.gov/cgi-bin/generate-all.www");
+    file_prepare_directory($ipv6dir, FILE_CREATE_DIRECTORY);
+    $ipv6filedata = file_get_contents('/tmp/nist_ipv6.html', true);
+    $ipv6datafile = file_save_data($ipv6filedata,file_default_scheme().'://ipv6_nist_source/'.nist_ipv6.'_'.date("Y-m-d-h-i-s-a").'.html', FILE_EXISTS_REPLACE);
+
+    $node->field_pulse_source_https_file['und'][0] = array('fid' => $httpsdatafile->fid,'display' => 1, 'description' => 'Pulse HTTPS scan source File');
+    $node->field_pulse_source_analytics_fil['und'][0] = array('fid' => $dapdatafile->fid,'display' => 1, 'description' => 'Pulse DAP scan source File');
+    $node->field_nist_ipv6_data['und'][0] = array('fid' => $ipv6datafile->fid,'display' => 1, 'description' => 'NIST Ipv6 scan source File');
     node_object_prepare($node);
     if($node=node_submit($node)){
         node_save($node);
@@ -409,6 +437,11 @@ function getMobileAPIdata($domain){
         $mobFriendlyFile = file_save_data($googMobileFriendlyApiData,file_default_scheme().'://mobilefriendly_reports/'.$domain.'.json', FILE_EXISTS_REPLACE);
         $mobileAPIdataArr['mobFriendlyFile'] = array('fid' => $mobFriendlyFile->fid,'display' => 1, 'description' => '');
         $jsonMFarr = json_decode($googMobileFriendlyApiData, true);
+        if(isset($jsonMFarr['error']['errors'])){
+            $mobileAPIdataArr['mobFriendlyErrorCode'] = $jsonMFarr['error']['code'];
+            $mobileAPIdataArr['mobFriendlyErrorMessage'] = $jsonMFarr['error']['errors'][0]['message'];
+        }
+
         $mobileAPIdataArr['mobFriendlyScore'] = $jsonMFarr['ruleGroups']['USABILITY']['score'];
         $mobileAPIdataArr['mobFriendlyResult'] = $jsonMFarr['ruleGroups']['USABILITY']['pass'];
         $mobSnapshotData = str_replace('_', '/', $jsonMFarr['screenshot']['data']);
@@ -435,6 +468,10 @@ function getMobileAPIdata($domain){
         $mobileAPIdataArr['mobPerformFile'] = array('fid' => $mobPerformFile->fid,'display' => 1, 'description' => '');
 
         $jsonMParr = json_decode($googMobilePerformApiData, true);
+        if(isset($jsonMParr['error']['errors'])){
+            $mobileAPIdataArr['mobPerformErrorCode'] = $jsonMParr['error']['code'];
+            $mobileAPIdataArr['mobPerformErrorMessage'] = $jsonMParr['error']['errors'][0]['message'];
+        }
         if($mobileAPIdataArr['mobSnapshotData'] == ''){
             $mobSnapshotData = str_replace('_', '/', $jsonMParr['screenshot']['data']);
             $mobSnapshotData = str_replace('-', '+', $mobSnapshotData);
@@ -577,17 +614,62 @@ function getSiteInspectorOutput($domain){
  */
 
 function getDnssecStatus($domain){
-      $dnsseccom = "dig +dnssec $domain @8.8.8.8|grep -i 'rrsig'";
+  $dnsseccom = "dig +dnssec $domain @8.8.8.8|grep -i 'rrsig'";
   $outp = array();
   $comret = "";
   execCommand("$dnsseccom",$outp,$comret);
-  $commandString = implode(" ", $outp);
-  //If the command output is null there is no RRSIG (DNNSEC cryptographic signature) info for the domain
-  if(trim($commandString) == '')
+    $commandOutputforStore = implode("\n", $outp);
+    //If the command output is null there is no RRSIG (DNNSEC cryptographic signature) info for the domain
+  if(trim($commandOutputforStore) == '')
     $dnssecstat = '0';
   else
     $dnssecstat = '1';
-  return $dnssecstat;
+
+    $dnssecret['status'] = $dnssecstat;
+    $dnssecret['output'] = $commandOutputforStore;
+    return $dnssecret;
+}
+
+
+/*
+ * Get IPv6 status of a domain. This is a custom scanner differrent from NIST
+ * we use nslookup
+ */
+
+function getCustomIpv6Status($domain){
+    $ipv6com = "nslookup -q=aaaa $domain";
+    $outp = array();
+    $comret = "";
+    execCommand("$ipv6com",$outp,$comret);
+    $commandOutputforStore = implode("\n", $outp);
+//Check if the command ouputs a valid ipv6 address
+    if (strpos($commandOutputforStore, 'has AAAA address') !== false) {
+        $ipv6stat = '1';
+    }
+    else{
+        $ipv6stat = '0';
+    }
+
+    $ipv6address = shell_exec("dig AAAA +short $domain");
+    $ipv6ret['status'] = $ipv6stat;
+    execCommand("dig AAAA +short $domain",$ipv6outp,$ipcomret);
+    $ipv6ret['address'] = $ipv6outp[0];
+    $ipv6ret['output'] = $commandOutputforStore;
+    return $ipv6ret;
+}
+
+//This function checks status of IPV6 domain in nist. This just checks for the domain is present in the list of ipv6 servers we download earlier from NIST at https://usgv6-deploymon.antd.nist.gov/cgi-bin/generate-all.www
+function getIPv6StatfromNIST($domain){
+    $newdom1 = explode('.',$domain);
+    $newdom = 'gov.'.$newdom1[0].'.';
+    $html = file_get_contents("/tmp/nist_ipv6.html");
+    if( strpos($html,$newdom) !== false) {
+        $ipv6stat = '1';
+    }
+    else{
+        $ipv6stat = '0';
+    }
+return $ipv6stat;
 }
 
 
@@ -663,7 +745,7 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
             db_query("update custom_pulse_https_data set HTTPS = '$domjsonHttp' , redirect = '$domjsonRed' where domain=:domain",array(':domain' => $website['domain']));
         }
     }
-
+    $tags = array();
     $query = db_query("select * from  custom_pulse_https_data where domain=:domain", array(':domain' => $website['domain']));
     foreach ($query as $result) {
         $tags = array();
@@ -718,14 +800,44 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
         }
         if($result->dap == 'Yes')
             $tags[] = 'DAP';
-        $node->field_https_score['und'][0]['value'] = round($https_score);
+        if($result->Compliant_mbod == 'Yes') {
+            $tags[] = 'Compliant with M-15-13 and BOD 18-01';
+            $m15_score = '100';
+            $m15status = 1;
+        }
+        elseif($result->Compliant_mbod == 'No') {
+            $m15_score = '0';
+            $m15status = 0;
+        }
+        else{
+            $m15_score = NULL;
+            $m15status = NULL;
+        }
+        if($result->freeofunsecure == 'Yes') {
+            $tags[] = 'Free of RC4/3DES and SSLv2/SSLv3';
+            $rc4_score = '100';
+            $rc4status = 1;
+        }
+        elseif($result->freeofunsecure == 'No') {
+            $rc4_score = '0';
+            $rc4status = 0;
+        }
+        else{
+            $rc4_score = NULL;
+            $rc4status = NULL;
+        }
+
     }
+    $node->field_https_score['und'][0]['value'] = round($https_score);
+    $node->field_compl_m_15_13_bod['und'][0]['value'] = $m15status;
+    $node->field_free_of_rc4_3des_and_sslv2['und'][0]['value'] = $rc4status;
 
     //Save parent website node
     $wnode = node_load($siteid);
     $wnode->field_https_score['und'][0]['value'] = round($https_score);
     $wnode->field_dap_score['und'][0]['value'] = $dapscore;
-
+    $wnode->field_m15_13_compliance_score['und'][0]['value'] = $m15_score;
+    $wnode->field_free_of_insecr_prot_score['und'][0]['value'] = $rc4_score;
 
     //Save Tags to parent website
     if(!empty($tags)) {
@@ -759,6 +871,8 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
             $i += 1;
         }
 
+    }else{
+        $wnode->field_website_tags['und'] = NULL;
     }
 
     //print_r($node);
@@ -839,8 +953,11 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
     $siInfo = getSiteInspectorOutput($website['domain']);
     //Update Site Inspector details
     //Override Siteinspector dnssec with custom dnssec result
-     $siInfo['dnssec'] = getDnssecStatus($website['domain']);
-	
+     //$siInfo['dnssec'] = getDnssecStatus($website['domain']);
+     $dnssecret = getDnssecStatus($website['domain']);
+     $ipv6nistret = getIPv6StatfromNIST($website['domain']);
+     $ipv6custret = getCustomIpv6Status($website['domain']);
+
     $node->field_cdn_provider_name['und'][0]['value'] = $siInfo['cdn'];
     $node->field_cloud_provider['und'][0]['value'] = $siInfo['cloud_provider'];
     $node->field_uses_sitemap['und'][0]['value'] = ($siInfo['sitemap_xml'] == '')?0:1;
@@ -852,8 +969,27 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
     $node->field_uses_cookies['und'][0]['value'] = ($siInfo['cookie'] == '')?0:1;
     $node->field_uses_secure_cookies['und'][0]['value'] = ($siInfo['secure_cookie'] == '')?0:1;
     $node->field_site_inspector_raw_out['und'][0]['value'] = $siInfo['raw'];
-    $node->field_ipv6_compliance['und'][0]['value'] = ($siInfo['ipv6'] == '')?0:1;
-    $node->field_dnssec_compliance['und'][0]['value'] = $siInfo['dnssec'];
+
+    if(($ipv6nistret == '') || ($ipv6nistret == '0'))
+        $node->field_ipv6_compliance['und'][0]['value'] = 0;
+    else
+        $node->field_ipv6_compliance['und'][0]['value'] = 1;
+
+    if(($dnssecret['status'] == '') || ($dnssecret['status'] == '0'))
+        $node->field_dnssec_compliance['und'][0]['value'] = 0;
+    else
+        $node->field_dnssec_compliance['und'][0]['value'] = 1;
+
+    $node->field_dnssec_scan_output['und'][0]['value'] = $dnssecret['output'];
+
+
+    if(($ipv6custret['status'] == '') || ($ipv6custret['status'] == '0'))
+        $node->field_ipv6_custom_scan_status['und'][0]['value'] = 0;
+    else
+        $node->field_ipv6_custom_scan_status['und'][0]['value'] = 1;
+
+    $node->field_ipv6_custom_scan_output['und'][0]['value'] = $ipv6custret['output'];
+    $node->field_ipv6_address['und'][0]['value'] = $ipv6custret['address'];
 
     //Get SSL labs scan ouput
     //$ssllabsInfo = collectSslLabsDomInfo($website['domain']);
@@ -865,6 +1001,8 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
 
 //Save parent website node
     $wnode = node_load($siteid);
+    //Set all tags to null here
+    $wnode->field_website_tags['und'] = NULL;
 
     $sslScore = 0;
     //Calculate SSL Score
@@ -888,14 +1026,14 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
         $sslScore += 15;
         $tags[] = 'TLSV1.2';
     }
-    if($siInfo['ipv6'] == '1') {
+    if($ipv6nistret == '1') {
         $tags[] = 'IPV6';
         $wnode->field_ipv6_score['und'][0]['value'] = '100';
     }
     else
         $wnode->field_ipv6_score['und'][0]['value'] = '0';
 
-    if($siInfo['dnssec'] == '1') {
+    if($dnssecret['status'] == '1') {
         $tags[] = 'DNSSEC';
         $wnode->field_dnssec_score['und'][0]['value'] = '100';
     }
@@ -997,9 +1135,32 @@ function updateMobileScanInfo($siteid,$webscanId,$website){
     $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
     $node->field_website_id['und'][0]['nid'] = $siteid;
     $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteid);
-    $node->field_mobile_usability_score['und'][0]['value'] = round($mobInfo['mobFriendlyScore']);
+    if($mobInfo['mobFriendlyErrorCode'] != '') {
+        $node->field_mobile_usability_score['und'][0]['value'] = NULL;
+    }
+    else{
+        $node->field_mobile_usability_score['und'][0]['value'] = round($mobInfo['mobFriendlyScore']);
+    }
     $node->field_mobile_usability_result['und'][0]['value'] = ($mobInfo['mobFriendlyResult'] == 'true')?1:0;
-    $node->field_mobile_performance_score['und'][0]['value'] = round($mobInfo['mPScore']);
+    if($mobInfo['mobPerformErrorCode'] != '') {
+        $node->field_mobile_performance_score['und'][0]['value'] = NULL;
+    }
+    else{
+        $node->field_mobile_performance_score['und'][0]['value'] = round($mobInfo['mPScore']);
+    }
+    if(($mobInfo['mobFriendlyErrorCode'] != '') && ($mobInfo['mobPerformErrorCode'] != '')) {
+        $node->field_mobile_overall_score['und'][0]['value'] = NULL;
+        }
+    elseif(($mobInfo['mobFriendlyErrorCode'] != '') && ($mobInfo['mobPerformErrorCode'] == '')) {
+        $node->field_mobile_overall_score['und'][0]['value'] = round($mobInfo['mPScore']);
+    }
+    elseif(($mobInfo['mobFriendlyErrorCode'] == '') && ($mobInfo['mobPerformErrorCode'] != '')) {
+        $node->field_mobile_overall_score['und'][0]['value'] = round($mobInfo['mobFriendlyScore']);
+    }
+    else{
+        $node->field_mobile_overall_score['und'][0]['value'] = round(($mobInfo['mobFriendlyScore'] + $mobInfo['mPScore']) / 2);
+    }
+
     $node->field_mobile_usability_report['und'][0] = $mobInfo['mobFriendlyFile'];
     $node->field_mobile_performance_report['und'][0] = $mobInfo['mobPerformFile'];
     $node->field_mobile_websnapshot['und'][0] = $mobInfo['mobSnapshotFile'];
@@ -1015,17 +1176,37 @@ function updateMobileScanInfo($siteid,$webscanId,$website){
     $node->field_number_of_hosts['und'][0]['value'] = $mobInfo['mPStats']['numberHosts'];
     $node->field_total_request_bytes['und'][0]['value'] = $mobInfo['mPStats']['totalRequestBytes'];
     $node->field_number_of_static_resources['und'][0]['value'] = $mobInfo['mPStats']['numberStaticResources'];
-    $node->field_mobile_overall_score['und'][0]['value'] = round(($mobInfo['mobFriendlyScore']+$mobInfo['mPScore'])/2);
+
+    $node->field_mobile_perf_error_code['und'][0]['value'] = $mobInfo['mobPerformErrorCode'];
+    $node->field_mobile_perf_error_message['und'][0]['value'] = $mobInfo['mobPerformErrorMessage'];
+    $node->field_mobile_usab_error_code['und'][0]['value'] = $mobInfo['mobFriendlyErrorCode'];
+    $node->field_mobile_usab_error_message['und'][0]['value'] = $mobInfo['mobFriendlyErrorMessage'];
+
 
     if($mobInfo['mobFriendlyResult'] == 'true'){
         $tags[] = "MOBILE";
     }
     //Load Parent website id
     $wnode = node_load($siteid);
-    $wnode->field_mobile_performance_score['und'][0]['value'] = round($mobInfo['mPScore']);
-    $wnode->field_mobile_usability_score['und'][0]['value'] = round($mobInfo['mobFriendlyScore']);
-    $wnode->field_mobile_overall_score['und'][0]['value'] = round(($mobInfo['mobFriendlyScore']+$mobInfo['mPScore'])/2);
+    if($mobInfo['mobFriendlyErrorCode'] != '') {
+        $wnode->field_mobile_usability_score['und'][0]['value'] = NULL;
+    }
+    else{
+        $wnode->field_mobile_usability_score['und'][0]['value'] = round($mobInfo['mobFriendlyScore']);
+    }
 
+    if($mobInfo['mobPerformErrorCode'] != ''){
+        $wnode->field_mobile_performance_score['und'][0]['value'] = NULL;
+    }
+    else {
+        $wnode->field_mobile_performance_score['und'][0]['value'] = round($mobInfo['mPScore']);
+    }
+    if(($mobInfo['mobPerformErrorCode'] != '') && ($mobInfo['mobPerformErrorCode'] != '')){
+        $wnode->field_mobile_overall_score['und'][0]['value'] = NULL;
+    }
+    else{
+        $wnode->field_mobile_overall_score['und'][0]['value'] = round(($mobInfo['mobFriendlyScore'] + $mobInfo['mPScore']) / 2);
+    }
     //Save Tags to parent website
     if(!empty($tags)) {
         if(!empty($wnode->field_website_tags)){
@@ -1590,8 +1771,6 @@ foreach($varCatassoc as $vkey=>$vval){
         node_save($webnode);
     }
 }
-
-
 function recursive_array_search($needle,$haystack) {
     foreach($haystack as $key=>$value) {
         $current_key=$key;
@@ -1882,12 +2061,14 @@ function getAccessibleAPIdata(){
 
 function updateBranchInfo(){
   //Update Legislative Branch sites
-  db_query("update custom_pulse_https_data set branch='legislative' where agency in 
-	('Architect of the Capitol','Congressional Office of Compliance','Government Publishing Office','Library of Congress','Stennis Center for Public Service','The Legislative Branch (Congress)','U.S. Capitol Police')");
+  db_query("update custom_pulse_https_data set branch='legislative' where agency in 	('Architect of the Capitol','Congressional Office of Compliance','Government Publishing Office','Library of Congress','Stennis Center for Public Service','The Legislative Branch (Congress)','U.S. Capitol Police')");
   //Update Judicial Branch Sites
   db_query("update custom_pulse_https_data set branch='judicial' where  agency in ('The Supreme Court','U.S Courts')");
   //Update Executive Bracnh Sites
-  db_query("update custom_pulse_https_data set branch='executive' where agency in 
+    db_query("update custom_pulse_https_data set branch='executive' where agency not in ('Architect of the Capitol','Congressional Office of Compliance','Government Publishing Office','Library of Congress','Stennis Center for Public Service','The Legislative Branch (Congress)','U.S. Capitol Police','The Supreme Court','U.S Courts')");
+
+    /*
+  db_query("update custom_pulse_https_data set branch='executive' where agency in
 	(('Administrative Conference of the United States'),('Advisory Council on Historic Preservation'),
 	('African Development Foundation'),
 	('American Battle Monuments Commission'),
@@ -2007,6 +2188,7 @@ function updateBranchInfo(){
 	('United Stated Global Change Research Program'),
 	('United States Office of Government Ethics'),
 	('US Interagency Council on Homelessness'))");
+    */
 }
 
 /*

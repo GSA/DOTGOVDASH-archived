@@ -25,7 +25,7 @@
 
 <?php //print $output;
 ?>
-<div id="access_chart" style="width:560px;">&nbsp;</div>
+<div id="access_chart" >&nbsp;</div>
 <script type="text/javascript">
 Highcharts.chart('access_chart', {
     chart: {

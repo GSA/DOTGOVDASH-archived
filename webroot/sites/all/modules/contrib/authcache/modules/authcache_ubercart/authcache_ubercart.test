@@ -1,0 +1,145 @@
+<?php
+/**
+ * @file
+ * Test cases for the Authcache Ubercart module.
+ */
+
+// Nothing to test if UbercartTestHelper does not exist.
+if (!class_exists('UbercartTestHelper')) {
+  return;
+}
+
+/**
+ * Tests for markup substitution.
+ */
+class AuthcacheUbercartTest extends UbercartTestHelper {
+  protected $stubmod;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Ubercart',
+      'description' => 'Test markup substitution and fragment generation for Ubercart',
+      'group' => 'Authcache Ubercart',
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp($modules = array(), $permissions = array()) {
+    $modules = array_merge(array(
+      'authcache_ubercart',
+      'authcache_form',
+      'authcache_p13n',
+      'authcache_p13n_test',
+      'cacheobject',
+    ), $modules);
+
+    parent::setUp($modules, $permissions);
+
+    variable_set('cache_class_cache_form', 'CacheObjectAPIWrapper');
+    variable_set('cacheobject_class_cache_form', 'DrupalDatabaseCache');
+    module_disable(array('comment'));
+    $this->resetAll();
+
+    $authcache_roles = array(
+      DRUPAL_ANONYMOUS_RID => DRUPAL_ANONYMOUS_RID,
+      DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID,
+    ) + $this->customer->roles;
+
+    // Setup authcache.
+    variable_set('authcache_roles', $authcache_roles);
+    $pagecaching = _authcache_default_pagecaching();
+    $pagecaching[0]['roles']['roles'] = $authcache_roles;
+    variable_set('authcache_pagecaching', $pagecaching);
+
+    // HookStub.
+    $this->stubmod = new ModuleStub('authcache_p13n_test');
+  }
+
+  /**
+   * Test whether the given stub passes the invocation verifier.
+   */
+  protected function assertStub(HookStubProxy $stub, $verifier, $message = NULL) {
+    $result = $stub->verify($verifier, $error);
+
+    if (!$message) {
+      $message = t('Verify invocation of hook @hook.', array('@hook' => $stub->hookname()));
+    }
+    if (!$result && is_string($error)) {
+      $message .= ' ' . $error;
+    }
+
+    $this->assertTrue($result, $message);
+  }
+
+  /**
+   * Test that products are added to the proper cart.
+   */
+  public function testUbercartAddToCartWithFormCache() {
+    $this->stubmod->hook('authcache_p13n_client', array(
+      'authcache_p13n_test' => array(
+        'title' => t('Test Client'),
+        'enabled' => TRUE,
+      ),
+    ));
+
+    // Create a clone of customer with the same set of roles.
+    $cloned_customer = $this->drupalCreateUser();
+    $cloned_customer->roles = $this->customer->roles;
+    user_save($cloned_customer);
+
+    $this->drupalLogin($this->customer);
+
+    // Customer 1: Visit the product display in order to warm the form cache.
+    $excluded_stub = $this->stubmod->hook('authcache_excluded');
+    $canceled_stub = $this->stubmod->hook('authcache_canceled');
+    $this->drupalGet('node/' . $this->product->nid);
+    $this->assertStub($excluded_stub, HookStub::never());
+    $this->assertStub($canceled_stub, HookStub::never());
+
+    $content = $this->drupalGetContent();
+    $url = $this->getUrl();
+
+    // Customer 2: Add one product to the cart.
+    $this->drupalLogin($cloned_customer);
+
+    // Simulate a cache-hit by restoring the content and url from
+    // customer.
+    $this->drupalSetContent($content, $url);
+
+    // Compute CSRF token and supply it via the extra_post parameter.
+    $token = $this->drupalGetToken('uc_product_add_to_cart_form');
+    $extra_post = '&form_token=' . urlencode($token);
+
+    $this->drupalPost(NULL, array(), 'Add to cart', array(), array(), NULL, $extra_post);
+
+    // Ensure that we are not running into CSRF protection.
+    $this->assertNoText('The form has become outdated.');
+
+    // Ensure the add to cart message is displayed.
+    $message = t('<strong>@title</strong> added to <a href="!cart-url">your shopping cart</a>.', array('@title' => $this->product->title, '!cart-url' => url('cart')));
+    $this->assertRaw($message, t('Product add to cart message displayed.'));
+
+    // Go to cart url.
+    $this->drupalGet('cart');
+
+    // Test if the page resolves and there is something in the cart.
+    $this->assertResponse(200);
+    $this->assertNoText(t('There are no products in your shopping cart.'), t('Cart is not empty'));
+    $this->assertText($this->product->title, t('Product was added to the cart'));
+
+    $this->drupalLogout();
+  }
+
+  /**
+   * Overrides the defective method in the parent class.
+   */
+  protected function drupalGetToken($value = '') {
+    return drupal_hmac_base64($value, $this->session_id . drupal_get_private_key() . drupal_get_hash_salt());
+  }
+
+}

@@ -11,6 +11,8 @@ foreach ($query as $result) {
     $parent_websites[] = $result->websiteid;
     $child_scans[] = $result->scanids;
 }
+print_r(array_unique($parent_websites));
+/*
 $unpublish_nodes = array_merge(array_unique($parent_websites),$child_scans);
 foreach($unpublish_nodes as $key=>$nid){
         // Load a node
@@ -21,6 +23,6 @@ foreach($unpublish_nodes as $key=>$nid){
         node_save($node);
         print "unpublished ".$node->title." ".$node->nid." of type".$node->type."\n";
 
-}
-;?>
+}*/
+?>
 

@@ -3,12 +3,12 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
 $score_arr = array('trends_ssl','trends_https','trends_mobile_spark');
 $negativecolor = '#ac0600';
 $positivecolor = '#2a633b';
-$threshold = '0';
+$threshold = '1';
 
 if (in_array($trend_vars['blockname'],$score_arr)){
     $compliancetext = 'Score';
     $negativecolor = '#ac0600';
-    $positivecolor = '#0071bc';
+    $positivecolor = '#4d525a';
 }
 else{
     $compliancetext = 'Compliance';
@@ -32,14 +32,13 @@ else{
 //    $threshold = '0';
 //}
 ?>
-<div id="<?=$trend_vars['container']?>" style="min-width: 150px; height: 50px; margin: 0 auto"></div>
-
+<div id="<?=$trend_vars['container']?>" style="min-width: 150px; height: 40px; margin: 0 auto"></div>
 <script type="text/javascript">//<![CDATA[
 
   Highcharts.chart('<?=$trend_vars['container']?>', {
     chart: {
           type: 'area',
-        events: {
+	events: {
             load: function(){
                 var p = this.series[0].points[<?=(count($trend_vars['compliance'])-1)?>];
                 this.tooltip.refresh(p);
@@ -90,13 +89,29 @@ else{
       tooltip: {
           formatter: function()
           {
-              if(this.y == 0 || this.y == -1)
+              if(this.y == -1)
                   return 'On '+this.x+' was Not Compliant';
+              else if(this.y == '0')
+                  return 'On '+this.x+' was Not Available';
               else
                   return 'On '+this.x+' was Compliant';
           }
       },
-      <?php } ?>
+      <?php }
+         elseif($trend_vars['blockname'] == 'trends_mobile_spark'){
+             ?>
+      tooltip: {
+          formatter: function()
+          {
+              if(this.y == -1)
+                  return 'On '+this.x+' was Not Available';
+              else
+                  return 'On '+this.x+' Score was '+this.y;
+          }
+      },
+      <?php
+         }
+      ?>
       series: [{
       threshold: <?=$threshold?>,
       negativeColor: '<?=$negativecolor?>',
@@ -120,7 +135,4 @@ else{
     //]]>
 
   </script>
-
-
-
 

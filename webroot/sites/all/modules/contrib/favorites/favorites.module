@@ -207,7 +207,7 @@ function favorites_add_favorite($values) {
   $values['path'] = drupal_get_normal_path($values['path']);
 
   // Prepare the query values
-  $values['query'] = drupal_get_query_array($values['query']);
+  $values['query'] = drupal_get_query_array(urldecode($values['query']));
   // Remove useless q value
   unset($values['query']['q']);
   $values['query'] = serialize($values['query']);
