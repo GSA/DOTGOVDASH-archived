@@ -8,13 +8,21 @@
 include_once("../scripts/commonScanFunctions.php");
 
 //Before Starting scan get the latest website listing and data from pulse
+<<<<<<< HEAD
 writeToLogs("Get Latest Websites and data from Pulse\n",$logFile);
+=======
+#writeToLogs("Get Latest Websites and data from Pulse\n",$logFile);
+>>>>>>> devel
 #getPulseData();
 //Start the scan and get the scan id.
 writeToLogs("Starting Scan",$logFile);
 $scanId = startScan();
 //Below are the full scans run for all websites at once. DAP and HTTPS info are collected from pulse site at once for perforamnce optimization
+<<<<<<< HEAD
 writeToLogs("Collecting HTTPS and DAP data from Pulse",$logFile);
+=======
+#writeToLogs("Collecting HTTPS and DAP data from Pulse",$logFile);
+>>>>>>> devel
 //Get the latest reports from pulse accessibility to local.
 #updateAccessibleScanInfo($scanId);
 //Below are scans that are run individually for each site.
@@ -23,6 +31,7 @@ $listWebsites = getSites();
 foreach($listWebsites as $key=>$website){
 /*
     //Update technology Stack Infomration
+<<<<<<< HEAD
 writeToLogs("Running Technology Scan for site ".$website['domain'],$logFile);
 updateTechStackInfo($website['domain']);
 
@@ -32,13 +41,28 @@ updateDomainSSLInfo($key,$scanId,$website);
     //Update HTTPS and DAP info in Drupal. HTTPS info is dependent on domain scan
 writeToLogs("\nStart HTTPS and DAP Scan ".$website['domain'],$logFile);
 updateHttpsDAPInfo($key,$scanId,$website);
+=======
+#writeToLogs("Running Technology Scan for site ".$website['domain'],$logFile);
+#updateTechStackInfo($website['domain']);
+
+#writeToLogs("\nStart Domain and SSL Scan for ".$website['domain'],$logFile);
+#updateDomainSSLInfo($key,$scanId,$website);
+
+    //Update HTTPS and DAP info in Drupal. HTTPS info is dependent on domain scan
+#writeToLogs("\nStart HTTPS and DAP Scan ".$website['domain'],$logFile);
+#updateHttpsDAPInfo($key,$scanId,$website);
+>>>>>>> devel
 
 //writeToLogs("\nStart Mobile Scan for ".$website['domain'],$logFile);
 updateMobileScanInfo($key,$scanId,$website);
 //writeToLogs("\nStart Site Speed Scan for ".$website['domain'],$logFile);
+<<<<<<< HEAD
 updateSiteScanInfo($key,$scanId,$website);
 */
 updateMobileScanInfo($key,$scanId,$website);
+=======
+#updateSiteScanInfo($key,$scanId,$website);
+>>>>>>> devel
     //TODO
     //After scan is done. Run the taxonomy processor. This will parse all taxonomy data and create/edit taxonomies and tag appropriate content.
 

@@ -27,7 +27,16 @@ function trend_analysis_theme($existing, $type, $theme, $path) {
         'template' => 'trend-analysis-multivalspark-page',
         'variables' => array('nid' => NULL),
         'path' => drupal_get_path('module', 'trend_analysis') . '/templates',
+<<<<<<< HEAD
       )
+=======
+      ),
+        'trend_analysis_datatable_page' => array(
+            'template' => 'trend-analysis-datatable-page',
+            'variables' => array('nid' => NULL),
+            'path' => drupal_get_path('module', 'trend_analysis') . '/templates',
+        )
+>>>>>>> devel
     );
 }
 
@@ -98,6 +107,13 @@ function trend_analysis_block_info() {
         'info' => t('Mobile Trend Analysis Chart'),
         'cache' => DRUPAL_NO_CACHE
     );
+<<<<<<< HEAD
+=======
+    $blocks['trends_data_table'] = array(
+        'info' => t('Trend Analysis Table'),
+        'cache' => DRUPAL_NO_CACHE
+    );
+>>>>>>> devel
 
 
     return $blocks;
@@ -111,7 +127,11 @@ function trend_analysis_block_view($delta = 0) {
     $trend_vars['trend_title'] = $trend_node->title;
     switch ($delta) {
         case 'trends_dnssec':
+<<<<<<< HEAD
             $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_dnssec_score_value as score_val from node_revision a , field_revision_field_dnssec_score b where b.revision_id=a.vid  and a.nid=:nid  order by a.timestamp asc;", array(':nid' => arg(1)));
+=======
+            $query = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_dnssec_score_value as score_val from node_revision a , field_revision_field_dnssec_score b where b.revision_id=a.vid  and a.nid=:nid  order by a.timestamp asc;", array(':nid' => arg(1)));
+>>>>>>> devel
             $trend_arr = array();
             foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -137,7 +157,11 @@ function trend_analysis_block_view($delta = 0) {
 
         case 'trends_dap':
 
+<<<<<<< HEAD
             $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_dap_score_value as score_val from node_revision a , field_revision_field_dap_score b where b.revision_id=a.vid and a.nid=:nid  order by a.timestamp asc", array(':nid' => arg(1)));
+=======
+            $query = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_dap_score_value as score_val from node_revision a , field_revision_field_dap_score b where b.revision_id=a.vid and a.nid=:nid  order by a.timestamp asc", array(':nid' => arg(1)));
+>>>>>>> devel
             $trend_arr = array();
             foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -161,7 +185,11 @@ function trend_analysis_block_view($delta = 0) {
             break;
         case 'trends_ipv6':
 
+<<<<<<< HEAD
             $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_ipv6_score_value as score_val from node_revision a , field_revision_field_ipv6_score b where  b.revision_id=a.vid  and a.nid=:nid  order by a.timestamp asc;", array(':nid' => arg(1)));
+=======
+            $query = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_ipv6_score_value as score_val from node_revision a , field_revision_field_ipv6_score b where  b.revision_id=a.vid  and a.nid=:nid  order by a.timestamp asc;", array(':nid' => arg(1)));
+>>>>>>> devel
             $trend_arr = array();
             foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -185,7 +213,11 @@ function trend_analysis_block_view($delta = 0) {
             break;
         case 'trends_m1513':
 
+<<<<<<< HEAD
             $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_m15_13_compliance_score_value as score_val from node_revision a , field_revision_field_m15_13_compliance_score b where  b.revision_id=a.vid  and a.nid=:nid  order by a.timestamp asc", array(':nid' => arg(1)));
+=======
+            $query = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_m15_13_compliance_score_value as score_val from node_revision a , field_revision_field_m15_13_compliance_score b where  b.revision_id=a.vid  and a.nid=:nid  order by a.timestamp asc", array(':nid' => arg(1)));
+>>>>>>> devel
             $trend_arr = array();
             foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -209,7 +241,11 @@ function trend_analysis_block_view($delta = 0) {
             break;
         case 'trends_freerc4':
 
+<<<<<<< HEAD
             $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_free_of_insecr_prot_score_value as score_val from node_revision a , field_revision_field_free_of_insecr_prot_score b where  b.revision_id=a.vid  and a.nid=:nid  order by a.timestamp asc", array(':nid' => arg(1)));
+=======
+            $query = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_free_of_insecr_prot_score_value as score_val from node_revision a , field_revision_field_free_of_insecr_prot_score b where  b.revision_id=a.vid  and a.nid=:nid  order by a.timestamp asc", array(':nid' => arg(1)));
+>>>>>>> devel
             $trend_arr = array();
             foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -232,7 +268,11 @@ function trend_analysis_block_view($delta = 0) {
             );
             break;
       case 'trends_dnssec_sparkline':
+<<<<<<< HEAD
         $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_dnssec_score_value as score_val from node_revision a , field_revision_field_dnssec_score b where b.revision_id=a.vid  and a.nid=:nid  order by a.timestamp asc;", array(':nid' => arg(1)));
+=======
+        $query = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_dnssec_score_value as score_val from node_revision a , field_revision_field_dnssec_score b where b.revision_id=a.vid  and a.nid=:nid  order by a.timestamp asc;", array(':nid' => arg(1)));
+>>>>>>> devel
         $trend_arr = array();
         foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -262,7 +302,11 @@ function trend_analysis_block_view($delta = 0) {
         break;
       case 'trends_dap_sparkline':
 
+<<<<<<< HEAD
         $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_dap_score_value as score_val from node_revision a , field_revision_field_dap_score b where b.revision_id=a.vid and a.nid=:nid  order by a.timestamp asc", array(':nid' => arg(1)));
+=======
+        $query = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_dap_score_value as score_val from node_revision a , field_revision_field_dap_score b where b.revision_id=a.vid and a.nid=:nid  order by a.timestamp asc", array(':nid' => arg(1)));
+>>>>>>> devel
         $trend_arr = array();
         foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -292,7 +336,11 @@ function trend_analysis_block_view($delta = 0) {
         break;
       case 'trends_ipv6_sparkline':
 
+<<<<<<< HEAD
         $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_ipv6_score_value as score_val from node_revision a , field_revision_field_ipv6_score b where  b.revision_id=a.vid  and a.nid=:nid  order by a.timestamp asc;", array(':nid' => arg(1)));
+=======
+        $query = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_ipv6_score_value as score_val from node_revision a , field_revision_field_ipv6_score b where  b.revision_id=a.vid  and a.nid=:nid  order by a.timestamp asc;", array(':nid' => arg(1)));
+>>>>>>> devel
         $trend_arr = array();
         foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -321,7 +369,11 @@ function trend_analysis_block_view($delta = 0) {
         break;
       case 'trends_m1513_sparkline':
 
+<<<<<<< HEAD
         $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_m15_13_compliance_score_value as score_val from node_revision a , field_revision_field_m15_13_compliance_score b where  b.revision_id=a.vid  and a.nid=:nid order by a.timestamp asc", array(':nid' => arg(1)));
+=======
+        $query = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_m15_13_compliance_score_value as score_val from node_revision a , field_revision_field_m15_13_compliance_score b where  b.revision_id=a.vid  and a.nid=:nid order by a.timestamp asc", array(':nid' => arg(1)));
+>>>>>>> devel
         $trend_arr = array();
         foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -350,7 +402,11 @@ function trend_analysis_block_view($delta = 0) {
         break;
       case 'trends_freerc4_sparkline':
 
+<<<<<<< HEAD
         $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_free_of_insecr_prot_score_value as score_val from node_revision a , field_revision_field_free_of_insecr_prot_score b where  b.revision_id=a.vid  and a.nid=:nid order by a.timestamp asc", array(':nid' => arg(1)));
+=======
+        $query = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_free_of_insecr_prot_score_value as score_val from node_revision a , field_revision_field_free_of_insecr_prot_score b where  b.revision_id=a.vid  and a.nid=:nid order by a.timestamp asc", array(':nid' => arg(1)));
+>>>>>>> devel
         $trend_arr = array();
         foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -379,27 +435,43 @@ function trend_analysis_block_view($delta = 0) {
         break;
       case 'trends_accessible_chart':
         $allscanids = dotgov_common_siteAsocScanids(arg(1));
+<<<<<<< HEAD
         $query = db_query("select FROM_UNIXTIME(a.timestamp,'%b-%D-%Y') as scandate, a.vid from node_revision a, node b  where  a.nid=b.nid and b.type='508_scan_information' and a.nid=:nid  group by scandate order by a.timestamp asc", array(':nid' => $allscanids['508_scan_information']));
+=======
+        $query = db_query("select FROM_UNIXTIME(a.timestamp,'%Y/%m/%d') as scandate, a.vid from node_revision a, node b  where  a.nid=b.nid and b.type='508_scan_information' and a.nid=:nid  group by scandate order by a.timestamp asc", array(':nid' => $allscanids['508_scan_information']));
+>>>>>>> devel
         $trend_arr = array();
         foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
           $trend_arr[$result->scandate] = (int)$result->vid;
         }
+<<<<<<< HEAD
         $query1 = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_accessible_group_colorcont_value as score_val from node_revision a , field_revision_field_accessible_group_colorcont b where  b.revision_id=a.vid  and a.nid=:nid  group by scandate order by a.timestamp asc", array(':nid' => $allscanids['508_scan_information']));
+=======
+        $query1 = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_accessible_group_colorcont_value as score_val from node_revision a , field_revision_field_accessible_group_colorcont b where  b.revision_id=a.vid  and a.nid=:nid  group by scandate order by a.timestamp asc", array(':nid' => $allscanids['508_scan_information']));
+>>>>>>> devel
         $trend_color = array();
         foreach ($query1 as $result1) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
           $trend_color[$result1->scandate] = (int)$result1->score_val;
         }
 
+<<<<<<< HEAD
         $query2 = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_accessible_group_htmlattri_value as score_val from node_revision a , field_revision_field_accessible_group_htmlattri b where  b.revision_id=a.vid  and a.nid=:nid   group by scandate order by a.timestamp asc", array(':nid' => $allscanids['508_scan_information']));
+=======
+        $query2 = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_accessible_group_htmlattri_value as score_val from node_revision a , field_revision_field_accessible_group_htmlattri b where  b.revision_id=a.vid  and a.nid=:nid   group by scandate order by a.timestamp asc", array(':nid' => $allscanids['508_scan_information']));
+>>>>>>> devel
         $trend_htmlattrib = array();
         foreach ($query2 as $result2) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
           $trend_htmlattrib[$result2->scandate] = (int)$result2->score_val;
         }
 
+<<<<<<< HEAD
         $query3 = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_accessible_group_missingim_value as score_val from node_revision a , field_revision_field_accessible_group_missingim b where  b.revision_id=a.vid  and a.nid=:nid  group by scandate order by a.timestamp asc", array(':nid' => $allscanids['508_scan_information']));
+=======
+        $query3 = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_accessible_group_missingim_value as score_val from node_revision a , field_revision_field_accessible_group_missingim b where  b.revision_id=a.vid  and a.nid=:nid  group by scandate order by a.timestamp asc", array(':nid' => $allscanids['508_scan_information']));
+>>>>>>> devel
         $trend_missing = array();
         foreach ($query3 as $result3) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -424,7 +496,11 @@ function trend_analysis_block_view($delta = 0) {
         break;
       case 'trends_ssl':
 
+<<<<<<< HEAD
         $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_ssl_score_value as score_val from node_revision a , field_revision_field_ssl_score b where  b.revision_id=a.vid  and a.nid=:nid  order by a.timestamp asc", array(':nid' => arg(1)));
+=======
+        $query = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_ssl_score_value as score_val from node_revision a , field_revision_field_ssl_score b where  b.revision_id=a.vid  and a.nid=:nid  order by a.timestamp asc", array(':nid' => arg(1)));
+>>>>>>> devel
         $trend_arr = array();
         foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -447,7 +523,11 @@ function trend_analysis_block_view($delta = 0) {
         break;
       case 'trends_https':
 
+<<<<<<< HEAD
         $query = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_https_score_value as score_val from node_revision a , field_revision_field_https_score b where  b.revision_id=a.vid  and a.nid=:nid  order by a.timestamp asc", array(':nid' => arg(1)));
+=======
+        $query = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_https_score_value as score_val from node_revision a , field_revision_field_https_score b where  b.revision_id=a.vid  and a.nid=:nid  order by a.timestamp asc", array(':nid' => arg(1)));
+>>>>>>> devel
         $trend_arr = array();
         foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -471,27 +551,43 @@ function trend_analysis_block_view($delta = 0) {
         case 'trends_mobile_chart':
             $allscanids = dotgov_common_siteAsocScanids(arg(1));
             //dsm($allscanids);
+<<<<<<< HEAD
             $query = db_query("select FROM_UNIXTIME(a.timestamp,'%b-%D-%Y') as scandate, a.vid from node_revision a, node b  where  a.nid=b.nid and b.type='mobile_scan_information' and a.nid=:nid   group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
+=======
+            $query = db_query("select FROM_UNIXTIME(a.timestamp,'%Y/%m/%d') as scandate, a.vid from node_revision a, node b  where  a.nid=b.nid and b.type='mobile_scan_information' and a.nid=:nid   group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
+>>>>>>> devel
             $trend_arr = array();
             foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
                 $trend_arr[$result->scandate] = (int)$result->vid;
             }
+<<<<<<< HEAD
             $query1 = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_mobile_overall_score_value as score_val from node_revision a , field_revision_field_mobile_overall_score b where  b.revision_id=a.vid  and a.nid=:nid  group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
+=======
+            $query1 = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_mobile_overall_score_value as score_val from node_revision a , field_revision_field_mobile_overall_score b where  b.revision_id=a.vid  and a.nid=:nid  group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
+>>>>>>> devel
             $trend_moboverall = array();
             foreach ($query1 as $result1) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
                 $trend_moboverall[$result1->scandate] = (int)$result1->score_val;
             }
 
+<<<<<<< HEAD
             $query2 = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_mobile_performance_score_value as score_val from node_revision a , field_revision_field_mobile_performance_score b where  b.revision_id=a.vid  and a.nid=:nid   group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
+=======
+            $query2 = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_mobile_performance_score_value as score_val from node_revision a , field_revision_field_mobile_performance_score b where  b.revision_id=a.vid  and a.nid=:nid   group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
+>>>>>>> devel
             $trend_mobperfrm = array();
             foreach ($query2 as $result2) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
                 $trend_mobperfrm[$result2->scandate] = (int)$result2->score_val;
             }
 
+<<<<<<< HEAD
             $query3 = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_mobile_usability_score_value as score_val from node_revision a , field_revision_field_mobile_usability_score b where  b.revision_id=a.vid  and a.nid=:nid   group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
+=======
+            $query3 = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_mobile_usability_score_value as score_val from node_revision a , field_revision_field_mobile_usability_score b where  b.revision_id=a.vid  and a.nid=:nid   group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
+>>>>>>> devel
             $trend_mobusab = array();
             foreach ($query3 as $result3) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -519,13 +615,21 @@ function trend_analysis_block_view($delta = 0) {
       case 'trends_mobile_spark':
         $allscanids = dotgov_common_siteAsocScanids(arg(1));
         //dsm($allscanids);
+<<<<<<< HEAD
         $query = db_query("select FROM_UNIXTIME(a.timestamp,'%b-%D-%Y') as scandate, a.vid from node_revision a, node b  where  a.nid=b.nid and b.type='mobile_scan_information' and a.nid=:nid   group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
+=======
+        $query = db_query("select FROM_UNIXTIME(a.timestamp,'%Y/%m/%d') as scandate, a.vid from node_revision a, node b  where  a.nid=b.nid and b.type='mobile_scan_information' and a.nid=:nid   group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
+>>>>>>> devel
         $trend_arr = array();
         foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
           $trend_arr[$result->scandate] = (int)$result->vid;
         }
+<<<<<<< HEAD
         $query1 = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,max(field_mobile_overall_score_value) as score_val from node_revision a , field_revision_field_mobile_overall_score b where  b.revision_id=a.vid  and a.nid=:nid  group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
+=======
+        $query1 = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,max(field_mobile_overall_score_value) as score_val from node_revision a , field_revision_field_mobile_overall_score b where  b.revision_id=a.vid  and a.nid=:nid  group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
+>>>>>>> devel
         //dsm($allscanids['mobile_scan_information']);
         $trend_moboverall = array();
         foreach ($query1 as $result1) {
@@ -539,14 +643,22 @@ function trend_analysis_block_view($delta = 0) {
 
         }
 
+<<<<<<< HEAD
         $query2 = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_mobile_performance_score_value as score_val from node_revision a , field_revision_field_mobile_performance_score b where  b.revision_id=a.vid  and a.nid=:nid  group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
+=======
+        $query2 = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_mobile_performance_score_value as score_val from node_revision a , field_revision_field_mobile_performance_score b where  b.revision_id=a.vid  and a.nid=:nid  group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
+>>>>>>> devel
         $trend_mobperfrm = array();
         foreach ($query2 as $result2) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
           $trend_mobperfrm[$result2->scandate] = (int)$result2->score_val;
         }
 
+<<<<<<< HEAD
         $query3 = db_query("select FROM_UNIXTIME(timestamp,'%b-%D-%Y') as scandate,field_mobile_usability_score_value as score_val from node_revision a , field_revision_field_mobile_usability_score b where  b.revision_id=a.vid  and a.nid=:nid  group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
+=======
+        $query3 = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_mobile_usability_score_value as score_val from node_revision a , field_revision_field_mobile_usability_score b where  b.revision_id=a.vid  and a.nid=:nid  group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
+>>>>>>> devel
         $trend_mobusab = array();
         foreach ($query3 as $result3) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -571,6 +683,87 @@ function trend_analysis_block_view($delta = 0) {
           'content' => $analysis_output,
         );
         break;
+<<<<<<< HEAD
+=======
+        case 'trends_data_table':
+            $query1 = db_query("select FROM_UNIXTIME(a.timestamp,'%Y/%m/%d') scandate,field_dap_score_value score_val  from node_revision a, field_revision_field_dap_score b where a.nid=b.entity_id and a.vid=b.revision_id and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
+            $trend_arr1 = array();
+            foreach ($query1 as $result1) {
+                $trend_arr1[$result1->scandate]['dap'] = $result1->score_val;
+            }
+            $query2 = db_query("select FROM_UNIXTIME(a.timestamp,'%Y/%m/%d') scandate,field_dnssec_score_value score_val  from node_revision a, field_revision_field_dnssec_score b where a.nid=b.entity_id and a.vid=b.revision_id and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
+            $trend_arr2 = array();
+            foreach ($query2 as $result2) {
+                $trend_arr2[$result2->scandate]['dnssec'] = $result2->score_val;
+            }
+            $query3 = db_query("select FROM_UNIXTIME(a.timestamp,'%Y/%m/%d') scandate,field_free_of_insecr_prot_score_value score_val  from node_revision a, field_revision_field_free_of_insecr_prot_score b where a.nid=b.entity_id and a.vid=b.revision_id and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
+            $trend_arr3 = array();
+            foreach ($query3 as $result3) {
+                $trend_arr3[$result3->scandate]['insec'] = $result3->score_val;
+            }
+            $query4 = db_query("select FROM_UNIXTIME(a.timestamp,'%Y/%m/%d') scandate,field_https_score_value score_val  from node_revision a, field_revision_field_https_score b where a.nid=b.entity_id and a.vid=b.revision_id and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
+            $trend_arr4 = array();
+            foreach ($query4 as $result4) {
+                $trend_arr4[$result4->scandate]['https'] = $result4->score_val;
+            }
+
+            $query5 = db_query("select FROM_UNIXTIME(a.timestamp,'%Y/%m/%d') scandate,field_ipv6_score_value score_val  from node_revision a, field_revision_field_ipv6_score b where a.nid=b.entity_id and a.vid=b.revision_id and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
+            $trend_arr5 = array();
+            foreach ($query5 as $result5) {
+                $trend_arr5[$result5->scandate]['ipv6'] = $result5->score_val;
+            }
+
+            $query6 = db_query("select FROM_UNIXTIME(a.timestamp,'%Y/%m/%d') scandate,field_m15_13_compliance_score_value score_val  from node_revision a, field_revision_field_m15_13_compliance_score b where a.nid=b.entity_id and a.vid=b.revision_id and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
+            $trend_arr6 = array();
+            foreach ($query6 as $result6) {
+                $trend_arr6[$result6->scandate]['m15'] = $result6->score_val;
+            }
+
+            $query7 = db_query("select FROM_UNIXTIME(a.timestamp,'%Y/%m/%d') scandate,field_mobile_overall_score_value score_val  from node_revision a, field_revision_field_mobile_overall_score b where a.nid=b.entity_id and a.vid=b.revision_id and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
+            $trend_arr7 = array();
+            foreach ($query7 as $result7) {
+                $trend_arr7[$result7->scandate]['mobovr'] = $result7->score_val;
+            }
+
+            $query8 = db_query("select FROM_UNIXTIME(a.timestamp,'%Y/%m/%d') scandate,field_mobile_performance_score_value score_val  from node_revision a, field_revision_field_mobile_performance_score b where a.nid=b.entity_id and a.vid=b.revision_id and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
+            $trend_arr8 = array();
+            foreach ($query8 as $result8) {
+                $trend_arr8[$result8->scandate]['mobperf'] = $result8->score_val;
+            }
+
+            $query9 = db_query("select FROM_UNIXTIME(a.timestamp,'%Y/%m/%d') scandate,field_mobile_usability_score_value score_val  from node_revision a, field_revision_field_mobile_usability_score b where a.nid=b.entity_id and a.vid=b.revision_id and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
+            $trend_arr9 = array();
+            foreach ($query9 as $result9) {
+                $trend_arr9[$result9->scandate]['mobusab'] = $result9->score_val;
+            }
+
+            $query10 = db_query("select FROM_UNIXTIME(a.timestamp,'%Y/%m/%d') scandate,field_site_speed_score_value score_val  from node_revision a, field_revision_field_site_speed_score b where a.nid=b.entity_id and a.vid=b.revision_id and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
+            $trend_arr10 = array();
+            foreach ($query10 as $result10) {
+                $trend_arr10[$result10->scandate]['sitespeed'] = $result10->score_val;
+            }
+
+            $query11 = db_query("select FROM_UNIXTIME(a.timestamp,'%Y/%m/%d') scandate,field_ssl_score_value score_val  from node_revision a, field_revision_field_ssl_score b where a.nid=b.entity_id and a.vid=b.revision_id and a.nid=:nid group by scandate order by a.timestamp desc", array(':nid' => arg(1)));
+            $trend_arr11 = array();
+            foreach ($query11 as $result11) {
+                $trend_arr11[$result11->scandate]['ssl'] = $result11->score_val;
+            }
+
+            $trend_arr = array_merge_recursive($trend_arr1,$trend_arr2,$trend_arr3,$trend_arr4,$trend_arr5,$trend_arr6,$trend_arr7,$trend_arr8,$trend_arr9,$trend_arr10,$trend_arr11);
+
+
+            $trend_vars['trend_arr'] = $trend_arr;
+
+            $trend_vars['container'] = 'container1';
+            $trend_vars['blockname'] = 'trends_data_table';
+
+            $analysis_output =  theme('trend_analysis_datatable_page', array('trend_vars' => $trend_vars));
+            $block = array(
+                'subject' => t('View All Historical Scan Score Data for '.$trend_vars['trend_title']),
+                'content' => $analysis_output,
+            );
+            break;
+>>>>>>> devel
     }
 
     return $block;

@@ -51,9 +51,12 @@
  */
 $scanids = dotgov_common_siteAsocScanids(arg(1));
 $scanpath = drupal_get_path_alias("node/".$scanids['https_dap_scan_information']);
-?>
-
-<?php
+//
+$query = db_query("select a.field_dap_score_value,b.field_dap_status_value from field_data_field_dap_score a , field_data_field_dap_status b,field_data_field_website_id c where a.entity_id=c.field_website_id_nid and b.entity_id=c.entity_id and a.entity_id=:nid",array(":nid"=>arg(1)));
+foreach ($query as $result) {
+$dapscore = $result->field_dap_score_value;
+$dapstat = $result->field_dap_status_value;
+}
 //drupal_add_js('https://code.highcharts.com/highcharts-more.js');
 //drupal_add_js('https://code.highcharts.com/modules/solid-gauge.js');
 //drupal_add_js(drupal_get_path('module', 'activity_chart') . '/activity_chart.js');
@@ -61,6 +64,7 @@ $chartdatafont = "22px";
 ?>
 <div class="col-lg-6">
 <?php
+<<<<<<< HEAD
 if($row->_field_data['nid']['entity']->field_dap_score['und'][0]['value'] == NULL)
   print "DAP Score: Not Available<br>";
 elseif($row->_field_data['nid']['entity']->field_dap_score['und'][0]['value'] == '0')
@@ -69,21 +73,46 @@ else
   print "DAP Score: ".$row->_field_data['nid']['entity']->field_dap_score['und'][0]['value']."%<br>";
 
 if($row->_field_data['nid']['entity']->field_dap_status['und'][0]['value'] == NULL) {
+=======
+if($dapscore == NULL  || $dapscore == '') {
+    print "DAP Score: Not Available<br>";
+>>>>>>> devel
     print "DAP Status: Not Available<br>";
     $chartdatatext = "Not Available";
     $chartdatafont = "12px";
     $chartdata = "0";
 }
+<<<<<<< HEAD
 elseif($row->_field_data['nid']['entity']->field_dap_status['und'][0]['value'] == '1') {
+=======
+elseif($dapscore == '0') {
+    print "DAP Score: 0%<br>";
+    print "DAP Status: Not Implemented<br>";
+    $chartdatatext = "0%";
+    $chartdata = "0";
+}
+elseif($dapscore == '100') {
+    print "DAP Score: 100%<br>";
+>>>>>>> devel
     print "DAP Status: Implemented<br>";
     $chartdatatext = "100%";
     $chartdata = "100";
 }
+<<<<<<< HEAD
 elseif($row->_field_data['nid']['entity']->field_dap_status['und'][0]['value'] == '0') {
     print "DAP Status: Not Implemented<br>";
     $chartdatatext = "0%";
     $chartdata = "0";
 }
+=======
+else {
+    print "DAP Score: ".$dapscore."%<br>";
+    print "DAP Status: Implemented<br>";
+    $chartdatatext = $dapscore."%";
+    $chartdata = $dapscore;
+}
+
+>>>>>>> devel
 ?>
 </div>
 <?php print $output;?>
@@ -178,3 +207,7 @@ else{
 </script>
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> devel

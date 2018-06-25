@@ -34,4 +34,12 @@ jQuery( document ).ready(function($) {
      $(".view_bookmark").click(function() {
      $( ".block-favorites" ).toggle();
      }),2000}); */
+<<<<<<< HEAD
+=======
+var img_title=$(".page-overall-compliance .view-agency-logo h2").text();
+$(".page-overall-compliance .img-responsive").attr("title",img_title);
+$(".page-overall-compliance .img-responsive").attr("alt",img_title);
+$(".dataTable").addClass("table table-hover table-striped");
+
+>>>>>>> devel
 });

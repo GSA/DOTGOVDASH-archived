@@ -10,16 +10,6 @@ define('APACHESOLR_READ_ONLY', 1);
 define('APACHESOLR_API_VERSION', '3.0');
 
 /**
- * Implements hook_init().
- */
-function apachesolr_init() {
-  if (arg(0) == 'admin') {
-    // Add the CSS for this module
-    drupal_add_css(drupal_get_path('module', 'apachesolr') . '/apachesolr.css');
-  }
-}
-
-/**
  * Implements hook_menu().
  */
 function apachesolr_menu() {
@@ -652,7 +642,7 @@ function apachesolr_user_update(&$edit, $account, $category) {
 }
 
 /**
- * Implements hook_term_update().
+ * Implements hook_taxonomy_term_update().
  *
  * Mark nodes as needing re-indexing if a term name changes.
  *
@@ -958,7 +948,11 @@ function apachesolr_cron($env_id = NULL) {
   module_load_include('inc', 'apachesolr', 'apachesolr.index');
 
   // Optimize the index (by default once a day).
+<<<<<<< HEAD
   $optimize_interval = variable_get('apqachesolr_optimize_interval', 60 * 60 * 24);
+=======
+  $optimize_interval = variable_get('apachesolr_optimize_interval', 60 * 60 * 24);
+>>>>>>> devel
   // Protect from too-frequent optimizations.
   $optimize_attempt_interval = variable_get('apachesolr_optimize_attempt_interval', 60 * 60);
 

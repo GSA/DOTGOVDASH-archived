@@ -13,12 +13,25 @@ function getSites()
     $websites = array();
 
 //Remove ice.gov from scan as there is a firewall blocking it
+<<<<<<< HEAD
 $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id and b.status='1'", array(':bundle' => 'website'));
 //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id and b.status='1' and a.entity_id >'1071'", array(':bundle' => 'website'));
     //$query = db_query("select a.field_website_id_nid as entity_id,c.title,d.body_value from field_data_field_website_id a , field_data_field_site_inspector_raw_out b , node c , field_data_body d where a.entity_id=b.entity_id and a.bundle='domain_scan_information' and a.field_website_id_nid=c.nid and c.nid=d.entity_id and b.field_site_inspector_raw_out_value like '%site-inspector 3.1.1%'");
 #$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value LIKE 'alaskacenters.gov' and b.nid=a.entity_id", array(':bundle' => 'website'));
 //    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id", array(':bundle' => 'website'));
 //$query = db_query("select b.field_website_id_nid entity_id,d.body_value,c.title from field_data_field_site_inspector_raw_out a , field_data_field_website_id b , node c , field_data_body d where a.field_site_inspector_raw_out_value like '%Error:%' and a.entity_id=b.entity_id and b.field_website_id_nid = c.nid and c.nid = d.entity_id");
+=======
+//$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id and b.status='1'", array(':bundle' => 'website'));
+//$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id and b.status='1' and a.entity_id >'1071'", array(':bundle' => 'website'));
+    //$query = db_query("select a.field_website_id_nid as entity_id,c.title,d.body_value from field_data_field_website_id a , field_data_field_site_inspector_raw_out b , node c , field_data_body d where a.entity_id=b.entity_id and a.bundle='domain_scan_information' and a.field_website_id_nid=c.nid and c.nid=d.entity_id and b.field_site_inspector_raw_out_value like '%site-inspector 3.1.1%'");
+#    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value not LIKE 'ice.gov' and b.nid=a.entity_id  and b.status='1'", array(':bundle' => 'website'));
+//    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id", array(':bundle' => 'website'));
+//$query = db_query("select b.field_website_id_nid entity_id,d.body_value,c.title from field_data_field_site_inspector_raw_out a , field_data_field_website_id b , node c , field_data_body d where a.field_site_inspector_raw_out_value like '%Error:%' and a.entity_id=b.entity_id and b.field_website_id_nid = c.nid and c.nid = d.entity_id");
+
+//Find all failed mobile scan sites and run mobile scan for them
+$query = db_query("select b.field_website_id_nid entity_id,d.body_value,c.title from field_data_field_mobile_perf_error_code a , field_data_field_website_id b , node c , field_data_body d where a.field_mobile_perf_error_code_value is not null and a.entity_id=b.entity_id and b.field_website_id_nid = c.nid and c.nid = d.entity_id UNION select b.field_website_id_nid entity_id,d.body_value,c.title from field_data_field_mobile_usab_error_code a , field_data_field_website_id b , node c , field_data_body d where a.field_mobile_usab_error_code_value is not null and a.entity_id=b.entity_id and b.field_website_id_nid = c.nid and c.nid = d.entity_id");
+
+>>>>>>> devel
   #$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id  and  b.status='1' and a.entity_id > '634'", array(':bundle' => 'website'));
 
     //Final Query
@@ -741,7 +754,11 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
             db_query("update custom_pulse_https_data set HTTPS = '$domjsonHttp' , redirect = '$domjsonRed' where domain=:domain",array(':domain' => $website['domain']));
         }
     }
+<<<<<<< HEAD
 
+=======
+    $tags = array();
+>>>>>>> devel
     $query = db_query("select * from  custom_pulse_https_data where domain=:domain", array(':domain' => $website['domain']));
     foreach ($query as $result) {
         $tags = array();
@@ -822,10 +839,17 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
             $rc4_score = NULL;
             $rc4status = NULL;
         }
+<<<<<<< HEAD
         $node->field_https_score['und'][0]['value'] = round($https_score);
         $node->field_compl_m_15_13_bod['und'][0]['value'] = $m15status;
         $node->field_free_of_rc4_3des_and_sslv2['und'][0]['value'] = $rc4status;
+=======
+
+>>>>>>> devel
     }
+    $node->field_https_score['und'][0]['value'] = round($https_score);
+    $node->field_compl_m_15_13_bod['und'][0]['value'] = $m15status;
+    $node->field_free_of_rc4_3des_and_sslv2['und'][0]['value'] = $rc4status;
 
     //Save parent website node
     $wnode = node_load($siteid);
@@ -833,7 +857,10 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
     $wnode->field_dap_score['und'][0]['value'] = $dapscore;
     $wnode->field_m15_13_compliance_score['und'][0]['value'] = $m15_score;
     $wnode->field_free_of_insecr_prot_score['und'][0]['value'] = $rc4_score;
+<<<<<<< HEAD
 
+=======
+>>>>>>> devel
 
     //Save Tags to parent website
     if(!empty($tags)) {
@@ -867,6 +894,8 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
             $i += 1;
         }
 
+    }else{
+        $wnode->field_website_tags['und'] = NULL;
     }
 
     //print_r($node);
@@ -995,6 +1024,8 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
 
 //Save parent website node
     $wnode = node_load($siteid);
+    //Set all tags to null here
+    $wnode->field_website_tags['und'] = NULL;
 
     $sslScore = 0;
     //Calculate SSL Score
@@ -1140,10 +1171,23 @@ function updateMobileScanInfo($siteid,$webscanId,$website){
     else{
         $node->field_mobile_performance_score['und'][0]['value'] = round($mobInfo['mPScore']);
     }
+<<<<<<< HEAD
     if(($mobInfo['mobPerformErrorCode'] != '') && ($mobInfo['mobPerformErrorCode'] != '')) {
         $node->field_mobile_overall_score['und'][0]['value'] = NULL;
         }
     else {
+=======
+    if(($mobInfo['mobFriendlyErrorCode'] != '') && ($mobInfo['mobPerformErrorCode'] != '')) {
+        $node->field_mobile_overall_score['und'][0]['value'] = NULL;
+        }
+    elseif(($mobInfo['mobFriendlyErrorCode'] != '') && ($mobInfo['mobPerformErrorCode'] == '')) {
+        $node->field_mobile_overall_score['und'][0]['value'] = round($mobInfo['mPScore']);
+    }
+    elseif(($mobInfo['mobFriendlyErrorCode'] == '') && ($mobInfo['mobPerformErrorCode'] != '')) {
+        $node->field_mobile_overall_score['und'][0]['value'] = round($mobInfo['mobFriendlyScore']);
+    }
+    else{
+>>>>>>> devel
         $node->field_mobile_overall_score['und'][0]['value'] = round(($mobInfo['mobFriendlyScore'] + $mobInfo['mPScore']) / 2);
     }
 

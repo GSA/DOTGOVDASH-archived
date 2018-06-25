@@ -66,6 +66,7 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
         },
 		plotOptions: {
 		series: {
+<<<<<<< HEAD
 			pointWidth: 55,
          dataLabels: {
                enabled: true,
@@ -74,6 +75,40 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
 			   align: 'center',
             }
           }
+=======
+			pointWidth: 30,
+         dataLabels: {
+               enabled: true,
+			   inside: true,
+			   color: 'blue',
+			   align: 'center',
+            },
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                legend: {
+                    align: 'center',
+                    verticalAlign: 'bottom',
+                    layout: 'horizontal'
+                },
+                yAxis: {
+                    labels: {
+                        align: 'left',
+                        x: 0,
+                        y: -5
+                    },
+                },
+                subtitle: {
+                    text: null
+                },
+            }
+        }]
+    }
+        }
+>>>>>>> devel
 		},	    
         series: [
 		    {
