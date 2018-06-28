@@ -38,5 +38,10 @@ var img_title=$(".page-overall-compliance .view-agency-logo h2").text();
 $(".page-overall-compliance .img-responsive").attr("title",img_title);
 $(".page-overall-compliance .img-responsive").attr("alt",img_title);
 $(".dataTable").addClass("table table-hover table-striped");
-
+$('#edit-title').before(function () {
+        return $('<label />', {
+            for: this.id
+        }).text("Add Page").append(this.previousSibling)
+    });
+$('.tabledrag-handle').html('<span class="sr-only">Click here to drag the link</span>');
 });
