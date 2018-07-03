@@ -44,4 +44,9 @@ $('#edit-title').before(function () {
         }).text("Add Page").append(this.previousSibling)
     });
 $('.tabledrag-handle').html('<span class="sr-only">Click here to drag the link</span>');
+  $(document).ajaxComplete(function() {
+$(".dataTable").addClass("table table-hover table-striped");
+$(".dataTables_wrapper").addClass("table-responsive");
+
+});
 });
