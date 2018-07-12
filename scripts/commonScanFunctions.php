@@ -2201,3 +2201,51 @@ function getBranchInfo($agencyname){
     $branchname = 'NA';
   return $branchname;
 }
+/*
+ * Create Government Wide Snapshot for Archival and trend analysis purpose
+ */
+function archiveGovwideTrendData(){
+    //Find Number of published websites
+    $curdate = date("Y-m-d");
+    $websitenos = db_query("select count(*) from node where type='website' and status ='1'")->fetchField();
+    $avg_https = round(db_query("select avg(a.field_https_score_value) as avg_value from field_data_field_https_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_dap = round(db_query("select avg(a.field_dap_score_value) as avg_value from field_data_field_dap_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_mob_overall = round(db_query("select avg(a.field_mobile_overall_score_value) as avg_value from field_data_field_mobile_overall_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_mob_perform = round(db_query("select avg(a.field_mobile_performance_score_value) as avg_value from field_data_field_mobile_performance_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_mob_usab = round(db_query("select avg(a.field_mobile_usability_score_value) as avg_value from field_data_field_mobile_usability_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_sitespeed = round(db_query("select avg(a.field_site_speed_score_value) as avg_value from field_data_field_site_speed_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_ipv6 = round(db_query("select avg(a.field_ipv6_score_value) as avg_value from field_data_field_ipv6_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_dnssec = round(db_query("select avg(a.field_dnssec_score_value) as avg_value from field_data_field_dnssec_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_rc4 = round(db_query("select avg(a.field_free_of_insecr_prot_score_value) as avg_value from field_data_field_free_of_insecr_prot_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_m15 = round(db_query("select avg(a.field_m15_13_compliance_score_value) as avg_value from field_data_field_m15_13_compliance_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+
+//Update/Insert Archive record for current data sets
+    db_query("insert into custom_government_wide_archive values(NULL,CURDATE(),NOW(),$websitenos,$avg_https,$avg_dap,$avg_mob_overall,$avg_mob_usab,$avg_mob_perform,$avg_sitespeed,$avg_ipv6,$avg_dnssec,$avg_rc4,$avg_m15) ON DUPLICATE KEY UPDATE    
+num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15'");
+
+}
+
+function archiveAgencywideTrendData(){
+    $query = db_query("select nid,title from node where type=:bundle and status='1'", array(':bundle' => 'agency'));
+    $curdate = date("Y-m-d");
+    foreach ($query as $result) {
+        $websitenos = db_query("select count(*) from node a , field_data_field_web_agency_id b   where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => $result->nid))->fetchField();
+        $avg_https = round(db_query("select avg(c.field_https_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_https_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => $result->nid))->fetchField());
+        $avg_dap = round(db_query("select avg(c.field_dap_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_dap_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => $result->nid))->fetchField());
+        $avg_mob_overall = round(db_query("select avg(c.field_mobile_overall_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_mobile_overall_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => $result->nid))->fetchField());
+        $avg_mob_perform = round(db_query("select avg(c.field_mobile_performance_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_mobile_performance_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => $result->nid))->fetchField());
+        $avg_mob_usab = round(db_query("select avg(c.field_mobile_usability_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_mobile_usability_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => $result->nid))->fetchField());
+        $avg_sitespeed = round(db_query("select avg(c.field_site_speed_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_site_speed_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => $result->nid))->fetchField());
+        $avg_ipv6 = round(db_query("select avg(c.field_ipv6_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_ipv6_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => $result->nid))->fetchField());
+        $avg_dnssec = round(db_query("select avg(c.field_dnssec_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_dnssec_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => $result->nid))->fetchField());
+        $avg_rc4 = round(db_query("select avg(c.field_free_of_insecr_prot_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_free_of_insecr_prot_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => $result->nid))->fetchField());
+        $avg_m15 = round(db_query("select avg(c.field_m15_13_compliance_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_m15_13_compliance_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => $result->nid))->fetchField());
+        //  print  $result->nid."-- $result->title -- $websitenos - $avg_https\n";
+        print  "$result->nid -- $result->title -- $websitenos - $avg_https -- $avg_dap -- $avg_mob_overall -- $avg_mob_perform -- $avg_mob_usab - $avg_sitespeed - $avg_ipv6 - $avg_dnssec -  $avg_rc4 - $avg_m15\n";
+        if($websitenos != '0'){
+            db_query("insert into custom_agencywide_archive values(NULL,CURDATE(),NOW(),'$result->title','$result->nid',$websitenos,$avg_https,$avg_dap,$avg_mob_overall,$avg_mob_usab,$avg_mob_perform,$avg_sitespeed,$avg_ipv6,$avg_dnssec,$avg_rc4,$avg_m15) ON DUPLICATE KEY UPDATE     num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15'");
+
+        }
+    }
+
+}
