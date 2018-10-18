@@ -49,4 +49,14 @@ $(".dataTable").addClass("table table-hover table-striped");
 $(".dataTables_wrapper").addClass("table-responsive");
 
 });
+  //jquery function to hide chart on agency wide accessibility summary page.
+  $( document ).ajaxComplete(function() {
+  var agencyValue = $("#edit-field-web-agency-id-nid").val();
+console.log(agencyValue);
+if(agencyValue ==="All"){
+$(".panel-accessibility-chart").css("display", "block");
+}else{
+$(".panel-accessibility-chart").css("display", "none");
+}
+});
 });
