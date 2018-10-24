@@ -7,6 +7,7 @@ drupal_add_js('/sites/all/libraries/highcharts/highcharts.js');
 drupal_add_js('/sites/all/libraries/highcharts/highcharts-more.js');
 drupal_add_js('/sites/all/libraries/highcharts/solid-gauge.js');
 drupal_add_js('/sites/all/themes/dotgov/js/loader.js');
+drupal_add_css('//fonts.googleapis.com/css?family=Fira+Sans|Fjalla+One');
 
 function dotgov_common_getMobileSnapshot($websiteid){
     $mobsnap = array();
