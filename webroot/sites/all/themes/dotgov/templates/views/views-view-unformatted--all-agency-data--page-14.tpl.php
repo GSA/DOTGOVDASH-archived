@@ -5,7 +5,10 @@
  *
  * @ingroup views_templates
  */
-$agencydata = dotgov_common_getAgencyComplianceData( arg( 1 ) );
+global $user;
+$user_data = user_load($user->uid);
+$curuserAgency =  $user_data->field_web_agency_id['und'][0]['nid'];
+$agencydata = dotgov_common_getAgencyComplianceData( $curuserAgency );
 
 foreach ( $view->style_plugin->rendered_fields[ 0 ] as $key => $val ) {
 	if ( $key == 'field_web_agency_id_1' )
@@ -32,7 +35,8 @@ foreach ( $view->style_plugin->rendered_fields[ 0 ] as $key => $val ) {
 		$agency_m15_score = $val;
 }
 
-$agencynode = node_load( arg( 1 ) );
+$agencynode = node_load( $curuserAgency );
+drupal_set_title($agencynode->title);
 ?>
 
 <div class="main-container container-fluid">
@@ -210,9 +214,9 @@ $agencynode = node_load( arg( 1 ) );
                             <?php print $agencydata['ag_access_chart']; ?> <span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of Accessibility issues by category</span> </div>
                         </div>
                         </div>
-							  <div class="view-button"><br>
-                          <p><a class="link-all-reports" href="/accessibilityreportalldomains?field_web_agency_id_nid_selective=<?=arg(1)?>">Go to Full Report</a> </p>
-                        </div>
+<!--							  <div class="view-button"><br>-->
+<!--                          <p><a class="link-all-reports" href="/accessibilityreportalldomains?field_web_agency_id_nid_selective=--><?//=$curuserAgency?><!--">Go to Full Report</a> </p>-->
+<!--                        </div>-->
                       </div>
                     </div>
                     
@@ -348,15 +352,14 @@ $agencynode = node_load( arg( 1 ) );
 																	?>
                                 </div>
                               </div>
+                              <div class="col-xs-12">
+                                <a href="/improve-my-score">How to Improve Score</a>
+                              </div>
                             </div>
 								  </div>
-                            <div class="view-button">
-<div class="row">                              
-				<div class="col-xs-12 clearfix" style="margin:-10px 0 10px 0; ">
-					<a href="/improve-my-score">How to Improve Score</a>
-				</div>
-				<div class="col-xs-12"><a class="link-all-reports" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </div>
-                            </div></div>
+<!--                            <div class="view-button"><br>-->
+<!--                              <p><a class="link-all-reports" href="/website/all/reports?field_web_agency_id_nid=--><?//=$curuserAgency?><!--">Go to Full Report</a> </p>-->
+<!--                            </div>-->
                           </div>
                         </div>
                       </div>
@@ -472,9 +475,9 @@ $agencynode = node_load( arg( 1 ) );
                                   </tr>
                                 </table>
                                 </div>
-							    <div class="view-button"><br>
-                                  <p><a class="link-all-reports" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </p>
-                                </div>
+<!--							    <div class="view-button"><br>-->
+<!--                                  <p><a class="link-all-reports" href="/website/all/reports?field_web_agency_id_nid=--><?//=$curuserAgency?><!--">Go to Full Report</a> </p>-->
+<!--                                </div>-->
                               </div>
                             </div>
                           </div>
@@ -497,10 +500,10 @@ $agencynode = node_load( arg( 1 ) );
                         <div class="row">
                           <div class="col-sm-12 col-lg-6">
                             <?php
-															$blockObject3 = block_load( 'trend_analysis', 'agency_https' );
-															$block3 = _block_get_renderable_array( _block_render_blocks( array( $blockObject3 ) ) );
-															$output3 = drupal_render( $block3 );
-															print "$output3 <br><span style='color: " . dotgov_common_getChartColor( $agency_https_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly HTTPS Trend</span>";
+                            $blockObject3 = block_load( 'trend_analysis', 'agency_https' );
+                            $block3 = _block_get_renderable_array( _block_render_blocks( array( $blockObject3 ) ) );
+                            $output3 = drupal_render( $block3 );
+                            print "$output3 <br><span style='color: " . dotgov_common_getChartColor( $agency_https_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly HTTPS Trend</span>";
 															?>
                           </div>
                           <div class="col-sm-12 col-lg-6">
@@ -613,9 +616,9 @@ $agencynode = node_load( arg( 1 ) );
                           </tr>
                         </table>
                         </div>
-						<div class="view-button"><br>
-                          <p><a class="link-all-reports" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </p>
-                        </div>
+<!--						<div class="view-button"><br>-->
+<!--                          <p><a class="link-all-reports" href="/website/all/reports?field_web_agency_id_nid=--><?//=$curuserAgency?><!--">Go to Full Report</a> </p>-->
+<!--                        </div>-->
                       </div>
                     </div>
                     <div class="panel-separator"></div>
@@ -730,9 +733,9 @@ $agencynode = node_load( arg( 1 ) );
                                     </tr>
                                   </table>
 										</div>
-                                  <div class="view-button"><br>
-                                    <p><a class="link-all-reports" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </p>
-                                  </div>
+<!--                                  <div class="view-button"><br>-->
+<!--                                    <p><a class="link-all-reports" href="/website/all/reports?field_web_agency_id_nid=--><?//=$curuserAgency?><!--">Go to Full Report</a> </p>-->
+<!--                                  </div>-->
                                 </div>
                               </div>
                             </div>
@@ -851,9 +854,9 @@ $agencynode = node_load( arg( 1 ) );
                                   </tr>
                                 </table>
 									  </div>
-                                <div class="view-button"><br>
-                                  <p><a class="link-all-reports" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </p>
-                                </div>
+<!--                                <div class="view-button"><br>-->
+<!--                                  <p><a class="link-all-reports" href="/website/all/reports?field_web_agency_id_nid=--><?//=$curuserAgency?><!--">Go to Full Report</a> </p>-->
+<!--                                </div>-->
                               </div>
                             </div>
                           </div>
@@ -962,9 +965,9 @@ $agencynode = node_load( arg( 1 ) );
 																					);
 																				</script> 
                                   </div>
-                                  <table style="width:100%;">
+                                  <table style="align-items: center;width:100%;">
                                     
-                                      <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
+                                      <th style="background-color: #215393;color: white;border: 1px;margin-left: -5px;"> Breakdown </th>
                                       <th style="background-color: #215393;color: white;border: 1px;"> Domains </th>
                                     <tr>
                                       <td>
@@ -984,9 +987,9 @@ $agencynode = node_load( arg( 1 ) );
                         <div><br>
                           <p><font style="font-size: larger;font-color:blue;">*</font> : DAP information is based on data collected from <span style="font-color:blue"></span><a href="https://pulse.cio.gov/analytics/agencies" target="_new">pulse.cio.gov</a></span></p>
 					  </div></div>
-					  <div class="view-button">
-                          <p><a class="link-all-reports" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </p>
-                        </div>
+<!--					  <div class="view-button">-->
+<!--                          <p><a class="link-all-reports" href="/website/all/reports?field_web_agency_id_nid=--><?//=$curuserAgency?><!--">Go to Full Report</a> </p>-->
+<!--                        </div>-->
 						
                       </div>
                     </div>
@@ -1104,9 +1107,9 @@ $agencynode = node_load( arg( 1 ) );
                                     </tr>
                                   </table>
 								  </div>
-                                  <div class="view-button"><br>
-                                    <p><a class="link-all-reports" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </p>
-                                  </div>
+<!--                                  <div class="view-button"><br>-->
+<!--                                    <p><a class="link-all-reports" href="/website/all/reports?field_web_agency_id_nid=--><?//=$curuserAgency?><!--">Go to Full Report</a> </p>-->
+<!--                                  </div>-->
                                 </div>
                               </div>
                             </div>
@@ -1115,14 +1118,14 @@ $agencynode = node_load( arg( 1 ) );
                       </div>
                     </div>
                     <div class="panel-separator"></div>
-                    <div class="panel-pane pane-views pane-website-information" style="min-height:423px;">
+                    <div class="panel-pane pane-views pane-website-information">
                       <h2 class="pane-title"> Popular Technologies </h2>
                       <div class="pane-content">
                         <div class="view  view-display-id-block_8 view-dom-id-b6c9491539ed2fa13d8d26fb2e0fc9c7">
                           <div class="view-content">
                             <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
                               <div class="views-field views-field-nothing">
-								  <div class="view-wrapper" style="min-height:334px;">
+								  <div class="view-wrapper">
                                 <div class="field-content col-lg-12">
                                   <p> Below are the most popular technology stacks used in
                                     <?=$agencynode->title?>
@@ -1177,9 +1180,9 @@ $agencynode = node_load( arg( 1 ) );
                                                                     ?>
                                 </div>
 									  </div>
-                                  <div class="view-button" style="margin-left:15px;"><br>
-                                    <p><a class="link-all-reports" href="/technology-overview?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </p>
-                                  </div>
+<!--                                  <div class="view-button" style="margin-left:15px;"><br>-->
+<!--                                    <p><a class="link-all-reports" href="/technology-overview?field_web_agency_id_nid=--><?//=$curuserAgency?><!--">Go to Full Report</a> </p>-->
+<!--                                  </div>-->
                               </div>
                             </div>
                           </div>

@@ -29,8 +29,10 @@ foreach($view->style_plugin->rendered_fields[0] as $key=>$val){
     if($key == 'field_web_agency_id_1')
         $totWebsites = "$val";
     else {
-	if($val == '')
-		$val = '0';
+	if($val == ''){
+		//$val = '0';
+		continue;
+	}
         $chartData .= "[\"" . $chartCrit[$key] . "\"," . $val . ",\"" . $chartColors[$i] ."\",".$val."],";
         $chartData1 .= $val . ",";
         $i += 1;
@@ -45,11 +47,11 @@ $chartCritval = array_values($chartCrit);
 
     function drawChart() {
 		var data = google.visualization.arrayToDataTable([<?=$chartData?>]);
-        var data_old = google.visualization.arrayToDataTable([
+        <?php /*var data_old = google.visualization.arrayToDataTable([
             ['Scans', '<?=implode("','",$chartCritval)?>'],
 			['Overall Score', <?=$chartData1?>]]
 
-        );
+        );*/ ?>
         var options = {
            /*chartArea: {
 				//left: '15%',

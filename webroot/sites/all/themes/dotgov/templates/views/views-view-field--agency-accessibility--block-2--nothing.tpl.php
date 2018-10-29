@@ -25,7 +25,7 @@
 
 <?php //print $output;
 ?>
-<div id="access_chart" class="gov-wide-chart" style="">&nbsp;</div>
+<div id="access_chart" >&nbsp;</div>
 <script type="text/javascript">
 Highcharts.chart('access_chart', {
     chart: {
@@ -40,12 +40,12 @@ Highcharts.chart('access_chart', {
 	legend: {
                     enabled: true,
                     floating: false,
-                    
+                    margin:40,
                     
                     labelFormatter : function() { 
                         var total = 0, percentage; jQuery.each(this.series.data, function() { total+=this.y; });
                         percentage=((this.y/total)*100).toFixed(2); 
-                        return this.name +'\xa0'+ this.y + '\xa0(<span style=\"color:#000">'+percentage+ '%</span>)'; 
+                        return this.name +'\xa0'+ this.y + '\xa0(<span style=\"color:#000;\">'+percentage+ '%</span>)'; 
                     }
 
             }, 
@@ -57,7 +57,7 @@ Highcharts.chart('access_chart', {
             allowPointSelect: true,
             cursor: 'pointer',
             dataLabels: {
-                enabled: false
+                enabled: true
             },
 		   showInLegend: true
 		   
@@ -82,3 +82,4 @@ Highcharts.chart('access_chart', {
     }]
 });
 </script>
+

@@ -26,53 +26,58 @@
 <?php
 $scanids = dotgov_common_siteAsocScanids(arg(1));
 $scanpath = drupal_get_path_alias("node/".$scanids['508_scan_information']);
- //print $output;
+//print $output;
+$showlegend = 1;
+if(($view->result[0]->_field_data['nid']['entity']->field_accessible_group_colorcont['und'][0]['value'] == '0' || $view->result[0]->_field_data['nid']['entity']->field_accessible_group_colorcont['und'][0]['value'] == NULL) && ($view->result[0]->_field_data['nid']['entity']->field_accessible_group_htmlattri['und'][0]['value'] == '0' || $view->result[0]->_field_data['nid']['entity']->field_accessible_group_htmlattri['und'][0]['value'] == NULL) && ($view->result[0]->_field_data['nid']['entity']->field_accessible_group_missingim['und'][0]['value'] ==  '0' || $view->result[0]->_field_data['nid']['entity']->field_accessible_group_missingim['und'][0]['value'] == NULL)){
+    $showlegend = 0;
+}
 ?>
 <div id="access_chart" style="width: 245px; height:200px; float:right;">&nbsp;</div>
-<?php 
+<?php
 //dsm($view->result[0]->_field_data['nid']['entity']);
 ?>
 <script type="text/javascript">
-Highcharts.chart('access_chart', {
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-    },
-    title: {
-        text: ''
-    },
-    legend:{
-    
-    },
-    tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: false
-            },
-            showInLegend: true
-        }
-    },
-    series: [{
-        name: 'Percentage',
-        colorByPoint: true,
-        data: [{
-            name: 'Color Contrast Issues',
-            y: <?php print_r( $view->result[0]->_field_data['nid']['entity']->field_accessible_group_colorcont['und'][0]['value']);?>
-        }, {
-            name: 'HTML Attribute Issues',
-            y: <?php print_r( $view->result[0]->_field_data['nid']['entity']->field_accessible_group_htmlattri['und'][0]['value']);?>
-           
-        }, {
-            name: 'Missing Image Description Issues',
-            y: <?php print_r( $view->result[0]->_field_data['nid']['entity']->field_accessible_group_missingim['und'][0]['value']); ?>
+    Highcharts.chart('access_chart', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: ''
+        },
+        legend:{
+
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                <?php if($showlegend == 1) print "showInLegend: true"; ?>
+            }
+        },
+        series: [{
+            name: 'Percentage',
+            colorByPoint: true,
+            data: [{
+                name: 'Color Contrast Issues',
+                y: <?php print_r(($view->result[0]->_field_data['nid']['entity']->field_accessible_group_colorcont['und'][0]['value']!= '')?$view->result[0]->_field_data['nid']['entity']->field_accessible_group_colorcont['und'][0]['value']:0);?>
+            }, {
+                name: 'HTML Attribute Issues',
+                y: <?php print_r( ($view->result[0]->_field_data['nid']['entity']->field_accessible_group_htmlattri['und'][0]['value'] != '')?$view->result[0]->_field_data['nid']['entity']->field_accessible_group_htmlattri['und'][0]['value']:0);?>
+
+            }, {
+                name: 'Missing Image Description Issues',
+                y: <?php print_r(($view->result[0]->_field_data['nid']['entity']->field_accessible_group_missingim['und'][0]['value'] != '')?$view->result[0]->_field_data['nid']['entity']->field_accessible_group_missingim['und'][0]['value']:0); ?>
+            }]
         }]
-    }]
-});
+    });
 </script>
+
