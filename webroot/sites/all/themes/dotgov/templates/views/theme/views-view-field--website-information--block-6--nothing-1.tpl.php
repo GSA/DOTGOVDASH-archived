@@ -101,7 +101,7 @@ else{
                 tickPositions: [],
 
                 title: {
-                    text: '<?php echo ($chartdata); ?> %',
+                    text: '<?php echo ($chartdata); ?>',
                     style: {
                         fontSize: '22px',
                         color:'<?php echo $chartcolor; ?>'

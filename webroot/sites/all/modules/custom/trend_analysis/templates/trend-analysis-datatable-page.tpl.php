@@ -1,9 +1,6 @@
-<script type="text/javascript" src="//code.jquery.com/jquery-2.2.4.js"></script>
-
 <link rel="stylesheet" type="text/css" href="/css/result-light.css">
 
 <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
 <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <style type="text/css">
@@ -33,7 +30,9 @@
 
             $("#min").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
             $("#max").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
-            var table = $('#trendtable').DataTable();
+            var table = $('#trendtable').DataTable(
+               { "order": [[ 1, "desc" ]] }
+);
 
             // Event listener to the two range filtering inputs to redraw on input
             $('#min, #max').change(function () {
@@ -45,24 +44,26 @@
 
 </script>
 <body>
-<table border="0" cellspacing="5" cellpadding="5">
-    <tbody>
-    <tr><form>
-        <td><label for="min"> Start Date:</label></td>
-        <td><input name="min" id="min" type="text"></td>
-	<td>
-<button type="button" id="edit-submit-historical-content-summary" name="" value="Apply" class="btn btn-info form-submit">Apply</button>&nbsp;
-<button type="submit" id="edit-reset" name="op" value="Reset" class="btn btn-default form-submit">Reset</button>
-</td>
-    </tr>
-    <tr>
-<td>&nbsp;<label for="max">End Date:</label></td>
-        <td><input name="max" id="max" type="text"></td>
-<td>&nbsp;</td>
+<div class="table-responsive">
+<div class="col-lg-12 col-sm-12 col-xs-12 nopadding" style="margin-bottom:15px;">
+<form>
+  <div class= "col-lg-12 col-xs-12 nopadding" style="margin-bottom:15px;">
+    <label for="min" style="margin-right:10px;"> Start Date:</label>
+	<input name="min" id="min" type="text">
+  </div>
+  <div class= "col-lg-12 col-xs-12 nopadding" style="margin-bottom:15px;">
+	  <label for="max" style="margin-right:16px;">End Date:</label>
+	  <input name="max" id="max" type="text">
+  </div>
+  <div class= "col-lg-12 col-xs-12 nopadding">
+    <button type="button" id="edit-submit-historical-content-summary" name="" value="Apply" class="btn btn-info form-submit">Apply</button>
+    <button type="submit" id="edit-reset" name="op" value="Reset" class="btn btn-default form-submit">Reset</button>
+  </div>
 </form>
-    </tr>
-    </tbody>
-</table><table width="100%" class="display white-back views-table cols-13 table table-hover table-striped" id="trendtable" cellspacing="0">
+</div>
+
+
+<table width="100%" class="display white-back views-table cols-13 table table-hover table-striped" id="trendtable" cellspacing="0">
     <thead>
     <tr>
         <th>Website</th>
@@ -168,4 +169,4 @@
     </tr>
     </tbody>
 </table>
-
+</div>

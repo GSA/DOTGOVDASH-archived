@@ -1,6 +1,8 @@
 <?php
 drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
-$score_arr = array('trends_ssl','trends_https','trends_mobile_spark');
+$score_arr = array('trends_ssl','trends_https','trends_mobile_spark','agency_mob');
+$agency_score_arr = array('agency_https','agency_dap','agency_dnssec','agency_ipv6','agency_m15','agency_rc4');
+$agency_color_arr = array('agency_mob','agency_https','agency_dap','agency_dnssec','agency_ipv6','agency_m15','agency_rc4');
 $negativecolor = '#ac0600';
 $positivecolor = '#2a633b';
 $threshold = '1';
@@ -14,6 +16,10 @@ else{
     $compliancetext = 'Compliance';
     $negativecolor = '#ac0600';
     $positivecolor = '#2a633b';
+}
+if (in_array($trend_vars['blockname'],$agency_color_arr)) {
+    $negativecolor = '#4d525a';
+    $positivecolor = '#4d525a';
 }
 //if (in_array($trend_vars['blockname'],$score_arr)){
 //  $compliancetext = 'Score';
@@ -84,20 +90,19 @@ else{
       }
     },
 <?php
-      if (!in_array($trend_vars['blockname'],$score_arr)){
-      ?>
+      if (in_array($trend_vars['blockname'],$agency_score_arr)){
+          ?>
       tooltip: {
           formatter: function()
           {
               if(this.y == -1)
-                  return 'On '+this.x+' was Not Compliant';
-              else if(this.y == '0')
-                  return 'On '+this.x+' was Not Available';
+                  return 'Score: 0%';
               else
-                  return 'On '+this.x+' was Compliant';
+                  return 'Score: '+this.y +'%';
           }
       },
-      <?php }
+      <?php
+      }
          elseif($trend_vars['blockname'] == 'trends_mobile_spark'){
              ?>
       tooltip: {
@@ -111,6 +116,20 @@ else{
       },
       <?php
          }
+      elseif (!in_array($trend_vars['blockname'],$score_arr)){
+      ?>
+      tooltip: {
+          formatter: function()
+          {
+              if(this.y == -1)
+                  return 'On '+this.x+' was Not Compliant';
+              else if(this.y == '0')
+                  return 'On '+this.x+' was Not Available';
+              else
+                  return 'On '+this.x+' was Compliant';
+          }
+      },
+      <?php }
       ?>
       series: [{
       threshold: <?=$threshold?>,
@@ -135,4 +154,5 @@ else{
     //]]>
 
   </script>
+
 

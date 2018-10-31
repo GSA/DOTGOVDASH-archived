@@ -14,6 +14,11 @@ function dotgov_common_theme($existing, $type, $theme, $path) {
             'template' => 'dotgov-common-govwide-graphspage',
             'variables' => array('nid' => NULL),
             'path' => drupal_get_path('module', 'dotgov_common') . '/templates',
+        ),
+        'agencywide_accessgraphs_page' => array(
+            'template' => 'dotgov-common-agencyacess-graph',
+            'variables' => array('nid' => NULL),
+            'path' => drupal_get_path('module', 'dotgov_common') . '/templates',
         )
     );
 }
@@ -74,13 +79,13 @@ $vulnerable_fields = array("bm_field_openssl_ccs_injection","bm_field_openssl_he
                                         $build[$key]["#markup"] = "Not Vulnerable";
                           }
                         }
-
-$fix_encode_fields = array("sm_field_certificate_issuer","sm_field_certificate_provider");
+    $fix_encode_fields = array("sm_field_certificate_issuer","sm_field_certificate_provider");
     if (in_array($settings->facet,$fix_encode_fields)) {
         foreach($build as $key => $item) {
             $build[$key]["#markup"] = html_entity_decode($item["#markup"], ENT_QUOTES, 'UTF-8');
         }
     }
+
 }
 
 /*
@@ -294,5 +299,384 @@ function dotgov_common_govwideTrendData(){
     $govwidewebsite['avg_rc4'] = $avg_rc4;
     $govwidewebsite['avg_m15'] = $avg_m15;
     return $govwidewebsite;
+}
+
+/*
+ * Get Agency Data
+ */
+
+function dotgov_common_getAgencyComplianceData($agencyid){
+    $agencydata = array();
+//Query to get https data for an agency
+    $httpresults = db_query("select field_https_status_value,count(field_https_status_value) as complnum from node a , field_data_field_https_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='https_dap_scan_information' group by field_https_status_value;
+", array(':agencyid' => $agencyid));
+    foreach ($httpresults as $httpresult) {
+        if($httpresult->field_https_status_value == 'Yes')
+            $agencydata['https_compliant'] += $httpresult->complnum;
+        if($httpresult->field_https_status_value == 'No')
+            $agencydata['https_noncompliant'] += $httpresult->complnum;
+    }
+//Query to get DAP data
+    $dapresults = db_query("select field_dap_score_value,count(field_dap_score_value)  as complnum from field_data_field_dap_score a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid group by field_dap_score_value", array(':agencyid' => $agencyid));
+    foreach ($dapresults as $dapresult) {
+        if($dapresult->field_dap_score_value == '100')
+            $agencydata['dap_compliant'] += $dapresult->complnum;
+        if($dapresult->field_dap_score_value == '0')
+            $agencydata['dap_noncompliant'] += $dapresult->complnum;
+        $agencydata['dap_tottracked'] += $dapresult->complnum;
+    }
+
+//Query to get DNSSEC data
+    $dnsresults = db_query("select field_dnssec_compliance_value,count(field_dnssec_compliance_value)  as complnum from node a , field_data_field_dnssec_compliance b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='domain_scan_information'  group by field_dnssec_compliance_value;
+", array(':agencyid' => $agencyid));
+    foreach ($dnsresults as $dnsresult) {
+        if($dnsresult->field_dnssec_compliance_value == '1')
+            $agencydata['dns_compliant'] += $dnsresult->complnum;
+        if($dnsresult->field_dnssec_compliance_value == '0')
+            $agencydata['dns_noncompliant'] += $dnsresult->complnum;
+    }
+
+//Query to get IPV6 data
+    $ipv6results = db_query("select field_ipv6_compliance_value,count(field_ipv6_compliance_value)  as complnum from node a , field_data_field_ipv6_compliance b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='domain_scan_information'  group by field_ipv6_compliance_value;", array(':agencyid' => $agencyid));
+    foreach ($ipv6results as $ipv6result) {
+        if($ipv6result->field_ipv6_compliance_value == '1')
+            $agencydata['ipv6_compliant'] += $ipv6result->complnum;
+        if($ipv6result->field_ipv6_compliance_value == '0')
+            $agencydata['ipv6_noncompliant'] += $ipv6result->complnum;
+    }
+
+    //Query to get M15-13 data
+    $m15results = db_query("select field_compl_m_15_13_bod_value,count(field_compl_m_15_13_bod_value)  as complnum from node a , field_data_field_compl_m_15_13_bod b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='https_dap_scan_information'  group by field_compl_m_15_13_bod_value;
+", array(':agencyid' => $agencyid));
+    foreach ($m15results as $m15result) {
+        if($m15result->field_compl_m_15_13_bod_value == '1')
+            $agencydata['m15_compliant'] += $m15result->complnum;
+        if($m15result->field_compl_m_15_13_bod_value == '0')
+            $agencydata['m15_noncompliant'] += $m15result->complnum;
+        $agencydata['m15_tracked'] += $m15result->complnum;
+
+    }
+
+    //Query to get Insecure protocol data
+    $insecresults = db_query("select field_free_of_rc4_3des_and_sslv2_value,count(field_free_of_rc4_3des_and_sslv2_value)  as complnum from node a , field_data_field_free_of_rc4_3des_and_sslv2 b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='https_dap_scan_information'  group by field_free_of_rc4_3des_and_sslv2_value", array(':agencyid' => $agencyid));
+    foreach ($insecresults as $insecresult) {
+        if($insecresult->field_free_of_rc4_3des_and_sslv2_value == '1')
+            $agencydata['insec_compliant'] += $insecresult->complnum;
+        if($insecresult->field_free_of_rc4_3des_and_sslv2_value == '0')
+            $agencydata['insec_noncompliant'] += $insecresult->complnum;
+        $agencydata['free_tracked'] += $insecresult->complnum;
+    }
+
+//    //Query to get Downgrade data
+//    $downgradresults = db_query("select field_downgrade_attacks_value,count(field_downgrade_attacks_value)  as complnum from node a , field_data_field_downgrade_attacks b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='domain_scan_information'  group by field_downgrade_attacks_value", array(':agencyid' => $agencyid));
+//    foreach ($downgradresults as $downgradresult) {
+//        if($downgradresult->field_downgrade_attacks_value == '1')
+//            $agencydata['downgrade_exposed'] = $downgradresult->complnum;
+//        if($downgradresult->field_downgrade_attacks_value == '0')
+//            $agencydata['downgrade_notexposed'] = $downgradresult->complnum;
+//    }
+//
+//    //Query to get Opensssl CCS injection data
+//    $ccsresults = db_query("select field_openssl_ccs_injection_value,count(field_openssl_ccs_injection_value)  as complnum from node a , field_data_field_openssl_ccs_injection b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='domain_scan_information'  group by field_openssl_ccs_injection_value", array(':agencyid' => $agencyid));
+//    foreach ($ccsresults as $ccsresult) {
+//        if($ccsresult->field_openssl_ccs_injection_value == '1')
+//            $agencydata['ccs_exposed'] = $ccsresult->complnum;
+//        if($ccsresult->field_openssl_ccs_injection_value == '0')
+//            $agencydata['ccs_notexposed'] = $ccsresult->complnum;
+//    }
+
+    //Query to get SSL v2  data
+    $v2results = db_query("select field_ssl_v2_from_pulse_value,count(field_ssl_v2_from_pulse_value)  as complnum from node a , field_data_field_ssl_v2_from_pulse b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='https_dap_scan_information'  group by field_ssl_v2_from_pulse_value", array(':agencyid' => $agencyid));
+    foreach ($v2results as $v2result) {
+        if($v2result->field_ssl_v2_from_pulse_value == 'Yes')
+            $agencydata['v2_support'] += $v2result->complnum;
+        else
+            $agencydata['v2_nosupport'] += $v2result->complnum;
+    }
+
+    //Query to get SSL v3  data
+    $v3results = db_query("select field_ssl_v3_from_pulse_value,count(field_ssl_v3_from_pulse_value)  as complnum from node a , field_data_field_ssl_v3_from_pulse b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='https_dap_scan_information'  group by field_ssl_v3_from_pulse_value", array(':agencyid' => $agencyid));
+    foreach ($v3results as $v3result) {
+        if($v3result->field_ssl_v3_from_pulse_value == 'Yes')
+            $agencydata['v3_support'] += $v3result->complnum;
+        else
+            $agencydata['v3_nosupport'] += $v3result->complnum;
+    }
+
+
+    //Query to get TLs v1  data
+    $tls1results = db_query("select field_tls_v1_support_value,count(field_tls_v1_support_value)  as complnum from node a , field_data_field_tls_v1_support b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='domain_scan_information'  group by field_tls_v1_support_value", array(':agencyid' => $agencyid));
+    foreach ($tls1results as $tls1result) {
+        if($tls1result->field_tls_v1_support_value == '1')
+            $agencydata['tlsv1_support'] += $tls1result->complnum;
+        else
+            $agencydata['tlsv1_nosupport'] += $tls1result->complnum;
+    }
+
+    //Query to get TLs v1.1  data
+    $tls11results = db_query("select field_tls_v1_1_support_value,count(field_tls_v1_1_support_value)  as complnum from node a , field_data_field_tls_v1_1_support b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='domain_scan_information'  group by field_tls_v1_1_support_value", array(':agencyid' => $agencyid));
+    foreach ($tls11results as $tls11result) {
+        if($tls11result->field_tls_v1_1_support_value == '1')
+            $agencydata['tlsv11_support'] += $tls11result->complnum;
+        else
+            $agencydata['tlsv11_nosupport'] += $tls11result->complnum;
+    }
+
+
+    //Query to get SSL v2  data
+    $v2results = db_query("select field_ssl_v2_from_pulse_value,count(field_ssl_v2_from_pulse_value)  as complnum from node a , field_data_field_ssl_v2_from_pulse b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='https_dap_scan_information'  group by field_ssl_v2_from_pulse_value", array(':agencyid' => $agencyid));
+    foreach ($v2results as $v2result) {
+        if($v2result->field_ssl_v2_from_pulse_value == 'Yes')
+            $agencydata['v2_support'] += $v2result->complnum;
+        else
+            $agencydata['v2_nosupport'] += $v2result->complnum;
+    }
+
+    //Query to get Enforce HTTPS  data
+    $enfhttpsresults = db_query("select field_enforce_https_value,count(field_enforce_https_value)  as complnum from node a , field_data_field_enforce_https b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='https_dap_scan_information'  group by field_enforce_https_value", array(':agencyid' => $agencyid));
+    foreach ($enfhttpsresults as $enfhttpsresult) {
+        if($enfhttpsresult->field_enforce_https_value == 'Yes')
+            $agencydata['enfhttps_support'] += $enfhttpsresult->complnum;
+        else
+            $agencydata['enfhttps_nosupport'] += $enfhttpsresult->complnum;
+    }
+
+    //Query to get HSTS  data
+    $hstsresults = db_query("select field_hsts_status_value,count(field_hsts_status_value)  as complnum from node a , field_data_field_hsts_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='https_dap_scan_information'  group by field_hsts_status_value;
+", array(':agencyid' => $agencyid));
+    foreach ($hstsresults as $hstsresult) {
+        if($hstsresult->field_hsts_status_value == 'Yes')
+            $agencydata['hsts_support'] += $hstsresult->complnum;
+        else
+            $agencydata['hsts_nosupport'] += $hstsresult->complnum;
+    }
+
+    //Query to get HTTPS status  data
+    $httpsresults = db_query("select field_https_status_value,count(field_https_status_value)  as complnum from node a , field_data_field_https_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='https_dap_scan_information'  group by field_https_status_value
+", array(':agencyid' => $agencyid));
+    foreach ($httpsresults as $httpsresult) {
+        if($httpsresult->field_https_status_value == 'Yes')
+            $agencydata['https_support'] += $httpsresult->complnum;
+        else
+            $agencydata['https_nosupport'] += $httpsresult->complnum;
+    }
+
+    //Query to get Preload status  data
+    $preloadresults = db_query("select field_preload_status_value,count(field_preload_status_value)  as complnum from node a , field_data_field_preload_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='https_dap_scan_information'  group by field_preload_status_value", array(':agencyid' => $agencyid));
+    foreach ($preloadresults as $preloadresult) {
+        if($preloadresult->field_preload_status_value == 'Yes')
+            $agencydata['preload_support'] += $preloadresult->complnum;
+        elseif($preloadresult->field_preload_status_value == 'Ready')
+            $agencydata['preload_readysupport'] += $preloadresult->complnum;
+        else
+            $agencydata['preload_nosupport'] += $preloadresult->complnum;
+    }
+
+
+//Query to get Most Popular web servers for Agency
+    $agwebservreslts = db_query("select d.title,d.status,c.name,b.field_web_server_tid,count(b.field_web_server_tid) cnt from field_data_field_web_agency_id a, field_data_field_web_server b ,taxonomy_term_data c , node d where a.field_web_agency_id_nid=:agencyid and  a.bundle='website' and a.entity_id=b.entity_id and b.field_web_server_tid=c.tid  and a.entity_id=d.nid and d.status='1' group by b.field_web_server_tid order by cnt desc limit 2", array(':agencyid' => $agencyid));
+    foreach ($agwebservreslts as $agwebservres) {
+        $agwebdata[$agwebservres->name] = $agwebservres->cnt;
+    }
+    $agencydata['ag_webserver'] = $agwebdata;
+
+
+    //Query to get Most Popular Programming languages for Agency
+    $agplreslts = db_query("select d.title,d.status,c.name,field_programming_languages_tid,count(field_programming_languages_tid) cnt from field_data_field_web_agency_id a, field_data_field_programming_languages b ,taxonomy_term_data c , node d where a.field_web_agency_id_nid=:agencyid and  a.bundle='website' and a.entity_id=b.entity_id and field_programming_languages_tid=c.tid  and a.entity_id=d.nid and d.status='1' group by field_programming_languages_tid order by cnt desc limit 2", array(':agencyid' => $agencyid));
+    foreach ($agplreslts as $agplreslt) {
+        $agpldata[$agplreslt->name] = $agplreslt->cnt;
+    }
+    $agencydata['ag_proglang'] = $agpldata;
+
+    //Query to get Most Popular CMS for Agency
+    $agcmsreslts = db_query("select d.title,d.status,c.name,field_cms_applications_tid,count(field_cms_applications_tid) cnt from field_data_field_web_agency_id a, field_data_field_cms_applications b ,taxonomy_term_data c , node d where a.field_web_agency_id_nid=:agencyid and  a.bundle='website' and a.entity_id=b.entity_id and field_cms_applications_tid=c.tid and c.name not like '%\_%'   and a.entity_id=d.nid and d.status='1' group by field_cms_applications_tid order by cnt desc limit 2", array(':agencyid' => $agencyid));
+    foreach ($agcmsreslts as $agcmsreslt) {
+        $agcmsdata[$agcmsreslt->name] = $agcmsreslt->cnt;
+    }
+    $agencydata['ag_cms'] = $agcmsdata;
+
+    //Query to get Most Popular OS for Agency
+    $agosreslts = db_query("select d.title,d.status,c.name,field_operating_systems_tid,count(field_operating_systems_tid) cnt from field_data_field_web_agency_id a, field_data_field_operating_systems b ,taxonomy_term_data c , node d where a.field_web_agency_id_nid=:agencyid and  a.bundle='website' and a.entity_id=b.entity_id and field_operating_systems_tid=c.tid and c.name not like '%\_%'   and a.entity_id=d.nid and d.status='1' group by field_operating_systems_tid order by cnt desc limit 2", array(':agencyid' => $agencyid));
+    foreach ($agosreslts as $agosreslt) {
+        $agosdata[$agosreslt->name] = $agosreslt->cnt;
+    }
+    $agencydata['ag_os'] = $agosdata;
+
+    //Query to get Most Popular Javascript Framework for Agency
+    $agjsreslts = db_query("select d.title,d.status,c.name,field_javascript_frameworks_tid,count(field_javascript_frameworks_tid) cnt from field_data_field_web_agency_id a, field_data_field_javascript_frameworks b ,taxonomy_term_data c , node d where a.field_web_agency_id_nid=:agencyid and  a.bundle='website' and a.entity_id=b.entity_id and field_javascript_frameworks_tid=c.tid and c.name not like '%\_%'   and a.entity_id=d.nid and d.status='1' group by field_javascript_frameworks_tid order by cnt desc limit 2", array(':agencyid' => $agencyid));
+    foreach ($agjsreslts as $agjsreslt) {
+        $agjsdata[$agjsreslt->name] = $agjsreslt->cnt;
+    }
+    $agencydata['ag_js'] = $agjsdata;
+
+    //Query to get Most Popular CDN for Agency
+    $agcdnreslts = db_query("select d.title,d.status,c.name,field_cdn_applications_tid,count(field_cdn_applications_tid) cnt from field_data_field_web_agency_id a, field_data_field_cdn_applications b ,taxonomy_term_data c , node d where a.field_web_agency_id_nid=:agencyid and  a.bundle='website' and a.entity_id=b.entity_id and field_cdn_applications_tid=c.tid and c.name not like '%\_%'   and a.entity_id=d.nid and d.status='1' group by field_cdn_applications_tid order by cnt desc limit 2", array(':agencyid' => $agencyid));
+    foreach ($agcdnreslts as $agcdnreslt) {
+        $agcdndata[$agcdnreslt->name] = $agcdnreslt->cnt;
+    }
+    $agencydata['ag_cdn'] = $agcdndata;
+    //Query to get Agency Accessibility errors
+
+    //$ag_avrg_color_cont =  round(db_query("select field_agac_color_contrast_aver_value from field_data_field_agac_color_contrast_aver a, field_data_field_web_agency_id b where a.entity_id=b.entity_id and b.field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
+    //$ag_avrg_miss_image =  round(db_query("select field_agac_missing_image_avrg_value from field_data_field_agac_missing_image_avrg a, field_data_field_web_agency_id b where a.entity_id=b.entity_id and b.field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
+    //$ag_avrg_html_attr =  round(db_query("select field_agac_html_attribute_avrg_value from field_data_field_agac_html_attribute_avrg a, field_data_field_web_agency_id b where a.entity_id=b.entity_id and b.field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
+$ag_avrg_color_cont =  round(db_query("select sum(c.field_accessible_group_colorcont_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_accessible_group_colorcont c  where a.type='508_scan_information' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
+    $ag_avrg_miss_image =  round(db_query("select sum(c.field_accessible_group_missingim_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_accessible_group_missingim c  where a.type='508_scan_information' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
+    $ag_avrg_html_attr =  round(db_query("select sum(c.field_accessible_group_htmlattri_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_accessible_group_htmlattri c  where a.type='508_scan_information' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
+    $agencydata['ag_col_contrast'] = $ag_avrg_color_cont;
+    $agencydata['ag_miss_image'] = $ag_avrg_miss_image;
+    $agencydata['ag_html_attrib'] = $ag_avrg_html_attr;
+	if(($ag_avrg_color_cont == '0') && ($ag_avrg_miss_image == '0') && ($ag_avrg_html_attr == '0')) {
+        $agencyaccess_output = "<br><span style=\"color: #ac0600;font-size: 12px;\">Sorry No Graph Data to display.</span><br>";
+    }
+    else{
+        $agencyaccess_output = theme('agencywide_accessgraphs_page', array('agencydata' => $agencydata));
+    }
+
+
+    $agencydata['ag_access_chart'] = $agencyaccess_output;
+
+    return $agencydata;
+}
+
+/*
+ * Get Chart color
+ */
+function dotgov_common_getChartColor($chartdata)
+{
+    if ($chartdata <= 50){
+        $chartcolor = '#ac0600';
+    }elseif($chartdata>50 and $chartdata<=75){
+        $chartcolor='#654f00';
+    }
+    else{
+        $chartcolor='#29643a';
+    }
+    return $chartcolor;
+
+
+}
+
+/*
+ * Get Text with color
+ */
+function dotgov_common_getChartColordata($data,$websites)
+{
+
+        $percent = round(($data / $websites) * 100);
+        if ($percent <= 50) {
+            $chartcolor = '#ac0600';
+        } elseif ($percent > 50 and $percent <= 75) {
+            $chartcolor = '#654f00';
+        } else {
+            $chartcolor = '#29643a';
+        }
+    if ($data != '') {
+        $colordata = "<span style='color:$chartcolor;font-weight:bold;'>$data ($percent %)</span>";
+    }
+    else{
+        $colordata = "<span style='color:#ac0600;font-weight:bold;'>0</span>";
+    }
+    return $colordata;
+
+
+}
+
+/*
+ * Get Text with color
+ */
+function dotgov_common_applyDataColor($data,$websites,$chartColor)
+{
+
+    $percent = round(($data / $websites) * 100);
+
+    if ($data != '') {
+        $colordata = "<span style='color:$chartColor;font-weight:bold;'>$data ($percent %)</span>";
+    }
+    else{
+        $colordata = "<span style='color:$chartColor;font-weight:bold;'>0</span>";
+    }
+    return $colordata;
+
+}
+
+/*
+ * Get the chart
+ */
+
+function dotgov_commmon_getChart($chartname,$chartdivid,$chartScore){
+
+drupal_add_js("
+Highcharts.chart('$chartdivid', {
+
+                          chart: {
+        type: 'solidgauge',
+
+                          },
+
+                          title: {
+
+        text: ''
+
+                          },
+
+                          tooltip: {
+        enabled:false,
+                          },
+
+                          pane: {
+        startAngle: 0,
+                              endAngle: 360,
+                              background: [{
+            outerRadius: '118%',
+                                  innerRadius: '80%',
+                                  backgroundColor: '#d6d7d9',
+                                  borderWidth: 0
+                              }]
+                          },
+
+                          yAxis: {
+        min: 0,
+                              max: 100,
+                              lineWidth: 0,
+                              tickPositions: [],
+
+                              title: {
+            text: '".$chartScore."%',
+                                  style: {
+                fontSize: '22px',
+                                      color:'".dotgov_common_getChartColor($chartScore)."'
+                                  },
+                                  y: 30
+                              },
+
+
+
+                          },
+
+                          plotOptions: {
+        solidgauge: {
+            dataLabels: {
+                enabled: false
+                                  },
+            linecap: 'round',
+                                  stickyTracking: false,
+                                  rounded: true
+                              }
+    },
+
+                          series: [{
+        name: '$chartname',
+                              data: [{
+            color: '".dotgov_common_getChartColor($chartScore)."',
+                                  radius: '118%',
+                                  innerRadius: '80%',
+                                  y:100                }]
+                          }]
+                      }
+
+
+                  );
+","inline");
 }
 

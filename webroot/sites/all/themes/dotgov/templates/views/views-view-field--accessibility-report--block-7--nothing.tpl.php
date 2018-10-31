@@ -45,7 +45,7 @@ Highcharts.chart('access_chart', {
                     labelFormatter : function() { 
                         var total = 0, percentage; jQuery.each(this.series.data, function() { total+=this.y; });
                         percentage=((this.y/total)*100).toFixed(2); 
-                        return this.name +'\xa0'+ this.y + '\xa0(<span style=\"color:'+this.color+'\">'+percentage+ '%</span>)'; 
+                        return this.name +'\xa0'+ this.y + '\xa0(<span style=\"color:#000">'+percentage+ '%</span>)'; 
                     }
 
             }, 
