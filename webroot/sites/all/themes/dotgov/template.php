@@ -8,6 +8,11 @@ drupal_add_js('/sites/all/libraries/highcharts/highcharts-more.js');
 drupal_add_js('/sites/all/libraries/highcharts/solid-gauge.js');
 drupal_add_js('/sites/all/themes/dotgov/js/loader.js');
 drupal_add_css('//fonts.googleapis.com/css?family=Fira+Sans|Fjalla+One');
+function dotgov_css_alter(&$css) {
+  // Remove datatable css files.
+unset($css[drupal_get_path('module', 'datatables') . '/dataTables/media/css/demo_table.css']);
+
+}
 
 function dotgov_common_getMobileSnapshot($websiteid){
     $mobsnap = array();
@@ -89,4 +94,12 @@ function dotgov_preprocess_search_results(&$vars) {
       '!results_label' => format_plural($total, 'result', 'results'),
     ));
   }
+}
+/*
+ * HTML preprocess
+ */
+function dotgov_preprocess_html(&$variables) {
+    if(arg(0) == "historical_scan_score_data") {
+        drupal_add_js("https://code.jquery.com/jquery-2.2.4.js", "external");
+    }
 }
