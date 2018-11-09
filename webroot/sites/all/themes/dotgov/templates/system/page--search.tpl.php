@@ -75,7 +75,7 @@
 if(arg(1) == "website_search")
     $searchtitle = "Search";
 else
-    $searchtitle = "Site Search";
+    $searchtitle = "Data Discovery";
 ?>
 <div class="top-bar">
     <!-- top header-->
@@ -152,9 +152,13 @@ else
     <a id="main-content"></a>
     <?php print render($title_prefix); ?>
     <?php if (!empty($title)): ?>
-        <h1 class="page-header"><?=$searchtitle?></h1>
+        <h1 class="page-header"><?=$searchtitle; ?></h1>
     <?php endif; ?>
     <?php print render($title_suffix); ?>
+    <?php if ($searchtitle =="Data Discovery"){ ?>
+        <div class="container"><p style="text-align:center;margin-bottom:10px;">The data discovery module is currently under development. It is illustrated here to show functionality and intended use. The data presented here should not be used for any reporting or decision making purposes</p>
+        </div>
+    <?php } ?>
     <div class="container white-back">
         <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
         <div class="row">
