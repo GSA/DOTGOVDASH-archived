@@ -198,13 +198,13 @@ $agencynode = node_load( arg( 1 ) );
                         <div class="view-wrapper">
                           <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                             <div class="view-empty"> Average Color Contrast:
-                              <?= round($agencydata['ag_col_contrast']/$agency_website_num,2); ?>
+                              <?= round($agencydata['ag_col_contrast']/$agency_website_num,1); ?>
                               <br>
                               Average HTML Attribute :
-                              <?= round($agencydata['ag_html_attrib']/$agency_website_num,2); ?>
+                              <?= round($agencydata['ag_html_attrib']/$agency_website_num,1); ?>
                               <br>
                               Average Missing Image Description:
-                              <?= round($agencydata['ag_miss_image']/$agency_website_num,2); ?>
+                              <?= round($agencydata['ag_miss_image']/$agency_website_num,1); ?>
                               <br>
                               <div id="piechart"></div>
                               <?php print $agencydata['ag_access_chart']; ?> <span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of Accessibility issues by category</span> </div>
