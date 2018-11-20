@@ -115,7 +115,7 @@ else
                         <?php print render($secondary_nav); ?>
                     <?php endif; ?>
                 </div>
-                <div class="col-xs-12">
+                <div class="col-xs-10 pull-right">
                     <?php if (!empty($page['navigation'])): ?>
                         <?php print render($page['navigation']); ?>
                     <?php endif; ?>
