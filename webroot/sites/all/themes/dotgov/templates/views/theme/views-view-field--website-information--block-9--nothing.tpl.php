@@ -32,7 +32,7 @@ if(($view->result[0]->_field_data['nid']['entity']->field_accessible_group_color
     $showlegend = 0;
 }
 ?>
-<div id="access_chart" style="width: 245px; height:200px; float:right;">&nbsp;</div>
+<div id="access_chart" style="height:200px;">&nbsp;</div>
 <?php
 //dsm($view->result[0]->_field_data['nid']['entity']);
 ?>
