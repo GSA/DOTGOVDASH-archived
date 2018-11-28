@@ -1124,13 +1124,15 @@ $agencynode = node_load( arg( 1 ) );
                               <div class="views-field views-field-nothing">
                                 <div class="view-wrapper" style="">
                                   <div class="field-content col-lg-12">
-                                    <p> Below are the most popular technology stacks used in
-                                      <?=$agencynode->title?>.
-                                    </p>
+
                                     <?php
+                                    $message = "Below are the most popular technology stacks used in ";
                                     $no_data = 1;
                                     if ( $agencydata[ 'ag_webserver' ] != '' ) {
-                                      $no_data = 0;
+                                      if($no_data == 1) {
+                                        $no_data = 0;
+                                        print "<p>". $message . $agencynode->title .".</p>";
+                                      }
                                       print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Web Server :";
                                       foreach ( $agencydata[ 'ag_webserver' ] as $akey => $aval ) {
                                         print "$akey($aval) ";
@@ -1138,7 +1140,10 @@ $agencynode = node_load( arg( 1 ) );
                                       print "</span></div>";
                                     }
                                     if ( $agencydata[ 'ag_proglang' ] != '' ) {
-                                      $no_data = 0;
+                                      if($no_data == 1) {
+                                        $no_data = 0;
+                                        print "<p>". $message . $agencynode->title .".</p>";
+                                      }
                                       print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Languages :";
                                       foreach ( $agencydata[ 'ag_proglang' ] as $akey => $aval ) {
                                         print "$akey($aval) ";
@@ -1147,7 +1152,10 @@ $agencynode = node_load( arg( 1 ) );
                                     }
 
                                     if ( $agencydata[ 'ag_cms' ] != '' ) {
-                                      $no_data = 0;
+                                      if($no_data == 1) {
+                                        $no_data = 0;
+                                        print "<p>". $message . $agencynode->title .".</p>";
+                                      }
                                       print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">CMS :";
                                       foreach ( $agencydata[ 'ag_cms' ] as $akey => $aval ) {
                                         print "$akey($aval) ";
@@ -1156,7 +1164,10 @@ $agencynode = node_load( arg( 1 ) );
                                     }
 
                                     if ( $agencydata[ 'ag_os' ] != '' ) {
-                                      $no_data = 0;
+                                      if($no_data == 1) {
+                                        $no_data = 0;
+                                        print "<p>". $message . $agencynode->title .".</p>";
+                                      }
                                       print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Operating Systems :";
                                       foreach ( $agencydata[ 'ag_os' ] as $akey => $aval ) {
                                         print "$akey($aval) ";
@@ -1165,7 +1176,10 @@ $agencynode = node_load( arg( 1 ) );
                                     }
 
                                     //       if($agencydata['ag_js'] != ''){
-                                    //          $no_data = 0;
+                                    //if($no_data == 1) {
+                                    //                                        $no_data = 0;
+                                    //                                        print "<p>". $message . $agencynode->title .".</p>";
+                                    //                                      }
                                     //        print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">JS Frameworks :";
                                     //        foreach($agencydata['ag_js'] as $akey=>$aval){
                                     //         print "$akey($aval) ";
@@ -1174,7 +1188,10 @@ $agencynode = node_load( arg( 1 ) );
                                     //       }
 
                                     if ( $agencydata[ 'ag_cdn' ] != '' ) {
-                                      $no_data = 0;
+                                      if($no_data == 1) {
+                                        $no_data = 0;
+                                        print "<p>". $message . $agencynode->title .".</p>";
+                                      }
                                       print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">CDN :";
                                       foreach ( $agencydata[ 'ag_cdn' ] as $akey => $aval ) {
                                         print "$akey($aval) ";
@@ -1183,7 +1200,7 @@ $agencynode = node_load( arg( 1 ) );
                                     }
 
                                     if($no_data == 1){
-                                      print "<br><div><span style='font-size: 12px;font-style: italic;color: darkred;'>Data is not currently available.</span></div>";
+                                      print "<div><span style='font-size: 12px;font-style: italic;color: darkred;'>Data is not currently available.</span></div>";
                                     }
                                     ?>
 

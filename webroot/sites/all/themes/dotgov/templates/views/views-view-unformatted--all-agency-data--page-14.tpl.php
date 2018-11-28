@@ -1127,68 +1127,85 @@ drupal_set_title($agencynode->title);
                               <div class="views-field views-field-nothing">
 								  <div class="view-wrapper">
                                 <div class="field-content col-lg-12">
-                                  <p> Below are the most popular technology stacks used in
-                                    <?=$agencynode->title?>.
-                                  </p>
+
                                   <?php
-                                                                    $no_data = 1;
-                                                                    if ( $agencydata[ 'ag_webserver' ] != '' ) {
-                                                                      $no_data = 0;
-                                                                        print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Web Server :";
-                                                                        foreach ( $agencydata[ 'ag_webserver' ] as $akey => $aval ) {
-                                                                            print "$akey($aval) ";
-                                                                        }
-                                                                        print "</span></div>";
-                                                                    }
-                                                                    if ( $agencydata[ 'ag_proglang' ] != '' ) {
-                                                                      $no_data = 0;
-                                                                        print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Languages :";
-                                                                        foreach ( $agencydata[ 'ag_proglang' ] as $akey => $aval ) {
-                                                                            print "$akey($aval) ";
-                                                                        }
-                                                                        print "</span></div>";
-                                                                    }
+                                    $no_data = 1;
+                                    $message = "Below are the most popular technology stacks used in ";
+                                    if ( $agencydata[ 'ag_webserver' ] != '' ) {
+                                      if($no_data == 1) {
+                                        $no_data = 0;
+                                        print "<p>". $message . $agencynode->title .".</p>";
+                                      }
+                                        print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Web Server :";
+                                        foreach ( $agencydata[ 'ag_webserver' ] as $akey => $aval ) {
+                                            print "$akey($aval) ";
+                                        }
+                                        print "</span></div>";
+                                    }
+                                    if ( $agencydata[ 'ag_proglang' ] != '' ) {
+                                      if($no_data == 1) {
+                                        $no_data = 0;
+                                        print "<p>". $message . $agencynode->title .".</p>";
+                                      }
+                                        print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Languages :";
+                                        foreach ( $agencydata[ 'ag_proglang' ] as $akey => $aval ) {
+                                            print "$akey($aval) ";
+                                        }
+                                        print "</span></div>";
+                                    }
 
-                                                                    if ( $agencydata[ 'ag_cms' ] != '' ) {
-                                                                      $no_data = 0;
-                                                                        print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">CMS :";
-                                                                        foreach ( $agencydata[ 'ag_cms' ] as $akey => $aval ) {
-                                                                            print "$akey($aval) ";
-                                                                        }
-                                                                        print "</span></div>";
-                                                                    }
+                                    if ( $agencydata[ 'ag_cms' ] != '' ) {
+                                      if($no_data == 1) {
+                                        $no_data = 0;
+                                        print "<p>". $message . $agencynode->title .".</p>";
+                                      }
+                                        print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">CMS :";
+                                        foreach ( $agencydata[ 'ag_cms' ] as $akey => $aval ) {
+                                            print "$akey($aval) ";
+                                        }
+                                        print "</span></div>";
+                                    }
 
-                                                                    if ( $agencydata[ 'ag_os' ] != '' ) {
-                                                                      $no_data = 0;
-                                                                        print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Operating Systems :";
-                                                                        foreach ( $agencydata[ 'ag_os' ] as $akey => $aval ) {
-                                                                            print "$akey($aval) ";
-                                                                        }
-                                                                        print "</span></div>";
-                                                                    }
+                                    if ( $agencydata[ 'ag_os' ] != '' ) {
+                                      if($no_data == 1) {
+                                        $no_data = 0;
+                                        print "<p>". $message . $agencynode->title .".</p>";
+                                      }
+                                        print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Operating Systems :";
+                                        foreach ( $agencydata[ 'ag_os' ] as $akey => $aval ) {
+                                            print "$akey($aval) ";
+                                        }
+                                        print "</span></div>";
+                                    }
 
-                                                                    //       if($agencydata['ag_js'] != ''){
-                                                                    //          $no_data = 0;
-                                                                    //        print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">JS Frameworks :";
-                                                                    //        foreach($agencydata['ag_js'] as $akey=>$aval){
-                                                                    //         print "$akey($aval) ";
-                                                                    //        }
-                                                                    //        print "</span></div>";
-                                                                    //       }
+                                    //       if($agencydata['ag_js'] != ''){
+                                    //if($no_data == 1) {
+                                  //                                        $no_data = 0;
+                                  //                                        print "<p>". $message . $agencynode->title .".</p>";
+                                  //                                      }
+                                    //        print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">JS Frameworks :";
+                                    //        foreach($agencydata['ag_js'] as $akey=>$aval){
+                                    //         print "$akey($aval) ";
+                                    //        }
+                                    //        print "</span></div>";
+                                    //       }
 
-                                                                    if ( $agencydata[ 'ag_cdn' ] != '' ) {
-                                                                      $no_data = 0;
-                                                                        print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">CDN :";
-                                                                        foreach ( $agencydata[ 'ag_cdn' ] as $akey => $aval ) {
-                                                                            print "$akey($aval) ";
-                                                                        }
-                                                                        print "</span></div>";
-                                                                    }
+                                    if ( $agencydata[ 'ag_cdn' ] != '' ) {
+                                      if($no_data == 1) {
+                                        $no_data = 0;
+                                        print "<p>". $message . $agencynode->title .".</p>";
+                                      }
+                                        print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">CDN :";
+                                        foreach ( $agencydata[ 'ag_cdn' ] as $akey => $aval ) {
+                                            print "$akey($aval) ";
+                                        }
+                                        print "</span></div>";
+                                    }
 
-                                                                    if($no_data == 1){
-                                                                       print "<br><div><span style='font-size: 12px;font-style: italic;color: darkred;'>Data is not currently available.</span></div>";
-                                                                    }
-                                                                    ?>
+                                    if($no_data == 1){
+                                       print "<div><span style='font-size: 12px;font-style: italic;color: darkred;'>Data is not currently available.</span></div>";
+                                    }
+                                    ?>
                                 </div>
 									  </div>
 <!--                                  <div class="view-button" style="margin-left:15px;"><br>-->
