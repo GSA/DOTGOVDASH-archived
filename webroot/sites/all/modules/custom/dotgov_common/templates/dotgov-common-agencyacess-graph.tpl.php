@@ -1,5 +1,6 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script language="JavaScript">
+
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
 
@@ -7,9 +8,9 @@ function drawChart() {
 
 var data = google.visualization.arrayToDataTable([
 ['Type', 'Number'],
-['Color Contrast Issues',     <?php echo $agencydata['ag_col_contrast'];?>],
-['HTML Attribute Issues',      <?php echo $agencydata['ag_html_attrib'];?>],
-['Missing Image Description Issues',  <?php echo $agencydata['ag_miss_image']; ?>]
+['Color Contrast Issues',     <?php echo number_format($agencydata['ag_col_contrast'],1, '.', '');?>],
+['HTML Attribute Issues',      <?php echo number_format($agencydata['ag_html_attrib'],1, '.', '');?>],
+['Missing Image Description Issues',  <?php echo number_format($agencydata['ag_miss_image'],1, '.', ''); ?>]
 ]);
 var options = {
 title: 'Accessibility Issue Breakdown',
