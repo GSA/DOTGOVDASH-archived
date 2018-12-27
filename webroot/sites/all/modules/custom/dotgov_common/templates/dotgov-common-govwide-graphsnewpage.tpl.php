@@ -30,7 +30,7 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
 ?>
 <?php //print_r($govwidedata);print_r($agencydata);  ?>
 <div class="row">
-    <div class="col-sm-12">       
+    <div class="col-sm-12">
         <div class="graph-container">
             <div class="panel-display pond clearfix ">
                 <div class="pond-container pond-secondary-column-content pond-column-content-row2 clearfix">
@@ -49,38 +49,38 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                 <br>
                                                 <div id="piechart"></div>
                                                 <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
-                                                    <script language="JavaScript">
+                                                <script language="JavaScript">
                                                     google.charts.load('current', {'packages':['corechart']});
                                                     google.charts.setOnLoadCallback(drawChart);
 
                                                     function drawChart() {
 
-                                                    var data = google.visualization.arrayToDataTable([
-                                                    ['Type', 'Number'],
-                                                    ['Color Contrast Issues',     <?php echo number_format($agencydata['ag_col_contrast'],1, '.', '');?>],
-                                                    ['HTML Attribute Issues',      <?php echo number_format($agencydata['ag_html_attrib'],1, '.', '');?>],
-                                                    ['Missing Image Description Issues',  <?php echo number_format($agencydata['ag_miss_image'],1, '.', ''); ?>]
-                                                    ]);
-                                                    var options = {
-                                                    title: 'Accessibility Issue Breakdown',
-                                                        colors: ['#7cb5ec', '#90ed7d', '#434348'],
-                                                        sliceVisibilityThreshold: 0,
-                                                        dataLabels: {
-                                                            enabled: true
-                                                        },
-                                                        showInLegend: true
-                                                    };
+                                                        var data = google.visualization.arrayToDataTable([
+                                                            ['Type', 'Number'],
+                                                            ['Color Contrast Issues',     <?php echo number_format($agencydata['ag_col_contrast'],1, '.', '');?>],
+                                                            ['HTML Attribute Issues',      <?php echo number_format($agencydata['ag_html_attrib'],1, '.', '');?>],
+                                                            ['Missing Image Description Issues',  <?php echo number_format($agencydata['ag_miss_image'],1, '.', ''); ?>]
+                                                        ]);
+                                                        var options = {
+                                                            title: 'Accessibility Issue Breakdown',
+                                                            colors: ['#7cb5ec', '#90ed7d', '#434348'],
+                                                            sliceVisibilityThreshold: 0,
+                                                            dataLabels: {
+                                                                enabled: true
+                                                            },
+                                                            showInLegend: true
+                                                        };
 
-                                                    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                                                        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
-                                                    chart.draw(data, options);
+                                                        chart.draw(data, options);
                                                     }
-                                                    </script>
+                                                </script>
                                                 <span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of Accessibility issues by category</span> </div>
                                         </div>
                                     </div>
                                     <div class="view-button"><br>
-                                        <p><a class="link-all-reports" href="#">Go to Full Report</a> </p>
+                                        <p><a class="link-all-reports" href="/accessibility-report-all-domains">Go to Full Report</a> </p>
                                     </div>
                                 </div>
                             </div>
@@ -131,11 +131,11 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                                         startAngle: 0,
                                                                         endAngle: 360,
                                                                         background: [{
-                                                                                outerRadius: '118%',
-                                                                                innerRadius: '80%',
-                                                                                backgroundColor: '#d6d7d9',
-                                                                                borderWidth: 0
-                                                                            }]
+                                                                            outerRadius: '118%',
+                                                                            innerRadius: '80%',
+                                                                            backgroundColor: '#d6d7d9',
+                                                                            borderWidth: 0
+                                                                        }]
                                                                     },
                                                                     yAxis: {
                                                                         min: 0,
@@ -164,14 +164,14 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                                         }
                                                                     },
                                                                     series: [{
-                                                                            name: 'Mobile Chart',
-                                                                            data: [{
-                                                                                    color: '<?php echo dotgov_common_getChartColor($agency_mobovr_score); ?>',
-                                                                                    radius: '118%',
-                                                                                    innerRadius: '80%',
-                                                                                    y: <?php echo trim($agency_mobovr_score); ?>
-                                                                                }]
+                                                                        name: 'Mobile Chart',
+                                                                        data: [{
+                                                                            color: '<?php echo dotgov_common_getChartColor($agency_mobovr_score); ?>',
+                                                                            radius: '118%',
+                                                                            innerRadius: '80%',
+                                                                            y: <?php echo trim($agency_mobovr_score); ?>
                                                                         }]
+                                                                    }]
                                                                 });
                                                             </script>
                                                         </div>
@@ -193,7 +193,7 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                     <div class="col-xs-12 clearfix" style="margin:-10px 0 10px 0; ">
                                                         <a href="/improve-my-score">How to Improve Score</a>
                                                     </div>
-                                                    <div class="col-xs-12"><a class="link-all-reports" href="#">Go to Full Report</a> </div>
+                                                    <div class="col-xs-12"><a class="link-all-reports" href="/website/all/reports">Go to Full Report</a> </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -236,11 +236,11 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                                         startAngle: 0,
                                                                         endAngle: 360,
                                                                         background: [{
-                                                                                outerRadius: '118%',
-                                                                                innerRadius: '80%',
-                                                                                backgroundColor: '#d6d7d9',
-                                                                                borderWidth: 0
-                                                                            }]
+                                                                            outerRadius: '118%',
+                                                                            innerRadius: '80%',
+                                                                            backgroundColor: '#d6d7d9',
+                                                                            borderWidth: 0
+                                                                        }]
                                                                     },
                                                                     yAxis: {
                                                                         min: 0,
@@ -268,14 +268,14 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                                         }
                                                                     },
                                                                     series: [{
-                                                                            name: 'M-15-13 Chart',
-                                                                            data: [{
-                                                                                    color: '<?php echo dotgov_common_getChartColor($agency_m15_score); ?>',
-                                                                                    radius: '118%',
-                                                                                    innerRadius: '80%',
-                                                                                    y: <?php echo trim($agency_m15_score); ?>
-                                                                                }]
+                                                                        name: 'M-15-13 Chart',
+                                                                        data: [{
+                                                                            color: '<?php echo dotgov_common_getChartColor($agency_m15_score); ?>',
+                                                                            radius: '118%',
+                                                                            innerRadius: '80%',
+                                                                            y: <?php echo trim($agency_m15_score); ?>
                                                                         }]
+                                                                    }]
                                                                 });
                                                             </script>
                                                         </div>
@@ -293,7 +293,7 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                         </table>
                                                     </div>
                                                     <div class="view-button"><br>
-                                                        <p><a class="link-all-reports" href="#">Go to Full Report</a> </p>
+                                                        <p><a class="link-all-reports" href="/website/all/reports">Go to Full Report</a> </p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -339,11 +339,11 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                             startAngle: 0,
                                                             endAngle: 360,
                                                             background: [{
-                                                                    outerRadius: '118%',
-                                                                    innerRadius: '80%',
-                                                                    backgroundColor: '#d6d7d9',
-                                                                    borderWidth: 0
-                                                                }]
+                                                                outerRadius: '118%',
+                                                                innerRadius: '80%',
+                                                                backgroundColor: '#d6d7d9',
+                                                                borderWidth: 0
+                                                            }]
                                                         },
 
                                                         yAxis: {
@@ -373,14 +373,14 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                             }
                                                         },
                                                         series: [{
-                                                                name: 'Free of Insecure Protocol Chart',
-                                                                data: [{
-                                                                        color: '<?php echo dotgov_common_getChartColor($agency_https_score); ?>',
-                                                                        radius: '118%',
-                                                                        innerRadius: '80%',
-                                                                        y: <?php echo trim($agency_https_score); ?>
-                                                                    }]
+                                                            name: 'Free of Insecure Protocol Chart',
+                                                            data: [{
+                                                                color: '<?php echo dotgov_common_getChartColor($agency_https_score); ?>',
+                                                                radius: '118%',
+                                                                innerRadius: '80%',
+                                                                y: <?php echo trim($agency_https_score); ?>
                                                             }]
+                                                        }]
                                                     });
                                                 </script>
                                             </div>
@@ -388,7 +388,7 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                         <table width="100%">
                                             <th style="background-color: #215393;color: white;">Criteria</th>
                                             <th style="background-color: #215393;color: white">Supporting Domains </th>
-                                            <th style="background-color: #215393;color: white">Non Supporting Domains </th>
+                                            <th style="background-color: #215393;color: white">&nbsp;Non Supporting Domains </th>
                                             <tr>
                                                 <td>Enforce HTTPS</td>
                                                 <td align="center"><?php echo dotgov_common_applyDataColor($agencydata['enfhttps_support'], $agency_website_num, '#29643a') ?></td>
@@ -417,7 +417,7 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                         </table>
                                     </div>
                                     <div class="view-button"><br>
-                                        <p><a class="link-all-reports" href="#">Go to Full Report</a> </p>
+                                        <p><a class="link-all-reports" href="/website/all/reports">Go to Full Report</a> </p>
                                     </div>
                                 </div>
                             </div>
@@ -458,11 +458,11 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                                             startAngle: 0,
                                                                             endAngle: 360,
                                                                             background: [{
-                                                                                    outerRadius: '118%',
-                                                                                    innerRadius: '80%',
-                                                                                    backgroundColor: '#d6d7d9',
-                                                                                    borderWidth: 0
-                                                                                }]
+                                                                                outerRadius: '118%',
+                                                                                innerRadius: '80%',
+                                                                                backgroundColor: '#d6d7d9',
+                                                                                borderWidth: 0
+                                                                            }]
                                                                         },
                                                                         yAxis: {
                                                                             min: 0,
@@ -490,14 +490,14 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                                             }
                                                                         },
                                                                         series: [{
-                                                                                name: 'DNSSEC Chart',
-                                                                                data: [{
-                                                                                        color: '<?php echo dotgov_common_getChartColor($agency_dnssec_score); ?>',
-                                                                                        radius: '118%',
-                                                                                        innerRadius: '80%',
-                                                                                        y: <?php echo trim($agency_dnssec_score); ?>
-                                                                                    }]
+                                                                            name: 'DNSSEC Chart',
+                                                                            data: [{
+                                                                                color: '<?php echo dotgov_common_getChartColor($agency_dnssec_score); ?>',
+                                                                                radius: '118%',
+                                                                                innerRadius: '80%',
+                                                                                y: <?php echo trim($agency_dnssec_score); ?>
                                                                             }]
+                                                                        }]
                                                                     });
                                                                 </script>
                                                             </div>
@@ -515,7 +515,7 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                             </table>
                                                         </div>
                                                         <div class="view-button"><br>
-                                                            <p><a class="link-all-reports" href="#">Go to Full Report</a> </p>
+                                                            <p><a class="link-all-reports" href="/website/all/reports">Go to Full Report</a> </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -560,11 +560,11 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                                         startAngle: 0,
                                                                         endAngle: 360,
                                                                         background: [{
-                                                                                outerRadius: '118%',
-                                                                                innerRadius: '80%',
-                                                                                backgroundColor: '#d6d7d9',
-                                                                                borderWidth: 0
-                                                                            }]
+                                                                            outerRadius: '118%',
+                                                                            innerRadius: '80%',
+                                                                            backgroundColor: '#d6d7d9',
+                                                                            borderWidth: 0
+                                                                        }]
                                                                     },
                                                                     yAxis: {
                                                                         min: 0,
@@ -591,14 +591,14 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                                         }
                                                                     },
                                                                     series: [{
-                                                                            name: 'Free of Insecure Protocol Chart',
-                                                                            data: [{
-                                                                                    color: '<?php echo dotgov_common_getChartColor($agency_insecprot_score); ?>',
-                                                                                    radius: '118%',
-                                                                                    innerRadius: '80%',
-                                                                                    y: <?php echo trim($agency_insecprot_score); ?>
-                                                                                }]
+                                                                        name: 'Free of Insecure Protocol Chart',
+                                                                        data: [{
+                                                                            color: '<?php echo dotgov_common_getChartColor($agency_insecprot_score); ?>',
+                                                                            radius: '118%',
+                                                                            innerRadius: '80%',
+                                                                            y: <?php echo trim($agency_insecprot_score); ?>
                                                                         }]
+                                                                    }]
                                                                 });
                                                             </script>
                                                         </div>
@@ -616,7 +616,7 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                         </table>
                                                     </div>
                                                     <div class="view-button"><br>
-                                                        <p><a class="link-all-reports" href="#">Go to Full Report</a> </p>
+                                                        <p><a class="link-all-reports" href="/website/all/reports">Go to Full Report</a> </p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -665,11 +665,11 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                                             startAngle: 0,
                                                                             endAngle: 360,
                                                                             background: [{
-                                                                                    outerRadius: '118%',
-                                                                                    innerRadius: '80%',
-                                                                                    backgroundColor: '#d6d7d9',
-                                                                                    borderWidth: 0
-                                                                                }]
+                                                                                outerRadius: '118%',
+                                                                                innerRadius: '80%',
+                                                                                backgroundColor: '#d6d7d9',
+                                                                                borderWidth: 0
+                                                                            }]
                                                                         },
                                                                         yAxis: {
                                                                             min: 0,
@@ -697,14 +697,14 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                                             }
                                                                         },
                                                                         series: [{
-                                                                                name: 'DAP Chart',
-                                                                                data: [{
-                                                                                        color: '<?php echo dotgov_common_getChartColor($agency_dap_score); ?>',
-                                                                                        radius: '118%',
-                                                                                        innerRadius: '80%',
-                                                                                        y: <?php echo trim($agency_dap_score); ?>
-                                                                                    }]
+                                                                            name: 'DAP Chart',
+                                                                            data: [{
+                                                                                color: '<?php echo dotgov_common_getChartColor($agency_dap_score); ?>',
+                                                                                radius: '118%',
+                                                                                innerRadius: '80%',
+                                                                                y: <?php echo trim($agency_dap_score); ?>
                                                                             }]
+                                                                        }]
                                                                     });
                                                                 </script>
                                                             </div>
@@ -730,7 +730,7 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                             <p><font style="font-size: larger;font-color:blue;">*</font> : DAP information is based on data collected from <span style="font-color:blue"></span><a href="https://pulse.cio.gov/analytics/agencies" target="_new">pulse.cio.gov</a></span></p>
                                         </div></div>
                                     <div class="view-button">
-                                        <p><a class="link-all-reports" href="#">Go to Full Report</a> </p>
+                                        <p><a class="link-all-reports" href="/website/all/reports">Go to Full Report</a> </p>
                                     </div>
 
                                 </div>
@@ -772,11 +772,11 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                                             startAngle: 0,
                                                                             endAngle: 360,
                                                                             background: [{
-                                                                                    outerRadius: '118%',
-                                                                                    innerRadius: '80%',
-                                                                                    backgroundColor: '#d6d7d9',
-                                                                                    borderWidth: 0
-                                                                                }]
+                                                                                outerRadius: '118%',
+                                                                                innerRadius: '80%',
+                                                                                backgroundColor: '#d6d7d9',
+                                                                                borderWidth: 0
+                                                                            }]
                                                                         },
                                                                         yAxis: {
                                                                             min: 0,
@@ -805,14 +805,14 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                                             }
                                                                         },
                                                                         series: [{
-                                                                                name: 'Free of Insecure Protocol Chart',
-                                                                                data: [{
-                                                                                        color: '<?php echo dotgov_common_getChartColor($agency_ipv6_score); ?>',
-                                                                                        radius: '118%',
-                                                                                        innerRadius: '80%',
-                                                                                        y: <?php echo trim($agency_ipv6_score); ?>
-                                                                                    }]
+                                                                            name: 'Free of Insecure Protocol Chart',
+                                                                            data: [{
+                                                                                color: '<?php echo dotgov_common_getChartColor($agency_ipv6_score); ?>',
+                                                                                radius: '118%',
+                                                                                innerRadius: '80%',
+                                                                                y: <?php echo trim($agency_ipv6_score); ?>
                                                                             }]
+                                                                        }]
                                                                     });
                                                                 </script>
                                                             </div>
@@ -830,7 +830,7 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                             </table>
                                                         </div>
                                                         <div class="view-button"><br>
-                                                            <p><a class="link-all-reports" href="#">Go to Full Report</a> </p>
+                                                            <p><a class="link-all-reports" href="/website/all/reports">Go to Full Report</a> </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -852,14 +852,14 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                             <p> Below are the most popular technology stacks used </p>
                                                             <?php
                                                             if ($agencydata['ag_webserver'] != '') {
-                                                                print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Web Server : ";
+                                                                print "<div class=\"col-sm-12 nopadding dataset-resources\"><span class=\"app-button\" style=\"height:auto;\">Web Server : ";
                                                                 foreach ($agencydata['ag_webserver'] as $akey => $aval) {
                                                                     print "$akey($aval) ";
                                                                 }
                                                                 print "</span></div>";
                                                             }
                                                             if ($agencydata['ag_proglang'] != '') {
-                                                                print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Languages : ";
+                                                                print "<div class=\"col-sm-12 nopadding dataset-resources\"><span style=\"height:auto;\" class=\"app-button\">Languages : ";
                                                                 foreach ($agencydata['ag_proglang'] as $akey => $aval) {
                                                                     print "$akey($aval) ";
                                                                 }
@@ -867,7 +867,7 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                             }
 
                                                             if ($agencydata['ag_cms'] != '') {
-                                                                print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">CMS : ";
+                                                                print "<div class=\"col-sm-12 nopadding dataset-resources\"><span style=\"height:auto;\" class=\"app-button\">CMS : ";
                                                                 foreach ($agencydata['ag_cms'] as $akey => $aval) {
                                                                     print "$akey($aval) ";
                                                                 }
@@ -875,7 +875,7 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                             }
 
                                                             if ($agencydata['ag_os'] != '') {
-                                                                print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Operating Systems : ";
+                                                                print "<div class=\"col-sm-12 nopadding dataset-resources\"><span style=\"height:auto;\" class=\"app-button\">Operating Systems : ";
                                                                 foreach ($agencydata['ag_os'] as $akey => $aval) {
                                                                     print "$akey($aval) ";
                                                                 }
@@ -883,7 +883,7 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                             }
 
                                                             if ($agencydata['ag_cdn'] != '') {
-                                                                print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">CDN : ";
+                                                                print "<div class=\"col-sm-12 nopadding dataset-resources\"><span style=\"height:auto;\" class=\"app-button\">CDN : ";
                                                                 foreach ($agencydata['ag_cdn'] as $akey => $aval) {
                                                                     print "$akey($aval) ";
                                                                 }
@@ -893,7 +893,7 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                         </div>
                                                     </div>
                                                     <div class="view-button" style="margin-left:15px;"><br>
-                                                        <p><a class="link-all-reports" href="#">Go to Full Report</a> </p>
+                                                        <p><a class="link-all-reports" href="/technology-overview">Go to Full Report</a> </p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -905,6 +905,6 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                     </div>
                 </div>
             </div>
-        </div>        
+        </div>
     </div>
 </div>

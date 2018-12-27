@@ -26,18 +26,18 @@ $chartseries = array_values($chartdata);
 drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
 ?>
 <div  class="main-govwidecontents">
-	<div class="content-wrap">
-		<div class="col-lg-4 col-sm-12 col-xs-12 text-center">
-			<p><span style="font-size:16px;text-align:center;">About</span><br/>This page reports the total overall government data captured in a virtual way. You can see healths of all government websites for each criteria for which we score</p>
-		</div>
-		<div class="col-lg-4 col-sm-12 col-xs-12 text-center">
-			<img src="<?php echo $base_url; ?>/sites/all/modules/custom/dotgov_common/images/gov-wide-report-logo.png " alt="Govwide Report" style="width:100px; height:100px;"/>
-		</div>
-		<div class="col-lg-4 col-sm-12 col-xs-12 text-center">
-			<?php echo "Total Agencies: ". $agencynos . "<br>"; ?> 
-			<?php echo "Total Domain: " . $websitenos ."<br>"; ?>
-		</div>
-	</div>
+    <div class="content-wrap">
+        <div class="col-lg-4 col-sm-12 col-xs-12 text-center">
+            <p><span style="font-size:16px;text-align:center;">About</span><br/>This page reports the total overall government data captured in a virtual way. You can see healths of all government websites for each criteria for which we score</p>
+        </div>
+        <div class="col-lg-4 col-sm-12 col-xs-12 text-center">
+            <img src="<?php echo $base_url; ?>/sites/all/modules/custom/dotgov_common/images/gov-wide-report-logo.png " alt="Govwide Report" style="width:100px; height:100px;"/>
+        </div>
+        <div class="col-lg-4 col-sm-12 col-xs-12 text-center" style="margin-top:30px;">
+            <?php echo "Total Agencies: ". $agencynos . "<br>"; ?>
+            <?php echo "Total Domain: " . $websitenos ."<br>"; ?>
+        </div>
+    </div>
 </div>
 <div class="main-govwidechart">
     <div class="view view-all-agency-data view-id-all_agency_data view-display-id-page_5 white-back view-dom-id-b562269ee2f951e205ff4aa51b8a3ac0 custom-tpl-code">
@@ -69,9 +69,9 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
                     },
                     yAxis: {
                         labels:
-                                {
-                                    enabled: true
-                                },
+                        {
+                            enabled: true
+                        },
                         title: {
                             enabled: false,
                         }
@@ -90,27 +90,27 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
                             },
                             responsive: {
                                 rules: [{
-                                        condition: {
-                                            maxWidth: 500
+                                    condition: {
+                                        maxWidth: 500
+                                    },
+                                    chartOptions: {
+                                        legend: {
+                                            align: 'center',
+                                            verticalAlign: 'bottom',
+                                            layout: 'horizontal'
                                         },
-                                        chartOptions: {
-                                            legend: {
-                                                align: 'center',
-                                                verticalAlign: 'bottom',
-                                                layout: 'horizontal'
+                                        yAxis: {
+                                            labels: {
+                                                align: 'left',
+                                                x: 0,
+                                                y: -5
                                             },
-                                            yAxis: {
-                                                labels: {
-                                                    align: 'left',
-                                                    x: 0,
-                                                    y: -5
-                                                },
-                                            },
-                                            subtitle: {
-                                                text: null
-                                            },
-                                        }
-                                    }]
+                                        },
+                                        subtitle: {
+                                            text: null
+                                        },
+                                    }
+                                }]
                             }
                         }
                     },
@@ -169,5 +169,5 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
     <div class="view-footer">
         <div class="field-content col-lg-12"><a href="<?php echo $base_url; ?>/content/scoring-methods" title="" data-toggle="tooltip" class="infor" data-original-title="Click Here to see the scoring methods used to calculate the scores"><i class="icon glyphicon glyphicon-info-sign"></i><span class="sr-only">information</span></a></div>
         <a id="link-all-reports" href="<?php echo $base_url; ?>/website/all/reports">Complete List </a>&nbsp;( Last scan date: <?= dotgov_common_lastScanDate() ?> )
-    </div> 
+    </div>
 </div>
