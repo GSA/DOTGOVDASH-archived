@@ -28,20 +28,21 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
 <div  class="main-govwidecontents">
     <div class="content-wrap">
         <div class="col-lg-4 col-sm-12 col-xs-12 text-center">
-            <p><span style="font-size:16px;text-align:center;">About</span><br/>This page reports the total overall government data captured in a virtual way. You can see healths of all government websites for each criteria for which we score</p>
+            <p><span style="font-size:16px;text-align:center;">This page reports government-wide data displayed in dashboard format, where you can easily see the status of websites government-wide for each criteria that we score</p>
         </div>
         <div class="col-lg-4 col-sm-12 col-xs-12 text-center">
             <img src="<?php echo $base_url; ?>/sites/all/modules/custom/dotgov_common/images/gov-wide-report-logo.png " alt="Govwide Report" style="width:100px; height:100px;"/>
         </div>
         <div class="col-lg-4 col-sm-12 col-xs-12 text-center" style="margin-top:30px;">
-            <?php echo "Total Agencies: ". $agencynos . "<br>"; ?>
-            <?php echo "Total Domain: " . $websitenos ."<br>"; ?>
+            <?php echo "Domains: " . $websitenos ."|"; ?>
+            <?php echo "Agencies: ". $agencynos ; ?>
         </div>
     </div>
 </div>
 <div class="main-govwidechart">
     <div class="view view-all-agency-data view-id-all_agency_data view-display-id-page_5 white-back view-dom-id-b562269ee2f951e205ff4aa51b8a3ac0 custom-tpl-code">
         <div class="view-content">
+
             <div id="govwidechart"  style="min-width: 300px; min-height: 300px; margin: 0 auto"></div>
             <script type="text/javascript">//<![CDATA[
                 Highcharts.chart('govwidechart', {
@@ -166,8 +167,10 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
                 //]]></script>
         </div>
     </div>
-    <div class="view-footer">
-        <div class="field-content col-lg-12"><a href="<?php echo $base_url; ?>/content/scoring-methods" title="" data-toggle="tooltip" class="infor" data-original-title="Click Here to see the scoring methods used to calculate the scores"><i class="icon glyphicon glyphicon-info-sign"></i><span class="sr-only">information</span></a></div>
-        <a id="link-all-reports" href="<?php echo $base_url; ?>/website/all/reports">Complete List </a>&nbsp;( Last scan date: <?= dotgov_common_lastScanDate() ?> )
+    <div class="view-footer clearfix" style="margin-top:10px;">
+        <div class="field-content col-lg-6"> <a class="btn btn-primary" href="<?php echo $base_url; ?>/website/all/reports">Complete List </a>&nbsp;( Last scan date: <?= dotgov_common_lastScanDate() ?> )</div>
+
+        <div class="field-content col-lg-6 text-right"><a href="<?php echo $base_url; ?>/content/scoring-methods" title="" data-toggle="tooltip" class="infor" data-original-title="Click Here to see the scoring methods used to calculate the scores"><i class="icon glyphicon glyphicon-info-sign"></i><span class="sr-only">information</span></a></div>
+
     </div>
 </div>
