@@ -171,8 +171,5 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
     </div>
     <div class="view-footer clearfix" style="margin-top:10px;">
         <div class="field-content col-lg-6"> <a class="btn btn-primary" href="<?php echo $base_url; ?>/website/all/reports">Complete List </a>&nbsp;( Last scan date: <?= dotgov_common_lastScanDate() ?> )</div>
-
-        <div class="field-content col-lg-6 text-right"><a href="<?php echo $base_url; ?>/content/scoring-methods" title="" data-toggle="tooltip" class="infor" data-original-title="Click Here to see the scoring methods used to calculate the scores"><i class="icon glyphicon glyphicon-info-sign"></i><span class="sr-only">information</span></a></div>
-
     </div>
 </div>
