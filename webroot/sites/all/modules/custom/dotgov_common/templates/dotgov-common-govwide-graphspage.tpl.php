@@ -39,6 +39,8 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
         </div>
     </div>
 </div>
+<div class="field-content col-lg-6 text-right" style="position:absolute;right:0;z-index:9999;"><a href="<?php echo $base_url; ?>/content/scoring-methods" title="" data-toggle="tooltip" class="infor" data-original-title="Click Here to see the scoring methods used to calculate the scores"><i class="icon glyphicon glyphicon-info-sign"></i><span class="sr-only">information</span></a></div>
+
 <div class="main-govwidechart">
     <div class="view view-all-agency-data view-id-all_agency_data view-display-id-page_5 white-back view-dom-id-b562269ee2f951e205ff4aa51b8a3ac0 custom-tpl-code">
         <div class="view-content">
