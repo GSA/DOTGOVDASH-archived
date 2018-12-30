@@ -6,31 +6,19 @@
  * @ingroup views_templates
  */
 $agencydata = dotgov_common_getAgencyComplianceData( arg( 1 ) );
-
 foreach ( $view->style_plugin->rendered_fields[ 0 ] as $key => $val ) {
-  if ( $key == 'field_web_agency_id_1' )
-    $agency_website_num = $val;
-  if ( $key == 'field_dap_score' )
-    $agency_dap_score = $val;
-  if ( $key == 'field_https_score' )
-    $agency_https_score = $val;
-  if ( $key == 'field_mobile_overall_score' )
-    $agency_mobovr_score = $val;
-  if ( $key == 'field_mobile_performance_score' )
-    $agency_mobperf_score = $val;
-  if ( $key == 'field_mobile_usability_score' )
-    $agency_mobusab_score = $val;
-  if ( $key == 'field_dnssec_score' )
-    $agency_dnssec_score = $val;
-  if ( $key == 'field_ipv6_score' )
-    $agency_ipv6_score = $val;
-  if ( $key == 'field_https_score' )
-    $agency_https_score = $val;
-  if ( $key == 'field_free_of_insecr_prot_score' )
-    $agency_insecprot_score = $val;
-  if ( $key == 'field_m15_13_compliance_score' )
-    $agency_m15_score = $val;
+	if ( $key == 'field_web_agency_id_1' )
+		$agency_website_num = $val;
 }
+$agency_https_score = round(db_query("select avg(c.field_https_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_https_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => arg(1)))->fetchField());
+$agency_dap_score = round(db_query("select avg(c.field_dap_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_dap_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => arg(1)))->fetchField());
+$agency_mobovr_score = round(db_query("select avg(c.field_mobile_overall_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_mobile_overall_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => arg(1)))->fetchField());
+$agency_mobperf_score = round(db_query("select avg(c.field_mobile_performance_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_mobile_performance_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => arg(1)))->fetchField());
+$agency_mobusab_score = round(db_query("select avg(c.field_mobile_usability_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_mobile_usability_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => arg(1)))->fetchField());
+$agency_ipv6_score = round(db_query("select avg(c.field_ipv6_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_ipv6_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => arg(1)))->fetchField());
+$agency_dnssec_score = round(db_query("select avg(c.field_dnssec_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_dnssec_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => arg(1)))->fetchField());
+$agency_insecprot_score = round(db_query("select avg(c.field_free_of_insecr_prot_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_free_of_insecr_prot_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => arg(1)))->fetchField());
+$agency_m15_score = round(db_query("select avg(c.field_m15_13_compliance_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_m15_13_compliance_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => arg(1)))->fetchField());
 
 $agencynode = node_load( arg( 1 ) );
 ?>
