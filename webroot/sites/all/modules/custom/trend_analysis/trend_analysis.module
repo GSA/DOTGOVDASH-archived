@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: kapilbulchandani
@@ -734,7 +735,12 @@ function trend_analysis_block_view($delta = 0) {
                 $agencyid = arg(1);
             else
                 $agencyid = getCurrentUserAgencyId();
-            $query = db_query("select date as scandate,average_https_score as score_val from custom_agencywide_archive where agency_id=:nid  order by date asc", array(':nid' => $agencyid));
+
+            if(isset($agencyid) && !empty($agencyid) && is_numeric($agencyid)){
+                $query = db_query("select date as scandate,average_https_score as score_val from custom_agencywide_archive where agency_id=:nid  order by date asc", array(':nid' => $agencyid));
+            }else{
+                $query = db_query("select date as scandate, AVG(average_https_score) as score_val, SUM(average_https_score) as score_val_sum from custom_government_wide_archive where 1 group by date  order by date asc", array());
+            }
             $trend_arr = array();
             foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -760,7 +766,12 @@ function trend_analysis_block_view($delta = 0) {
                 $agencyid = arg(1);
             else
                 $agencyid = getCurrentUserAgencyId();
-            $query = db_query("select date as scandate,average_dap_score as score_val from custom_agencywide_archive where agency_id=:nid  order by date asc", array(':nid' => $agencyid));
+
+            if(isset($agencyid) && !empty($agencyid) && is_numeric($agencyid)){
+                $query = db_query("select date as scandate,average_dap_score as score_val from custom_agencywide_archive where agency_id=:nid  order by date asc", array(':nid' => $agencyid));
+            }else{
+                $query = db_query("select date as scandate,AVG(average_dap_score) as score_val,SUM(average_dap_score) as score_val_sum from custom_government_wide_archive where 1 group by date order by date asc", array());
+            }
             $trend_arr = array();
             foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -786,7 +797,12 @@ function trend_analysis_block_view($delta = 0) {
                 $agencyid = arg(1);
             else
                 $agencyid = getCurrentUserAgencyId();
-            $query = db_query("select date as scandate,average_mob_overall_score as score_val from custom_agencywide_archive where agency_id=:nid  order by date asc", array(':nid' => $agencyid));
+
+            if(isset($agencyid) && !empty($agencyid) && is_numeric($agencyid)){
+                $query = db_query("select date as scandate,average_mob_overall_score as score_val from custom_agencywide_archive where agency_id=:nid  order by date asc", array(':nid' => $agencyid));
+            }else{
+                $query = db_query("select date as scandate, SUM(average_mob_overall_score) as score_val_sum, AVG(average_mob_overall_score) as score_val from custom_government_wide_archive where 1 group by date order by date asc", array());
+            }
             $trend_arr = array();
             foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -813,7 +829,12 @@ function trend_analysis_block_view($delta = 0) {
                 $agencyid = arg(1);
             else
                 $agencyid = getCurrentUserAgencyId();
-            $query = db_query("select date as scandate,average_dnssec_score as score_val from custom_agencywide_archive where agency_id=:nid  order by date asc", array(':nid' => $agencyid));
+
+            if(isset($agencyid) && !empty($agencyid) && is_numeric($agencyid)){
+                $query = db_query("select date as scandate,average_dnssec_score as score_val from custom_agencywide_archive where agency_id=:nid  order by date asc", array(':nid' => $agencyid));
+            }else{
+                $query = db_query("select date as scandate,AVG(average_dnssec_score) as score_val,SUM(average_dnssec_score) as score_val_sum from custom_government_wide_archive where 1 group by date order by date asc", array());
+            }
             $trend_arr = array();
             foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -840,7 +861,12 @@ function trend_analysis_block_view($delta = 0) {
                 $agencyid = arg(1);
             else
                 $agencyid = getCurrentUserAgencyId();
-            $query = db_query("select date as scandate,average_ipv6_score as score_val from custom_agencywide_archive where agency_id=:nid  order by date asc", array(':nid' => $agencyid));
+
+            if(isset($agencyid) && !empty($agencyid) && is_numeric($agencyid)){
+                $query = db_query("select date as scandate,average_ipv6_score as score_val from custom_agencywide_archive where agency_id=:nid  order by date asc", array(':nid' => $agencyid));
+            }else{
+                $query = db_query("select date as scandate,AVG(average_ipv6_score) as score_val,SUM(average_ipv6_score) as score_val_sum from custom_government_wide_archive where 1 group by date order by date asc", array());
+            }
             $trend_arr = array();
             foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -867,7 +893,12 @@ function trend_analysis_block_view($delta = 0) {
                 $agencyid = arg(1);
             else
                 $agencyid = getCurrentUserAgencyId();
-            $query = db_query("select date as scandate,average_m15_score as score_val from custom_agencywide_archive where agency_id=:nid  order by date asc", array(':nid' => $agencyid));
+
+            if(isset($agencyid) && !empty($agencyid) && is_numeric($agencyid)){
+                $query = db_query("select date as scandate,average_m15_score as score_val from custom_agencywide_archive where agency_id=:nid  order by date asc", array(':nid' => $agencyid));
+            }else{
+                $query = db_query("select date as scandate,AVG(average_m15_score) as score_val,SUM(average_m15_score) as score_val_sum from custom_government_wide_archive where 1 group by date order by date asc", array());
+            }
             $trend_arr = array();
             foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
@@ -894,7 +925,12 @@ function trend_analysis_block_view($delta = 0) {
                 $agencyid = arg(1);
             else
                 $agencyid = getCurrentUserAgencyId();
-            $query = db_query("select date as scandate,average_rc4_score as score_val from custom_agencywide_archive where agency_id=:nid  order by date asc", array(':nid' => $agencyid));
+
+            if(isset($agencyid) && !empty($agencyid) && is_numeric($agencyid)){
+                $query = db_query("select date as scandate,average_rc4_score as score_val from custom_agencywide_archive where agency_id=:nid  order by date asc", array(':nid' => $agencyid));
+            }else{
+                $query = db_query("select date as scandate,AVG(average_rc4_score) as score_val,SUM(average_rc4_score) as score_val_sum from custom_government_wide_archive where 1 group by date order by date asc", array());
+            }
             $trend_arr = array();
             foreach ($query as $result) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
