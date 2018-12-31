@@ -76,7 +76,11 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                         chart.draw(data, options);
                                                     }
                                                 </script>
-                                                <span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of Accessibility issues by category</span> </div>
+                                              <?php
+                                              if(($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydata['ag_miss_image']) != 0){
+                                                print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of Accessibility issues by category</span>";
+                                              }?>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="view-button"><br>
