@@ -1,4 +1,5 @@
 jQuery(document).ready(function ($) {
+    $('.page-search-site .breadcrumb .last').html('<a href=/search/site>Data Discovery</a>');
     $(".ui-accordion-content").css("height", "auto");
     $("#favorites-list li").prepend('<i class="icon glyphicon glyphicon-star"></i>');
     $("th").attr("scope", "col");
@@ -68,5 +69,13 @@ jQuery(document).ready(function ($) {
                 $('.pane-agency-accessibility').hide();
             }
         }), 1000
+    });
+
+    $('#agency_acc_table_filter .input-sm').keyup(function () {
+        if ($(this).val() == '') {
+            $('.panel-accessibility-chart').show();
+        } else {
+            $('.panel-accessibility-chart').hide();
+        }
     });
 });
