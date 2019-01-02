@@ -1,6 +1,5 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script language="JavaScript">
-
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
 

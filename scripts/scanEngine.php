@@ -9,12 +9,12 @@ include_once("../scripts/commonScanFunctions.php");
 
 //Before Starting scan get the latest website listing and data from pulse
 writeToLogs("Get Latest Websites and data from Pulse\n",$logFile);
-#getPulseData();
+getPulseData();
 //Start the scan and get the scan id.
 writeToLogs("Starting Scan",$logFile);
 $scanId = startScan();
 //Below are the full scans run for all websites at once. DAP and HTTPS info are collected from pulse site at once for perforamnce optimization
-#writeToLogs("Collecting HTTPS and DAP data from Pulse",$logFile);
+writeToLogs("Collecting HTTPS and DAP data from Pulse",$logFile);
 //Get the latest reports from pulse accessibility to local.
 //This wont be executed anymore as pulse accessibility API site is down
 //updateAccessibleScanInfo($scanId);
@@ -27,26 +27,26 @@ foreach($listWebsites as $key=>$website){
 writeToLogs("Running Technology Scan for site ".$website['domain'],$logFile);
 updateTechStackInfo($website['domain']);
 
-#writeToLogs("\nStart Domain and SSL Scan for ".$website['domain'],$logFile);
-#updateDomainSSLInfo($key,$scanId,$website);
+writeToLogs("\nStart Domain and SSL Scan for ".$website['domain'],$logFile);
+updateDomainSSLInfo($key,$scanId,$website);
 
     //Update HTTPS and DAP info in Drupal. HTTPS info is dependent on domain scan
-#writeToLogs("\nStart HTTPS and DAP Scan ".$website['domain'],$logFile);
-#updateHttpsDAPInfo($key,$scanId,$website);
+writeToLogs("\nStart HTTPS and DAP Scan ".$website['domain'],$logFile);
+updateHttpsDAPInfo($key,$scanId,$website);
 
-#writeToLogs("\nStart Mobile Scan for ".$website['domain'],$logFile);
-#updateMobileScanInfo($key,$scanId,$website);
-#writeToLogs("\nStart Site Speed Scan for ".$website['domain'],$logFile);
-#updateSiteScanInfo($key,$scanId,$website);
+writeToLogs("\nStart Mobile Scan for ".$website['domain'],$logFile);
+updateMobileScanInfo($key,$scanId,$website);
+writeToLogs("\nStart Site Speed Scan for ".$website['domain'],$logFile);
+updateSiteScanInfo($key,$scanId,$website);
 
 //Get the latest reports from pulse accessibility to local.
-#writeToLogs("\nStart Accessibility Scan for ".$website['domain'],$logFile);
-#updateAccessibilityScanCustom($website['domain'],$scanId);
+writeToLogs("\nStart Accessibility Scan for ".$website['domain'],$logFile);
+updateAccessibilityScanCustom($website['domain'],$scanId);
 
 }
     //TODO
     //After scan is done. Run the taxonomy processor. This will parse all taxonomy data and create/edit taxonomies and tag appropriate content.
-#archiveGovwideTrendData();
-#archiveAgencywideTrendData();
+archiveGovwideTrendData();
+archiveAgencywideTrendData();
 
 print "Finished Processing!\n";

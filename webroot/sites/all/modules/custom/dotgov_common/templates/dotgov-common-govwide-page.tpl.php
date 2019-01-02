@@ -36,7 +36,7 @@
                     <td class="views-field views-field-field-web-agency-id-1">
                         <a href="/website/all/reports"><?=$govwidedata['actualdata']['websitenos']?></a>          </td>
                     <td class="views-field views-field-field-web-agency-id-1">
-                        <a href="/website/all/reports"><?=$govwidedata['actualdata']['agencynos']?></a>          </td>
+                        <a href="/agency/all/data"><?=$govwidedata['actualdata']['agencynos']?></a>          </td>
                     <td class="views-field views-field-field-dap-score">
                         <?=$govwidedata['actualdata']['avg_dap']?>          </td>
                     <td class="views-field views-field-field-https-score">

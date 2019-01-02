@@ -110,7 +110,7 @@
             'style="padding-left: 10px; opacity: 0; cursor: move;">&nbsp;</span></a>';
           $(this).prepend(handlemarkup);
           $('.hidden-fid').hide();
-          //console.log($(this).parent('ul'));
+          console.log($(this).parent('ul'));
           $(this).parent('ul').css({
             'padding': "0px",
           });        

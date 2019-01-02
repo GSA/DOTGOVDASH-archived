@@ -23,7 +23,7 @@
  */
 $mobsnap = dotgov_common_getMobileSnapshot(arg(1));
 $output = $mobsnap;
-$filesize = filesize($output['uri']);
+$file_size = filesize($output['uri']);
 $output =  image_style_url("thumbnail", $output['uri'] );
 $outputorig =  	file_create_url($mobsnap['uri']);
 
@@ -38,7 +38,7 @@ $outputorig =  	file_create_url($mobsnap['uri']);
 
 <div class="col-xs-4 text-center">
         <?php
-        if($filesize != 0){
+        if($file_size != 0){
         ?>
     <a href="<?=$outputorig?>">
         <img src="<?php echo $output?>" title="agency-logo" alt="agency-logo" /></a>

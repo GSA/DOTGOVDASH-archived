@@ -19,30 +19,30 @@
 <script src="//cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
 
 <style type="text/css">
-    .dataTables_filter {
-        width: 50%;
-        float: right;
-        text-align: right;
-    }
+   .dataTables_filter {
+	width: 50%;
+	float: right;
+	text-align: right;
+}
 </style>
 <!-- TODO: Missing CoffeeScript 2 -->
 <script type="text/javascript">
 
 
+    
+        jQuery(document).ready(function() {
+             jQuery('#agency_acc_table').DataTable( {
+                responsive: true,
+                paging: false,
+dom: '<"toolbar">Bfrtip',
+        buttons: [
+             {extend:'csv', text:'csv'}, {extend:'excel',text:'xls'}
+        ]
+            } );
 
-    jQuery(document).ready(function() {
-        jQuery('#agency_acc_table').DataTable( {
-            responsive: true,
-            paging: false,
-            dom: '<"toolbar">Bfrtip',
-            buttons: [
-                {extend:'csv', text:'csv'}, {extend:'excel',text:'xls'}
-            ]
+jQuery("div.toolbar").html('Download Agency Level Accessibility Report:');
+jQuery("div.toolbar").css('float','left');
         } );
-
-        jQuery("div.toolbar").html('Download Agency Level Accessibility Report:');
-        jQuery("div.toolbar").css('float','left');
-    } );
 
 
 </script>

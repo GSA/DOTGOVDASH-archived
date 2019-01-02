@@ -14,15 +14,6 @@ unset($css[drupal_get_path('module', 'datatables') . '/dataTables/media/css/demo
 
 }
 
-function dotgov_common_getMobileSnapshot($websiteid){
-    $mobsnap = array();
-    $query = db_query("SELECT c.* from field_data_field_mobile_websnapshot a, field_data_field_website_id b,file_managed c where b.field_website_id_nid=:nid and b.bundle='mobile_scan_information' and a.entity_id=b.entity_id and a.field_mobile_websnapshot_fid=c.fid", array(':nid' => $websiteid));
-    foreach ($query as $result) {
-        $mobsnap['uri'] = $result->uri;
-        $mobsnap['fid'] = $result->fid;
-    }
-    return $mobsnap;
-}
 function dotgov_menu_link__main_menu($variables)
 {
   $element = $variables['element'];
@@ -102,4 +93,29 @@ function dotgov_preprocess_html(&$variables) {
     if(arg(0) == "historical_scan_score_data") {
         drupal_add_js("https://code.jquery.com/jquery-2.2.4.js", "external");
     }
+}
+
+function dotgov_common_getMobileSnapshot($websiteid){
+    $mobsnap = array();
+    $query = db_query("SELECT c.* from field_data_field_mobile_websnapshot a, field_data_field_website_id b,file_managed c where b.field_website_id_nid=:nid and b.bundle='mobile_scan_information' and a.entity_id=b.entity_id and a.field_mobile_websnapshot_fid=c.fid", array(':nid' => $websiteid));
+    foreach ($query as $result) {
+        $mobsnap['uri'] = $result->uri;
+        $mobsnap['fid'] = $result->fid;
+    }
+    return $mobsnap;
+}
+
+
+function dotgov_breadcrumb($variables) {
+$breadcrumb = $variables['breadcrumb'];
+if (!empty($breadcrumb)) {
+if(arg(0)=='search' && arg(1)=='site')
+{
+$temp = $breadcrumb[1];
+$breadcrumb[1] = "<a href='/search/site'>Data Discovery</a>";
+#$breadcrumb[] = $temp;
+}
+$output .= '' . implode(' » ', $breadcrumb) . '';
+return $output;
+}
 }

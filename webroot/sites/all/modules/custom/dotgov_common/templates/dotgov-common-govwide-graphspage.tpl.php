@@ -28,23 +28,22 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
 <div  class="main-govwidecontents">
     <div class="content-wrap">
         <div class="col-lg-4 col-sm-12 col-xs-12 text-center">
-            <p><span style="font-size:16px;text-align:center;">This page reports government-wide data displayed in dashboard format, where you can easily see the status of websites government-wide for each criteria that we score</p>
+           <br> <span style="font-size:15px;text-align:center;">Total Federal Executive Branch Agencies Reported: <?=$agencynos?></span>
         </div>
         <div class="col-lg-4 col-sm-12 col-xs-12 text-center">
             <img src="<?php echo $base_url; ?>/sites/all/modules/custom/dotgov_common/images/gov-wide-report-logo.png " alt="Govwide Report" style="width:100px; height:100px;"/>
         </div>
-        <div class="col-lg-4 col-sm-12 col-xs-12 text-center" style="margin-top:30px;">
-            <?php echo "Domains: " . $websitenos ."|"; ?>
-            <?php echo "Agencies: ". $agencynos ; ?>
+        <div class="col-lg-4 col-sm-12 col-xs-12 text-center">
+           <br> <span style="font-size:15px;text-align:center;"><?php echo "Total Public-Facing Websites Reported: " . $websitenos; ?></span>
         </div>
     </div>
 </div>
-<div class="field-content col-lg-6 text-right" style="position:absolute;right:0;z-index:9999;"><a href="<?php echo $base_url; ?>/content/scoring-methods" title="" data-toggle="tooltip" class="infor" data-original-title="Click Here to see the scoring methods used to calculate the scores"><i class="icon glyphicon glyphicon-info-sign"></i><span class="sr-only">information</span></a></div>
+                <div class="field-content col-lg-6 text-right" style="position: absolute;right: 0;z-index: 999;"><a href="<?php echo $base_url; ?>/content/scoring-methods" title="" data-toggle="tooltip" class="infor" data-original-title="Click Here to see the scoring methods used to calculate the scores"><i class="icon glyphicon glyphicon-info-sign"></i><span class="sr-only">information</span></a></div>
 
 <div class="main-govwidechart">
     <div class="view view-all-agency-data view-id-all_agency_data view-display-id-page_5 white-back view-dom-id-b562269ee2f951e205ff4aa51b8a3ac0 custom-tpl-code">
-        <div class="view-content">
 
+	<div class="view-content">
             <div id="govwidechart"  style="min-width: 300px; min-height: 300px; margin: 0 auto"></div>
             <script type="text/javascript">//<![CDATA[
                 Highcharts.chart('govwidechart', {
@@ -171,5 +170,7 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
     </div>
     <div class="view-footer clearfix" style="margin-top:10px;">
         <div class="field-content col-lg-6"> <a class="btn btn-primary" href="<?php echo $base_url; ?>/website/all/reports">Complete List </a>&nbsp;( Last scan date: <?= dotgov_common_lastScanDate() ?> )</div>
+
+
     </div>
 </div>
