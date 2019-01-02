@@ -1,5 +1,4 @@
 jQuery(document).ready(function ($) {
-    $('.page-search-site .breadcrumb .last').html('<a href=/search/site>Data Discovery</a>');
     $(".ui-accordion-content").css("height", "auto");
     $("#favorites-list li").prepend('<i class="icon glyphicon glyphicon-star"></i>');
     $("th").attr("scope", "col");
