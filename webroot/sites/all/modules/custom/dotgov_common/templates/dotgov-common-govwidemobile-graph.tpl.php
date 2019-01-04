@@ -21,14 +21,10 @@ var options = {
         enabled: false
     },
     showInLegend: false,
-    tooltip:{trigger:'selection'}
 };
 
-    var chart = new google.visualization.PieChart(document.getElementById('piechart1'));
-    google.visualization.events.addListener(chart, 'ready', function(e) {
-        chart.setSelection([{row:2,column:null}]);
-    });
-    chart.draw(data, options);
+var chart = new google.visualization.PieChart(document.getElementById('piechart1'));
 
+chart.draw(data, options);
 }
 </script>
