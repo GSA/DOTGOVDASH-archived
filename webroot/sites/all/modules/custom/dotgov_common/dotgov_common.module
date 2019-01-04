@@ -29,7 +29,18 @@ function dotgov_common_theme($existing, $type, $theme, $path) {
             'template' => 'dotgov-common-agencyacess-table',
             'variables' => array('nid' => NULL),
             'path' => drupal_get_path('module', 'dotgov_common') . '/templates',
-        )
+        ),
+        'agencywide_mobgraphs_page' => array(
+            'template' => 'dotgov-common-agencymobile-graph',
+            'variables' => array('nid' => NULL),
+            'path' => drupal_get_path('module', 'dotgov_common') . '/templates',
+        ),
+        'govwide_mobgraphs_page' => array(
+            'template' => 'dotgov-common-govwidemobile-graph',
+            'variables' => array('nid' => NULL),
+            'path' => drupal_get_path('module', 'dotgov_common') . '/templates',
+        ),
+
     );
 }
 
@@ -601,6 +612,14 @@ $ag_avrg_color_cont =  round(db_query("select sum(c.field_accessible_group_color
 
     $agencydata['ag_access_chart'] = $agencyaccess_output;
 
+    $agency_mob['agency_mob_bad'] = round(db_query("select count(*) from field_data_field_mobile_overall_score a,field_data_field_web_agency_id b where a.field_mobile_overall_score_value<='49' and a.bundle='website' and a.entity_id=b.entity_id and b.field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
+    $agency_mob['agency_mob_avg'] = round(db_query("select count(*) from field_data_field_mobile_overall_score a,field_data_field_web_agency_id b where field_mobile_overall_score_value<='89' and  field_mobile_overall_score_value>='50' and a.bundle='website' and a.entity_id=b.entity_id and b.field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
+    $agency_mob['agency_mob_good'] = round(db_query("select count(*) from field_data_field_mobile_overall_score a,field_data_field_web_agency_id b where field_mobile_overall_score_value<='100' and  field_mobile_overall_score_value>='90' and a.bundle='website' and a.entity_id=b.entity_id and b.field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
+
+    $agencyaccess_output = theme('agencywide_mobgraphs_page', array('agencydata' => $agency_mob));
+
+    $agencydata['ag_mob_chart'] = $agencyaccess_output;
+
     return $agencydata;
 }
 
@@ -957,5 +976,12 @@ function dotgov_common_getAllAgencyComplianceData(){
         $agencyaccess_output = theme('agencywide_accessgraphs_page', array('agencydata' => $agencydata));
     }
     $agencydata['ag_access_chart'] = $agencyaccess_output;
+
+    $govwide_mob['govwide_mob_bad'] = round(db_query("select count(*) from field_data_field_mobile_overall_score a,field_data_field_web_agency_id b where a.field_mobile_overall_score_value<='49' and a.bundle='website' and a.entity_id=b.entity_id")->fetchField());
+    $govwide_mob['govwide_mob_avg'] = round(db_query("select count(*) from field_data_field_mobile_overall_score a,field_data_field_web_agency_id b where field_mobile_overall_score_value<='89' and  field_mobile_overall_score_value>='50' and a.bundle='website' and a.entity_id=b.entity_id")->fetchField());
+    $govwide_mob['govwide_mob_good'] = round(db_query("select count(*) from field_data_field_mobile_overall_score a,field_data_field_web_agency_id b where field_mobile_overall_score_value<='100' and  field_mobile_overall_score_value>='90' and a.bundle='website' and a.entity_id=b.entity_id")->fetchField());
+    $govwideaccess_output = theme('govwide_mobgraphs_page', array('govwidedata' => $govwide_mob));
+
+    $agencydata['gov_mob_chart'] = $govwideaccess_output;
     return $agencydata;
 }

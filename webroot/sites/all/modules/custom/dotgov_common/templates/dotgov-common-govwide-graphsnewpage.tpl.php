@@ -51,9 +51,9 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                 <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
                                                 <script language="JavaScript">
                                                   google.charts.load('current', {'packages':['corechart']});
-                                                  google.charts.setOnLoadCallback(drawChart);
+                                                  google.charts.setOnLoadCallback(drawChart2);
 
-                                                  function drawChart() {
+                                                  function drawChart2() {
 
                                                     var data = google.visualization.arrayToDataTable([
                                                       ['Type', 'Number'],
@@ -114,7 +114,10 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                     $mobusabstat = "Good";
                                                   }
                                                   ?>
-                                                    <div class="views-field views-field-php-2 col-lg-6"><span class="field-content">Mobile Overall Average Score : <?php print $agency_mobovr_score ?> <br>
+                                                    <div class="views-field views-field-php-2 col-lg-6">
+                                                        <div id="piechart1"></div>
+                                                        <?php print $agencydata['gov_mob_chart']; ?>
+                                                        <span class="field-content">Mobile Overall Average Score : <?php print $agency_mobovr_score ?> <br>
                                                             Mobile Performance Score : <?php echo $agency_mobperf_score . ' (' . $mobperfmstat . ')' ?>
                                                             <br>
                                                             Mobile Usability Score : <?php echo $agency_mobusab_score . ' (' . $mobusabstat . ')' ?>

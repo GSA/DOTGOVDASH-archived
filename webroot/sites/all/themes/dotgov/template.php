@@ -108,14 +108,15 @@ function dotgov_common_getMobileSnapshot($websiteid){
 
 function dotgov_breadcrumb($variables) {
 $breadcrumb = $variables['breadcrumb'];
-if (!empty($breadcrumb)) {
-if(arg(0)=='search' && arg(1)=='site')
-{
-$temp = $breadcrumb[1];
-$breadcrumb[1] = "<a href='/search/site'>Data Discovery</a>";
-#$breadcrumb[] = $temp;
-}
-$output .= '' . implode(' » ', $breadcrumb) . '';
-return $output;
-}
+    $output = "";
+    if (!empty($breadcrumb)) {
+    if(arg(0)=='search' && arg(1)=='site')
+    {
+//        $temp = $breadcrumb[1];
+        $breadcrumb[1] = "<a href='/search/site'>Data Discovery</a>";
+        #$breadcrumb[] = $temp;
+    }
+    $output .= '' . implode(' » ', $breadcrumb) . '';
+    return $output;
+    }
 }
