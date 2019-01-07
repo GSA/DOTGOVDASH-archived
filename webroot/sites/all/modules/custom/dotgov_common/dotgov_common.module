@@ -612,9 +612,26 @@ $ag_avrg_color_cont =  round(db_query("select sum(c.field_accessible_group_color
 
     $agencydata['ag_access_chart'] = $agencyaccess_output;
 
-    $agency_mob['agency_mob_bad'] = round(db_query("select count(*) from field_data_field_mobile_overall_score a,field_data_field_web_agency_id b where a.field_mobile_overall_score_value<='49' and a.bundle='website' and a.entity_id=b.entity_id and b.field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
-    $agency_mob['agency_mob_avg'] = round(db_query("select count(*) from field_data_field_mobile_overall_score a,field_data_field_web_agency_id b where field_mobile_overall_score_value<='89' and  field_mobile_overall_score_value>='50' and a.bundle='website' and a.entity_id=b.entity_id and b.field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
-    $agency_mob['agency_mob_good'] = round(db_query("select count(*) from field_data_field_mobile_overall_score a,field_data_field_web_agency_id b where field_mobile_overall_score_value<='100' and  field_mobile_overall_score_value>='90' and a.bundle='website' and a.entity_id=b.entity_id and b.field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
+    $agency_mob['agency_mob_bad'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='49' and entity_id in (SELECT node.nid AS nid 
+FROM 
+node node
+LEFT JOIN field_data_field_web_agency_id field_data_field_web_agency_id ON node.nid = field_data_field_web_agency_id.entity_id AND (field_data_field_web_agency_id.entity_type = 'node' AND field_data_field_web_agency_id.deleted = '0')
+WHERE (( (node.status = '1') AND (node.type IN  ('website')) AND (field_data_field_web_agency_id.field_web_agency_id_nid IN  (:agencyid)) )))", array(':agencyid' => $agencyid))->fetchField());
+    $agency_mob['agency_mob_avg'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='89' and  field_mobile_overall_score_value>='50' and entity_id in (SELECT node.nid AS nid 
+FROM 
+node node
+LEFT JOIN field_data_field_web_agency_id field_data_field_web_agency_id ON node.nid = field_data_field_web_agency_id.entity_id AND (field_data_field_web_agency_id.entity_type = 'node' AND field_data_field_web_agency_id.deleted = '0')
+WHERE (( (node.status = '1') AND (node.type IN  ('website')) AND (field_data_field_web_agency_id.field_web_agency_id_nid IN  (:agencyid)) )))", array(':agencyid' => $agencyid))->fetchField());
+    $agency_mob['agency_mob_good'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='100' and  field_mobile_overall_score_value>='90' and entity_id in (SELECT node.nid AS nid 
+FROM 
+node node
+LEFT JOIN field_data_field_web_agency_id field_data_field_web_agency_id ON node.nid = field_data_field_web_agency_id.entity_id AND (field_data_field_web_agency_id.entity_type = 'node' AND field_data_field_web_agency_id.deleted = '0')
+WHERE (( (node.status = '1') AND (node.type IN  ('website')) AND (field_data_field_web_agency_id.field_web_agency_id_nid IN  (:agencyid)) )))", array(':agencyid' => $agencyid))->fetchField());
+    $agency_mob['agency_mob_null'] = round(db_query("select count(entity_id) from field_data_field_mobile_overall_score where field_mobile_overall_score_value is NULL and entity_id in (SELECT node.nid AS nid 
+FROM 
+node node
+LEFT JOIN field_data_field_web_agency_id field_data_field_web_agency_id ON node.nid = field_data_field_web_agency_id.entity_id AND (field_data_field_web_agency_id.entity_type = 'node' AND field_data_field_web_agency_id.deleted = '0')
+WHERE (( (node.status = '1') AND (node.type IN  ('website')) AND (field_data_field_web_agency_id.field_web_agency_id_nid IN  (:agencyid)) )))", array(':agencyid' => $agencyid))->fetchField());
 
     $agencyaccess_output = theme('agencywide_mobgraphs_page', array('agencydata' => $agency_mob));
 
@@ -977,9 +994,28 @@ function dotgov_common_getAllAgencyComplianceData(){
     }
     $agencydata['ag_access_chart'] = $agencyaccess_output;
 
-    $govwide_mob['govwide_mob_bad'] = round(db_query("select count(*) from field_data_field_mobile_overall_score a,field_data_field_web_agency_id b where a.field_mobile_overall_score_value<='49' and a.bundle='website' and a.entity_id=b.entity_id")->fetchField());
-    $govwide_mob['govwide_mob_avg'] = round(db_query("select count(*) from field_data_field_mobile_overall_score a,field_data_field_web_agency_id b where field_mobile_overall_score_value<='89' and  field_mobile_overall_score_value>='50' and a.bundle='website' and a.entity_id=b.entity_id")->fetchField());
-    $govwide_mob['govwide_mob_good'] = round(db_query("select count(*) from field_data_field_mobile_overall_score a,field_data_field_web_agency_id b where field_mobile_overall_score_value<='100' and  field_mobile_overall_score_value>='90' and a.bundle='website' and a.entity_id=b.entity_id")->fetchField());
+
+    $govwide_mob['govwide_mob_bad'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='49' and entity_id in (SELECT node.nid AS nid 
+FROM 
+node node
+LEFT JOIN field_data_field_web_agency_id field_data_field_web_agency_id ON node.nid = field_data_field_web_agency_id.entity_id AND (field_data_field_web_agency_id.entity_type = 'node' AND field_data_field_web_agency_id.deleted = '0')
+WHERE (( (node.status = '1') AND (node.type IN  ('website')) )))")->fetchField());
+    $govwide_mob['govwide_mob_avg'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='89' and  field_mobile_overall_score_value>='50' and entity_id in (SELECT node.nid AS nid 
+FROM 
+node node
+LEFT JOIN field_data_field_web_agency_id field_data_field_web_agency_id ON node.nid = field_data_field_web_agency_id.entity_id AND (field_data_field_web_agency_id.entity_type = 'node' AND field_data_field_web_agency_id.deleted = '0')
+WHERE (( (node.status = '1') AND (node.type IN  ('website')) )))")->fetchField());
+    $govwide_mob['govwide_mob_good'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='100' and  field_mobile_overall_score_value>='90' and entity_id in (SELECT node.nid AS nid 
+FROM 
+node node
+LEFT JOIN field_data_field_web_agency_id field_data_field_web_agency_id ON node.nid = field_data_field_web_agency_id.entity_id AND (field_data_field_web_agency_id.entity_type = 'node' AND field_data_field_web_agency_id.deleted = '0')
+WHERE (( (node.status = '1') AND (node.type IN  ('website'))  )))")->fetchField());
+    $govwide_mob['govwide_mob_null'] = round(db_query("select count(entity_id) from field_data_field_mobile_overall_score where field_mobile_overall_score_value is NULL and entity_id in (SELECT node.nid AS nid 
+FROM 
+node node
+LEFT JOIN field_data_field_web_agency_id field_data_field_web_agency_id ON node.nid = field_data_field_web_agency_id.entity_id AND (field_data_field_web_agency_id.entity_type = 'node' AND field_data_field_web_agency_id.deleted = '0')
+WHERE (( (node.status = '1') AND (node.type IN  ('website')) )))")->fetchField());
+
     $govwideaccess_output = theme('govwide_mobgraphs_page', array('govwidedata' => $govwide_mob));
 
     $agencydata['gov_mob_chart'] = $govwideaccess_output;

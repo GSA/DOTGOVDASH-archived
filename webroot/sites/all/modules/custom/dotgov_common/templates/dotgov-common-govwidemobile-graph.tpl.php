@@ -7,12 +7,13 @@ function drawChart1() {
 
 var data = google.visualization.arrayToDataTable([
 ['Type', 'Number'],
-['Bad',     <?php echo number_format($govwidedata['govwide_mob_bad'],1, '.', '');?>],
+['Low',     <?php echo number_format($govwidedata['govwide_mob_bad'],1, '.', '');?>],
 ['Average',      <?php echo number_format($govwidedata['govwide_mob_avg'],1, '.', '');?>],
-['Good',  <?php echo number_format($govwidedata['govwide_mob_good'],1, '.', ''); ?>]
-]);
+['Good',  <?php echo number_format($govwidedata['govwide_mob_good'],1, '.', ''); ?>],
+['NA',  <?php echo number_format($govwidedata['govwide_mob_null'],1, '.', ''); ?>]
+])
 var options = {
-    colors: ['#ae0100', '#665000','#276437'],
+    colors: ['#ae0100', '#665000','#276437','#337ab7'],
     sliceVisibilityThreshold: 0,
     legend: {position: 'none'},
     backgroundColor: { fill:'transparent' },
