@@ -352,7 +352,7 @@ $agencynode = node_load( arg( 1 ) );
                                                                 <div class="col-xs-12 clearfix" style="margin:-10px 0 10px 0; ">
                                                                     <a href="/improve-my-score">How to Improve Score</a>
                                                                 </div>
-                                                                <div class="col-xs-12"><a class="link-all-reports" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </div>
+                                                                <div class="col-xs-12"><a class="link-all-reports" href="/website/mobile/reports?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </div>
                                                             </div></div>
                                                     </div>
                                                 </div>
