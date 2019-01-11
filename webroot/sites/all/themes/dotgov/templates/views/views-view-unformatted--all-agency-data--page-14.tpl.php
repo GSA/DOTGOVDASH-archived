@@ -259,7 +259,10 @@ drupal_set_title($agencynode->title);
                                                               }
 
                                                               ?>
-                                                                <div class="views-field views-field-php-2 col-lg-6"><span class="field-content">Mobile Overall Average Score : <?php print $agency_mobovr_score ?> <br>
+                                                                <div class="views-field views-field-php-2 col-lg-6">
+                                                                  <div id="piechart1"></div>
+                                                                    <?php print $agencydata['ag_mob_chart']; ?>
+                                                                  <span class="field-content">Mobile Overall Average Score : <?php print $agency_mobovr_score ?> <br>
                                 Mobile Performance Score :
                                                                     <?= $agency_mobperf_score . ' (' . $mobperfmstat . ')' ?>
                                                                         <br>
