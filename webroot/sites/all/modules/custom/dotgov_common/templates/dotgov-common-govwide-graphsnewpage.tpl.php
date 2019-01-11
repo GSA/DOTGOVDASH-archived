@@ -189,10 +189,11 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="view-button">
-                                                <div class="row">
-                                                    <div class="col-xs-12 clearfix" style="margin:-10px 0 10px 0; "> <a href="/improve-my-score">How to Improve Score</a> </div>
-                                                    <div class="col-xs-12"><a class="btn btn-primary" href="/mobile/report">Go to Full Report</a> </div>
+                                            <div class="view-button clearfix">
+                                                <div class="row col-xs-12 nopadding clearfix" style="margin-top: 20px;">
+                                                    <div class="col-xs-6"><a class="btn btn-primary" href="/mobile/report">Go to Full Report</a> </div>
+                                                    <div class="col-xs-6" style="margin-top:8px;"> <a href="/improve-my-score">How to Improve Score</a> </div>
+
                                                 </div>
                                             </div>
                                         </div>
