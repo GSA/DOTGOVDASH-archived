@@ -163,27 +163,36 @@ if ( $result[ 'node' ]->bundle == 'website' ) {
                         $compliant_text .= "<div class='taxotooltip'><li> <span class=\"label\" data-format=\"$tval\" style=\"margin-bottom:5px;\">$tval</span><span class=\"tooltiptext\">$tooltip[$tval]</span></li></div>";
                     }
                     elseif(in_array($tval,$noncompliant_taxonomy)) {
-                        $noncompliant_text .= "<li> <span class=\"label\" data-format=\"$tval\" style=\"margin-bottom:5px;\">$tval</span></li>";
+                        $noncompliant_text .= "<div class='taxotooltip'><li> <span class=\"label\" data-format=\"$tval\" style=\"margin-bottom:5px;\">$tval</span><span class=\"tooltiptext\">$tooltip[$tval]</span></li></div>";
                     }
                 }
                 ?>
-            <?php if($compliant_text != ''){ ?>
             <div><b>Compliant</b></div>
             <ul class="dataset-resources unstyled">
-                <?=$compliant_text?>
+                <?php if(trim($compliant_text) != '')
+                    print $compliant_text;
+                else
+                    print "NA";
+                ?>
             </ul>
-            <?php } ?>
-            <?php if($noncompliant_text != ''){ ?>
-                <div><b>Non Compliant</b></div>
+                <div><b>Non-Compliant</b></div>
                 <ul class="dataset-resources unstyled">
-                    <?=$noncompliant_text?>
+                    <?php if(trim($noncompliant_text) != '')
+                        print $noncompliant_text;
+                    else
+                        print "NA";
+                    ?>
                 </ul>
-            <?php } ?>
+            <div><b>Technologies Identified</b></div>
             <div id="techstack" class="row dataset-resources">
                 <?php
-
-                foreach ( $techterms as $techkey => $techval ) {
-                    print "<div class='col-sm-4 nopadding dataset-resources clearfix'><span id='app-button' class='app-button'>" . $techval[ 'category' ][ 'name' ] . " :&nbsp;<img alt='app-icon' class='app-icon' src='/" . drupal_get_path( 'module', 'dotgov_common' ) . "/images/icons/" . $techval[ 'icon' ] . "'>$techkey " . $techval[ 'appversion' ] . "</span></div>";
+                if(!empty($techterms)) {
+                    foreach ($techterms as $techkey => $techval) {
+                        print "<div class='col-sm-4 nopadding dataset-resources clearfix'><span id='app-button' class='app-button'>" . $techval['category']['name'] . " :&nbsp;<img alt='app-icon' class='app-icon' src='/" . drupal_get_path('module', 'dotgov_common') . "/images/icons/" . $techval['icon'] . "'>$techkey " . $techval['appversion'] . "</span></div>";
+                    }
+                }
+                else{
+                    print "NA";
                 }
                 ?>
             </div>
@@ -218,4 +227,4 @@ if ( $result[ 'node' ]->bundle == 'website' ) {
     <?php
 }
 ?>
-<br clear="all" /></li>
+<br clear="all" /></li><hr>
