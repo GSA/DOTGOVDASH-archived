@@ -163,7 +163,13 @@ if ( $result[ 'node' ]->bundle == 'website' ) {
                         $compliant_text .= "<div class='taxotooltip'><li> <span class=\"label\" data-format=\"$tval\" style=\"margin-bottom:5px;\">$tval</span><span class=\"tooltiptext\">$tooltip[$tval]</span></li></div>";
                     }
                     elseif(in_array($tval,$noncompliant_taxonomy)) {
-                        $noncompliant_text .= "<div class='taxotooltip'><li> <span class=\"label\" data-format=\"$tval\" style=\"margin-bottom:5px;\">$tval</span><span class=\"tooltiptext\">$tooltip[$tval]</span></li></div>";
+                        if($tval == "VULNERABLE"){
+                            $tvaltext = "Insecure Protocol";
+                        }
+                        else{
+                            $tvaltext = $tval;
+                        }
+                        $noncompliant_text .= "<div class='taxotooltip'><li> <span class=\"label\" data-format=\"$tval\" style=\"margin-bottom:5px;\">$tvaltext</span><span class=\"tooltiptext\">$tooltip[$tval]</span></li></div>";
                     }
                 }
                 ?>
