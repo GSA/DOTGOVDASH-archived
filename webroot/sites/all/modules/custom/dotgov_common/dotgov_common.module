@@ -40,6 +40,11 @@ function dotgov_common_theme($existing, $type, $theme, $path) {
             'variables' => array('nid' => NULL),
             'path' => drupal_get_path('module', 'dotgov_common') . '/templates',
         ),
+        'govwide_collapsible_page' => array(
+            'template' => 'dotgov-common-collapsible-graphspage',
+            'variables' => array('nid' => NULL),
+            'path' => drupal_get_path('module', 'dotgov_common') . '/templates',
+        ),
 
     );
 }
@@ -100,6 +105,13 @@ $vulnerable_fields = array("bm_field_openssl_ccs_injection","bm_field_openssl_he
                                         $build[$key]["#markup"] = "Not Vulnerable";
                           }
                         }
+    if ($settings->facet == "im_field_website_tags") {
+        foreach($build as $key => $item) {
+            if ($item['#markup'] == 'VULNERABLE') {
+            $build[$key]["#markup"] = "Insecure Protocol";
+        }
+        }
+    }
     $fix_encode_fields = array("sm_field_certificate_issuer","sm_field_certificate_provider");
     if (in_array($settings->facet,$fix_encode_fields)) {
         foreach($build as $key => $item) {
@@ -185,6 +197,12 @@ function dotgov_common_block_info() {
         'cache' => DRUPAL_NO_CACHE,
         'status' => FALSE
     );
+    $blocks['govwide_collapsible_graph'] = array(
+        // The name that will appear in the block list.
+        'info' => t('Government-Wide Collapsible Report'),
+        'cache' => DRUPAL_NO_CACHE,
+        'status' => FALSE
+    );
     return $blocks;
 }
 /*
@@ -247,6 +265,16 @@ function dotgov_common_block_view($delta = 0)
             // Retrieve and process data here.
             $govwidedata['actualdata'] = dotgov_common_agencywideAcessibility();
             $analysis_output =  theme('agencywide_accessible_datatable_page', array('govwidedata' => $govwidedata));
+            $block = array(
+                'subject' => NULL,
+                'content' => $analysis_output,
+            );
+            break;
+        case 'govwide_collapsible_graph':
+            $block['subject'] = t('Government-Wide Collapsible Data');
+            // Retrieve and process data here.
+            $govwidedata['actualdata'] = dotgov_common_getAllAgencyComplianceData();
+            $analysis_output =  theme('govwide_collapsible_page', array('govwidedata' => $govwidedata));
             $block = array(
                 'subject' => NULL,
                 'content' => $analysis_output,

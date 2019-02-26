@@ -61,7 +61,7 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
                         },
                         title: {
                             enabled: true,
-                            text: 'Average of <?= $govwidedata['actualdata']['websitenos'] ?> Websites',
+                            text: 'Overall Average Gov-wide Scores of <?= $govwidedata['actualdata']['websitenos'] ?> Websites',
                             style: {
                                 fontWeight: 'bold',
                                 //color: 'black'
@@ -70,6 +70,7 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
                         }
                     },
                     yAxis: {
+                        max: 100,
                         labels:
                         {
                             enabled: true
