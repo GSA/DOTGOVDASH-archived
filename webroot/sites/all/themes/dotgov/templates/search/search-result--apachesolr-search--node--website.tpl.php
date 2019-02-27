@@ -68,9 +68,9 @@ $websiteurl = "/website/" . $result[ 'node' ]->entity_id . "/information";
 if ( $result[ 'node' ]->bundle == 'website' ) {
     $mobsnap = dotgov_common_getMobileSnapshot($result[ 'node' ]->entity_id);
     if(file_exists(drupal_realpath($mobsnap['uri'])) && (filesize(drupal_realpath($mobsnap['uri'])) != '0'))
-        $imageoutput =  '<img src="'.file_create_url($mobsnap['uri']).'" height="150px" width="182px" title="website-logo" alt="website-logo" />';
+        $imageoutput =  '<img class="web-image" src="'.file_create_url($mobsnap['uri']).'" height="150px" width="182px" title="website-logo" alt="website-logo" />';
     else
-        $imageoutput = '&nbsp;';
+        $imageoutput = '<img src="/sites/default/files/mobile_snapshots/no-image.png" height="150px" width="182px" title="website-logo" alt="website-logo">';
 
 
     $techterms = dotgov_commmon_get_techTerms( $result[ 'node' ]->entity_id );
@@ -143,17 +143,18 @@ if ( $result[ 'node' ]->bundle == 'website' ) {
     </style>
     <li class="<?php print $classes; ?>" <?php print $attributes; ?>>
 
-    <div class="col-xs-12 nopadding">
-        <div class="col-xs-3">
-            <a href="<?php print $websiteurl; ?>"><div class="image-container"><?=$imageoutput?>
-            </div></a>
+    <div class="row result clearfix">
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
+           <div class="image-container">
+		 <a href="<?php print $websiteurl; ?>"><?=$imageoutput?></a>
+            </div>
             <?php print render($title_prefix); ?>
             <h4 class="pane-title" <?php print $title_attributes; ?>>
                 <a href="<?php print $websiteurl; ?>"><?php print $title; ?></a>
                 </h3>
 
         </div>
-        <div class="col-xs-9">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
                 <?php
                 $compliant_text = "";
                 $noncompliant_text = "";
@@ -171,35 +172,32 @@ if ( $result[ 'node' ]->bundle == 'website' ) {
                         }
                         $noncompliant_text .= "<div class='taxotooltip'><li> <span class=\"label\" data-format=\"$tval\" style=\"margin-bottom:5px;\">$tvaltext</span><span class=\"tooltiptext\">$tooltip[$tval]</span></li></div>";
                     }
-                }
-                ?>
-            <div><b>Compliant</b></div>
-            <ul class="dataset-resources unstyled">
-                <?php if(trim($compliant_text) != '')
-                    print $compliant_text;
-                else
-                    print "NA";
-                ?>
-            </ul>
-                <div><b>Non-Compliant</b></div>
+                }                ?>
+ <div><h4>Compliant</h4></div>
                 <ul class="dataset-resources unstyled">
-                    <?php if(trim($noncompliant_text) != '')
-                        print $noncompliant_text;
+                    <?php if(trim($compliant_text) != '')
+                        print $compliant_text;
                     else
                         print "NA";
                     ?>
                 </ul>
-            <div><b>Technologies Identified</b></div>
+                    <div><h4>Non-Compliant</h4></div>
+                    <ul class="dataset-resources unstyled">
+                        <?php if(trim($noncompliant_text) != '')
+                            print $noncompliant_text;
+                        else
+                            print "NA";
+                        ?>
+                    </ul>            
+<div><h4>Technologies Identified</h4></div>
+
             <div id="techstack" class="row dataset-resources">
                 <?php
-                if(!empty($techterms)) {
-                    foreach ($techterms as $techkey => $techval) {
-                        print "<div class='col-sm-4 nopadding dataset-resources clearfix'><span id='app-button' class='app-button'>" . $techval['category']['name'] . " :&nbsp;<img alt='app-icon' class='app-icon' src='/" . drupal_get_path('module', 'dotgov_common') . "/images/icons/" . $techval['icon'] . "'>$techkey " . $techval['appversion'] . "</span></div>";
-                    }
+		if(empty($techterms)){print "N/A";}else{
+                foreach ( $techterms as $techkey => $techval ) {
+                    print "<div class='col-sm-4 nopadding dataset-resources clearfix'><span id='app-button' class='app-button'>" . $techval[ 'category' ][ 'name' ] . " :&nbsp;<img alt='app-icon' class='app-icon' src='/" . drupal_get_path( 'module', 'dotgov_common' ) . "/images/icons/" . $techval[ 'icon' ] . "'>$techkey " . $techval[ 'appversion' ] . "</span></div>";
                 }
-                else{
-                    print "NA";
-                }
+}
                 ?>
             </div>
 
@@ -233,4 +231,4 @@ if ( $result[ 'node' ]->bundle == 'website' ) {
     <?php
 }
 ?>
-<br clear="all" /></li><hr>
+<br clear="all" /></li>

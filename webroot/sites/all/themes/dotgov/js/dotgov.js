@@ -31,6 +31,10 @@ jQuery(document).ready(function ($) {
 	$(".view_bookmark").click(function () {
 		$(".block-favorites").toggle();
 	});
+	$("#addbookmark").click(function () {
+		$(".block-favorites").toggle();
+	});
+
 	/*setTimeout(function () {
 	 $(".view_bookmark").click(function() {
 	 $( ".block-favorites" ).toggle();
