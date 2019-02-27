@@ -24,7 +24,7 @@
  */
 ?>
 <?php if ($search_results): ?>
-  <h4 class="result-title"><a id="addbookmark"><img src="/sites/all/themes/dotgov/images/new_bookmark_icon.png" style="width:24px;" class="bookimage"/></a><?php //print t('Number of Records found:');
+  <h4 class="result-title"><a id="addbookmark"><img alt="Saved Searches" title="Saved Searches" src="/sites/all/themes/dotgov/images/new_bookmark_icon.png" style="width:24px;" class="bookimage"/></a><?php //print t('Number of Records found:');
 print  $search_totals;?></h4>
   <ol class="search-results <?php print $module; ?>-results">
     <?php print $search_results; ?>
