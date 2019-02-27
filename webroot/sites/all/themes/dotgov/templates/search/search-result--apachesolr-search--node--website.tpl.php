@@ -193,7 +193,7 @@ if ( $result[ 'node' ]->bundle == 'website' ) {
 
             <div id="techstack" class="row dataset-resources">
                 <?php
-		if(empty($techterms)){print "N/A";}else{
+		if(empty($techterms)){print "NA";}else{
                 foreach ( $techterms as $techkey => $techval ) {
                     print "<div class='col-sm-4 nopadding dataset-resources clearfix'><span id='app-button' class='app-button'>" . $techval[ 'category' ][ 'name' ] . " :&nbsp;<img alt='app-icon' class='app-icon' src='/" . drupal_get_path( 'module', 'dotgov_common' ) . "/images/icons/" . $techval[ 'icon' ] . "'>$techkey " . $techval[ 'appversion' ] . "</span></div>";
                 }
