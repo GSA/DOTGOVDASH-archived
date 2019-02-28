@@ -3,7 +3,7 @@ jQuery(document).ready(function ($) {
 	$(".ui-accordion-content").css("height", "auto");
 	$("#favorites-list li").prepend('<i class="icon glyphicon glyphicon-star"></i>');
 	$("th").attr("scope", "col");
-	$(".Website").text("Domains");
+	$(".Website").text("Websites");
 	$(".Agency").text("Agencies");
 
 	/* adding custom toggle js for favorites bookmark show-hide buttom */
