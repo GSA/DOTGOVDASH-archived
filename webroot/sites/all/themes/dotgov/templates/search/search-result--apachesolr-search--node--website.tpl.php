@@ -151,7 +151,7 @@ if ( $result[ 'node' ]->bundle == 'website' ) {
             <?php print render($title_prefix); ?>
             <h4 class="pane-title" <?php print $title_attributes; ?>>
                 <a href="<?php print $websiteurl; ?>"><?php print $title; ?></a>
-                </h3>
+                </h4>
 
         </div>
         <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
@@ -166,6 +166,9 @@ if ( $result[ 'node' ]->bundle == 'website' ) {
                     elseif(in_array($tval,$noncompliant_taxonomy)) {
                         if($tval == "VULNERABLE"){
                             $tvaltext = "Insecure Protocol";
+                        }
+                        if($tval == "TLSV1"){
+                            $tvaltext = "TLSV1.0";
                         }
                         else{
                             $tvaltext = $tval;
