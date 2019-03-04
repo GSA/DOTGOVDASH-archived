@@ -120,8 +120,8 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                         <table width="100%">
 
                                             <th style="background-color: #215393;color: white;">Criteria</th>
-                                            <th style="background-color: #215393;color: white">Supporting Domains </th>
-                                            <th style="background-color: #215393;color: white">&nbsp;Non Supporting Domains </th>
+                                            <th style="background-color: #215393;color: white">Supporting Websites </th>
+                                            <th style="background-color: #215393;color: white">&nbsp;Non Supporting Websites </th>
                                             <tr>
                                                 <td>Enforce HTTPS</td>
                                                 <td align="center"><?php echo dotgov_common_applyDataColor($agencydata['enfhttps_support'], $agency_website_num, '#29643a') ?></td>
@@ -238,13 +238,13 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                             <table style="width:100%;">
 
                                                                 <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
-                                                                <th style="background-color: #215393;color: white;border: 1px;"> Domains </th>
+                                                                <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
                                                                 <tr>
-                                                                    <td> DAP Compliant Domains<font style="font-size: larger;font-color:blue;">*</font></td>
+                                                                    <td> DAP Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
                                                                     <td><?php echo dotgov_common_applyDataColor($agencydata['dap_compliant'], $agencydata['dap_tottracked'], '#29643a') ?></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>DAP Non Compliant Domains<font style="font-size: larger;font-color:blue;">*</font></td>
+                                                                    <td>DAP Non Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
                                                                     <td><?php echo dotgov_common_applyDataColor($agencydata['dap_noncompliant'], $agencydata['dap_tottracked'], '#ac0600') ?></td>
                                                                 </tr>
                                                             </table>
@@ -345,13 +345,13 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                             <table width="100%">
 
                                                                 <th style="background-color: #215393;color: white;">Breakdown</th>
-                                                                <th style="background-color: #215393;color: white;">Domains</th>
+                                                                <th style="background-color: #215393;color: white;">Websites</th>
                                                                 <tr>
-                                                                    <td>DNSSEC Compliant Domains</td>
+                                                                    <td>DNSSEC Compliant Websites</td>
                                                                     <td><?php echo dotgov_common_applyDataColor($agencydata['dns_compliant'], $agency_website_num, '#29643a') ?></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>DNSSEC Non Compliant Domains</td>
+                                                                    <td>DNSSEC Non Compliant Websites</td>
                                                                     <td><?php echo dotgov_common_applyDataColor($agencydata['dns_noncompliant'], $agency_website_num, '#ac0600') ?></td>
                                                                 </tr>
                                                             </table>
@@ -565,13 +565,13 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                         <table width="100%">
 
                                                             <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                                            <th style="background-color: #215393;color: white;"> Domains </th>
+                                                            <th style="background-color: #215393;color: white;"> Websites </th>
                                                             <tr>
-                                                                <td>M-15-13 and BOD 18-01 Compliant Domains </td>
+                                                                <td>M-15-13 and BOD 18-01 Compliant Websites </td>
                                                                 <td><?php echo dotgov_common_applyDataColor($agencydata['m15_compliant'], $agencydata['m15_tracked'], '#29643a') ?></td>
                                                             </tr>
                                                             <tr>
-                                                                <td>M-15-13 and BOD 18-01 Non Compliant Domains </td>
+                                                                <td>M-15-13 and BOD 18-01 Non Compliant Websites </td>
                                                                 <td><?php echo dotgov_common_applyDataColor($agencydata['m15_noncompliant'], $agencydata['m15_tracked'], '#ac0600') ?></td>
                                                             </tr>
                                                         </table>
@@ -669,13 +669,13 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                             <table width="100%">
 
                                                                 <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                                                <th style="background-color: #215393;color: white;"> Domains </th>
+                                                                <th style="background-color: #215393;color: white;"> Websites </th>
                                                                 <tr width="100%">
-                                                                    <td>IPv6 Compliant Domains</td>
+                                                                    <td>IPv6 Compliant Websites</td>
                                                                     <td><?php echo dotgov_common_applyDataColor($agencydata['ipv6_compliant'], $agency_website_num, '#29643a') ?></td>
                                                                 </tr>
                                                                 <tr width="100%">
-                                                                    <td>IPv6 Non Compliant Domains</td>
+                                                                    <td>IPv6 Non Compliant Websites</td>
                                                                     <td><?php echo dotgov_common_applyDataColor($agencydata['ipv6_noncompliant'], $agency_website_num, '#ac0600') ?></td>
                                                                 </tr>
                                                             </table>
@@ -825,13 +825,13 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                                         <table width="100%">
 
                                                             <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                                            <th style="background-color: #215393;color: white;"> Domains </th>
+                                                            <th style="background-color: #215393;color: white;"> Websites </th>
                                                             <tr>
-                                                                <td>Domains Free of RC4/3DES and SSLv2/SSLv3 </td>
+                                                                <td>Websites Free of RC4/3DES and SSLv2/SSLv3 </td>
                                                                 <td><?php echo dotgov_common_applyDataColor($agencydata['insec_compliant'], $agencydata['free_tracked'], '#29643a') ?></td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Domains Not Free of RC4/3DES and SSLv2/SSLv3 </td>
+                                                                <td>Websites Not Free of RC4/3DES and SSLv2/SSLv3 </td>
                                                                 <td><?php echo dotgov_common_applyDataColor($agencydata['insec_noncompliant'], $agencydata['free_tracked'], '#ac0600') ?></td>
                                                             </tr>
                                                         </table>
