@@ -174,10 +174,10 @@ else
 	<div class="search-wrapper">
 		<div class="row box-back clearfix">
 			<ul class="col-xs-12 col-sm-12 col-lg-2 nav nopadding">
-				<li class="col-xs-4 datadisc active nopadding"> <a data-toggle="tab" href="#dd"> <img  alt="Data Discovery" title="Data Discovery" src="/sites/all/themes/dotgov/images/data-discovery-tab.png"/> </a> </li>
-				<li class="col-xs-4 popular nopadding"><a data-toggle="tab" href="#popular"><img alt="Popular Reports" title="Popular Reports" src="/sites/all/themes/dotgov/images/reports-tab.png"/></a>
+				<li class="col-xs-4 datadisc active nopadding"> <a data-toggle="tab" href="#dd" title="Data Discovery"> <img  alt="Data Discovery" title="Data Discovery" src="/sites/all/themes/dotgov/images/data-discovery-tab.png"/> </a> </li>
+				<li class="col-xs-4 popular nopadding"><a data-toggle="tab" href="#popular" title="Popular Reports"><img alt="Popular Reports" title="Popular Reports" src="/sites/all/themes/dotgov/images/reports-tab.png"/></a>
 				</li>
-				<li class="col-xs-4 fav nopadding"><a data-toggle="tab" href="#fav"><img alt="Saved Searches" title="Saved Searches" src="/sites/all/themes/dotgov/images/bookmark-tab.png"/></a>
+				<li class="col-xs-4 fav nopadding"><a data-toggle="tab" href="#fav" title="Saved Searches"><img alt="Saved Searches" title="Saved Searches" src="/sites/all/themes/dotgov/images/bookmark-tab.png"/></a>
 				</li>
 			</ul>
 		</div>
