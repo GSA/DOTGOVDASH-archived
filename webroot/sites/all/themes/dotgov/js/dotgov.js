@@ -82,4 +82,6 @@ jQuery(document).ready(function ($) {
 			$('.panel-accessibility-chart').hide();
 		}
 	});
+	$( ".active" ).parents(".collapse").addClass( "in" );
+	$( ".facetapi-active" ).parent().css( "background-color","#f1c393" );
 });
