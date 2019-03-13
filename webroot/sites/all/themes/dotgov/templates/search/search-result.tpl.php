@@ -63,7 +63,16 @@
  *
  * @ingroup themeable
  */
-    $websiteurl = "/website/".$result['node']->entity_id."/information";	
+    $websiteurl = "/website/".$result['node']->entity_id."/information";
+if (strpos($title, 'Domain') !== false) {
+    $title = str_replace("Domain","Website",$title);
+}
+if (strpos($result['node']->bundle_name, 'Domain') !== false) {
+    $result['node']->bundle_name = str_replace("Domain","Website",$result['node']->bundle_name);
+}
+if (strpos($result['node']->label, 'Domain') !== false) {
+    $result['node']->label = str_replace("Domain","Website",$result['node']->label);
+}
 //if(arg(1) == "website_search") {
 if($result['node']->bundle == 'website'){
     $techterms = dotgov_commmon_get_techTerms($result['node']->entity_id);
