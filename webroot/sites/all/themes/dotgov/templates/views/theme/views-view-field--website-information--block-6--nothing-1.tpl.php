@@ -51,8 +51,10 @@
  */
 ?>
 <?php print $output; ?>
-<?php 
-$chartdata= $row->_field_data['nid']['entity']->field_mobile_overall_score['und'][0]['value'];
+<?php
+//$chartdata= $row->_field_data['nid']['entity']->field_mobile_overall_score['und'][0]['value'];
+$revision = get_mobile_score_information($row->field_field_website_id['0']['raw']['nid']);
+$chartdata = $revision['overall'];
 
 if ($chartdata <= 50){
     $chartcolor = '#ac0600';

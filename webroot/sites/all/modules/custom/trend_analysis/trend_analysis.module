@@ -131,9 +131,9 @@ function trend_analysis_block_view($delta = 0) {
 //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
                 $trend_arr[$result->scandate] = (int)$result->score_val;
             }
-            $trend_vars['trend_arr'] = $trend_arr;
+            $trend_vars['trend_arr'] = array_slice($trend_arr, -24, 24);
             $dates = array_keys($trend_vars['trend_arr']);
-            $compliance = array_values($trend_vars['trend_arr']);
+            $compliance = array_values(array_slice($trend_vars['trend_arr'], -24, 24));
             $noncompliance = array_replace($compliance, array_fill_keys(array_keys($compliance, 0), -100));
             $noncompliance = array_replace($noncompliance, array_fill_keys(array_keys($noncompliance, 100), 0));
             $trend_vars['compliance'] = $compliance;

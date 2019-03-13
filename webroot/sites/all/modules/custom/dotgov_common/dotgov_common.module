@@ -1049,3 +1049,33 @@ WHERE (( (node.status = '1') AND (node.type IN  ('website')) )))")->fetchField()
     $agencydata['gov_mob_chart'] = $govwideaccess_output;
     return $agencydata;
 }
+
+
+function get_mobile_score_information($nid) {
+  if(!empty($nid)) {
+    return db_query('
+        SELECT r.nid, r.vid, r.timestamp, o.field_mobile_overall_score_value AS overall,
+          p.field_mobile_performance_score_value AS performance,
+          u.field_mobile_usability_score_value AS usability,
+          pc.field_mobile_perf_error_code_value AS perf_error_code,
+          pm.field_mobile_perf_error_message_value AS perf_error_message,
+          uc.field_mobile_usab_error_code_value AS usab_error_code,
+          um.field_mobile_usab_error_message_value AS usab_error_message
+        FROM node_revision r
+        JOIN field_revision_field_website_id w ON r.vid=w.revision_id
+        JOIN field_revision_field_mobile_overall_score o ON r.vid = o.revision_id
+        JOIN field_revision_field_mobile_performance_score p ON r.vid=p.revision_id
+        JOIN field_revision_field_mobile_usability_score u ON r.vid=u.revision_id
+        JOIN field_revision_field_mobile_perf_error_code pc ON r.vid=pc.revision_id
+        JOIN field_revision_field_mobile_perf_error_message pm ON r.vid=pm.revision_id
+        JOIN field_revision_field_mobile_usab_error_code uc ON r.vid=uc.revision_id
+        JOIN field_revision_field_mobile_usab_error_message um ON r.vid=um.revision_id
+        WHERE w.field_website_id_nid = :nid
+          AND (o.field_mobile_overall_score_value IS NOT NULL
+          AND p.field_mobile_performance_score_value IS NOT NULL
+          AND u.field_mobile_usability_score_value IS NOT NULL)
+        ORDER BY r.vid DESC', array(':nid' => $nid))->fetchAssoc();
+  } else {
+    return NULL;
+  }
+}
