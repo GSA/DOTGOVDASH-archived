@@ -52,9 +52,26 @@
 ?>
 <?php print $output; ?>
 <?php
-//$chartdata= $row->_field_data['nid']['entity']->field_mobile_overall_score['und'][0]['value'];
-$revision = get_mobile_score_information($row->field_field_website_id['0']['raw']['nid']);
-$chartdata = $revision['overall'];
+$data_preformance = $row->field_field_mobile_performance_score[0]['raw']['value'];
+$data_usability =  $row->field_field_mobile_usability_score[0]['raw']['value'];
+$data_overall =  $row->field_field_mobile_overall_score[0]['raw']['value'];
+$nid = $row->field_field_website_id[0]['raw']['nid'];
+
+if(empty($data_preformance) && !empty($nid)) {
+  $result_perf = get_mobile_score_information($nid, NULL, -1);
+  $data_preformance = $result_perf['performance'];
+}
+
+if(empty($data_usability) && !empty($nid)) {
+  $result_usab = get_mobile_score_information($nid, -1, NULL);
+  $data_usability = $result_usab['usability'];
+}
+
+if(!empty($data_preformance) && !empty($data_usability)) {
+  $chartdata = round(($data_preformance + $data_usability) / 2);
+} else {
+  $chartdata = 0;
+}
 
 if ($chartdata <= 50){
     $chartcolor = '#ac0600';
