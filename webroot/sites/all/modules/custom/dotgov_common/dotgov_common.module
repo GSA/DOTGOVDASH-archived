@@ -1061,7 +1061,7 @@ function get_mobile_score_information($nid, $performance_score = -1, $usability_
         WHERE r.nid = :nid
           AND p.field_mobile_performance_score_value IS NOT NULL
         GROUP BY scan_date
-        ORDER BY r.vid DESC", array(':nid' => $nid))->fetchAssoc();
+        ORDER BY r.vid DESC, r.timestamp DESC", array(':nid' => $nid))->fetchAssoc();
   }
   elseif(!empty($nid) && empty($usability_score)) {
     return db_query("
@@ -1072,7 +1072,7 @@ function get_mobile_score_information($nid, $performance_score = -1, $usability_
         WHERE r.nid = :nid
           AND u.field_mobile_usability_score_value IS NOT NULL
         GROUP BY scan_date
-        ORDER BY r.vid DESC", array(':nid' => $nid))->fetchAssoc();
+        ORDER BY r.vid DESC, r.timestamp DESC", array(':nid' => $nid))->fetchAssoc();
   } else {
     return NULL;
   }

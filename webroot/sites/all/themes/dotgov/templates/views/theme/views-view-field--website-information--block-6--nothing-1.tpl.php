@@ -52,14 +52,14 @@
 ?>
 <?php print $output; ?>
 <?php
-$data_preformance = $row->field_field_mobile_performance_score[0]['raw']['value'];
+$data_performance = $row->field_field_mobile_performance_score[0]['raw']['value'];
 $data_usability =  $row->field_field_mobile_usability_score[0]['raw']['value'];
 $data_overall =  $row->field_field_mobile_overall_score[0]['raw']['value'];
 $nid = $row->field_field_website_id[0]['raw']['nid'];
 
-if(empty($data_preformance) && !empty($nid)) {
+if(empty($data_performance) && !empty($nid)) {
   $result_perf = get_mobile_score_information($nid, NULL, -1);
-  $data_preformance = $result_perf['performance'];
+  $data_performance = $result_perf['performance'];
 }
 
 if(empty($data_usability) && !empty($nid)) {
@@ -67,8 +67,8 @@ if(empty($data_usability) && !empty($nid)) {
   $data_usability = $result_usab['usability'];
 }
 
-if(!empty($data_preformance) && !empty($data_usability)) {
-  $chartdata = round(($data_preformance + $data_usability) / 2);
+if(!empty($data_performance) && !empty($data_usability)) {
+  $chartdata = round(($data_performance + $data_usability) / 2);
 } else {
   $chartdata = 0;
 }
@@ -89,13 +89,10 @@ else{
 
             chart: {
                 type: 'solidgauge',
-
             },
 
             title: {
-
                 text: ''
-
             },
 
             tooltip: {
@@ -120,16 +117,13 @@ else{
                 tickPositions: [],
 
                 title: {
-                    text: '<?php echo ($chartdata); ?>',
+                    text: '<?php echo ($chartdata != 0 ? $chartdata : '<span style="font-size: 12px;">Not Available</span>'); ?>',
                     style: {
                         fontSize: '22px',
                         color:'<?php echo $chartcolor; ?>'
                     },
                     y: 30
                 },
-
-
-
             },
 
             plotOptions: {
