@@ -1050,7 +1050,30 @@ WHERE (( (node.status = '1') AND (node.type IN  ('website')) )))")->fetchField()
     return $agencydata;
 }
 
+/**
+ * Library function to evaluate '' or NULL values but not 0
+ * @param $nullableValue
+ *
+ * @return bool
+ */
+function isNullNotZero($nullableValue) {
+  $nullableValue = trim($nullableValue);
+  if ($nullableValue == '' || $nullableValue == NULL) {
+    return true;
+  } elseif ($nullableValue == 0) {
+    return false;
+  }
+}
 
+
+/**
+ * DB query for mobile overall score
+ * @param $nid
+ * @param int $performance_score
+ * @param int $usability_score
+ *
+ * @return null
+ */
 function get_mobile_score_information($nid, $performance_score = -1, $usability_score = -1) {
   if(!empty($nid) && empty($performance_score)) {
     return db_query("
