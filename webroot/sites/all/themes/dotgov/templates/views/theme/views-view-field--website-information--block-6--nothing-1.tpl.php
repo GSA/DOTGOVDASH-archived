@@ -57,17 +57,17 @@ $data_usability =  $row->field_field_mobile_usability_score[0]['raw']['value'];
 $data_overall =  $row->field_field_mobile_overall_score[0]['raw']['value'];
 $nid = $row->field_field_website_id[0]['raw']['nid'];
 
-if(empty($data_performance) && !empty($nid)) {
+if(isNullNotZero($data_performance) && !empty($nid)) {
   $result_perf = get_mobile_score_information($nid, NULL, -1);
   $data_performance = $result_perf['performance'];
 }
 
-if(empty($data_usability) && !empty($nid)) {
+if(isNullNotZero($data_usability) && !empty($nid)) {
   $result_usab = get_mobile_score_information($nid, -1, NULL);
   $data_usability = $result_usab['usability'];
 }
 
-if(!empty($data_performance) && !empty($data_usability)) {
+if(!isNullNotZero($data_performance) && !isNullNotZero($data_usability)) {
   $chartdata = round(($data_performance + $data_usability) / 2);
 } else {
   $chartdata = 0;
@@ -117,7 +117,7 @@ else{
                 tickPositions: [],
 
                 title: {
-                    text: '<?php echo ($chartdata != 0 ? $chartdata : '<span style="font-size: 12px;">Not Available</span>'); ?>',
+                    text: '<?php echo (!isNullNotZero($chartdata) ? $chartdata : '<span style="font-size: 12px;">Not Available</span>'); ?>',
                     style: {
                         fontSize: '22px',
                         color:'<?php echo $chartcolor; ?>'
