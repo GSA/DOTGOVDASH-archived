@@ -1759,6 +1759,16 @@ foreach($varCatassoc as $vkey=>$vval){
         }
 
     }
+    //Assign Search Scan Results here to the domain
+    $query = db_query("select * from search_scan where domain=:domain", array(':domain' => $website));
+    foreach ($query as $result) {
+        if($result->search_available == 'yes')
+            $search_available = 1;
+        elseif($result->search_available == 'no')
+            $search_available = 0;
+        $webnode->field_search_engine_name['und'][0]['value'] = $result->type;
+        $webnode->field_search_status['und'][0]['value'] = $search_available;
+    }
     //print_r($webnode->field_analytics_applications);
     node_object_prepare($webnode);
     if ($webnode = node_submit($webnode)) {
@@ -2422,4 +2432,160 @@ function updateAccessibilityScanCustom($website,$webscanId){
     }
     $end = microtime(true);
     writeToLogs("Accessibility scan for ".$domain." took " . ($end - $start) . "seconds.", $logFile);
+}
+
+/*
+ * Run Full Search Engine Scan and update search_scan custom table. Node will be updated during techscan.
+ */
+
+function runSearchEngineScan(){
+    include("../scripts/configSettings.php");
+
+    $nonwww_domains = array("accessibility.gov","ayudaconmibanco.gov","agingstats.gov","bankanswers.gov");
+    $httpsonly_domains = array("ars-grin.gov","cbca.gov","cupcao.gov","eaglecash.gov","foiaonline.gov","wapa.gov","votebymail.gov","usphs.gov","ttb.gov","psa.gov","pretrialservices.gov","oversight.gov","navycash.gov","sss.gov");
+    $ignore_domains = array("famep.gov","geocommunicator.gov","golearn.gov","hru.gov","icbemp.gov","lmrcouncil.gov","ncpw.gov","nea.gov","notalone.gov","ogis.gov","osc.gov","osdls.gov","qatesttwai.gov","reo.gov","tox21.gov","watermonitor.gov","atcreform.gov","doeal.gov","ots.gov","smarterskies.gov","aftac.gov");
+    $curl_domains = array("lep.gov");
+    writeToLogs("Get List of websites to Run Search Scan On",$logFile);
+//$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b  where a.bundle=:bundle and b.nid=a.entity_id  and b.title not in (select domain from search_scan_copy)  and b.status='1' and b.title='911.gov' order by title", array(':bundle' => 'website'));
+//$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b  where a.bundle=:bundle and b.nid=a.entity_id   and b.status='1' and b.title not in (select domain from search_scan) order by title", array(':bundle' => 'website'));
+    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b  where a.bundle=:bundle and b.nid=a.entity_id   and b.status='1'  order by title", array(':bundle' => 'website'));
+    foreach ($query as $result) {
+        print $result->title."";
+        if(!in_array($result->title,$ignore_domains)) {
+            if(in_array($result->title,$nonwww_domains)) {
+                $weburl = "http://" . trim($result->title);
+            }
+            else{
+                if(in_array($result->title,$httpsonly_domains)) {
+                    $weburl = "https://www." . trim($result->title);
+                }
+                else{
+                    $weburl = "http://www." . trim($result->title);
+                }
+            }
+//    if(($curl_stat_code != '') && ($curl_stat_code != '404')){
+//        $weburl = "http://".trim($result->title);
+//    }
+//    else{
+//        $weburl = "http://www.".trim($result->title);
+//    }
+            $curl_stat_code = trim(shell_exec("curl -I  --stderr /dev/null $weburl | head -1 | cut -d' ' -f2"));
+
+            if ($curl_stat_code != '') {
+                //$html = shell_exec("curl -L -k --silent https://".trim($result->title));
+                //$html = shell_exec("wget  --no-check-certificate --trust-server-names -qO- --max-redirect=1 -T 5 -t 1 ".$weburl);
+                //$html = shell_exec("phantomjs ../scripts/phantomjs_website.js \"".$weburl."/\"");
+                if(in_array($result->title,$curl_domains)) {
+                    $html = shell_exec("curl -L -k --silent https://".trim($result->title));
+                }
+                else {
+                    $html = shell_exec("\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --headless --disable-gpu --dump-dom --ignore-certificate-errors --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36\" \"" . $weburl . "/\"");
+                }
+
+                //print_r($html);
+                $dom = new DomDocument;
+                $dom->preserveWhiteSpace = FALSE;
+                $dom->loadHTML($html);
+                $params = $dom->getElementsByTagName('form'); // Find Sections
+                $params1 = $dom->getElementsByTagName('input'); // Find Sections
+                if ($params->length == 0) {
+                    if ($params1->length != 0) {
+                        $params = $params1;
+                    }
+                }
+                print_r($params1);
+                $l = 0;
+                $forms1 = array();
+                foreach ($params1 as $param1) {
+                    $forms1[$l][0] = $params1->item($l)->getAttribute('name');
+                    $forms1[$l][1] = $params1->item($l)->getAttribute('action');
+                    $forms1[$l][2] = $params1->item($l)->getAttribute('method');
+                    $forms1[$l][3] = $params1->item($l)->getAttribute('type');
+                    if(($forms1[$l][3] == 'text') || ($forms1[$l][3] == 'search')){
+                        $search_input_type = "text";
+                    }
+                    $l++;
+                }
+                //If the source does have a form or input process these
+                if (($params->length != 0) && ($search_input_type == 'text')) {
+                    $k = 0;
+                    $forms = array();
+                    $searchtype = "";
+                    $ded_searchdomain = "";
+                    $search_avail = "";
+                    foreach ($params as $param) {
+                        $search_avail = "yes";
+                        $forms = array();
+                        $forms[$k][0] = $params->item($k)->getAttribute('name');
+                        $forms[$k][1] = $params->item($k)->getAttribute('action');
+                        $forms[$k][2] = $params->item($k)->getAttribute('method');
+                        if (strpos($html, 'usasearch') !== FALSE) {
+                            $searchtype = "search.usa.gov";
+                        } elseif (strpos($html, 'search.usa.gov') !== FALSE) {
+                            $searchtype = "search.usa.gov";
+                        }elseif (strpos($html, "cse.google.com") !== FALSE) {
+                            $searchtype = "google custom search";
+                        } elseif (strpos($forms[$k][1], 'search.usa.gov') !== FALSE) {
+                            $searchtype = "search.usa.gov";
+                        } elseif (strpos($forms[$k][1], 'google') !== FALSE) {
+                            $searchtype = "google search";
+                        } elseif (strpos($forms[$k][1], "search." . trim($result->title)) !== FALSE) {
+                            $searchtype = "search.usa.gov";
+                        } elseif (strpos($forms[$k][1], 'http') === FALSE) {
+                            $searchtype = "custom search";
+                            //In custom search append action urls and find if the search has solr
+                            $html_search = shell_exec("wget --no-check-certificate --trust-server-names -qO- --max-redirect=1 -T 5 -t 1 https://" . trim($result->title) . "/" . $forms[$k][1] . "?keys=test");
+                            //Check if the site is Drupal based by checking against tag 32
+                            $check_drupal =  db_query("select b.title from field_data_field_cms_applications a, node b where a.field_cms_applications_tid='32' and a.entity_id=b.nid and b.title=:title", array(':title' => trim($result->title)))->fetchField();
+                            //print $html_search;
+                            if (strpos($html_search, 'solr') !== FALSE) {
+                                $searchtype = "apache solr";
+                            }
+                            elseif($check_drupal != ''){
+                                $searchtype = "drupal core search";
+                            }
+                        }
+                        else{
+                            $check_drupal =  db_query("select b.title from field_data_field_cms_applications a, node b where a.field_cms_applications_tid='32' and a.entity_id=b.nid and b.title=:title", array(':title' => trim($result->title)))->fetchField();
+                            if($check_drupal != ''){
+                                $searchtype = "drupal core search";
+                            }else {
+                                $searchtype = "custom search";
+                            }
+                        }
+                        if (strpos($forms[$k][1], trim($result->title)) !== FALSE) {
+                            $ded_searchdomain = "yes";
+                        } else {
+                            $ded_searchdomain = "no";
+                        }
+
+                        db_query("replace into search_scan(domain,name,action,method,type,dedicated_search_domain,search_available) values( :title,:name,:action,:method,:type,:ddomain,:avail)", array(':title' => $result->title, ':name' => $params->item($k)->getAttribute('name'), ':action' => substr($params->item($k)->getAttribute('action'), 0, 255), ':method' => $params->item($k)->getAttribute('method'), ':type' => $searchtype, ':ddomain' => $ded_searchdomain, ':avail' => $search_avail));
+                        $k++;
+                    }
+                } elseif ((strpos($html, 'cse.google.com') !== FALSE)) {
+                    $search_avail = "yes";
+                    $type = "google custom search";
+                    db_query("replace into search_scan(domain,search_available,type) values( :title,:avail,:type)", array(':title' => $result->title, ':avail' => $search_avail, ':type' => $type));
+                }
+                elseif ((strpos($html, 'search.usa.gov') !== FALSE)) {
+                    $search_avail = "yes";
+                    $type = "search.usa.gov";
+                    db_query("replace into search_scan(domain,search_available,type) values( :title,:avail,:type)", array(':title' => $result->title, ':avail' => $search_avail, ':type' => $type));
+                }
+                else {
+                    $search_avail = "no";
+                    db_query("replace into search_scan(domain,search_available) values( :title,:avail)", array(':title' => $result->title, ':avail' => $search_avail));
+                }
+
+            } else {
+                print "Sorry website is unavailable \n";
+                db_query("replace into search_scan(domain,search_available,domain_available) values( :title,:avail,:domavail)", array(':title' => $result->title, ':avail' => "no",':domavail' => "no"));
+            }
+        }
+        else{
+            print "Sorry website is unavailable \n";
+            db_query("replace into search_scan(domain,search_available,domain_available) values( :title,:avail,:domavail)", array(':title' => $result->title, ':avail' => "no",':domavail' => "no"));
+        }
+    }
+
 }
