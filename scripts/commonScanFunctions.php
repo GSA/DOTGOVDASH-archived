@@ -2479,7 +2479,7 @@ function runSearchEngineScan(){
                     $html = shell_exec("curl -L -k --silent https://".trim($result->title));
                 }
                 else {
-                    $html = shell_exec("\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --headless --disable-gpu --dump-dom --ignore-certificate-errors --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36\" \"" . $weburl . "/\"");
+                    $html = shell_exec("google-chrome --no-sandbox --headless --disable-gpu --dump-dom --ignore-certificate-errors --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36\" \"" . $weburl . "/\"");
                 }
 
                 //print_r($html);
