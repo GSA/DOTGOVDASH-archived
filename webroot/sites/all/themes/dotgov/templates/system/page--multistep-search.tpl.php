@@ -274,14 +274,17 @@ function searchsubmit(){
   </div>
   <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
     <div class="panel-body">
-      <div class="col-lg-6 col-sm-6">
+      <div class="col-lg-12 col-sm-12">
+<h2 class="pane-title" style="margin-top:0;">Filter by Agency:</h2>
 		<?php
 						$block_ag = module_invoke('panels_mini', 'block_view', 'agencies');
 						print $block_ag[ 'content' ];
 						?>
 	  </div>
-      <div class="col-sm-6 text-center">
+      <div class="col-sm-12 text-center">
         <form action='/test?<?=$_SERVER['QUERY_STRING']?>' method="get">
+<a href="/multistep-search" class="btn btn-primary" style="margin-right:10px;">Reset</a>
+
           <input type="button" id="search-submit" name="op" value="Discover" class="btn btn-primary form-submit" onclick="searchsubmit();">
           <span class="sr-only">Discover</span>
           </input>
