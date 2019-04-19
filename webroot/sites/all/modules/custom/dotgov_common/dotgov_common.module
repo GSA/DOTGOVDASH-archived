@@ -1049,3 +1049,54 @@ WHERE (( (node.status = '1') AND (node.type IN  ('website')) )))")->fetchField()
     $agencydata['gov_mob_chart'] = $govwideaccess_output;
     return $agencydata;
 }
+
+/**
+ * Library function to evaluate '' or NULL values but not 0
+ * @param $nullableValue
+ *
+ * @return bool
+ */
+function isNullNotZero($nullableValue) {
+  $nullableValue = trim($nullableValue);
+  if ($nullableValue == '' || $nullableValue == NULL) {
+    return true;
+  } elseif ($nullableValue == 0) {
+    return false;
+  }
+}
+
+
+/**
+ * DB query for mobile overall score
+ * @param $nid
+ * @param int $performance_score
+ * @param int $usability_score
+ *
+ * @return null
+ */
+function get_mobile_score_information($nid, $performance_score = -1, $usability_score = -1) {
+  if(!empty($nid) && empty($performance_score)) {
+    return db_query("
+        SELECT DATE_FORMAT(FROM_UNIXTIME(r.timestamp), '%Y/%m/%d') AS scan_date,
+          p.field_mobile_performance_score_value AS performance
+        FROM node_revision r
+        JOIN field_revision_field_mobile_performance_score p ON r.vid=p.revision_id
+        WHERE r.nid = :nid
+          AND p.field_mobile_performance_score_value IS NOT NULL
+        GROUP BY scan_date
+        ORDER BY r.vid DESC, r.timestamp DESC", array(':nid' => $nid))->fetchAssoc();
+  }
+  elseif(!empty($nid) && empty($usability_score)) {
+    return db_query("
+        SELECT DATE_FORMAT(FROM_UNIXTIME(r.timestamp), '%Y/%m/%d') AS scan_date,
+          u.field_mobile_usability_score_value AS usability
+        FROM node_revision r
+        JOIN field_revision_field_mobile_usability_score u ON r.vid=u.revision_id
+        WHERE r.nid = :nid
+          AND u.field_mobile_usability_score_value IS NOT NULL
+        GROUP BY scan_date
+        ORDER BY r.vid DESC, r.timestamp DESC", array(':nid' => $nid))->fetchAssoc();
+  } else {
+    return NULL;
+  }
+}
