@@ -573,65 +573,81 @@ function trend_analysis_block_view($delta = 0) {
             );
             break;
       case 'trends_mobile_spark':
-          if(arg(1) != '')
-              $agencyid = arg(1);
-          else
-              $agencyid = getCurrentUserAgencyId();
-        $allscanids = dotgov_common_siteAsocScanids($agencyid);
-        //dsm($allscanids);
-        $query = db_query("select FROM_UNIXTIME(a.timestamp,'%Y/%m/%d') as scandate, a.vid from node_revision a, node b  where  a.nid=b.nid and b.type='mobile_scan_information' and a.nid=:nid   group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
-        $trend_arr = array();
-        foreach ($query as $result) {
-//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
-          $trend_arr[$result->scandate] = (int)$result->vid;
-        }
-        $query1 = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,max(field_mobile_overall_score_value) as score_val from node_revision a , field_revision_field_mobile_overall_score b where  b.revision_id=a.vid  and a.nid=:nid  group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
-        //dsm($allscanids['mobile_scan_information']);
-        $trend_moboverall = array();
-        foreach ($query1 as $result1) {
-//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
-          //$trend_moboverall[$result1->scandate] = (int)$result1->score_val;
-
-            if($result1->score_val == NULL || $result1->score_val == '')
+          if(arg(1) != '') {
+            $agencyid = arg(1);
+          } else {
+            $agencyid = getCurrentUserAgencyId();
+          }
+          
+          $allscanids = dotgov_common_siteAsocScanids($agencyid);
+          //dsm($allscanids);
+          $query = db_query("select FROM_UNIXTIME(a.timestamp,'%Y/%m/%d') as scandate, a.vid from node_revision a, node b  where  a.nid=b.nid and b.type='mobile_scan_information' and a.nid=:nid   group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
+          $trend_arr = array();
+          foreach ($query as $result) {
+  //                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+            $trend_arr[$result->scandate] = (int)$result->vid;
+          }
+          $query1 = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,max(field_mobile_overall_score_value) as score_val from node_revision a , field_revision_field_mobile_overall_score b where  b.revision_id=a.vid  and a.nid=:nid  group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
+          //dsm($allscanids['mobile_scan_information']);
+          $trend_moboverall = array();
+          foreach ($query1 as $result1) {
+              // $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+              // $trend_moboverall[$result1->scandate] = (int)$result1->score_val;
+  
+              if ($result1->score_val == NULL || $result1->score_val == '') {
                 $trend_moboverall[$result1->scandate] = '-1';
-            else
+              } else {
                 $trend_moboverall[$result1->scandate] = (int)$result1->score_val;
+              }
+          }
+  
+          // $query2 = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_mobile_performance_score_value as score_val from node_revision a , field_revision_field_mobile_performance_score b where  b.revision_id=a.vid  and a.nid=:nid  group by scandate order by a.timestamp DESC", array(':nid' => $allscanids['mobile_scan_information']));
+          $query2 = db_query("
+            SELECT FROM_UNIXTIME(r.timestamp,'%Y/%m/%d') AS scandate, p.field_mobile_performance_score_value AS score_val
+            FROM {node_revision} r
+            JOIN {field_revision_field_mobile_performance_score} p ON r.vid=p.revision_id
+            where r.nid=:nid
+            group by scandate
+            order by r.timestamp ASC", array(':nid' => $allscanids['mobile_scan_information']));
+          $trend_mobperfrm = array();
+          foreach ($query2 as $result2) {
+            // $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+            $trend_mobperfrm[$result2->scandate] = (int)$result2->score_val;
+          }
+  
+         // $query3 = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_mobile_usability_score_value as score_val from node_revision a , field_revision_field_mobile_usability_score b where  b.revision_id=a.vid  and a.nid=:nid  group by scandate order by a.timestamp DESC", array(':nid' => $allscanids['mobile_scan_information']));
+          $query3 = db_query("
+            SELECT FROM_UNIXTIME(r.timestamp,'%Y/%m/%d') AS scandate,u.field_mobile_usability_score_value AS score_val
+            FROM {node_revision} r
+            JOIN field_revision_field_mobile_usability_score u ON r.vid=u.revision_id
+            WHERE r.nid=:nid
+            GROUP BY scandate
+            ORDER BY r.timestamp ASC", array(':nid' => $allscanids['mobile_scan_information']));
+          $trend_mobusab = array();
+          foreach ($query3 as $result3) {
+            // $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
+            $trend_mobusab[$result3->scandate] = (int)$result3->score_val;
+          }
 
-        }
-
-        $query2 = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_mobile_performance_score_value as score_val from node_revision a , field_revision_field_mobile_performance_score b where  b.revision_id=a.vid  and a.nid=:nid  group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
-        $trend_mobperfrm = array();
-        foreach ($query2 as $result2) {
-//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
-          $trend_mobperfrm[$result2->scandate] = (int)$result2->score_val;
-        }
-
-        $query3 = db_query("select FROM_UNIXTIME(timestamp,'%Y/%m/%d') as scandate,field_mobile_usability_score_value as score_val from node_revision a , field_revision_field_mobile_usability_score b where  b.revision_id=a.vid  and a.nid=:nid  group by scandate order by a.timestamp asc", array(':nid' => $allscanids['mobile_scan_information']));
-        $trend_mobusab = array();
-        foreach ($query3 as $result3) {
-//                $daptime = format_date($result->scandate ,'custom','m-d-Y h A');
-          $trend_mobusab[$result3->scandate] = (int)$result3->score_val;
-        }
-
-        $trend_vars['trend_arr'] = $trend_arr;
-        $dates = array_keys($trend_moboverall);
-        $compliance = array_values($trend_moboverall);
-        $trend_vars['moboverall'] = $trend_moboverall;
-        $trend_vars['mobperfrm'] = $trend_mobperfrm;
-        $trend_vars['mobusab'] = $trend_mobusab;
-        $trend_vars['compliance'] = $compliance;
-        $trend_vars['dates'] = $dates;
-        $trend_vars['container'] = 'container18';
-        $trend_vars['scanreportid'] = $allscanids['mobile_scan_information'];
-        $trend_vars['blockname'] = 'trends_mobile_spark';
-        //$analysis_output =  theme('trend_analysis_multivalspark_page', array('trend_vars' => $trend_vars));
-        $analysis_output =  theme('trend_analysis_sparkline_page', array('trend_vars' => $trend_vars));
-        $block = array(
-          'subject' => NULL,
-          'content' => $analysis_output,
-        );
+          $trend_vars['trend_arr'] = $trend_arr;
+          $dates = array_keys($trend_moboverall);
+          $compliance = array_values($trend_moboverall);
+          $trend_vars['moboverall'] = $trend_moboverall;
+          $trend_vars['mobperfrm'] = $trend_mobperfrm;
+          $trend_vars['mobusab'] = $trend_mobusab;
+          $trend_vars['compliance'] = $compliance;
+          $trend_vars['dates'] = $dates;
+          $trend_vars['container'] = 'container18';
+          $trend_vars['scanreportid'] = $allscanids['mobile_scan_information'];
+          $trend_vars['blockname'] = 'trends_mobile_spark';
+          //$analysis_output =  theme('trend_analysis_multivalspark_page', array('trend_vars' => $trend_vars));
+          $analysis_output =  theme('trend_analysis_sparkline_page', array('trend_vars' => $trend_vars));
+          $block = array(
+            'subject' => NULL,
+            'content' => $analysis_output,
+          );
         break;
-        case 'trends_data_table':
+      case 'trends_data_table':
             if(arg(1) != '')
                 $agencyid = arg(1);
             else
