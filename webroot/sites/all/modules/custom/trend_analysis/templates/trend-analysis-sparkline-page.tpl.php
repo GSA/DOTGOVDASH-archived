@@ -84,38 +84,19 @@ $mobilePerfUsabScanDate = array_values(array_slice($trend_vars['scandate'], -5, 
               text: 'Score (%)'
             }
           },
-//          tooltip: {
-//            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-//            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-//            '<td style="padding:0"><b>{point.y}</b></td></tr>',
-//            footerFormat: '</table>',
-//            shared: true,
-//            useHTML: true
-//          },
           tooltip: {
             formatter: function() {
               var s = '<span style="font-size:10px">' + this.x + '</span><table>';
-              var perfY, usabY;
-              
-              if(this.points[0].y == -1) {
-                perfY = 'NA';
-              } else {
-                perfY = this.points[0].y;
-              }
-              if(this.points[1].y == -1) {
-                usabY = 'NA';
-              } else {
-                usabY = this.points[1].y;
-              }
-
-              var performance = '<tr><td style="color:' + this.points[0].color + ';padding:0">' + this.points[0].series.name + ': </td>' +
-                  '<td style="padding:0"><b>' + perfY + '</b></td></tr>';
-
-              var usability = '<tr><td style="color:' + this.points[1].color + ';padding:0">' + this.points[1].series.name + ': </td>' +
-                  '<td style="padding:0"><b>' + usabY + '</b></td></tr>';
-              
-              s = s + performance + usability + '</table>';
-              return s;
+              var scoreVal;
+              jQuery.each(this.points, function(i, point) {
+                if (point.y == -1) {
+                  scoreVal = 'NA';
+                } else {
+                  scoreVal = point.y;
+                }
+                s += '<tr><td style="color:' + point.color + ';padding:0">' + point.series.name + ':&nbsp;</td>' + '<td style="padding:0"><b>' + scoreVal + '</b></td></tr>';
+              });
+              return s += '</table>';
             },
             shared: true,
             useHTML: true
