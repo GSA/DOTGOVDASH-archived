@@ -411,7 +411,7 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                         </div>
                                     </div>
                                     <div class="view-button"><br>
-                                        <p><a class="btn btn-primary" href="/accessibilityreportalldomains?field_web_agency_id_nid_selective=<?=arg(1)?>">Go to Full Report</a> </p>
+                                        <p><a class="btn btn-primary" href="/website/search/reports">Go to Full Report</a> </p>
                                     </div>
                                 </div>
                             </div>
