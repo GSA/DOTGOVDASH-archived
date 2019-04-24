@@ -366,6 +366,55 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                                     </div>
                                 </div>
                             </div>
+                            <div class="panel-separator"></div>
+                            <div class="panel-pane pane-views pane-website-information">
+                                <h2 class="pane-title"> Search Engine Information </h2>
+                                <div class="pane-content">
+                                    <div class="view-wrapper">
+                                        <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
+                                            <div class="view-empty">
+                                                <table><tr><td><div id="piechart2"></div>
+                                                            <br>
+                                                            <?php print $agencydata['searchenginestatus_graph'];
+                                                            print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of Search Engine issues by category</span>";
+                                                            ?>
+                                                        </td><td><div id="piechart3"></div>
+                                                            <br>
+                                                            <?php print $agencydata['searchengines_graph'];
+                                                            print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of Search Engines</span>";
+                                                            ?>
+                                                        </td></tr>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr style="background-color: #215393;color: white;"><td><b>Search Engine</td><td>Total Number</b></td></tr>
+                                                                <?php
+                                                                foreach($agencydata['searchenginedata'] as $skey=>$sval){
+                                                                    print "<tr><td>$skey</td><td align='center'>   $sval</td> </tr>";
+                                                                }
+                                                                ?>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <?php
+                                                            $searchenginestatus = $agencydata['searchenginestatus'];
+                                                            ?>
+                                                            <table>
+                                                                <tr style="background-color: #215393;color: white;"><td>Number of sites with Search Engine</td><td>Number of sites without Search Engine</td></tr>
+                                                                <tr><td align='center'><?=$searchenginestatus['search_available']?></td><td align='center'><?=$searchenginestatus['search_notavailable']?></td></tr>
+                                                            </table>
+                                                        </td></tr>
+                                                </table>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="view-button"><br>
+                                        <p><a class="btn btn-primary" href="/accessibilityreportalldomains?field_web_agency_id_nid_selective=<?=arg(1)?>">Go to Full Report</a> </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="pond-secondary-column-content-region pond-column pond-secondary-column2 panel-panel">
