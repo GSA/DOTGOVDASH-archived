@@ -10,6 +10,8 @@ include_once("../scripts/commonScanFunctions.php");
 //Before Starting scan get the latest website listing and data from pulse
 writeToLogs("Get Latest Websites and data from Pulse\n",$logFile);
 getPulseData();
+writeToLogs("Start Search Engine Scan\n",$logFile);
+runSearchEngineScan();
 //Start the scan and get the scan id.
 writeToLogs("Starting Scan",$logFile);
 $scanId = startScan();
