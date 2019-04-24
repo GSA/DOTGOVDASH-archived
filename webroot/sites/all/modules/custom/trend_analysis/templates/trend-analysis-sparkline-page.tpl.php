@@ -24,9 +24,17 @@ if (in_array($trend_vars['blockname'],$agency_color_arr)) {
 
 $mobilePerf = array_slice($trend_vars['mobperfrm'], -5, 5);
 $mobilePerf = array_values($mobilePerf);
+$mobilePerf = array_map(function($value) {
+  return $value === '' || $value === NULL ? -1 : (int) $value;
+}, $mobilePerf);
+
 $mobileUsab = array_slice($trend_vars['mobusab'], -5, 5);
 $mobileUsab = array_values($mobileUsab);
-$mobilePerfUsabScanDate = array_keys(array_slice($trend_vars['mobperfrm'], 0, 5));
+$mobileUsab = array_map(function($value) {
+  return $value === '' || $value === NULL ? -1 : (int) $value;
+}, $mobileUsab);
+
+$mobilePerfUsabScanDate = array_values(array_slice($trend_vars['scandate'], -5, 5));
 
 //if (in_array($trend_vars['blockname'],$score_arr)){
 //  $compliancetext = 'Score';
@@ -76,11 +84,39 @@ $mobilePerfUsabScanDate = array_keys(array_slice($trend_vars['mobperfrm'], 0, 5)
               text: 'Score (%)'
             }
           },
+//          tooltip: {
+//            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+//            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+//            '<td style="padding:0"><b>{point.y}</b></td></tr>',
+//            footerFormat: '</table>',
+//            shared: true,
+//            useHTML: true
+//          },
           tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
-            footerFormat: '</table>',
+            formatter: function() {
+              var s = '<span style="font-size:10px">' + this.x + '</span><table>';
+              var perfY, usabY;
+              
+              if(this.points[0].y == -1) {
+                perfY = 'NA';
+              } else {
+                perfY = this.points[0].y;
+              }
+              if(this.points[1].y == -1) {
+                usabY = 'NA';
+              } else {
+                usabY = this.points[1].y;
+              }
+
+              var performance = '<tr><td style="color:' + this.points[0].color + ';padding:0">' + this.points[0].series.name + ': </td>' +
+                  '<td style="padding:0"><b>' + perfY + '</b></td></tr>';
+
+              var usability = '<tr><td style="color:' + this.points[1].color + ';padding:0">' + this.points[1].series.name + ': </td>' +
+                  '<td style="padding:0"><b>' + usabY + '</b></td></tr>';
+              
+              s = s + performance + usability + '</table>';
+              return s;
+            },
             shared: true,
             useHTML: true
           },
