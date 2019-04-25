@@ -622,7 +622,7 @@ function trend_analysis_block_view($delta = 0) {
             JOIN {field_revision_field_mobile_usability_score} u ON r.vid=u.revision_id
             WHERE r.nid=:nid
             GROUP BY scandate
-            ORDER BY r.timestamp ASC, r.vid ASC", array(':nid' => $agencyid));
+            ORDER BY r.timestamp ASC, r.vid ASC", array(':nid' => $allscanids['mobile_scan_information']));
         $trend_scandate = array();
         $trend_mobusab = array();
         $trend_mobperfrm = array();
@@ -723,24 +723,25 @@ function trend_analysis_block_view($delta = 0) {
 
             $trend_arr = array_merge_recursive($trend_arr1,$trend_arr2,$trend_arr3,$trend_arr4,$trend_arr5,$trend_arr6,$trend_arr7,$trend_arr8,$trend_arr9,$trend_arr10,$trend_arr11);
             //get current data
-//            $currentquery = db_query("select FROM_UNIXTIME(a.changed,'%Y/%m/%d') scandate,field_dap_score_value,field_dnssec_score_value,field_free_of_insecr_prot_score_value,field_https_score_value,field_ipv6_score_value,field_m15_13_compliance_score_value,field_mobile_overall_score_value,field_mobile_performance_score_value,field_mobile_usability_score_value,field_site_speed_score_value,field_ssl_score_value FROM node a, field_data_field_dap_score b, field_data_field_dnssec_score c, field_data_field_free_of_insecr_prot_score d, field_data_field_https_score e,field_data_field_ipv6_score f, field_data_field_m15_13_compliance_score g, field_data_field_mobile_overall_score h, field_data_field_mobile_performance_score i, field_data_field_mobile_usability_score j, field_data_field_site_speed_score k, field_data_field_ssl_score l where a.nid=b.entity_id and a.nid=c.entity_id and a.nid=d.entity_id and a.nid=e.entity_id and a.nid=f.entity_id and a.nid=g.entity_id and a.nid=h.entity_id and a.nid=i.entity_id and a.nid=j.entity_id and a.nid=k.entity_id and a.nid=l.entity_id and a.nid=:nid", array(':nid' => $agencyid));
-//            foreach ($currentquery as $curres) {
-//                $trend_arr[$curres->scandate]['dap'] = $curres->field_dap_score_value;
-//                $trend_arr[$curres->scandate]['dnssec'] = $curres->field_dnssec_score_value;
-//                $trend_arr[$curres->scandate]['insec'] = $curres->field_free_of_insecr_prot_score_value;
-//                $trend_arr[$curres->scandate]['https'] = $curres->field_https_score_value;
-//                $trend_arr[$curres->scandate]['ipv6'] = $curres->field_ipv6_score_value;
-//                $trend_arr[$curres->scandate]['m15'] = $curres->field_m15_13_compliance_score_value;
-//                $trend_arr[$curres->scandate]['mobovr'] = $curres->field_mobile_overall_score_value;
-//                $trend_arr[$curres->scandate]['mobperf'] = $curres->field_mobile_performance_score_value;
-//                $trend_arr[$curres->scandate]['mobusab'] = $curres->field_mobile_usability_score_value;
-//                $trend_arr[$curres->scandate]['sitespeed'] = $curres->field_site_speed_score_value;
-//                $trend_arr[$curres->scandate]['ssl'] = $curres->field_ssl_score_value;
-//            }
+            $currentquery = db_query("select FROM_UNIXTIME(a.changed,'%Y/%m/%d') scandate,field_dap_score_value,field_dnssec_score_value,field_free_of_insecr_prot_score_value,field_https_score_value,field_ipv6_score_value,field_m15_13_compliance_score_value,field_mobile_overall_score_value,field_mobile_performance_score_value,field_mobile_usability_score_value,field_site_speed_score_value,field_ssl_score_value FROM node a, field_data_field_dap_score b, field_data_field_dnssec_score c, field_data_field_free_of_insecr_prot_score d, field_data_field_https_score e,field_data_field_ipv6_score f, field_data_field_m15_13_compliance_score g, field_data_field_mobile_overall_score h, field_data_field_mobile_performance_score i, field_data_field_mobile_usability_score j, field_data_field_site_speed_score k, field_data_field_ssl_score l where a.nid=b.entity_id and a.nid=c.entity_id and a.nid=d.entity_id and a.nid=e.entity_id and a.nid=f.entity_id and a.nid=g.entity_id and a.nid=h.entity_id and a.nid=i.entity_id and a.nid=j.entity_id and a.nid=k.entity_id and a.nid=l.entity_id and a.nid=:nid", array(':nid' => $agencyid));
+            foreach ($currentquery as $curres) {
+                $trend_arr[$curres->scandate]['dap'] = $curres->field_dap_score_value;
+                $trend_arr[$curres->scandate]['dnssec'] = $curres->field_dnssec_score_value;
+                $trend_arr[$curres->scandate]['insec'] = $curres->field_free_of_insecr_prot_score_value;
+                $trend_arr[$curres->scandate]['https'] = $curres->field_https_score_value;
+                $trend_arr[$curres->scandate]['ipv6'] = $curres->field_ipv6_score_value;
+                $trend_arr[$curres->scandate]['m15'] = $curres->field_m15_13_compliance_score_value;
+                $trend_arr[$curres->scandate]['mobovr'] = $curres->field_mobile_overall_score_value;
+                $trend_arr[$curres->scandate]['mobperf'] = $curres->field_mobile_performance_score_value;
+                $trend_arr[$curres->scandate]['mobusab'] = $curres->field_mobile_usability_score_value;
+                $trend_arr[$curres->scandate]['sitespeed'] = $curres->field_site_speed_score_value;
+                $trend_arr[$curres->scandate]['ssl'] = $curres->field_ssl_score_value;
+            }
             
             $trend_vars['trend_arr'] = $trend_arr;
             $trend_vars['container'] = 'container1';
             $trend_vars['blockname'] = 'trends_data_table';
+            $trend_vars['is_mobile_scan'] = is_mobile_scan($agencyid);
 
             $analysis_output =  theme('trend_analysis_datatable_page', array('trend_vars' => $trend_vars));
             $block = array(
@@ -1010,6 +1011,20 @@ function is_redirect($website_id) {
       ':boolean' => 'Yes',
       ':type' => 'https_dap_scan_information'))->fetchField();
   if ($result == 'Yes') {
+    return TRUE;
+  } else {
+    return FALSE;
+  }
+}
+
+/**
+ * @param $nid
+ *
+ * @return bool
+ */
+function is_mobile_scan($nid) {
+  $result = db_query("SELECT type FROM node WHERE type = :type AND nid = :nid", array(':nid' => $nid, ':type' => 'mobile_scan_information'))->fetchField();
+  if ($result === 'mobile_scan_information') {
     return TRUE;
   } else {
     return FALSE;
