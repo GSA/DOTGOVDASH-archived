@@ -349,6 +349,11 @@ else
 			localStorage.clear();
 			window.location.href = '/multistep-search';
 		}
+		jQuery("#edit-keys").keypress(function(event) {
+			if (event.which == 13) {
+				event.preventDefault();
+				searchsubmit();    }
+		});
 	</script>
 <?php if (!empty($page['footer'])): ?>
 
