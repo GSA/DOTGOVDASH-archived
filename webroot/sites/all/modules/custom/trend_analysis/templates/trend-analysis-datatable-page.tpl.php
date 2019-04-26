@@ -40,6 +40,7 @@
 
 </script>
 <body>
+<h4><a href="/trend_analysis/<?php print $trend_vars['website_id_nid'];?>">Click Here to View Historical Data in Graph</a></h4>
 <div class="table-responsive">
 <div class="col-lg-12 col-sm-12 col-xs-12 nopadding" style="margin-bottom:15px;">
 <form>
@@ -57,7 +58,6 @@
   </div>
 </form>
 </div>
-
 
 <table width="100%" class="display white-back views-table cols-13 table table-hover table-striped" id="trendtable" cellspacing="0">
     <thead>

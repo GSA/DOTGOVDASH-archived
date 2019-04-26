@@ -742,6 +742,12 @@ function trend_analysis_block_view($delta = 0) {
             $trend_vars['container'] = 'container1';
             $trend_vars['blockname'] = 'trends_data_table';
             $trend_vars['is_mobile_scan'] = is_mobile_scan($agencyid);
+            
+            if(is_mobile_scan($agencyid)) {
+              $trend_vars['website_id_nid'] = get_website_id_nid($agencyid);
+            } else {
+              $trend_vars['website_id_nid'] = $agencyid;
+            }
 
             $analysis_output =  theme('trend_analysis_datatable_page', array('trend_vars' => $trend_vars));
             $block = array(
@@ -1028,5 +1034,22 @@ function is_mobile_scan($nid) {
     return TRUE;
   } else {
     return FALSE;
+  }
+}
+
+/**
+ * @param $website_id
+ *
+ * @return null
+ */
+function get_website_id_nid($website_id) {
+  $result = db_query("
+    SELECT w.field_website_id_nid
+    FROM node n JOIN field_data_field_website_id w ON n.nid=w.entity_id
+    WHERE n.type = :type AND n.nid = :nid ", array(':type' => 'mobile_scan_information', ':nid' => $website_id))->fetchField();
+  if($result) {
+    return $result;
+  } else {
+    return null;
   }
 }
