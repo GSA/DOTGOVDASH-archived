@@ -1,5 +1,8 @@
 jQuery(document).ready(function ($) {
 //$('.page-search-site .breadcrumb span:nth-child(3)').html('<a href=/search/site>Data Discovery</a>');
+  $( "#favorites-add-favorite-form .panel-body" ).removeClass( "fade collapsed" ).addClass( "in" );
+  $( "#edit-add-3-body" ).removeClass( "fade collapsed" ).addClass( "in" );
+
     $(".ui-accordion-content").css("height", "auto");
     $("#favorites-list li").prepend('<i class="icon glyphicon glyphicon-star"></i>');
     $("th").attr("scope", "col");
