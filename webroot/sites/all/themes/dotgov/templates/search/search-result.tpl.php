@@ -63,6 +63,10 @@
  *
  * @ingroup themeable
  */
+
+if (strpos($title, 'HTTPS DAP') !== false) {
+    $title = str_replace('HTTPS DAP','HTTPS & DAP',$title);
+}
     $websiteurl = "/website/".$result['node']->entity_id."/information";
 if (strpos($title, 'Domain') !== false) {
     $title = str_replace("Domain","Website",$title);
