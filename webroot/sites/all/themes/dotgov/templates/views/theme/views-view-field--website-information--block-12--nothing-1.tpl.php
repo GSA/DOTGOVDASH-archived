@@ -79,6 +79,7 @@ elseif(trim($chartdata) == ''){
 
             chart: {
                 type: 'solidgauge',
+                height:140
 
             },
 
