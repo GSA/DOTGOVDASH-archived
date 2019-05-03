@@ -162,7 +162,7 @@ else
 	</header>
 
 	<div class="main-container <?php print $container_class; ?>">
-
+		<?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
 		<a id="main-content"></a>
 		<?php print render($title_prefix); ?>
 		<?php if (!empty($title)): ?>
@@ -187,7 +187,6 @@ else
 				</ul>
 			</div>
 
-			<?php  if (!empty($breadcrumb)): print $breadcrumb; endif;?>
 			<div class="row border">
 
 				<?php if (!empty($page['sidebar_first'])): ?>
