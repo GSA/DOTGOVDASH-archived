@@ -187,7 +187,7 @@ else
 				</ul>
 			</div>
 
-			<?php // if (!empty($breadcrumb)): print $breadcrumb; endif;?>
+			<?php  if (!empty($breadcrumb)): print $breadcrumb; endif;?>
 			<div class="row border">
 
 				<?php if (!empty($page['sidebar_first'])): ?>
