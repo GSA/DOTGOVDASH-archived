@@ -51,31 +51,8 @@
  */
 ?>
 <?php print $output; ?>
-<?php
-$data_performance = $row->field_field_mobile_performance_score[0]['raw']['value'];
-$data_usability =  $row->field_field_mobile_usability_score[0]['raw']['value'];
-$data_overall =  $row->field_field_mobile_overall_score[0]['raw']['value'];
-$nid = $row->field_field_website_id[0]['raw']['nid'];
-
-if(isNullNotZero($data_performance) && !empty($nid)) {
-  $result_perf = get_mobile_score_information($nid, NULL, -1);
-  $result_performance = $result_perf['performance'];
-}
-
-if(isNullNotZero($data_usability) && !empty($nid)) {
-  $result_usab = get_mobile_score_information($nid, -1, NULL);
-  $result_usability = $result_usab['usability'];
-}
-
-if(!isNullNotZero($data_performance) && !isNullNotZero($data_usability)) {
-  if (!isNullNotZero($data_overall)) {
-    $chartdata = $data_overall;
-  } else {
-    $chartdata = round(($data_performance + $data_usability) / 2);
-  }
-} elseif((isNullNotZero($data_performance) && isNullNotZero($data_usability)) || (isNullNotZero($data_performance) || isNullNotZero($data_usability))) {
-    $chartdata = -1;
-}
+<?php 
+$chartdata= $row->_field_data['nid']['entity']->field_mobile_overall_score['und'][0]['value'];
 
 if ($chartdata <= 50){
     $chartcolor = '#ac0600';
@@ -93,10 +70,13 @@ else{
 
             chart: {
                 type: 'solidgauge',
+
             },
 
             title: {
+
                 text: ''
+
             },
 
             tooltip: {
@@ -121,13 +101,16 @@ else{
                 tickPositions: [],
 
                 title: {
-                    text: '<?php echo (!isNullNotZero($chartdata) && $chartdata != -1 ? $chartdata : '<span style="font-size: 12px;">Not Available</span>'); ?>',
+                    text: '<?php echo ($chartdata); ?>',
                     style: {
                         fontSize: '22px',
                         color:'<?php echo $chartcolor; ?>'
                     },
                     y: 30
                 },
+
+
+
             },
 
             plotOptions: {

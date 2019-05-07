@@ -46,7 +46,7 @@ $outputorig =  	file_create_url($mobsnap['uri']);
     <?php } ?>
 </div>
 
-<div class="col-xs-3 text-center"><h3>Website</h3>
+<div class="col-xs-3 text-center"><h3>Domain</h3>
 <p><?php print($row->field_body[0]['rendered']['#markup']); ?></p>
 </div>
 </div>

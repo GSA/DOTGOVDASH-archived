@@ -63,7 +63,6 @@
  *
  * @ingroup themeable
  */
-
 if (strpos($title, 'HTTPS DAP') !== false) {
     $title = str_replace('HTTPS DAP','HTTPS & DAP',$title);
 }
@@ -166,10 +165,10 @@ else {
             <?php if ($snippet): 
                 //print "<p class='search-snippet'".$content_attributes.">$snippet</p>";
 		 print "<div class=\"col-lg-6\">Record Type: ".$result['node']->bundle_name." </div>";	
-		 //print "<div class=\"col-lg-6\">Record Title: ".$result['node']->label." </div>";
-		 //print "<div class=\"col-lg-6\">Record Number: ".$result['node']->entity_id." </div>";
-		 //print "<div class=\"col-lg-6\">Record Created Date: ".date('m/d/Y h:i:s',$result['node']->created)." </div>";
-		 print "<div class=\"col-lg-6\">Last Scan Date: ".date('m/d/Y h:i:s',$result['node']->changed)." </div>";
+		 print "<div class=\"col-lg-6\">Record Title: ".$result['node']->label." </div>";	
+		 print "<div class=\"col-lg-6\">Record Number: ".$result['node']->entity_id." </div>";	
+		 print "<div class=\"col-lg-6\">Record Created Date: ".date('m/d/Y h:i:s',$result['node']->created)." </div>";	
+		 print "<div class=\"col-lg-6\">Record Changed Date: ".date('m/d/Y h:i:s',$result['node']->changed)." </div>";	
             endif; ?>
             </div>
         </div>
