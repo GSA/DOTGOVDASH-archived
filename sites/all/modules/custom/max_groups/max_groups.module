@@ -1,0 +1,176 @@
+<?php
+
+/**
+ * @file This module maps MAX groups to Drupal roles.
+ * It implements hook_cas_user_presave (invoked by the CAS module)
+ * and modifies the roles array which is then merged into $user->roles.
+ * 
+ * This module's effectiveness is dependent the
+ * implementation of hook_max_role_mapping,
+ * a function which should return an associative array
+ * whose keys are MAX group ID's and whose values are
+ * either a single Drupal role name or an array of
+ * Drupal role names.
+ */
+
+/*
+ * Implementation of hook_cas_user_presave
+ */
+function max_groups_cas_user_presave(&$edit, $account) {
+  // By default, MAX's username is the email address of the user.
+  // Store this value in the user's mail attribute.
+  $edit['mail'] = $edit['cas_user']['name'];
+  
+  $rolemap = array();
+  foreach(module_implements('max_role_mapping') as $module) {
+    $function = $module . '_max_role_mapping';
+    $rolemap = array_merge($rolemap, $function());
+  }
+  if(count($rolemap) == 0) {
+    // There is no mapping defined between MAX groups and Drupal roles.
+    return;
+  }
+  $drupalRoles = array_flip(user_roles());
+ 
+  // First, unset any MAX-related Drupal roles on the user.
+  // But don't bother if there is no UID, because this new user has no Drupal roles yet.
+  if($account->uid > 0) {
+    foreach($rolemap as $m_group => $d_roles) {
+      if(!is_array($d_roles)) {
+        $d_roles = array($d_roles);
+      }
+      foreach($d_roles as $d_role) {
+        if(isset($edit['roles'][$drupalRoles[$d_role]])) {
+          unset($edit['roles'][$drupalRoles[$d_role]]);
+        }
+      }
+    }
+  }
+  
+  // Don't bother proceeding if cas_user has no attributes.
+  if(!isset($edit['cas_user']['attributes']) || !is_array($edit['cas_user']['attributes']) || count($edit['cas_user']['attributes']) == 0) {
+    // Response from MAX returned no attributes.
+    return;
+  }
+  $attributes = $edit['cas_user']['attributes'];
+  // Don't bother proceeding if we haven't gotten a GroupList back from MAX.
+  if(!isset($attributes['GroupList'])) {
+    // Response from MAX returned no GroupList.
+    return;
+  }
+  if(strlen($attributes['GroupList']) == 0) {
+    // GroupList is empty for this user.
+    return;
+  }
+  // GroupList is a comma-delimited string. Turn it into an array.
+  $m_groups = explode(',', $attributes['GroupList']);
+  foreach($m_groups as $m_group) {
+	if(preg_match("/APP-PREP-/",$m_group)){
+    if(isset($rolemap[$m_group])) {
+      $d_roles = $rolemap[$m_group];
+      if(!is_array($d_roles)) {
+        $d_roles = array($d_roles);
+      }
+      foreach($d_roles as $d_role_name) {
+        if(isset($drupalRoles[$d_role_name])) {
+          $rid = $drupalRoles[$d_role_name];
+          $edit['roles'][$rid] = $d_role_name;
+        }
+        // else: The role map refers to Drupal role <$d_role_name>, which is not defined.
+      }
+    }
+    // else: User is a member of <$m_group> MAX group, which is not defined in the role map.
+$prep_agency = explode("-",$m_group);
+$prep_agency_code = db_query("select entity_id from {field_data_field_agency_acronym} where field_agency_acronym_value=:aid limit 1",array(':aid' => $prep_agency[3]));
+$prep_agency_code_id = (int)$prep_agency_code->fetchField();
+//Assign the agency to user only if it's agency user.We don't need to do it for omb user
+if(trim($prep_agency_code_id) != ''){
+    $edit['field_account_agency']['und']['0']['nid'] = $prep_agency_code_id;
+}
+}
+  }
+
+}
+
+// implement hook_max_role_mapping
+function max_groups_max_role_mapping() {
+  // map MAX group names to Drupal roles
+  $role_map = array();
+
+        //OMB user
+        $role_map['APP-PREP-ALL-OMB'] = 'omb-editor';
+        //Agency Editor
+        $role_map['APP-PREP-EDITOR-CORPS'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-DHS'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-DOC'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-DOD'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-DOE'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-DOI'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-DOJ'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-DOL'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-DOSUSAID'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-DOT'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-ED'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-EPA'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-GSA'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-HHS'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-HUD'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-NASA'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-NSF'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-OPM'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-SBA'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-SSA'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-TREAS'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-USDA'] = 'agency-editor';
+        $role_map['APP-PREP-EDITOR-VA'] = 'agency-editor';
+        //Agency User
+        $role_map['APP-PREP-USER-CORPS'] = 'agency-user';
+        $role_map['APP-PREP-USER-DHS'] = 'agency-user';
+        $role_map['APP-PREP-USER-DOC'] = 'agency-user';
+        $role_map['APP-PREP-USER-DOD'] = 'agency-user';
+        $role_map['APP-PREP-USER-DOE'] = 'agency-user';
+        $role_map['APP-PREP-USER-DOI'] = 'agency-user';
+        $role_map['APP-PREP-USER-DOJ'] = 'agency-user';
+        $role_map['APP-PREP-USER-DOL'] = 'agency-user';
+        $role_map['APP-PREP-USER-DOSUSAID'] = 'agency-user';
+        $role_map['APP-PREP-USER-DOT'] = 'agency-user';
+        $role_map['APP-PREP-USER-ED'] = 'agency-user';
+        $role_map['APP-PREP-USER-EPA'] = 'agency-user';
+        $role_map['APP-PREP-USER-GSA'] = 'agency-user';
+        $role_map['APP-PREP-USER-HHS'] = 'agency-user';
+        $role_map['APP-PREP-USER-HUD'] = 'agency-user';
+        $role_map['APP-PREP-USER-NASA'] = 'agency-user';
+        $role_map['APP-PREP-USER-NSF'] = 'agency-user';
+        $role_map['APP-PREP-USER-OPM'] = 'agency-user';
+        $role_map['APP-PREP-USER-SBA'] = 'agency-user';
+        $role_map['APP-PREP-USER-SSA'] = 'agency-user';
+        $role_map['APP-PREP-USER-TREAS'] = 'agency-user';
+        $role_map['APP-PREP-USER-USDA'] = 'agency-user';
+        $role_map['APP-PREP-USER-VA'] = 'agency-user';
+        //Agency Reviewer
+        $role_map['APP-PREP-REVIEWER-CORPS'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-DHS'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-DOC'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-DOD'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-DOE'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-DOI'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-DOJ'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-DOL'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-DOSUSAID'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-DOT'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-ED'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-EPA'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-GSA'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-HHS'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-HUD'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-NASA'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-NSF'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-OPM'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-SBA'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-SSA'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-TREAS'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-USDA'] = 'agency-reviewer';
+        $role_map['APP-PREP-REVIEWER-VA'] = 'agency-reviewer';
+    return $role_map;
+    }
+

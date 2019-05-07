@@ -1,0 +1,71 @@
+<?php
+
+/**
+ * @file
+ * Authcache support for Ubercart.
+ */
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Remove the uid value from the ubercart add-to-cart form.
+ */
+function authcache_ubercart_form_uc_product_add_to_cart_form_alter(&$form, &$form_state) {
+  if (authcache_page_is_cacheable()) {
+    // Neither 'nid' nor 'node' value elements do contain any per-user data,
+    // thus just mark them cacheable.
+    if (isset($form['nid'])) {
+      authcache_element_set_cacheable($form['nid']);
+    }
+    if (isset($form['node'])) {
+      authcache_element_set_cacheable($form['node']);
+    }
+  }
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * @todo: Remove when https://www.drupal.org/node/2885388 is resolved.
+ *
+ * Make sure that hook_form_alter of this module is called before all other
+ * modules in order to beat the main authcache module.
+ */
+function authcache_ubercart_module_implements_alter(&$implementations, $hook) {
+  if ($hook === 'form_alter') {
+    $me = $implementations['authcache_ubercart'];
+    unset($implementations['authcache_ubercart']);
+    $implementations = array_merge(array('authcache_ubercart' => $me), $implementations);
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * @todo: Remove when https://www.drupal.org/node/2885388 is resolved.
+ */
+function authcache_ubercart_form_alter(&$form, &$form_state) {
+  if (isset($form_state['build_info']['base_form_id']) && $form_state['build_info']['base_form_id'] === 'uc_product_add_to_cart_form') {
+    // The Ubercart Attributes module adds a form element 'attributes' => NULL
+    // in the add-to-cart form for products which do not have any product
+    // attributes. Authcache Form chockes on that, so let's just remove it.
+    // @see https://www.drupal.org/node/2885086
+    // @see uc_attribute_uc_form_alter()
+    if (isset($form['products']) || isset($form['sub_products'])) {
+      if (isset($form['products'])) {
+        $element = &$form['products'];
+      }
+      else {
+        $element = &$form['sub_products'];
+      }
+      foreach (element_children($element) as $key) {
+        if (empty($element['attributes'])) {
+          unset($element['attributes']);
+        }
+      }
+    }
+    elseif (empty($form['attributes'])) {
+      unset($form['attributes']);
+    }
+  }
+}

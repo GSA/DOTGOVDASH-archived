@@ -1,0 +1,291 @@
+<?php
+
+/**
+ * @file
+ * A module to provide revisions of Views.
+ */
+
+/**
+ * Implements hook_help().
+ */
+function views_revisions_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#views_revisions':
+      return "<p>" .
+        l('View README.txt', drupal_get_path('module', 'views_revisions'). '/README.txt')  .
+      "</p>";
+      break;
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function views_revisions_menu() {
+  $items = array();
+  $items['admin/structure/views/revisions/%'] = array(
+    'type' => MENU_NORMAL_ITEM,
+    'title' => 'Views Revisions',
+    'page callback' => 'views_revisions_page',
+    'page arguments' => array(4),
+    'access arguments' => array('administer views')
+  );
+  $items['admin/structure/views/revisions/revision/%'] = array(
+    'type' => MENU_NORMAL_ITEM,
+    'title' => 'Views Revision',
+    'page callback' => 'views_revisions_revision_page',
+    'page arguments' => array(5),
+    'access arguments' => array('administer views')
+  );
+  $items['admin/structure/views/revisions/revision/%/edit'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Edit Views Revision',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('views_revisions_revision_form', 5),
+    'access arguments' => array('administer views'),
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function views_revisions_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'views_ui_edit_form' && $form_state['view']->vid != 'new') {
+    $form['#prefix'] .= '<div>' .
+      l('Views Revisions', 'admin/structure/views/revisions/' . $form_state['view']->name) .
+    '</div>';
+    $form['actions']['views_revisions_revision'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Create new revision'),
+      '#default_value' => 1
+    );
+    $form['actions']['views_revisions_log'] = array(
+      '#type' => 'textarea',
+      '#title' => t('Revision log message'),
+      '#description' => t('Provide an explanation of the changes you are making. This will help other authors understand your motivations.'),
+      '#rows' => 3
+    );
+    array_unshift($form['actions']['save']['#submit'], 'views_revisions_form_submit');
+  }
+  else if ($form_id == 'ctools_export_ui_delete_confirm_form') {
+    $form['#submit'][] = 'views_revisions_delete';
+  }
+}
+
+/**
+ * Submission handler for the Views UI form.
+ */
+function views_revisions_form_submit($form, &$form_state) {
+  global $user;
+  if (!isset($form_state['view']->vid) || empty($form_state['view']->vid)) {
+    drupal_set_message(t('There was no vid on the View, so a revision could not be created this time.'), 'warning');
+    return;
+  }
+  $revision = $form_state['values']['actions']['views_revisions_revision'];
+  if ($revision) {
+    $log = $form_state['values']['actions']['views_revisions_log'];
+    $view = views_get_view($form_state['view']->name);
+    $data = views_export_view($view);
+    $vrvid = db_insert('views_revisions')->fields(
+      array(
+        'vid' => $form_state['view']->vid,
+        'uid' => $user->uid,
+        'created' => time(),
+        'log' => $log,
+        'data' => $data
+      )
+    )->execute();
+  }
+}
+
+/**
+ * Submission handler for the ctools delete confirmation form.
+ */
+function views_revisions_delete($form, &$form_state) {
+  if ($form_state['plugin']['schema'] == 'views_view') {
+    $vid = $form_state['item']->vid;
+    db_query("DELETE FROM {views_revisions} WHERE vid = :vid", array(':vid' => $vid));
+  }
+}
+
+/**
+ * Page callback function for the views revisions page.
+ */
+function views_revisions_page($name) {
+  $html = "<h2>$name</h2><p>" . l('Go Back to View', "admin/structure/views/view/$name") . " &raquo;</p>";
+  $result = db_query("SELECT vid FROM {views_view} WHERE name = :name", array(':name' => $name))->fetch();
+  if (!$result) {
+    $html .= t('Failed to load view!');
+    return $html;
+  }
+  $vid = $result->vid;
+  $revisions = db_query("SELECT vr.vrvid, vr.vid, vr.uid, vr.created, vr.log, u.name
+    FROM {views_revisions} vr
+    LEFT OUTER JOIN {users} u ON vr.uid = u.uid
+    WHERE vr.vid = :vid
+    ORDER BY vr.created DESC", array(':vid' => $vid))->fetchAll();
+  if (sizeof($revisions) == 0) {
+    $html .= t('There are no revisions for this view.');
+    return $html;
+  }
+  $header = array(
+    array("data" => t('User')),
+    array("data" => t('Message')),
+    array("data" => t('Created')),
+    array("data" => t('Revision'))
+  );
+  $rows = array();
+  foreach($revisions as $revision) {
+    $row = array(
+      l($revision->name, "user/$revision->uid"),
+      filter_xss($revision->log),
+      format_date($revision->created, 'custom', 'Y-m-d H:i:s'),
+      l('View', "admin/structure/views/revisions/revision/$revision->vrvid") . "<br>" . l("Edit message", "admin/structure/views/revisions/revision/$revision->vrvid/edit")
+    );
+    $rows[] = $row;
+  }
+  $html .= theme('table', array('header' => $header, 'rows' => $rows));
+  return $html;
+}
+
+/**
+ * Page callback function for the views revisions revision page.
+ */
+function views_revisions_revision_page($vrvid) {
+  $html = '';
+  $revision = db_query("SELECT vr.vrvid, vr.vid, vr.uid, vr.created, vr.log, vr.data, u.name, vv.name as view_name
+    FROM {views_revisions} vr
+    LEFT OUTER JOIN {users} u ON vr.uid = u.uid
+    INNER JOIN {views_view} vv ON vr.vid = vv.vid
+    WHERE vrvid = :vrvid", array('vrvid' => $vrvid))->fetch();
+  $header = array(
+    array("data" => t('User')),
+    array("data" => t('Message')),
+    array("data" => t('Created')),
+    array(),
+  );
+  $rows = array(
+    array(
+      l($revision->name, "user/$revision->uid"),
+      filter_xss($revision->log),
+      format_date($revision->created, 'custom', 'Y-m-d H:i:s'),
+      l(t('Edit message'), "admin/structure/views/revisions/revision/" . $revision->vrvid . "/edit"),
+    )
+  );
+  $table = theme('table', array('header' => $header, 'rows' => $rows));
+  $textarea = array(
+    'element' => array(
+      '#id' => 'views_revisions_data',
+      '#value' => $revision->data,
+      '#rows' => 32,
+      '#attributes' => array('onclick' => 'javascript:this.select();')
+    )
+  );
+  $html .= "<h2>{$revision->view_name}</h2>" .
+    '<p>' .
+    l('View', "admin/structure/views/view/{$revision->view_name}") . ' &raquo; ' .
+    l('Revisions', "admin/structure/views/revisions/{$revision->view_name}") . ' &raquo;' .
+    '</p>' .
+    $table .
+    '<p>' . l('Go to Import Page', 'admin/structure/views/import') . '</p>' .
+    '<label for="views_revisions_data">' . t('Ctools export data before revision was made') . ':</label>' .
+    theme('textarea', $textarea);
+  return $html;
+}
+
+/**
+ * Form constructor for editing a views revision.
+ *
+ * @param integer $vrvid
+ *   The views revision ID.
+ *
+ * @see views_revisions_revision_form_validate()
+ * @see views_revisions_revision_form_submit()
+ *
+ * @ingroup forms
+ */
+function views_revisions_revision_form($form, &$form_state, $vrvid) {
+  $row = db_query("
+    SELECT vr.vrvid, vr.vid, vr.log, views_view.name
+    FROM {views_revisions} AS vr
+    LEFT JOIN {views_view} ON vr.vid = views_view.vid
+    WHERE vr.vrvid = :vrvid
+  ", array(":vrvid" => $vrvid))
+    ->fetchObject();
+  if (!$row) {
+    drupal_set_message(t('Could not find revision ID @vrvid', array(
+      "@vrvid" => $vrvid,
+    )), 'error');
+    return $form;
+  }
+  $form_state['vrvid'] = $row->vrvid;
+  $form_state['view'] = views_get_view($row->name);
+  if (!$form_state['view']) {
+    drupal_set_message(t('Could not find the view @name.', array(
+      "@name" => $row->name,
+    )), 'error');
+  }
+  else {
+    $form['title'] = array(
+      '#markup' => '<h2><code>' . check_plain($form_state['view']->name) . '</code></h2>',
+    );
+  }
+  $form['views_revisions_log'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Revision log message'),
+    '#description' => t('Improve the explanation of the changes made. This will help other authors understand your motivations.'),
+    '#rows' => 3,
+    '#default_value' => $row->log,
+  );
+  $form['actions'] = array(
+    '#type' => 'actions',
+  );
+  $form['actions']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Update'),
+  );
+  return $form;
+}
+
+/**
+ * Validate handler for editing a views revision.
+ *
+ * @see views_revisions_revision_form_submit()
+ */
+function views_revisions_revision_form_validate($form, &$form_state) {
+  $exists = db_query("
+    SELECT vrvid FROM {views_revisions} WHERE vrvid = :vrvid
+  ", array(":vrvid" => $form_state['vrvid']))
+    ->fetchField();
+  if (!$exists) {
+    form_set_error('views_revisions_log', t('The views revision no longer exists.'));
+  }
+}
+
+/**
+ * Submit handler for editing a views revision.
+ *
+ * @see views_revisions_revision_form_validate()
+ */
+function views_revisions_revision_form_submit($form, &$form_state) {
+  db_query("
+    UPDATE {views_revisions} SET log = :log WHERE vrvid = :vrvid
+  ", array(
+    ":log" => $form_state['values']['views_revisions_log'],
+    ":vrvid" => $form_state['vrvid'],
+  ));
+  drupal_set_message(t('The new revision message has been saved.'));
+}
+
+/**
+ * Implements hook_views_ui_display_top_links_alter().
+ *
+ * Add a views revision link to the views ui top links.
+ */
+function views_revisions_views_ui_display_top_links_alter(&$links, $view, $display_id) {
+  $links['revisions'] = array(
+    'title' => t('view revisions'),
+    'href' => 'admin/structure/views/revisions/' . $view->name,
+  );
+}
