@@ -22,7 +22,7 @@ function getSites()
 
 //Find all failed mobile scan sites and run mobile scan for them
 #$query = db_query("select b.field_website_id_nid entity_id,d.body_value,c.title from field_data_field_mobile_perf_error_code a , field_data_field_website_id b , node c , field_data_body d where a.field_mobile_perf_error_code_value is not null and a.entity_id=b.entity_id and b.field_website_id_nid = c.nid and c.nid = d.entity_id UNION select b.field_website_id_nid entity_id,d.body_value,c.title from field_data_field_mobile_usab_error_code a , field_data_field_website_id b , node c , field_data_body d where a.field_mobile_usab_error_code_value is not null and a.entity_id=b.entity_id and b.field_website_id_nid = c.nid and c.nid = d.entity_id");
-    #$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value LIKE '%cjis.gov%' and b.nid=a.entity_id", array(':bundle' => 'website'));
+    //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value LIKE '%cjis.gov%' and b.nid=a.entity_id", array(':bundle' => 'website'));
     //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value in ('afadvantage.gov','ama.gov','asc.gov','atf.gov','broadbandmap.gov','buildingamerica.gov','cfda.gov','cjis.gov','cncsoig.gov','earmarks.gov','exploretsp.gov','faca.gov','facadatabase.gov','fbo.gov','fercalt.gov','fha.gov','frtib.gov','fsgb.gov','g5.gov','geomac.gov','gop.gov','grants.gov','grantsolutions.gov','green.gov','gsaadvantage.gov','guideline.gov','guidelines.gov','highperformancebuildings.gov','housecommunications.gov','iarpa-ideas.gov','idealab.gov','invasivespeciesinfo.gov','irs.gov','irsauctions.gov','irssales.gov','itap.gov','itdashboard.gov','juvenilecouncil.gov','labor.gov','lcacommons.gov','malwareinvestigator.gov','max.gov','medicalcountermeasures.gov','nara.gov','nbm.gov','ncix.gov','nepa.gov','nfpors.gov','ngc.gov','nls.gov','nmcourt.gov','realestatesales.gov','republicans.gov','saferproduct.gov','saferproducts.gov','safetyact.gov','sam.gov','sen.gov','sss.gov','stb.gov','stopfraud.gov','thisfreelife.gov','tsc.gov','tsp.gov','usaid.gov','uspis.gov','wh.gov','worldwar1centennial.gov','businessdefense.gov','notalone.gov') and b.nid=a.entity_id", array(':bundle' => 'website'));
 
 
@@ -2479,10 +2479,10 @@ function runSearchEngineScan(){
                     $html = shell_exec("curl -L -k --silent https://".trim($result->title));
                 }
                 else {
-                    $html = shell_exec("timeout 15 google-chrome --no-sandbox --headless --disable-gpu --dump-dom --ignore-certificate-errors --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36\" --timeout=15000 \" " . $weburl . "/\"");
+                    $html = shell_exec("timeout 15 google-chrome --no-sandbox --headless --disable-gpu --dump-dom --ignore-certificate-errors --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36\"  --timeout=15000  \"" . $weburl . "/\"");
                 }
 
-                //print_r($html);
+                print_r($html);
                 $dom = new DomDocument;
                 $dom->preserveWhiteSpace = FALSE;
                 $dom->loadHTML($html);
