@@ -50,7 +50,11 @@
  * @ingroup themeable
  */
 ?>
-
+<style>
+#searchengine_chart .highcharts-container{
+height:160px !important;
+}
+</style>
 <?php
 print $output;
 $chartdata= $row->_field_data['nid']['entity']->field_search_status['und'][0]['value'];
@@ -79,7 +83,7 @@ elseif(trim($chartdata) == ''){
 
             chart: {
                 type: 'solidgauge',
-                height:140
+height:140
 
             },
 
