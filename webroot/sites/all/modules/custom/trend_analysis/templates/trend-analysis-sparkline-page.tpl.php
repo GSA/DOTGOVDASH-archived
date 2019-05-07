@@ -21,20 +21,25 @@ if (in_array($trend_vars['blockname'],$agency_color_arr)) {
     $negativecolor = '#4d525a';
     $positivecolor = '#4d525a';
 }
+if (!empty($trend_vars['mobperfrm']) && is_array($trend_vars['mobperfrm'])) {
+  $mobilePerf = array_slice($trend_vars['mobperfrm'], -5, 5);
+  $mobilePerf = array_values($mobilePerf);
+  $mobilePerf = array_map(function($value) {
+    return $value === '' || $value === NULL ? -1 : (int) $value;
+  }, $mobilePerf);
+}
 
-$mobilePerf = array_slice($trend_vars['mobperfrm'], -5, 5);
-$mobilePerf = array_values($mobilePerf);
-$mobilePerf = array_map(function($value) {
-  return $value === '' || $value === NULL ? -1 : (int) $value;
-}, $mobilePerf);
+if (!empty($trend_vars['mobusab']) && is_array($trend_vars['mobusab'])) {
+  $mobileUsab = array_slice($trend_vars['mobusab'], -5, 5);
+  $mobileUsab = array_values($mobileUsab);
+  $mobileUsab = array_map(function($value) {
+    return $value === '' || $value === NULL ? -1 : (int) $value;
+  }, $mobileUsab);
+}
 
-$mobileUsab = array_slice($trend_vars['mobusab'], -5, 5);
-$mobileUsab = array_values($mobileUsab);
-$mobileUsab = array_map(function($value) {
-  return $value === '' || $value === NULL ? -1 : (int) $value;
-}, $mobileUsab);
-
-$mobilePerfUsabScanDate = array_values(array_slice($trend_vars['scandate'], -5, 5));
+if (!empty($trend_vars['scandate'])) {
+  $mobilePerfUsabScanDate = array_values(array_slice($trend_vars['scandate'], -5, 5));
+}
 
 //if (in_array($trend_vars['blockname'],$score_arr)){
 //  $compliancetext = 'Score';

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: kapilbulchandani
- * Date: 5/19/17
- * Time: 12:08 AM
- */
 
 /**
  * @file field.tpl.php
@@ -49,84 +43,81 @@
  *
  * @ingroup themeable
  */
-$scanids = dotgov_common_siteAsocScanids(arg(1));
-$scanpath = drupal_get_path_alias("node/".$scanids['https_dap_scan_information']);
-//
-$query = db_query("select a.field_dap_score_value,b.field_dap_status_value from field_data_field_dap_score a , field_data_field_dap_status b,field_data_field_website_id c where a.entity_id=c.field_website_id_nid and b.entity_id=c.entity_id and a.entity_id=:nid",array(":nid"=>arg(1)));
-foreach ($query as $result) {
-$dapscore = $result->field_dap_score_value;
-$dapstat = $result->field_dap_status_value;
-}
-//drupal_add_js('https://code.highcharts.com/highcharts-more.js');
-//drupal_add_js('https://code.highcharts.com/modules/solid-gauge.js');
-//drupal_add_js(drupal_get_path('module', 'activity_chart') . '/activity_chart.js');
-$chartdatafont = "22px";
 ?>
-<div class="col-lg-6">
-<?php
-if($dapscore == NULL  || $dapscore == '') {
-    print "DAP Score: Not Available<br>";
-    print "DAP Status: Not Available<br>";
-    $chartdatatext = "Not Available";
-    $chartdatafont = "12px";
-    $chartdata = "0";
-}
-elseif($dapscore == '0') {
-    print "DAP Score: 0%<br>";
-    print "DAP Status: Not Implemented<br>";
-    $chartdatatext = "0%";
-    $chartdata = "0";
-}
-elseif($dapscore == '100') {
-    print "DAP Score: 100%<br>";
-    print "DAP Status: Implemented<br>";
-    $chartdatatext = "100%";
-    $chartdata = "100";
-}
-else {
-    print "DAP Score: ".$dapscore."%<br>";
-    print "DAP Status: Implemented<br>";
-    $chartdatatext = $dapscore."%";
-    $chartdata = $dapscore;
-}
 
-?>
+<?php dotgov_common_tooltip("tooltip6","id");?>
+
+<div class="col-xs-10">
+    <h2 class="pane-title"> IPV6 Information </h2>
 </div>
-<?php print $output;?>
+<div class="col-xs-2">
+    <div id="tooltip6" class="infor">
+        <i class='icon glyphicon glyphicon-info-sign'>&nbsp</i>
+        <span class="tooltiptext tooltip-left">
+            <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code">
+            IPV6 Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate();?>
+        </span>
+    </div>
+</div>
+<?php if(!is_redirect(arg(1))): ?>
+    <div class="col-lg-6">
+        IPV6 Compliance: <?php print $row->field_field_ipv6_score[0]['raw']['value']; ?>%
+    </div>
+    <div class="col-lg-6">
+        <div id="ipv6_chart" style="width: 130px; height:130px; margin: 0 auto">&nbsp;</div>
+    </div>
+  
+    <?php
+    $blockObject = block_load('trend_analysis', 'trends_ipv6_sparkline');
+    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+    $output = drupal_render($block);
+    print '<div class="col-lg-12">';
+    print $output;
+    print '</div>';
+    ?>
+<?php else: ?>
+    <div class="col-lg-12">
+        IPV6 Compliance: <span style="color:red;">Website Redirect - Metric Not Applicable</span></br>
+    </div>
+<?php endif; ?>
 
-<?php //dsm($view->result);
-//dsm ($row->_field_data['nid']['entity']->field_https_score['und'][0]['safe_value']);
-
-
-if ($chartdata <= 50){
-    $chartcolor = '#ac0600';
-}elseif($chartdata>50 and $chartdata<=75){
-    $chartcolor='#654f00';
-}
-
-else{
-    $chartcolor='#29643a';
-}
-
+<?php
+$scanids = dotgov_common_siteAsocScanids(arg(1));
+$scanpath = drupal_get_path_alias("node/" . $scanids['domain_scan_information']);
 ?>
-<script type="text/javascript">
-    Highcharts.chart('dap_chart', {
+<div class="col-lg-12 clearfix report-buttons">
+    <p>
+        <a href="/improve-my-score">How to Improve Score</a>
+    </p>
+    <p>
+        <a class="link-all-reports" href="/<?=$scanpath?>">Go to Full Report</a>
+        <a class="trend-analysis-reports link-all-reports" href="/historical_scan_score_data/<?=arg(1)?>?order=field_ipv6_score-revision_id&sort=desc">Trend Analysis Report</a>
+    </p>
+</div>
 
+<?php
+$chartdata= $row->_field_data['nid']['entity']->field_ipv6_score['und'][0]['value'];
+
+if ($chartdata == 0) {
+    $chartcolor = '#ac0600';
+} elseif ($chartdata > 0) {
+    $chartcolor = '#29643a';
+    $chartdata = 100;
+}
+?>
+<div class="sr-only">The graphic below indicates the level of IPV6 compliance, and this score is <?php echo $chartdata; ?>%.</div>
+
+<script type="text/javascript">
+    Highcharts.chart('ipv6_chart', {
             chart: {
                 type: 'solidgauge',
-
             },
-
             title: {
-
                 text: ''
-
             },
-
             tooltip: {
                 enabled:false,
             },
-
             pane: {
                 startAngle: 0,
                 endAngle: 360,
@@ -137,26 +128,20 @@ else{
                     borderWidth: 0
                 }]
             },
-
             yAxis: {
                 min: 0,
                 max: 100,
                 lineWidth: 0,
                 tickPositions: [],
-
                 title: {
-                    text: '<?php echo ($chartdatatext); ?>',
+                    text: '<?php echo ($chartdata); ?> %',
                     style: {
-                        fontSize: '<?=$chartdatafont?>',
+                        fontSize: '22px',
                         color:'<?php echo $chartcolor; ?>',
                     },
                     y: 30
                 },
-
-
-
             },
-
             plotOptions: {
                 solidgauge: {
                     dataLabels: {
@@ -167,21 +152,15 @@ else{
                     rounded: true
                 }
             },
-
             series: [{
-                name: 'DAP',
+                name: 'HTTPS',
                 data: [{
                     color: '<?php echo $chartcolor; ?>',
                     radius: '118%',
                     innerRadius: '80%',
-                    y:<?=$chartdata?>
+                    y:<?php echo ($chartdata); ?>
                 }]
             }]
         }
-
-
     );
 </script>
-
-
-
