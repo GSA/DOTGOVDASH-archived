@@ -154,7 +154,10 @@ if (strpos($title, 'Domain ') !== false) {
       <a id="main-content"></a>
       <?php print render($title_prefix); ?>
       <?php if (!empty($title)): ?>
-        <h1 class="page-header"><?php print $title; ?>(Raw Scan Output Page)</h1>
+        <h1 class="page-header"><?php print $title;
+            if($node->type != "page")
+            print "(Raw Scan Output Page) ";
+            ?></h1>
       <?php endif; ?>
       <?php print render($title_suffix); ?>
   <div class="container white-back">
