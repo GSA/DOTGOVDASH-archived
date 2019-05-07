@@ -75,6 +75,9 @@
 if (strpos($title, 'HTTPS DAP') !== false) {
     $title = str_replace('HTTPS DAP','HTTPS & DAP',$title);
 }
+if (strpos($title, 'Domain ') !== false) {
+    $title = str_replace('Domain ','Website ',$title);
+}
 ?>
 <div class="top-bar">
 			<!-- top header-->
