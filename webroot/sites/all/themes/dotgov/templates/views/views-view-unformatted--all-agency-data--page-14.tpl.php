@@ -80,7 +80,7 @@ drupal_set_title( $agencynode->title );
                                                                         ?>
                                                                     </div>
                                                                     <div class="col-lg-3 col-sm-12 col-xs-12 text-center">
-                                                                        <h3>Public Websites Reported</h3>
+                                                                        <h3>Public-Facing Websites Reported</h3>
                                                                         <p></p>
                                                                         <p>
                                                                             <?= $agency_website_num ?>
