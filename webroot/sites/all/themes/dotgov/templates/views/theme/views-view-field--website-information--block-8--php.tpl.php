@@ -59,32 +59,24 @@
         </span>
     </div>
 </div>
-<?php if(!is_redirect(arg(1))): ?>
-    <div class="col-lg-6">
-        IPV6 Compliance: <?php print $row->field_field_ipv6_score[0]['raw']['value']; ?>%
-    </div>
-    <div class="col-lg-6">
-        <div id="ipv6_chart" style="width: 130px; height:130px; margin: 0 auto">&nbsp;</div>
-    </div>
+<?php // if(!is_redirect(arg(1))): ?>
+<div class="col-lg-6">
+    IPV6 Compliance: <?php print $row->field_field_ipv6_score[0]['raw']['value']; ?>%
+</div>
+<div class="col-lg-6">
+    <div id="ipv6_chart" style="width: 130px; height:130px; margin: 0 auto">&nbsp;</div>
+</div>
   
-    <?php
-    $blockObject = block_load('trend_analysis', 'trends_ipv6_sparkline');
-    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
-    $output = drupal_render($block);
-    print '<div class="col-lg-12">';
-    print $output;
-    print '</div>';
-    ?>
-<?php else: ?>
-    <div class="col-lg-12">
-        IPV6 Compliance: <span style="color:red;">Website Redirect - Metric Not Applicable</span></br>
-    </div>
-<?php endif; ?>
-
 <?php
+$blockObject = block_load('trend_analysis', 'trends_ipv6_sparkline');
+$block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
 $scanids = dotgov_common_siteAsocScanids(arg(1));
 $scanpath = drupal_get_path_alias("node/" . $scanids['domain_scan_information']);
 ?>
+<div class="col-lg-12">
+    <?php print drupal_render($block); ?>
+</div>
+
 <div class="col-lg-12 clearfix report-buttons">
     <p>
         <a href="/improve-my-score">How to Improve Score</a>

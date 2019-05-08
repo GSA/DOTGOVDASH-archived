@@ -54,9 +54,7 @@ if ($chartdata == 0) {
     $chartcolor = '#29643a';
     $chartdata = 100;
 }
-?>
 
-<?php
 dotgov_common_tooltip("tooltip5","id");
 ?>
 <div class="col-xs-10">
@@ -66,38 +64,28 @@ dotgov_common_tooltip("tooltip5","id");
     <div id="tooltip5" class="infor">
         <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
         <span class="tooltiptext tooltip-left">
-  <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>DNSSEC Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?>
-</span>
+          <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>DNSSEC Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?>
+        </span>
     </div>
 </div>
 
-<?php if(!is_redirect(arg(1))): ?>
-    <div id="dnssec_chart" style="width: 130px; height:130px; margin: 0 auto">&nbsp;</div>
-    <div class="sr-only">The graphic below indicates the level of DNSSEC compliance, and this score is <?php echo $chartdata; ?>%.</div>
-<?php endif; ?>
+<div id="dnssec_chart" style="width: 130px; height:130px; margin: 0 auto">&nbsp;</div>
+<div class="sr-only">The graphic below indicates the level of DNSSEC compliance, and this score is <?php echo $chartdata; ?>%.</div>
+
+<div class="col-lg-6">
+    <?php print 'DNSSEC Compliance: ' . $row->field_field_dnssec_score_1[0]['raw']['value'] . '%<br>'; ?>
+</div>
 
 <?php
-$output = '';
-if (is_redirect($row->nid)) {
-  $output .= '<div class="col-lg-12">';
-  $output .= 'DNSSEC Compliance: <span style="color:red;">Website Redirect - Metric Not Applicable</span><br>';
-} else {
-  $output .= '<div class="col-lg-6">';
-  $output .= 'DNSSEC Compliance: ' . $row->field_field_dnssec_score_1[0]['raw']['value'] . '%<br>';
-}
-$output .= '</div>';
-print $output;
-
-if (!is_redirect($row->nid)) {
-  $blockObject = block_load('trend_analysis', 'trends_dnssec_sparkline');
-  $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
-  print '<div class="col-lg-12">';
-  print drupal_render($block);
-  print '</div>';
-}
+$blockObject = block_load('trend_analysis', 'trends_dnssec_sparkline');
+$block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
 $scanids = dotgov_common_siteAsocScanids(arg(1));
 $scanpath = drupal_get_path_alias("node/" . $scanids['domain_scan_information']);
 ?>
+<div class="col-lg-12">
+    <?php print drupal_render($block); ?>
+</div>
+
 <div class="col-lg-12 clearfix report-buttons">
     <p>
         <a href="/improve-my-score">How to Improve Score</a>

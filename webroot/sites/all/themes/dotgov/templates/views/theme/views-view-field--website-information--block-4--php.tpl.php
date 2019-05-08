@@ -46,7 +46,7 @@
 
 <?php
 $crit_text = '';
-$redirect_message = 'Website Redirect - Metric Not Available';
+$redirect_message = 'Website Redirect - Metric Not Applicable';
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   if($row->field_field_dap_status['0']['raw']['value'] == NULL) {
     $crit_text .= "DAP Data not available for this site. ";
@@ -67,7 +67,7 @@ dotgov_common_tooltip("tooltip3","id");
           <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"><br>
           <?php
           if (is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
-            print '<span style="color:red;">' . $redirect_message . '</span>';
+            print '<span style="color:#a70000;">' . $redirect_message . '</span>';
           } else {
             print $crit_text;
           }
@@ -119,8 +119,8 @@ if(!is_redirect(arg(1))) {
   }
 } else {
   print '<div class="col-lg-12">';
-  print 'DAP Score: <span style="color:red;">Website Redirect - Metric Not Applicable</span></br>';
-  print 'DAP Status: <span style="color:red;">Website Redirect - Metric Not Applicable</span></br>';
+  print 'DAP Score: <span style="color:#a70000;">Website Redirect - Metric Not Applicable</span></br>';
+  print 'DAP Status: <span style="color:#a70000;">Website Redirect - Metric Not Applicable</span></br>';
 }
 ?>
 </div>

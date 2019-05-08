@@ -27,7 +27,7 @@
 $scanids = dotgov_common_siteAsocScanids(arg(1));
 $scanpath = drupal_get_path_alias("node/" . $scanids['508_scan_information']);
 $showlegend = 1;
-$redirect_message = 'Website Redirect - Metric Not Available';
+$redirect_message = 'Website Redirect - Metric Not Applicable';
 if(
   emptyOrNull($row->field_field_accessible_group_colorcont[ '0' ][ 'raw' ][ 'value' ]) &&
   emptyOrNull($row->field_field_accessible_group_htmlattri[ '0' ][ 'raw' ][ 'value' ]) &&
@@ -57,9 +57,9 @@ dotgov_common_tooltip("tooltip9","id");
         <span class="tooltiptext tooltip-left">
             <?php
                 if (!is_redirect(arg(1))) {
-                  print '<span style="color:red;">' . $crit_text . "</span><br>";
+                  print '<span style="color:#a70000;">' . $crit_text . "</span><br>";
                 } else {
-                    print '<span style="color:red;">' . $redirect_message . "</span><br>";
+                    print '<span style="color:#a70000;">' . $redirect_message . "</span><br>";
                 }
             ?>
         Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php dotgov_common_lastScanDate(); ?>
@@ -78,9 +78,9 @@ dotgov_common_tooltip("tooltip9","id");
     </div>
 <?php else: ?>
     <div class="col-lg-12 nopadding">
-        Color Contrast: <span style="color:red;"><?php print $redirect_message; ?></span><br>
-        HTML Attribute: <span style="color:red;"><?php print $redirect_message; ?></span><br>
-        Missing Image Description: <span style="color:red;"><?php print $redirect_message; ?></span>
+        Color Contrast: <span style="color:#a70000;"><?php print $redirect_message; ?></span><br>
+        HTML Attribute: <span style="color:#a70000;"><?php print $redirect_message; ?></span><br>
+        Missing Image Description: <span style="color:#a70000;"><?php print $redirect_message; ?></span>
     </div>
 <?php endif; ?>
 

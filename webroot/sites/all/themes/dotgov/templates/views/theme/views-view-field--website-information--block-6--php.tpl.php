@@ -81,7 +81,7 @@ if ($chartdata <= 50) {
 
 <?php
 // Mobile Information PHP1
-$redirect_message = 'Website Redirect - Metric Not Available';
+$redirect_message = 'Website Redirect - Metric Not Applicable';
 $crit_text = '';
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] != '' ) {
@@ -90,7 +90,7 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
     $crit_text .= "Mobile Performance Score by Google : Not Available";
   }
 } else {
-  $crit_text .= "Mobile Performance Score by Google: <span style=\"color:red;\">" . $redirect_message . "</span><br>";
+  $crit_text .= "Mobile Performance Score by Google: <span style=\"color:#a70000;\">" . $redirect_message . "</span><br>";
 }
 
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
@@ -100,7 +100,7 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
     $crit_text .= "Mobile Compatibility Score by Google : Not Available";
   }
 } else {
-  $crit_text .= "Mobile Compatibility Score by Google: <span style=\"color:red;\">" . $redirect_message . "</span><br>";
+  $crit_text .= "Mobile Compatibility Score by Google: <span style=\"color:#a70000;\">" . $redirect_message . "</span><br>";
 }
 
 dotgov_common_tooltip("tooltip4","id");
@@ -124,7 +124,7 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
     print "Mobile Performance Score: " . $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] . "<br>";
   }
 } else {
-  print "Mobile Performance Score: <span style=\"color:red;\">" . $redirect_message . "</span><br>";
+  print "Mobile Performance Score: <span style=\"color:#a70000;\">" . $redirect_message . "</span><br>";
 }
 
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
@@ -134,7 +134,7 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
     print "Mobile Usability Score: " . $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] . "<br>";
   }
 } else {
-  print "Mobile Usability Score: <span style=\"color:red;\">" . $redirect_message . "</span><br>";
+  print "Mobile Usability Score: <span style=\"color:#a70000;\">" . $redirect_message . "</span><br>";
 }
 ?>
 </div>
