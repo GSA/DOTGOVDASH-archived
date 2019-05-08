@@ -67,7 +67,7 @@ dotgov_common_tooltip("tooltip3","id");
           <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"><br>
           <?php
           if (is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
-            print '<span style="color:#a70000;">' . $redirect_message . '</span>';
+            print '<span style="color:#red;">' . $redirect_message . '</span>';
           } else {
             print $crit_text;
           }

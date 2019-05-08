@@ -57,9 +57,9 @@ dotgov_common_tooltip("tooltip9","id");
         <span class="tooltiptext tooltip-left">
             <?php
                 if (!is_redirect(arg(1))) {
-                  print '<span style="color:#a70000;">' . $crit_text . "</span><br>";
+                    print '<span style="color:white;">' . $crit_text . "</span><br>";
                 } else {
-                    print '<span style="color:#a70000;">' . $redirect_message . "</span><br>";
+                    print '<span style="color:white;">' . $redirect_message . "</span><br>";
                 }
             ?>
         Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php dotgov_common_lastScanDate(); ?>

@@ -90,7 +90,7 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
     $crit_text .= "Mobile Performance Score by Google : Not Available";
   }
 } else {
-  $crit_text .= "Mobile Performance Score by Google: <span style=\"color:#a70000;\">" . $redirect_message . "</span><br>";
+  $crit_text .= "Mobile Performance Score by Google: <span style=\"color:white;\">" . $redirect_message . "</span><br>";
 }
 
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
@@ -100,7 +100,7 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
     $crit_text .= "Mobile Compatibility Score by Google : Not Available";
   }
 } else {
-  $crit_text .= "Mobile Compatibility Score by Google: <span style=\"color:#a70000;\">" . $redirect_message . "</span><br>";
+  $crit_text .= "Mobile Compatibility Score by Google: <span style=\"color:white;\">" . $redirect_message . "</span><br>";
 }
 
 dotgov_common_tooltip("tooltip4","id");
