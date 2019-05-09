@@ -1,12 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: kapilbulchandani
- * Date: 5/19/17
- * Time: 12:08 AM
- */
-
-/**
  * @file field.tpl.php
  * Default template implementation to display the value of a field.
  *
@@ -49,40 +42,71 @@
  *
  * @ingroup themeable
  */
-$scanids = dotgov_common_siteAsocScanids(arg(1));
-$scanpath = drupal_get_path_alias("node/".$scanids['domain_scan_information']);
 ?>
 
-<?php print $output; ?>
-<?php //dsm($view->result);
-$chartdata= $row->_field_data['nid']['entity']->field_dnssec_score['und'][0]['value'];
-if ($chartdata == 0){
+<?php
+$scanids = dotgov_common_siteAsocScanids(arg(1));
+$scanpath = drupal_get_path_alias("node/".$scanids['domain_scan_information']);
+$chartdata = $row->_field_data['nid']['entity']->field_dnssec_score['und'][0]['value'];
+if ($chartdata == 0) {
     $chartcolor = '#ac0600';
-}elseif ($chartdata > 0){
+} elseif ($chartdata > 0){
     $chartcolor = '#29643a';
     $chartdata = 100;
 }
+
+dotgov_common_tooltip("tooltip5","id");
 ?>
+<div class="col-xs-10">
+    <h2 class="pane-title">DNSSEC Information</h2>
+</div>
+<div class="col-xs-2 nopadding">
+    <div id="tooltip5" class="infor">
+        <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+        <span class="tooltiptext tooltip-left">
+          <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>DNSSEC Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?>
+        </span>
+    </div>
+</div>
+
+<div id="dnssec_chart" style="width: 130px; height:130px; margin: 0 auto">&nbsp;</div>
 <div class="sr-only">The graphic below indicates the level of DNSSEC compliance, and this score is <?php echo $chartdata; ?>%.</div>
+
+<div class="col-lg-6">
+    <?php print 'DNSSEC Compliance: ' . $row->field_field_dnssec_score_1[0]['raw']['value'] . '%<br>'; ?>
+</div>
+
+<?php
+$blockObject = block_load('trend_analysis', 'trends_dnssec_sparkline');
+$block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+$scanids = dotgov_common_siteAsocScanids(arg(1));
+$scanpath = drupal_get_path_alias("node/" . $scanids['domain_scan_information']);
+?>
+<div class="col-lg-12">
+    <?php print drupal_render($block); ?>
+</div>
+
+<div class="col-lg-12 clearfix report-buttons">
+    <p>
+        <a href="/improve-my-score">How to Improve Score</a>
+    </p>
+    <p>
+        <a class="link-all-reports" href="/<?=$scanpath?>">Go to Full Report</a>
+        <a class="trend-analysis-reports link-all-reports" href="/historical_scan_score_data/<?=arg(1)?>?order=field_dnssec_score-revision_id&sort=desc">Trend Analysis Report</a>
+    </p>
+</div>
 
 <script type="text/javascript">
     Highcharts.chart('dnssec_chart', {
-
             chart: {
                 type: 'solidgauge',
-
             },
-
             title: {
-
                 text: ''
-
             },
-
             tooltip: {
                 enabled:false,
             },
-
             pane: {
                 startAngle: 0,
                 endAngle: 360,
@@ -98,7 +122,6 @@ if ($chartdata == 0){
                 max: 100,
                 lineWidth: 0,
                 tickPositions: [],
-
                 title: {
                     text: '<?php echo ($chartdata); ?> %',
                     style: {
@@ -107,11 +130,7 @@ if ($chartdata == 0){
                     },
                     y: 30
                 },
-
-
-
             },
-
             plotOptions: {
                 solidgauge: {
                     dataLabels: {
@@ -122,7 +141,6 @@ if ($chartdata == 0){
                     rounded: true
                 }
             },
-
             series: [{
                 name: 'HTTPS',
                 data: [{
@@ -133,9 +151,5 @@ if ($chartdata == 0){
                 }]
             }]
         }
-
-
     );
 </script>
-
-

@@ -1,12 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: kapilbulchandani
- * Date: 5/19/17
- * Time: 12:08 AM
- */
-
-/**
  * @file field.tpl.php
  * Default template implementation to display the value of a field.
  *
@@ -49,84 +42,136 @@
  *
  * @ingroup themeable
  */
+?>
+
+<?php
+$crit_text = '';
+$redirect_message = 'Website Redirect - Metric Not Applicable';
+if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
+  if($row->field_field_dap_status['0']['raw']['value'] == NULL) {
+    $crit_text .= "DAP Data not available for this site. ";
+  } else {
+    $crit_text .= "DAP Data is collected from pulse.cio.gov";
+  }
+}
+dotgov_common_tooltip("tooltip3","id");
+?>
+
+<div class="col-xs-10">
+    <h2 class="pane-title">DAP Information</h2>
+</div>
+<div class="col-xs-2 nopadding">
+    <div id="tooltip3" class="infor">
+        <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+        <span class="tooltiptext tooltip-left">
+          <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"><br>
+          <?php
+          if (is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
+            print '<span style="color:#red;">' . $redirect_message . '</span>';
+          } else {
+            print $crit_text;
+          }
+          ?>
+        </span>
+    </div>
+</div>
+
+<?php
 $scanids = dotgov_common_siteAsocScanids(arg(1));
 $scanpath = drupal_get_path_alias("node/".$scanids['https_dap_scan_information']);
-//
+
 $query = db_query("select a.field_dap_score_value,b.field_dap_status_value from field_data_field_dap_score a , field_data_field_dap_status b,field_data_field_website_id c where a.entity_id=c.field_website_id_nid and b.entity_id=c.entity_id and a.entity_id=:nid",array(":nid"=>arg(1)));
 foreach ($query as $result) {
-$dapscore = $result->field_dap_score_value;
-$dapstat = $result->field_dap_status_value;
+    $dapscore = $result->field_dap_score_value;
+    $dapstat = $result->field_dap_status_value;
 }
-//drupal_add_js('https://code.highcharts.com/highcharts-more.js');
-//drupal_add_js('https://code.highcharts.com/modules/solid-gauge.js');
-//drupal_add_js(drupal_get_path('module', 'activity_chart') . '/activity_chart.js');
 $chartdatafont = "22px";
 ?>
-<div class="col-lg-6">
+
+<div class="col-lg-12 clearfix">
 <?php
-if($dapscore == NULL  || $dapscore == '') {
+if(!is_redirect(arg(1))) {
+  print '<div class="col-lg-6">';
+  if($dapscore == NULL  || $dapscore == '') {
     print "DAP Score: Not Available<br>";
     print "DAP Status: Not Available<br>";
     $chartdatatext = "Not Available";
     $chartdatafont = "12px";
     $chartdata = "0";
-}
-elseif($dapscore == '0') {
+  }
+  elseif($dapscore == '0') {
     print "DAP Score: 0%<br>";
     print "DAP Status: Not Implemented<br>";
     $chartdatatext = "0%";
     $chartdata = "0";
-}
-elseif($dapscore == '100') {
+  }
+  elseif($dapscore == '100') {
     print "DAP Score: 100%<br>";
     print "DAP Status: Implemented<br>";
     $chartdatatext = "100%";
     $chartdata = "100";
-}
-else {
+  }
+  else {
     print "DAP Score: ".$dapscore."%<br>";
     print "DAP Status: Implemented<br>";
     $chartdatatext = $dapscore."%";
     $chartdata = $dapscore;
+  }
+} else {
+  print '<div class="col-lg-12">';
+  print 'DAP Score: <span style="color:#a70000;">Website Redirect - Metric Not Applicable</span></br>';
+  print 'DAP Status: <span style="color:#a70000;">Website Redirect - Metric Not Applicable</span></br>';
 }
-
 ?>
 </div>
-<?php print $output;?>
 
-<?php //dsm($view->result);
-//dsm ($row->_field_data['nid']['entity']->field_https_score['und'][0]['safe_value']);
-
-
-if ($chartdata <= 50){
+<?php
+if ($chartdata <= 50) {
     $chartcolor = '#ac0600';
-}elseif($chartdata>50 and $chartdata<=75){
+} elseif($chartdata>50 and $chartdata<=75) {
     $chartcolor='#654f00';
-}
-
-else{
+} else {
     $chartcolor='#29643a';
 }
-
 ?>
+
+<?php if (!is_redirect(arg(1))): ?>
+  <div class="col-lg-6">
+      <div id="dap_chart" style="width: 130px; height:130px; margin: 0 auto">&nbsp;</div>
+  </div>
+<?php endif; ?>
+
+<?php
+$blockObject = block_load('trend_analysis', 'trends_dap_sparkline');
+$block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+$output = drupal_render($block);
+if (!is_redirect(arg(1))) {
+    print $output;
+}
+$scanids = dotgov_common_siteAsocScanids(arg(1));
+$scanpath = drupal_get_path_alias("node/" . $scanids['https_dap_scan_information']);
+?>
+</div>
+
+<div class="col-lg-12 clearfix report-buttons">
+    <p>
+        <a class="link-all-reports" href="/<?=$scanpath?>">Go to Full Report</a>
+        <a class="trend-analysis-reports link-all-reports" href="/historical_scan_score_data/<?=arg(1)?>?order=field_dap_score-revision_id&sort=desc">Trend Analysis Report</a>
+    </p>
+</div>
+
 <script type="text/javascript">
     Highcharts.chart('dap_chart', {
-
             chart: {
                 type: 'solidgauge',
-
             },
-
             title: {
 
                 text: ''
-
             },
-
             tooltip: {
                 enabled:false,
             },
-
             pane: {
                 startAngle: 0,
                 endAngle: 360,
@@ -137,13 +182,11 @@ else{
                     borderWidth: 0
                 }]
             },
-
             yAxis: {
                 min: 0,
                 max: 100,
                 lineWidth: 0,
                 tickPositions: [],
-
                 title: {
                     text: '<?php echo ($chartdatatext); ?>',
                     style: {
@@ -152,11 +195,7 @@ else{
                     },
                     y: 30
                 },
-
-
-
             },
-
             plotOptions: {
                 solidgauge: {
                     dataLabels: {
@@ -167,7 +206,6 @@ else{
                     rounded: true
                 }
             },
-
             series: [{
                 name: 'DAP',
                 data: [{
@@ -178,10 +216,5 @@ else{
                 }]
             }]
         }
-
-
     );
 </script>
-
-
-

@@ -98,7 +98,7 @@ else
                         <h1 class="site-logo">Digital Dashboard</h1>
                         <img src="<?php print $logo; ?>" alt="Digital Dashboard.gov - Home" />
                     </a>
-			
+
 
 
 				<?php endif; ?>
@@ -157,7 +157,7 @@ else
 </header>
 
 <div class="main-container <?php print $container_class; ?>">
-
+	<?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
 	<a id="main-content"></a>
 	<?php print render($title_prefix); ?>
 	<?php if (!empty($title)): ?>
@@ -182,7 +182,6 @@ else
 			</ul>
 		</div>
 <div class="heading clearfix"><h2>Data Discovery Results</h2></div><hr>
-		<?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
 		<div class="row border">
 
 			<?php if (!empty($page['sidebar_first'])): ?>
