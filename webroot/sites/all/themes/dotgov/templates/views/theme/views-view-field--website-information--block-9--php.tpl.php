@@ -28,24 +28,24 @@ $scanids = dotgov_common_siteAsocScanids(arg(1));
 $scanpath = drupal_get_path_alias("node/" . $scanids['508_scan_information']);
 $showlegend = 1;
 $redirect_message = 'Website Redirect - Metric Not Applicable';
-if(
-  emptyOrNull($row->field_field_accessible_group_colorcont[ '0' ][ 'raw' ][ 'value' ]) &&
-  emptyOrNull($row->field_field_accessible_group_htmlattri[ '0' ][ 'raw' ][ 'value' ]) &&
-  emptyOrNull($row->field_field_accessible_group_missingim[ '0' ][ 'raw' ][ 'value' ])) {
+
+$colorcont = $row->field_field_accessible_group_colorcont[ '0' ][ 'raw' ][ 'value' ];
+$htmlattri = $row->field_field_accessible_group_htmlattri[ '0' ][ 'raw' ][ 'value' ];
+$missingim = $row->field_field_accessible_group_missingim[ '0' ][ 'raw' ][ 'value' ];
+
+if(emptyOrNull($colorcont) && emptyOrNull($htmlattri) && emptyOrNull($missingim)) {
     $showlegend = 0;
 }
-?>
 
-<?php
 $crit_text = '';
-if ( !emptyOrNull($row->field_field_accessible_group_colorcont[ '0' ][ 'raw' ][ 'value' ])) {
-  $crit_text .= "Color Contrast Issues : " . $row->field_field_accessible_group_colorcont[ '0' ][ 'raw' ][ 'value' ] ."<br>";
+if ( !emptyOrNull($colorcont)) {
+  $crit_text .= "Color Contrast Issues : " . $colorcont ."<br>";
 }
-if ( !emptyOrNull($row->field_field_accessible_group_htmlattri[ '0' ][ 'raw' ][ 'value' ])) {
-  $crit_text .= "HTML Attribute Issues : " . $row->field_field_accessible_group_htmlattri[ '0' ][ 'raw' ][ 'value' ] . "<br>";
+if ( !emptyOrNull($htmlattri)) {
+  $crit_text .= "HTML Attribute Issues : " . $htmlattri . "<br>";
 }
-if ( !emptyOrNull($row->field_field_accessible_group_missingim[ '0' ][ 'raw' ][ 'value' ])) {
-  $crit_text .= "Missing Image Description : " . $row->field_field_accessible_group_missingim[ '0' ][ 'raw' ][ 'value' ] . "<br>";
+if ( !emptyOrNull($missingim)) {
+  $crit_text .= "Missing Image Description : " . $missingim . "<br>";
 }
 dotgov_common_tooltip("tooltip9","id");
 ?>
@@ -68,12 +68,12 @@ dotgov_common_tooltip("tooltip9","id");
 </div>
 
 <?php if (!is_redirect(arg(1))): ?>
-    <div class="col-lg-5 nopadding">
-        Color Contrast: <?php print $row->field_field_accessible_group_colorcont[ '0' ][ 'raw' ][ 'value' ]; ?> <br/>
-        HTML Attribute: <?php print $row->field_field_accessible_group_htmlattri[ '0' ][ 'raw' ][ 'value' ]; ?> <br/>
-        Missing Image Description: <?php print $row->field_field_accessible_group_missingim[ '0' ][ 'raw' ][ 'value' ]; ?>
+    <div class="col-lg-<?php echo (emptyOrNull($colorcont) && emptyOrNull($htmlattri) && emptyOrNull($missingim)) ? '8' : '5'; ?> nopadding">
+        Color Contrast: <?php print !emptyOrNull($colorcont) ? $colorcont : 0; ?> <br/>
+        HTML Attribute: <?php print !emptyOrNull($htmlattri) ? $htmlattri : 0; ?> <br/>
+        Missing Image Description: <?php print !emptyOrNull($missingim) ? $missingim : 0; ?>
     </div>
-    <div class="col-lg-7 nopadding">
+    <div class="col-lg-<?php echo (emptyOrNull($colorcont) && emptyOrNull($htmlattri) && emptyOrNull($missingim)) ? '4' : '7'; ?> nopadding">
         <div id="access_chart" style="height:200px;">&nbsp</div>
     </div>
 <?php else: ?>
@@ -126,14 +126,13 @@ dotgov_common_tooltip("tooltip9","id");
             colorByPoint: true,
             data: [{
                 name: 'Color Contrast Issues',
-                y: <?php print_r(($view->result[0]->_field_data['nid']['entity']->field_accessible_group_colorcont['und'][0]['value']!= '')?$view->result[0]->_field_data['nid']['entity']->field_accessible_group_colorcont['und'][0]['value']:0);?>
+                y: <?php print_r(!emptyOrNull($colorcont) ? $colorcont : 0); ?>
             }, {
                 name: 'HTML Attribute Issues',
-                y: <?php print_r( ($view->result[0]->_field_data['nid']['entity']->field_accessible_group_htmlattri['und'][0]['value'] != '')?$view->result[0]->_field_data['nid']['entity']->field_accessible_group_htmlattri['und'][0]['value']:0);?>
-
+                y: <?php print_r(!emptyOrNull($htmlattri) ? $htmlattri : 0); ?>
             }, {
                 name: 'Missing Image Description Issues',
-                y: <?php print_r(($view->result[0]->_field_data['nid']['entity']->field_accessible_group_missingim['und'][0]['value'] != '')?$view->result[0]->_field_data['nid']['entity']->field_accessible_group_missingim['und'][0]['value']:0); ?>
+                y: <?php print_r(!emptyOrNull($missingim) ? $missingim : 0); ?>
             }]
         }]
     });
