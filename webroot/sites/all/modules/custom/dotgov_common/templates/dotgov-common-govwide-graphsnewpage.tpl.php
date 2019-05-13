@@ -27,6 +27,14 @@ $agency_insecprot_score = $govwidedata['actualdata']['avg_rc4'];
 $agency_m15_score = $govwidedata['actualdata']['avg_m15'];
 
 $agencydata = dotgov_common_getAllAgencyComplianceData();
+dotgov_common_tooltip("tooltip2","id");
+dotgov_common_tooltip("tooltip4","id");
+dotgov_common_tooltip("tooltip3","id");
+dotgov_common_tooltip("tooltip5","id");
+dotgov_common_tooltip("tooltip7","id");
+dotgov_common_tooltip("tooltip6","id");
+dotgov_common_tooltip("tooltip9","id");
+dotgov_common_tooltip("tooltip8","id");
 ?>
 <?php //print_r($govwidedata);print_r($agencydata);  ?>
 
@@ -38,8 +46,16 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                     <div class="pond-secondary-column-content-region pond-column pond-secondary-column1 panel-panel">
                         <div class="pond-secondary-column-content-region-inner pond-column-inner pond-secondary-column1-inner panel-panel-inner">
                             <div class="panel-pane pane-views pane-website-information">
-                                <h2 class="pane-title"> HTTPS Information </h2>
-                                <div class="pane-content">
+                                <div class="col-xs-10 nopadding">
+                                    <h2 class="pane-title"> HTTPS Information </h2>
+                                </div>
+                                <div class="col-xs-2 nopadding">
+                                    <div id="tooltip2" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+
+    HTTPS Data is collected through a custom scanner component of digital dashboard that last ran on
+                                            <?php dotgov_common_lastScanDate(); ?>
+    </span> </div>
+                                </div>                                <div class="pane-content">
                                     <div class="view-wrapper">
                                         <div class="row">
                                             <div class="col-md-12 col-lg-12">HTTPS Overall Average Score : <?php echo $agency_https_score ?>%</div>
@@ -156,7 +172,19 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                             </div>
                             <div class="panel-separator"></div>
                             <div class="panel-pane pane-views pane-website-information">
-                                <h2 class="pane-title"> DAP Information </h2>
+                                <div class="col-xs-10 nopadding">
+                                    <h2 class="pane-title">DAP Information</h2>
+                                </div>
+                                <div class="col-xs-2 nopadding">
+                                    <div id="tooltip3" class="infor">
+                                        <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                                        <span class="tooltiptext tooltip-left">
+          <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"><br>
+			DAP Overall Average Score :
+                                            <?= $agency_dap_score ?>%
+        </span>
+                                    </div>
+                                </div>
                                 <div class="pane-content">
                                     <div class="view-wrapper" style="min-height:359px;">
                                         <div class="view  view-display-id-block_4 view-dom-id-6181bfbb91a57a13154a09c584b98ec8">
@@ -264,7 +292,17 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                             </div>
                             <div class="panel-separator"></div>
                             <div class="panel-pane pane-views pane-website-information">
-                                <h2 class="pane-title">DNSSEC Information </h2>
+                                <div class="col-xs-10 nopadding">
+                                    <h2 class="pane-title">DNSSEC Information</h2>
+                                </div>
+                                <div class="col-xs-2 nopadding">
+                                    <div id="tooltip5" class="infor">
+                                        <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                                        <span class="tooltiptext tooltip-left">
+          <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>DNSSEC Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?>
+        </span>
+                                    </div>
+                                </div>
                                 <div class="pane-content">
                                     <div class="view  view-display-id-block_7 view-dom-id-3e71e61814bfdc7fd3678ddb5e0c33c9">
                                         <div class="view-content">
@@ -368,7 +406,16 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                             </div>
                             <div class="panel-separator"></div>
                             <div class="panel-pane pane-views pane-website-information">
-                                <h2 class="pane-title"> Search Engine Information </h2>
+                                <div class="col-xs-10 nopadding">
+                                    <h2 class="pane-title"> Search Information </h2>
+                                </div>
+                                <div class="col-xs-2 nopadding">
+                                    <div id="tooltip5" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                                        <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+Search Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?> </span>
+                                    </div>
+
+                                </div>
                                 <div class="pane-content">
                                     <div class="view-wrapper">
                                         <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
@@ -420,7 +467,23 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                     <div class="pond-secondary-column-content-region pond-column pond-secondary-column2 panel-panel">
                         <div class="pond-secondary-column-content-region-inner pond-column-inner pond-secondary-column2-inner panel-panel-inner">
                             <div class="panel-pane pane-views pane-website-information">
-                                <h2 class="pane-title"> Mobile Information </h2>
+                                <div class="col-xs-12 nopadding">
+                                    <div class="col-xs-10 nopadding">
+                                        <h2 class="pane-title"> Mobile Information </h2>
+                                    </div>
+                                    <div class="col-xs-2 nopadding">
+                                        <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                                            <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"><br>
+								  Mobile Overall Average Score : <?php print $agency_mobovr_score; ?> <br>
+                                  Mobile Performance Score :
+                                                <?= $agency_mobperf_score; ?>
+                                                <br>
+                                  Mobile Usability Score:
+                                                <?= $agency_mobusab_score; ?>
+                                                <br></span>
+                                        </div>
+                                    </div>
+                                </div><br clear="all" />
                                 <div class="pane-content">
                                     <div class="view  view-display-id-block_6 view-dom-id-146fb84eddbe3dc34d2b2cff5758c7bc">
                                         <div class="view-content">
@@ -534,7 +597,13 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                             </div>
                             <div class="panel-separator"></div>
                             <div class="panel-pane pane-views pane-website-information">
-                                <h2 class="pane-title"> M-15-13 and BOD 18-01 Information </h2>
+                                <div class="col-xs-10 nopadding"><h2 class="pane-title">M-15-13 and BOD 18-01 Information</h2></div>
+                                <div class="col-xs-2 nopadding">
+                                    <div id="tooltip7" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                                        <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+M-15-13 and BOD 18-01 Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?></span>
+                                    </div>
+                                </div>
                                 <div class="pane-content">
                                     <div class="view  view-display-id-block_10 view-dom-id-93e7fd06306700be9064f5e8954f211b">
                                         <div class="view-content">
@@ -636,8 +705,18 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                             </div>
                             <div class="panel-separator"></div>
                             <div class="panel-pane pane-views pane-website-information">
-                                <h2 class="pane-title"> IPV6 Information </h2>
-                                <div class="pane-content">
+                                <div class="col-xs-10 nopadding">
+                                    <h2 class="pane-title"> IPV6 Information </h2>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div id="tooltip6" class="infor">
+                                        <i class='icon glyphicon glyphicon-info-sign'>&nbsp</i>
+                                        <span class="tooltiptext tooltip-left">
+            <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code">
+            IPV6 Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate();?>
+        </span>
+                                    </div>
+                                </div>                                <div class="pane-content">
                                     <div class="view  view-display-id-block_8 view-dom-id-b6c9491539ed2fa13d8d26fb2e0fc9c7">
                                         <div class="view-content">
                                             <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
@@ -745,8 +824,17 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                     <div class="pond-secondary-column-content-region pond-column pond-secondary-column3 panel-panel">
                         <div class="pond-secondary-column-content-region-inner pond-column-inner pond-secondary-column3-inner panel-panel-inner">
                             <div class="panel-pane pane-views pane-website-information">
-                                <h2 class="pane-title"> Accessibility Issues </h2>
-                                <div class="pane-content">
+                                <div class="col-xs-10 nopadding">
+                                    <h2 class="pane-title">Accessibility Issues</h2>
+                                </div>
+                                <div class="col-xs-2 nopadding">
+                                    <div id="tooltip9" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                                        <span class="tooltiptext tooltip-left">
+            <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br/>
+        Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php dotgov_common_lastScanDate(); ?>
+        </span>
+                                    </div>
+                                </div>    <br clear="all"/>                                  <div class="pane-content">
                                     <div class="view-wrapper">
                                         <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                                             <div class="view-empty"> Average Color Contrast : <?php echo round($agencydata['ag_col_contrast'] / $agency_website_num, 1); ?> <br>
@@ -795,8 +883,13 @@ $agencydata = dotgov_common_getAllAgencyComplianceData();
                             </div>
                             <div class="panel-separator"></div>
                             <div class="panel-pane pane-views pane-website-information">
-                                <h2 class="pane-title"> Free of Insecure Protocols Information </h2>
-                                <div class="pane-content">
+                                <div class="col-xs-10 nopadding"><h2 class="pane-title">Free of Insecure Protocols Information</h2></div>
+                                <div class="col-xs-2 nopadding">
+                                    <div id="tooltip8" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                                        <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?></span>
+                                    </div>
+                                </div>                                                      <div class="pane-content">
                                     <div class="view  view-display-id-block_11 view-dom-id-48cb0bd52b149a4150411d9b44b892bc">
                                         <div class="view-content">
                                             <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">

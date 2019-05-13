@@ -5,6 +5,14 @@
  *
  * @ingroup views_templates
  */
+dotgov_common_tooltip("tooltip2","id");
+dotgov_common_tooltip("tooltip4","id");
+dotgov_common_tooltip("tooltip3","id");
+dotgov_common_tooltip("tooltip5","id");
+dotgov_common_tooltip("tooltip7","id");
+dotgov_common_tooltip("tooltip6","id");
+dotgov_common_tooltip("tooltip9","id");
+dotgov_common_tooltip("tooltip8","id");
 
 $agencydata = dotgov_common_getAgencyComplianceData( arg( 1 ) );
 foreach ( $view->style_plugin->rendered_fields[ 0 ] as $key => $val ) {
@@ -89,7 +97,17 @@ $agencynode = node_load( arg( 1 ) );
                                 <div class="pond-secondary-column-content-region pond-column pond-secondary-column1 panel-panel">
                                     <div class="pond-secondary-column-content-region-inner pond-column-inner pond-secondary-column1-inner panel-panel-inner">
                                         <div class="panel-pane pane-views pane-website-information">
-                                            <h2 class="pane-title"> HTTPS Information </h2>
+
+                                            <div class="col-xs-10 nopadding">
+                                                <h2 class="pane-title"> HTTPS Information </h2>
+                                            </div>
+                                            <div class="col-xs-2 nopadding">
+                                                <div id="tooltip2" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+
+    HTTPS Data is collected through a custom scanner component of digital dashboard that last ran on
+                                                        <?php dotgov_common_lastScanDate(); ?>
+    </span> </div>
+                                            </div>
                                             <div class="pane-content">
                                                 <div class="view-wrapper">
                                                     <div class="row">
@@ -223,7 +241,19 @@ $agencynode = node_load( arg( 1 ) );
                                         </div>
                                         <div class="panel-separator"></div>
                                         <div class="panel-pane pane-views pane-website-information">
-                                            <h2 class="pane-title"> DAP Information </h2>
+                                            <div class="col-xs-10 nopadding">
+                                                <h2 class="pane-title">DAP Information</h2>
+                                            </div>
+                                            <div class="col-xs-2 nopadding">
+                                                <div id="tooltip3" class="infor">
+                                                    <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                                                    <span class="tooltiptext tooltip-left">
+          <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"><br>
+			DAP Overall Average Score :
+                                                        <?= $agency_dap_score ?>%
+        </span>
+                                                </div>
+                                            </div>
                                             <div class="pane-content">
                                                 <div class="view-wrapper" style="min-height:332px;">
                                                     <div class="view  view-display-id-block_4 view-dom-id-6181bfbb91a57a13154a09c584b98ec8">
@@ -325,8 +355,7 @@ $agencynode = node_load( arg( 1 ) );
                                                                             <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
                                                                             <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
                                                                             <tr>
-                                                                                <td>
-                                                                                    DAP Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
+                                                                                <td> DAP Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
                                                                                 <td><?= dotgov_common_applyDataColor($agencydata['dap_compliant'], $agencydata['dap_tottracked'],'#29643a') ?></td>
                                                                             </tr>
                                                                             <tr>
@@ -341,17 +370,26 @@ $agencynode = node_load( arg( 1 ) );
                                                     </div>
                                                     <div><br>
                                                         <p><font style="font-size: larger;font-color:blue;">*</font> : DAP information is based on data collected from <span style="font-color:blue"></span><a href="https://pulse.cio.gov/analytics/agencies" target="_new">pulse.cio.gov</a></span></p>
-                                                    </div></div>
+                                                    </div>
+                                                </div>
                                                 <div class="view-button">
                                                     <p><a class="btn btn-primary" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </p>
                                                 </div>
-
                                             </div>
                                         </div>
                                         <div class="panel-separator"></div>
                                         <div class="panel-pane pane-views pane-website-information">
-                                            <h2 class="pane-title">DNSSEC Information </h2>
-                                            <div class="pane-content">
+                                            <div class="col-xs-10 nopadding">
+                                                <h2 class="pane-title">DNSSEC Information</h2>
+                                            </div>
+                                            <div class="col-xs-2 nopadding">
+                                                <div id="tooltip5" class="infor">
+                                                    <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                                                    <span class="tooltiptext tooltip-left">
+          <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>DNSSEC Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?>
+        </span>
+                                                </div>
+                                            </div>                      <div class="pane-content">
                                                 <div class="view  view-display-id-block_7 view-dom-id-3e71e61814bfdc7fd3678ddb5e0c33c9">
                                                     <div class="view-content">
                                                         <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
@@ -472,45 +510,60 @@ $agencynode = node_load( arg( 1 ) );
                                         </div>
                                         <div class="panel-separator"></div>
                                         <div class="panel-pane pane-views pane-website-information">
-                                            <h2 class="pane-title"> Search Engine Information </h2>
+                                            <div class="col-xs-10 nopadding">
+                                                <h2 class="pane-title"> Search Information </h2>
+                                            </div>
+                                            <div class="col-xs-2 nopadding">
+                                                <div id="tooltip5" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                                                    <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+Search Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?> </span>
+                                                </div>
+
+                                            </div>
                                             <div class="pane-content">
                                                 <div class="view-wrapper">
                                                     <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                                                         <div class="view-empty">
-                                                            <table><tr><td><div id="piechart2"></div>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><div id="piechart2"></div>
                                                                         <br>
                                                                         <?php print $agencydata['searchenginestatus_graph'];
                                                                         print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of Search Engines by category</span>";
-                                                                        ?>
-                                                                    </td><td><div id="piechart3"></div>
+                                                                        ?></td>
+                                                                    <td><div id="piechart3"></div>
                                                                         <br>
                                                                         <?php print $agencydata['searchengines_graph'];
                                                                         print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of Search Engines</span>";
-                                                                        ?>
-                                                                    </td></tr>
+                                                                        ?></td>
+                                                                </tr>
                                                                 <tr>
-                                                                    <td>
-                                                                        <table>
-                                                                            <tr style="background-color: #215393;color: white;"><td><b>Search Engine</td><td>Total Number</b></td></tr>
+                                                                    <td><table>
+                                                                            <tr style="background-color: #215393;color: white;">
+                                                                                <td><b>Search Engine</td>
+                                                                                <td>Total Number</b></td>
+                                                                            </tr>
                                                                             <?php
                                                                             foreach($agencydata['searchenginedata'] as $skey=>$sval){
                                                                                 print "<tr><td>$skey</td><td align='center'>   $sval</td> </tr>";
                                                                             }
                                                                             ?>
-                                                                        </table>
-                                                                    </td>
-                                                                    <td>
-                                                                        <?php
+                                                                        </table></td>
+                                                                    <td><?php
                                                                         $searchenginestatus = $agencydata['searchenginestatus'];
                                                                         ?>
                                                                         <table>
-                                                                            <tr style="background-color: #215393;color: white;"><td>Number of sites with Search Engine</td><td>Number of sites without Search Engine</td></tr>
-                                                                            <tr><td align='center'><?=$searchenginestatus['search_available']?></td><td align='center'><?=$searchenginestatus['search_notavailable']?></td></tr>
-                                                                        </table>
-                                                                    </td></tr>
+                                                                            <tr style="background-color: #215393;color: white;">
+                                                                                <td>Number of sites with Search Engine</td>
+                                                                                <td>Number of sites without Search Engine</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td align='center'><?=$searchenginestatus['search_available']?></td>
+                                                                                <td align='center'><?=$searchenginestatus['search_notavailable']?></td>
+                                                                            </tr>
+                                                                        </table></td>
+                                                                </tr>
                                                             </table>
-
-
                                                         </div>
                                                     </div>
                                                 </div>
@@ -519,19 +572,34 @@ $agencynode = node_load( arg( 1 ) );
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                                 <div class="pond-secondary-column-content-region pond-column pond-secondary-column2 panel-panel">
                                     <div class="pond-secondary-column-content-region-inner pond-column-inner pond-secondary-column2-inner panel-panel-inner">
+
                                         <div class="panel-pane pane-views pane-website-information">
-                                            <h2 class="pane-title"> Mobile Information </h2>
-                                            <div class="pane-content">
+                                            <div class="col-xs-12 nopadding">
+                                                <div class="col-xs-10 nopadding">
+                                                    <h2 class="pane-title"> Mobile Information </h2>
+                                                </div>
+                                                <div class="col-xs-2 nopadding">
+                                                    <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                                                        <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"><br>
+								  Mobile Overall Average Score : <?php print $agency_mobovr_score; ?> <br>
+                                  Mobile Performance Score :
+                                                            <?= $agency_mobperf_score; ?>
+                                                            <br>
+                                  Mobile Usability Score:
+                                                            <?= $agency_mobusab_score; ?>
+                                                            <br></span>
+                                                    </div>
+                                                </div>
+                                            </div><br clear="all" />
+                                            <div class="pane-content clearfix">
                                                 <div class="view  view-display-id-block_6 view-dom-id-146fb84eddbe3dc34d2b2cff5758c7bc">
                                                     <div class="view-content">
                                                         <div class="view-wrapper">
                                                             <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
-
                                                                 <?php
                                                                 if ( $agency_mobperf_score >= '0' && $agency_mobperf_score <= '59' ) {
                                                                     $mobperfmstat = "Low";
@@ -638,7 +706,8 @@ $agencynode = node_load( arg( 1 ) );
                                                                                 );
                                                                             </script>
                                                                         </div>
-                                                                    </div></div>
+                                                                    </div>
+                                                                </div>
                                                                 <?php print $agencydata['ag_mob_chart']; ?>
                                                                 <div class="col-xs-12">Mobile Overall Average Score : <?php print $agency_mobovr_score ?> <br>
                                                                     Mobile Performance Score :
@@ -657,29 +726,29 @@ $agencynode = node_load( arg( 1 ) );
                                                                         print "$output1";
                                                                         ?>
                                                                     </div>
-
                                                                 </div>
                                                             </div>
-
                                                         </div>
-                                                        <div class="col-xs-12 clearfix">
-                                                            <span style="font-size: 12px;font-style:italic;">&nbsp;&nbsp;Above graph represents a monthly Mobile Trend</span>
-                                                        </div>
+                                                        <div class="col-xs-12 clearfix"> <span style="font-size: 12px;font-style:italic;">&nbsp;&nbsp;Above graph represents a monthly Mobile Trend</span> </div>
                                                         <div class="view-button clearfix">
                                                             <div class="row col-xs-12 nopadding">
-
                                                                 <div class="col-xs-6"><a class="btn btn-primary" href="/website/mobile/reports?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </div>
-                                                                <div class="col-xs-6" style="margin-top:8px ">
-                                                                    <a href="/improve-my-score">How to Improve Score</a>
-                                                                </div>
-                                                            </div></div>
+                                                                <div class="col-xs-6" style="margin-top:8px "> <a href="/improve-my-score">How to Improve Score</a> </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="panel-separator"></div>
                                         <div class="panel-pane pane-views pane-website-information">
-                                            <h2 class="pane-title"> M-15-13 and BOD 18-01 Information </h2>
+                                            <div class="col-xs-10 nopadding"><h2 class="pane-title">M-15-13 and BOD 18-01 Information</h2></div>
+                                            <div class="col-xs-2 nopadding">
+                                                <div id="tooltip7" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                                                    <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+M-15-13 and BOD 18-01 Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?></span>
+                                                </div>
+                                            </div>
                                             <div class="pane-content">
                                                 <div class="view  view-display-id-block_10 view-dom-id-93e7fd06306700be9064f5e8954f211b">
                                                     <div class="view-content">
@@ -799,7 +868,18 @@ $agencynode = node_load( arg( 1 ) );
                                         </div>
                                         <div class="panel-separator"></div>
                                         <div class="panel-pane pane-views pane-website-information">
-                                            <h2 class="pane-title"> IPV6 Information </h2>
+                                            <div class="col-xs-10 nopadding">
+                                                <h2 class="pane-title"> IPV6 Information </h2>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <div id="tooltip6" class="infor">
+                                                    <i class='icon glyphicon glyphicon-info-sign'>&nbsp</i>
+                                                    <span class="tooltiptext tooltip-left">
+            <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code">
+            IPV6 Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate();?>
+        </span>
+                                                </div>
+                                            </div>
                                             <div class="pane-content">
                                                 <div class="view  view-display-id-block_8 view-dom-id-b6c9491539ed2fa13d8d26fb2e0fc9c7">
                                                     <div class="view-content">
@@ -926,8 +1006,17 @@ $agencynode = node_load( arg( 1 ) );
                                 <div class="pond-secondary-column-content-region pond-column pond-secondary-column3 panel-panel">
                                     <div class="pond-secondary-column-content-region-inner pond-column-inner pond-secondary-column3-inner panel-panel-inner">
                                         <div class="panel-pane pane-views pane-website-information">
-                                            <h2 class="pane-title"> Accessibility Issues </h2>
-                                            <div class="pane-content">
+                                            <div class="col-xs-10 nopadding">
+                                                <h2 class="pane-title">Accessibility Issues</h2>
+                                            </div>
+                                            <div class="col-xs-2 nopadding">
+                                                <div id="tooltip9" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                                                    <span class="tooltiptext tooltip-left">
+            <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br/>
+        Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php dotgov_common_lastScanDate(); ?>
+        </span>
+                                                </div>
+                                            </div>    <br clear="all"/>                 <div class="pane-content clearfix">
                                                 <div class="view-wrapper">
                                                     <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                                                         <div class="view-empty"> Average Color Contrast:
@@ -943,8 +1032,7 @@ $agencynode = node_load( arg( 1 ) );
                                                             <?php print $agencydata['ag_access_chart'];
                                                             if(($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydata['ag_miss_image']) != 0){
                                                                 print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of Accessibility issues by category</span>";
-                                                            }?>
-                                                        </div>
+                                                            }?> </div>
                                                     </div>
                                                 </div>
                                                 <div class="view-button"><br>
@@ -954,8 +1042,13 @@ $agencynode = node_load( arg( 1 ) );
                                         </div>
                                         <div class="panel-separator"></div>
                                         <div class="panel-pane pane-views pane-website-information">
-                                            <h2 class="pane-title"> Free of Insecure Protocols Information </h2>
-                                            <div class="pane-content">
+                                            <div class="col-xs-10 nopadding"><h2 class="pane-title">Free of Insecure Protocols Information</h2></div>
+                                            <div class="col-xs-2 nopadding">
+                                                <div id="tooltip8" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                                                    <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?></span>
+                                                </div>
+                                            </div>                      <div class="pane-content">
                                                 <div class="view  view-display-id-block_11 view-dom-id-48cb0bd52b149a4150411d9b44b892bc">
                                                     <div class="view-content">
                                                         <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
@@ -1082,7 +1175,6 @@ $agencynode = node_load( arg( 1 ) );
                                                             <div class="views-field views-field-nothing">
                                                                 <div class="view-wrapper" style="">
                                                                     <div class="field-content col-lg-12">
-
                                                                         <?php
                                                                         $message = "Below are the most popular technology stacks used in ";
                                                                         $no_data = 1;
@@ -1161,7 +1253,6 @@ $agencynode = node_load( arg( 1 ) );
                                                                             print "<div><span style='font-size: 12px;font-style: italic;color: darkred;'>Data is not currently available.</span></div>";
                                                                         }
                                                                         ?>
-
                                                                     </div>
                                                                 </div>
                                                                 <div class="view-button" style="margin-left:15px;"><br>
