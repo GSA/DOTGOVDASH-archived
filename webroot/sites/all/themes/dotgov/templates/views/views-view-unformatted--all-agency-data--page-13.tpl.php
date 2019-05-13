@@ -480,7 +480,7 @@ $agencynode = node_load( arg( 1 ) );
                                                             <table><tr><td><div id="piechart2"></div>
                                                                         <br>
                                                                         <?php print $agencydata['searchenginestatus_graph'];
-                                                                        print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of Search Engine issues by category</span>";
+                                                                        print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of Search Engines by category</span>";
                                                                         ?>
                                                                     </td><td><div id="piechart3"></div>
                                                                         <br>
