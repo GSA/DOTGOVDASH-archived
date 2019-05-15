@@ -728,7 +728,7 @@ Search Data is collected through a custom scanner component of dotgov dashboard 
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div><br clear="all" />
                                                         <div class="col-xs-12 clearfix"> <span style="font-size: 12px;font-style:italic;">&nbsp;&nbsp;Above graph represents a monthly Mobile Trend</span> </div>
                                                         <div class="view-button clearfix">
                                                             <div class="row col-xs-12 nopadding">

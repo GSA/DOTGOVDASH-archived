@@ -117,7 +117,7 @@ drupal_set_title( $agencynode->title );
     HTTPS Data is collected through a custom scanner component of digital dashboard that last ran on
                                                         <?php dotgov_common_lastScanDate(); ?>
     </span> </div>
-                                            </div>
+                                            </div><br clear="all" />
                                             <div class="pane-content">
                                                 <div class="view-wrapper">
                                                     <div class="row">
@@ -433,7 +433,7 @@ drupal_set_title( $agencynode->title );
           <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>DNSSEC Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?>
         </span>
                                                 </div>
-                                            </div>                                               <div class="pane-content">
+                                            </div> <br clear="all" />                                             <div class="pane-content">
                                                 <div class="view  view-display-id-block_7 view-dom-id-3e71e61814bfdc7fd3678ddb5e0c33c9">
                                                     <div class="view-content">
                                                         <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
@@ -792,7 +792,7 @@ Search Data is collected through a custom scanner component of dotgov dashboard 
                                                     <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
 M-15-13 and BOD 18-01 Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?></span>
                                                 </div>
-                                            </div>                                            <div class="pane-content">
+                                            </div> <br clear="all" />                                           <div class="pane-content">
                                                 <div class="view  view-display-id-block_10 view-dom-id-93e7fd06306700be9064f5e8954f211b">
                                                     <div class="view-content">
                                                         <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
@@ -928,7 +928,7 @@ M-15-13 and BOD 18-01 Data is collected through a custom scanner component of do
             IPV6 Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate();?>
         </span>
                                                 </div>
-                                            </div>                                            <div class="pane-content">
+                                            </div>  <br clear="all" />                                         <div class="pane-content">
                                                 <div class="view  view-display-id-block_8 view-dom-id-b6c9491539ed2fa13d8d26fb2e0fc9c7">
                                                     <div class="view-content">
                                                         <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
@@ -1103,7 +1103,7 @@ M-15-13 and BOD 18-01 Data is collected through a custom scanner component of do
                                                     <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
 Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?></span>
                                                 </div>
-                                            </div>
+                                            </div><br clear="all" />
                                             <div class="pane-content">
                                                 <div class="view  view-display-id-block_11 view-dom-id-48cb0bd52b149a4150411d9b44b892bc">
                                                     <div class="view-content">
