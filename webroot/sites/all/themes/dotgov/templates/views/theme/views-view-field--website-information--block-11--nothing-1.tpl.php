@@ -55,16 +55,16 @@
 print $output;
 //dsm($row->_field_data['nid']['entity']);
 $chartdata= $row->_field_data['nid']['entity']->field_free_of_insecr_prot_score['und'][0]['value'];
-$chartdatafont = "22px";
+$chartdatafont = "12px";
 //dsm($chartdata);
 if (trim($chartdata) == '100'){
     $chartcolor = '#29643a';
-    $chartdatatext = '100%';
+    $chartdatatext = 'Available';
     $chartdata = 100;
 }
 elseif(trim($chartdata) == '0'){
     $chartcolor = '#ac0600';
-    $chartdatatext = '0%';
+    $chartdatatext = 'Not Available';
     $chartdata = '0';
 }
 elseif(trim($chartdata) == ''){
