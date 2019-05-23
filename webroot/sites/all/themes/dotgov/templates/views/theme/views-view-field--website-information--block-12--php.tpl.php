@@ -43,9 +43,6 @@
  * @ingroup themeable
  */
 ?>
-<?php
-$redirect_message = '<span style="color:#a70000;">Website Redirect - Metric Not Applicable</span></br>';
-?>
 <style>
 #searchengine_chart .highcharts-container {
     height:160px !important;
@@ -64,7 +61,7 @@ $redirect_message = '<span style="color:#a70000;">Website Redirect - Metric Not 
         </div>
     </div>
 </div>
-<?php dpm($row); ?>
+
 <?php if(!is_redirect($row->nid)): ?>
 <div class="col-lg-6">
     <?php
@@ -93,14 +90,14 @@ $redirect_message = '<span style="color:#a70000;">Website Redirect - Metric Not 
 <?php else: ?>
     <div class="col-lg-12">
       <?php
+      $redirect_message = '<span style="color:#a70000;">Website Redirect - Metric Not Applicable</span></br>';
       print "Site Search: " . $redirect_message;
-      print "Search Engine Identified :" . $redirect_message;
+      print "Search Engine Identified: " . $redirect_message;
       ?>
     </div>
 <?php endif; ?>
 
 <?php
-//print $output;
 $chartdata = $row->_field_data['nid']['entity']->field_search_status['und'][0]['value'];
 $chartdatafont = "22px";
 if (trim($chartdata) == '1') {
