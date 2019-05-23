@@ -1,12 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: kapilbulchandani
- * Date: 5/19/17
- * Time: 12:08 AM
- */
-
-/**
  * @file field.tpl.php
  * Default template implementation to display the value of a field.
  *
@@ -50,53 +43,107 @@
  * @ingroup themeable
  */
 ?>
+<?php
+$redirect_message = '<span style="color:#a70000;">Website Redirect - Metric Not Applicable</span></br>';
+?>
 <style>
-#searchengine_chart .highcharts-container{
-height:160px !important;
+#searchengine_chart .highcharts-container {
+    height:160px !important;
 }
 </style>
+
+<div class="col-lg-12 nopadding clearfix">
+    <?php dotgov_common_tooltip("tooltip5","id");?>
+    <div class="col-xs-10">
+        <h2 class="pane-title">Search Information</h2>
+    </div>
+    <div class="col-xs-2 nopadding">
+        <div id="tooltip5" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+            <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+    Search Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?> </span>
+        </div>
+    </div>
+</div>
+<?php dpm($row); ?>
+<?php if(!is_redirect($row->nid)): ?>
+<div class="col-lg-6">
+    <?php
+    if($row->field_field_search_status['0']['raw']['value'] == "1") {
+      $searchscore = "Yes";
+    } elseif($row->field_field_search_status['0']['raw']['value'] == "0") {
+      $searchscore = "No";
+    } else {
+      $searchscore = "NA";
+    }
+    
+    if(trim($row->field_field_search_engine_name['0']['raw']['value']) == "") {
+      $searchengine_name = "Not available";
+    } else {
+      $searchengine_name = $row->field_field_search_engine_name['0']['raw']['value'];
+    }
+    
+    print "Site Search: $searchscore <br>";
+    print "Search Engine Identified :".$searchengine_name;
+    ?>
+</div>
+
+<div class="col-lg-6">
+    <div id="searchengine_chart" style="width: 130px; height:130px; margin: 0 auto">&nbsp;</div>
+</div>
+<?php else: ?>
+    <div class="col-lg-12">
+      <?php
+      print "Site Search: " . $redirect_message;
+      print "Search Engine Identified :" . $redirect_message;
+      ?>
+    </div>
+<?php endif; ?>
+
 <?php
-print $output;
-$chartdata= $row->_field_data['nid']['entity']->field_search_status['und'][0]['value'];
+//print $output;
+$chartdata = $row->_field_data['nid']['entity']->field_search_status['und'][0]['value'];
 $chartdatafont = "22px";
-if (trim($chartdata) == '1'){
+if (trim($chartdata) == '1') {
     $chartcolor = '#29643a';
     $chartdatatext = '100%';
     $chartdata = 100;
-}
-elseif(trim($chartdata) == '0'){
+} elseif(trim($chartdata) == '0') {
     $chartcolor = '#ac0600';
     $chartdatatext = '0%';
     $chartdata = '0';
-}
-elseif(trim($chartdata) == ''){
+} elseif(trim($chartdata) == '') {
     $chartcolor = '#ac0600';
     $chartdatatext = 'Not Available';
     $chartdata = '0';
     $chartdatafont = "12px";
 }
 ?>
+
 <div class="sr-only">The graphic below indicates the level of Search Engine compliance, and this score is <?php echo $chartdata; ?>%.</div>
+
+<?php
+$scanids = dotgov_common_siteAsocScanids(arg(1));
+$scanpath = drupal_get_path_alias("node/" . arg(1));
+?>
+<div class="col-lg-12 clearfix report-buttons">
+    <p>This widget is under iterative development to programmatically determine additional types of website search engines.</p>
+    <div>
+        <p><a class="link-all-reports" href="/<?=$scanpath?>">Go to Full Report</a></p>
+    </div>
+</div>
 
 <script type="text/javascript">
     Highcharts.chart('searchengine_chart', {
-
             chart: {
                 type: 'solidgauge',
-height:140
-
+                height:140
             },
-
             title: {
-
                 text: ''
-
             },
-
             tooltip: {
                 enabled:false,
             },
-
             pane: {
                 startAngle: 0,
                 endAngle: 360,
@@ -112,7 +159,6 @@ height:140
                 max: 100,
                 lineWidth: 0,
                 tickPositions: [],
-
                 title: {
                     text: '<?php echo $chartdatatext; ?>',
                     style: {
@@ -121,11 +167,7 @@ height:140
                     },
                     y: 30
                 },
-
-
-
             },
-
             plotOptions: {
                 solidgauge: {
                     dataLabels: {
@@ -136,7 +178,6 @@ height:140
                     rounded: true
                 }
             },
-
             series: [{
                 name: 'Search Engine Compliance',
                 data: [{
@@ -147,8 +188,5 @@ height:140
                 }]
             }]
         }
-
-
     );
 </script>
-
