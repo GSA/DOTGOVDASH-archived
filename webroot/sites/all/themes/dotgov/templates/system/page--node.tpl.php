@@ -86,7 +86,7 @@ if (strpos($title, 'Domain ') !== false) {
 					<div class="col-xs-7 col-md-7 contacts col">
 						<span class="item">An Official Website Of The United States Government</span> </div>
 <div class="col-xs-5 col-md-5 contacts col" style="text-align:right;font-weight:bold;">
-						<span>This site is currently in <a href="//18f.gsa.gov/dashboard/stages/#alpha">alpha</a></span> </div>
+						<span>This site is currently in <a href="//18f.gsa.gov/dashboard/stages/#beta">beta</a></span> </div>
 				</div>				</div>
 			</div>
 		</div>
@@ -105,7 +105,7 @@ if (strpos($title, 'Domain ') !== false) {
         <a class="name navbar-brand" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>"><?php print $site_name; ?></a>
       <?php endif; ?>
 
-  
+
     </div>
 
       </div>
@@ -127,7 +127,7 @@ if (strpos($title, 'Domain ') !== false) {
     </div>
 </div>
 <header id="navbar" role="banner" class="<?php print $navbar_classes; ?>">
-  
+
         <?php if (!empty($primary_nav) || !empty($secondary_nav) || !empty($page['navigation'])): ?>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
           <span class="sr-only"><?php print t('Toggle navigation'); ?></span>
@@ -146,11 +146,11 @@ if (strpos($title, 'Domain ') !== false) {
                   </nav>
       </div>
     <?php endif; ?>
-  
+
 </header>
 
 <div class="main-container <?php print $container_class; ?>">
- 
+
       <a id="main-content"></a>
       <?php print render($title_prefix); ?>
       <?php if (!empty($title)): ?>
@@ -174,7 +174,7 @@ if (strpos($title, 'Domain ') !== false) {
       <?php if (!empty($page['highlighted'])): ?>
         <div class="highlighted jumbotron"><?php print render($page['highlighted']); ?></div>
       <?php endif; ?>
-     
+
       <?php print $messages; ?>
       <?php if (!empty($tabs)): ?>
         <?php print render($tabs); ?>
@@ -199,9 +199,9 @@ if (strpos($title, 'Domain ') !== false) {
 </div>
 
 <?php if (!empty($page['footer'])): ?>
-  
+
   <footer class="footer <?php print $container_class; ?>">
     <?php print render($page['footer']); ?>
   </footer>
-  
+
 <?php endif; ?>

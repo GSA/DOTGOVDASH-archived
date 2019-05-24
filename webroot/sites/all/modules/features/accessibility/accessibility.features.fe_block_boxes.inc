@@ -31,7 +31,7 @@ function accessibility_default_fe_block_boxes() {
 			<td>
 			<p><strong>By logging in, you agree and adhere to the following terms of use:</strong></p>
 
-			<p>This is an Alpha version of the .Gov Dashboard. The results shown are preliminary only and should not be used, shared or referenced in any official or internal reports.&nbsp;</p>
+			<p>This is an Beta version of the .Gov Dashboard. The results shown are preliminary only and should not be used, shared or referenced in any official or internal reports.&nbsp;</p>
 
 			<p>&nbsp;</p>
 			</td>
