@@ -11,6 +11,13 @@ include_once("../scripts/commonScanFunctions.php");
 writeToLogs("Get Latest Websites and data from Pulse\n",$logFile);
 getPulseData();
 runSearchEngineScan();
+//Update Search engine table with custom collected data from search_customidentfied_domains.csv
+exec("drush sql-query \"create table if not exists tmpdomains(domain varchar(255),search_available varchar(11));\"");
+exec("drush sql-query \"truncate tmpdomains;\"");
+exec("drush sql-query \"load data local infile '../scripts/search_customidentfied_domains.csv' into table tmpdomains FIELDS TERMINATED BY ',';\"");
+exec("drush sql-query \"update search_scan a, tmpdomains b set a.search_available=b.search_available where a.domain=b.domain;\"");
+exec("drush sql-query \"drop table tmpdomains;\"");
+
 //Start the scan and get the scan id.
 writeToLogs("Starting Scan",$logFile);
 $scanId = startScan();

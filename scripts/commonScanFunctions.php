@@ -1525,6 +1525,7 @@ function readCSV($csvFile){
         $line_of_text[] = fgetcsv($file_handle, 1024);
     }
     fclose($file_handle);
+	unset($line_of_text[0]);
     return $line_of_text;
 }
 
