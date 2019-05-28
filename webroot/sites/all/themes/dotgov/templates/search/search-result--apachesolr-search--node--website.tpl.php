@@ -198,6 +198,10 @@ if ( $result[ 'node' ]->bundle == 'website' ) {
                 <?php
 		if(empty($techterms)){print "NA";}else{
                 foreach ( $techterms as $techkey => $techval ) {
+                    if ($techval[ 'icon' ] == "")
+                        $techval[ 'icon' ] = "default.svg";
+                    if (trim($techval[ 'category' ][ 'name' ]) == "")
+                        $techval[ 'category' ][ 'name' ] = "Technology";
                     print "<div class='col-sm-4 nopadding dataset-resources clearfix'><span id='app-button' class='app-button'>" . $techval[ 'category' ][ 'name' ] . " :&nbsp;<img alt='app-icon' class='app-icon' src='/" . drupal_get_path( 'module', 'dotgov_common' ) . "/images/icons/" . $techval[ 'icon' ] . "'>$techkey " . $techval[ 'appversion' ] . "</span></div>";
                 }
 }

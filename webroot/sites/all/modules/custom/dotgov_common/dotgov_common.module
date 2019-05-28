@@ -335,6 +335,10 @@ function dotgov_commmon_getTechStackInfo($nid){
     $output = "<div id='techstack' class='row dataset-resources'>";
     if(count($techterms) != 0) {
         foreach ($techterms as $techkey => $techval) {
+            if ($techval[ 'icon' ] == "")
+                $techval[ 'icon' ] = "default.svg";
+            if (trim($techval[ 'category' ][ 'name' ]) == "")
+                $techval[ 'category' ][ 'name' ] = "Technology";
             $output .= "<div class='col-sm-12 nopadding dataset-resources'><span id='app-button' class='app-button'>" . $techval['category']['name'] . " :&nbsp;<img alt='app-icon' class='app-icon' src='/" . drupal_get_path('module', 'dotgov_common') . "/images/icons/" . $techval['icon'] . "'>$techkey " . $techval['appversion'] . "</span></div>";
         }
     }
