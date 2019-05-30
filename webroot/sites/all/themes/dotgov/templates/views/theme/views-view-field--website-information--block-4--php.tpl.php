@@ -88,7 +88,7 @@ foreach ($query as $result) {
 $chartdatafont = "22px";
 ?>
 
-<div class="col-lg-12 clearfix">
+<div class="col-lg-12 clearfix nopadding">
 <?php
 if(!is_redirect(arg(1))) {
   print '<div class="col-lg-6">';
