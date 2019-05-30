@@ -56,7 +56,7 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
 }
 dotgov_common_tooltip("tooltip3","id");
 ?>
-
+<div class="col-xs-12 nopadding clearfix">
 <div class="col-xs-10">
     <h2 class="pane-title">DAP Information</h2>
 </div>
@@ -67,7 +67,7 @@ dotgov_common_tooltip("tooltip3","id");
           <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"><br>
           <?php
           if (is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
-            print '<span style="color:#red;">' . $redirect_message . '</span>';
+            print '<span style="color:red;">' . $redirect_message . '</span>';
           } else {
             print $crit_text;
           }
@@ -75,7 +75,7 @@ dotgov_common_tooltip("tooltip3","id");
         </span>
     </div>
 </div>
-
+</div>
 <?php
 $scanids = dotgov_common_siteAsocScanids(arg(1));
 $scanpath = drupal_get_path_alias("node/".$scanids['https_dap_scan_information']);

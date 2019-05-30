@@ -49,6 +49,8 @@ if ( !emptyOrNull($missingim)) {
 }
 dotgov_common_tooltip("tooltip9","id");
 ?>
+
+<div class="col-xs-12 nopadding clearfix">
 <div class="col-xs-10 nopadding">
     <h2 class="pane-title">Accessibility Issues</h2>
 </div>
@@ -66,7 +68,7 @@ dotgov_common_tooltip("tooltip9","id");
         </span>
     </div>
 </div>
-
+</div>
 <?php if (!is_redirect(arg(1))): ?>
     <div class="col-lg-<?php echo (emptyOrNull($colorcont) && emptyOrNull($htmlattri) && emptyOrNull($missingim)) ? '8' : '5'; ?> nopadding">
         Color Contrast: <?php print !emptyOrNull($colorcont) ? $colorcont : 0; ?> <br/>
