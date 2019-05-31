@@ -46,6 +46,7 @@
 ?>
 
 <?php dotgov_common_tooltip("tooltip6","id");?>
+<div class="col-xs-12 nopadding clearfix">
 
 <div class="col-xs-10">
     <h2 class="pane-title"> IPV6 Information </h2>
@@ -59,6 +60,7 @@
         </span>
     </div>
 </div>
+    </div>
 <?php // if(!is_redirect(arg(1))): ?>
 <div class="col-lg-6">
     IPV6 Compliance: <?php print $row->field_field_ipv6_score[0]['raw']['value']; ?>%
