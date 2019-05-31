@@ -557,10 +557,7 @@ Search Data is collected through a custom scanner component of dotgov dashboard 
                                                                                 <td>Number of sites with Search Engine</td>
                                                                                 <td>Number of sites without Search Engine</td>
                                                                             </tr>
-                                                                            <tr>
-                                                                                <td align='center'><?=$searchenginestatus['search_available']?></td>
-                                                                                <td align='center'><?=$searchenginestatus['search_notavailable']?></td>
-                                                                            </tr>
+                                                                            <tr><td align='center'><?=($searchenginestatus['search_available'] == "")?0:$searchenginestatus['search_available']?></td><td align='center'><?=($searchenginestatus['search_notavailable'] == "")?0:$searchenginestatus['search_notavailable']?></td></tr>
                                                                         </table></td>
                                                                 </tr>
                                                             </table>
