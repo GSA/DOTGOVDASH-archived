@@ -84,7 +84,7 @@ else
 			<div class="col-xs-7 col-md-7 contacts col">
 				<span class="item">An Official Website Of The United States Government</span> </div>
 			<div class="col-xs-5 col-md-5 contacts col" style="text-align:right;font-weight:bold;">
-				<span>This site is currently in <a href="//18f.gsa.gov/dashboard/stages/#alpha">alpha</a></span> </div>
+				<span>This site is currently in <a href="//18f.gsa.gov/dashboard/stages/#beta">beta</a></span> </div>
 		</div>
 	</div>
 </div>
