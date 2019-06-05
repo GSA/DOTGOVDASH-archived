@@ -80,7 +80,7 @@
     }
     
     print "On-Site Search: $searchscore <br>";
-    print "On-Site Search Engine Identified :".$searchengine_name;
+    print "On-Site Search Engine Identified :<span style='text-transform: capitalize;'>".$searchengine_name."</span>";
     ?>
 </div>
 
