@@ -11,7 +11,7 @@
         ]);
 
         var options = {
-            title: 'Search Engine Breakdown',
+            title: 'On-Site Search Engine Breakdown',
             colors: ['#3f51b5', '#337ab7', '#ffc107', '#7cb5ec', '#795548', '#009688','#f44336'],
             chartArea: {width: '100%'},
             hAxis: {

@@ -17,12 +17,12 @@ else
 
         var data = google.visualization.arrayToDataTable([
             ['Type', 'Number'],
-            ['Search Available',     <?=$search_available?>],
-            ['Search Not Available',      <?=$search_notavailable?>],
+            ['On-Site Search Available',     <?=$search_available?>],
+            ['On-Site Search Not Available',      <?=$search_notavailable?>],
         ]);
         var options = {
-            title: 'Search Engine Status Breakdown',
-            colors: ['#4caf50', '#f44336'],
+            title: 'On-Site Search Engine Status Breakdown',
+            colors: ['#29633a', '#ac0600'],
             sliceVisibilityThreshold: 0,
             dataLabels: {
                 enabled: true
@@ -36,3 +36,4 @@ else
         chart.draw(data, options);
     }
 </script>
+

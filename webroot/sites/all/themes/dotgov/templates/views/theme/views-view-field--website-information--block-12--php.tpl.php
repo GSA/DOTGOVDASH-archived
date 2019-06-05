@@ -52,12 +52,12 @@
 <div class="col-lg-12 nopadding clearfix">
     <?php dotgov_common_tooltip("tooltip5","id");?>
     <div class="col-xs-10">
-        <h2 class="pane-title">Search Information</h2>
+        <h2 class="pane-title">On-Site Search Information</h2>
     </div>
     <div class="col-xs-2 nopadding">
         <div id="tooltip5" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
             <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
-    Search Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?> </span>
+    On-Site Search Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?> </span>
         </div>
     </div>
 </div>
@@ -79,8 +79,8 @@
       $searchengine_name = $row->field_field_search_engine_name['0']['raw']['value'];
     }
     
-    print "Site Search: $searchscore <br>";
-    print "Search Engine Identified :".$searchengine_name;
+    print "On-Site Search: $searchscore <br>";
+    print "On-Site Search Engine Identified :".$searchengine_name;
     ?>
 </div>
 
@@ -91,8 +91,8 @@
     <div class="col-lg-12">
       <?php
       $redirect_message = '<span style="color:#a70000;">Website Redirect - Metric Not Applicable</span></br>';
-      print "Site Search: " . $redirect_message;
-      print "Search Engine Identified: " . $redirect_message;
+      print "On-Site Search: " . $redirect_message;
+      print "On-Site Search Engine Identified: " . $redirect_message;
       ?>
     </div>
 <?php endif; ?>
@@ -116,7 +116,7 @@ if (trim($chartdata) == '1') {
 }
 ?>
 
-<div class="sr-only">The graphic below indicates the level of Search Engine compliance, and this score is <?php echo $chartdata; ?>%.</div>
+<div class="sr-only">The graphic below indicates the level of On-Site Search Engine compliance, and this score is <?php echo $chartdata; ?>%.</div>
 
 <?php
 $scanids = dotgov_common_siteAsocScanids(arg(1));
@@ -176,7 +176,7 @@ $scanpath = drupal_get_path_alias("node/" . arg(1));
                 }
             },
             series: [{
-                name: 'Search Engine Compliance',
+                name: 'On-Site Search Engine Compliance',
                 data: [{
                     color: '<?php echo $chartcolor; ?>',
                     radius: '118%',

@@ -511,12 +511,12 @@ $agencynode = node_load( arg( 1 ) );
                                         <div class="panel-separator"></div>
                                         <div class="panel-pane pane-views pane-website-information">
                                             <div class="col-xs-10 nopadding">
-                                                <h2 class="pane-title"> Search Information </h2>
+                                                <h2 class="pane-title"> On-Site Search Information </h2>
                                             </div>
                                             <div class="col-xs-2 nopadding">
                                                 <div id="tooltip5" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
                                                     <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
-Search Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?> </span>
+On-Site Search Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?> </span>
                                                 </div>
 
                                             </div><br clear="all"/>
@@ -529,18 +529,18 @@ Search Data is collected through a custom scanner component of dotgov dashboard 
                                                                     <td><div id="piechart2"></div>
                                                                         <br>
                                                                         <?php print $agencydata['searchenginestatus_graph'];
-                                                                        print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of Search Engines by category</span>";
+                                                                        print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines by category</span>";
                                                                         ?></td>
                                                                     <td><div id="piechart3"></div>
                                                                         <br>
                                                                         <?php print $agencydata['searchengines_graph'];
-                                                                        print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of Search Engines</span>";
+                                                                        print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines</span>";
                                                                         ?></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td><table>
                                                                             <tr style="background-color: #215393;color: white;">
-                                                                                <td><b>Search Engine</td>
+                                                                                <td><b>On-Site Search Engine</td>
                                                                                 <td>Total Number</b></td>
                                                                             </tr>
                                                                             <?php
@@ -554,8 +554,8 @@ Search Data is collected through a custom scanner component of dotgov dashboard 
                                                                         ?>
                                                                         <table>
                                                                             <tr style="background-color: #215393;color: white;">
-                                                                                <td>Number of sites with Search Engine</td>
-                                                                                <td>Number of sites without Search Engine</td>
+                                                                                <td>Number of sites with On-Site Search Engine</td>
+                                                                                <td>Number of sites without On-Site Search Engine</td>
                                                                             </tr>
                                                                             <tr><td align='center'><?=($searchenginestatus['search_available'] == "")?0:$searchenginestatus['search_available']?></td><td align='center'><?=($searchenginestatus['search_notavailable'] == "")?0:$searchenginestatus['search_notavailable']?></td></tr>
                                                                         </table></td>
