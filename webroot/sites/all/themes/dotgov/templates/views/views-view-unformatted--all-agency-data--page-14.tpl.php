@@ -589,9 +589,8 @@ On-Site Search Data is collected through a custom scanner component of dotgov da
                                                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                                                     <table>
                                                                         <tr style="background-color: #215393;color: white;">
-                                                                            <td><b>On-Site Search Engine</td>
-                                                                            <td>Total Number</b>
-                                                                            </td>
+                                                                            <td>On-Site Search Engine</td>
+                                                                            <td>Total Number</td>
                                                                         </tr>
                                                                         <?php
                                                                         foreach ( $agencydata[ 'searchenginedata' ] as $skey => $sval ) {
@@ -609,10 +608,10 @@ On-Site Search Data is collected through a custom scanner component of dotgov da
                                                                             <td>Number of sites without On-Site Search Engine</td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td align='center'>
+                                                                            <td>
                                                                                 <?=$searchenginestatus['search_available']?>
                                                                             </td>
-                                                                            <td align='center'>
+                                                                            <td>
                                                                                 <?=$searchenginestatus['search_notavailable']?>
                                                                             </td>
                                                                         </tr>
