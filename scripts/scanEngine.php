@@ -16,6 +16,7 @@ exec("drush sql-query \"create table if not exists tmpdomains(domain varchar(255
 exec("drush sql-query \"truncate tmpdomains;\"");
 exec("drush sql-query \"load data local infile '../scripts/search_customidentfied_domains.csv' into table tmpdomains FIELDS TERMINATED BY ',';\"");
 exec("drush sql-query \"update search_scan a, tmpdomains b set a.search_available=b.search_available where a.domain=b.domain;\"");
+exec("drush sql-query \"update search_scan set search_available = 'NA',type = NULL where domain in (select a.title from node a, field_data_field_redirect b, field_data_field_website_id c where a.nid=c.field_website_id_nid and b.entity_id=c.entity_id and b.field_redirect_value='yes');\"");
 exec("drush sql-query \"drop table tmpdomains;\"");
 
 //Start the scan and get the scan id.
