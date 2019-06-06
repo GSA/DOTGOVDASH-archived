@@ -623,7 +623,7 @@ On-Site Search Data is collected through a custom scanner component of dotgov da
                                                     </div>
                                                 </div>
                                                 <div class="view-button"><br>
-                                                    <p><a class="btn btn-primary" href="/website/search/reports?field_web_agency_id_nid=<?=$curuserAgency?>">Go to Full Report</a> </p>
+                                                    <p><a class="btn btn-primary" href="/myagency/search/reports">Go to Full Report</a> </p>
                                                 </div>
                                             </div>
                                         </div>
