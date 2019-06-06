@@ -107,16 +107,41 @@ function dotgov_common_getMobileSnapshot($websiteid){
 
 
 function dotgov_breadcrumb($variables) {
-$breadcrumb = $variables['breadcrumb'];
-    $output = "";
-    if (!empty($breadcrumb)) {
-    if(arg(0)=='search' && arg(1)=='site')
-    {
-//        $temp = $breadcrumb[1];
-        $breadcrumb[1] = "<a href='/search/site'>Data Discovery</a>";
-        #$breadcrumb[] = $temp;
+  $breadcrumb = $variables['breadcrumb'];
+  if (!empty($breadcrumb)) {
+    $output = '';
+    
+    if (arg(0) == 'search' && arg(1) == 'site') {
+      $breadcrumb[1] = '<a href="/multistep-search">Data Discovery</a>';
     }
-    $output .= '' . implode(' » ', $breadcrumb) . '';
+    elseif (arg(0) == 'historical_scan_score_data' && !empty(arg(1)) && is_mobile_scan(arg(1))) {
+      $getTextBetweenTags = getTextBetweenTags($breadcrumb[1], 'a');
+      $breadcrumb[1] = '<a href="/website/' . get_website_id_nid(arg(1)) . '/information">' . $getTextBetweenTags . '</a>';
+    }
+    elseif (arg(0) == 'website' && arg(1) == 'search' && arg(2) == 'reports') {
+      $breadcrumb[1] = 'Website Search Reports';
+    }
+    elseif (arg(0) == 'accessibilityreportalldomains') {
+      $breadcrumb[1] = 'Website Level Accessibility Report';
+    }
+    elseif (arg(0) == 'privacy-policy') {
+      $breadcrumb[1] = 'Privacy Policy';
+    }
+    
+    $output .= implode(' » ', $breadcrumb);
     return $output;
-    }
+  }
+}
+
+/**
+ * Helper function to extract values from html tags
+ * @param $string
+ * @param $tagname
+ *
+ * @return mixed
+ */
+function getTextBetweenTags($string, $tagname) {
+  $pattern = "/<$tagname ?.*>(.*)<\/$tagname>/";
+  preg_match($pattern, $string, $matches);
+  return $matches[1];
 }
