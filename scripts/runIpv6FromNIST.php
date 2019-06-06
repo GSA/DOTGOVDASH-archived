@@ -74,7 +74,6 @@ foreach ($query as $result) {
     }
 
   }
-  $pnode->field_dap_score['und'][0]['value'] = $dapscore;
   node_object_prepare($pnode);
   if ($pnode = node_submit($pnode)) {
     node_save($pnode);
