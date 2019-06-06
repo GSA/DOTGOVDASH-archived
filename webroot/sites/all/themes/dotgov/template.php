@@ -114,7 +114,7 @@ function dotgov_breadcrumb($variables) {
     if (arg(0) == 'search' && arg(1) == 'site') {
       $breadcrumb[1] = '<a href="/multistep-search">Data Discovery</a>';
     }
-    elseif (arg(0) == 'historical_scan_score_data' && !empty(arg(1)) && is_mobile_scan(arg(1))) {
+    elseif (arg(0) == 'historical_scan_score_data' && (arg(1) !== NULL || arg(1) !== '') && is_mobile_scan(arg(1))) {
       $getTextBetweenTags = getTextBetweenTags($breadcrumb[1], 'a');
       $breadcrumb[1] = '<a href="/website/' . get_website_id_nid(arg(1)) . '/information">' . $getTextBetweenTags . '</a>';
     }
