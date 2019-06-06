@@ -541,11 +541,11 @@ On-Site Search Data is collected through a custom scanner component of dotgov da
                                                                     <td><table>
                                                                             <tr style="background-color: #215393;color: white;">
                                                                                 <td>On-Site Search Engine</td>
-                                                                                <td>Total Number</td>
+                                                                                <td>&nbsp;Total</td>
                                                                             </tr>
                                                                             <?php
                                                                             foreach($agencydata['searchenginedata'] as $skey=>$sval){
-                                                                                print "<tr style='text-transform: capitalize;'><td>$skey</td><td align='center'>   $sval</td> </tr>";
+                                                                                print "<tr style='text-transform: capitalize;'><td>".ucfirst($skey)."</td><td align='center'>   $sval</td> </tr>";
                                                                             }
                                                                             ?>
                                                                         </table></td>

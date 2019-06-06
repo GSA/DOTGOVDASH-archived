@@ -80,7 +80,7 @@
     }
     
     print "On-Site Search: $searchscore <br>";
-    print "On-Site Search Engine Identified :<span style='text-transform: capitalize;'>".$searchengine_name."</span>";
+    print "On-Site Search Engine :<span style='text-transform: capitalize;'>".$searchengine_name."</span>";
     ?>
 </div>
 
@@ -123,7 +123,7 @@ $scanids = dotgov_common_siteAsocScanids(arg(1));
 $scanpath = drupal_get_path_alias("node/" . arg(1));
 ?>
 <div class="col-lg-12 clearfix report-buttons">
-    <p>This widget is under iterative development to programmatically determine additional types of website search engines.</p>
+    <p>This widget is under iterative development to programmatically determine additional types of On-Site search engines.</p>
     <div>
         <p><a class="link-all-reports" href="/<?=$scanpath?>">Go to Full Report</a></p>
     </div>
