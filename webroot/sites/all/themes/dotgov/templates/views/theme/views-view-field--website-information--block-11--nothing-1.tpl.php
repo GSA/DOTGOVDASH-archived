@@ -55,7 +55,7 @@
 print $output;
 //dsm($row->_field_data['nid']['entity']);
 $chartdata= $row->_field_data['nid']['entity']->field_free_of_insecr_prot_score['und'][0]['value'];
-$chartdatafont = "12px";
+$chartdatafont = "22px";
 //dsm($chartdata);
 if (trim($chartdata) == '100'){
     $chartcolor = '#29643a';
