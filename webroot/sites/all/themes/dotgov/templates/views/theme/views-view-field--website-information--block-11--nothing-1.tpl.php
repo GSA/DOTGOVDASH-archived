@@ -59,12 +59,12 @@ $chartdatafont = "12px";
 //dsm($chartdata);
 if (trim($chartdata) == '100'){
     $chartcolor = '#29643a';
-    $chartdatatext = 'Available';
+    $chartdatatext = '100%';
     $chartdata = 100;
 }
 elseif(trim($chartdata) == '0'){
     $chartcolor = '#ac0600';
-    $chartdatatext = 'Not Available';
+    $chartdatatext = '0%';
     $chartdata = '0';
 }
 elseif(trim($chartdata) == ''){
