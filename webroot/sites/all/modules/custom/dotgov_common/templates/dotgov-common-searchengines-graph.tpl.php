@@ -1,3 +1,7 @@
+<?php
+if(trim($search_engine_data_for_agencygraph) == "")
+  $search_engine_data_for_agencygraph = "0,0";
+?>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script language="JavaScript">
     google.charts.load('current', {packages: ['corechart', 'bar']});
