@@ -565,7 +565,7 @@ drupal_set_title( $agencynode->title );
                                             </div>
                                             <div class="col-xs-2 nopadding">
                                                 <div id="tooltip5" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
-                                                    <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+                                                    <span class="tooltiptext tooltip-left">
 On-Site Search Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?> </span>
                                                 </div>
 
@@ -604,8 +604,8 @@ On-Site Search Data is collected through a custom scanner component of dotgov da
                                                                     ?>
                                                                     <table>
                                                                         <tr style="background-color: #215393;color: white;">
-                                                                            <td>Number of sites with On-Site Search Engine</td>
-                                                                            <td>Number of sites without On-Site Search Engine</td>
+                                                                            <td>Sites with On-Site Search Engine</td>
+                                                                            <td>Sites without On-Site Search Engine</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>
