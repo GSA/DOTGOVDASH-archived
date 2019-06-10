@@ -604,8 +604,8 @@ On-Site Search Data is collected through a custom scanner component of dotgov da
                                                                     ?>
                                                                     <table>
                                                                         <tr style="background-color: #215393;color: white;">
-                                                                            <td>Sites with On-Site Search Engine</td>
-                                                                            <td>Sites without On-Site Search Engine</td>
+                                                                            <td>Sites w/ On-Site Search Engine</td>
+                                                                            <td>Sites w/out On-Site Search Engine</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>

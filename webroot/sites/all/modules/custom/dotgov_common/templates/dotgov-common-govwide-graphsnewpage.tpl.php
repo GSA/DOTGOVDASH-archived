@@ -447,7 +447,7 @@ On-Site Search Data is collected through a custom scanner component of dotgov da
                                                             $searchenginestatus = $agencydata['searchenginestatus'];
                                                             ?>
                                                             <table>
-                                                                <tr style="background-color: #215393;color: white;"><td>Sites with On-Site Search Engine</td><td>Sites without On-Site Search Engine</td></tr>
+                                                                <tr style="background-color: #215393;color: white;"><td>Sites w/ On-Site Search Engine</td><td>Sites w/out On-Site Search Engine</td></tr>
                                                                 <tr><td align='center'><?=($searchenginestatus['search_available'] == "")?0:$searchenginestatus['search_available']?></td><td align='center'><?=($searchenginestatus['search_notavailable'] == "")?0:$searchenginestatus['search_notavailable']?></td></tr>
                                                             </table>
                                                         </td></tr>
