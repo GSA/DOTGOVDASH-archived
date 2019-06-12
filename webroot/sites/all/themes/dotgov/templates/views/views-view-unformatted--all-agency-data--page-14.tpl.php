@@ -577,13 +577,13 @@ On-Site Search Data is collected through a custom scanner component of dotgov da
                                                                 <div id="piechart2"></div>
                                                                 <br>
                                                                 <?php print $agencydata['searchenginestatus_graph'];
-                                                                print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engine issues by category</span>";
+                                                                //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engine issues by category</span>";
                                                                 ?></div>
                                                             <div class="col-lg-6 col-md-6 col-sm-12">
                                                                 <div id="piechart3"></div>
                                                                 <br>
                                                                 <?php print $agencydata['searchengines_graph'];
-                                                                print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines</span>";
+                                                                //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines</span>";
                                                                 ?></div>
                                                             <div class="col-lg-12 nopadding clearfix">
                                                                 <div class="col-lg-6 col-md-6 col-sm-12">
