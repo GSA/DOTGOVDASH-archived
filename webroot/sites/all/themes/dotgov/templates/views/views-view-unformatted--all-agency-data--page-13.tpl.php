@@ -538,7 +538,7 @@ On-Site Search Data is collected through a custom scanner component of dotgov da
                                                                         ?></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td><table>
+                                                                    <td style="vertical-align:top;"><table>
                                                                             <tr style="background-color: #215393;color: white;">
                                                                                 <td>On-Site Search Engine</td>
                                                                                 <td>&nbsp;Total</td>
