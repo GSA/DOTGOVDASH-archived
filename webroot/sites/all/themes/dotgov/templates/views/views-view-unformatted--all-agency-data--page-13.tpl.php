@@ -549,14 +549,12 @@ On-Site Search Data is collected through a custom scanner component of dotgov da
                                                                             }
                                                                             ?>
                                                                         </table></td>
-                                                                    <td style="vertical-align:top;"><?php
+                                                                    <td style="vertical-align:top; padding:0 5px;"><?php
                                                                         $searchenginestatus = $agencydata['searchenginestatus'];
                                                                         ?>
                                                                         <table>
-                                                                            <tr style="background-color: #215393;color: white;">
-                                                                                <td>Sites w/ On-Site Search Engine</td>
-                                                                                <td>Sites w/out On-Site Search Engine</td>
-                                                                            </tr>
+                                                                            <tr style="background-color: #215393;color: white;"><td> On-Site Search Available</td><td>On-Site Search Not Available</td></tr>
+
                                                                             <tr><td><?=($searchenginestatus['search_available'] == "")?0:$searchenginestatus['search_available']?></td>
                                                                                 <td><?=($searchenginestatus['search_notavailable'] == "")?0:$searchenginestatus['search_notavailable']?></td></tr>
                                                                         </table></td>

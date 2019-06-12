@@ -432,9 +432,9 @@ On-Site Search Data is collected through a custom scanner component of dotgov da
                                                             ?>
                                                         </td></tr>
                                                     <tr>
-                                                        <td>
+                                                        <td style="vertical-align:top;">
                                                             <table>
-                                                                <tr style="background-color: #215393;color: white;"><td><b>On-Site Search Engine</td><td>&nbsp;Total </b></td></tr>
+                                                                <tr style="background-color: #215393;color: white;"><td>On-Site Search Engine</td><td>&nbsp;Total </td></tr>
                                                                 <?php
                                                                 foreach($agencydata['searchenginedata'] as $skey=>$sval){
                                                                     print "<tr><td>".ucfirst($skey)."</td><td align='center'>   $sval</td> </tr>";
@@ -442,12 +442,12 @@ On-Site Search Data is collected through a custom scanner component of dotgov da
                                                                 ?>
                                                             </table>
                                                         </td>
-                                                        <td>
+                                                        <td style="vertical-align:top;padding:0 5px;">
                                                             <?php
                                                             $searchenginestatus = $agencydata['searchenginestatus'];
                                                             ?>
                                                             <table>
-                                                                <tr style="background-color: #215393;color: white;"><td>Sites w/ On-Site Search Engine</td><td>Sites w/out On-Site Search Engine</td></tr>
+                                                                <tr style="background-color: #215393;color: white;"><td> On-Site Search Available</td><td>On-Site Search Not Available</td></tr>
                                                                 <tr><td align='center'><?=($searchenginestatus['search_available'] == "")?0:$searchenginestatus['search_available']?></td><td align='center'><?=($searchenginestatus['search_notavailable'] == "")?0:$searchenginestatus['search_notavailable']?></td></tr>
                                                             </table>
                                                         </td></tr>
