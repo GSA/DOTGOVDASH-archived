@@ -171,11 +171,7 @@ else
 		</h1>
 	<?php endif; ?>
 	<?php print render($title_suffix); ?>
-	<?php if ($searchtitle =="Data Discovery"){ ?>
-		<div>
-			<p style="text-align:center;margin-bottom:10px;">The data discovery module is currently under development. It is illustrated here to show functionality and intended use. The data presented here should not be used for any reporting or decision making purposes</p>
-		</div>
-	<?php } ?>
+	
 	<div class="search-wrapper">
 		<div class="row box-back clearfix">
 			<ul class="col-xs-12 col-sm-12 col-lg-2 nav nopadding">
