@@ -369,7 +369,9 @@ $agencynode = node_load( arg( 1 ) );
                                                         </div>
                                                     </div>
                                                     <div><br>
-                                                        <p><font style="font-size: larger;font-color:blue;">*</font> : DAP information is based on data collected from <span style="font-color:blue"></span><a href="https://pulse.cio.gov/analytics/agencies" target="_new">pulse.cio.gov</a></span></p>
+                                                        <p><span style="font-size: larger;font-color:blue;">*</span> : DAP information is based on data collected from <span style="font-color:blue"></span><a href="https://pulse.cio.gov/analytics/agencies" target="_new">pulse.cio.gov</a></span></p>
+                                                        <span>(Note: website redirects are excluded)</span>
+
                                                     </div>
                                                 </div>
                                                 <div class="view-button">
@@ -530,13 +532,15 @@ On-Site Search Data is collected through a custom scanner component of dotgov da
                                                                         <br>
                                                                         <?php print $agencydata['searchenginestatus_graph'];
                                                                         //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines by category</span>";
-                                                                        ?></td>
+                                                                        ?>
+                                                                    </td>
                                                                     <td><div id="piechart3"></div>
                                                                         <br>
                                                                         <?php print $agencydata['searchengines_graph'];
                                                                         //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines</span>";
                                                                         ?></td>
                                                                 </tr>
+
                                                                 <tr>
                                                                     <td style="vertical-align:top;"><table>
                                                                             <tr style="background-color: #215393;color: white;">
@@ -559,6 +563,7 @@ On-Site Search Data is collected through a custom scanner component of dotgov da
                                                                                 <td><?=($searchenginestatus['search_notavailable'] == "")?0:$searchenginestatus['search_notavailable']?></td></tr>
                                                                         </table></td>
                                                                 </tr>
+                                                                <tr><td colspan="2"><span>(Note: website redirects are excluded)</span></td> </tr>
                                                             </table>
                                                         </div>
                                                     </div>
@@ -725,7 +730,7 @@ On-Site Search Data is collected through a custom scanner component of dotgov da
                                                                 </div>
                                                             </div>
                                                         </div><br clear="all" />
-                                                        <div class="col-xs-12 clearfix"> <span style="font-size: 12px;font-style:italic;">&nbsp;&nbsp;Above graph represents a monthly Mobile Trend</span> </div>
+                                                        <div class="col-xs-12 clearfix"> <span style="font-size: 12px;font-style:italic;">&nbsp;&nbsp;Above graph represents a monthly Mobile Trend</span><br/><span>(Note: website redirects are excluded)</span> </div>
                                                         <div class="view-button clearfix">
                                                             <div class="row col-xs-12 nopadding">
                                                                 <div class="col-xs-6"><a class="btn btn-primary" href="/website/mobile/reports?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </div>
@@ -1027,7 +1032,8 @@ M-15-13 and BOD 18-01 Data is collected through a custom scanner component of do
                                                             <div id="piechart"></div>
                                                             <?php print $agencydata['ag_access_chart'];
                                                             if(($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydata['ag_miss_image']) != 0){
-                                                                print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of Accessibility issues by category</span>";
+                                                                print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of Accessibility issues by category</span><br/><span>(Note: website redirects are excluded)</span>
+";
                                                             }?> </div>
                                                     </div>
                                                 </div>
