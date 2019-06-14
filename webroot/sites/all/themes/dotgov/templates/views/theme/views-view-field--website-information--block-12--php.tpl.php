@@ -72,15 +72,15 @@
     } else {
       $searchscore = "NA";
     }
-    
+
     if(trim($row->field_field_search_engine_name['0']['raw']['value']) == "") {
       $searchengine_name = "Not available";
     } else {
       $searchengine_name = $row->field_field_search_engine_name['0']['raw']['value'];
     }
-    
+
     print "On-Site Search: $searchscore <br>";
-    print "On-Site Search Engine :<span style='text-transform: capitalize;'>".$searchengine_name."</span>";
+    print "On-Site Search Engine: <span style='text-transform: capitalize;'>".$searchengine_name."</span>";
     ?>
 </div>
 
