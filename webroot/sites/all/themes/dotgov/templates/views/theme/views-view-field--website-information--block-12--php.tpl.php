@@ -123,7 +123,6 @@ $scanids = dotgov_common_siteAsocScanids(arg(1));
 $scanpath = drupal_get_path_alias("node/" . arg(1));
 ?>
 <div class="col-lg-12 clearfix report-buttons">
-    <p>This widget is under iterative development to programmatically determine additional types of On-Site search engines.</p>
     <div>
         <p><a class="link-all-reports" href="/<?=$scanpath?>">Go to Full Report</a></p>
     </div>
