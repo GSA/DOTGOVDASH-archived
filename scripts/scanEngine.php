@@ -58,4 +58,7 @@ updateAccessibilityScanCustom($website['domain'],$scanId);
 archiveGovwideTrendData();
 archiveAgencywideTrendData();
 
+// This will update 'scans' content type scanEndTime
+updateScanEndDateTime();
+
 print "Finished Processing!\n";

@@ -2590,3 +2590,20 @@ function runSearchEngineScan(){
     }
 
 }
+
+/**
+ * When all scans are complete update scanEndDate node
+ */
+function updateScanEndDateTime() {
+  $nid = db_query('SELECT MAX(nid) FROM node WHERE type = :type', array(':type' => 'scans'))->fetchField();
+  
+  if (!empty($nid)) {
+    $node = node_load($nid);
+    $title = 'Scan ' . date('m-d-Y', $node->created) . ' through ' . date('m-d-Y');
+    
+    $wrapper = entity_metadata_wrapper('node', $node);
+    $wrapper->title->set($title);
+    $wrapper->field_scan_end_time->set(time());
+    $wrapper->save();
+  }
+}
