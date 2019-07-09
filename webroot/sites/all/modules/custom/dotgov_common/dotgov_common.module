@@ -99,7 +99,10 @@ function dotgov_common_lastScanDate(){
     foreach ($query as $result) {
         $lastscantime = $result->created;
     }
-    print date("m/d/Y",$lastscantime);
+    // Scan takes 2 or 3 days to complete.
+    // Query returns lastscan date at the start of the scan not when scan completes.
+    // Adding 2 or 3 days makes san date to show scan completion date.
+    print date("m/d/Y",$lastscantime + + (3 * 24 * 60 * 60));
 }
 
 /*
