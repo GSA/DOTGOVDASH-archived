@@ -543,8 +543,8 @@ function getMobileApiDataPagespeedV5($domain){
         //$mobileAPIdataArr['mobPerformFile'] = "sites/default/files/mobileperform_reports/" . $domain . ".json";
         //Get Json data and enter to a file
         //file_put_contents($mobileAPIdataArr['mobPerformFile'], $googMobilePerformApiData);
-        //$mobPerformFile = file_save_data($googMobilePerformApiData,file_default_scheme().'://mobileperform_reports/'.$domain.'.json', FILE_EXISTS_REPLACE);
-        //$mobileAPIdataArr['mobPerformFile'] = array('fid' => $mobPerformFile->fid,'display' => 1, 'description' => '');
+        $mobPerformFile = file_save_data($googMobilePerformApiData,file_default_scheme().'://mobileperform_reports/'.$domain.'.json', FILE_EXISTS_REPLACE);
+        $mobileAPIdataArr['mobPerformFile'] = array('fid' => $mobPerformFile->fid,'display' => 1, 'description' => '');
 
         $jsonMParr = json_decode($googMobilePerformApiData, true);
         if(isset($jsonMParr['error']['errors'])){
