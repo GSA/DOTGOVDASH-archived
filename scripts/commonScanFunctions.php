@@ -26,7 +26,7 @@ function getSites()
     //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value in ('afadvantage.gov','ama.gov','asc.gov','atf.gov','broadbandmap.gov','buildingamerica.gov','cfda.gov','cjis.gov','cncsoig.gov','earmarks.gov','exploretsp.gov','faca.gov','facadatabase.gov','fbo.gov','fercalt.gov','fha.gov','frtib.gov','fsgb.gov','g5.gov','geomac.gov','gop.gov','grants.gov','grantsolutions.gov','green.gov','gsaadvantage.gov','guideline.gov','guidelines.gov','highperformancebuildings.gov','housecommunications.gov','iarpa-ideas.gov','idealab.gov','invasivespeciesinfo.gov','irs.gov','irsauctions.gov','irssales.gov','itap.gov','itdashboard.gov','juvenilecouncil.gov','labor.gov','lcacommons.gov','malwareinvestigator.gov','max.gov','medicalcountermeasures.gov','nara.gov','nbm.gov','ncix.gov','nepa.gov','nfpors.gov','ngc.gov','nls.gov','nmcourt.gov','realestatesales.gov','republicans.gov','saferproduct.gov','saferproducts.gov','safetyact.gov','sam.gov','sen.gov','sss.gov','stb.gov','stopfraud.gov','thisfreelife.gov','tsc.gov','tsp.gov','usaid.gov','uspis.gov','wh.gov','worldwar1centennial.gov','businessdefense.gov','notalone.gov') and b.nid=a.entity_id", array(':bundle' => 'website'));
 
 
-  #$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id  and  b.status='1' and a.entity_id > '634'", array(':bundle' => 'website'));
+    #$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id  and  b.status='1' and a.entity_id > '634'", array(':bundle' => 'website'));
 
     //Final Query
 //    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id and b.nid not in (select c.field_website_id_nid from field_data_body a , node b, field_data_field_website_id c  where b.type='mobile_scan_information' and b.nid=a.entity_id and b.nid=c.entity_id and (UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - b.changed)/3600 >= 3)", array(':bundle' => 'website'));
@@ -492,6 +492,110 @@ function getMobileAPIdata($domain){
 }
 
 /*
+ * Run Mobile API calls to Google and get the data using pagespped v5 api
+ */
+
+function getMobileApiDataPagespeedV5($domain){
+    include("../scripts/configSettings.php");
+    $mobileAPIdataArr = array();
+    //Call to Google Mobile Friendly API
+    //We are not using drupal system_retrieve_file because it failed url calls to google randomly
+    //$googMobileFriendlyApi = "https://www.googleapis.com/pagespeedonline/v3beta1/mobileReady?screenshot=true&key=AIzaSyDXNreglPI5GTgZRi2Le71DZUGQe2o77h4&url=http://".$domain."&strategy=mobile";
+    //$googMobileFriendlyApiHttps = "https://www.googleapis.com/pagespeedonline/v3beta1/mobileReady?screenshot=true&key=AIzaSyDXNreglPI5GTgZRi2Le71DZUGQe2o77h4&url=https://".$domain."&strategy=mobile";
+    $http_domain = "http://".$domain;
+    $https_domain = "https://".$domain;
+    $googleApiKey = "AIzaSyDXNreglPI5GTgZRi2Le71DZUGQe2o77h4";
+    if(!$googMobileFriendlyApiData = mobileFriendlyApidata("$http_domain","$googleApiKey")) {
+        $error = error_get_last();
+        writeToLogs("API request failed to $http_domain . Error was: " . $error['message'],$logFile);
+    }
+    else{
+        //$mobileAPIdataArr['mobFriendlyFile'] = "sites/default/files/mobilefriendly_reports/" . $domain . ".json";
+        //Get Json data and enter to a file
+        //file_put_contents($mobileAPIdataArr['mobFriendlyFile'], $googMobileFriendlyApiData);
+        $mobFriendlyFile = file_save_data($googMobileFriendlyApiData,file_default_scheme().'://mobilefriendly_reports/'.$domain.'.json', FILE_EXISTS_REPLACE);
+        $mobileAPIdataArr['mobFriendlyFile'] = array('fid' => $mobFriendlyFile->fid,'display' => 1, 'description' => '');
+        $jsonMFarr = json_decode($googMobileFriendlyApiData, true);
+        if(isset($jsonMFarr['error']['errors'])){
+            $mobileAPIdataArr['mobFriendlyErrorCode'] = $jsonMFarr['error']['code'];
+            $mobileAPIdataArr['mobFriendlyErrorMessage'] = $jsonMFarr['error']['errors'][0]['message'];
+        }
+
+        $mobileAPIdataArr['mobFriendlyScore'] = $jsonMFarr['ruleGroups']['USABILITY']['score'];
+        $mobileAPIdataArr['mobFriendlyResult'] = $jsonMFarr['ruleGroups']['USABILITY']['pass'];
+        $mobSnapshotData = str_replace('_', '/', $jsonMFarr['screenshot']['data']);
+        $mobSnapshotData = str_replace('-', '+', $mobSnapshotData);
+        $mobSnapshotData = base64_decode($mobSnapshotData);
+        $mobileAPIdataArr['mobSnapshotData'] = $mobSnapshotData;
+
+        $snapshotfile = file_save_data($mobSnapshotData,file_default_scheme().'://mobile_snapshots/'.$domain.'.jpg', FILE_EXISTS_REPLACE);
+        $mobileAPIdataArr['mobSnapshotFile'] = array('fid' => $snapshotfile->fid,'display' => 1, 'description' => '');
+        //file_put_contents($mobileAPIdataArr['mobSnapshotFile'], $mobSnapshotData);
+    }
+    //Call to Google Inights Speed API
+    //$googMobilePerformApi = "https://www.googleapis.com/pagespeedonline/v2/runPagespeed?screenshot=true&key=AIzaSyDXNreglPI5GTgZRi2Le71DZUGQe2o77h4&strategy=mobile&url=".$domain."";
+    //if(!$googMobilePerformApiData = file_get_contents("$googMobilePerformApi")) {
+    if(!$googMobilePerformApiData = googleApiv5data("$http_domain","mobile","performance", "$googleApiKey")) {
+        $error = error_get_last();
+        writeToLogs("API request failed to $http_domain . Error was: " . $error['message'],$logFile);
+    }
+    else{
+        //$mobileAPIdataArr['mobPerformFile'] = "sites/default/files/mobileperform_reports/" . $domain . ".json";
+        //Get Json data and enter to a file
+        //file_put_contents($mobileAPIdataArr['mobPerformFile'], $googMobilePerformApiData);
+        //$mobPerformFile = file_save_data($googMobilePerformApiData,file_default_scheme().'://mobileperform_reports/'.$domain.'.json', FILE_EXISTS_REPLACE);
+        //$mobileAPIdataArr['mobPerformFile'] = array('fid' => $mobPerformFile->fid,'display' => 1, 'description' => '');
+
+        $jsonMParr = json_decode($googMobilePerformApiData, true);
+        if(isset($jsonMParr['error']['errors'])){
+            $mobileAPIdataArr['mobPerformErrorCode'] = $jsonMParr['error']['code'];
+            $mobileAPIdataArr['mobPerformErrorMessage'] = $jsonMParr['error']['errors'][0]['message'];
+        }
+        if($mobileAPIdataArr['mobSnapshotData'] == ''){
+            $mobSnapshotData = str_replace('_', '/', $jsonMParr['lighthouseResult']['audits']['final-screenshot']['details']['data']);
+            $mobSnapshotData = str_replace('-', '+', $mobSnapshotData);
+            $mobSnapshotData = base64_decode($mobSnapshotData);
+            $mobileAPIdataArr['mobSnapshotData'] = $mobSnapshotData;
+            //$snapshotfile = file_save_data($mobSnapshotData,file_default_scheme().'://mobile_snapshots/'.$domain.'.jpg', FILE_EXISTS_REPLACE);
+            //$mobileAPIdataArr['mobSnapshotFile'] = array('fid' => $snapshotfile->fid,'display' => 1, 'description' => '');
+        }
+        $mobperfscore =   round(($jsonMParr['lighthouseResult']['categories']['performance']['score'] * 100));
+
+        $mobileAPIdataArr['mPScore'] = $mobperfscore;
+//        if(($mobileAPIdataArr['mobFriendlyScore'] == '') || ($mobileAPIdataArr['mobFriendlyScore'] == '0'))
+//            $mobileAPIdataArr['mobFriendlyScore'] = $jsonMParr['ruleGroups']['USABILITY']['score'];
+        //$mobileAPIdataArr['mPStats'] = $jsonMParr['pageStats'];
+        foreach($jsonMParr['lighthouseResult']['audits']['resource-summary']['details']['items'] as $jkey=>$jval){
+            if($jval['resourceType'] == "total"){
+                $mobileAPIdataArr['mPStats']['totalRequestBytes'] = $jval['size'];
+                $mobileAPIdataArr['mPStats']['numberResources'] = $jval['requestCount'];
+            }
+            if($jval['resourceType'] == "image"){
+                $mobileAPIdataArr['mPStats']['imageResponseBytes'] = $jval['size'];
+                $mobileAPIdataArr['mPStats']['numberImageResources'] = $jval['requestCount'];
+            }
+            if($jval['resourceType'] == "script"){
+                $mobileAPIdataArr['mPStats']['javascriptResponseBytes'] = $jval['size'];
+                $mobileAPIdataArr['mPStats']['numberJsResources'] = $jval['requestCount'];
+            }
+            if($jval['resourceType'] == "stylesheet"){
+                $mobileAPIdataArr['mPStats']['cssResponseBytes'] = $jval['size'];
+                $mobileAPIdataArr['mPStats']['numberCssResources'] = $jval['requestCount'];
+            }
+            if($jval['resourceType'] == "document"){
+                $mobileAPIdataArr['mPStats']['htmlResponseBytes'] = $jval['size'];
+            }
+            if($jval['resourceType'] == "other"){
+                $mobileAPIdataArr['mPStats']['otherResponseBytes'] = $jval['size'];
+            }
+        }
+
+    }
+    return $mobileAPIdataArr;
+}
+
+
+/*
  * Get Mobile Friendly API through Curl calls
  */
 
@@ -501,6 +605,24 @@ function mobileFriendlyApidata($url, $apiKey)
     curl_setopt_array($curl, array(
         CURLOPT_RETURNTRANSFER => 1,
         CURLOPT_URL => 'https://www.googleapis.com/pagespeedonline/v3beta1/mobileReady?key='.$apiKey.'&url='.$url.'&strategy=mobile',
+    ));
+    $resp = curl_exec($curl);
+    curl_close($curl);
+
+    return $resp;
+}
+
+/*
+ * Get Data from google page speed api
+ * Category can be "accessibility" , "best-practices" , "performance" , "pwa" , "seo"
+ */
+function googleApiv5data($url,$type, $category, $apiKey)
+{
+
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_URL => 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed?key='.$apiKey.'&url='.$url.'&strategy='.$type.'&category='.$category,
     ));
     $resp = curl_exec($curl);
     curl_close($curl);
@@ -617,16 +739,16 @@ function getSiteInspectorOutput($domain){
  */
 
 function getDnssecStatus($domain){
-  $dnsseccom = "dig +dnssec $domain @8.8.8.8|grep -i 'rrsig'";
-  $outp = array();
-  $comret = "";
-  execCommand("$dnsseccom",$outp,$comret);
+    $dnsseccom = "dig +dnssec $domain @8.8.8.8|grep -i 'rrsig'";
+    $outp = array();
+    $comret = "";
+    execCommand("$dnsseccom",$outp,$comret);
     $commandOutputforStore = implode("\n", $outp);
     //If the command output is null there is no RRSIG (DNNSEC cryptographic signature) info for the domain
-  if(trim($commandOutputforStore) == '')
-    $dnssecstat = '0';
-  else
-    $dnssecstat = '1';
+    if(trim($commandOutputforStore) == '')
+        $dnssecstat = '0';
+    else
+        $dnssecstat = '1';
 
     $dnssecret['status'] = $dnssecstat;
     $dnssecret['output'] = $commandOutputforStore;
@@ -672,7 +794,7 @@ function getIPv6StatfromNIST($domain){
     else{
         $ipv6stat = '0';
     }
-return $ipv6stat;
+    return $ipv6stat;
 }
 
 
@@ -699,8 +821,8 @@ function getPulseData(){
     db_query("LOAD DATA LOCAL INFILE '".$localdapfile."' INTO TABLE `custom_pulse_dap_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
     db_query("update custom_pulse_https_data a , custom_pulse_dap_data b set a.dap=b.dap where a.domain=b.domain");
 
-  //Update branch information since pulse is not giving that data any more
-  updateBranchInfo();
+    //Update branch information since pulse is not giving that data any more
+    updateBranchInfo();
 
     //Update Agency information from CSV file
     updatePulseAgencyInfo("$localhttpsfile");
@@ -728,7 +850,7 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
     }
     $node->promote = 0;
 
-  //Collect HTTPS and Redirect status from Domain scan and update HTTPS
+    //Collect HTTPS and Redirect status from Domain scan and update HTTPS
     $domainScanNodeTit = "Domain Scan ".$website['domain'];
     if(($domainNodeId = findNode($domainScanNodeTit,'domain_scan_information')) != FALSE){
         $domquery = db_query("select field_site_inspector_raw_out_value from  field_data_field_site_inspector_raw_out where entity_id=:nid", array(':nid' => $domainNodeId));
@@ -737,13 +859,13 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
             $domjsonHttp =  $domjson->https;
             $domjsonRed =  $domjson->redirect;
             if($domjsonHttp == '1')
-              $domjsonHttp = 'Yes';
+                $domjsonHttp = 'Yes';
             else
-              $domjsonHttp = 'No';
-          if($domjsonRed == '1')
-            $domjsonRed = 'Yes';
-          else
-            $domjsonRed = 'No';
+                $domjsonHttp = 'No';
+            if($domjsonRed == '1')
+                $domjsonRed = 'Yes';
+            else
+                $domjsonRed = 'No';
 
             db_query("update custom_pulse_https_data set HTTPS = '$domjsonHttp' , redirect = '$domjsonRed' where domain=:domain",array(':domain' => $website['domain']));
         }
@@ -956,10 +1078,10 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
     $siInfo = getSiteInspectorOutput($website['domain']);
     //Update Site Inspector details
     //Override Siteinspector dnssec with custom dnssec result
-     //$siInfo['dnssec'] = getDnssecStatus($website['domain']);
-     $dnssecret = getDnssecStatus($website['domain']);
-     $ipv6nistret = getIPv6StatfromNIST($website['domain']);
-     $ipv6custret = getCustomIpv6Status($website['domain']);
+    //$siInfo['dnssec'] = getDnssecStatus($website['domain']);
+    $dnssecret = getDnssecStatus($website['domain']);
+    $ipv6nistret = getIPv6StatfromNIST($website['domain']);
+    $ipv6custret = getCustomIpv6Status($website['domain']);
 
     $node->field_cdn_provider_name['und'][0]['value'] = $siInfo['cdn'];
     $node->field_cloud_provider['und'][0]['value'] = $siInfo['cloud_provider'];
@@ -1060,7 +1182,7 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
     //Assign node Value
     $node->field_ssl_score['und'][0]['value'] = round($sslScore);
 
-        $wnode->field_ssl_score['und'][0]['value'] = round($sslScore);
+    $wnode->field_ssl_score['und'][0]['value'] = round($sslScore);
 
     //Save Tags to parent website
     if(!empty($tags)) {
@@ -1132,7 +1254,7 @@ function updateMobileScanInfo($siteid,$webscanId,$website){
         $node->nid = $nodeId;
     }
     $node->promote = 0;
-    $mobInfo = getMobileAPIdata($website['domain']);
+    $mobInfo = getMobileApiDataPagespeedV5($website['domain']);
     //print_r($mobInfo);
     $node->body['und'][0]['value'] = '';
     $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
@@ -1154,7 +1276,7 @@ function updateMobileScanInfo($siteid,$webscanId,$website){
     }
     if(($mobInfo['mobFriendlyErrorCode'] != '') && ($mobInfo['mobPerformErrorCode'] != '')) {
         $field_mobile_overall_score = NULL;
-        }
+    }
     elseif(($mobInfo['mobFriendlyErrorCode'] != '') && ($mobInfo['mobPerformErrorCode'] == '')) {
         $field_mobile_overall_score = round($mobInfo['mPScore']);
     }
@@ -1166,8 +1288,8 @@ function updateMobileScanInfo($siteid,$webscanId,$website){
     }
 
     $node->field_mobile_usability_score['und'][0]['value'] = $field_mobile_usability_score;
-     $node->field_mobile_performance_score['und'][0]['value'] = $field_mobile_performance_score;
-    $node->field_mobile_overall_score['und'][0]['value'] = $field_mobile_overall_score;		
+    $node->field_mobile_performance_score['und'][0]['value'] = $field_mobile_performance_score;
+    $node->field_mobile_overall_score['und'][0]['value'] = $field_mobile_overall_score;
     $node->field_mobile_usability_report['und'][0] = $mobInfo['mobFriendlyFile'];
     $node->field_mobile_performance_report['und'][0] = $mobInfo['mobPerformFile'];
     $node->field_mobile_websnapshot['und'][0] = $mobInfo['mobSnapshotFile'];
@@ -1269,7 +1391,7 @@ function updateSiteScanInfo($siteid,$webscanId,$website){
         $node->nid = $nodeId;
     }
     $node->promote = 0;
-    $siteInfo = getSitePerformanceAPIdata($website['domain']);
+    $siteInfo = getSitePerformanceAPIdataV5($website['domain']);
     //print_r($mobInfo);
     $node->body['und'][0]['value'] = '';
     $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
@@ -1354,6 +1476,68 @@ function getSitePerformanceAPIdata($domain){
     return $siteSpeedAPIdataArr;
 }
 
+/*
+ * Run Site performance API calls to Google and get the data from pagespped v5 api
+ */
+
+function getSitePerformanceAPIdataV5($domain){
+    include("../scripts/configSettings.php");
+    $siteSpeedAPIdataArr = array();
+    //We are not using drupal system_retrieve_file because it failed url calls to google randomly
+    $http_domain = "http://".$domain;
+    $https_domain = "https://".$domain;
+    $googleApiKey = "AIzaSyDXNreglPI5GTgZRi2Le71DZUGQe2o77h4";
+
+    //Call to Google Inights Speed API
+    if(!$googSitePerformApiData = googleApiv5data("$http_domain","desktop","performance", "$googleApiKey")) {
+        $error = error_get_last();
+        writeToLogs("API request failed to $http_domain . Error was: " . $error['message'],$logFile);
+    }
+    else{
+        $sitePerformFile = file_save_data($googSitePerformApiData,file_default_scheme().'://sitespeed_reports/'.$domain.'.json', FILE_EXISTS_REPLACE);
+        $siteSpeedAPIdataArr['sitePerformFile'] = array('fid' => $sitePerformFile->fid,'display' => 1, 'description' => '');
+
+        $jsonMParr = json_decode($googSitePerformApiData, true);
+        if($siteSpeedAPIdataArr['siteSnapshotData'] == ''){
+            $siteSnapshotData = str_replace('_', '/', $jsonMParr['lighthouseResult']['audits']['final-screenshot']['details']['data']);
+            $siteSnapshotData = str_replace('-', '+', $siteSnapshotData);
+            $siteSnapshotData = base64_decode($siteSnapshotData);
+            $siteSpeedAPIdataArr['siteSnapshotData'] = $siteSnapshotData;
+            $snapshotfile = file_save_data($siteSnapshotData,file_default_scheme().'://desktop_snapshots/'.$domain.'.jpg', FILE_EXISTS_REPLACE);
+            $siteSpeedAPIdataArr['siteSnapshotFile'] = array('fid' => $snapshotfile->fid,'display' => 1, 'description' => '');
+        }
+        $mobperfscore =   round(($jsonMParr['lighthouseResult']['categories']['performance']['score'] * 100));
+        $siteSpeedAPIdataArr['mPScore'] = $mobperfscore;
+        foreach($jsonMParr['lighthouseResult']['audits']['resource-summary']['details']['items'] as $jkey=>$jval){
+            if($jval['resourceType'] == "total"){
+                $siteSpeedAPIdataArr['mPStats']['totalRequestBytes'] = $jval['size'];
+                $siteSpeedAPIdataArr['mPStats']['numberResources'] = $jval['requestCount'];
+            }
+            if($jval['resourceType'] == "image"){
+                $siteSpeedAPIdataArr['mPStats']['imageResponseBytes'] = $jval['size'];
+                $siteSpeedAPIdataArr['mPStats']['numberImageResources'] = $jval['requestCount'];
+            }
+            if($jval['resourceType'] == "script"){
+                $siteSpeedAPIdataArr['mPStats']['javascriptResponseBytes'] = $jval['size'];
+                $siteSpeedAPIdataArr['mPStats']['numberJsResources'] = $jval['requestCount'];
+            }
+            if($jval['resourceType'] == "stylesheet"){
+                $siteSpeedAPIdataArr['mPStats']['cssResponseBytes'] = $jval['size'];
+                $siteSpeedAPIdataArr['mPStats']['numberCssResources'] = $jval['requestCount'];
+            }
+            if($jval['resourceType'] == "document"){
+                $siteSpeedAPIdataArr['mPStats']['htmlResponseBytes'] = $jval['size'];
+            }
+            if($jval['resourceType'] == "other"){
+                $siteSpeedAPIdataArr['mPStats']['otherResponseBytes'] = $jval['size'];
+            }
+        }
+
+
+    }
+    return $siteSpeedAPIdataArr;
+}
+
 
 /*
  * Find if node exists form title then return nid else return false
@@ -1419,7 +1603,7 @@ function updatePulseAgencyInfo($csvfile){
     foreach($csv as $csval){
         print "$csval[3] \n";
         if(trim($csval[3]) != ''){
-          $branchname = getBranchInfo($csval[3]);
+            $branchname = getBranchInfo($csval[3]);
             //Check if the Agency exists if not create a new agency
             if(($agencyId = findNode($csval[3],'agency')) != FALSE){
                 echo "found agency $agencyId";
@@ -1525,7 +1709,7 @@ function readCSV($csvFile){
         $line_of_text[] = fgetcsv($file_handle, 1024);
     }
     fclose($file_handle);
-	unset($line_of_text[0]);
+    unset($line_of_text[0]);
     return $line_of_text;
 }
 
@@ -1691,11 +1875,11 @@ function updateTechStackInfo($website){
     $command = "node /usr/lib/node_modules/wappalyzer/index.js $weburl";
     shell_exec("export npm_config_loglevel=silent");
     $tsout = shell_exec("export npm_config_loglevel=silent;$command");
-if (strpos($tsout, 'JQMIGRATE:') !== false) {
-    $tsout1 = explode(" version 1.4.1",$tsout);
-    $tsout = $tsout1[1];
-}
-     $tsout = "[$tsout]";
+    if (strpos($tsout, 'JQMIGRATE:') !== false) {
+        $tsout1 = explode(" version 1.4.1",$tsout);
+        $tsout = $tsout1[1];
+    }
+    $tsout = "[$tsout]";
     $tsout2 = strstr($tsout,'[{"');
     $tsout2 = str_replace('\'', '\\\'', $tsout2);
     $tsout2 = str_replace("\\n","",$tsout2);
@@ -1704,7 +1888,7 @@ if (strpos($tsout, 'JQMIGRATE:') !== false) {
     $tags = array();
     $k = 1;
     foreach($tsobj[0]->applications as $tskey=>$tsobj){
-    //foreach($tsobj as $tskey=>$tsobj){
+        //foreach($tsobj as $tskey=>$tsobj){
         $tsAppname = $tsobj->name;
         //$tsAppCat = $tsobj->categories[0];
         $tsAppCat1 = (Array)$tsobj->categories[0];
@@ -1716,20 +1900,20 @@ if (strpos($tsout, 'JQMIGRATE:') !== false) {
         if(trim($tsobj->version) != '') {
             $tsAppname .= "_" . $tsobj->version;
             //if (!in_array($tsAppname, $tags[$tsAppCat]))
-                $tags[strtolower($tsAppCat)][] = $tsAppname;
+            $tags[strtolower($tsAppCat)][] = $tsAppname;
         }
 
-            $tags[strtolower($tsAppCat)][] = $tsobj->name;
+        $tags[strtolower($tsAppCat)][] = $tsobj->name;
     }
     //print_r($tags);
     $curNodeid = findNode($website,'website');
     $webnode = node_load($curNodeid);
     $webnode->field_technology_scan_raw['und'][0]['value'] = $tsout2;
     $cdnproviders = findCDNProvider("$website");
-foreach($varCatassoc as $vkey=>$vval){
-		 $webnode->{$vval} = array();
-		//print "$vkey -- $vval \n";
-	}
+    foreach($varCatassoc as $vkey=>$vval){
+        $webnode->{$vval} = array();
+        //print "$vkey -- $vval \n";
+    }
     if(!empty($cdnproviders)){
         $tags['cdn'] = array_values($cdnproviders);
     }
@@ -1800,43 +1984,43 @@ function updateAccessibleScanInfo($webscanId){
     $allDomAgencycontents = utf8_encode($allDomAgencycontents);
     $allAgenArr = json_decode($allDomAgencycontents, true);
     foreach($allAgenArr['data'] as $errorlistk => $errorlistv) {
- if (($agAgencyNodeId = findNode($errorlistv['agency'],'agency')) != FALSE) {
-        $pageCnt = $errorlistv['pages_count'];
-        $agColCont = $errorlistv['Color Contrast - Initial Findings'];
-        $agMissImage = $errorlistv['Missing Image Descriptions'];
-        $agHtmlAtrrib = $errorlistv['HTML Attribute - Initial Findings'];
-        $agFormFind = $errorlistv['Form - Initial Findings'];
-        $agAvError = $errorlistv['Average Errors per Page'];
-        $date = date("m-d-Y");
-        $agnode = new stdClass();
-        $agnode->type = "accessibility_agency_scan_inform";
-        $agnode->language = LANGUAGE_NONE;
-        $agnode->uid = "1";
-        $agnode->name = "admin";
-        $agnode->status = 1;
-        $agnode->title = "Accessibility Agency Scan " . $errorlistv['agency'];
-        if (($nodeId = findNode($agnode->title, 'accessibility_agency_scan_inform')) != FALSE) {
-            echo "found node $agnode->title $nodeId";
-            $agnode->nid = $nodeId;
-        }
-        $agnode->promote = 0;
+        if (($agAgencyNodeId = findNode($errorlistv['agency'],'agency')) != FALSE) {
+            $pageCnt = $errorlistv['pages_count'];
+            $agColCont = $errorlistv['Color Contrast - Initial Findings'];
+            $agMissImage = $errorlistv['Missing Image Descriptions'];
+            $agHtmlAtrrib = $errorlistv['HTML Attribute - Initial Findings'];
+            $agFormFind = $errorlistv['Form - Initial Findings'];
+            $agAvError = $errorlistv['Average Errors per Page'];
+            $date = date("m-d-Y");
+            $agnode = new stdClass();
+            $agnode->type = "accessibility_agency_scan_inform";
+            $agnode->language = LANGUAGE_NONE;
+            $agnode->uid = "1";
+            $agnode->name = "admin";
+            $agnode->status = 1;
+            $agnode->title = "Accessibility Agency Scan " . $errorlistv['agency'];
+            if (($nodeId = findNode($agnode->title, 'accessibility_agency_scan_inform')) != FALSE) {
+                echo "found node $agnode->title $nodeId";
+                $agnode->nid = $nodeId;
+            }
+            $agnode->promote = 0;
 
-        $agnode->field_web_scan_id['und'][0]['nid'] = $webscanId;
-        $agnode->field_web_agency_id['und'][0]['nid'] = $agAgencyNodeId;
-        $agnode->field_agac_average_errors_page['und'][0]['value'] = $agAvError;
-        $agnode->field_agac_agency_pages_cnt['und'][0]['value'] = $pageCnt;
-        $agnode->field_agac_color_contrast_aver['und'][0]['value'] = $agColCont;
-        $agnode->field_agac_missing_image_avrg['und'][0]['value'] = $agMissImage;
-        $agnode->field_agac_html_attribute_avrg['und'][0]['value'] = $agHtmlAtrrib;
-        $agnode->field_agac_form_init_find_avrg['und'][0]['value'] = $agFormFind;
-        $agnode->body['und'][0]['value'] = json_encode($errorlistv);
+            $agnode->field_web_scan_id['und'][0]['nid'] = $webscanId;
+            $agnode->field_web_agency_id['und'][0]['nid'] = $agAgencyNodeId;
+            $agnode->field_agac_average_errors_page['und'][0]['value'] = $agAvError;
+            $agnode->field_agac_agency_pages_cnt['und'][0]['value'] = $pageCnt;
+            $agnode->field_agac_color_contrast_aver['und'][0]['value'] = $agColCont;
+            $agnode->field_agac_missing_image_avrg['und'][0]['value'] = $agMissImage;
+            $agnode->field_agac_html_attribute_avrg['und'][0]['value'] = $agHtmlAtrrib;
+            $agnode->field_agac_form_init_find_avrg['und'][0]['value'] = $agFormFind;
+            $agnode->body['und'][0]['value'] = json_encode($errorlistv);
 
-        node_object_prepare($agnode);
-        if ($agnode = node_submit($agnode)) {
-            node_save($agnode);
+            node_object_prepare($agnode);
+            if ($agnode = node_submit($agnode)) {
+                node_save($agnode);
+            }
+            print "$agAgencyNodeId --  ".$errorlistv['agency']." \n";
         }
-        print "$agAgencyNodeId --  ".$errorlistv['agency']." \n";
-    }
     }
 
 
@@ -1869,127 +2053,127 @@ function updateAccessibleScanInfo($webscanId){
         $domain = $domval['domain'];
         $siteId = findNode($domval['domain'],'website');
         if($siteId != '') {
-          //  if ($domval['domain'] == 'inl.gov') {
-                $allDomainNewArr[$domval['domain']]['errorlist'] = $domval['errorlist'];
-                $allDomainNewArr[$domval['domain']]['errordetails'] = $allDomErrArr['data'][$domain];
-                $errorgroupTerms = array();
-                $totError = 0;
-                foreach ($domval['errorlist'] as $derror => $derrorval) {
-                    if ($derror == 'Color Contrast - Initial Findings')
-                        $cntColor = $derrorval;
-                    elseif ($derror == 'HTML Attribute - Initial Findings')
-                        $cntHTML = $derrorval;
-                    elseif ($derror == 'Missing Image Descriptions')
-                        $cntMissing = $derrorval;
+            //  if ($domval['domain'] == 'inl.gov') {
+            $allDomainNewArr[$domval['domain']]['errorlist'] = $domval['errorlist'];
+            $allDomainNewArr[$domval['domain']]['errordetails'] = $allDomErrArr['data'][$domain];
+            $errorgroupTerms = array();
+            $totError = 0;
+            foreach ($domval['errorlist'] as $derror => $derrorval) {
+                if ($derror == 'Color Contrast - Initial Findings')
+                    $cntColor = $derrorval;
+                elseif ($derror == 'HTML Attribute - Initial Findings')
+                    $cntHTML = $derrorval;
+                elseif ($derror == 'Missing Image Descriptions')
+                    $cntMissing = $derrorval;
 
-                    if ($derrorval != 0) {
-                        $errorgroupTerms[] = $derror;
+                if ($derrorval != 0) {
+                    $errorgroupTerms[] = $derror;
+                }
+                $totError += $derrorval;
+            }
+
+            //$agencyId = findNode($domval['agency'],'agency');
+
+            //Create Accessibility Scanning Node
+
+            $date = date("m-d-Y");
+            $node = new stdClass();
+            $node->type = "508_scan_information";
+            $node->language = LANGUAGE_NONE;
+            $node->uid = "1";
+            $node->name = "admin";
+            $node->status = 1;
+            $node->title = "Accessibility Scan " . $domval['domain'];
+            if (($nodeId = findNode($node->title, '508_scan_information')) != FALSE) {
+                echo "found node $node->title $nodeId";
+                $node->nid = $nodeId;
+            }
+            $node->promote = 0;
+
+            $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
+            $node->field_website_id['und'][0]['nid'] = $siteId;
+            $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteId);
+            $node->field_508_scan_time['und'][0]['value'] = time();
+            $node->field_accessibility_raw_scan['und'][0]['value'] = json_encode($allDomErrArr['data'][$domain]);
+            $node->field_accessible_group_colorcont['und'][0]['value'] = $cntColor;
+            $node->field_accessible_group_htmlattri['und'][0]['value'] = $cntHTML;
+            $node->field_accessible_group_missingim['und'][0]['value'] = $cntMissing;
+
+            node_object_prepare($node);
+            if ($node = node_submit($node)) {
+                node_save($node);
+            }
+
+            //Update Parent Website with required tagging info
+            //print_r($wcagCodearr[$domval['domain']]);
+
+            $wnode = node_load($siteId);
+            $wnode->field_accessibility_total_errors['und'][0]['value'] = $totError;
+            $j = 1;
+            $i = 1;
+
+            if(!empty($wnode->field_accessibility_errors)){
+                foreach($wnode->field_accessibility_errors['und'] as $etk  =>$etval){
+                    $currentTermsErr[] = $etval['tid'];
+                }
+                $crnTermCntErr = count($currentTermsErr);
+            }
+
+            if(!empty($wnode->field_accessibility_error_group)){
+                foreach($wnode->field_accessibility_error_group['und'] as $egtk  =>$egval){
+                    $currentTermsErrGrp[] = $egval['tid'];
+                }
+                $crnTermCntErrGrp = count($currentTermsErrGrp);
+            }
+
+            foreach($wcagCodearr[$domval['domain']] as $tagkey => $tags) {
+
+                if ($eterm = taxonomy_get_term_by_name($tagkey)) {
+                    //print_r($eterm);
+                    //$wnode->field_accessibility_error_group['und'][$j]['tid'] = $eterm->tid;
+                    $terms_array = array_keys($eterm);
+                    //Check if the term already assigned to the node
+                    if(!in_array($terms_array['0'],$currentTermsErrGrp)){
+                        $wnode->field_accessibility_error_group['und'][$crnTermCntErrGrp+$j]['tid'] = $terms_array['0'];
                     }
-                    $totError += $derrorval;
-                }
-
-                //$agencyId = findNode($domval['agency'],'agency');
-
-                //Create Accessibility Scanning Node
-
-                $date = date("m-d-Y");
-                $node = new stdClass();
-                $node->type = "508_scan_information";
-                $node->language = LANGUAGE_NONE;
-                $node->uid = "1";
-                $node->name = "admin";
-                $node->status = 1;
-                $node->title = "Accessibility Scan " . $domval['domain'];
-                if (($nodeId = findNode($node->title, '508_scan_information')) != FALSE) {
-                    echo "found node $node->title $nodeId";
-                    $node->nid = $nodeId;
-                }
-                $node->promote = 0;
-
-                $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
-                $node->field_website_id['und'][0]['nid'] = $siteId;
-                $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteId);
-                $node->field_508_scan_time['und'][0]['value'] = time();
-                $node->field_accessibility_raw_scan['und'][0]['value'] = json_encode($allDomErrArr['data'][$domain]);
-                $node->field_accessible_group_colorcont['und'][0]['value'] = $cntColor;
-                $node->field_accessible_group_htmlattri['und'][0]['value'] = $cntHTML;
-                $node->field_accessible_group_missingim['und'][0]['value'] = $cntMissing;
-
-                node_object_prepare($node);
-                if ($node = node_submit($node)) {
-                    node_save($node);
-                }
-
-                //Update Parent Website with required tagging info
-                //print_r($wcagCodearr[$domval['domain']]);
-
-                $wnode = node_load($siteId);
-                $wnode->field_accessibility_total_errors['und'][0]['value'] = $totError;
-                $j = 1;
-                $i = 1;
-
-                if(!empty($wnode->field_accessibility_errors)){
-                    foreach($wnode->field_accessibility_errors['und'] as $etk  =>$etval){
-                        $currentTermsErr[] = $etval['tid'];
+                } else {
+                    $eterm = new STDClass();
+                    $eterm->name = $tagkey;
+                    $eterm->vid = 5;
+                    if (!empty($eterm->name)) {
+                        taxonomy_term_save($eterm);
+                        $wnode->field_accessibility_error_group['und'][$j]['tid'] = $eterm->tid;
                     }
-                    $crnTermCntErr = count($currentTermsErr);
                 }
 
-                if(!empty($wnode->field_accessibility_error_group)){
-                    foreach($wnode->field_accessibility_error_group['und'] as $egtk  =>$egval){
-                        $currentTermsErrGrp[] = $egval['tid'];
-                    }
-                    $crnTermCntErrGrp = count($currentTermsErrGrp);
-                }
-
-                foreach($wcagCodearr[$domval['domain']] as $tagkey => $tags) {
-
-                    if ($eterm = taxonomy_get_term_by_name($tagkey)) {
-                        //print_r($eterm);
-                        //$wnode->field_accessibility_error_group['und'][$j]['tid'] = $eterm->tid;
-                        $terms_array = array_keys($eterm);
+                foreach ($tags as $key => $tag) {
+                    if ($term = taxonomy_get_term_by_name($tag)) {
+                        $terms_array_err = array_keys($term);
                         //Check if the term already assigned to the node
-                        if(!in_array($terms_array['0'],$currentTermsErrGrp)){
-                            $wnode->field_accessibility_error_group['und'][$crnTermCntErrGrp+$j]['tid'] = $terms_array['0'];
+//                            print_r($term);
+                        if(!in_array($terms_array_err['0'],$crnTermCntErr)) {
+                            $wnode->field_accessibility_errors['und'][$crnTermCntErr+$j]['tid'] = $terms_array_err['0'];
                         }
                     } else {
-                        $eterm = new STDClass();
-                        $eterm->name = $tagkey;
-                        $eterm->vid = 5;
-                        if (!empty($eterm->name)) {
-                            taxonomy_term_save($eterm);
-                            $wnode->field_accessibility_error_group['und'][$j]['tid'] = $eterm->tid;
+                        $term = new STDClass();
+                        $term->name = $tag;
+                        $term->vid = 4;
+                        if (!empty($term->name)) {
+                            taxonomy_term_save($term);
+                            $wnode->field_accessibility_errors['und'][$i]['tid'] = $term->tid;
                         }
                     }
-
-                    foreach ($tags as $key => $tag) {
-                        if ($term = taxonomy_get_term_by_name($tag)) {
-                            $terms_array_err = array_keys($term);
-                            //Check if the term already assigned to the node
-//                            print_r($term);
-                            if(!in_array($terms_array_err['0'],$crnTermCntErr)) {
-                                $wnode->field_accessibility_errors['und'][$crnTermCntErr+$j]['tid'] = $terms_array_err['0'];
-                            }
-                        } else {
-                            $term = new STDClass();
-                            $term->name = $tag;
-                            $term->vid = 4;
-                            if (!empty($term->name)) {
-                                taxonomy_term_save($term);
-                                $wnode->field_accessibility_errors['und'][$i]['tid'] = $term->tid;
-                            }
-                        }
-                        $i += 1;
-                    }
-                    $j += 1;
+                    $i += 1;
                 }
-                node_object_prepare($wnode);
-                if ($wnode = node_submit($wnode)) {
-                    node_save($wnode);
-                }
+                $j += 1;
+            }
+            node_object_prepare($wnode);
+            if ($wnode = node_submit($wnode)) {
+                node_save($wnode);
+            }
 
 
-           // }
+            // }
         }
         $end = microtime(true);
         writeToLogs("Accessibility scan for ".$domval['domain']." took " . ($end - $start) . "seconds.", $logFile);
@@ -2065,11 +2249,11 @@ function getAccessibleAPIdata(){
  */
 
 function updateBranchInfo(){
-  //Update Legislative Branch sites
-  db_query("update custom_pulse_https_data set branch='legislative' where agency in 	('Architect of the Capitol','Congressional Office of Compliance','Government Publishing Office','Library of Congress','Stennis Center for Public Service','The Legislative Branch (Congress)','U.S. Capitol Police')");
-  //Update Judicial Branch Sites
-  db_query("update custom_pulse_https_data set branch='judicial' where  agency in ('The Supreme Court','U.S Courts')");
-  //Update Executive Bracnh Sites
+    //Update Legislative Branch sites
+    db_query("update custom_pulse_https_data set branch='legislative' where agency in 	('Architect of the Capitol','Congressional Office of Compliance','Government Publishing Office','Library of Congress','Stennis Center for Public Service','The Legislative Branch (Congress)','U.S. Capitol Police')");
+    //Update Judicial Branch Sites
+    db_query("update custom_pulse_https_data set branch='judicial' where  agency in ('The Supreme Court','U.S Courts')");
+    //Update Executive Bracnh Sites
     db_query("update custom_pulse_https_data set branch='executive' where agency not in ('Architect of the Capitol','Congressional Office of Compliance','Government Publishing Office','Library of Congress','Stennis Center for Public Service','The Legislative Branch (Congress)','U.S. Capitol Police','The Supreme Court','U.S Courts')");
 
     /*
@@ -2201,10 +2385,10 @@ function updateBranchInfo(){
  */
 function getBranchInfo($agencyname){
 
-  $branchname = db_query("select branch from custom_pulse_https_data where agency=:agencyname limit 1", array(':agencyname' => $agencyname))->fetchField();
-  if($branchname == '')
-    $branchname = 'NA';
-  return $branchname;
+    $branchname = db_query("select branch from custom_pulse_https_data where agency=:agencyname limit 1", array(':agencyname' => $agencyname))->fetchField();
+    if($branchname == '')
+        $branchname = 'NA';
+    return $branchname;
 }
 
 
@@ -2268,7 +2452,7 @@ function extractAccessibilityErrors($domain){
     foreach ($decodedJson as $stObj){
 //        if($stObj->code == 'WCAG2AA.Principle1.Guideline1_1.1_1_1.H30.2'){
         if (strpos($stObj->code, 'WCAG2AA.Principle1.Guideline1_1') !== false) {
-                $errorArr['Missing Image Descriptions'][] = $stObj;
+            $errorArr['Missing Image Descriptions'][] = $stObj;
         }
 //        if($stObj->code == 'WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail'){
         if (strpos($stObj->code, 'WCAG2AA.Principle1.Guideline1_4') !== false) {
@@ -2293,143 +2477,143 @@ function updateAccessibilityScanCustom($website,$webscanId){
     $siteId = findNode($website,'website');
     if($siteId != '') {
         $errorlist = extractAccessibilityErrors($domain);
-	print_r($errorlist);
+        print_r($errorlist);
         $errorlist_decode = json_decode($errorlist);
-	if(count($errorlist_decode) != 0){
-        //  if ($domval['domain'] == 'inl.gov') {
-        //$allDomainNewArr[$domval['domain']]['errorlist'] = $domval['errorlist'];
-        //$allDomainNewArr[$domval['domain']]['errordetails'] = $allDomErrArr['data'][$domain];
-        $errorgroupTerms = array();
-        $totError = 0;
-        foreach ($errorlist_decode as $derror => $derrorval) {
-            $wcagCodearrOld = array();
+        if(count($errorlist_decode) != 0){
+            //  if ($domval['domain'] == 'inl.gov') {
+            //$allDomainNewArr[$domval['domain']]['errorlist'] = $domval['errorlist'];
+            //$allDomainNewArr[$domval['domain']]['errordetails'] = $allDomErrArr['data'][$domain];
+            $errorgroupTerms = array();
+            $totError = 0;
+            foreach ($errorlist_decode as $derror => $derrorval) {
+                $wcagCodearrOld = array();
 
-            if ($derror == 'Color Contrast - Initial Findings')
-                $cntColor = count($derrorval);
-            elseif ($derror == 'HTML Attribute - Initial Findings')
-                $cntHTML = count($derrorval);
-            elseif ($derror == 'Missing Image Descriptions')
-                $cntMissing = count($derrorval);
+                if ($derror == 'Color Contrast - Initial Findings')
+                    $cntColor = count($derrorval);
+                elseif ($derror == 'HTML Attribute - Initial Findings')
+                    $cntHTML = count($derrorval);
+                elseif ($derror == 'Missing Image Descriptions')
+                    $cntMissing = count($derrorval);
 
-            if ($derrorval != 0) {
-                $errorgroupTerms[] = $derror;
-            }
-            foreach($derrorval as $errorintk1=>$errorintv1) {
-//print_r($errorintv1);
-                foreach($errorintv1 as $errorintk=>$errorintv) {
-                    if($errorintk == "code")
-                        $wcagCodearrOld[$errorintv] = $errorintv;
+                if ($derrorval != 0) {
+                    $errorgroupTerms[] = $derror;
                 }
-                $wcagCodearr[$derror] = $wcagCodearrOld;
+                foreach($derrorval as $errorintk1=>$errorintv1) {
+//print_r($errorintv1);
+                    foreach($errorintv1 as $errorintk=>$errorintv) {
+                        if($errorintk == "code")
+                            $wcagCodearrOld[$errorintv] = $errorintv;
+                    }
+                    $wcagCodearr[$derror] = $wcagCodearrOld;
+                }
             }
-        }
-        $totError = $cntColor+$cntHTML+$cntMissing;
+            $totError = $cntColor+$cntHTML+$cntMissing;
 //print_r($errorlist_decode);
 //print_r($wcagCodearr);
 
-        //$agencyId = findNode($domval['agency'],'agency');
+            //$agencyId = findNode($domval['agency'],'agency');
 
-        //Create Accessibility Scanning Node
+            //Create Accessibility Scanning Node
 
-        $date = date("m-d-Y");
-        $node = new stdClass();
-        $node->type = "508_scan_information";
-        $node->language = LANGUAGE_NONE;
-        $node->uid = "1";
-        $node->name = "admin";
-        $node->status = 1;
-        $node->title = "Accessibility Scan " . $website;
-        if (($nodeId = findNode($node->title, '508_scan_information')) != FALSE) {
-            echo "found node $node->title $nodeId";
-            $node->nid = $nodeId;
-        }
-        $node->promote = 0;
-
-        $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
-        $node->field_website_id['und'][0]['nid'] = $siteId;
-        $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteId);
-        $node->field_508_scan_time['und'][0]['value'] = time();
-        $node->field_accessibility_raw_scan['und'][0]['value'] = $errorlist;
-        $node->field_accessible_group_colorcont['und'][0]['value'] = $cntColor;
-        $node->field_accessible_group_htmlattri['und'][0]['value'] = $cntHTML;
-        $node->field_accessible_group_missingim['und'][0]['value'] = $cntMissing;
-
-        node_object_prepare($node);
-        if ($node = node_submit($node)) {
-            node_save($node);
-        }
-
-        //Update Parent Website with required tagging info
-        //print_r($wcagCodearr[$domval['domain']]);
-
-        $wnode = node_load($siteId);
-        $wnode->field_accessibility_total_errors['und'][0]['value'] = $totError;
-        $j = 1;
-        $i = 1;
-
-        if(!empty($wnode->field_accessibility_errors)){
-            foreach($wnode->field_accessibility_errors['und'] as $etk  =>$etval){
-                $currentTermsErr[] = $etval['tid'];
+            $date = date("m-d-Y");
+            $node = new stdClass();
+            $node->type = "508_scan_information";
+            $node->language = LANGUAGE_NONE;
+            $node->uid = "1";
+            $node->name = "admin";
+            $node->status = 1;
+            $node->title = "Accessibility Scan " . $website;
+            if (($nodeId = findNode($node->title, '508_scan_information')) != FALSE) {
+                echo "found node $node->title $nodeId";
+                $node->nid = $nodeId;
             }
-            $crnTermCntErr = count($currentTermsErr);
-        }
+            $node->promote = 0;
 
-        if(!empty($wnode->field_accessibility_error_group)){
-            foreach($wnode->field_accessibility_error_group['und'] as $egtk  =>$egval){
-                $currentTermsErrGrp[] = $egval['tid'];
+            $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
+            $node->field_website_id['und'][0]['nid'] = $siteId;
+            $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteId);
+            $node->field_508_scan_time['und'][0]['value'] = time();
+            $node->field_accessibility_raw_scan['und'][0]['value'] = $errorlist;
+            $node->field_accessible_group_colorcont['und'][0]['value'] = $cntColor;
+            $node->field_accessible_group_htmlattri['und'][0]['value'] = $cntHTML;
+            $node->field_accessible_group_missingim['und'][0]['value'] = $cntMissing;
+
+            node_object_prepare($node);
+            if ($node = node_submit($node)) {
+                node_save($node);
             }
-            $crnTermCntErrGrp = count($currentTermsErrGrp);
-        }
 
-        foreach($wcagCodearr as $tagkey => $tags) {
+            //Update Parent Website with required tagging info
+            //print_r($wcagCodearr[$domval['domain']]);
 
-            if ($eterm = taxonomy_get_term_by_name($tagkey)) {
-                //print_r($eterm);
-                //$wnode->field_accessibility_error_group['und'][$j]['tid'] = $eterm->tid;
-                $terms_array = array_keys($eterm);
-                //Check if the term already assigned to the node
-                if(!in_array($terms_array['0'],$currentTermsErrGrp)){
-                    $wnode->field_accessibility_error_group['und'][$crnTermCntErrGrp+$j]['tid'] = $terms_array['0'];
+            $wnode = node_load($siteId);
+            $wnode->field_accessibility_total_errors['und'][0]['value'] = $totError;
+            $j = 1;
+            $i = 1;
+
+            if(!empty($wnode->field_accessibility_errors)){
+                foreach($wnode->field_accessibility_errors['und'] as $etk  =>$etval){
+                    $currentTermsErr[] = $etval['tid'];
                 }
-            } else {
-                $eterm = new STDClass();
-                $eterm->name = $tagkey;
-                $eterm->vid = 5;
-                if (!empty($eterm->name)) {
-                    taxonomy_term_save($eterm);
-                    $wnode->field_accessibility_error_group['und'][$j]['tid'] = $eterm->tid;
-                }
+                $crnTermCntErr = count($currentTermsErr);
             }
 
-            foreach ($tags as $key => $tag) {
-                $crnTermCntErr = $crnTermCntErr+$j;
-                if ($term = taxonomy_get_term_by_name($tag)) {
-                    $terms_array_err = array_keys($term);
+            if(!empty($wnode->field_accessibility_error_group)){
+                foreach($wnode->field_accessibility_error_group['und'] as $egtk  =>$egval){
+                    $currentTermsErrGrp[] = $egval['tid'];
+                }
+                $crnTermCntErrGrp = count($currentTermsErrGrp);
+            }
+
+            foreach($wcagCodearr as $tagkey => $tags) {
+
+                if ($eterm = taxonomy_get_term_by_name($tagkey)) {
+                    //print_r($eterm);
+                    //$wnode->field_accessibility_error_group['und'][$j]['tid'] = $eterm->tid;
+                    $terms_array = array_keys($eterm);
                     //Check if the term already assigned to the node
-                    if(!in_array($terms_array_err['0'],$currentTermsErr)) {
-                        $wnode->field_accessibility_errors['und'][$crnTermCntErr]['tid'] = $terms_array_err['0'];
+                    if(!in_array($terms_array['0'],$currentTermsErrGrp)){
+                        $wnode->field_accessibility_error_group['und'][$crnTermCntErrGrp+$j]['tid'] = $terms_array['0'];
                     }
                 } else {
-                    $term = new STDClass();
-                    $term->name = $tag;
-                    $term->vid = 4;
-                    if (!empty($term->name)) {
-                        taxonomy_term_save($term);
-                        $wnode->field_accessibility_errors['und'][$i]['tid'] = $term->tid;
+                    $eterm = new STDClass();
+                    $eterm->name = $tagkey;
+                    $eterm->vid = 5;
+                    if (!empty($eterm->name)) {
+                        taxonomy_term_save($eterm);
+                        $wnode->field_accessibility_error_group['und'][$j]['tid'] = $eterm->tid;
                     }
                 }
-                $i += 1;
+
+                foreach ($tags as $key => $tag) {
+                    $crnTermCntErr = $crnTermCntErr+$j;
+                    if ($term = taxonomy_get_term_by_name($tag)) {
+                        $terms_array_err = array_keys($term);
+                        //Check if the term already assigned to the node
+                        if(!in_array($terms_array_err['0'],$currentTermsErr)) {
+                            $wnode->field_accessibility_errors['und'][$crnTermCntErr]['tid'] = $terms_array_err['0'];
+                        }
+                    } else {
+                        $term = new STDClass();
+                        $term->name = $tag;
+                        $term->vid = 4;
+                        if (!empty($term->name)) {
+                            taxonomy_term_save($term);
+                            $wnode->field_accessibility_errors['und'][$i]['tid'] = $term->tid;
+                        }
+                    }
+                    $i += 1;
+                }
+                $j += 1;
             }
-            $j += 1;
-        }
-        node_object_prepare($wnode);
-        if ($wnode = node_submit($wnode)) {
-            node_save($wnode);
-        }
+            node_object_prepare($wnode);
+            if ($wnode = node_submit($wnode)) {
+                node_save($wnode);
+            }
 
 
-        // }
-    }
+            // }
+        }
     }
     $end = microtime(true);
     writeToLogs("Accessibility scan for ".$domain." took " . ($end - $start) . "seconds.", $logFile);
@@ -2595,15 +2779,15 @@ function runSearchEngineScan(){
  * When all scans are complete update scanEndDate node
  */
 function updateScanEndDateTime() {
-  $nid = db_query('SELECT MAX(nid) FROM node WHERE type = :type', array(':type' => 'scans'))->fetchField();
-  
-  if (!empty($nid)) {
-    $node = node_load($nid);
-    $title = 'Scan ' . date('m-d-Y', $node->created) . ' through ' . date('m-d-Y');
-    
-    $wrapper = entity_metadata_wrapper('node', $node);
-    $wrapper->title->set($title);
-    $wrapper->field_scan_end_time->set(time());
-    $wrapper->save();
-  }
+    $nid = db_query('SELECT MAX(nid) FROM node WHERE type = :type', array(':type' => 'scans'))->fetchField();
+
+    if (!empty($nid)) {
+        $node = node_load($nid);
+        $title = 'Scan ' . date('m-d-Y', $node->created) . ' through ' . date('m-d-Y');
+
+        $wrapper = entity_metadata_wrapper('node', $node);
+        $wrapper->title->set($title);
+        $wrapper->field_scan_end_time->set(time());
+        $wrapper->save();
+    }
 }
