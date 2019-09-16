@@ -317,8 +317,8 @@ $agencynode = node_load( arg( 1 ) );
                                                 </script>
                                                 <?php
                                                 if ( ( $agencydata[ 'ag_col_contrast' ] + $agencydata[ 'ag_html_attrib' ] + $agencydata[ 'ag_miss_image' ] ) != 0 ) {
-                                                    print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>
-Above graph shows the breakdown of Accessibility issues by category</span><br/>
+                                                    print "<div class='col-lg-12 text-center clearfix'><span style='color:#29643a; font-size: 10px;font-style: italic;'>
+Above graph shows the breakdown of Accessibility issues by category</span></div>
 ";
                                                 }
                                                 ?>
@@ -466,7 +466,7 @@ Above graph shows the breakdown of Accessibility issues by category</span><br/>
                                                                 $blockObject4 = block_load( 'trend_analysis', 'agency_dnssec' );
                                                                 $block4 = _block_get_renderable_array( _block_render_blocks( array( $blockObject4 ) ) );
                                                                 $output4 = drupal_render( $block4 );
-                                                                print "$output4<br><span style='color: " . dotgov_common_getChartColor( $agency_dnssec_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly DNSSEC Trend</span>";
+                                                                print "$output4<br><div class='col-lg-12 text-center clearfix'><span style='color: " . dotgov_common_getChartColor( $agency_dnssec_score ) . ";font-size: 10px;font-style: italic;'>Above graph represents a monthly DNSSEC Trend</span></div>";
                                                                 ?>
                                                             </div>
                                                         </div>
@@ -504,7 +504,7 @@ Above graph shows the breakdown of Accessibility issues by category</span><br/>
                                     <div class="view-wrapper">
                                         <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                                             <div class="view-empty">
-                                                <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient" >
+                                                <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient pie-chart" >
                                                     <div id="piechart3"></div>
                                                     <?php print $agencydata['searchengines_graph'];
                                                     //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines</span>";
@@ -521,7 +521,7 @@ Above graph shows the breakdown of Accessibility issues by category</span><br/>
                                                         ?>
                                                     </table>
                                                 </div>
-                                                <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient second" >
+                                                <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient second bar-chart" >
 
                                                     <div id="piechart2"></div>
                                                     <?php print $agencydata['searchenginestatus_graph'];
@@ -1354,3 +1354,8 @@ Above graph shows the breakdown of Accessibility issues by category</span><br/>
         </section>
     </div>
 </div>
+<script type="text/javascript">
+    jQuery(window).on('load', function() {
+        jQuery(".bar-chart").css({'height':(jQuery(".pie-chart").height()+'px')});
+    });
+</script>
