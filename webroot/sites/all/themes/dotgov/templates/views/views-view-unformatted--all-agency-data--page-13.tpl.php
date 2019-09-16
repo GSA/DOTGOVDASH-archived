@@ -360,7 +360,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                             <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
                                                 <div class="views-field views-field-nothing">
                                                     <div class="field-content col-lg-12">
-                                                        <div class="view-wrapper">
+                                                        <div class="view-wrapper" style="min-height:325px">
                                                             <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient" style="height:165px;">
                                                                 <h5>DNSSEC Score Breakdown</h5>
                                                                 <table width="100%" class="dnssec-table">
@@ -501,7 +501,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                 </div>
                                 <br clear="all"/>
                                 <div class="pane-content">
-                                    <div class="view-wrapper">
+                                    <div class="view-wrapper" style="min-height:325px">
                                         <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                                             <div class="view-empty">
                                                 <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient pie-chart" >
