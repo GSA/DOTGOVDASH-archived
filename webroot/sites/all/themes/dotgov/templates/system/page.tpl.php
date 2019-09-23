@@ -80,7 +80,7 @@
 					<div class="col-xs-7 col-md-7 contacts col">
 						<span class="item">An Official Website Of The United States Government</span> </div>
 <div class="col-xs-5 col-md-5 contacts col" style="text-align:right;font-weight:bold;">
-						<span>This site is currently in <a href="//18f.gsa.gov/dashboard/stages/#alpha">alpha</a></span> </div>
+						<span>This site is currently in <a href="//18f.gsa.gov/dashboard/stages/#beta">beta</a></span> </div>
 				</div>
 			</div>
 		</div>
@@ -99,7 +99,7 @@
         <a class="name navbar-brand" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>"><?php print $site_name; ?></a>
       <?php endif; ?>
 
-  
+
     </div>
 
       </div>
@@ -121,7 +121,7 @@
     </div>
 </div>
 <header id="navbar" role="banner" class="<?php print $navbar_classes; ?>">
-  
+
         <?php if (!empty($primary_nav) || !empty($secondary_nav) || !empty($page['navigation'])): ?>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
           <span class="sr-only"><?php print t('Toggle navigation'); ?></span>
@@ -140,7 +140,7 @@
                   </nav>
       </div>
     <?php endif; ?>
-  
+
 </header>
 
 
@@ -174,7 +174,7 @@ Helping Federal Agencies Do Digital Better			</h2>
     <?php endif; ?>
 
     <section<?php print $content_column_class; ?>>
-     
+
       <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
       <a id="main-content"></a>
       <?php print render($title_prefix); ?>
@@ -205,10 +205,10 @@ Helping Federal Agencies Do Digital Better			</h2>
 </div>
 
 <?php if (!empty($page['footer'])): ?>
-  
+
   <footer class="footer <?php print $container_class; ?>">
     <?php print render($page['footer']); ?>
   </footer>
-  
+
 <?php endif; ?>
 <script language="javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=GSA"></script>

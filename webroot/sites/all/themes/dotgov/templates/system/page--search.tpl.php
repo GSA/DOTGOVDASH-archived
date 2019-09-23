@@ -75,7 +75,7 @@
 if(arg(1) == "website_search")
     $searchtitle = "Search";
 else
-    $searchtitle = "Site Search";
+    $searchtitle = "Data Discovery";
 ?>
 <div class="top-bar">
     <!-- top header-->
@@ -84,7 +84,7 @@ else
             <div class="col-xs-7 col-md-7 contacts col">
                 <span class="item">An Official Website Of The United States Government</span> </div>
             <div class="col-xs-5 col-md-5 contacts col" style="text-align:right;font-weight:bold;">
-                <span>This site is currently in <a href="//18f.gsa.gov/dashboard/stages/#alpha">alpha</a></span> </div>
+                <span>This site is currently in <a href="//18f.gsa.gov/dashboard/stages/#beta">beta</a></span> </div>
         </div>				</div>
 </div>
 </div>
@@ -115,7 +115,7 @@ else
                         <?php print render($secondary_nav); ?>
                     <?php endif; ?>
                 </div>
-                <div class="col-xs-12">
+                <div class="col-xs-10 pull-right">
                     <?php if (!empty($page['navigation'])): ?>
                         <?php print render($page['navigation']); ?>
                     <?php endif; ?>
@@ -148,15 +148,15 @@ else
 </header>
 
 <div class="main-container <?php print $container_class; ?>">
-
+  <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
     <a id="main-content"></a>
     <?php print render($title_prefix); ?>
     <?php if (!empty($title)): ?>
-        <h1 class="page-header"><?=$searchtitle?></h1>
+        <h1 class="page-header"><?=$searchtitle; ?></h1>
     <?php endif; ?>
     <?php print render($title_suffix); ?>
+
     <div class="container white-back">
-        <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
         <div class="row">
 
             <?php if (!empty($page['sidebar_first'])): ?>
