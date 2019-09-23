@@ -948,7 +948,11 @@ function apachesolr_cron($env_id = NULL) {
   module_load_include('inc', 'apachesolr', 'apachesolr.index');
 
   // Optimize the index (by default once a day).
+<<<<<<< HEAD
+  $optimize_interval = variable_get('apqachesolr_optimize_interval', 60 * 60 * 24);
+=======
   $optimize_interval = variable_get('apachesolr_optimize_interval', 60 * 60 * 24);
+>>>>>>> devel
   // Protect from too-frequent optimizations.
   $optimize_attempt_interval = variable_get('apachesolr_optimize_attempt_interval', 60 * 60);
 
@@ -2269,8 +2273,13 @@ function field_apachesolr_index_document_build(ApacheSolrDocument $document, $en
               // entity field may be indexed to multiple Solr fields.
               $fields = $function($entity, $field_name, $index_key, $field_info);
               foreach ($fields as $field) {
-                // It's fine to use this method also for single value fields.
-                $document->setMultiValue($field['key'], $field['value']);
+                // Make sure singular fields aren't added twice.
+                if (empty($field['multiple'])) {
+                  $document->setField($field['key'], $field['value']);
+                }
+                else {
+                  $document->addField($field['key'], $field['value']);
+                }
               }
             }
           }
