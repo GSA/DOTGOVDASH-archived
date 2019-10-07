@@ -1,4 +1,11 @@
-
+<style>
+    .view-wrapper {
+        min-height: 380px;
+    }
+    .font-italic {
+        font-style:italic;
+    }
+</style>
 <?php
 /**
  * @file
@@ -572,30 +579,625 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                     </span> </div>
                                 </div>
                                 <br clear="all"/>
-                                <div class="pane-content">
+                                <div class="pane-content clearfix">
                                     <div class="view-wrapper">
-                                        <div class="row">
-                                            <div class="col-md-12 col-lg-12"> HTTPS Overall Average Score :
-                                                <?= $agency_https_score ?>
-                                                % </div>
+                                        <div class="grey-gradient clearfix">
+                                            <div class="col-xs-12">
+                                                <h5>HTTPS score breakdown</h5>
+                                                <div class="col-sm-12 col-lg-6 nopadding">
+                                                    <p>  HTTPS Overall Average Score :
+                                                        <?= $agency_https_score ?>
+                                                        % </p>
+                                                    <span style="font-size:12px;" class="font-italic">The individual site score is based on the sum of 4 different metrics. See scoring methods for more info.</span>
+                                                </div>
+                                                <div class="col-sm-12 col-lg-6 nopadding">
+                                                    <div id="https_chart">&nbsp;</div>
+                                                    <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
+                                                    <script type="text/javascript">
+                                                        Highcharts.chart( 'https_chart', {
+
+                                                                chart: {
+                                                                    type: 'solidgauge',
+                                                                    backgroundColor: 'transparent'
+
+                                                                },
+
+                                                                title: {
+
+                                                                    text: ''
+
+                                                                },
+
+                                                                tooltip: {
+                                                                    enabled: false,
+                                                                },
+
+                                                                pane: {
+                                                                    startAngle: 0,
+                                                                    endAngle: 360,
+                                                                    background: [ {
+                                                                        outerRadius: '118%',
+                                                                        innerRadius: '80%',
+                                                                        backgroundColor: '#d6d7d9',
+                                                                        borderWidth: 0
+                                                                    } ]
+                                                                },
+
+                                                                yAxis: {
+                                                                    min: 0,
+                                                                    max: 100,
+                                                                    lineWidth: 0,
+                                                                    tickPositions: [],
+
+                                                                    title: {
+                                                                        text: '<?php echo $agency_https_score;?> %',
+                                                                        style: {
+                                                                            fontSize: '22px',
+                                                                            color: '<?php echo dotgov_common_getChartColor($agency_https_score); ?>'
+                                                                        },
+                                                                        y: 30
+                                                                    },
+
+
+
+                                                                },
+
+                                                                plotOptions: {
+                                                                    solidgauge: {
+                                                                        dataLabels: {
+                                                                            enabled: false
+                                                                        },
+                                                                        linecap: 'round',
+                                                                        stickyTracking: false,
+                                                                        rounded: true
+                                                                    }
+                                                                },
+
+                                                                series: [ {
+                                                                    name: 'Free of Insecure Protocol Chart',
+                                                                    data: [ {
+                                                                        color: '<?php echo dotgov_common_getChartColor($agency_https_score); ?>',
+                                                                        radius: '118%',
+                                                                        innerRadius: '80%',
+                                                                        y: <?php echo trim($agency_https_score);?>
+                                                                    } ]
+                                                                } ]
+                                                            }
+
+
+                                                        );
+                                                    </script>
+                                                </div>
+                                            </div>
+                                            <table width="100%">
+
+                                                <th style="background-color: #215393;color: white;">Criteria</th>
+                                                <th style="background-color: #215393;color: white">Supporting Websites </th>
+                                                <th style="background-color: #215393;color: white">Non Supporting Websites </th>
+                                                <tr>
+                                                    <td>Enforce HTTPS</td>
+                                                    <td align="center"><?= dotgov_common_applyDataColor($agencydata['enfhttps_support'], $agency_website_num,'#29643a') ?></td>
+                                                    <td align="center"><?= dotgov_common_applyDataColor($agencydata['enfhttps_nosupport'], $agency_website_num,'#ac0600') ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>HSTS Status</td>
+                                                    <td align="center"><?= dotgov_common_applyDataColor($agencydata['hsts_support'], $agency_website_num,'#29643a') ?></td>
+                                                    <td align="center"><?= dotgov_common_applyDataColor($agencydata['hsts_nosupport'], $agency_website_num,'#ac0600') ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>HTTPS Status</td>
+                                                    <td align="center"><?= dotgov_common_applyDataColor($agencydata['https_support'], $agency_website_num,'#29643a') ?></td>
+                                                    <td align="center"><?= dotgov_common_applyDataColor($agencydata['https_nosupport'], $agency_website_num,'#ac0600') ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Preload Status</td>
+                                                    <td align="center"><?= dotgov_common_applyDataColor($agencydata['preload_support'], $agency_website_num,'#29643a') ?></td>
+                                                    <td align="center"><?= dotgov_common_applyDataColor($agencydata['preload_nosupport'], $agency_website_num,'#ac0600') ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Preload Ready</td>
+                                                    <td align="center"><?= dotgov_common_applyDataColor($agencydata['preload_readysupport'], $agency_website_num,'#29643a') ?></td>
+                                                    <td align="center">NA</td>
+                                                </tr>
+                                            </table>
+                                            <span class="col-xs-12 clearfix text-center" style="font-size:10px;">(website redirects are excluded)</span>
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-12 col-lg-6">
-                                                <?php
-                                                $blockObject3 = block_load( 'trend_analysis', 'agency_https' );
-                                                $block3 = _block_get_renderable_array( _block_render_blocks( array( $blockObject3 ) ) );
-                                                $output3 = drupal_render( $block3 );
-                                                print "$output3 <br><span style='color: " . dotgov_common_getChartColor( $agency_https_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly HTTPS Trend</span>";
-                                                ?>
+
+                                            <?php
+                                            $blockObject3 = block_load( 'trend_analysis', 'agency_https' );
+                                            $block3 = _block_get_renderable_array( _block_render_blocks( array( $blockObject3 ) ) );
+                                            $output3 = drupal_render( $block3 );
+                                            print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . dotgov_common_getChartColor( $agency_https_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly HTTPS Trend</span>";
+                                            ?>
+                                        </div>
+                                    </div>
+                                    <div class="view-button">
+                                        <div class="row col-xs-12 nopadding">
+                                            <div class="col-xs-12 col-lg-12 text-center"><a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="143" height="30" alt=""/></a> </div>
+                                            <!--<div class="col-xs-12 col-lg-6 text-left"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-lg-4">
+                        <div class="white-back">
+                            <div class="panel-pane pane-views pane-website-information">
+                                <div class="col-xs-10 nopadding">
+                                    <h2 class="pane-title">M-15-13 and BOD 18-01 Information</h2>
+                                </div>
+                                <div class="col-xs-2 nopadding">
+                                    <div id="tooltip7" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+                    M-15-13 and BOD 18-01 Data is collected through a custom scanner component of dotgov dashboard that last ran on
+                                            <?php dotgov_common_lastScanDate(); ?>
+                    </span> </div>
+                                </div>
+                                <br clear="all"/>
+                                <div class="pane-content clearfix">
+                                    <div class="view  view-display-id-block_10 view-dom-id-93e7fd06306700be9064f5e8954f211b">
+                                        <div class="view-content">
+                                            <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
+                                                <div class="views-field views-field-php-2 col-lg-12">
+                                                    <div class="view-wrapper">
+                                                        <div class="grey-gradient clearfix">
+
+                                                            <div class="col-xs-12"><h5>M-15-13 and BOD 18-01 score breakdown</h5>
+                                                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
+                                                                    <p> Compliant with M-15-13 and BOD 18-01 Overall Average Score :
+                                                                        <?= $agency_m15_score ?>
+                                                                        % </p>
+                                                                    <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
+                                                                </div>
+                                                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
+                                                                    <div id="m1513_chart">&nbsp;</div>
+                                                                    <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
+                                                                    <script type="text/javascript">
+                                                                        Highcharts.chart( 'm1513_chart', {
+
+                                                                                chart: {
+                                                                                    type: 'solidgauge',
+                                                                                    backgroundColor:'transparent'
+
+                                                                                },
+
+                                                                                title: {
+
+                                                                                    text: ''
+
+                                                                                },
+
+                                                                                tooltip: {
+                                                                                    enabled: false,
+                                                                                },
+
+                                                                                pane: {
+                                                                                    startAngle: 0,
+                                                                                    endAngle: 360,
+                                                                                    background: [ {
+                                                                                        outerRadius: '118%',
+                                                                                        innerRadius: '80%',
+                                                                                        backgroundColor: '#d6d7d9',
+                                                                                        borderWidth: 0
+                                                                                    } ]
+                                                                                },
+
+                                                                                yAxis: {
+                                                                                    min: 0,
+                                                                                    max: 100,
+                                                                                    lineWidth: 0,
+                                                                                    tickPositions: [],
+
+                                                                                    title: {
+                                                                                        text: '<?php echo $agency_m15_score;?> %',
+                                                                                        style: {
+                                                                                            fontSize: '22px',
+                                                                                            color: '<?php echo dotgov_common_getChartColor($agency_m15_score); ?>'
+                                                                                        },
+                                                                                        y: 30
+                                                                                    },
+
+
+
+                                                                                },
+
+                                                                                plotOptions: {
+                                                                                    solidgauge: {
+                                                                                        dataLabels: {
+                                                                                            enabled: false
+                                                                                        },
+                                                                                        linecap: 'round',
+                                                                                        stickyTracking: false,
+                                                                                        rounded: true
+                                                                                    }
+                                                                                },
+
+                                                                                series: [ {
+                                                                                    name: 'M-15-13 Chart',
+                                                                                    data: [ {
+                                                                                        color: '<?php echo dotgov_common_getChartColor($agency_m15_score); ?>',
+                                                                                        radius: '118%',
+                                                                                        innerRadius: '80%',
+                                                                                        y: <?php echo trim($agency_m15_score);?>
+                                                                                    } ]
+                                                                                } ]
+                                                                            }
+
+
+                                                                        );
+                                                                    </script>
+                                                                </div></div>
+                                                            <table width="100%">
+
+                                                                <th style="background-color: #215393;color: white;"> Breakdown </th>
+                                                                <th style="background-color: #215393;color: white;"> Websites </th>
+                                                                <tr>
+                                                                    <td>M-15-13 and BOD 18-01 Compliant Websites </td>
+                                                                    <td><?= dotgov_common_applyDataColor($agencydata['m15_compliant'], $agencydata['m15_tracked'],'#29643a') ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>M-15-13 and BOD 18-01 Non Compliant Websites </td>
+                                                                    <td><?= dotgov_common_applyDataColor($agencydata['m15_noncompliant'], $agencydata['m15_tracked'],'#ac0600') ?></td>
+                                                                </tr>
+                                                            </table>
+                                                            <span class="col-xs-12 text-center clearfix" style="font-size:10px;">(website redirects are excluded)</span>
+                                                        </div>
+                                                        <div class="col-xs-12 clearfix">
+                                                            <?php
+                                                            $blockObject2 = block_load( 'trend_analysis', 'agency_m15' );
+                                                            $block2 = _block_get_renderable_array( _block_render_blocks( array( $blockObject2 ) ) );
+                                                            $output2 = drupal_render( $block2 );
+                                                            print "$output2 <br><span class='col-xs-12 text-center'style='color: " . dotgov_common_getChartColor( $agency_m15_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly M-15-13 Trend</span>";
+                                                            ?>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="view-button">
+                                                        <div class="row col-xs-12 nopadding">
+                                                            <div class="col-xs-12 col-lg-12 text-center"><a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="143" height="30" alt=""/></a> </div>
+                                                            <!--<div class="col-xs-12 col-lg-6 text-left"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-sm-12 col-lg-6">
-                                                <div id="https_chart">&nbsp;</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-lg-4">
+                        <div class="white-back">
+                            <div class="panel-pane pane-views pane-website-information">
+                                <div class="col-xs-10 nopadding">
+                                    <h2 class="pane-title"> IPV6 Information </h2>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div id="tooltip6" class="infor"> <i class='icon glyphicon glyphicon-info-sign'>&nbsp</i> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"> IPV6 Data is collected through a custom scanner component of dotgov dashboard that last ran on
+                                            <?php dotgov_common_lastScanDate();?>
+                    </span> </div>
+                                </div>
+                                <br clear="all"/>
+                                <div class="pane-content clearfix">
+                                    <div class="view  view-display-id-block_8 view-dom-id-b6c9491539ed2fa13d8d26fb2e0fc9c7">
+                                        <div class="view-content">
+                                            <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
+                                                <div class="views-field views-field-nothing">
+                                                    <div class="field-content col-lg-12">
+                                                        <div class="view-wrapper">
+                                                            <div class="grey-gradient clearfix">
+                                                                <div class="col-xs-12"><h5>IPV6 score breakdown</h5>
+                                                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
+                                                                        <p>IPV6 Overall Average Score :
+                                                                            <?= $agency_ipv6_score ?>
+                                                                            %
+
+                                                                        </p><span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
+                                                                        <div id="ipv6_chart">&nbsp;</div>
+                                                                        <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
+                                                                        <script type="text/javascript">
+                                                                            Highcharts.chart( 'ipv6_chart', {
+
+                                                                                    chart: {
+                                                                                        type: 'solidgauge',
+                                                                                        backgroundColor:'transparent'
+
+                                                                                    },
+
+                                                                                    title: {
+
+                                                                                        text: ''
+
+                                                                                    },
+
+                                                                                    tooltip: {
+                                                                                        enabled: false,
+                                                                                    },
+
+                                                                                    pane: {
+                                                                                        startAngle: 0,
+                                                                                        endAngle: 360,
+                                                                                        background: [ {
+                                                                                            outerRadius: '118%',
+                                                                                            innerRadius: '80%',
+                                                                                            backgroundColor: '#d6d7d9',
+                                                                                            borderWidth: 0
+                                                                                        } ]
+                                                                                    },
+
+                                                                                    yAxis: {
+                                                                                        min: 0,
+                                                                                        max: 100,
+                                                                                        lineWidth: 0,
+                                                                                        tickPositions: [],
+
+                                                                                        title: {
+                                                                                            text: '<?php echo $agency_ipv6_score;?> %',
+                                                                                            style: {
+                                                                                                fontSize: '22px',
+                                                                                                color: '<?php echo dotgov_common_getChartColor($agency_ipv6_score); ?>'
+                                                                                            },
+                                                                                            y: 30
+                                                                                        },
+
+
+
+                                                                                    },
+
+                                                                                    plotOptions: {
+                                                                                        solidgauge: {
+                                                                                            dataLabels: {
+                                                                                                enabled: false
+                                                                                            },
+                                                                                            linecap: 'round',
+                                                                                            stickyTracking: false,
+                                                                                            rounded: true
+                                                                                        }
+                                                                                    },
+
+                                                                                    series: [ {
+                                                                                        name: 'Free of Insecure Protocol Chart',
+                                                                                        data: [ {
+                                                                                            color: '<?php echo dotgov_common_getChartColor($agency_ipv6_score); ?>',
+                                                                                            radius: '118%',
+                                                                                            innerRadius: '80%',
+                                                                                            y: <?php echo trim($agency_ipv6_score);?>
+                                                                                        } ]
+                                                                                    } ]
+                                                                                }
+
+
+                                                                            );
+                                                                        </script>
+                                                                    </div></div>
+                                                                <table width="100%">
+
+                                                                    <th style="background-color: #215393;color: white;"> Breakdown </th>
+                                                                    <th style="background-color: #215393;color: white;"> Websites </th>
+                                                                    <tr width="100%">
+                                                                        <td>IPv6 Compliant Websites</td>
+                                                                        <td><?= dotgov_common_applyDataColor($agencydata['ipv6_compliant'], $agency_website_num,'#29643a') ?></td>
+                                                                    </tr>
+                                                                    <tr width="100%">
+                                                                        <td>IPv6 Non Compliant Websites</td>
+                                                                        <td><?= dotgov_common_applyDataColor($agencydata['ipv6_noncompliant'], $agency_website_num,'#ac0600') ?></td>
+                                                                    </tr>
+                                                                </table><span class="col-xs-12 text-center clearfix" style="font-size:10px;">(website redirects are excluded)</span></div>
+                                                            <div class="row">
+                                                                <?php
+                                                                $blockObject7 = block_load( 'trend_analysis', 'agency_ipv6' );
+                                                                $block7 = _block_get_renderable_array( _block_render_blocks( array( $blockObject7 ) ) );
+                                                                $output7 = drupal_render( $block7 );
+                                                                print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . dotgov_common_getChartColor( $agency_ipv6_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly IPv6 Trend</span>";
+                                                                ?>
+                                                            </div>
+                                                        </div>
+                                                        <div class="view-button">
+                                                            <div class="row col-xs-12 nopadding">
+                                                                <div class="col-xs-12 col-lg-12 text-center"><a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="143" height="30" alt=""/></a> </div>
+                                                                <!--<div class="col-xs-12 col-lg-6 text-left"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-separator clearfix"></div>
+            <div class="out-wrapper">
+                <div class="col-xs-12 nopadding clearfix">
+                    <div class="col-xs-12 col-lg-4">
+                        <div class="white-back">
+                            <div class="panel-pane pane-views pane-website-information">
+                                <div class="col-xs-10 nopadding">
+                                    <h2 class="pane-title">DAP Information</h2>
+                                </div>
+                                <div class="col-xs-2 nopadding">
+                                    <div id="tooltip3" class="infor"> <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"><br>
+                    DAP Overall Average Score :
+                                            <?= $agency_dap_score ?>
+                                            % </span> </div>
+                                </div>
+                                <br clear="all"/>
+                                <div class="pane-content clearfix">
+                                    <div class="view-wrapper">
+
+                                        <div class="view-content">
+
+
+                                            <div class="field-content col-lg-12 nopadding">
+                                                <div class="grey-gradient clearfix">
+                                                    <div class="col-xs-12"><h5>DAP score breakdown</h5></div>
+                                                    <div class = "col-xs-12-col-sm-12 col-lg-6">
+                                                        <p>DAP Overall Average Score :
+                                                            <?= $agency_dap_score ?>
+                                                            %</p>
+                                                        <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
+
+                                                    </div>
+                                                    <div class = "col-xs-12-col-sm-12 col-lg-6">
+                                                        <div id="dap_chart">&nbsp;</div>
+                                                        <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
+                                                        <script type="text/javascript">
+                                                            Highcharts.chart( 'dap_chart', {
+
+                                                                    chart: {
+                                                                        type: 'solidgauge',
+                                                                        backgroundColor:'transparent'
+
+                                                                    },
+
+                                                                    title: {
+
+                                                                        text: ''
+
+                                                                    },
+
+                                                                    tooltip: {
+                                                                        enabled: false,
+                                                                    },
+
+                                                                    pane: {
+                                                                        startAngle: 0,
+                                                                        endAngle: 360,
+                                                                        background: [ {
+                                                                            outerRadius: '118%',
+                                                                            innerRadius: '80%',
+                                                                            backgroundColor: '#d6d7d9',
+                                                                            borderWidth: 0
+                                                                        } ]
+                                                                    },
+
+                                                                    yAxis: {
+                                                                        min: 0,
+                                                                        max: 100,
+                                                                        lineWidth: 0,
+                                                                        tickPositions: [],
+
+                                                                        title: {
+                                                                            text: '<?php echo $agency_dap_score;?> %',
+                                                                            style: {
+                                                                                fontSize: '22px',
+                                                                                color: '<?php echo dotgov_common_getChartColor($agency_dap_score); ?>'
+                                                                            },
+                                                                            y: 30
+                                                                        },
+
+
+
+                                                                    },
+
+                                                                    plotOptions: {
+                                                                        solidgauge: {
+                                                                            dataLabels: {
+                                                                                enabled: false
+                                                                            },
+                                                                            linecap: 'round',
+                                                                            stickyTracking: false,
+                                                                            rounded: true
+                                                                        }
+                                                                    },
+
+                                                                    series: [ {
+                                                                        name: 'DAP Chart',
+                                                                        data: [ {
+                                                                            color: '<?php echo dotgov_common_getChartColor($agency_dap_score); ?>',
+                                                                            radius: '118%',
+                                                                            innerRadius: '80%',
+                                                                            y: <?php echo trim($agency_dap_score);?>
+                                                                        } ]
+                                                                    } ]
+                                                                }
+
+
+                                                            );
+                                                        </script>
+                                                    </div>
+                                                    <table style="width:100%;">
+
+                                                        <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
+                                                        <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
+                                                        <tr>
+                                                            <td> DAP Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
+                                                            <td><?= dotgov_common_applyDataColor($agencydata['dap_compliant'], $agencydata['dap_tottracked'],'#29643a') ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>DAP Non Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
+                                                            <td><?= dotgov_common_applyDataColor($agencydata['dap_noncompliant'], $agencydata['dap_tottracked'],'#ac0600') ?></td>
+                                                        </tr>
+                                                    </table>
+                                                    <div class="col-xs-12 clearfix">
+                                                        <p><span style="font-size: 10px;font-color:blue;">*</span> : DAP information is based on data collected from <span style="font-color:blue"></span><a href="https://pulse.cio.gov/analytics/agencies" target="_new">pulse.cio.gov</a></span></p>
+                                                        <span class="text-center">(Note: website redirects are excluded)</span> </div>
+                                                </div>
+                                                <div class="col-xs-12 nopadding clearfix"> <?php
+                                                    $blockObject6 = block_load( 'trend_analysis', 'agency_dap' );
+                                                    $block6 = _block_get_renderable_array( _block_render_blocks( array( $blockObject6 ) ) );
+                                                    $output6 = drupal_render( $block6 );
+                                                    print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: " . dotgov_common_getChartColor( $agency_dap_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly DAP Trend</span>";
+                                                    ?></div>
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="view-button">
+                                        <div class="row col-xs-12 nopadding">
+                                            <div class="col-xs-12 col-lg-12 text-center"><a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="143" height="30" alt=""/></a> </div>
+                                            <!--<div class="col-xs-12 col-lg-6 text-left"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-lg-4">
+                        <div class="white-back">
+                            <div class="panel-pane pane-views pane-website-information">
+                                <div class="col-xs-10 nopadding">
+                                    <h2 class="pane-title">Free of Insecure Protocols Information</h2>
+                                </div>
+                                <div class="col-xs-2 nopadding">
+                                    <div id="tooltip8" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+                    Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner component of dotgov dashboard that last ran on
+                                            <?php dotgov_common_lastScanDate(); ?>
+                    </span> </div>
+                                </div>
+                                <br clear="all"/>
+                                <div class="pane-content clearfix">
+
+
+
+
+                                    <div class="view-wrapper">
+                                        <div class="grey-gradient clearfix">
+                                            <div class="col-xs-12 clearfix">Free of RC4/3DES and SSLv2/SSLv3 score breakdown</h5></div>
+                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                <p>Free of RC4/3DES and SSLv2/SSLv3 Overall Average Score :
+                                                    <?= $agency_insecprot_score ?>
+                                                    %</p>
+                                                <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                <div id="freeofinsecureprot_chart">&nbsp;</div>
                                                 <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                                 <script type="text/javascript">
-                                                    Highcharts.chart( 'https_chart', {
+                                                    Highcharts.chart( 'freeofinsecureprot_chart', {
 
                                                             chart: {
                                                                 type: 'solidgauge',
+                                                                backgroundColor:'transparent'
 
                                                             },
 
@@ -627,10 +1229,10 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                 tickPositions: [],
 
                                                                 title: {
-                                                                    text: '<?php echo $agency_https_score;?> %',
+                                                                    text: '<?php echo $agency_insecprot_score;?> %',
                                                                     style: {
                                                                         fontSize: '22px',
-                                                                        color: '<?php echo dotgov_common_getChartColor($agency_https_score); ?>'
+                                                                        color: '<?php echo dotgov_common_getChartColor($agency_insecprot_score); ?>'
                                                                     },
                                                                     y: 30
                                                                 },
@@ -653,10 +1255,10 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                             series: [ {
                                                                 name: 'Free of Insecure Protocol Chart',
                                                                 data: [ {
-                                                                    color: '<?php echo dotgov_common_getChartColor($agency_https_score); ?>',
+                                                                    color: '<?php echo dotgov_common_getChartColor($agency_insecprot_score); ?>',
                                                                     radius: '118%',
                                                                     innerRadius: '80%',
-                                                                    y: <?php echo trim($agency_https_score);?>
+                                                                    y: <?php echo trim($agency_insecprot_score);?>
                                                                 } ]
                                                             } ]
                                                         }
@@ -665,584 +1267,35 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                     );
                                                 </script>
                                             </div>
-                                        </div>
-                                        <table width="100%">
+                                            <table width="100%">
 
-                                            <th style="background-color: #215393;color: white;">Criteria</th>
-                                            <th style="background-color: #215393;color: white">Supporting Websites </th>
-                                            <th style="background-color: #215393;color: white">Non Supporting Websites </th>
-                                            <tr>
-                                                <td>Enforce HTTPS</td>
-                                                <td align="center"><?= dotgov_common_applyDataColor($agencydata['enfhttps_support'], $agency_website_num,'#29643a') ?></td>
-                                                <td align="center"><?= dotgov_common_applyDataColor($agencydata['enfhttps_nosupport'], $agency_website_num,'#ac0600') ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>HSTS Status</td>
-                                                <td align="center"><?= dotgov_common_applyDataColor($agencydata['hsts_support'], $agency_website_num,'#29643a') ?></td>
-                                                <td align="center"><?= dotgov_common_applyDataColor($agencydata['hsts_nosupport'], $agency_website_num,'#ac0600') ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>HTTPS Status</td>
-                                                <td align="center"><?= dotgov_common_applyDataColor($agencydata['https_support'], $agency_website_num,'#29643a') ?></td>
-                                                <td align="center"><?= dotgov_common_applyDataColor($agencydata['https_nosupport'], $agency_website_num,'#ac0600') ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Preload Status</td>
-                                                <td align="center"><?= dotgov_common_applyDataColor($agencydata['preload_support'], $agency_website_num,'#29643a') ?></td>
-                                                <td align="center"><?= dotgov_common_applyDataColor($agencydata['preload_nosupport'], $agency_website_num,'#ac0600') ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Preload Ready</td>
-                                                <td align="center"><?= dotgov_common_applyDataColor($agencydata['preload_readysupport'], $agency_website_num,'#29643a') ?></td>
-                                                <td align="center">NA</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <div class="view-button"><br>
-                                        <p><a class="btn btn-primary" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-lg-4">
-                        <div class="white-back">
-                            <div class="panel-pane pane-views pane-website-information">
-                                <div class="col-xs-10 nopadding">
-                                    <h2 class="pane-title">M-15-13 and BOD 18-01 Information</h2>
-                                </div>
-                                <div class="col-xs-2 nopadding">
-                                    <div id="tooltip7" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
-                    M-15-13 and BOD 18-01 Data is collected through a custom scanner component of dotgov dashboard that last ran on
-                                            <?php dotgov_common_lastScanDate(); ?>
-                    </span> </div>
-                                </div>
-                                <br clear="all"/>
-                                <div class="pane-content">
-                                    <div class="view  view-display-id-block_10 view-dom-id-93e7fd06306700be9064f5e8954f211b">
-                                        <div class="view-content">
-                                            <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
-                                                <div class="views-field views-field-php-2 col-lg-12">
-                                                    <div class="view-wrapper">
-                                                        <p> Compliant with M-15-13 and BOD 18-01 Overall Average Score :
-                                                            <?= $agency_m15_score ?>
-                                                            % </p>
-                                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                                            <?php
-                                                            $blockObject2 = block_load( 'trend_analysis', 'agency_m15' );
-                                                            $block2 = _block_get_renderable_array( _block_render_blocks( array( $blockObject2 ) ) );
-                                                            $output2 = drupal_render( $block2 );
-                                                            print "$output2<br><span style='color: " . dotgov_common_getChartColor( $agency_m15_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly M-15-13 Trend</span>";
-                                                            ?>
-                                                        </div>
-                                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                                            <div id="m1513_chart">&nbsp;</div>
-                                                            <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
-                                                            <script type="text/javascript">
-                                                                Highcharts.chart( 'm1513_chart', {
-
-                                                                        chart: {
-                                                                            type: 'solidgauge',
-
-                                                                        },
-
-                                                                        title: {
-
-                                                                            text: ''
-
-                                                                        },
-
-                                                                        tooltip: {
-                                                                            enabled: false,
-                                                                        },
-
-                                                                        pane: {
-                                                                            startAngle: 0,
-                                                                            endAngle: 360,
-                                                                            background: [ {
-                                                                                outerRadius: '118%',
-                                                                                innerRadius: '80%',
-                                                                                backgroundColor: '#d6d7d9',
-                                                                                borderWidth: 0
-                                                                            } ]
-                                                                        },
-
-                                                                        yAxis: {
-                                                                            min: 0,
-                                                                            max: 100,
-                                                                            lineWidth: 0,
-                                                                            tickPositions: [],
-
-                                                                            title: {
-                                                                                text: '<?php echo $agency_m15_score;?> %',
-                                                                                style: {
-                                                                                    fontSize: '22px',
-                                                                                    color: '<?php echo dotgov_common_getChartColor($agency_m15_score); ?>'
-                                                                                },
-                                                                                y: 30
-                                                                            },
-
-
-
-                                                                        },
-
-                                                                        plotOptions: {
-                                                                            solidgauge: {
-                                                                                dataLabels: {
-                                                                                    enabled: false
-                                                                                },
-                                                                                linecap: 'round',
-                                                                                stickyTracking: false,
-                                                                                rounded: true
-                                                                            }
-                                                                        },
-
-                                                                        series: [ {
-                                                                            name: 'M-15-13 Chart',
-                                                                            data: [ {
-                                                                                color: '<?php echo dotgov_common_getChartColor($agency_m15_score); ?>',
-                                                                                radius: '118%',
-                                                                                innerRadius: '80%',
-                                                                                y: <?php echo trim($agency_m15_score);?>
-                                                                            } ]
-                                                                        } ]
-                                                                    }
-
-
-                                                                );
-                                                            </script>
-                                                        </div>
-                                                        <table width="100%">
-
-                                                            <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                                            <th style="background-color: #215393;color: white;"> Websites </th>
-                                                            <tr>
-                                                                <td>M-15-13 and BOD 18-01 Compliant Websites </td>
-                                                                <td><?= dotgov_common_applyDataColor($agencydata['m15_compliant'], $agencydata['m15_tracked'],'#29643a') ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>M-15-13 and BOD 18-01 Non Compliant Websites </td>
-                                                                <td><?= dotgov_common_applyDataColor($agencydata['m15_noncompliant'], $agencydata['m15_tracked'],'#ac0600') ?></td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                    <div class="view-button"><br>
-                                                        <p><a class="btn btn-primary" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </p>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                <th style="background-color: #215393;color: white;"> Breakdown </th>
+                                                <th style="background-color: #215393;color: white;"> Websites </th>
+                                                <tr>
+                                                    <td>Websites Free of RC4/3DES and SSLv2/SSLv3 </td>
+                                                    <td><?= dotgov_common_applyDataColor($agencydata['insec_compliant'], $agencydata['free_tracked'],'#29643a') ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Websites Not Free of RC4/3DES and SSLv2/SSLv3 </td>
+                                                    <td><?= dotgov_common_applyDataColor($agencydata['insec_noncompliant'], $agencydata['free_tracked'],'#ac0600') ?></td>
+                                                </tr>
+                                            </table></div>
+                                        <div class="col-xs-12">
+                                            <?php
+                                            $blockObject5 = block_load( 'trend_analysis', 'agency_rc4' );
+                                            $block5 = _block_get_renderable_array( _block_render_blocks( array( $blockObject5 ) ) );
+                                            $output5 = drupal_render( $block5 );
+                                            print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: " . dotgov_common_getChartColor( $agency_insecprot_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly Insecure Protocol Trend</span>";
+                                            ?>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-lg-4">
-                        <div class="white-back">
-                            <div class="panel-pane pane-views pane-website-information">
-                                <div class="col-xs-10 nopadding">
-                                    <h2 class="pane-title"> IPV6 Information </h2>
-                                </div>
-                                <div class="col-xs-2">
-                                    <div id="tooltip6" class="infor"> <i class='icon glyphicon glyphicon-info-sign'>&nbsp</i> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"> IPV6 Data is collected through a custom scanner component of dotgov dashboard that last ran on
-                                            <?php dotgov_common_lastScanDate();?>
-                    </span> </div>
-                                </div>
-                                <br clear="all"/>
-                                <div class="pane-content">
-                                    <div class="view  view-display-id-block_8 view-dom-id-b6c9491539ed2fa13d8d26fb2e0fc9c7">
-                                        <div class="view-content">
-                                            <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
-                                                <div class="views-field views-field-nothing">
-                                                    <div class="field-content col-lg-12">
-                                                        <div class="view-wrapper">
-                                                            <p>IPV6 Overall Average Score :
-                                                                <?= $agency_ipv6_score ?>
-                                                                %
-                                                                </td>
-                                                            </p>
-                                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                                                <?php
-                                                                $blockObject7 = block_load( 'trend_analysis', 'agency_ipv6' );
-                                                                $block7 = _block_get_renderable_array( _block_render_blocks( array( $blockObject7 ) ) );
-                                                                $output7 = drupal_render( $block7 );
-                                                                print "$output7<br><span style='color: " . dotgov_common_getChartColor( $agency_ipv6_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly IPv6 Trend</span>";
-                                                                ?>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                                                <div id="ipv6_chart">&nbsp;</div>
-                                                                <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
-                                                                <script type="text/javascript">
-                                                                    Highcharts.chart( 'ipv6_chart', {
-
-                                                                            chart: {
-                                                                                type: 'solidgauge',
-
-                                                                            },
-
-                                                                            title: {
-
-                                                                                text: ''
-
-                                                                            },
-
-                                                                            tooltip: {
-                                                                                enabled: false,
-                                                                            },
-
-                                                                            pane: {
-                                                                                startAngle: 0,
-                                                                                endAngle: 360,
-                                                                                background: [ {
-                                                                                    outerRadius: '118%',
-                                                                                    innerRadius: '80%',
-                                                                                    backgroundColor: '#d6d7d9',
-                                                                                    borderWidth: 0
-                                                                                } ]
-                                                                            },
-
-                                                                            yAxis: {
-                                                                                min: 0,
-                                                                                max: 100,
-                                                                                lineWidth: 0,
-                                                                                tickPositions: [],
-
-                                                                                title: {
-                                                                                    text: '<?php echo $agency_ipv6_score;?> %',
-                                                                                    style: {
-                                                                                        fontSize: '22px',
-                                                                                        color: '<?php echo dotgov_common_getChartColor($agency_ipv6_score); ?>'
-                                                                                    },
-                                                                                    y: 30
-                                                                                },
-
-
-
-                                                                            },
-
-                                                                            plotOptions: {
-                                                                                solidgauge: {
-                                                                                    dataLabels: {
-                                                                                        enabled: false
-                                                                                    },
-                                                                                    linecap: 'round',
-                                                                                    stickyTracking: false,
-                                                                                    rounded: true
-                                                                                }
-                                                                            },
-
-                                                                            series: [ {
-                                                                                name: 'Free of Insecure Protocol Chart',
-                                                                                data: [ {
-                                                                                    color: '<?php echo dotgov_common_getChartColor($agency_ipv6_score); ?>',
-                                                                                    radius: '118%',
-                                                                                    innerRadius: '80%',
-                                                                                    y: <?php echo trim($agency_ipv6_score);?>
-                                                                                } ]
-                                                                            } ]
-                                                                        }
-
-
-                                                                    );
-                                                                </script>
-                                                            </div>
-                                                            <table width="100%">
-
-                                                                <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                                                <th style="background-color: #215393;color: white;"> Websites </th>
-                                                                <tr width="100%">
-                                                                    <td>IPv6 Compliant Websites</td>
-                                                                    <td><?= dotgov_common_applyDataColor($agencydata['ipv6_compliant'], $agency_website_num,'#29643a') ?></td>
-                                                                </tr>
-                                                                <tr width="100%">
-                                                                    <td>IPv6 Non Compliant Websites</td>
-                                                                    <td><?= dotgov_common_applyDataColor($agencydata['ipv6_noncompliant'], $agency_website_num,'#ac0600') ?></td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
-                                                        <div class="view-button"><br>
-                                                            <p><a class="btn btn-primary" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="row col-xs-12 nopadding">
+                                        <div class="col-xs-12 col-lg-12 text-center"><a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="143" height="30" alt=""/></a> </div>
+                                        <!--<div class="col-xs-12 col-lg-6 text-left"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>-->
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel-separator clearfix"></div>
-            <div class="out-wrapper">
-                <div class="col-xs-12 nopadding clearfix">
-                    <div class="col-xs-12 col-lg-4">
-                        <div class="white-back">
-                            <div class="panel-pane pane-views pane-website-information">
-                                <div class="col-xs-10 nopadding">
-                                    <h2 class="pane-title">DAP Information</h2>
-                                </div>
-                                <div class="col-xs-2 nopadding">
-                                    <div id="tooltip3" class="infor"> <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"><br>
-                    DAP Overall Average Score :
-                                            <?= $agency_dap_score ?>
-                                            % </span> </div>
-                                </div>
-                                <br clear="all"/>
-                                <div class="pane-content">
-                                    <div class="view-wrapper" style="min-height:332px;">
-                                        <div class="view  view-display-id-block_4 view-dom-id-6181bfbb91a57a13154a09c584b98ec8">
-                                            <div class="view-content">
-                                                <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
-                                                    <div class="views-field views-field-php"> <span class="field-content col-lg-12"> </span> </div>
-                                                    <div class="views-field views-field-nothing clearfix">
-                                                        <div class="field-content col-lg-12">
-                                                            <p>DAP Overall Average Score :
-                                                                <?= $agency_dap_score ?>
-                                                                %</p>
-                                                            <div class = "col-xs-12-col-sm-12 col-lg-6">
-                                                                <?php
-                                                                $blockObject6 = block_load( 'trend_analysis', 'agency_dap' );
-                                                                $block6 = _block_get_renderable_array( _block_render_blocks( array( $blockObject6 ) ) );
-                                                                $output6 = drupal_render( $block6 );
-                                                                print "$output6 <br><span style='color: " . dotgov_common_getChartColor( $agency_dap_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly DAP Trend</span>";
-                                                                ?>
-                                                            </div>
-                                                            <div class = "col-xs-12-col-sm-12 col-lg-6">
-                                                                <div id="dap_chart">&nbsp;</div>
-                                                                <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
-                                                                <script type="text/javascript">
-                                                                    Highcharts.chart( 'dap_chart', {
-
-                                                                            chart: {
-                                                                                type: 'solidgauge',
-
-                                                                            },
-
-                                                                            title: {
-
-                                                                                text: ''
-
-                                                                            },
-
-                                                                            tooltip: {
-                                                                                enabled: false,
-                                                                            },
-
-                                                                            pane: {
-                                                                                startAngle: 0,
-                                                                                endAngle: 360,
-                                                                                background: [ {
-                                                                                    outerRadius: '118%',
-                                                                                    innerRadius: '80%',
-                                                                                    backgroundColor: '#d6d7d9',
-                                                                                    borderWidth: 0
-                                                                                } ]
-                                                                            },
-
-                                                                            yAxis: {
-                                                                                min: 0,
-                                                                                max: 100,
-                                                                                lineWidth: 0,
-                                                                                tickPositions: [],
-
-                                                                                title: {
-                                                                                    text: '<?php echo $agency_dap_score;?> %',
-                                                                                    style: {
-                                                                                        fontSize: '22px',
-                                                                                        color: '<?php echo dotgov_common_getChartColor($agency_dap_score); ?>'
-                                                                                    },
-                                                                                    y: 30
-                                                                                },
 
 
 
-                                                                            },
-
-                                                                            plotOptions: {
-                                                                                solidgauge: {
-                                                                                    dataLabels: {
-                                                                                        enabled: false
-                                                                                    },
-                                                                                    linecap: 'round',
-                                                                                    stickyTracking: false,
-                                                                                    rounded: true
-                                                                                }
-                                                                            },
-
-                                                                            series: [ {
-                                                                                name: 'DAP Chart',
-                                                                                data: [ {
-                                                                                    color: '<?php echo dotgov_common_getChartColor($agency_dap_score); ?>',
-                                                                                    radius: '118%',
-                                                                                    innerRadius: '80%',
-                                                                                    y: <?php echo trim($agency_dap_score);?>
-                                                                                } ]
-                                                                            } ]
-                                                                        }
-
-
-                                                                    );
-                                                                </script>
-                                                            </div>
-                                                            <table style="width:100%;">
-
-                                                                <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
-                                                                <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
-                                                                <tr>
-                                                                    <td> DAP Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
-                                                                    <td><?= dotgov_common_applyDataColor($agencydata['dap_compliant'], $agencydata['dap_tottracked'],'#29643a') ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>DAP Non Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
-                                                                    <td><?= dotgov_common_applyDataColor($agencydata['dap_noncompliant'], $agencydata['dap_tottracked'],'#ac0600') ?></td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div><br>
-                                            <p><span style="font-size: larger;font-color:blue;">*</span> : DAP information is based on data collected from <span style="font-color:blue"></span><a href="https://pulse.cio.gov/analytics/agencies" target="_new">pulse.cio.gov</a></span></p>
-                                            <span>(Note: website redirects are excluded)</span> </div>
-                                    </div>
-                                    <div class="view-button">
-                                        <p><a class="btn btn-primary" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-lg-4">
-                        <div class="white-back">
-                            <div class="panel-pane pane-views pane-website-information">
-                                <div class="col-xs-10 nopadding">
-                                    <h2 class="pane-title">Free of Insecure Protocols Information</h2>
-                                </div>
-                                <div class="col-xs-2 nopadding">
-                                    <div id="tooltip8" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
-                    Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner component of dotgov dashboard that last ran on
-                                            <?php dotgov_common_lastScanDate(); ?>
-                    </span> </div>
-                                </div>
-                                <br clear="all"/>
-                                <div class="pane-content">
-                                    <div class="view  view-display-id-block_11 view-dom-id-48cb0bd52b149a4150411d9b44b892bc">
-                                        <div class="view-content">
-                                            <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
-                                                <div class="views-field views-field-php-1 col-lg-12">
-                                                    <div class="view-wrapper">
-                                                        <p>Free of RC4/3DES and SSLv2/SSLv3 Overall Average Score :
-                                                            <?= $agency_insecprot_score ?>
-                                                            %</p>
-                                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                                            <?php
-                                                            $blockObject5 = block_load( 'trend_analysis', 'agency_rc4' );
-                                                            $block5 = _block_get_renderable_array( _block_render_blocks( array( $blockObject5 ) ) );
-                                                            $output5 = drupal_render( $block5 );
-                                                            print "$output5<br><span style='color: " . dotgov_common_getChartColor( $agency_insecprot_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly Insecure Protocol Trend</span>";
-                                                            ?>
-                                                        </div>
-                                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                                            <div id="freeofinsecureprot_chart">&nbsp;</div>
-                                                            <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
-                                                            <script type="text/javascript">
-                                                                Highcharts.chart( 'freeofinsecureprot_chart', {
-
-                                                                        chart: {
-                                                                            type: 'solidgauge',
-
-                                                                        },
-
-                                                                        title: {
-
-                                                                            text: ''
-
-                                                                        },
-
-                                                                        tooltip: {
-                                                                            enabled: false,
-                                                                        },
-
-                                                                        pane: {
-                                                                            startAngle: 0,
-                                                                            endAngle: 360,
-                                                                            background: [ {
-                                                                                outerRadius: '118%',
-                                                                                innerRadius: '80%',
-                                                                                backgroundColor: '#d6d7d9',
-                                                                                borderWidth: 0
-                                                                            } ]
-                                                                        },
-
-                                                                        yAxis: {
-                                                                            min: 0,
-                                                                            max: 100,
-                                                                            lineWidth: 0,
-                                                                            tickPositions: [],
-
-                                                                            title: {
-                                                                                text: '<?php echo $agency_insecprot_score;?> %',
-                                                                                style: {
-                                                                                    fontSize: '22px',
-                                                                                    color: '<?php echo dotgov_common_getChartColor($agency_insecprot_score); ?>'
-                                                                                },
-                                                                                y: 30
-                                                                            },
-
-
-
-                                                                        },
-
-                                                                        plotOptions: {
-                                                                            solidgauge: {
-                                                                                dataLabels: {
-                                                                                    enabled: false
-                                                                                },
-                                                                                linecap: 'round',
-                                                                                stickyTracking: false,
-                                                                                rounded: true
-                                                                            }
-                                                                        },
-
-                                                                        series: [ {
-                                                                            name: 'Free of Insecure Protocol Chart',
-                                                                            data: [ {
-                                                                                color: '<?php echo dotgov_common_getChartColor($agency_insecprot_score); ?>',
-                                                                                radius: '118%',
-                                                                                innerRadius: '80%',
-                                                                                y: <?php echo trim($agency_insecprot_score);?>
-                                                                            } ]
-                                                                        } ]
-                                                                    }
-
-
-                                                                );
-                                                            </script>
-                                                        </div>
-                                                        <table width="100%">
-
-                                                            <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                                            <th style="background-color: #215393;color: white;"> Websites </th>
-                                                            <tr>
-                                                                <td>Websites Free of RC4/3DES and SSLv2/SSLv3 </td>
-                                                                <td><?= dotgov_common_applyDataColor($agencydata['insec_compliant'], $agencydata['free_tracked'],'#29643a') ?></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Websites Not Free of RC4/3DES and SSLv2/SSLv3 </td>
-                                                                <td><?= dotgov_common_applyDataColor($agencydata['insec_noncompliant'], $agencydata['free_tracked'],'#ac0600') ?></td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                    <div class="view-button"><br>
-                                                        <p><a class="btn btn-primary" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1338,9 +1391,11 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                             ?>
                                                         </div>
                                                     </div>
-                                                    <div class="view-button" style="margin-left:15px;"><br>
-                                                        <p><a class="btn btn-primary" href="/technology-overview?field_web_agency_id_nid=<?=arg(1)?>">Go to Full Report</a> </p>
-                                                    </div>
+                                                    <div class="view-button">
+
+                                                        <div class="row col-xs-12 nopadding">
+                                                            <div class="col-xs-12 col-lg-6 text-left" style="visibility: hidden"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>
+                                                        </div></div>
                                                 </div>
                                             </div>
                                         </div>
