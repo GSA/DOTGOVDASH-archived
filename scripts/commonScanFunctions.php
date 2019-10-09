@@ -966,14 +966,12 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
 
     //Save Tags to parent website
     if(!empty($tags)) {
-        //if(!empty($wnode->field_website_tags)){
-         //   foreach($wnode->field_website_tags['und'] as $ctk  =>$ctval){
-          //      $currentTerms[] = $ctval['tid'];
-           // }
-           // $crnTermCnt = count($currentTerms);
-       // }
-        $currentTerms = array();
-        $crnTermCnt = 0;
+        if(!empty($wnode->field_website_tags)){
+            foreach($wnode->field_website_tags['und'] as $ctk  =>$ctval){
+                $currentTerms[] = $ctval['tid'];
+            }
+            $crnTermCnt = count($currentTerms);
+        }
         $i = 1;
         foreach (array_unique($tags) as $key => $tag) {
             if ($term = taxonomy_get_term_by_name($tag)) {
@@ -1188,12 +1186,14 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
 
     //Save Tags to parent website
     if(!empty($tags)) {
-        if(!empty($wnode->field_website_tags)){
-            foreach($wnode->field_website_tags['und'] as $ctk  =>$ctval){
-                $currentTerms[] = $ctval['tid'];
-            }
-            $crnTermCnt = count($currentTerms);
-        }
+    //    if(!empty($wnode->field_website_tags)){
+     //       foreach($wnode->field_website_tags['und'] as $ctk  =>$ctval){
+      //          $currentTerms[] = $ctval['tid'];
+       //     }
+        //    $crnTermCnt = count($currentTerms);
+       // }
+	$currentTerms = array();
+        $crnTermCnt = 0;
         $i = 1;
         foreach (array_unique($tags) as $key => $tag) {
             if ($term = taxonomy_get_term_by_name($tag)) {
