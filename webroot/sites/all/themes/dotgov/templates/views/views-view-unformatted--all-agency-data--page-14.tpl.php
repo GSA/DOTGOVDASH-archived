@@ -595,7 +595,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                     <p>  HTTPS Overall Average Score :
                                                         <?= $agency_https_score ?>
                                                         % </p>
-                                                    <span style="font-size:12px;" class="font-italic">The individual site score is based on the sum of 4 different metrics. See scoring methods for more info.</span>
+                                                    <span style="font-size:12px;" class="font-italic">The individual site score is based on several different metrics. See scoring methods for more info.</span>
                                                 </div>
                                                 <div class="col-sm-12 col-lg-6 nopadding">
                                                     <div id="https_chart">&nbsp;</div>
