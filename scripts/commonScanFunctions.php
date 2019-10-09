@@ -966,12 +966,14 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
 
     //Save Tags to parent website
     if(!empty($tags)) {
-        if(!empty($wnode->field_website_tags)){
-            foreach($wnode->field_website_tags['und'] as $ctk  =>$ctval){
-                $currentTerms[] = $ctval['tid'];
-            }
-            $crnTermCnt = count($currentTerms);
-        }
+        //if(!empty($wnode->field_website_tags)){
+         //   foreach($wnode->field_website_tags['und'] as $ctk  =>$ctval){
+          //      $currentTerms[] = $ctval['tid'];
+           // }
+           // $crnTermCnt = count($currentTerms);
+       // }
+        $currentTerms = array();
+        $crnTermCnt = 0;
         $i = 1;
         foreach (array_unique($tags) as $key => $tag) {
             if ($term = taxonomy_get_term_by_name($tag)) {
@@ -2422,8 +2424,8 @@ function archiveGovwideTrendData(){
     //Query to get Search data for govtwide
     $searchresults = db_query("select field_search_status_value,count(field_search_status_value) as complnum from node a , field_data_field_search_status b  where a.status='1' and a.nid=b.entity_id  and a.type='website' group by field_search_status_value");
     $agency_search_status = array();
-    $search_available = "";
-    $search_notavailable = "";
+    $search_available = 0;
+    $search_notavailable = 0;
     foreach ($searchresults as $searchresult) {
         if($searchresult->field_search_status_value == '1')
             $search_available += $searchresult->complnum;
@@ -2458,8 +2460,8 @@ function archiveAgencywideTrendData(){
         //Query to get Search data for an agency
         $searchresults = db_query("select field_search_status_value,count(field_search_status_value) as complnum from node a , field_data_field_search_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='website' group by field_search_status_value", array(':agencyid' => $result->nid));
         $agency_search_status = array();
-        $search_available = "";
-        $search_notavailable = "";
+        $search_available = 0;
+        $search_notavailable = 0;
         foreach ($searchresults as $searchresult) {
             if($searchresult->field_search_status_value == '1')
                 $search_available += $searchresult->complnum;
