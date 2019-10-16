@@ -243,9 +243,9 @@ $agencynode = node_load( arg( 1 ) );
                                             </div>
                                             <br clear="all" />
                                             <div class="view-button clearfix">
-                                                <div class="row col-xs-12 nopadding">
-                                                    <div class="col-xs-12 col-lg-6 text-right"><a class="" href="/website/mobile/reports?field_web_agency_id_nid=<?=arg(1)?>"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="143" height="30" alt=""/></a> </div>
-                                                    <div class="col-xs-12 col-lg-6 text-left"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>
+                                                <div class="row text-center">
+                                                    <a class="" href="/website/mobile/reports?field_web_agency_id_nid=<?=arg(1)?>"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                                    <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -333,9 +333,9 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                         </div>
                                     </div>
                                     <div class="view-button">
-                                        <div class="row col-xs-12 nopadding">
-                                            <div class="col-xs-12 col-lg-6 text-right"><a href="/accessibilityreportalldomains?field_web_agency_id_nid_selective=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="143" height="30" alt=""/></a> </div>
-                                            <div class="col-xs-12 col-lg-6 text-left"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>
+                                        <div class="row text-center">
+                                            <a href="/accessibilityreportalldomains?field_web_agency_id_nid_selective=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                            <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
                                         </div>
 
                                     </div>
@@ -480,9 +480,9 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                         <div class="view-button">
 
 
-                                                            <div class="row col-xs-12 nopadding">
-                                                                <div class="col-xs-12 col-lg-6 text-right"><a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="143" height="30" alt=""/></a> </div>
-                                                                <div class="col-xs-12 col-lg-6 text-left"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>
+                                                            <div class="row text-center">
+                                                                <a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                                                <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
                                                             </div>
 
                                                         </div>
@@ -552,9 +552,9 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
 
                                         </div>
                                     </div>
-                                    <div class="view-button clearfix"><div class="row col-xs-12 nopadding">
-                                            <div class="col-xs-12 col-lg-6 text-right"><a class="" href="/website/search/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="143" height="30" alt=""/></a> </div>
-                                            <div class="col-xs-12 col-lg-6 text-left"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>
+                                    <div class="view-button clearfix"><div class="row text-center">
+                                            <a class="" href="/website/search/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                            <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
                                         </div>
                                     </div>
                                 </div>
@@ -713,9 +713,9 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                         </div>
                                     </div>
                                     <div class="view-button">
-                                        <div class="row col-xs-12 nopadding">
-                                            <div class="col-xs-12 col-lg-12 text-center"><a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="143" height="30" alt=""/></a> </div>
-                                            <!--<div class="col-xs-12 col-lg-6 text-left"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>-->
+                                        <div class="row text-center">
+                                            <a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                            <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
                                         </div>
                                     </div>
                                 </div>
@@ -854,9 +854,9 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
 
                                                     </div>
                                                     <div class="view-button">
-                                                        <div class="row col-xs-12 nopadding">
-                                                            <div class="col-xs-12 col-lg-12 text-center"><a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="143" height="30" alt=""/></a> </div>
-                                                            <!--<div class="col-xs-12 col-lg-6 text-left"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>-->
+                                                        <div class="row text-center">
+                                                            <a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                                            <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -996,9 +996,9 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                             </div>
                                                         </div>
                                                         <div class="view-button">
-                                                            <div class="row col-xs-12 nopadding">
-                                                                <div class="col-xs-12 col-lg-12 text-center"><a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="143" height="30" alt=""/></a> </div>
-                                                                <!--<div class="col-xs-12 col-lg-6 text-left"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>-->
+                                                            <div class="row text-center">
+                                                                <a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                                                <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1153,9 +1153,9 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
 
                                     </div>
                                     <div class="view-button">
-                                        <div class="row col-xs-12 nopadding">
-                                            <div class="col-xs-12 col-lg-12 text-center"><a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="143" height="30" alt=""/></a> </div>
-                                            <!--<div class="col-xs-12 col-lg-6 text-left"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>-->
+                                        <div class="row text-center">
+                                            <a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                            <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
                                         </div>
                                     </div>
                                 </div>
@@ -1289,9 +1289,9 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                             ?>
                                         </div>
                                     </div>
-                                    <div class="row col-xs-12 nopadding">
-                                        <div class="col-xs-12 col-lg-12 text-center"><a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="143" height="30" alt=""/></a> </div>
-                                        <!--<div class="col-xs-12 col-lg-6 text-left"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>-->
+                                    <div class="row text-center">
+                                        <a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                        <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
                                     </div>
 
 
@@ -1394,7 +1394,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                     <div class="view-button">
 
                                                         <div class="row col-xs-12 nopadding">
-                                                            <div class="col-xs-12 col-lg-6 text-left" style="visibility: hidden"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>
+                                                            <div class="col-xs-12 col-lg-6 text-left" style="visibility: hidden"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a> </div>
                                                         </div></div>
                                                 </div>
                                             </div>
