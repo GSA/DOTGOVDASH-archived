@@ -1137,7 +1137,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                     </table>
                                                     <div class="col-xs-12 clearfix">
                                                         <p><span style="font-size: 10px;font-color:blue;">*</span> : DAP information is based on data collected from <span style="font-color:blue"></span><a href="https://pulse.cio.gov/analytics/agencies" target="_new">pulse.cio.gov</a></span></p>
-                                                        <span class="text-center">(Note: website redirects are excluded)</span> </div>
+                                                        <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span> </div>
                                                 </div>
                                                 <div class="col-xs-12 nopadding clearfix"> <?php
                                                     $blockObject6 = block_load( 'trend_analysis', 'agency_dap' );
@@ -1279,7 +1279,9 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                     <td>Websites Not Free of RC4/3DES and SSLv2/SSLv3 </td>
                                                     <td><?= dotgov_common_applyDataColor($agencydata['insec_noncompliant'], $agencydata['free_tracked'],'#ac0600') ?></td>
                                                 </tr>
-                                            </table></div>
+                                            </table>
+                                            <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span>
+                                        </div>
                                         <div class="col-xs-12">
                                             <?php
                                             $blockObject5 = block_load( 'trend_analysis', 'agency_rc4' );
