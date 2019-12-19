@@ -87,7 +87,7 @@ $agencynode = node_load( arg( 1 ) );
                                         <h2 class="pane-title"> Mobile Information </h2>
                                     </div>
                                     <div class="col-xs-2 nopadding">
-                                        <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"><br>
+                                        <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
                       Mobile Overall Average Score : <?php print $agency_mobovr_score; ?> <br>
                       Mobile Performance Score :
                                                 <?= $agency_mobperf_score; ?>
