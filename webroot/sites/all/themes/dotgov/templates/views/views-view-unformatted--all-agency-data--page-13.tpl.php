@@ -116,13 +116,13 @@ $agencynode = node_load( arg( 1 ) );
                                                     }
 
                                                     if ( $agency_mobusab_score >= '0' && $agency_mobusab_score < '50' ) {
-                                                        $mobusabstat = "Slow";
+                                                        $mobusabstat = "Low";
 
                                                     } elseif ( $agency_mobusab_score >= '50' && $agency_mobusab_score < '90' ) {
-                                                        $mobusabstat = "Moderate";
+                                                        $mobusabstat = "Medium";
 
                                                     } elseif ( $agency_mobusab_score >= '90' && $agency_mobusab_score <= '100' ) {
-                                                        $mobusabstat = "Fast";
+                                                        $mobusabstat = "Good";
 
                                                     }
 
