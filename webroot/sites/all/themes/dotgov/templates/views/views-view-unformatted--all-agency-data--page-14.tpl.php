@@ -118,10 +118,10 @@ drupal_set_title( $agencynode->title );
                                                     if ( $agency_mobperf_score >= '0' && $agency_mobperf_score < '50' ) {
                                                         $mobperfmstat = "Slow";
 
-                                                    } elseif ( $agency_mobperf_score >= '60' && $agency_mobperf_score < '90' ) {
+                                                    } elseif ( $agency_mobperf_score >= '50' && $agency_mobperf_score < '90' ) {
                                                         $mobperfmstat = "Moderate";
 
-                                                    } elseif ( $agency_mobperf_score >= '80' && $agency_mobperf_score <= '100' ) {
+                                                    } elseif ( $agency_mobperf_score >= '90' && $agency_mobperf_score <= '100' ) {
                                                         $mobperfmstat = "Fast";
 
                                                     }
@@ -129,10 +129,10 @@ drupal_set_title( $agencynode->title );
                                                     if ( $agency_mobusab_score >= '0' && $agency_mobusab_score < '50' ) {
                                                         $mobusabstat = "Slow";
 
-                                                    } elseif ( $agency_mobusab_score >= '60' && $agency_mobusab_score < '90' ) {
+                                                    } elseif ( $agency_mobusab_score >= '50' && $agency_mobusab_score < '90' ) {
                                                         $mobusabstat = "Moderate";
 
-                                                    } elseif ( $agency_mobusab_score >= '80' && $agency_mobusab_score <= '100' ) {
+                                                    } elseif ( $agency_mobusab_score >= '90' && $agency_mobusab_score <= '100' ) {
                                                         $mobusabstat = "Fast";
 
                                                     }
