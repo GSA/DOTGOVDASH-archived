@@ -18,6 +18,8 @@ open("analytics.csv", "w").close()
 f=open("analytics.csv", "a+")
 f.write("Domain Name,Participates in Dap" + "\n")
 f.close()
+
+#process each domain in list
 for row in my_list:
     domain = row[0].lower() #convert domains to lowercase
     url = base + domain + route + key + param #construct url
@@ -25,5 +27,5 @@ for row in my_list:
 
     #write result
     f=open("analytics.csv", "a+")
-    f.write(domain + ",Yes\n" if "{\"id\":" in response else domain + ",No\n") #in dap or not
+    f.write(domain + ",Yes\n" if "{\"id\":" in response else domain + ",No\n") #return if the domain is in dap or not
     f.close()
