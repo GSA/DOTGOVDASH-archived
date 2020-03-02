@@ -246,25 +246,28 @@ def csv_run_command(csv_path):
           logging.info('pshtt.csv does not exist')
 
 
-def single_domain_run_command(domain_name,agency_name):
+def single_domain_run_command(domain_name):
     cmd = "/Users/navyasree.kumbam/Documents/Ecas\ Project/domain-scan/scan" + " " + domain_name + " " + "--scan=pshtt,sslyze"
-
+    with open('/Users/navyasree.kumbam/Desktop/current-federal.csv') as domain_file:
+        for dict_row in csv.DictReader(domain_file):
+            if dict_row['Domain Name'].lower().strip() == domain_name:
+                agency_name = dict_row['Agency']
+                break
+            else:
+                agency_name = None
     os.system(cmd)
-
     if Path('./results/pshtt.csv').exists():
         data = process_pshtt_data()
+        load_https_data(agency_name, data)
     else:
         logging.info('pshtt.csv does not exist')
-    return data
 
 
 def run():
 
     parser = argparse.ArgumentParser(prefix_chars="--")
-
-    parser.add_argument("--domain_name", default="", type=str, help= "Provide domain name ex: python3 single_https.py --domain_name RL.GOV")
+    parser.add_argument("--domain_name", default="", type=str, help= "Provide domain name ex: python3 single_https.py --domain_name sam.gov")
     parser.add_argument("--csvpath", default="", type=str, help= "Provide csv path ex: python3 single_https.py --csvpath current-federal.csv")
-    agency_name = None
     # domain_name = sys.argv[1]
     args = parser.parse_args()
     csv_path = args.csvpath
@@ -274,12 +277,8 @@ def run():
     https_csv.truncate()
     print('Clearing the https scan csv file before starting a new scan')
     if domain_name != "":
-        with open('/Users/navyasree.kumbam/Desktop/current-federal.csv') as domain_file:
-            for dict_row in csv.DictReader(domain_file):
-                if dict_row['Domain Name'] == domain_name:
-                    agency_name = dict_row['Agency']
-            result = single_domain_run_command(domain_name, agency_name)
-            load_https_data(agency_name, result)
+        domain_name = domain_name.lower().strip()
+        single_domain_run_command(domain_name)
     elif csv_path != "":
         csv_run_command(csv_path)
     else:
