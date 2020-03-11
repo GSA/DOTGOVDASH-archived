@@ -24,11 +24,13 @@ def process_pshtt_data(pshtt_row, sslyze_row):
     if pshtt_row is not None:
         m1513 = None
         parameter_list['Domain'] = pshtt_row['Domain']
+        searchdomain = "\"" + pshtt_row['Domain'] + "\""
         parameter_list['Base Domain'] = pshtt_row['Base Domain']
         parameter_list['URL'] = pshtt_row['Canonical URL']
         with open('./results/preloaded.txt') as preloaded_file:
+
             preloaded_data = preloaded_file.read()
-            if pshtt_row['Domain'] in preloaded_data:
+            if searchdomain in preloaded_data:
                 print('HSTS PRELOADED VALUE CHANGED')
                 pshtt_row['HSTS Preloaded'] = "True"
             if pshtt_row['Live'] == 'True':
@@ -268,7 +270,7 @@ def csv_run_command(csv_path):
     preloaded = load_preload_list()
     preloaded_data = Path('./results/preloaded.txt').open('w')
     for data in preloaded:
-      preloaded_data.write(data + "\n")
+      preloaded_data.write("\""+data + "\"" + "\n")
     if Path('./results/pshtt.csv').exists():
         sslyze_row = None
         agency_name = None
@@ -280,10 +282,16 @@ def csv_run_command(csv_path):
                     agency_name = domain_row['Agency'].strip()
                     domain = domain_row['Domain Name'].lower().strip()
                     pshtt_row = pshtt
+                    break
+                else:
+                  pshtt_row = None
             if Path('./results/sslyze.csv').exists():
                 for sslyze in csv.DictReader(open('./results/sslyze.csv')):
                     if sslyze['Domain'] == domain_row['Domain Name'].lower().strip():
                         sslyze_row = sslyze
+                        break
+                    else:
+                      sslyze_row = None
             process_data = process_pshtt_data(pshtt_row, sslyze_row)
             load_https_data(agency_name, process_data)
 
