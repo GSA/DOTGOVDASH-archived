@@ -1,0 +1,15 @@
+version: '3.3'
+
+services:
+  scan:
+    build: .
+    volumes:
+      - .:/home/scanner
+      - /home/scanner/node_modules
+    # Some internet providers intercept NXDOMAIN and show a search
+    # page instead.  Google's DNS does not, so I prefer to use it.
+    dns:
+      - 8.8.8.8
+    # This is used when debugging with GDB
+    cap_add:
+      - SYS_PTRACE
