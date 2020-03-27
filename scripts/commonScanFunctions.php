@@ -694,7 +694,10 @@ function getPulseData(){
     db_query("LOAD DATA LOCAL INFILE '".$localhttpsfile."' INTO TABLE `custom_pulse_https_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
 
     //Get Pulse dap data and enter to a temp table
-    file_put_contents("$localdapfile", file_get_contents("$pulsedapurl"));
+    //file_put_contents("$localdapfile", file_get_contents("$pulsedapurl"));
+    //This is the latest scan which uses GSA analytics api instead of pulse and generates a file at /tmp/pulsedap.csv
+    shell_exec("/usr/bin/python3.6 ../scripts/custom_pulse_scanner_analytics/secondLevelDomain.py");
+
     db_query("truncate table custom_pulse_dap_data");
     db_query("LOAD DATA LOCAL INFILE '".$localdapfile."' INTO TABLE `custom_pulse_dap_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
     db_query("update custom_pulse_https_data a , custom_pulse_dap_data b set a.dap=b.dap where a.domain=b.domain");
