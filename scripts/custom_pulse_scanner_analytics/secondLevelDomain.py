@@ -24,8 +24,8 @@ limit = 100000 #limit of results return, default is 10000
 date = (datetime.today() - timedelta(days=days_to_subtract)).strftime("%Y-%m-%d")
 response = requests.get('https://api.gsa.gov/analytics/dap/v1.1/reports/second-level-domain/data?api_key=CUluXOXEJqFO4Hqlt4YJpAlE8zua2rP3nUcIM2rZ&after=' + date + '&limit=' + str(limit) + '', verify=False)
 contents = response.text.replace('{', '\n{').replace('}]', '}\n]')
-open("analyticsSecondLevelDomain.csv", 'w').close() #empty file
-f = open("analyticsSecondLevelDomain.csv", mode='a')
+open("/tmp/pulsedap.csv", 'w').close() #empty file
+f = open("/tmp/pulsedap.csv", mode='a')
 f.write('"Domain","Base Domain","URL","Agency","Sources","Participates in DAP?"')
 f.close()
 
