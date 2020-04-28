@@ -99,7 +99,7 @@ if (!empty($trend_vars['scandate'])) {
                 } else {
                   scoreVal = point.y;
                 }
-                s += '<tr><td style="color:' + point.color + ';padding:0">' + point.series.name + ':&nbsp;</td>' + '<td style="padding:0"><b>' + scoreVal + '</b></td></tr>';
+                  s += '<tr><td style="color:' + point.color + ';padding:0">' + point.series.name + ':&nbsp;</td>' + '<td style="padding:0"><b>' + scoreVal + '</b></td></tr>';
               });
               return s += '</table>';
             },
@@ -176,11 +176,11 @@ if (!empty($trend_vars['scandate'])) {
           
             <?php if (in_array($trend_vars['blockname'],$agency_score_arr)): ?>
                 tooltip: {
-                    formatter: function() {
+                    formatter: function(){
                         if(this.y == -1)
-                            return 'Score: 0%';
+                            return '<span style="font-size:10px">' + this.x + '</span><br><table> <tr><td>Score: <b>0%</b></td></tr></table>';
                         else
-                            return 'Score: '+this.y +'%';
+                        return '<span style="font-size:10px">' + this.x + '</span><br><table> <tr<td>Score: <b>' + this.y + '%</b></td></tr></table>';
                     }
                 },
             <?php elseif($trend_vars['blockname'] == 'trends_mobile_spark'): ?>
