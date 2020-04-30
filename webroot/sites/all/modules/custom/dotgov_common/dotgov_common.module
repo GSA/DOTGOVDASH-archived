@@ -102,7 +102,7 @@ function dotgov_common_lastScanDate(){
     // Scan takes 2 or 3 days to complete.
     // Query returns lastscan date at the start of the scan not when scan completes.
     // Adding 2 or 3 days makes san date to show scan completion date.
-    print date("m/d/Y",$lastscantime + + (3 * 24 * 60 * 60));
+    print date("m/d/Y",$lastscantime + + (2 * 24 * 60 * 60));
 }
 
 /*
@@ -418,8 +418,9 @@ function dotgov_common_govwideTrendData(){
     $avg_dnssec = round(db_query("select avg(a.field_dnssec_score_value) as avg_value from field_data_field_dnssec_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
     $avg_rc4 = round(db_query("select avg(a.field_free_of_insecr_prot_score_value) as avg_value from field_data_field_free_of_insecr_prot_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
     $avg_m15 = round(db_query("select avg(a.field_m15_13_compliance_score_value) as avg_value from field_data_field_m15_13_compliance_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_uswds = round(db_query("select avg(a.field_uswds_score_value) as avg_value from field_data_field_uswds_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
 
-    $govwidewebsite['websitenos'] = $websitenos;
+  $govwidewebsite['websitenos'] = $websitenos;
     $govwidewebsite['agencynos'] = $agencynos;
     $govwidewebsite['avg_https'] = $avg_https;
     $govwidewebsite['avg_dap'] = $avg_dap;
@@ -431,6 +432,7 @@ function dotgov_common_govwideTrendData(){
     $govwidewebsite['avg_dnssec'] = $avg_dnssec;
     $govwidewebsite['avg_rc4'] = $avg_rc4;
     $govwidewebsite['avg_m15'] = $avg_m15;
+    $govwidewebsite['avg_uswds'] = $avg_uswds;
     return $govwidewebsite;
 }
 
