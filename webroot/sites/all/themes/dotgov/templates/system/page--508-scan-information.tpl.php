@@ -80,7 +80,7 @@
 			<div class="col-xs-7 col-md-7 contacts col">
 				<span class="item">An Official Website Of The United States Government</span> </div>
 			<div class="col-xs-5 col-md-5 contacts col" style="text-align:right;font-weight:bold;">
-				<span>This site is currently in <a href="//18f.gsa.gov/dashboard/stages/#alpha">alpha</a></span> </div>
+				<span>This site is currently in <a href="//18f.gsa.gov/dashboard/stages/#beta">beta</a></span> </div>
 		</div>
 	</div>
 </div>
@@ -94,7 +94,7 @@
 <h1 class="site-logo">Digital Dashboard</h1>
           <img src="<?php print $logo; ?>" alt="Digital Dashboard.gov - Home" />
         </a>
-			
+
 
 				<?php endif; ?>
 
@@ -192,14 +192,18 @@
 				<?php endif; ?>
 				<?php //print render($page['content']); ?>
 				<!-- Inserting Custom Content Here -->
-				<?php  
+				<?php
 					$content= $node->field_accessibility_raw_scan['und'][0]['value'];
 					$json = json_decode($content, true);
 					$html_attr_count=count($json['HTML Attribute - Initial Findings']);
 					$color_cont_count=count($json['Color Contrast - Initial Findings']);
 					$missing_image_count=count($json['Missing Image Descriptions']);
 					if ($html_attr_count > 0){
+<<<<<<< HEAD
+						print '<div class="category"><h2>HTML Attribute - Initial Findings&nbsp;('.$html_attr_count.')</h2>';
+=======
 						print '<div class="category"><h2>HTML Attributes - Initial Findings&nbsp;('.$html_attr_count.')</h2>';
+>>>>>>> devel
 						foreach($json['HTML Attribute - Initial Findings'] as $item) {
 							print "<h4>".$item['code']."</h4>";
 							print "<strong>Selector:&nbsp;</strong>".$item['selector']."<br/>";

@@ -1,9 +1,12 @@
 jQuery(document).ready(function ($) {
 //$('.page-search-site .breadcrumb span:nth-child(3)').html('<a href=/search/site>Data Discovery</a>');
+$( "#favorites-add-favorite-form .panel-body" ).removeClass( "fade collapsed" ).addClass( "in" );
+$( "#edit-add-3-body" ).removeClass( "fade collapsed" ).addClass( "in" );
+
 	$(".ui-accordion-content").css("height", "auto");
 	$("#favorites-list li").prepend('<i class="icon glyphicon glyphicon-star"></i>');
 	$("th").attr("scope", "col");
-	$(".Website").text("Domains");
+	$(".Website").text("Websites");
 	$(".Agency").text("Agencies");
 
 	/* adding custom toggle js for favorites bookmark show-hide buttom */
@@ -82,4 +85,8 @@ jQuery(document).ready(function ($) {
 			$('.panel-accessibility-chart').hide();
 		}
 	});
+	$( ".active" ).parents(".collapse").addClass( "in" );
+$( ".facetapi-active" ).parents(".collapse").addClass( "in" );
+
+	$( ".facetapi-active" ).parent().css( "background-color","#f1c393" );
 });

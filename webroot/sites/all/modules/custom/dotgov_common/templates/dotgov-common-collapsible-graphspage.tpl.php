@@ -1,5 +1,5 @@
 <?php
-print_r(json_encode($govwidedata['actualdata']));
+//print_r(json_encode($govwidedata['actualdata']));
 $agdata = json_encode($govwidedata['actualdata']);
 ?>
 <div id="govwidecol"></div>
@@ -29,7 +29,7 @@ $agdata = json_encode($govwidedata['actualdata']);
     }
 </style>
 
-<title>Collapsible Tree</title>
+<title>Collapsible Tree (d3js) by awolf2904</title>
 
 <script type="text/javascript">
     window.onload=function(){

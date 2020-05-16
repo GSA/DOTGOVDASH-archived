@@ -84,7 +84,7 @@ else
             <div class="col-xs-7 col-md-7 contacts col">
                 <span class="item">An Official Website Of The United States Government</span> </div>
             <div class="col-xs-5 col-md-5 contacts col" style="text-align:right;font-weight:bold;">
-                <span>This site is currently in <a href="//18f.gsa.gov/dashboard/stages/#alpha">alpha</a></span> </div>
+                <span>This site is currently in <a href="//18f.gsa.gov/dashboard/stages/#beta">beta</a></span> </div>
         </div>				</div>
 </div>
 </div>
@@ -148,19 +148,15 @@ else
 </header>
 
 <div class="main-container <?php print $container_class; ?>">
-
+  <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
     <a id="main-content"></a>
     <?php print render($title_prefix); ?>
     <?php if (!empty($title)): ?>
         <h1 class="page-header"><?=$searchtitle; ?></h1>
     <?php endif; ?>
     <?php print render($title_suffix); ?>
-<?php if ($searchtitle =="Data Discovery"){ ?>
-<div class="container"><p style="text-align:center;margin-bottom:10px;">The data discovery module is currently under development. It is illustrated here to show functionality and intended use. The data presented here should not be used for any reporting or decision making purposes</p>
-</div>
-<?php } ?>
+
     <div class="container white-back">
-        <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
         <div class="row">
 
             <?php if (!empty($page['sidebar_first'])): ?>

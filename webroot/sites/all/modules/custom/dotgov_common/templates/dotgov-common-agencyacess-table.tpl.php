@@ -65,12 +65,14 @@ jQuery("div.toolbar").css('float','left');
         <tbody>
         <?php
         foreach($govwidedata['actualdata'] as $key=>$val){
+            if(trim($val['agencyname']) != "") {
             print "<tr><td><a href='/agency_home/".$key."'>".$val['agencyname']."</a></td>";
             print "<td>".$val['websitenos']."</td>";
             print "<td>".(($val['colorcontr_avg'] != '')?number_format($val['colorcontr_avg'],1):0)."</td>";
             print "<td>".(($val['htmlattr_avg'] != '')?number_format($val['htmlattr_avg'],1):0)."</td>";
             print "<td>".(($val['missingimg_avg'] != '')?number_format($val['missingimg_avg'],1):0)."</td>";
             print "</tr>";
+            }
         }
 
         ?>

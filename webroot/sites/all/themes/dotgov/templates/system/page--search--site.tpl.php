@@ -84,7 +84,7 @@ else
 			<div class="col-xs-7 col-md-7 contacts col">
 				<span class="item">An Official Website Of The United States Government</span> </div>
 			<div class="col-xs-5 col-md-5 contacts col" style="text-align:right;font-weight:bold;">
-				<span>This site is currently in <a href="//18f.gsa.gov/dashboard/stages/#alpha">alpha</a></span> </div>
+				<span>This site is currently in <a href="//18f.gsa.gov/dashboard/stages/#beta">beta</a></span> </div>
 		</div>
 	</div>
 </div>
@@ -98,7 +98,7 @@ else
                         <h1 class="site-logo">Digital Dashboard</h1>
                         <img src="<?php print $logo; ?>" alt="Digital Dashboard.gov - Home" />
                     </a>
-			
+
 
 
 				<?php endif; ?>
@@ -157,7 +157,7 @@ else
 </header>
 
 <div class="main-container <?php print $container_class; ?>">
-
+	<?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
 	<a id="main-content"></a>
 	<?php print render($title_prefix); ?>
 	<?php if (!empty($title)): ?>
@@ -166,23 +166,18 @@ else
 	</h1>
 	<?php endif; ?>
 	<?php print render($title_suffix); ?>
-	<?php if ($searchtitle =="Data Discovery"){ ?>
-	<div>
-		<p style="text-align:center;margin-bottom:10px;">The data discovery module is currently under development. It is illustrated here to show functionality and intended use. The data presented here should not be used for any reporting or decision making purposes</p>
-	</div>
-	<?php } ?>
+	
 	<div class="search-wrapper">
 		<div class="row box-back clearfix">
 			<ul class="col-xs-12 col-sm-12 col-lg-2 nav nopadding">
-				<li class="col-xs-4 datadisc active nopadding"> <a data-toggle="tab" href="#dd"> <img  alt="Data Discovery" title="Data Discovery" src="/sites/all/themes/dotgov/images/data-discovery-tab.png"/> </a> </li>
-				<li class="col-xs-4 popular nopadding"><a data-toggle="tab" href="#popular"><img alt="Popular Reports" title="Popular Reports" src="/sites/all/themes/dotgov/images/reports-tab.png"/></a>
+				<li class="col-xs-4 datadisc active nopadding"> <a data-toggle="tab" href="#dd" title="Data Discovery"> <img  alt="Data Discovery" title="Data Discovery" src="/sites/all/themes/dotgov/images/data-discovery-tab.png"/> </a> </li>
+				<li class="col-xs-4 popular nopadding"><a data-toggle="tab" href="#popular" title="Popular Reports"><img alt="Popular Reports" title="Popular Reports" src="/sites/all/themes/dotgov/images/reports-tab.png"/></a>
 				</li>
-				<li class="col-xs-4 fav nopadding"><a data-toggle="tab" href="#fav"><img alt="Saved Searches" title="Saved Searches" src="/sites/all/themes/dotgov/images/bookmark-tab.png"/></a>
+				<li class="col-xs-4 fav nopadding"><a data-toggle="tab" href="#fav" title="Saved Searches"><img alt="Saved Searches" title="Saved Searches" src="/sites/all/themes/dotgov/images/bookmark-tab.png"/></a>
 				</li>
 			</ul>
 		</div>
 <div class="heading clearfix"><h2>Data Discovery Results</h2></div><hr>
-		<?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
 		<div class="row border">
 
 			<?php if (!empty($page['sidebar_first'])): ?>

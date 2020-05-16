@@ -151,7 +151,7 @@ if ( $result[ 'node' ]->bundle == 'website' ) {
             <?php print render($title_prefix); ?>
             <h4 class="pane-title" <?php print $title_attributes; ?>>
                 <a href="<?php print $websiteurl; ?>"><?php print $title; ?></a>
-                </h3>
+                </h4>
 
         </div>
         <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
@@ -166,6 +166,9 @@ if ( $result[ 'node' ]->bundle == 'website' ) {
                     elseif(in_array($tval,$noncompliant_taxonomy)) {
                         if($tval == "VULNERABLE"){
                             $tvaltext = "Insecure Protocol";
+                        }
+                        if($tval == "TLSV1"){
+                            $tvaltext = "TLSV1.0";
                         }
                         else{
                             $tvaltext = $tval;
@@ -195,6 +198,10 @@ if ( $result[ 'node' ]->bundle == 'website' ) {
                 <?php
 		if(empty($techterms)){print "NA";}else{
                 foreach ( $techterms as $techkey => $techval ) {
+                    if ($techval[ 'icon' ] == "")
+                        $techval[ 'icon' ] = "default.svg";
+                    if (trim($techval[ 'category' ][ 'name' ]) == "")
+                        $techval[ 'category' ][ 'name' ] = "Technology";
                     print "<div class='col-sm-4 nopadding dataset-resources clearfix'><span id='app-button' class='app-button'>" . $techval[ 'category' ][ 'name' ] . " :&nbsp;<img alt='app-icon' class='app-icon' src='/" . drupal_get_path( 'module', 'dotgov_common' ) . "/images/icons/" . $techval[ 'icon' ] . "'>$techkey " . $techval[ 'appversion' ] . "</span></div>";
                 }
 }
@@ -220,10 +227,10 @@ if ( $result[ 'node' ]->bundle == 'website' ) {
                 <?php if ($snippet):
                     //print "<p class='search-snippet'".$content_attributes.">$snippet</p>";
                     print "<div class=\"col-lg-6\">Record Type: ".$result['node']->bundle_name." </div>";
-                    print "<div class=\"col-lg-6\">Record Title: ".$result['node']->label." </div>";
-                    print "<div class=\"col-lg-6\">Record Number: ".$result['node']->entity_id." </div>";
-                    print "<div class=\"col-lg-6\">Record Created Date: ".date('m/d/Y h:i:s',$result['node']->created)." </div>";
-                    print "<div class=\"col-lg-6\">Record Changed Date: ".date('m/d/Y h:i:s',$result['node']->changed)." </div>";
+                    //print "<div class=\"col-lg-6\">Record Title: ".$result['node']->label." </div>";
+                    //print "<div class=\"col-lg-6\">Record Number: ".$result['node']->entity_id." </div>";
+                    //print "<div class=\"col-lg-6\">Record Created Date: ".date('m/d/Y h:i:s',$result['node']->created)." </div>";
+                    print "<div class=\"col-lg-6\">Last Scan Date: ".date('m/d/Y h:i:s',$result['node']->changed)." </div>";
                 endif; ?>
             </div>
         </div>

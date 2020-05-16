@@ -63,7 +63,19 @@
  *
  * @ingroup themeable
  */
-    $websiteurl = "/website/".$result['node']->entity_id."/information";	
+if (strpos($title, 'HTTPS DAP') !== false) {
+    $title = str_replace('HTTPS DAP','HTTPS & DAP',$title);
+}
+    $websiteurl = "/website/".$result['node']->entity_id."/information";
+if (strpos($title, 'Domain') !== false) {
+    $title = str_replace("Domain","Website",$title);
+}
+if (strpos($result['node']->bundle_name, 'Domain') !== false) {
+    $result['node']->bundle_name = str_replace("Domain","Website",$result['node']->bundle_name);
+}
+if (strpos($result['node']->label, 'Domain') !== false) {
+    $result['node']->label = str_replace("Domain","Website",$result['node']->label);
+}
 //if(arg(1) == "website_search") {
 if($result['node']->bundle == 'website'){
     $techterms = dotgov_commmon_get_techTerms($result['node']->entity_id);
@@ -153,10 +165,10 @@ else {
             <?php if ($snippet): 
                 //print "<p class='search-snippet'".$content_attributes.">$snippet</p>";
 		 print "<div class=\"col-lg-6\">Record Type: ".$result['node']->bundle_name." </div>";	
-		 print "<div class=\"col-lg-6\">Record Title: ".$result['node']->label." </div>";	
-		 print "<div class=\"col-lg-6\">Record Number: ".$result['node']->entity_id." </div>";	
-		 print "<div class=\"col-lg-6\">Record Created Date: ".date('m/d/Y h:i:s',$result['node']->created)." </div>";	
-		 print "<div class=\"col-lg-6\">Record Changed Date: ".date('m/d/Y h:i:s',$result['node']->changed)." </div>";	
+		 //print "<div class=\"col-lg-6\">Record Title: ".$result['node']->label." </div>";
+		 //print "<div class=\"col-lg-6\">Record Number: ".$result['node']->entity_id." </div>";
+		 //print "<div class=\"col-lg-6\">Record Created Date: ".date('m/d/Y h:i:s',$result['node']->created)." </div>";
+		 print "<div class=\"col-lg-6\">Last Scan Date: ".date('m/d/Y h:i:s',$result['node']->changed)." </div>";
             endif; ?>
             </div>
         </div>

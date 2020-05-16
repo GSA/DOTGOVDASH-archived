@@ -45,6 +45,26 @@ function dotgov_common_theme($existing, $type, $theme, $path) {
             'variables' => array('nid' => NULL),
             'path' => drupal_get_path('module', 'dotgov_common') . '/templates',
         ),
+        'agencywide_searchstatus_page' => array(
+            'template' => 'dotgov-common-searchstatus-graph',
+            'variables' => array('nid' => NULL),
+            'path' => drupal_get_path('module', 'dotgov_common') . '/templates',
+        ),
+        'agencywide_searchengines_page' => array(
+            'template' => 'dotgov-common-searchengines-graph',
+            'variables' => array('nid' => NULL),
+            'path' => drupal_get_path('module', 'dotgov_common') . '/templates',
+        ),
+        'govwide_searchstatus_page' => array(
+            'template' => 'dotgov-common-searchstatus-govwide-graph',
+            'variables' => array('nid' => NULL),
+            'path' => drupal_get_path('module', 'dotgov_common') . '/templates',
+        ),
+        'govwide_searchengines_page' => array(
+            'template' => 'dotgov-common-searchengines-govwide-graph',
+            'variables' => array('nid' => NULL),
+            'path' => drupal_get_path('module', 'dotgov_common') . '/templates',
+        ),
 
     );
 }
@@ -67,7 +87,7 @@ function dotgov_common_getNodeTaxonomy($nid)
     foreach ($results as $result) {
         $terms[$result->taxId] = $result->taxKey;
     }
-  return $terms;
+    return $terms;
 
 }
 
@@ -75,11 +95,14 @@ function dotgov_common_getNodeTaxonomy($nid)
  * Find Last scan date
  */
 function dotgov_common_lastScanDate(){
-  $query = db_query("select nid,created from node where type='scans' order by nid desc limit 1");
-  foreach ($query as $result) {
-    $lastscantime = $result->created;
-  }
-  print date("m/d/Y",$lastscantime);
+    $query = db_query("select nid,created from node where type='scans' order by nid desc limit 1");
+    foreach ($query as $result) {
+        $lastscantime = $result->created;
+    }
+    // Scan takes 2 or 3 days to complete.
+    // Query returns lastscan date at the start of the scan not when scan completes.
+    // Adding 2 or 3 days makes san date to show scan completion date.
+    print date("m/d/Y",$lastscantime + + (2 * 24 * 60 * 60));
 }
 
 /*
@@ -87,29 +110,29 @@ function dotgov_common_lastScanDate(){
 */
 
 function dotgov_common_facet_items_alter(&$build, &$settings) {
-$enabled_fields =  array("sm_field_hsts_status","ism_field_https_status","sm_field_redirect","bm_field_ssl_v2_support","bm_field_ssl_v3_support","bm_field_tls_v1_support","bm_field_tls_v1_1_support","bm_field_tls_v1_2_support","bm_field_certificate_ocsp_stapli","bm_field_http_public_hpkp","bm_field_deflate_compression","bm_field_session_secure_renegoti","bm_field_have_proper_404","sm_field_enforce_https","bm_field_dap_status","bm_field_xss_protection");
-$vulnerable_fields = array("bm_field_openssl_ccs_injection","bm_field_openssl_heartbleed","bm_field_downgrade_attacks");
-                        if (in_array($settings->facet,$enabled_fields)) {
-                          foreach($build as $key => $item) {
-				if($key == 'true')	
-                            		$build[$key]["#markup"] = "Enabled";
-				elseif($key == 'false')	
-                            		$build[$key]["#markup"] = "Disabled";
-                          }
-                        }
-			if(in_array($settings->facet,$vulnerable_fields)) {
-                          foreach($build as $key => $item) {
-                                if($key == 'true')
-                                        $build[$key]["#markup"] = "Vulnerable";
-                                elseif($key == 'false')
-                                        $build[$key]["#markup"] = "Not Vulnerable";
-                          }
-                        }
+    $enabled_fields =  array("sm_field_hsts_status","ism_field_https_status","sm_field_redirect","bm_field_ssl_v2_support","bm_field_ssl_v3_support","bm_field_tls_v1_support","bm_field_tls_v1_1_support","bm_field_tls_v1_2_support","bm_field_certificate_ocsp_stapli","bm_field_http_public_hpkp","bm_field_deflate_compression","bm_field_session_secure_renegoti","bm_field_have_proper_404","sm_field_enforce_https","bm_field_dap_status","bm_field_xss_protection");
+    $vulnerable_fields = array("bm_field_openssl_ccs_injection","bm_field_openssl_heartbleed","bm_field_downgrade_attacks");
+    if (in_array($settings->facet,$enabled_fields)) {
+        foreach($build as $key => $item) {
+            if($key == 'true')
+                $build[$key]["#markup"] = "Enabled";
+            elseif($key == 'false')
+                $build[$key]["#markup"] = "Disabled";
+        }
+    }
+    if(in_array($settings->facet,$vulnerable_fields)) {
+        foreach($build as $key => $item) {
+            if($key == 'true')
+                $build[$key]["#markup"] = "Vulnerable";
+            elseif($key == 'false')
+                $build[$key]["#markup"] = "Not Vulnerable";
+        }
+    }
     if ($settings->facet == "im_field_website_tags") {
         foreach($build as $key => $item) {
             if ($item['#markup'] == 'VULNERABLE') {
-            $build[$key]["#markup"] = "Insecure Protocol";
-        }
+                $build[$key]["#markup"] = "Insecure Protocol";
+            }
         }
     }
     $fix_encode_fields = array("sm_field_certificate_issuer","sm_field_certificate_provider");
@@ -118,7 +141,9 @@ $vulnerable_fields = array("bm_field_openssl_ccs_injection","bm_field_openssl_he
             $build[$key]["#markup"] = html_entity_decode($item["#markup"], ENT_QUOTES, 'UTF-8');
         }
     }
-
+  foreach($build as $key => $item) {
+    $build[$key]["#markup"] = ucfirst($item["#markup"]);
+  }
 }
 
 /*
@@ -228,37 +253,37 @@ function dotgov_common_block_view($delta = 0)
 
         case 'govwide_tabular':
             $block['subject'] = t('Government-Wide Tabular Report');
-                // Retrieve and process data here.
-                $govwidedata['actualdata'] = dotgov_common_govwideTrendData();
-                $govwidedata['graph_title'] = "Government-Wide Tabular Report";
-                $analysis_output =  theme('govwide_reports_page', array('govwidedata' => $govwidedata));
-                $block = array(
-                    'subject' => NULL,
-                    'content' => $analysis_output,
-                );
+            // Retrieve and process data here.
+            $govwidedata['actualdata'] = dotgov_common_govwideTrendData();
+            $govwidedata['graph_title'] = "Government-Wide Tabular Report";
+            $analysis_output =  theme('govwide_reports_page', array('govwidedata' => $govwidedata));
+            $block = array(
+                'subject' => NULL,
+                'content' => $analysis_output,
+            );
             break;
 
         case 'govwide_graph_new':
             $block['subject'] = t('Government-Wide Chart New');
-                // Retrieve and process data here.
-                $govwidedata['actualdata'] = dotgov_common_govwideTrendData();
-                $govwidedata['graph_title'] = "Government-Wide Chart New";
-                $analysis_output =  theme('govwide_graphs_new_page', array('govwidedata' => $govwidedata));
-                $block = array(
-                    'subject' => NULL,
-                    'content' => $analysis_output,
-                );
+            // Retrieve and process data here.
+            $govwidedata['actualdata'] = dotgov_common_govwideTrendData();
+            $govwidedata['graph_title'] = "Government-Wide Chart New";
+            $analysis_output =  theme('govwide_graphs_new_page', array('govwidedata' => $govwidedata));
+            $block = array(
+                'subject' => NULL,
+                'content' => $analysis_output,
+            );
             break;
         case 'govwide_graph':
             $block['subject'] = t('Government-Wide Chart');
-                // Retrieve and process data here.
-                $govwidedata['actualdata'] = dotgov_common_govwideTrendData();
-                $govwidedata['graph_title'] = "Government-Wide Chart";
-                $analysis_output =  theme('govwide_graphs_page', array('govwidedata' => $govwidedata));
-                $block = array(
-                    'subject' => NULL,
-                    'content' => $analysis_output,
-                );
+            // Retrieve and process data here.
+            $govwidedata['actualdata'] = dotgov_common_govwideTrendData();
+            $govwidedata['graph_title'] = "Government-Wide Chart";
+            $analysis_output =  theme('govwide_graphs_page', array('govwidedata' => $govwidedata));
+            $block = array(
+                'subject' => NULL,
+                'content' => $analysis_output,
+            );
             break;
         case 'agencywide_accessible_datatable':
             $block['subject'] = t('Agency-Wide Accessible Data');
@@ -315,6 +340,10 @@ function dotgov_commmon_getTechStackInfo($nid){
     $output = "<div id='techstack' class='row dataset-resources'>";
     if(count($techterms) != 0) {
         foreach ($techterms as $techkey => $techval) {
+            if ($techval[ 'icon' ] == "")
+                $techval[ 'icon' ] = "default.svg";
+            if (trim($techval[ 'category' ][ 'name' ]) == "")
+                $techval[ 'category' ][ 'name' ] = "Technology";
             $output .= "<div class='col-sm-12 nopadding dataset-resources'><span id='app-button' class='app-button'>" . $techval['category']['name'] . " :&nbsp;<img alt='app-icon' class='app-icon' src='/" . drupal_get_path('module', 'dotgov_common') . "/images/icons/" . $techval['icon'] . "'>$techkey " . $techval['appversion'] . "</span></div>";
         }
     }
@@ -371,7 +400,7 @@ $cssid .tooltip-left {
     right: 128%;
 }
 </style>";
-print $dyncss;
+    print $dyncss;
 }
 
 function dotgov_common_govwideTrendData(){
@@ -389,8 +418,9 @@ function dotgov_common_govwideTrendData(){
     $avg_dnssec = round(db_query("select avg(a.field_dnssec_score_value) as avg_value from field_data_field_dnssec_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
     $avg_rc4 = round(db_query("select avg(a.field_free_of_insecr_prot_score_value) as avg_value from field_data_field_free_of_insecr_prot_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
     $avg_m15 = round(db_query("select avg(a.field_m15_13_compliance_score_value) as avg_value from field_data_field_m15_13_compliance_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_uswds = round(db_query("select avg(a.field_uswds_score_value) as avg_value from field_data_field_uswds_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
 
-    $govwidewebsite['websitenos'] = $websitenos;
+  $govwidewebsite['websitenos'] = $websitenos;
     $govwidewebsite['agencynos'] = $agencynos;
     $govwidewebsite['avg_https'] = $avg_https;
     $govwidewebsite['avg_dap'] = $avg_dap;
@@ -402,6 +432,7 @@ function dotgov_common_govwideTrendData(){
     $govwidewebsite['avg_dnssec'] = $avg_dnssec;
     $govwidewebsite['avg_rc4'] = $avg_rc4;
     $govwidewebsite['avg_m15'] = $avg_m15;
+    $govwidewebsite['avg_uswds'] = $avg_uswds;
     return $govwidewebsite;
 }
 
@@ -624,13 +655,13 @@ function dotgov_common_getAgencyComplianceData($agencyid){
     //$ag_avrg_color_cont =  round(db_query("select field_agac_color_contrast_aver_value from field_data_field_agac_color_contrast_aver a, field_data_field_web_agency_id b where a.entity_id=b.entity_id and b.field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
     //$ag_avrg_miss_image =  round(db_query("select field_agac_missing_image_avrg_value from field_data_field_agac_missing_image_avrg a, field_data_field_web_agency_id b where a.entity_id=b.entity_id and b.field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
     //$ag_avrg_html_attr =  round(db_query("select field_agac_html_attribute_avrg_value from field_data_field_agac_html_attribute_avrg a, field_data_field_web_agency_id b where a.entity_id=b.entity_id and b.field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
-$ag_avrg_color_cont =  round(db_query("select sum(c.field_accessible_group_colorcont_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_accessible_group_colorcont c  where a.type='508_scan_information' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
+    $ag_avrg_color_cont =  round(db_query("select sum(c.field_accessible_group_colorcont_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_accessible_group_colorcont c  where a.type='508_scan_information' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
     $ag_avrg_miss_image =  round(db_query("select sum(c.field_accessible_group_missingim_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_accessible_group_missingim c  where a.type='508_scan_information' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
     $ag_avrg_html_attr =  round(db_query("select sum(c.field_accessible_group_htmlattri_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_accessible_group_htmlattri c  where a.type='508_scan_information' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
     $agencydata['ag_col_contrast'] = $ag_avrg_color_cont;
     $agencydata['ag_miss_image'] = $ag_avrg_miss_image;
     $agencydata['ag_html_attrib'] = $ag_avrg_html_attr;
-	if(($ag_avrg_color_cont == '0') && ($ag_avrg_miss_image == '0') && ($ag_avrg_html_attr == '0')) {
+    if(($ag_avrg_color_cont == '0') && ($ag_avrg_miss_image == '0') && ($ag_avrg_html_attr == '0')) {
         $agencyaccess_output = "<br><span style=\"color: #ac0600;font-size: 12px;\">Sorry No Graph Data to display.</span><br>";
     }
     else{
@@ -665,6 +696,62 @@ WHERE (( (node.status = '1') AND (node.type IN  ('website')) AND (field_data_fie
 
     $agencydata['ag_mob_chart'] = $agencyaccess_output;
 
+    //Query to get Search data for an agency
+    $searchresults = db_query("select field_search_status_value,count(field_search_status_value) as complnum from node a , field_data_field_search_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='website' group by field_search_status_value", array(':agencyid' => $agencyid));
+    $agency_search_status = array();
+    foreach ($searchresults as $searchresult) {
+        if($searchresult->field_search_status_value == '1')
+            $agency_search_status['search_available'] += $searchresult->complnum;
+        if($searchresult->field_search_status_value == '0')
+            $agency_search_status['search_notavailable'] += $searchresult->complnum;
+    }
+    $agencydata['searchenginestatus'] = $agency_search_status;
+
+    $search_status_graph_output = theme('agencywide_searchstatus_page', array('agencydata' => $agency_search_status));
+    $agencydata['searchenginestatus_graph'] = $search_status_graph_output;
+
+
+    //Query to get Search Engine Name for an agency
+    $searchengines = db_query("select field_search_engine_name_value,count(field_search_engine_name_value) as complnum from node a , field_data_field_search_engine_name b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='website' group by field_search_engine_name_value", array(':agencyid' => $agencyid));
+    $search_engine_data_for_agencygraph = "";
+    $searchenginename = "";
+    $searchengine_nos = "";
+    foreach ($searchengines as $searchengine) {
+
+        if(($searchengine->field_search_engine_name_value == '') || ($searchengine->field_search_engine_name_value == NULL)) {
+            $searchenginename = "None";
+            $searchengine_nos +=  $searchengine->complnum;
+        }
+        else{
+            $searchenginename = $searchengine->field_search_engine_name_value;
+            $searchengine_nos =  $searchengine->complnum;
+          $search_engine_data[$searchenginename] = $searchengine_nos;
+
+        }
+    }
+    arsort($search_engine_data);
+    foreach($search_engine_data as $skey=>$sval){
+        $search_engine_data_for_agencygraph .= "['$skey' , $sval],";
+    }
+    $agencydata['searchenginedata'] = $search_engine_data;
+    $search_engine_graph_output = theme('agencywide_searchengines_page', array('search_engine_data_for_agencygraph' => $search_engine_data_for_agencygraph));
+    $agencydata['searchengines_graph'] = $search_engine_graph_output;
+
+
+    //Query to get Search data for an agency
+    $searchresults = db_query("select field_search_status_value,count(field_search_status_value) as complnum from node a , field_data_field_search_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='website' group by field_search_status_value", array(':agencyid' => $agencyid));
+    $agency_search_status = array();
+    foreach ($searchresults as $searchresult) {
+        if($searchresult->field_search_status_value == '1')
+            $agency_search_status['search_available'] += $searchresult->complnum;
+        if($searchresult->field_search_status_value == '0')
+            $agency_search_status['search_notavailable'] += $searchresult->complnum;
+    }
+    $agencydata['searchenginestatus'] = $agency_search_status;
+
+    $search_status_graph_output = theme('agencywide_searchstatus_page', array('agencydata' => $agency_search_status));
+    $agencydata['searchenginestatus_graph'] = $search_status_graph_output;
+
     return $agencydata;
 }
 
@@ -692,14 +779,14 @@ function dotgov_common_getChartColor($chartdata)
 function dotgov_common_getChartColordata($data,$websites)
 {
 
-        $percent = round(($data / $websites) * 100);
-        if ($percent <= 50) {
-            $chartcolor = '#ac0600';
-        } elseif ($percent > 50 and $percent <= 75) {
-            $chartcolor = '#654f00';
-        } else {
-            $chartcolor = '#29643a';
-        }
+    $percent = round(($data / $websites) * 100);
+    if ($percent <= 50) {
+        $chartcolor = '#ac0600';
+    } elseif ($percent > 50 and $percent <= 75) {
+        $chartcolor = '#654f00';
+    } else {
+        $chartcolor = '#29643a';
+    }
     if ($data != '') {
         $colordata = "<span style='color:$chartcolor;font-weight:bold;'>$data ($percent %)</span>";
     }
@@ -816,7 +903,7 @@ function dotgov_commmon_getChart($chartname,$chartdivid,$chartScore){
 
 function dotgov_common_getAllAgencyComplianceData(){
     $agencydata = array();
-    
+
     //Query to get https data
     $httpresults = db_query("select IFNULL(field_https_status_value, 0) as field_https_status_value, count(field_https_status_value) as complnum from node a , field_data_field_https_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and a.type='https_dap_scan_information' group by field_https_status_value", array());
     foreach ($httpresults as $httpresult) {
@@ -1003,8 +1090,8 @@ function dotgov_common_getAllAgencyComplianceData(){
         $agcdndata[$agcdnreslt->name] = $agcdnreslt->cnt;
     }
     $agencydata['ag_cdn'] = $agcdndata;
-    
-    //Query to get Agency Accessibility errors    
+
+    //Query to get Agency Accessibility errors
     $ag_avrg_color_cont =  round(db_query("select sum(c.field_accessible_group_colorcont_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_accessible_group_colorcont c  where a.type='508_scan_information' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id", array())->fetchField());
 
     $ag_avrg_miss_image =  round(db_query("select sum(c.field_accessible_group_missingim_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_accessible_group_missingim c  where a.type='508_scan_information' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id", array())->fetchField());
@@ -1047,5 +1134,98 @@ WHERE (( (node.status = '1') AND (node.type IN  ('website')) )))")->fetchField()
     $govwideaccess_output = theme('govwide_mobgraphs_page', array('govwidedata' => $govwide_mob));
 
     $agencydata['gov_mob_chart'] = $govwideaccess_output;
+
+    //Query to get Search Engine Name for Government wide
+    $searchengines = db_query("select field_search_engine_name_value,count(field_search_engine_name_value) as complnum from node a , field_data_field_search_engine_name b  where a.status='1' and a.nid=b.entity_id and a.type='website' group by field_search_engine_name_value");
+    $search_engine_data_for_agencygraph = "";
+    $searchenginename = "";
+    $searchengine_nos = "";
+    foreach ($searchengines as $searchengine) {
+
+        if(($searchengine->field_search_engine_name_value == '') || ($searchengine->field_search_engine_name_value == NULL)) {
+            $searchenginename = "None";
+            $searchengine_nos +=  $searchengine->complnum;
+        }
+        else{
+            $searchenginename = $searchengine->field_search_engine_name_value;
+            $searchengine_nos =  $searchengine->complnum;
+        }
+      if($searchenginename != "None")
+        $search_engine_data[$searchenginename] = $searchengine_nos;
+    }
+    arsort($search_engine_data);
+    foreach($search_engine_data as $skey=>$sval){
+        $search_engine_data_for_agencygraph .= "['$skey' , $sval],";
+    }
+    $agencydata['searchenginedata'] = $search_engine_data;
+    $search_engine_graph_output = theme('agencywide_searchengines_page', array('search_engine_data_for_agencygraph' => $search_engine_data_for_agencygraph));
+    $agencydata['searchengines_graph'] = $search_engine_graph_output;
+
+
+    //Query to get Search data for an agency
+    $searchresults = db_query("select field_search_status_value,count(field_search_status_value) as complnum from node a , field_data_field_search_status b  where a.status='1' and a.nid=b.entity_id  and a.type='website' group by field_search_status_value");
+    $agency_search_status = array();
+    foreach ($searchresults as $searchresult) {
+        if($searchresult->field_search_status_value == '1')
+            $agency_search_status['search_available'] += $searchresult->complnum;
+        if($searchresult->field_search_status_value == '0')
+            $agency_search_status['search_notavailable'] += $searchresult->complnum;
+    }
+    $agencydata['searchenginestatus'] = $agency_search_status;
+
+    $search_status_graph_output = theme('agencywide_searchstatus_page', array('agencydata' => $agency_search_status));
+    $agencydata['searchenginestatus_graph'] = $search_status_graph_output;
+
     return $agencydata;
+}
+
+/**
+ * Library function to evaluate '' or NULL values but not 0
+ * @param $nullableValue
+ *
+ * @return bool
+ */
+function isNullNotZero($nullableValue) {
+    $nullableValue = trim($nullableValue);
+    if ($nullableValue == '' || $nullableValue == NULL) {
+        return true;
+    } elseif ($nullableValue == 0) {
+        return false;
+    }
+}
+
+
+/**
+ * DB query for mobile overall score
+ * @param $nid
+ * @param int $performance_score
+ * @param int $usability_score
+ *
+ * @return null
+ */
+function get_mobile_score_information($nid, $performance_score = -1, $usability_score = -1) {
+    if(!empty($nid) && empty($performance_score)) {
+        return db_query("
+        SELECT DATE_FORMAT(FROM_UNIXTIME(r.timestamp), '%Y/%m/%d') AS scan_date,
+          p.field_mobile_performance_score_value AS performance
+        FROM node_revision r
+        JOIN field_revision_field_mobile_performance_score p ON r.vid=p.revision_id
+        WHERE r.nid = :nid
+          AND p.field_mobile_performance_score_value IS NOT NULL
+        GROUP BY scan_date
+        ORDER BY r.vid DESC, r.timestamp DESC", array(':nid' => $nid))->fetchAssoc();
+    }
+    elseif(!empty($nid) && empty($usability_score)) {
+        return db_query("
+        SELECT DATE_FORMAT(FROM_UNIXTIME(r.timestamp), '%Y/%m/%d') AS scan_date,
+          u.field_mobile_usability_score_value AS usability
+        FROM node_revision r
+        JOIN field_revision_field_mobile_usability_score u ON r.vid=u.revision_id
+        WHERE r.nid = :nid
+          AND u.field_mobile_usability_score_value IS NOT NULL
+        GROUP BY scan_date
+        ORDER BY r.vid DESC, r.timestamp DESC", array(':nid' => $nid))->fetchAssoc();
+    } else {
+        return NULL;
+    }
 }
