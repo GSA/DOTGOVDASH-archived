@@ -95,7 +95,6 @@ function runUswdsScan(){
 
 
 function updateUswdsScanInfo($webscanId){
-    runUswdsScan();
     $csv = readCSV("/tmp/results/uswds2.csv");
 
     $i =1;
