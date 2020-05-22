@@ -492,6 +492,16 @@ function dotgov_common_getAgencyComplianceData($agencyid){
 
     }
 
+    //Query to get USWDS for Agency
+    $uswdsresults = db_query("select field_uswds_score_value,count(field_uswds_score_value)  as complnum from field_data_field_uswds_score a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid group by field_uswds_score_value", array(':agencyid' => $agencyid));
+    foreach ($uswdsresults as $uswdsresult) {
+        if($uswdsresult->field_uswds_score_value == '100')
+            $agencydata['uswds_compliant'] += $uswdsresult->complnum;
+        if($uswdsresult->field_uswds_score_value == '0')
+            $agencydata['uswds_noncompliant'] += $uswdsresult->complnum;
+        $agencydata['uswds_tottracked'] += $uswdsresult->complnum;
+    }
+
     //Query to get Insecure protocol data
     $insecresults = db_query("select field_free_of_rc4_3des_and_sslv2_value,count(field_free_of_rc4_3des_and_sslv2_value)  as complnum from node a , field_data_field_free_of_rc4_3des_and_sslv2 b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='https_dap_scan_information'  group by field_free_of_rc4_3des_and_sslv2_value", array(':agencyid' => $agencyid));
     foreach ($insecresults as $insecresult) {
@@ -671,23 +681,23 @@ function dotgov_common_getAgencyComplianceData($agencyid){
 
     $agencydata['ag_access_chart'] = $agencyaccess_output;
 
-    $agency_mob['agency_mob_bad'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='49' and entity_id in (SELECT node.nid AS nid 
-FROM 
+    $agency_mob['agency_mob_bad'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='49' and entity_id in (SELECT node.nid AS nid
+FROM
 node node
 LEFT JOIN field_data_field_web_agency_id field_data_field_web_agency_id ON node.nid = field_data_field_web_agency_id.entity_id AND (field_data_field_web_agency_id.entity_type = 'node' AND field_data_field_web_agency_id.deleted = '0')
 WHERE (( (node.status = '1') AND (node.type IN  ('website')) AND (field_data_field_web_agency_id.field_web_agency_id_nid IN  (:agencyid)) )))", array(':agencyid' => $agencyid))->fetchField());
-    $agency_mob['agency_mob_avg'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='89' and  field_mobile_overall_score_value>='50' and entity_id in (SELECT node.nid AS nid 
-FROM 
+    $agency_mob['agency_mob_avg'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='89' and  field_mobile_overall_score_value>='50' and entity_id in (SELECT node.nid AS nid
+FROM
 node node
 LEFT JOIN field_data_field_web_agency_id field_data_field_web_agency_id ON node.nid = field_data_field_web_agency_id.entity_id AND (field_data_field_web_agency_id.entity_type = 'node' AND field_data_field_web_agency_id.deleted = '0')
 WHERE (( (node.status = '1') AND (node.type IN  ('website')) AND (field_data_field_web_agency_id.field_web_agency_id_nid IN  (:agencyid)) )))", array(':agencyid' => $agencyid))->fetchField());
-    $agency_mob['agency_mob_good'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='100' and  field_mobile_overall_score_value>='90' and entity_id in (SELECT node.nid AS nid 
-FROM 
+    $agency_mob['agency_mob_good'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='100' and  field_mobile_overall_score_value>='90' and entity_id in (SELECT node.nid AS nid
+FROM
 node node
 LEFT JOIN field_data_field_web_agency_id field_data_field_web_agency_id ON node.nid = field_data_field_web_agency_id.entity_id AND (field_data_field_web_agency_id.entity_type = 'node' AND field_data_field_web_agency_id.deleted = '0')
 WHERE (( (node.status = '1') AND (node.type IN  ('website')) AND (field_data_field_web_agency_id.field_web_agency_id_nid IN  (:agencyid)) )))", array(':agencyid' => $agencyid))->fetchField());
-    $agency_mob['agency_mob_null'] = round(db_query("select count(entity_id) from field_data_field_mobile_overall_score where field_mobile_overall_score_value is NULL and entity_id in (SELECT node.nid AS nid 
-FROM 
+    $agency_mob['agency_mob_null'] = round(db_query("select count(entity_id) from field_data_field_mobile_overall_score where field_mobile_overall_score_value is NULL and entity_id in (SELECT node.nid AS nid
+FROM
 node node
 LEFT JOIN field_data_field_web_agency_id field_data_field_web_agency_id ON node.nid = field_data_field_web_agency_id.entity_id AND (field_data_field_web_agency_id.entity_type = 'node' AND field_data_field_web_agency_id.deleted = '0')
 WHERE (( (node.status = '1') AND (node.type IN  ('website')) AND (field_data_field_web_agency_id.field_web_agency_id_nid IN  (:agencyid)) )))", array(':agencyid' => $agencyid))->fetchField());
@@ -952,6 +962,16 @@ function dotgov_common_getAllAgencyComplianceData(){
 
     }
 
+    //Query to get USWDS for Agency
+    $uswdsresults = db_query("select IFNULL(field_uswds_score_value, 0) as field_uswds_score_value, count(field_uswds_score_value) as complnum from field_data_field_uswds_score a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' group by field_uswds_score_value", array());
+    foreach ($uswdsresults as $uswdsresult) {
+        if($uswdsresult->field_uswds_score_value == '100')
+            $agencydata['uswds_compliant'] += $uswdsresult->complnum;
+        if($uswdsresult->field_uswds_score_value == '0')
+            $agencydata['uswds_noncompliant'] += $uswdsresult->complnum;
+        $agencydata['uswds_tottracked'] += $uswdsresult->complnum;
+    }
+
     //Query to get Insecure protocol data
     $insecresults = db_query("select IFNULL(field_free_of_rc4_3des_and_sslv2_value, 0) as field_free_of_rc4_3des_and_sslv2_value, count(field_free_of_rc4_3des_and_sslv2_value) as complnum from node a , field_data_field_free_of_rc4_3des_and_sslv2 b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and a.type='https_dap_scan_information'  group by field_free_of_rc4_3des_and_sslv2_value", array());
     foreach ($insecresults as $insecresult) {
@@ -1110,23 +1130,23 @@ function dotgov_common_getAllAgencyComplianceData(){
     $agencydata['ag_access_chart'] = $agencyaccess_output;
 
 
-    $govwide_mob['govwide_mob_bad'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='49' and entity_id in (SELECT node.nid AS nid 
-FROM 
+    $govwide_mob['govwide_mob_bad'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='49' and entity_id in (SELECT node.nid AS nid
+FROM
 node node
 LEFT JOIN field_data_field_web_agency_id field_data_field_web_agency_id ON node.nid = field_data_field_web_agency_id.entity_id AND (field_data_field_web_agency_id.entity_type = 'node' AND field_data_field_web_agency_id.deleted = '0')
 WHERE (( (node.status = '1') AND (node.type IN  ('website')) )))")->fetchField());
-    $govwide_mob['govwide_mob_avg'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='89' and  field_mobile_overall_score_value>='50' and entity_id in (SELECT node.nid AS nid 
-FROM 
+    $govwide_mob['govwide_mob_avg'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='89' and  field_mobile_overall_score_value>='50' and entity_id in (SELECT node.nid AS nid
+FROM
 node node
 LEFT JOIN field_data_field_web_agency_id field_data_field_web_agency_id ON node.nid = field_data_field_web_agency_id.entity_id AND (field_data_field_web_agency_id.entity_type = 'node' AND field_data_field_web_agency_id.deleted = '0')
 WHERE (( (node.status = '1') AND (node.type IN  ('website')) )))")->fetchField());
-    $govwide_mob['govwide_mob_good'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='100' and  field_mobile_overall_score_value>='90' and entity_id in (SELECT node.nid AS nid 
-FROM 
+    $govwide_mob['govwide_mob_good'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='100' and  field_mobile_overall_score_value>='90' and entity_id in (SELECT node.nid AS nid
+FROM
 node node
 LEFT JOIN field_data_field_web_agency_id field_data_field_web_agency_id ON node.nid = field_data_field_web_agency_id.entity_id AND (field_data_field_web_agency_id.entity_type = 'node' AND field_data_field_web_agency_id.deleted = '0')
 WHERE (( (node.status = '1') AND (node.type IN  ('website'))  )))")->fetchField());
-    $govwide_mob['govwide_mob_null'] = round(db_query("select count(entity_id) from field_data_field_mobile_overall_score where field_mobile_overall_score_value is NULL and entity_id in (SELECT node.nid AS nid 
-FROM 
+    $govwide_mob['govwide_mob_null'] = round(db_query("select count(entity_id) from field_data_field_mobile_overall_score where field_mobile_overall_score_value is NULL and entity_id in (SELECT node.nid AS nid
+FROM
 node node
 LEFT JOIN field_data_field_web_agency_id field_data_field_web_agency_id ON node.nid = field_data_field_web_agency_id.entity_id AND (field_data_field_web_agency_id.entity_type = 'node' AND field_data_field_web_agency_id.deleted = '0')
 WHERE (( (node.status = '1') AND (node.type IN  ('website')) )))")->fetchField());
