@@ -1025,7 +1025,7 @@ function trend_analysis_block_view($delta = 0) {
                 $agencyid = arg(1);
             else
                 $agencyid = getCurrentUserAgencyId();
-
+            //filtering by scan date to track the uswds score since first scan
             if(isset($agencyid) && !empty($agencyid) && is_numeric($agencyid)){
                 $query = db_query("select date as scandate,average_rc4_score as score_val from custom_agencywide_archive where agency_id=:nid  order by date asc", array(':nid' => $agencyid));
             }else{
@@ -1058,9 +1058,9 @@ function trend_analysis_block_view($delta = 0) {
                 $agencyid = getCurrentUserAgencyId();
 
             if(isset($agencyid) && !empty($agencyid) && is_numeric($agencyid)){
-                $query = db_query("select date as scandate,average_uswds_score as score_val from custom_agencywide_archive where agency_id=:nid  order by date asc", array(':nid' => $agencyid));
+                $query = db_query("select date as scandate,average_uswds_score as score_val from custom_agencywide_archive where agency_id=:nid AND date > '2020-05-15' order by date asc", array(':nid' => $agencyid));
             }else{
-                $query = db_query("select date as scandate,AVG(average_uswds_score) as score_val,SUM(average_uswds_score) as score_val_sum from custom_government_wide_archive where 1 group by date order by date asc", array());
+                $query = db_query("select date as scandate,AVG(average_uswds_score) as score_val,SUM(average_uswds_score) as score_val_sum from custom_government_wide_archive where 1 AND date > '2020-05-15' group by date order by date asc", array());
             }
             $trend_arr = array();
             foreach ($query as $result) {
