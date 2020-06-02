@@ -1458,7 +1458,6 @@ Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner comp
                                                         </tr>
                                                     </table>
                                                     <div class="col-xs-12 clearfix">
-                                                        <p><span style="font-size: 10px;font-color:blue;">*</span> : USWDS information is based on data collected from <span style="font-color:blue"></span><a href="https://pulse.cio.gov/analytics/agencies" target="_new">pulse.cio.gov</a></span></p>
                                                         <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span> </div>
                                                 </div>
                                                 <div class="col-xs-12 nopadding clearfix"> <?php
