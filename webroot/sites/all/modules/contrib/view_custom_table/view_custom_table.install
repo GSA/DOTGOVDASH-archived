@@ -1,0 +1,133 @@
+<?php
+
+/**
+ * @file
+ * Installation functions for the View Custom Table module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function view_custom_table_schema() {
+  $schema['custom_table_view_data'] = array(
+    'description' => 'Keep the records of custom tables added in views.',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Primary id for the table.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'table_name' => array(
+        'description' => 'Table name which needs to add to views.',
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'description' => array(
+        'description' => 'Table description for a quick idea of, what this table for.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'column_relations' => array(
+        'description' => 'Custom table relation with drupal core entities.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'created_by' => array(
+        'description' => 'Relation to the user who has created this entry.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+    ),
+    'indexes' => array(
+      'table_name' => array('table_name'),
+      'description' => array('description'),
+    ),
+    'primary key' => array('id'),
+  );
+
+  return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function view_custom_table_uninstall() {
+  // Remove views created from custom tables.
+  if (db_table_exists('custom_table_view_data')) {
+    $query = db_select('custom_table_view_data', 'ctvd')
+      ->fields('ctvd', array('table_name'));
+    $custom_tables = $query->execute()->fetchCol();
+    if (!empty($custom_tables)) {
+      $query = db_select('views_view', 'v')
+        ->fields('v', array('name'))
+        ->condition('base_table', $custom_tables, 'IN');
+      $custom_table_view = $query->execute()->fetchCol();
+      if (!empty($custom_table_view)) {
+        foreach ($custom_table_view as $view_name) {
+          $view = views_get_view($view_name);
+          if (is_object($view)) {
+            views_delete_view($view);
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_disable().
+ */
+function view_custom_table_disable() {
+  // Disable views created from custom tables.
+  if (db_table_exists('custom_table_view_data')) {
+    $query = db_select('custom_table_view_data', 'ctvd')
+      ->fields('ctvd', array('table_name'));
+    $custom_tables = $query->execute()->fetchCol();
+    if (!empty($custom_tables)) {
+      $query = db_select('views_view', 'v')
+        ->fields('v', array('name'))
+        ->condition('base_table', $custom_tables, 'IN');
+      $custom_table_view = $query->execute()->fetchCol();
+      if (!empty($custom_table_view)) {
+        foreach ($custom_table_view as $view_name) {
+          $status = variable_get('views_defaults', array());
+          $status[$view_name] = TRUE;
+          variable_set('views_defaults', $status);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_enable().
+ */
+function view_custom_table_enable() {
+  // Enable views created from custom tables.
+  if (db_table_exists('custom_table_view_data')) {
+    $query = db_select('custom_table_view_data', 'ctvd')
+      ->fields('ctvd', array('table_name'));
+    $custom_tables = $query->execute()->fetchCol();
+    if (!empty($custom_tables)) {
+      $query = db_select('views_view', 'v')
+        ->fields('v', array('name'))
+        ->condition('base_table', $custom_tables, 'IN');
+      $custom_table_view = $query->execute()->fetchCol();
+      if (!empty($custom_table_view)) {
+        foreach ($custom_table_view as $view_name) {
+          $status = variable_get('views_defaults', array());
+          $status[$view_name] = FALSE;
+          variable_set('views_defaults', $status);
+        }
+      }
+    }
+  }
+}

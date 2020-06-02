@@ -1,0 +1,310 @@
+<?php
+
+/**
+ * @file
+ * view_custom_table.module
+ */
+
+/**
+ * Implements hook_help().
+ */
+function view_custom_table_help($path, $arg) {
+  switch ($path) {
+
+    case 'admin/help#view_custom_table':
+      return '<h3>' . t('About') . '</h3><p>' . t('Views Custom Table provide you interface to add your custom table data to views. as we know views is a very strong and powerfull pulgin to format data in different displys. Views Custom Table module add your data to views so you can use all wonderfull fetures for the views for custom table data. you can add as much as custom table you want in syatem. you can find link to add them in system and manage or view which are already added in the system on <a href="@views_custom_table">Views Custom Table</a> page.', array(
+        '@views_custom_table' => url('admin/structure/views/custom_table'),
+      )) . '</p>' . '<p>' . t('It is very common that your custom table has the reference of a drupal entity, or relation with the drupal entity like "Node", "Taxonomy", "User", etc. Views Custom Table module provides you facility to add a relationship between custom table and drupal entity, to add relationship you must have an integer type column in your custom table, which refere main id of the entity, for example if your table has relation with the "Node" then it must have a column which refere to "Nid".') . '</p>';
+  }
+}
+
+/**
+ * Implements hook_permission().
+ */
+function view_custom_table_permission() {
+  return array(
+    'add custom table in views' => array(
+      'title' => t('Add custom table in views'),
+      'description' => t('Add custom table of database in views. So views can use it.'),
+    ),
+    'administer all custom table in views' => array(
+      'title' => t('Administer all custom table in views'),
+      'description' => t('View, edit, delete any custom tables for views.'),
+    ),
+    'administer own custom table in views' => array(
+      'title' => t('Administer own custom table in views'),
+      'description' => t('View, edit, delete own custom tables for views.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function view_custom_table_menu() {
+  $items['admin/structure/views/custom_table'] = array(
+    'title' => 'View Custom Table',
+    'page callback' => 'view_custom_table_available_custom_tables_for_views',
+    'access callback' => 'view_custom_table_administer_callback',
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'view_custom_table.admin.inc',
+  );
+  $items['admin/structure/views/custom_table/all'] = array(
+    'title' => 'All Custom Table',
+    'page callback' => 'view_custom_table_all_available_custom_tables_for_views',
+    'access arguments' => array('administer all custom table in views'),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'view_custom_table.admin.inc',
+  );
+  $items['admin/structure/views/custom_table/own'] = array(
+    'title' => 'My Custom Table',
+    'access callback' => 'view_custom_table_administer_callback',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'file' => 'view_custom_table.admin.inc',
+  );
+  $items['admin/structure/views/custom_table/add'] = array(
+    'title' => 'Add Custom Table',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('view_custom_table_add_custom_table_to_view_form'),
+    'access arguments' => array('add custom table in views'),
+    'type' => MENU_LOCAL_ACTION,
+    'file' => 'view_custom_table.admin.inc',
+  );
+  $items['admin/structure/views/custom_table/%/edit'] = array(
+    'title' => 'Edit Custom Table',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('view_custom_table_edit_custom_table_form', 4),
+    'access callback' => 'view_custom_table_administer_callback',
+    'type' => MENU_CALLBACK,
+    'file' => 'view_custom_table.admin.inc',
+  );
+  $items['admin/structure/views/custom_table/%/relations'] = array(
+    'title' => 'Edit Custom Table',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('view_custom_table_custom_table_update_relations_form', 4),
+    'access callback' => 'view_custom_table_administer_callback',
+    'type' => MENU_CALLBACK,
+    'file' => 'view_custom_table.admin.inc',
+  );
+  $items['admin/structure/views/custom_table/%/views'] = array(
+    'title' => 'Edit Custom Table',
+    'page callback' => 'view_custom_table_custom_tables_views',
+    'page arguments' => array(4),
+    'access callback' => 'view_custom_table_administer_callback',
+    'type' => MENU_CALLBACK,
+    'file' => 'view_custom_table.admin.inc',
+  );
+  $items['admin/structure/views/custom_table/%/delete'] = array(
+    'title' => 'Delete Custom Table',
+    'page callback' => 'view_custom_table_delete_custom_table_to_view_callback',
+    'page arguments' => array(4),
+    'access callback' => 'view_custom_table_administer_callback',
+    'type' => MENU_CALLBACK,
+    'file' => 'view_custom_table.admin.inc',
+  );
+  return $items;
+}
+
+/**
+ * Implements administer_custom_table_views_callback().
+ */
+function view_custom_table_administer_callback($account = NULL) {
+  if ($account == NULL) {
+    global $user;
+    $account = $user;
+  }
+  if (user_access('administer all custom table in views', $account) || user_access('administer own custom table in views', $account)) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/**
+ * Implements hook_views_data().
+ */
+function view_custom_table_views_data() {
+  $query = db_select('custom_table_view_data', 'ctvd')
+    ->fields('ctvd', array('table_name', 'column_relations'));
+  $all_custom_tables = $query->execute()->fetchAll();
+  // My Sql Datatypes.
+  $int_types = array(
+    'tinyint',
+    'smallint',
+    'mediumint',
+    'int',
+    'bigint',
+    'decimal',
+    'float',
+    'double',
+    'bit',
+  );
+  $text_types = array(
+    'varchar',
+    'char',
+    'tinytext',
+    'text',
+    'mediumtext',
+    'longtext',
+    'binary',
+    'varbinary',
+    'tinyblob',
+    'mediumblob',
+    'blob',
+    'longblob',
+    'enum',
+    'set',
+  );
+  $time_type = array(
+    'date',
+    'datetime',
+    'timestamp',
+    'time',
+    'year',
+  );
+
+  if (!empty($all_custom_tables)) {
+    foreach ($all_custom_tables as $custom_table) {
+      $table_relations = unserialize($custom_table->column_relations);
+      $table_display_name = ucfirst($custom_table->table_name);
+      $table_display_name = str_replace('_', ' ', $table_display_name);
+
+      $data[$custom_table->table_name]['table']['group'] = t('Custom Table Views');
+
+      $query = format_string('DESCRIBE { @table_name }', array('@table_name' => $custom_table->table_name));
+      $table = db_query($query);
+      foreach ($table as $column) {
+        $column_display_name = ucfirst($column->Field);
+        $column_display_name = str_replace('_', ' ', $column_display_name);
+
+        if (strpos($column->Type, '(')) {
+          $column_type_values = explode('(', $column->Type);
+          $column_type = $column_type_values[0];
+        }
+        else {
+          $column_type = $column->Type;
+        }
+
+        if ($column->Key == 'PRI') {
+          $data[$custom_table->table_name]['table']['base'] = array(
+            'field' => $column->Field,
+            'title' => t('@table data', array('@table' => $table_display_name)),
+            'help' => t('Data of @table.', array('@table' => $table_display_name)),
+            'weight' => 10,
+          );
+        }
+
+        if (in_array($column_type, $int_types)) {
+          $data[$custom_table->table_name][$column->Field] = array(
+            'title' => t('@column_name', array('@column_name' => $column_display_name)),
+            'help' => t('@column_name data form @table.', array('@column_name' => $column_display_name, '@table' => $table_display_name)),
+            'field' => array(
+              'handler' => 'views_handler_field_numeric',
+              'click sortable' => TRUE,
+            ),
+            'sort' => array(
+              'handler' => 'views_handler_sort',
+            ),
+            'filter' => array(
+              'handler' => 'views_handler_filter_numeric',
+            ),
+            'argument' => array(
+              'handler' => 'views_handler_argument_numeric',
+            ),
+          );
+        }
+
+        if (in_array($column_type, $text_types)) {
+          $data[$custom_table->table_name][$column->Field] = array(
+            'title' => t('@column_name', array('@column_name' => $column_display_name)),
+            'help' => t('@column_name data form @table.', array('@column_name' => $column_display_name, '@table' => $table_display_name)),
+            'field' => array(
+              'handler' => 'views_handler_field',
+              'click sortable' => TRUE,
+            ),
+            'sort' => array(
+              'handler' => 'views_handler_sort',
+            ),
+            'filter' => array(
+              'handler' => 'views_handler_filter_string',
+            ),
+            'argument' => array(
+              'handler' => 'views_handler_argument_string',
+            ),
+          );
+        }
+        if (in_array($column_type, $time_type)) {
+          $data[$custom_table->table_name][$column->Field] = array(
+            'title' => t('@column_name', array('@column_name' => $column_display_name)),
+            'help' => t('@column_name data form @table.', array('@column_name' => $column_display_name, '@table' => $table_display_name)),
+            'field' => array(
+              'handler' => 'view_custom_table_handler_field_date_time',
+              'click sortable' => TRUE,
+            ),
+            'sort' => array(
+              'handler' => 'views_handler_sort_date',
+            ),
+            'filter' => array(
+              'handler' => 'view_custom_table_handler_filter_date',
+            ),
+            'argument' => array(
+              'handler' => 'views_handler_argument_date',
+            ),
+          );
+        }
+        if (!empty($table_relations)) {
+          if (array_key_exists($column->Field, $table_relations)) {
+            $entity_info = entity_get_info($table_relations[$column->Field]);
+            if (isset($entity_info['base table']) && isset($entity_info['entity keys']) && isset($entity_info['entity keys']['id'])) {
+              $data[$custom_table->table_name][$column->Field]['relationship'] = array(
+                'base' => $entity_info['base table'],
+              // The name of the field on the joined table.
+                'base field' => $entity_info['entity keys']['id'],
+                'handler' => 'views_handler_relationship',
+                'label' => t('@column_name', array('@column_name' => $column_display_name)),
+                'title' => t('@column_name', array('@column_name' => $column_display_name)),
+                'help' => t('@entity - @column_name relationship', array(
+                  '@column_name' => $column_display_name,
+                  '@entity' => $entity_info['label'],
+                )),
+              );
+            }
+          }
+        }
+
+      }
+    }
+    return $data;
+  }
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function view_custom_table_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'view_custom_table') . '/views',
+  );
+}
+
+/**
+ * Function to load table information.
+ */
+function view_custom_table_load_table($table_id = NULL) {
+  $query = db_select('custom_table_view_data', 'ctvd')
+    ->fields('ctvd')
+    ->condition('id', $table_id);
+  $table_info = $query->execute()->fetchObject();
+  return $table_info;
+}
+
+/**
+ * Function to load all views created by a spesific table.
+ */
+function view_custom_table_load_custom_table_views($table_name = NULL) {
+  $query = db_select('views_view', 'v')
+    ->fields('v', array('name', 'human_name', 'vid', 'description'))
+    ->condition('base_table', $table_name);
+  $views_info = $query->execute()->fetchAll();
+  return $views_info;
+}

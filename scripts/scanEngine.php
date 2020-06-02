@@ -24,6 +24,9 @@ exec("drush sql-query \"drop table tmpdomains;\"");
 //Start the scan and get the scan id.
 writeToLogs("Starting Scan",$logFile);
 $scanId = startScan();
+//Start USWDS Scan
+writeToLogs("Collect USWDS Data through a full scan",$logFile);
+updateUswdsScanInfo($webscanId);
 //Below are the full scans run for all websites at once. DAP and HTTPS info are collected from pulse site at once for perforamnce optimization
 writeToLogs("Collecting HTTPS and DAP data from Pulse",$logFile);
 //Get the latest reports from pulse accessibility to local.
