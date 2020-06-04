@@ -84,6 +84,7 @@
             <th>Mobile Usability Score</th>
             <th>Site Speed Score</th>
             <th>SSL Score</th>
+            <th>USWDS Score</th>
         </tr>
     <?php endif; ?>
     </thead>
@@ -98,13 +99,13 @@
             } else{
                 print "<td>".$val['mobovr']."</td>";
             }
-        
+
             if(!isset($val['mobperf']) || ($val['mobperf'] == '') || ($val['mobperf'] == NULL)){
                 print "<td>Not Available</td>";
             } else{
                 print "<td>".$val['mobperf']."</td>";
             }
-        
+
             if(!isset($val['mobusab']) || ($val['mobusab'] == '') || ($val['mobusab'] == NULL)){
                 print "<td>Not Available</td>";
             } else{
@@ -118,70 +119,77 @@
             else{
                 print "<td>".$val['dap']."</td>";
             }
-        
+
             if(!isset($val['dnssec']) || ($val['dnssec'] == '') || ($val['dnssec'] == NULL)){
             print "<td>Not Available</td>";
             }
             else{
             print "<td>".$val['dnssec']."</td>";
             }
-        
+
             if(!isset($val['insec']) || ($val['insec'] == '') || ($val['insec'] == NULL)){
             print "<td>Not Available</td>";
             }
             else{
             print "<td>".$val['insec']."</td>";
             }
-        
+
             if(!isset($val['https']) || ($val['https'] == '') || ($val['https'] == NULL)){
             print "<td>Not Available</td>";
             }
             else{
             print "<td>".$val['https']."</td>";
             }
-        
+
             if(!isset($val['ipv6']) || ($val['ipv6'] == '') || ($val['ipv6'] == NULL)){
             print "<td>Not Available</td>";
             }
             else{
             print "<td>".$val['ipv6']."</td>";
             }
-        
+
             if(!isset($val['m15']) || ($val['m15'] == '') || ($val['m15'] == NULL)){
             print "<td>Not Available</td>";
             }
             else{
             print "<td>".$val['m15']."</td>";
             }
-        
+
+            if(!isset($val['uswds']) || ($val['uswds'] == '') || ($val['uswds'] == NULL)){
+              print "<td>Not Available</td>";
+            }
+            else{
+              print "<td>".$val['uswds']."</td>";
+            }
+
             if(!isset($val['mobovr']) || ($val['mobovr'] == '') || ($val['mobovr'] == NULL)){
             print "<td>Not Available</td>";
             }
             else{
             print "<td>".$val['mobovr']."</td>";
             }
-        
+
             if(!isset($val['mobperf']) || ($val['mobperf'] == '') || ($val['mobperf'] == NULL)){
             print "<td>Not Available</td>";
             }
             else{
             print "<td>".$val['mobperf']."</td>";
             }
-        
+
             if(!isset($val['mobusab']) || ($val['mobusab'] == '') || ($val['mobusab'] == NULL)){
             print "<td>Not Available</td>";
             }
             else{
             print "<td>".$val['mobusab']."</td>";
             }
-        
+
             if(!isset($val['sitespeed']) || ($val['sitespeed'] == '') || ($val['sitespeed'] == NULL)){
             print "<td>Not Available</td>";
             }
             else{
             print "<td>".$val['sitespeed']."</td>";
             }
-        
+
             if(!isset($val['ssl']) || ($val['ssl'] == '') || ($val['ssl'] == NULL)){
             print "<td>Not Available</td>";
             }
