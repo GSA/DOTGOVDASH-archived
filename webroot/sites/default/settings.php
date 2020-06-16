@@ -245,23 +245,7 @@
  * @endcode
  */
 $databases = array (
-<<<<<<< HEAD
-  'default' => 
-  array (
-    'default' => 
-    array (
-      'database' => 'dotgovuat',
-      'username' => 'dotgovuser',
-      'password' => 'Web*Portdtu!UAT2017',
-      'host' => 'localhost',
-      'port' => '',
-      'driver' => 'mysql',
-      'prefix' => '',
-	'pdo' => array(PDO::MYSQL_ATTR_LOCAL_INFILE => 1 ),	
-    ),
-  ),
-=======
-    'default' =>
+'default' =>
         array (
             'default' =>
                 array (
@@ -275,9 +259,9 @@ $databases = array (
                     'prefix' => '',
                     'pdo' => array(PDO::MYSQL_ATTR_LOCAL_INFILE => 1 ),
                 ),
-        ),
->>>>>>> devel
+        )
 );
+
 /**
  * Access control for update.php script.
  *
@@ -308,7 +292,7 @@ $update_free_access = FALSE;
  *   $drupal_hash_salt = file_get_contents('/home/example/salt.txt');
  *
  */
-$drupal_hash_salt = 'L_3VXJCvkZxVbsKIyK67IYl9UtXHMJcYImAZMDvBYvo';
+$drupal_hash_salt = '-D4yzJOmcnG53IPOl70gYv51vsEZwK-eLZQN34kFDzM';
 
 /**
  * Base URL (optional).
@@ -660,12 +644,5 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
  * @see drupal_clean_css_identifier()
  */
 # $conf['allow_css_double_underscores'] = TRUE;
-<<<<<<< HEAD
-$conf['mail_system'] = array(
-  'default-system' => 'DevelMailLog',
-);
-#$conf['theme_debug']=TRUE;
-=======
-#$conf['theme_debug'] = TRUE;
->>>>>>> devel
-
+$conf['cache_backends'][] = 'sites/all/modules/contrib/authcache/authcache.cache.inc';
+$conf['cache_backends'][] = 'sites/all/modules/contrib/authcache/modules/authcache_builtin/authcache_builtin.cache.inc';
