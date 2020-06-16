@@ -78,17 +78,12 @@
  *
  * @ingroup templates
  */
-<<<<<<< HEAD
-?>
-<article id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
-=======
 if($node->type != 'page')
 $custom_class = 'node-style';
 else
 $custom_class = '';
 ?>
 <article id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> <?php print $node->type.' '.$custom_class;?> clearfix"<?php print $attributes; ?>>
->>>>>>> devel
   <?php if ((!$page && !empty($title)) || !empty($title_prefix) || !empty($title_suffix) || $display_submitted): ?>
   <header>
     <?php print render($title_prefix); ?>
@@ -109,10 +104,7 @@ $custom_class = '';
     hide($content['comments']);
     hide($content['links']);
     hide($content['field_tags']);
-<<<<<<< HEAD
-=======
 	hide($content['field_accessibility_raw_scan']);
->>>>>>> devel
     print render($content);
   ?>
   <?php
@@ -127,8 +119,6 @@ $custom_class = '';
   </footer>
   <?php endif; ?>
   <?php print render($content['comments']); ?>
-<<<<<<< HEAD
-=======
   <?php  if($node->type == '508_scan_information'){
 	/*Page tpl code copy paste*/
 		//print_r($node->field_accessibility_raw_scan);
@@ -179,5 +169,4 @@ $custom_class = '';
 }
   }
 				?>
->>>>>>> devel
 </article>
