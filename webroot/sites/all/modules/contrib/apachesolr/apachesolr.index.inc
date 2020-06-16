@@ -549,13 +549,8 @@ function apachesolr_index_get_entities_to_index($env_id, $entity_type, $limit) {
  *   TRUE for success, FALSE if an error occured.
  */
 function apachesolr_index_delete_index($env_id, $entity_type = NULL, $bundle = NULL) {
-<<<<<<< HEAD
-  if (apachesolr_environment_variable_get($env_id, 'apachesolr_read_only', APACHESOLR_READ_WRITE) == APACHESOLR_READ_ONLY) {
-    watchdog('Apache Solr', 'Environment @env_id: Trying to update the Solr index while the environment is read-only in function %function', array('%function' => __FUNCTION__, '@env_id' => $env_id), WATCHDOG_WARNING);
-=======
   if (apachesolr_index_env_is_readonly($env_id)) {
     apachesolr_index_report_readonly($env_id);
->>>>>>> devel
     return FALSE;
   }
 
@@ -669,13 +664,8 @@ function _apachesolr_index_get_next_set_query($env_id, $entity_type) {
  * @return true on success, false on failure.
  */
 function apachesolr_index_delete_bundles($env_id, $entity_type, array $excluded_bundles) {
-<<<<<<< HEAD
-  if (apachesolr_environment_variable_get($env_id, 'apachesolr_read_only', APACHESOLR_READ_WRITE) == APACHESOLR_READ_ONLY) {
-    watchdog('Apache Solr', 'Environment @env_id: Trying to update the Solr index while the environment is read-only in function %function', array('%function' => __FUNCTION__, '@env_id' => $env_id), WATCHDOG_WARNING);
-=======
   if (apachesolr_index_env_is_readonly($env_id)) {
     apachesolr_index_report_readonly($env_id);
->>>>>>> devel
     return FALSE;
   }
 
@@ -726,14 +716,9 @@ function apachesolr_index_delete_entity_from_index($env_id, $entity_type, $entit
   if (!empty($failed[$env_id])) {
     return FALSE;
   }
-<<<<<<< HEAD
-  if (apachesolr_environment_variable_get($env_id, 'apachesolr_read_only', APACHESOLR_READ_WRITE) == APACHESOLR_READ_ONLY) {
-    watchdog('Apache Solr', 'Environment @env_id: Trying to update the Solr index while the environment is read-only in function %function', array('%function' => __FUNCTION__, '@env_id' => $env_id), WATCHDOG_WARNING);
-=======
 
   if (apachesolr_index_env_is_readonly($env_id)) {
     apachesolr_index_report_readonly($env_id);
->>>>>>> devel
     return FALSE;
   }
 
@@ -752,13 +737,8 @@ function apachesolr_index_delete_entity_from_index($env_id, $entity_type, $entit
   }
   catch (Exception $e) {
     apachesolr_log_exception($env_id, $e);
-<<<<<<< HEAD
-    // Don't keep trying queries if they are failing.
-    $failed = TRUE;
-=======
     // Don't keep trying queries if they are failing for this environment.
     $failed[$env_id] = TRUE;
->>>>>>> devel
     return FALSE;
   }
 }
@@ -1236,7 +1216,6 @@ function apachesolr_fields_default_indexing_callback($entity, $field_name, $inde
       $fields[] = array(
         'key' => $index_key,
         'value' => $function($values[$i]['value']),
-        'multiple' => $field_info['multiple'],
       );
     }
     // Also store the first value of the field in a singular index for multi value fields
@@ -1247,7 +1226,6 @@ function apachesolr_fields_default_indexing_callback($entity, $field_name, $inde
       $fields[] = array(
         'key' => $single_key,
         'value' => $function($values[0]['value']),
-        'multiple' => FALSE,
       );
     }
   }
@@ -1495,13 +1473,8 @@ function apachesolr_index_nodeapi_mass_update(array $nodes, $table = NULL) {
   }
 
   $env_id = apachesolr_default_environment();
-<<<<<<< HEAD
-  if (apachesolr_environment_variable_get($env_id, 'apachesolr_read_only', APACHESOLR_READ_WRITE) == APACHESOLR_READ_ONLY) {
-    watchdog('Apache Solr', 'Environment @env_id: Trying to update the Solr index while the environment is read-only in function %function', array('%function' => __FUNCTION__, '@env_id' => $env_id), WATCHDOG_WARNING);
-=======
   if (apachesolr_index_env_is_readonly($env_id)) {
     apachesolr_index_report_readonly($env_id);
->>>>>>> devel
     return FALSE;
   }
 
@@ -1559,13 +1532,8 @@ function apachesolr_index_nodeapi_mass_delete(array $nodes, $table = NULL) {
   }
 
   $env_id = apachesolr_default_environment();
-<<<<<<< HEAD
-  if (apachesolr_environment_variable_get($env_id, 'apachesolr_read_only', APACHESOLR_READ_WRITE) == APACHESOLR_READ_ONLY) {
-    watchdog('Apache Solr', 'Environment @env_id: Trying to update the Solr index while the environment %env_id is read-only in function %function', array('%function' => __FUNCTION__, '@env_id' => $env_id), WATCHDOG_WARNING);
-=======
   if (apachesolr_index_env_is_readonly($env_id)) {
     apachesolr_index_report_readonly($env_id);
->>>>>>> devel
     return FALSE;
   }
 

@@ -199,11 +199,7 @@
 					$color_cont_count=count($json['Color Contrast - Initial Findings']);
 					$missing_image_count=count($json['Missing Image Descriptions']);
 					if ($html_attr_count > 0){
-<<<<<<< HEAD
-						print '<div class="category"><h2>HTML Attribute - Initial Findings&nbsp;('.$html_attr_count.')</h2>';
-=======
 						print '<div class="category"><h2>HTML Attributes - Initial Findings&nbsp;('.$html_attr_count.')</h2>';
->>>>>>> devel
 						foreach($json['HTML Attribute - Initial Findings'] as $item) {
 							print "<h4>".$item['code']."</h4>";
 							print "<strong>Selector:&nbsp;</strong>".$item['selector']."<br/>";

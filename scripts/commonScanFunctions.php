@@ -594,33 +594,30 @@ function getMobileApiDataPagespeedV5($domain){
     $http_domain = "http://".$domain;
     $https_domain = "https://".$domain;
     $googleApiKey = "AIzaSyDXNreglPI5GTgZRi2Le71DZUGQe2o77h4";
-    if(!$googMobileFriendlyApiData = mobileFriendlyApidata("$http_domain","$googleApiKey")) {
-        $error = error_get_last();
-        writeToLogs("API request failed to $http_domain . Error was: " . $error['message'],$logFile);
-    }
-    else{
+    $googMobileFriendlyApiData = mobileFriendlyApidataNewAPI($https_domain,$googleApiKey);
         //$mobileAPIdataArr['mobFriendlyFile'] = "sites/default/files/mobilefriendly_reports/" . $domain . ".json";
         //Get Json data and enter to a file
         //file_put_contents($mobileAPIdataArr['mobFriendlyFile'], $googMobileFriendlyApiData);
-        $mobFriendlyFile = file_save_data($googMobileFriendlyApiData,file_default_scheme().'://mobilefriendly_reports/'.$domain.'.json', FILE_EXISTS_REPLACE);
+        $mobFriendlyFile = file_save_data($googMobileFriendlyApiData['returnstack'],file_default_scheme().'://mobilefriendly_reports/'.$domain.'.json', FILE_EXISTS_REPLACE);
         $mobileAPIdataArr['mobFriendlyFile'] = array('fid' => $mobFriendlyFile->fid,'display' => 1, 'description' => '');
-        $jsonMFarr = json_decode($googMobileFriendlyApiData, true);
-        if(isset($jsonMFarr['error']['errors'])){
-            $mobileAPIdataArr['mobFriendlyErrorCode'] = $jsonMFarr['error']['code'];
-            $mobileAPIdataArr['mobFriendlyErrorMessage'] = $jsonMFarr['error']['errors'][0]['message'];
+//        $jsonMFarr = json_decode($googMobileFriendlyApiData, true);
+//        if(isset($jsonMFarr['error']['errors'])){
+        if(stripos($googMobileFriendlyApiData['returnstack'],"<title>Error") !== false){
+            $mobileAPIdataArr['mobFriendlyErrorCode'] = '502';
+            $mobileAPIdataArr['mobFriendlyErrorMessage'] = $googMobileFriendlyApiData['returnstack'];
         }
 
-        $mobileAPIdataArr['mobFriendlyScore'] = $jsonMFarr['ruleGroups']['USABILITY']['score'];
-        $mobileAPIdataArr['mobFriendlyResult'] = $jsonMFarr['ruleGroups']['USABILITY']['pass'];
-        $mobSnapshotData = str_replace('_', '/', $jsonMFarr['screenshot']['data']);
-        $mobSnapshotData = str_replace('-', '+', $mobSnapshotData);
-        $mobSnapshotData = base64_decode($mobSnapshotData);
-        $mobileAPIdataArr['mobSnapshotData'] = $mobSnapshotData;
+        $mobileAPIdataArr['mobFriendlyScore'] = $googMobileFriendlyApiData['score'];
+        $mobileAPIdataArr['mobFriendlyResult'] =$googMobileFriendlyApiData['stat'];
+//        $mobSnapshotData = str_replace('_', '/', $googMobileFriendlyApiData['image']);
+//        $mobSnapshotData = str_replace('-', '+', $mobSnapshotData);
+//        $mobSnapshotData = base64_decode($googMobileFriendlyApiData['image']);
+        $mobileAPIdataArr['mobSnapshotData'] = base64_decode($googMobileFriendlyApiData['image']);
 
-        $snapshotfile = file_save_data($mobSnapshotData,file_default_scheme().'://mobile_snapshots/'.$domain.'.jpg', FILE_EXISTS_REPLACE);
+        $snapshotfile = file_save_data($mobileAPIdataArr['mobSnapshotData'],file_default_scheme().'://mobile_snapshots/'.$domain.'.png', FILE_EXISTS_REPLACE);
         $mobileAPIdataArr['mobSnapshotFile'] = array('fid' => $snapshotfile->fid,'display' => 1, 'description' => '');
         //file_put_contents($mobileAPIdataArr['mobSnapshotFile'], $mobSnapshotData);
-    }
+
     //Call to Google Inights Speed API
     //$googMobilePerformApi = "https://www.googleapis.com/pagespeedonline/v2/runPagespeed?screenshot=true&key=AIzaSyDXNreglPI5GTgZRi2Le71DZUGQe2o77h4&strategy=mobile&url=".$domain."";
     //if(!$googMobilePerformApiData = file_get_contents("$googMobilePerformApi")) {
@@ -699,6 +696,41 @@ function mobileFriendlyApidata($url, $apiKey)
     curl_close($curl);
 
     return $resp;
+}
+
+function mobileFriendlyApidataNewAPI($data, $apiKey){
+    $url="https://searchconsole.googleapis.com/v1/urlTestingTools/mobileFriendlyTest:run?key=".$apiKey;
+    $mobret = array();
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    $payload = json_encode( array( "url"=> $data , "requestScreenshot"=> "true") );
+    curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $api_content = curl_exec ($ch);
+    curl_close ($ch);
+
+    $api_result = json_decode($api_content);
+
+    if($api_content) {
+        if (trim($api_result->mobileFriendliness) == "MOBILE_FRIENDLY") {
+            $mobileFriendlyScore = "100";
+            $mobileFriendlyPass = "1";
+            $mobileImage = $api_result->screenshot->data;
+        } else {
+            $mobileFriendlyScore = "0";
+            $mobileFriendlyPass = "0";
+            $mobileImage = "";
+        }
+        $mobret['stat'] = $mobileFriendlyPass;
+        $mobret['score'] = $mobileFriendlyScore;
+        $mobret['image'] = $mobileImage;
+        $mobret['returnstack'] = $api_content;
+        return $mobret;
+    }else{
+        return $api_content;
+    }
 }
 
 /*
