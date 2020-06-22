@@ -90,81 +90,106 @@ function startScan(){
 * Run USWDS Scan
 */
 function runUswdsScan(){
-    exec("../tools/domain-scan/scan /tmp/current-federal.csv --scan=uswds2 --workers=50 --output=/tmp/");
+    //exec("../tools/domain-scan/scan /tmp/current-federal.csv --scan=uswds2 --workers=50 --output=/tmp/");
+    exec("wget -O /tmp/results/uswds2.csv \"https://api.gsa.gov/technology/site-scanner/v1/scans/uswds2/csv/?domaintype=Federal%20Agency%20-%20Executive&api_key=6i0A3HhMw1FAmhXokiEWrpjfWqGztEtaodHxGFfj\"");
 }
 
 
-function updateUswdsScanInfo($webscanId){
+function updateUswdsScanInfo(){
     $csv = readCSV("/tmp/results/uswds2.csv");
 
     $i =1;
     $lineresult = "";
-    foreach($csv as $csval){
+    foreach($csv as $csval) {
         $hostname = "$csval[0]";
-        $scan_stat_code = "$csval[3]";
+        $scan_stat_code = "$csval[13]";
         $custom_score = "$csval[15]";
-        $uswds_version = "$csval[13]";
-        $uswds_detected = "$csval[4]";
-        $usa_detected = "$csval[3]";
-        if($custom_score != "0"){
+        $uswds_version = "$csval[20]";
+        $uswds_detected = "$csval[18]";
+        $usa_detected = "$csval[17]";
+        $api_url = "$csval[5]";
+        $api_update_date = "$csval[6]";
+        $uswds_flag_detected = "$csval[8]";
+        $uswds_flagincss_detected = "$csval[9]";
+        $uswds_mwfont_detected = "$csval[10]";
+        $uswds_psfont_detected = "$csval[11]";
+        $uswds_ssfont_detected = "$csval[12]";
+        $uswds_tables = "$csval[14]";
+        $usa_classes_detected = "$csval[16]";
+        $uswds_incss_detected = "$csval[19]";
+
+        if ($custom_score != "0") {
             $uswds_status = "1";
             $uswds_score = "100";
-        }
-        else{
+        } else {
             $uswds_status = "0";
             $uswds_score = "0";
         }
-        $siteid = findNode($hostname,'website');
 
-        $lineresult = "\n Domain,Base Domain,domain,status_code,usa_classes_detected,uswds_detected,usa_detected,flag_detected,flagincss_detected,sourcesansfont_detected,uswdsincss_detected,merriweatherfont_detected,publicsansfont_detected,uswdsversion,tables,total_score \n";
-        $lineresult .= implode(",",$csval);
-
-    $tags = array();
-    $start = microtime(true);
-    $date = date("m-d-Y");
-    $node = new stdClass();
-    $node->type = "uswds_scan";
-    $node->language = LANGUAGE_NONE;
-    $node->uid = "1";
-    $node->name = "admin";
-    $node->status = 1;
-    $node->title = "USWDS Scan ".$hostname;
-    if(($nodeId = findNode($node->title,'uswds_scan')) != FALSE){
-        echo "found node $node->title $nodeId";
-        $node->nid = $nodeId;
-    }
-    $node->promote = 0;
-    $node->body['und'][0]['value'] = $lineresult;
-    $node->field_uswds_status['und'][0]['value'] = $uswds_status;
-    $node->field_uswds_score['und'][0]['value'] = $uswds_score;
-    $node->field_uswds_scan_web_status_code['und'][0]['value'] = $scan_stat_code;
-    $node->field_uswds_usa_detected['und'][0]['value'] = $usa_detected;
-    $node->field_uswds_detected['und'][0]['value'] = $uswds_detected;
-    $node->field_uswds_version['und'][0]['value'] = $uswds_version;
-        $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
-
-        node_object_prepare($node);
-        if ($node = node_submit($node)) {
-            node_save($node);
-        }
-        if($siteid != "") {
-            //Load Parent website id
-            $wnode = node_load($siteid);
-            $wnode->field_uswds_score['und'][0]['value'] = $uswds_score;
-
-            //Update Parent Website Node
-            $wnode->field_uswds_scan_node['und'][0]['target_id'] = $node->nid;
-            node_object_prepare($wnode);
-            if ($wnode = node_submit($wnode)) {
-                node_save($wnode);
+        $lineresult = $api_url . " \n Domain,Base Domain,domain,status_code,usa_classes_detected,uswds_detected,usa_detected,flag_detected,flagincss_detected,sourcesansfont_detected,uswdsincss_detected,merriweatherfont_detected,publicsansfont_detected,uswdsversion,tables,total_score \n";
+        $lineresult .= implode(",", $csval);
+        $siteid = findNode($hostname, 'website');
+        if (trim($siteid) != "") {
+            $tags = array();
+            $start = microtime(true);
+            $date = date("m-d-Y");
+            $node = new stdClass();
+            $node->type = "uswds_scan";
+            $node->language = LANGUAGE_NONE;
+            $node->uid = "1";
+            $node->name = "admin";
+            $node->status = 1;
+            $node->title = "USWDS Scan " . $hostname;
+            if (($nodeId = findNode($node->title, 'uswds_scan')) != FALSE) {
+                echo "found node $node->title $nodeId";
+                $node->nid = $nodeId;
             }
+            $node->promote = 0;
+            $node->body['und'][0]['value'] = $lineresult;
+            $node->field_uswds_status['und'][0]['value'] = $uswds_status;
+            $node->field_uswds_score['und'][0]['value'] = $uswds_score;
+            $node->field_uswds_scan_web_status_code['und'][0]['value'] = $scan_stat_code;
+            $node->field_uswds_usa_detected['und'][0]['value'] = $usa_detected;
+            $node->field_uswds_detected['und'][0]['value'] = $uswds_detected;
+            $node->field_uswds_version['und'][0]['value'] = $uswds_version;
+            $node->field_uswds_api_url['und'][0]['value'] = $api_url;
+            $node->field_uswds_api_scan_time['und'][0]['value'] = $api_update_date;
+            $node->field_uswds_flag_detected['und'][0]['value'] = $uswds_flag_detected;
+            $node->field_uswds_flagin_css_detected['und'][0]['value'] = $uswds_flagincss_detected;
+            $node->field_uswds_marriweather_font_de['und'][0]['value'] = $uswds_mwfont_detected;
+            $node->field_uswds_public_sans_font_det['und'][0]['value'] = $uswds_psfont_detected;
+            $node->field_uswds_source_san_font_det['und'][0]['value'] = $uswds_ssfont_detected;
+            $node->field_uswds_tables['und'][0]['value'] = $uswds_tables;
+            $node->field_uswds_usa_classes_detected['und'][0]['value'] = $usa_classes_detected;
+            $node->field_uswds_incss_detected['und'][0]['value'] = $uswds_incss_detected;
+            $node->field_uswds_total_custom_score['und'][0]['value'] = $custom_score;
+
+            $node->field_website_id['und'][0]['nid'] = $siteid;
+
+            node_object_prepare($node);
+            if ($node = node_submit($node)) {
+                node_save($node);
+            }
+                //Load Parent website id
+                $wnode = node_load($siteid);
+                $wnode->field_uswds_score['und'][0]['value'] = $uswds_score;
+
+                //Update Parent Website Node
+                $wnode->field_uswds_scan_node['und'][0]['target_id'] = $node->nid;
+                node_object_prepare($wnode);
+                if ($wnode = node_submit($wnode)) {
+                    node_save($wnode);
+                }
+
+            print "$hostname -- $siteid , $scan_stat_code , $custom_score , $uswds_status , $uswds_score \n";
+
+            $end = microtime(true);
+            print "USWDS scan for " . $hostname . " took " . ($end - $start) . ' seconds';
+
         }
-
-        print "$hostname -- $siteid , $scan_stat_code , $custom_score , $uswds_status , $uswds_score \n";
-
-    $end = microtime(true);
-    print "USWDS scan for ". $hostname." took " . ($end - $start) . ' seconds';
-
+        else{
+            print "Parent Domain $hostname is not tracked in DD currently \n";
+        }
     }
 }
 
