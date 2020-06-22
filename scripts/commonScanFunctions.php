@@ -130,6 +130,9 @@ function updateUswdsScanInfo(){
         $lineresult .= implode(",", $csval);
         $siteid = findNode($hostname, 'website');
         if (trim($siteid) != "") {
+            //Load Parent website id
+            $wnode = node_load($siteid);
+
             $tags = array();
             $start = microtime(true);
             $date = date("m-d-Y");
@@ -165,13 +168,13 @@ function updateUswdsScanInfo(){
             $node->field_uswds_total_custom_score['und'][0]['value'] = $custom_score;
 
             $node->field_website_id['und'][0]['nid'] = $siteid;
+            $node->field_web_agency_id['und'][0]['nid'] = $wnode->field_web_agency_id['und'][0]['nid'];
 
             node_object_prepare($node);
             if ($node = node_submit($node)) {
                 node_save($node);
             }
-                //Load Parent website id
-                $wnode = node_load($siteid);
+
                 $wnode->field_uswds_score['und'][0]['value'] = $uswds_score;
 
                 //Update Parent Website Node
