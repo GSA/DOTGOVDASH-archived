@@ -95,7 +95,7 @@ function runUswdsScan(){
 }
 
 
-function updateUswdsScanInfo(){
+function updateUswdsScanInfo($webscanId){
     $csv = readCSV("/tmp/results/uswds2.csv");
 
     $i =1;
@@ -169,6 +169,7 @@ function updateUswdsScanInfo(){
 
             $node->field_website_id['und'][0]['nid'] = $siteid;
             $node->field_web_agency_id['und'][0]['nid'] = $wnode->field_web_agency_id['und'][0]['nid'];
+            $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
 
             node_object_prepare($node);
             if ($node = node_submit($node)) {
