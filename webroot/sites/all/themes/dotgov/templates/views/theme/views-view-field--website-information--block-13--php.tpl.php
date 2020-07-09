@@ -50,8 +50,6 @@ $redirect_message = 'Website Redirect - Metric Not Applicable';
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   if($row->field_field_uswds_status['0']['raw']['value'] == NULL) {
     $crit_text .= "USWDS Data not available for this site. ";
-  } else {
-    $crit_text .= "USWDS Data is collected from pulse.cio.gov";
   }
 }
 dotgov_common_tooltip("tooltip10","id");
@@ -62,7 +60,7 @@ dotgov_common_tooltip("tooltip10","id");
 </div>
 <div class="col-xs-2 nopadding">
     <div id="tooltip3" class="infor">
-        <a href="https://designsystem.digital.gov/maturity-model/"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
+        <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
     </div>
 </div>
 </div>
@@ -83,24 +81,24 @@ $chartdatafont = "12px";
   if(!is_redirect(arg(1))) {
     print '<div class="col-lg-6">';
     if($uswdsscore == NULL  || $uswdsscore == '') {
-      print "USWDS Code: Not Present<br>";
-      $chartdatatext = "Not Present";
+      print "USWDS Code: Not Detected<br>";
+      $chartdatatext = "Not Detected";
       $chartdatafont = "12px";
       $chartdata = "0";
     }
     elseif($uswdsscore == '0') {
-      print "USWDS Code: Not Present<br>";
-      $chartdatatext = "Not Present";
+      print "USWDS Code: Not Detected<br>";
+      $chartdatatext = "Not Detected";
       $chartdata = "0";
     }
     elseif($uswdsscore == '100') {
-      print "USWDS Code: Present<br>";
-      $chartdatatext = "Present";
+      print "USWDS Code: Detected<br>";
+      $chartdatatext = "Detected";
       $chartdata = "100";
     }
     else {
-      print "USWDS Code: Present<br>";
-      $chartdatatext = "Present";
+      print "USWDS Code: Detected<br>";
+      $chartdatatext = "Detected";
       $chartdata = $uswdsscore;
     }
   } else {
