@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * apachesolrsearch.apachesolr_search_defaults.inc
@@ -16,16 +17,20 @@ function apachesolrsearch_apachesolr_search_default_searchers() {
   $searcher->page_id = 'core_search';
   $searcher->label = 'Core Search';
   $searcher->description = 'Core Search';
-  $searcher->search_path = 'search/site';
+  $searcher->search_path = 'search/website_search';
   $searcher->page_title = 'Site';
   $searcher->env_id = 'solr';
   $searcher->settings = array(
+    'fq' => array(
+      0 => 'bundle:page',
+    ),
+    'apachesolr_search_custom_enable' => 1,
     'apachesolr_search_search_type' => 'custom',
     'apachesolr_search_per_page' => 10,
-    'apachesolr_search_browse' => 'browse',
-    'apachesolr_search_spellcheck' => TRUE,
-    'apachesolr_search_not_removable' => TRUE,
-    'apachesolr_search_search_box' => TRUE,
+    'apachesolr_search_spellcheck' => 0,
+    'apachesolr_search_search_box' => 1,
+    'apachesolr_search_allow_user_input' => 0,
+    'apachesolr_search_browse' => 'results',
   );
   $export['core_search'] = $searcher;
 
@@ -53,17 +58,17 @@ function apachesolrsearch_apachesolr_search_default_searchers() {
   $searcher->page_id = 'website_search';
   $searcher->label = 'Website Search';
   $searcher->description = 'Website Search';
-  $searcher->search_path = 'search/website_search';
+  $searcher->search_path = 'search/site';
   $searcher->page_title = 'Website Search';
   $searcher->env_id = 'solr';
   $searcher->settings = array(
     'fq' => array(
-      0 => 'bundle:website',
+      0 => '-bundle:page',
     ),
     'apachesolr_search_custom_enable' => 1,
     'apachesolr_search_search_type' => 'custom',
     'apachesolr_search_per_page' => 10,
-    'apachesolr_search_spellcheck' => 1,
+    'apachesolr_search_spellcheck' => 0,
     'apachesolr_search_search_box' => 1,
     'apachesolr_search_allow_user_input' => 0,
     'apachesolr_search_browse' => 'results',

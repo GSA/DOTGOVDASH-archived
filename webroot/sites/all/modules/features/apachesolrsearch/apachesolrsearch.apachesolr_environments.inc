@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * apachesolrsearch.apachesolr_environments.inc
@@ -14,7 +15,7 @@ function apachesolrsearch_apachesolr_environments() {
   $environment->api_version = 1;
   $environment->env_id = 'solr';
   $environment->name = 'localhost server';
-  $environment->url = 'http://localhost:8983/solr/drupal';
+  $environment->url = 'http://159.142.67.12:8983/solr/drupal';
   $environment->service_class = '';
   $environment->conf = array(
     'apachesolr_access_always_add_grants' => 0,
@@ -26,20 +27,22 @@ function apachesolrsearch_apachesolr_environments() {
   $environment->index_bundles = array(
     'node' => array(
       0 => '508_scan_information',
-      1 => 'agency',
-      2 => 'article',
-      3 => 'broken_link_scan',
-      4 => 'cookie_law_scan',
-      5 => 'dnssec_ipv6_information',
-      6 => 'domain_scan_information',
-      7 => 'https_dap_scan_information',
-      8 => 'mobile_scan_information',
-      9 => 'page',
-      10 => 'scans',
-      11 => 'seo_scan_information',
-      12 => 'site_speed_scan',
-      13 => 'website',
-      14 => 'website_scan_info',
+      1 => 'accessibility_agency_scan_inform',
+      2 => 'agency',
+      3 => 'article',
+      4 => 'broken_link_scan',
+      5 => 'cookie_law_scan',
+      6 => 'dnssec_ipv6_information',
+      7 => 'domain_scan_information',
+      8 => 'https_dap_scan_information',
+      9 => 'mobile_scan_information',
+      10 => 'page',
+      11 => 'scans',
+      12 => 'seo_scan_information',
+      13 => 'site_speed_scan',
+      14 => 'uswds_scan',
+      15 => 'website',
+      16 => 'website_scan_info',
     ),
   );
   $export['solr'] = $environment;
