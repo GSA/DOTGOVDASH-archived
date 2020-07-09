@@ -1345,7 +1345,7 @@ Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner comp
                                 </div>
                                 <div class="col-xs-2 nopadding">
                                     <div id="tooltip10" class="infor">
-                                        <a href="https://designsystem.digital.gov/maturity-model/"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
+                                        <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
                                     </div>
                                 </div>
                             <br clear="all"/>
@@ -1372,8 +1372,8 @@ Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner comp
 
                                                     var data = google.visualization.arrayToDataTable([
                                                         ['Type', 'Number'],
-                                                        ['USWDS Code Present',<?php echo number_format($agencydata['uswds_compliant'],1, '.', '');?>],
-                                                        ['USWDS Code Not Present',<?php echo number_format($agencydata['uswds_noncompliant'],1, '.', '');?>],
+                                                        ['USWDS Code Detected',<?php echo number_format($agencydata['uswds_compliant'],1, '.', '');?>],
+                                                        ['USWDS Code Not Detected',<?php echo number_format($agencydata['uswds_noncompliant'],1, '.', '');?>],
                                                     ]);
                                                     var options = {
                                                         colors: ['#66746a', '#8ac99c'],
@@ -1397,11 +1397,11 @@ Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner comp
                                                         <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
                                                         <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
                                                         <tr>
-                                                            <td> Websites with USWDS code present</td>
+                                                            <td> Websites with USWDS code detected</td>
                                                             <td><?= dotgov_common_applyDataColor($agencydata['uswds_compliant'], $agencydata['uswds_tottracked'],'#66746a') ?></td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Websites without USWDS code present</td>
+                                                            <td>Websites without USWDS code detected</td>
                                                             <td><?= dotgov_common_applyDataColor($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'],'#8ac99c') ?></td>
                                                         </tr>
                                                     </table>
@@ -1414,7 +1414,7 @@ Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner comp
                                 <div class="view-button">
                                     <div class="row text-center">
                                         <a class="" href="/website/all/uswds"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                        <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""/></a>
+                                        <a href="https://designsystem.digital.gov/maturity-model/"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""/></a>
                                     </div>
                                 </div>
                             </div>
