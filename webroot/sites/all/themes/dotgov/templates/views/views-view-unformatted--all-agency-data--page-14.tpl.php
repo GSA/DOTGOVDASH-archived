@@ -1419,6 +1419,90 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                     </div>
                 </div>
             </div>
+            <div class="panel-separator clearfix"></div>
+            <div class="out-wrapper">
+              <div class="col-xs-12 col-lg-4">
+                <div class="white-back">
+                  <div class="panel-pane pane-views pane-website-information">
+                    <div class="col-xs-10 nopadding">
+                      <h2 class="pane-title">USWDS Code</h2>
+                    </div>
+                    <div class="col-xs-2 nopadding">
+                      <div id="tooltip3" class="infor"> <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> </a> </div>
+                    </div>
+                    <br clear="all"/>
+                    <div class="pane-content clearfix">
+                      <div class="view-wrapper">
+                        <div class="view-content">
+                          <div class="field-content col-lg-12 nopadding">
+                            <div class="grey-gradient clearfix">
+                              <div class="col-xs-12"><h5>USWDS Code Usage</h5></div>
+                              <div class="col-xs-6 nopadding">
+                                <br><p> The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
+                              </div>
+                              <div class="col-xs-6">
+                                <div id="piechartLast" ></div>
+                              </div>
+                            </div>
+                              <script language="JavaScript">
+                                  google.charts.load('current', {'packages':['corechart']});
+                                  google.charts.setOnLoadCallback(drawuswdsChart);
+
+                                  function drawuswdsChart() {
+
+                                      var data = google.visualization.arrayToDataTable([
+                                          ['Type', 'Number'],
+                                          ['USWDS Code Detected',  <?php echo number_format($agencydata['uswds_compliant'],1, '.', '');?>],
+                                          ['USWDS Code Not Detected', <?php echo number_format($agencydata['uswds_noncompliant'],1, '.', '');?>],
+                                      ]);
+                                      var options = {
+                                          colors: ['#66746a', '#8ac99c'],
+                                          sliceVisibilityThreshold: 0,
+                                          dataLabels: {
+                                              enabled: true
+                                          },
+                                          showInLegend: true,
+                                          backgroundColor:"transparent",
+                                          chartArea:{left:0,top:20,width:'100%',height:180},
+                                          legend:{position:'left',alignment:'center'}
+                                      };
+
+                                      var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));
+
+                                      chart.draw(data, options);
+                                  }
+                              </script>
+
+                              <table style="width:100%;">
+
+                                <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
+                                <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
+                                <tr>
+                                  <td> Websites with USWDS code detected<font style="font-size: larger;font-color:blue;"></font></td>
+                                  <td><?= dotgov_common_applyDataColor($agencydata['uswds_compliant'], $agencydata['uswds_tottracked'],'#66746a') ?></td>
+                                </tr>
+                                <tr>
+                                  <td>Websites without USWDS code detected<font style="font-size: larger;font-color:blue;"></font></td>
+                                  <td><?= dotgov_common_applyDataColor($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'],'#8ac99c') ?></td>
+                                </tr>
+                              </table>
+                              <div class="col-xs-12 clearfix">
+                                <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span> </div>
+                            </div>
+                          </div>
+                          <div class="view-button">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
         </section>
     </div>
 </div>
+<script type="text/javascript">
+    jQuery(window).on('load', function() {
+        jQuery(".bar-chart").css({'height':(jQuery(".pie-chart").height()+'px')});
+    });
+</script>

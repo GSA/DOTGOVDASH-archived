@@ -149,9 +149,6 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
                             name: 'M-15-13 and BOD 18-01 Compliance Score',
                         },
                         {
-                            name: 'USWDS Score',
-                        },
-                        {
                             name: 'Average of <?= $govwidedata['actualdata']['websitenos'] ?> Websites',
                             'colorByPoint': true,
                             // colors: ['#0e243a','#8bbd22','#900000','#1cadce','#482a6f','#f28e42','#76a0e6','#c42626','#a6ca6a','#000000'],
