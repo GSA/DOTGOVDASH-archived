@@ -1436,10 +1436,14 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                         <div class="view-content">
                           <div class="field-content col-lg-12 nopadding">
                             <div class="grey-gradient clearfix">
-                              <div class="col-xs-6"><h5>USWDS Code Usage</h5></div>
-                              <div class="col-xs-6">
-                                <div id="piechartLast"></div>
+                              <div class="col-xs-12"><h5>USWDS Code Usage</h5></div>
+                              <div class="col-xs-6 nopadding">
+                                <br><p> The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
                               </div>
+                              <div class="col-xs-6">
+                                <div id="piechartLast" ></div>
+                              </div>
+                            </div>
                               <script language="JavaScript">
                                   google.charts.load('current', {'packages':['corechart']});
                                   google.charts.setOnLoadCallback(drawuswdsChart);
@@ -1491,7 +1495,6 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                         </div>
                       </div>
                     </div>
-                  </div>
                 </div>
               </div>
             </div>

@@ -84,7 +84,6 @@
             <th>Mobile Usability Score</th>
             <th>Site Speed Score</th>
             <th>SSL Score</th>
-            <th>USWDS Score</th>
         </tr>
     <?php endif; ?>
     </thead>
@@ -153,13 +152,6 @@
             }
             else{
             print "<td>".$val['m15']."</td>";
-            }
-
-            if(!isset($val['uswds']) || ($val['uswds'] == '') || ($val['uswds'] == NULL)){
-              print "<td>Not Available</td>";
-            }
-            else{
-              print "<td>".$val['uswds']."</td>";
             }
 
             if(!isset($val['mobovr']) || ($val['mobovr'] == '') || ($val['mobovr'] == NULL)){
