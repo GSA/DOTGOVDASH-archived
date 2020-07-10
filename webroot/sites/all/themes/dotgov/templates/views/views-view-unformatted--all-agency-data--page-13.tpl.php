@@ -1416,7 +1416,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                   <div class="white-back">
                     <div class="panel-pane pane-views pane-website-information">
                       <div class="col-xs-10 nopadding">
-                        <h2 class="pane-title">USWDS Information</h2>
+                        <h2 class="pane-title">USWDS Code</h2>
                       </div>
                       <div class="col-xs-2 nopadding">
                         <div id="tooltip3" class="infor"> <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> </a> </div>
@@ -1485,7 +1485,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                       </div>
                       <div class="view-button">
                         <div class="row text-center">
-                          <a class="" href="/website/all/uswds"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                          <a class=""href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
                           <a href="https://designsystem.digital.gov/maturity-model/"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""/></a>
                         </div>
                       </div>
