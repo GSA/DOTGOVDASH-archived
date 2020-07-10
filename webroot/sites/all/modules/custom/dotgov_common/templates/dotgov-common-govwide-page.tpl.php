@@ -29,8 +29,6 @@
                         Average Free of RC4/3DES and SSLv2/SSLv3 score          </th>
                     <th class="views-field views-field-field-m15-13-compliance-score" scope="col">
                         Average M-15-13 and BOD 18-01 Compliance Score          </th>
-                    <th class="views-field views-field-field-m15-13-compliance-score" scope="col">
-                        Average USWDS Score          </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -59,8 +57,6 @@
                         <?=$govwidedata['actualdata']['avg_rc4']?>          </td>
                     <td class="views-field views-field-field-m15-13-compliance-score">
                         <?=$govwidedata['actualdata']['avg_m15']?>          </td>
-                    <td class="views-field views-field-field-uswds-score">
-                        <?=$govwidedata['actualdata']['avg_uswds']?>          </td>
                 </tr>
                 </tbody>
             </table>
