@@ -1363,7 +1363,7 @@ Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner comp
                                                     <div class="col-xs-6 nopadding"><br><p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p></div>
                                             <div class="col-xs-6">
                                               <div id="piechartLast"></div>
-                                            </div></div>
+                                            </div>
 
                                             </div>
                                             <script language="JavaScript">
