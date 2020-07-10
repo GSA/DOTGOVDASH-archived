@@ -22,14 +22,4 @@
  * the view is modified.
  */
 ?>
-<?php
- if (is_redirect($row->nid)) {
-   print 'NA';
- } else {
-   if (empty($row->field_field_mobile_usability_score[0]['raw']['value'])) {
-     print 0;
-   } else {
-     print $row->field_field_mobile_usability_score[0]['raw']['value'];
-   }
- }
-?>
+<?php print $output; ?>

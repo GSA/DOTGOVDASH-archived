@@ -22,14 +22,4 @@
  * the view is modified.
  */
 ?>
-<?php
-if (is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
-   print 'NA';
- } else {
-   if (empty($row->field_field_accessible_group_missingim[0]['raw']['value'])) {
-     print 0;
-   } else {
-     print $row->field_field_accessible_group_missingim[0]['raw']['value'];
-   }
- }
-?>
+<?php print $output; ?>
