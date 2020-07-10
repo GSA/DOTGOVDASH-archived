@@ -1345,8 +1345,7 @@ Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner comp
                                 </div>
                                 <div class="col-xs-2 nopadding">
                                     <div id="tooltip10" class="infor">
-                                        <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
-                                    </div>
+                                        <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>                                    </div>
                                 </div>
                             <br clear="all"/>
                                 <div class="pane-content clearfix">
@@ -1360,9 +1359,12 @@ Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner comp
 
                                                     </div> -->
                                                     <div class="col-xs-12"><h5>USWDS Code Usage</h5>
+
                                                     <div class="col-xs-6 nopadding"><br><p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p></div>
                                             <div class="col-xs-6">
                                               <div id="piechartLast"></div>
+                                            </div>
+
                                             </div>
                                             <script language="JavaScript">
                                                 google.charts.load('current', {'packages':['corechart']});
