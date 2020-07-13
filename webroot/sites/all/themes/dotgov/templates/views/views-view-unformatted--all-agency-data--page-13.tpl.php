@@ -291,7 +291,7 @@ $agencynode = node_load( arg( 1 ) );
                                                 </div>
                                                 <div class="col-lg-6 grey-gradient second" style="height:200px;">
                                                     <div class ="col-md-12 col-lg-12 nopadding" >
-                                                        <h5>Average Accessibility issues by type Per website</h5>
+                                                        <h5>Average Accessibility issues by type Per website<br><br></h5>
                                                     </div>
                                                     <div id="piechart"></div>
                                                 </div>
@@ -315,7 +315,7 @@ $agencynode = node_load( arg( 1 ) );
                                                             },
                                                             showInLegend: true,
                                                             backgroundColor:"transparent",
-                                                            chartArea:{left:0,top:20,width:'100%',height:180},
+                                                            chartArea:{left:0,top:20,width:'100%',height:130},
                                                             legend:{position:'left',alignment:'center'}
                                                         };
 

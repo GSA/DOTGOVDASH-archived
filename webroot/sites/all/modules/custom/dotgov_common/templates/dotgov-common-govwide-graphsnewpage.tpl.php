@@ -291,7 +291,7 @@ dotgov_common_tooltip( "tooltip10", "id" );
                                                             },
                                                             showInLegend: true,
                                                             backgroundColor:"transparent",
-                                                            chartArea:{left:0,top:20,width:'100%',height:180},
+                                                            chartArea:{left:0,top:20,width:'100%',height:130},
                                                             legend:{position:'left',alignment:'center'}
                                                         };
 
