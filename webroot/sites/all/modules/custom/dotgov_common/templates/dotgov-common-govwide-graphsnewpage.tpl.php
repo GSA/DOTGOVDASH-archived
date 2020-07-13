@@ -266,9 +266,10 @@ dotgov_common_tooltip( "tooltip10", "id" );
                                                         <span style="font-size:12px;">(Note: website redirects are excluded)</span></div>
                                                 </div>
                                                 <div class="col-lg-6 grey-gradient second" style="height:200px;">
-                                                    <div class ="col-md-6 col-lg-6 nopadding" >
+                                                    <div class ="col-md-12 col-lg-12 nopadding" >
                                                         <h5>Average Accessibility issues by type Per website</h5>
                                                     </div>
+                                                    <div  class="clearfix"></div>
                                                     <div id="piechart"></div>
                                                 </div>
                                                 <script language="JavaScript">
@@ -1291,8 +1292,8 @@ Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner comp
                                                 </div> -->
                                                 <div class="col-xs-12"><h5>USWDS Code Usage</h5>
 
-                                                    <div class="col-xs-4 nopadding"><br><p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p></div>
-                                                    <div class="col-xs-8">
+                                                    <div class="col-xs-12"><br><p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p></div>
+                                                    <div class="col-xs-12">
                                                         <div id="piechartLast"></div>
                                                     </div>
 
@@ -1316,8 +1317,8 @@ Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner comp
                                                             },
                                                             showInLegend: true,
                                                             backgroundColor:"transparent",
-                                                            chartArea:{left:0,top:0,width:'100%',height:130},
-                                                            legend:{position:'left',alignment:'left'}
+                                                            chartArea:{left:0,top:0,width:'100%'},
+                                                            legend:{position:'left',alignment:'center'}
                                                         };
 
                                                         var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));

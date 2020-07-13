@@ -290,9 +290,10 @@ $agencynode = node_load( arg( 1 ) );
                                                         <span style="font-size:12px;">(Note: website redirects are excluded)</span></div>
                                                 </div>
                                                 <div class="col-lg-6 grey-gradient second" style="height:200px;">
-                                                    <div class ="col-md-6 col-lg-6 nopadding" >
+                                                    <div class ="col-md-12 col-lg-12 nopadding" >
                                                         <h5>Average Accessibility issues by type Per website<br><br></h5>
                                                     </div>
+                                                    <div  class="clearfix"></div>
                                                     <div id="piechart"></div>
                                                 </div>
                                                 <script language="JavaScript">
@@ -315,7 +316,7 @@ $agencynode = node_load( arg( 1 ) );
                                                             },
                                                             showInLegend: true,
                                                             backgroundColor:"transparent",
-                                                            chartArea:{left:0,top:20,width:'100%',height:130},
+                                                            chartArea:{left:0,top:0,width:'100%',height:130},
                                                             legend:{position:'left',alignment:'center'}
                                                         };
 
@@ -1319,10 +1320,10 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                             <div class="field-content col-lg-12 nopadding">
                                                 <div class="grey-gradient clearfix">
                                                     <div class="col-xs-12"><h5>USWDS Code Usage</h5></div>
-                                                    <div class="col-xs-4 nopadding">
-                                                        <br><p> The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
+                                                    <div class="col-xs-12">
+                                                        <p> The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
                                                     </div>
-                                                    <div class="col-xs-8">
+                                                    <div class="col-xs-12">
                                                         <div id="piechartLast" ></div>
                                                     </div>
                                                 </div>
@@ -1345,8 +1346,8 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                             },
                                                             showInLegend: true,
                                                             backgroundColor:"transparent",
-                                                            chartArea:{left:0,top:0,width:'100%',height:130},
-                                                            legend:{position:'left',alignment:'left'}
+                                                            chartArea:{left:0,top:0,width:'100%'},
+                                                            legend:{position:'left',alignment:'center'}
                                                         };
 
                                                         var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));
