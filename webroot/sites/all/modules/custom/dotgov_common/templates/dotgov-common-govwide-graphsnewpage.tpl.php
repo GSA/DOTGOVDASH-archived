@@ -1291,8 +1291,8 @@ Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner comp
                                                 </div> -->
                                                 <div class="col-xs-12"><h5>USWDS Code Usage</h5>
 
-                                                    <div class="col-xs-6 nopadding"><br><p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p></div>
-                                                    <div class="col-xs-6">
+                                                    <div class="col-xs-4 nopadding"><br><p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p></div>
+                                                    <div class="col-xs-8">
                                                         <div id="piechartLast"></div>
                                                     </div>
 
@@ -1316,8 +1316,8 @@ Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner comp
                                                             },
                                                             showInLegend: true,
                                                             backgroundColor:"transparent",
-                                                            chartArea:{left:0,top:20,width:'100%',height:150},
-                                                            legend:{position:'left',alignment:'center'}
+                                                            chartArea:{left:0,top:0,width:'100%',height:130},
+                                                            legend:{position:'left',alignment:'left'}
                                                         };
 
                                                         var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));

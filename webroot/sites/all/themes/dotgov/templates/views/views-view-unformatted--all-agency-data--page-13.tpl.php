@@ -1319,10 +1319,10 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                             <div class="field-content col-lg-12 nopadding">
                                                 <div class="grey-gradient clearfix">
                                                     <div class="col-xs-12"><h5>USWDS Code Usage</h5></div>
-                                                    <div class="col-xs-6 nopadding">
+                                                    <div class="col-xs-4 nopadding">
                                                         <br><p> The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
                                                     </div>
-                                                    <div class="col-xs-6">
+                                                    <div class="col-xs-8">
                                                         <div id="piechartLast" ></div>
                                                     </div>
                                                 </div>
@@ -1345,8 +1345,8 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                             },
                                                             showInLegend: true,
                                                             backgroundColor:"transparent",
-                                                            chartArea:{left:0,top:20,width:'100%',height:180},
-                                                            legend:{position:'left',alignment:'center'}
+                                                            chartArea:{left:0,top:0,width:'100%',height:130},
+                                                            legend:{position:'left',alignment:'left'}
                                                         };
 
                                                         var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));
