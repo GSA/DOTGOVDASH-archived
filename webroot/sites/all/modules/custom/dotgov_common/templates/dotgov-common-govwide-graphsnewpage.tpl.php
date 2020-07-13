@@ -1285,15 +1285,9 @@ Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner comp
                                     <div class="view-content">
                                         <div class="field-content col-lg-12 nopadding">
                                             <div class="grey-gradient clearfix">
-                                                <!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                                    <div id="uswds_chart">&nbsp;</div>
-                                                    <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
-
-                                                </div> -->
                                                 <div class="col-xs-12"><h5>USWDS Code Usage</h5>
-
-                                                    <div class="col-xs-12"><br><p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p></div>
-                                                    <div class="col-xs-12">
+                                                    <div class="col-xs-12 nopadding"><p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p></div>
+                                                    <div class="col-xs-12 nopadding">
                                                         <div id="piechartLast"></div>
                                                     </div>
 

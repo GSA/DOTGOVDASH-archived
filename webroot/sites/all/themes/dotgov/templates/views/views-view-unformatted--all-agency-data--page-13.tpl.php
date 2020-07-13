@@ -1320,8 +1320,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                             <div class="field-content col-lg-12 nopadding">
                                                 <div class="grey-gradient clearfix">
                                                     <div class="col-xs-12"><h5>USWDS Code Usage</h5></div>
-                                                    <div class="col-xs-12">
-                                                        <p> The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
+                                                    <div class="col-xs-12"><p> The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
                                                     </div>
                                                     <div class="col-xs-12">
                                                         <div id="piechartLast" ></div>
