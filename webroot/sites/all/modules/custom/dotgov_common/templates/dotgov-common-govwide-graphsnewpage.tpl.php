@@ -291,7 +291,7 @@ dotgov_common_tooltip( "tooltip10", "id" );
                                                             },
                                                             showInLegend: true,
                                                             backgroundColor:"transparent",
-                                                            chartArea:{left:0,top:20,width:'100%',height:180},
+                                                            chartArea:{left:0,top:20,width:'100%',height:130},
                                                             legend:{position:'left',alignment:'center'}
                                                         };
 
@@ -509,6 +509,7 @@ On-Site Search Data is collected through a custom scanner component of dotgov da
                                                 <div id="piechart2"></div>
                                                 <?php print $agencydata['searchenginestatus_graph'];
                                                 //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines by category</span>";
+                                        $searchenginestatus = $agencydata[ 'searchenginestatus' ];
                                                 ?>
                                                 <table>
                                                     <tr style="background-color: #215393;color: white;">
@@ -522,9 +523,6 @@ On-Site Search Data is collected through a custom scanner component of dotgov da
                                                 </table><span style="font-size:12px;">(Note: website redirects are excluded)</span> </div>
                                         </div>
                                         <div class="clearfix">&nbsp;</div>
-                                        <?php
-                                        $searchenginestatus = $agencydata[ 'searchenginestatus' ];
-                                        ?>
 
                                     </div>
                                 </div>
@@ -1273,6 +1271,96 @@ Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner comp
                     </div>
                     <div class="col-xs-12 col-lg-4">
                         <div class="white-back">
+                            <div class="col-xs-10 nopadding">
+                                <h2 class="pane-title">USWDS Code</h2>
+                            </div>
+                            <div class="col-xs-2 nopadding">
+                                <div id="tooltip10" class="infor">
+                                    <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>                                    </div>
+                            </div>
+                            <br clear="all"/>
+                            <div class="pane-content clearfix">
+                                <div class="view-wrapper">
+                                    <div class="view-content">
+                                        <div class="field-content col-lg-12 nopadding">
+                                            <div class="grey-gradient clearfix">
+                                                <!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                    <div id="uswds_chart">&nbsp;</div>
+                                                    <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
+
+                                                </div> -->
+                                                <div class="col-xs-12"><h5>USWDS Code Usage</h5>
+
+                                                    <div class="col-xs-6 nopadding"><br><p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p></div>
+                                                    <div class="col-xs-6">
+                                                        <div id="piechartLast"></div>
+                                                    </div>
+
+                                                </div>
+                                                <script language="JavaScript">
+                                                    google.charts.load('current', {'packages':['corechart']});
+                                                    google.charts.setOnLoadCallback(drawuswdsChart);
+
+                                                    function drawuswdsChart() {
+
+                                                        var data = google.visualization.arrayToDataTable([
+                                                            ['Type', 'Number'],
+                                                            ['USWDS Code Detected',<?php echo number_format($agencydata['uswds_compliant'],1, '.', '');?>],
+                                                            ['USWDS Code Not Detected',<?php echo number_format($agencydata['uswds_noncompliant'],1, '.', '');?>],
+                                                        ]);
+                                                        var options = {
+                                                            colors: ['#66746a', '#8ac99c'],
+                                                            sliceVisibilityThreshold: 0,
+                                                            dataLabels: {
+                                                                enabled: true
+                                                            },
+                                                            showInLegend: true,
+                                                            backgroundColor:"transparent",
+                                                            chartArea:{left:0,top:20,width:'100%',height:150},
+                                                            legend:{position:'left',alignment:'center'}
+                                                        };
+
+                                                        var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));
+
+                                                        chart.draw(data, options);
+                                                    }
+                                                </script>
+
+                                                <table style="width:100%;">
+                                                    <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
+                                                    <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
+                                                    <tr>
+                                                        <td> Websites with USWDS code detected</td>
+                                                        <td><?= dotgov_common_applyDataColor($agencydata['uswds_compliant'], $agencydata['uswds_tottracked'],'#66746a') ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Websites without USWDS code detected</td>
+                                                        <td><?= dotgov_common_applyDataColor($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'],'#8ac99c') ?></td>
+                                                    </tr>
+                                                </table>
+                                                <div class="col-xs-12 clearfix">
+                                                    <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="view-button">
+                                    <div class="row text-center">
+                                        <a class="" href="/website/all/uswds"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                        <a href="https://designsystem.digital.gov/maturity-model/"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""/></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-separator clearfix"></div>
+            <div class="out-wrapper">
+                <div class="col-xs-12 nopadding clearfix">
+                    <div class="col-xs-12 col-lg-4">
+                        <div class="white-back">
                             <h2 class="pane-title"> Popular Technologies </h2>
                             <div class="pane-content">
                                 <div class="view  view-display-id-block_8 view-dom-id-b6c9491539ed2fa13d8d26fb2e0fc9c7">
@@ -1330,152 +1418,6 @@ Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner comp
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel-separator clearfix"></div>
-            <div class="out-wrapper">
-                <div class="col-xs-12 nopadding clearfix">
-                    <div class="col-xs-12 col-lg-4">
-                        <div class="white-back">
-               <div class="col-xs-10 nopadding">
-                                    <h2 class="pane-title">USWDS Information</h2>
-                                </div>
-                                <div class="col-xs-2 nopadding">
-                                    <div id="tooltip10" class="infor">
-                                        <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
-                                        <span class="tooltiptext tooltip-left">
-            <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"><br>
-            USWDS Overall Average Score :
-                                            <?= $agency_uswds_score ?>%
-            </span>
-                                    </div>
-                                </div>
-                            <br clear="all"/>
-                                <div class="pane-content clearfix">
-                                    <div class="view-wrapper">
-                                        <div class="view-content">
-                                            <div class="field-content col-lg-12 nopadding">
-                                                <div class="grey-gradient clearfix">
-                                                    <div class="col-xs-12"><h5>USWDS score breakdown</h5></div>
-                                                    <div class = "col-xs-12-col-sm-12 col-lg-6">
-                                                        <p>USWDS Overall Average Score :
-                                                            <?= $agency_uswds_score ?>
-                                                            %</p>
-                                                        <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
-
-                                                    </div>
-                                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                                        <div id="uswds_chart">&nbsp;</div>
-                                                        <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
-                                                        <script type="text/javascript">
-                                                            Highcharts.chart( 'uswds_chart', {
-
-                                                                    chart: {
-                                                                        type: 'solidgauge',
-                                                                        backgroundColor:'transparent'
-
-                                                                    },
-
-                                                                    title: {
-
-                                                                        text: ''
-
-                                                                    },
-
-                                                                    tooltip: {
-                                                                        enabled: false,
-                                                                    },
-
-                                                                    pane: {
-                                                                        startAngle: 0,
-                                                                        endAngle: 360,
-                                                                        background: [ {
-                                                                            outerRadius: '118%',
-                                                                            innerRadius: '80%',
-                                                                            backgroundColor: '#d6d7d9',
-                                                                            borderWidth: 0
-                                                                        } ]
-                                                                    },
-
-                                                                    yAxis: {
-                                                                        min: 0,
-                                                                        max: 100,
-                                                                        lineWidth: 0,
-                                                                        tickPositions: [],
-
-                                                                        title: {
-                                                                            text: '<?php echo $agency_uswds_score;?> %',
-                                                                            style: {
-                                                                                fontSize: '22px',
-                                                                                color: '<?php echo dotgov_common_getChartColor($agency_uswds_score); ?>'
-                                                                            },
-                                                                            y: 30
-                                                                        },
-
-
-
-                                                                    },
-
-                                                                    plotOptions: {
-                                                                        solidgauge: {
-                                                                            dataLabels: {
-                                                                                enabled: false
-                                                                            },
-                                                                            linecap: 'round',
-                                                                            stickyTracking: false,
-                                                                            rounded: true
-                                                                        }
-                                                                    },
-
-                                                                    series: [ {
-                                                                        name: 'USWDS Chart',
-                                                                        data: [ {
-                                                                            color: '<?php echo dotgov_common_getChartColor($agency_uswds_score); ?>',
-                                                                            radius: '118%',
-                                                                            innerRadius: '80%',
-                                                                            y: <?php echo trim($agency_uswds_score);?>
-                                                                        } ]
-                                                                    } ]
-                                                                }
-
-
-                                                            );
-                                                        </script>
-                                                    </div>
-                                                    <table style="width:100%;">
-                                                        <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
-                                                        <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
-                                                        <tr>
-                                                            <td> USWDS Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
-                                                            <td><?= dotgov_common_applyDataColor($agencydata['uswds_compliant'], $agencydata['uswds_tottracked'],'#29643a') ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>USWDS Non Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
-                                                            <td><?= dotgov_common_applyDataColor($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'],'#ac0600') ?></td>
-                                                        </tr>
-                                                    </table>
-                                                    <div class="col-xs-12 clearfix">
-                                                        <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span> </div>
-                                                </div>
-                                                <div class="col-xs-12 nopadding clearfix"> <?php
-                                                    $blockObject10 = block_load( 'trend_analysis', 'agency_uswds' );
-                                                    $block10 = _block_get_renderable_array( _block_render_blocks( array( $blockObject10 ) ) );
-                                                    $output10 = drupal_render( $block10 );
-                                                    print "$output10 <br><span class='col-xs-12 clearfix text-center' style='color: " . dotgov_common_getChartColor( $agency_uswds_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly USWDS Trend</span>";
-                                                    ?></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="view-button">
-                                        <div class="row text-center">
-                                            <a class="" href="/website/all/reports"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                            <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
-                                        </div>
-                                    </div>
-                                </div>
                         </div>
                     </div>
                 </div>

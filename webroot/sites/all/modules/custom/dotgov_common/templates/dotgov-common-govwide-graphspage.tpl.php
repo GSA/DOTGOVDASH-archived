@@ -10,7 +10,6 @@ $labeldesc['avg_ipv6'] = 'IPv6 Score';
 $labeldesc['avg_dnssec'] = 'DNSSEC Score';
 $labeldesc['avg_rc4'] = 'Free of RC4/3DES and SSLv2/SSLv3 Score';
 $labeldesc['avg_m15'] = 'M-15-13 and BOD 18-01 Compliance Score';
-$labeldesc['avg_uswds'] = 'USWDS Score';
 
 $chartdata = $govwidedata['actualdata'];
 $websitenos = $chartdata['websitenos'];
@@ -147,9 +146,6 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
                         },
                         {
                             name: 'M-15-13 and BOD 18-01 Compliance Score',
-                        },
-                        {
-                            name: 'USWDS Score',
                         },
                         {
                             name: 'Average of <?= $govwidedata['actualdata']['websitenos'] ?> Websites',
