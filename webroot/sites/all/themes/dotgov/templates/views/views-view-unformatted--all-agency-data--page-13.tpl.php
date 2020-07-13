@@ -290,7 +290,7 @@ $agencynode = node_load( arg( 1 ) );
                                                         <span style="font-size:12px;">(Note: website redirects are excluded)</span></div>
                                                 </div>
                                                 <div class="col-lg-6 grey-gradient second" style="height:200px;">
-                                                    <div class ="col-md-12 col-lg-12 nopadding" >
+                                                    <div class ="col-md-6 col-lg-6 nopadding" >
                                                         <h5>Average Accessibility issues by type Per website<br><br></h5>
                                                     </div>
                                                     <div id="piechart"></div>
