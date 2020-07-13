@@ -541,6 +541,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                     <div id="piechart2"></div>
                                                     <?php print $agencydata['searchenginestatus_graph'];
                                                     //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines by category</span>";
+                                                    $searchenginestatus = $agencydata[ 'searchenginestatus' ];
                                                     ?>
                                                     <table>
                                                         <tr style="background-color: #215393;color: white;">
@@ -554,9 +555,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                     </table><span style="font-size:12px;">(Note: website redirects are excluded)</span> </div>
                                             </div>
                                             <div class="clearfix">&nbsp;</div>
-                                            <?php
-                                            $searchenginestatus = $agencydata[ 'searchenginestatus' ];
-                                            ?>
+
 
                                         </div>
                                     </div>
@@ -1314,103 +1313,74 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                     </div>
                     <div class="col-xs-12 col-lg-4">
                         <div class="white-back">
-                            <div class="panel-pane pane-views pane-website-information" style="">
-                                <h2 class="pane-title"> Popular Technologies </h2>
-                                <div class="pane-content">
-                                    <div class="view  view-display-id-block_8 view-dom-id-b6c9491539ed2fa13d8d26fb2e0fc9c7">
+                            <div class="panel-pane pane-views pane-website-information">
+                                <div class="col-xs-10 nopadding">
+                                    <h2 class="pane-title">USWDS Code</h2>
+                                </div>
+                                <div class="col-xs-2 nopadding">
+                                    <div id="tooltip3" class="infor"> <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> </a> </div>
+                                </div>
+                                <br clear="all"/>
+                                <div class="pane-content clearfix">
+                                    <div class="view-wrapper">
                                         <div class="view-content">
-                                            <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
-                                                <div class="views-field views-field-nothing">
-                                                    <div class="view-wrapper" style="">
-                                                        <div class="field-content col-lg-12">
-                                                            <?php
-                                                            $message = "Below are the most popular technology stacks used in ";
-                                                            $no_data = 1;
-                                                            if ( $agencydata[ 'ag_webserver' ] != '' ) {
-                                                                if ( $no_data == 1 ) {
-                                                                    $no_data = 0;
-                                                                    print "<p>" . $message . $agencynode->title . ".</p>";
-                                                                }
-                                                                print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Web Server :";
-                                                                foreach ( $agencydata[ 'ag_webserver' ] as $akey => $aval ) {
-                                                                    print "$akey($aval) ";
-                                                                }
-                                                                print "</span></div>";
-                                                            }
-                                                            if ( $agencydata[ 'ag_proglang' ] != '' ) {
-                                                                if ( $no_data == 1 ) {
-                                                                    $no_data = 0;
-                                                                    print "<p>" . $message . $agencynode->title . ".</p>";
-                                                                }
-                                                                print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Languages :";
-                                                                foreach ( $agencydata[ 'ag_proglang' ] as $akey => $aval ) {
-                                                                    print "$akey($aval) ";
-                                                                }
-                                                                print "</span></div>";
-                                                            }
-
-                                                            if ( $agencydata[ 'ag_cms' ] != '' ) {
-                                                                if ( $no_data == 1 ) {
-                                                                    $no_data = 0;
-                                                                    print "<p>" . $message . $agencynode->title . ".</p>";
-                                                                }
-                                                                print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">CMS :";
-                                                                foreach ( $agencydata[ 'ag_cms' ] as $akey => $aval ) {
-                                                                    print "$akey($aval) ";
-                                                                }
-                                                                print "</span></div>";
-                                                            }
-
-                                                            if ( $agencydata[ 'ag_os' ] != '' ) {
-                                                                if ( $no_data == 1 ) {
-                                                                    $no_data = 0;
-                                                                    print "<p>" . $message . $agencynode->title . ".</p>";
-                                                                }
-                                                                print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Operating Systems :";
-                                                                foreach ( $agencydata[ 'ag_os' ] as $akey => $aval ) {
-                                                                    print "$akey($aval) ";
-                                                                }
-                                                                print "</span></div>";
-                                                            }
-
-                                                            //       if($agencydata['ag_js'] != ''){
-                                                            //if($no_data == 1) {
-                                                            //                                        $no_data = 0;
-                                                            //                                        print "<p>". $message . $agencynode->title .".</p>";
-                                                            //                                      }
-                                                            //        print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">JS Frameworks :";
-                                                            //        foreach($agencydata['ag_js'] as $akey=>$aval){
-                                                            //         print "$akey($aval) ";
-                                                            //        }
-                                                            //        print "</span></div>";
-                                                            //       }
-
-                                                            if ( $agencydata[ 'ag_cdn' ] != '' ) {
-                                                                if ( $no_data == 1 ) {
-                                                                    $no_data = 0;
-                                                                    print "<p>" . $message . $agencynode->title . ".</p>";
-                                                                }
-                                                                print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">CDN :";
-                                                                foreach ( $agencydata[ 'ag_cdn' ] as $akey => $aval ) {
-                                                                    print "$akey($aval) ";
-                                                                }
-                                                                print "</span></div>";
-                                                            }
-
-                                                            if ( $no_data == 1 ) {
-                                                                print "<div><span style='font-size: 12px;font-style: italic;color: darkred;'>Data is not currently available.</span></div>";
-                                                            }
-                                                            ?>
-                                                        </div>
+                                            <div class="field-content col-lg-12 nopadding">
+                                                <div class="grey-gradient clearfix">
+                                                    <div class="col-xs-12"><h5>USWDS Code Usage</h5></div>
+                                                    <div class="col-xs-6 nopadding">
+                                                        <br><p> The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
                                                     </div>
-                                                    <div class="view-button">
-
-                                                        <div class="row col-xs-12 nopadding">
-                                                            <!--  <div class="col-xs-12 col-lg-6 text-right"><a class="" href="/technology-overview?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="143" height="30" alt=""/></a> </div>
-                                                                <!--<div class="col-xs-12 col-lg-6 text-left"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>-->
-                                                        </div></div>
+                                                    <div class="col-xs-6">
+                                                        <div id="piechartLast" ></div>
+                                                    </div>
                                                 </div>
+                                                <script language="JavaScript">
+                                                    google.charts.load('current', {'packages':['corechart']});
+                                                    google.charts.setOnLoadCallback(drawuswdsChart);
+
+                                                    function drawuswdsChart() {
+
+                                                        var data = google.visualization.arrayToDataTable([
+                                                            ['Type', 'Number'],
+                                                            ['USWDS Code Detected',  <?php echo number_format($agencydata['uswds_compliant'],1, '.', '');?>],
+                                                            ['USWDS Code Not Detected', <?php echo number_format($agencydata['uswds_noncompliant'],1, '.', '');?>],
+                                                        ]);
+                                                        var options = {
+                                                            colors: ['#66746a', '#8ac99c'],
+                                                            sliceVisibilityThreshold: 0,
+                                                            dataLabels: {
+                                                                enabled: true
+                                                            },
+                                                            showInLegend: true,
+                                                            backgroundColor:"transparent",
+                                                            chartArea:{left:0,top:20,width:'100%',height:180},
+                                                            legend:{position:'left',alignment:'center'}
+                                                        };
+
+                                                        var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));
+
+                                                        chart.draw(data, options);
+                                                    }
+                                                </script>
+
+                                                <table style="width:100%;">
+
+                                                    <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
+                                                    <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
+                                                    <tr>
+                                                        <td> Websites with USWDS code detected<font style="font-size: larger;font-color:blue;"></font></td>
+                                                        <td><?= dotgov_common_applyDataColor($agencydata['uswds_compliant'], $agencydata['uswds_tottracked'],'#66746a') ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Websites without USWDS code detected<font style="font-size: larger;font-color:blue;"></font></td>
+                                                        <td><?= dotgov_common_applyDataColor($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'],'#8ac99c') ?></td>
+                                                    </tr>
+                                                </table>
+                                                <div class="col-xs-12 clearfix">
+                                                    <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span> </div>
                                             </div>
+                                        </div>
+                                        <div class="view-button">
                                         </div>
                                     </div>
                                 </div>
@@ -1421,82 +1391,111 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
             </div>
             <div class="panel-separator clearfix"></div>
             <div class="out-wrapper">
-              <div class="col-xs-12 col-lg-4">
-                <div class="white-back">
-                  <div class="panel-pane pane-views pane-website-information">
-                    <div class="col-xs-10 nopadding">
-                      <h2 class="pane-title">USWDS Code</h2>
-                    </div>
-                    <div class="col-xs-2 nopadding">
-                      <div id="tooltip3" class="infor"> <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> </a> </div>
-                    </div>
-                    <br clear="all"/>
-                    <div class="pane-content clearfix">
-                      <div class="view-wrapper">
-                        <div class="view-content">
-                          <div class="field-content col-lg-12 nopadding">
-                            <div class="grey-gradient clearfix">
-                              <div class="col-xs-12"><h5>USWDS Code Usage</h5></div>
-                              <div class="col-xs-6 nopadding">
-                                <br><p> The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
-                              </div>
-                              <div class="col-xs-6">
-                                <div id="piechartLast" ></div>
-                              </div>
+                <div class="col-xs-12 col-lg-4">
+                    <div class="white-back">
+                        <div class="panel-pane pane-views pane-website-information" style="">
+                            <h2 class="pane-title"> Popular Technologies </h2>
+                            <div class="pane-content">
+                                <div class="view  view-display-id-block_8 view-dom-id-b6c9491539ed2fa13d8d26fb2e0fc9c7">
+                                    <div class="view-content">
+                                        <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
+                                            <div class="views-field views-field-nothing">
+                                                <div class="view-wrapper" style="">
+                                                    <div class="field-content col-lg-12">
+                                                        <?php
+                                                        $message = "Below are the most popular technology stacks used in ";
+                                                        $no_data = 1;
+                                                        if ( $agencydata[ 'ag_webserver' ] != '' ) {
+                                                            if ( $no_data == 1 ) {
+                                                                $no_data = 0;
+                                                                print "<p>" . $message . $agencynode->title . ".</p>";
+                                                            }
+                                                            print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Web Server :";
+                                                            foreach ( $agencydata[ 'ag_webserver' ] as $akey => $aval ) {
+                                                                print "$akey($aval) ";
+                                                            }
+                                                            print "</span></div>";
+                                                        }
+                                                        if ( $agencydata[ 'ag_proglang' ] != '' ) {
+                                                            if ( $no_data == 1 ) {
+                                                                $no_data = 0;
+                                                                print "<p>" . $message . $agencynode->title . ".</p>";
+                                                            }
+                                                            print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Languages :";
+                                                            foreach ( $agencydata[ 'ag_proglang' ] as $akey => $aval ) {
+                                                                print "$akey($aval) ";
+                                                            }
+                                                            print "</span></div>";
+                                                        }
+
+                                                        if ( $agencydata[ 'ag_cms' ] != '' ) {
+                                                            if ( $no_data == 1 ) {
+                                                                $no_data = 0;
+                                                                print "<p>" . $message . $agencynode->title . ".</p>";
+                                                            }
+                                                            print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">CMS :";
+                                                            foreach ( $agencydata[ 'ag_cms' ] as $akey => $aval ) {
+                                                                print "$akey($aval) ";
+                                                            }
+                                                            print "</span></div>";
+                                                        }
+
+                                                        if ( $agencydata[ 'ag_os' ] != '' ) {
+                                                            if ( $no_data == 1 ) {
+                                                                $no_data = 0;
+                                                                print "<p>" . $message . $agencynode->title . ".</p>";
+                                                            }
+                                                            print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Operating Systems :";
+                                                            foreach ( $agencydata[ 'ag_os' ] as $akey => $aval ) {
+                                                                print "$akey($aval) ";
+                                                            }
+                                                            print "</span></div>";
+                                                        }
+
+                                                        //       if($agencydata['ag_js'] != ''){
+                                                        //if($no_data == 1) {
+                                                        //                                        $no_data = 0;
+                                                        //                                        print "<p>". $message . $agencynode->title .".</p>";
+                                                        //                                      }
+                                                        //        print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">JS Frameworks :";
+                                                        //        foreach($agencydata['ag_js'] as $akey=>$aval){
+                                                        //         print "$akey($aval) ";
+                                                        //        }
+                                                        //        print "</span></div>";
+                                                        //       }
+
+                                                        if ( $agencydata[ 'ag_cdn' ] != '' ) {
+                                                            if ( $no_data == 1 ) {
+                                                                $no_data = 0;
+                                                                print "<p>" . $message . $agencynode->title . ".</p>";
+                                                            }
+                                                            print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">CDN :";
+                                                            foreach ( $agencydata[ 'ag_cdn' ] as $akey => $aval ) {
+                                                                print "$akey($aval) ";
+                                                            }
+                                                            print "</span></div>";
+                                                        }
+
+                                                        if ( $no_data == 1 ) {
+                                                            print "<div><span style='font-size: 12px;font-style: italic;color: darkred;'>Data is not currently available.</span></div>";
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                                <div class="view-button">
+
+                                                    <div class="row col-xs-12 nopadding">
+                                                        <!--  <div class="col-xs-12 col-lg-6 text-right"><a class="" href="/technology-overview?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="143" height="30" alt=""/></a> </div>
+                                                                <!--<div class="col-xs-12 col-lg-6 text-left"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>-->
+                                                    </div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                              <script language="JavaScript">
-                                  google.charts.load('current', {'packages':['corechart']});
-                                  google.charts.setOnLoadCallback(drawuswdsChart);
-
-                                  function drawuswdsChart() {
-
-                                      var data = google.visualization.arrayToDataTable([
-                                          ['Type', 'Number'],
-                                          ['USWDS Code Detected',  <?php echo number_format($agencydata['uswds_compliant'],1, '.', '');?>],
-                                          ['USWDS Code Not Detected', <?php echo number_format($agencydata['uswds_noncompliant'],1, '.', '');?>],
-                                      ]);
-                                      var options = {
-                                          colors: ['#66746a', '#8ac99c'],
-                                          sliceVisibilityThreshold: 0,
-                                          dataLabels: {
-                                              enabled: true
-                                          },
-                                          showInLegend: true,
-                                          backgroundColor:"transparent",
-                                          chartArea:{left:0,top:20,width:'100%',height:180},
-                                          legend:{position:'left',alignment:'center'}
-                                      };
-
-                                      var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));
-
-                                      chart.draw(data, options);
-                                  }
-                              </script>
-
-                              <table style="width:100%;">
-
-                                <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
-                                <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
-                                <tr>
-                                  <td> Websites with USWDS code detected<font style="font-size: larger;font-color:blue;"></font></td>
-                                  <td><?= dotgov_common_applyDataColor($agencydata['uswds_compliant'], $agencydata['uswds_tottracked'],'#66746a') ?></td>
-                                </tr>
-                                <tr>
-                                  <td>Websites without USWDS code detected<font style="font-size: larger;font-color:blue;"></font></td>
-                                  <td><?= dotgov_common_applyDataColor($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'],'#8ac99c') ?></td>
-                                </tr>
-                              </table>
-                              <div class="col-xs-12 clearfix">
-                                <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span> </div>
-                            </div>
-                          </div>
-                          <div class="view-button">
-                          </div>
                         </div>
-                      </div>
                     </div>
                 </div>
-              </div>
             </div>
         </section>
     </div>
