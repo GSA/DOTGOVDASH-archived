@@ -1277,7 +1277,7 @@ Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner comp
                             </div>
                             <div class="col-xs-2 nopadding">
                                 <div id="tooltip10" class="infor">
-                                    <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>                                    </div>
+                                    <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/live/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>                                    </div>
                             </div>
                             <br clear="all"/>
                             <div class="pane-content clearfix">
