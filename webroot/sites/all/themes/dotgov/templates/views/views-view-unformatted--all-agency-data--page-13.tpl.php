@@ -134,9 +134,9 @@ $agencynode = node_load( arg( 1 ) );
                                                             <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                                                 <h5>Mobile Score Breakdown</h5>
                                                             </div>
-                                                            <div class="col-lg-4 col-md-4" style="padding-right:0px;margin-top:15px;padding-left:10px;"> <span class="dot low"></span>Low <br/>
-                                                                <span class="dot avg"></span>Average <br/>
-                                                                <span class="dot good"></span>Good<br/>
+                                                            <div class="col-lg-4 col-md-4" style="padding-right:0px;margin-top:15px;padding-left:10px;"> <span class="dot low"></span>Slow <br/>
+                                                                <span class="dot avg"></span>Moderate <br/>
+                                                                <span class="dot good"></span>Fast<br/>
                                                                 <span class="dot na"></span>NA </div>
                                                             <div class="col-lg-8 col-md-8 nopadding">
                                                                 <div id="piechart1" style="margin-top:-17px;height:140px;margin-left:30px;"></div>
