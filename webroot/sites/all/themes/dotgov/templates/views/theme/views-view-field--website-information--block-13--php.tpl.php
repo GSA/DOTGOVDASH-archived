@@ -111,11 +111,11 @@ $chartdatafont = "12px";
 
 <?php
 if ($chartdata <= 50) {
-    $chartcolor = '#ac0600';
+    $chartcolor = '#664f02';
 } elseif($chartdata>50 and $chartdata<=75) {
-    $chartcolor='#654f00';
+    $chartcolor='#664f02';
 } else {
-    $chartcolor='#29643a';
+    $chartcolor='#664f02';
 }
 ?>
 
