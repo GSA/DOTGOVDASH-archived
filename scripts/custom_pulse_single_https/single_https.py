@@ -261,7 +261,7 @@ def load_https_data(agencies, parameter_list):
 
 
 def csv_run_command(csv_path):
-    cmd = "/Users/navyasree.kumbam/Documents/Ecas\ Project/domain-scan/scan" + " " + csv_path + " " + "--scan=pshtt,sslyze --workers=20"
+    cmd = "/tmp/domain-scan/scan" + " " + csv_path + " " + "--scan=pshtt,sslyze --workers=20"
     os.system(cmd)
     print("scan done")
     #loading HSTS preloaded data
@@ -308,9 +308,9 @@ def csv_run_command(csv_path):
 
 
 def single_domain_run_command(domain_name):
-    cmd = "/Users/navyasree.kumbam/Documents/Ecas\ Project/domain-scan/scan" + " " + domain_name + " " + "--scan=pshtt,sslyze"
+    cmd = "/tmp/domain-scan/scan" + " " + domain_name + " " + "--scan=pshtt,sslyze"
     os.system(cmd)
-    with open('/Users/navyasree.kumbam/Desktop/current-federal.csv') as domain_file:
+    with open('/tmp/current-federal.csv') as domain_file:
         for dict_row in csv.DictReader(domain_file):
             if dict_row['Domain Name'].lower().strip() == domain_name:
                 agency_name = dict_row['Agency']
