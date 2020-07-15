@@ -11,44 +11,66 @@
  * @ingroup views_templates
  */
 global $user;
-$user_data = user_load( $user->uid );
-$curuserAgency = $user_data->field_web_agency_id[ 'und' ][ 0 ][ 'nid' ];
-$agencydata = dotgov_common_getAgencyComplianceData( $curuserAgency );
-dotgov_common_tooltip("tooltip2","id");
-dotgov_common_tooltip("tooltip4","id");
-dotgov_common_tooltip("tooltip3","id");
-dotgov_common_tooltip("tooltip5","id");
-dotgov_common_tooltip("tooltip7","id");
-dotgov_common_tooltip("tooltip6","id");
-dotgov_common_tooltip("tooltip9","id");
-dotgov_common_tooltip("tooltip8","id");
-foreach ( $view->style_plugin->rendered_fields[ 0 ] as $key => $val ) {
-    if ( $key == 'field_web_agency_id_1' )
+$user_data = user_load($user->uid);
+$curuserAgency = $user_data->field_web_agency_id['und'][0]['nid'];
+$agencydata = dotgov_common_getAgencyComplianceData($curuserAgency);
+dotgov_common_tooltip("tooltip2", "id");
+dotgov_common_tooltip("tooltip4", "id");
+dotgov_common_tooltip("tooltip3", "id");
+dotgov_common_tooltip("tooltip5", "id");
+dotgov_common_tooltip("tooltip7", "id");
+dotgov_common_tooltip("tooltip6", "id");
+dotgov_common_tooltip("tooltip9", "id");
+dotgov_common_tooltip("tooltip8", "id");
+foreach ($view->style_plugin->rendered_fields[0] as $key => $val) {
+    if ($key == 'field_web_agency_id_1') {
         $agency_website_num = $val;
-    if ( $key == 'field_dap_score' )
+    }
+
+    if ($key == 'field_dap_score') {
         $agency_dap_score = $val;
-    if ( $key == 'field_https_score' )
+    }
+
+    if ($key == 'field_https_score') {
         $agency_https_score = $val;
-    if ( $key == 'field_mobile_overall_score' )
+    }
+
+    if ($key == 'field_mobile_overall_score') {
         $agency_mobovr_score = $val;
-    if ( $key == 'field_mobile_performance_score' )
+    }
+
+    if ($key == 'field_mobile_performance_score') {
         $agency_mobperf_score = $val;
-    if ( $key == 'field_mobile_usability_score' )
+    }
+
+    if ($key == 'field_mobile_usability_score') {
         $agency_mobusab_score = $val;
-    if ( $key == 'field_dnssec_score' )
+    }
+
+    if ($key == 'field_dnssec_score') {
         $agency_dnssec_score = $val;
-    if ( $key == 'field_ipv6_score' )
+    }
+
+    if ($key == 'field_ipv6_score') {
         $agency_ipv6_score = $val;
-    if ( $key == 'field_https_score' )
+    }
+
+    if ($key == 'field_https_score') {
         $agency_https_score = $val;
-    if ( $key == 'field_free_of_insecr_prot_score' )
+    }
+
+    if ($key == 'field_free_of_insecr_prot_score') {
         $agency_insecprot_score = $val;
-    if ( $key == 'field_m15_13_compliance_score' )
+    }
+
+    if ($key == 'field_m15_13_compliance_score') {
         $agency_m15_score = $val;
+    }
+
 }
 
-$agencynode = node_load( $curuserAgency );
-drupal_set_title( $agencynode->title );
+$agencynode = node_load($curuserAgency);
+drupal_set_title($agencynode->title);
 ?>
 
 <div class="main-container container-fluid">
@@ -66,20 +88,20 @@ drupal_set_title( $agencynode->title );
                             </div>
                             <div class="col-lg-4 col-sm-12 col-xs-12 text-center">
                                 <?php
-                                if ( $agencynode->field_agency_logo[ 'und' ][ 0 ][ 'uri' ] != '' ) {
-                                    ?>
-                                    <img src="<?php print file_create_url($agencynode->field_agency_logo['und'][0]['uri']); ?>" alt="<?=$agencynode->title?>">
+if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
+    ?>
+                                    <img src="<?php print file_create_url($agencynode->field_agency_logo['und'][0]['uri']);?>" alt="<?=$agencynode->title?>">
                                     <?php
-                                } else {
-                                    print "&nbsp;";
-                                }
-                                ?>
+} else {
+    print "&nbsp;";
+}
+?>
                             </div>
                             <div class="col-lg-3 col-sm-12 col-xs-12 text-center">
                                 <h3>Public-Facing Websites Reported</h3>
                                 <p></p>
                                 <p>
-                                    <?= $agency_website_num ?>
+                                    <?=$agency_website_num?>
                                 </p>
                                 <p></p>
                             </div>
@@ -99,12 +121,12 @@ drupal_set_title( $agencynode->title );
                                     </div>
                                     <div class="col-xs-2 nopadding">
                                         <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
-                      Mobile Overall Average Score : <?php print $agency_mobovr_score; ?> <br>
+                      Mobile Overall Average Score : <?php print $agency_mobovr_score;?> <br>
                       Mobile Performance Score :
-                                                <?= $agency_mobperf_score; ?>
+                                                <?=$agency_mobperf_score;?>
                                                 <br>
                       Mobile Usability Score:
-                                                <?= $agency_mobusab_score; ?>
+                                                <?=$agency_mobusab_score;?>
                                                 <br>
                       </span> </div>
                                     </div>
@@ -115,29 +137,29 @@ drupal_set_title( $agencynode->title );
                                             <div class="view-wrapper-new clearfix">
                                                 <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
                                                     <?php
-                                                    if ( $agency_mobperf_score >= '0' && $agency_mobperf_score < '50' ) {
-                                                        $mobperfmstat = "Slow";
+if ($agency_mobperf_score >= '0' && $agency_mobperf_score < '50') {
+    $mobperfmstat = "Slow";
 
-                                                    } elseif ( $agency_mobperf_score >= '50' && $agency_mobperf_score < '90' ) {
-                                                        $mobperfmstat = "Moderate";
+} elseif ($agency_mobperf_score >= '50' && $agency_mobperf_score < '90') {
+    $mobperfmstat = "Moderate";
 
-                                                    } elseif ( $agency_mobperf_score >= '90' && $agency_mobperf_score <= '100' ) {
-                                                        $mobperfmstat = "Fast";
+} elseif ($agency_mobperf_score >= '90' && $agency_mobperf_score <= '100') {
+    $mobperfmstat = "Fast";
 
-                                                    }
+}
 
-                                                    if ( $agency_mobusab_score >= '0' && $agency_mobusab_score < '50' ) {
-                                                        $mobusabstat = "Low";
+if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
+    $mobusabstat = "Low";
 
-                                                    } elseif ( $agency_mobusab_score >= '50' && $agency_mobusab_score < '90' ) {
-                                                        $mobusabstat = "Medium";
+} elseif ($agency_mobusab_score >= '50' && $agency_mobusab_score < '90') {
+    $mobusabstat = "Medium";
 
-                                                    } elseif ( $agency_mobusab_score >= '90' && $agency_mobusab_score <= '100' ) {
-                                                        $mobusabstat = "Good";
+} elseif ($agency_mobusab_score >= '90' && $agency_mobusab_score <= '100') {
+    $mobusabstat = "Good";
 
-                                                    }
+}
 
-                                                    ?>
+?>
                                                     <div class="col-xs-12 clearfix">
                                                         <div class="views-field views-field-php-2 col-lg-6 nopadding grey-gradient" style="height:155px;">
                                                             <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
@@ -153,14 +175,14 @@ drupal_set_title( $agencynode->title );
                                                         </div>
                                                         <div class="col-xs-12 col-lg-6 nopadding grey-gradient second" style="height:155px;">
                                                             <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
-                                                                <h5>Mobile Overall Average Score: <?php print $agency_mobovr_score ?></h5>
+                                                                <h5>Mobile Overall Average Score: <?php print $agency_mobovr_score?></h5>
                                                             </div>
                                                             <div class="field-content clearfix">
                                                                 <div class="col-lg-7 col-md-7" style="font-size:11px;margin-top:20px; padding-right:0;padding-left:10px;"> Performance Score :
-                                                                    <?= $agency_mobperf_score . ' (' . $mobperfmstat . ')' ?>
+                                                                    <?=$agency_mobperf_score . ' (' . $mobperfmstat . ')'?>
                                                                     <br >
                                                                     Usability Score:
-                                                                    <?= $agency_mobusab_score . ' (' . $mobusabstat . ')' ?>
+                                                                    <?=$agency_mobusab_score . ' (' . $mobusabstat . ')'?>
                                                                     <br />
                                                                     <br/>
                                                                     <span style="font-size:10px;">(website redirects are excluded)</span> </div>
@@ -196,7 +218,7 @@ drupal_set_title( $agencynode->title );
                                                                                 tickPositions: [],
 
                                                                                 title: {
-                                                                                    text: '<?php echo $agency_mobovr_score;?>',
+                                                                                    text: '<?php echo $agency_mobovr_score; ?>',
                                                                                     style: {
                                                                                         fontSize: '22px',
                                                                                         color: '<?php echo dotgov_common_getChartColor($agency_mobovr_score); ?>'
@@ -225,7 +247,7 @@ drupal_set_title( $agencynode->title );
                                                                                     color: '<?php echo dotgov_common_getChartColor($agency_mobovr_score); ?>',
                                                                                     radius: '118%',
                                                                                     innerRadius: '80%',
-                                                                                    y: <?php echo trim($agency_mobovr_score);?>
+                                                                                    y: <?php echo trim($agency_mobovr_score); ?>
                                                                                 } ]
                                                                             } ]
                                                                         }
@@ -236,15 +258,15 @@ drupal_set_title( $agencynode->title );
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <?php print $agencydata['ag_mob_chart']; ?> <br clear="all" />
+                                                    <?php print $agencydata['ag_mob_chart'];?> <br clear="all" />
                                                     <div class="views-field views-field-php-1 clearfix">
                                                         <div class="field-content">
                                                             <?php
-                                                            $blockObject1 = block_load( 'trend_analysis', 'agency_mob' );
-                                                            $block1 = _block_get_renderable_array( _block_render_blocks( array( $blockObject1 ) ) );
-                                                            $output1 = drupal_render( $block1 );
-                                                            print "$output1";
-                                                            ?>
+$blockObject1 = block_load('trend_analysis', 'agency_mob');
+$block1 = _block_get_renderable_array(_block_render_blocks(array($blockObject1)));
+$output1 = drupal_render($block1);
+print "$output1";
+?>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -273,7 +295,7 @@ drupal_set_title( $agencynode->title );
                                 <div class="col-xs-2 nopadding">
                                     <div id="tooltip9" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br/>
                     Accessibility Data is collected from pulse.gov website though a scan that last ran on
-                                            <?php dotgov_common_lastScanDate(); ?>
+                                            <?php dotgov_common_lastScanDate();?>
                     </span> </div>
                                 </div>
                                 <br clear="all"/>
@@ -287,13 +309,13 @@ drupal_set_title( $agencynode->title );
                                                     </div>
                                                     <div class="col-md-12 col-lg-12 nopadding" style="margin:27px 0;">
                                                         <p>Average Color Contrast:
-                                                            <?= round($agencydata['ag_col_contrast']/$agency_website_num,1); ?>
+                                                            <?=round($agencydata['ag_col_contrast'] / $agency_website_num, 1);?>
                                                         </p>
                                                         <p> Average HTML Attribute :
-                                                            <?= round($agencydata['ag_html_attrib']/$agency_website_num,1); ?>
+                                                            <?=round($agencydata['ag_html_attrib'] / $agency_website_num, 1);?>
                                                         </p>
                                                         <p>Average Missing Image Description:
-                                                            <?= round($agencydata['ag_miss_image']/$agency_website_num,1); ?>
+                                                            <?=round($agencydata['ag_miss_image'] / $agency_website_num, 1);?>
                                                         </p>
                                                         <span style="font-size:12px;">(Note: website redirects are excluded)</span></div>
                                                 </div>
@@ -312,9 +334,9 @@ drupal_set_title( $agencynode->title );
 
                                                         var data = google.visualization.arrayToDataTable([
                                                             ['Type', 'Number'],
-                                                            ['Color Contrast Issues',     <?php echo number_format($agencydata['ag_col_contrast'],1, '.', '');?>],
-                                                            ['HTML Attribute Issues',      <?php echo number_format($agencydata['ag_html_attrib'],1, '.', '');?>],
-                                                            ['Missing Image Description Issues',  <?php echo number_format($agencydata['ag_miss_image'],1, '.', ''); ?>]
+                                                            ['Color Contrast Issues',     <?php echo number_format($agencydata['ag_col_contrast'], 1, '.', ''); ?>],
+                                                            ['HTML Attribute Issues',      <?php echo number_format($agencydata['ag_html_attrib'], 1, '.', ''); ?>],
+                                                            ['Missing Image Description Issues',  <?php echo number_format($agencydata['ag_miss_image'], 1, '.', ''); ?>]
                                                         ]);
                                                         var options = {
                                                             colors: ['#7cb5ec', '#90ed7d', '#434348'],
@@ -334,12 +356,12 @@ drupal_set_title( $agencynode->title );
                                                     }
                                                 </script>
                                                 <?php
-                                                if ( ( $agencydata[ 'ag_col_contrast' ] + $agencydata[ 'ag_html_attrib' ] + $agencydata[ 'ag_miss_image' ] ) != 0 ) {
-                                                    print "<div class='col-lg-12 text-center clearfix'><span style='color:#29643a; font-size: 10px;font-style: italic;'>
+if (($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydata['ag_miss_image']) != 0) {
+    print "<div class='col-lg-12 text-center clearfix'><span style='color:#29643a; font-size: 10px;font-style: italic;'>
 Above graph shows the breakdown of Accessibility issues by category</span></div>
 ";
-                                                }
-                                                ?>
+}
+?>
                                             </div>
                                         </div>
                                     </div>
@@ -367,7 +389,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                 <div class="col-xs-2 nopadding">
                                     <div id="tooltip5" class="infor"> <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
                     DNSSEC Data is collected through a custom scanner component of dotgov dashboard that last ran on
-                                            <?php dotgov_common_lastScanDate(); ?>
+                                            <?php dotgov_common_lastScanDate();?>
                     </span> </div>
                                 </div>
                                 <br clear="all"/>
@@ -386,17 +408,17 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                     <th style="background-color: #215393;color: white;">Websites</th>
                                                                     <tr>
                                                                         <td>DNSSEC Compliant Websites</td>
-                                                                        <td><?= dotgov_common_applyDataColor($agencydata['dns_compliant'], $agency_website_num,'#29643a') ?></td>
+                                                                        <td><?=dotgov_common_applyDataColor($agencydata['dns_compliant'], $agency_website_num, '#29643a')?></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>DNSSEC Non Compliant Websites</td>
-                                                                        <td><?= dotgov_common_applyDataColor($agencydata['dns_noncompliant'], $agency_website_num,'#ac0600') ?></td>
+                                                                        <td><?=dotgov_common_applyDataColor($agencydata['dns_noncompliant'], $agency_website_num, '#ac0600')?></td>
                                                                     </tr>
                                                                 </table>
                                                             </div>
                                                             <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient second" style="height:165px;">
                                                                 <h5>DNSSEC Overall Average Score :
-                                                                    <?= $agency_dnssec_score ?>
+                                                                    <?=$agency_dnssec_score?>
                                                                     % </h5>
                                                                 <div class="col-lg-6 col-xs-12" style="padding-left:0;font-size:12px;">When DNSSEC protocol is enabled, the score is 100 for compliance and zero is for non-compliance</div>
                                                                 <div class="col-lg-6 col-xs-12 nopadding">
@@ -440,7 +462,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                                 tickPositions: [],
 
                                                                                 title: {
-                                                                                    text: '<?php echo $agency_dnssec_score;?> %',
+                                                                                    text: '<?php echo $agency_dnssec_score; ?> %',
                                                                                     style: {
                                                                                         fontSize: '22px',
                                                                                         color: '<?php echo dotgov_common_getChartColor($agency_dnssec_score); ?>'
@@ -469,7 +491,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                                     color: '<?php echo dotgov_common_getChartColor($agency_dnssec_score); ?>',
                                                                                     radius: '118%',
                                                                                     innerRadius: '80%',
-                                                                                    y: <?php echo trim($agency_dnssec_score);?>
+                                                                                    y: <?php echo trim($agency_dnssec_score); ?>
                                                                                 } ]
                                                                             } ]
                                                                         }
@@ -480,11 +502,11 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                             </div>
                                                             <div class="col-xs-12 col-lg-12">
                                                                 <?php
-                                                                $blockObject4 = block_load( 'trend_analysis', 'agency_dnssec' );
-                                                                $block4 = _block_get_renderable_array( _block_render_blocks( array( $blockObject4 ) ) );
-                                                                $output4 = drupal_render( $block4 );
-                                                                print "$output4<br><div class='col-lg-12 text-center clearfix'><span style='color: " . dotgov_common_getChartColor( $agency_dnssec_score ) . ";font-size: 10px;font-style: italic;'>Above graph represents a monthly DNSSEC Trend</span></div>";
-                                                                ?>
+$blockObject4 = block_load('trend_analysis', 'agency_dnssec');
+$block4 = _block_get_renderable_array(_block_render_blocks(array($blockObject4)));
+$output4 = drupal_render($block4);
+print "$output4<br><div class='col-lg-12 text-center clearfix'><span style='color: " . dotgov_common_getChartColor($agency_dnssec_score) . ";font-size: 10px;font-style: italic;'>Above graph represents a monthly DNSSEC Trend</span></div>";
+?>
                                                             </div>
                                                         </div>
                                                         <div class="view-button">
@@ -512,7 +534,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                 </div>
                                 <div class="col-xs-2 nopadding">
                                     <div id="tooltip5" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"> On-Site Search Data is collected through a custom scanner component of dotgov dashboard that last ran on
-                                            <?php dotgov_common_lastScanDate(); ?>
+                                            <?php dotgov_common_lastScanDate();?>
                     </span> </div>
                                 </div>
                                 <br clear="all"/>
@@ -523,35 +545,35 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                 <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient pie-chart" >
                                                     <div id="piechart3"></div>
                                                     <?php print $agencydata['searchengines_graph'];
-                                                    //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines</span>";
-                                                    ?>
+//print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines</span>";
+?>
                                                     <table style="width:100%">
                                                         <tr style="background-color: #215393;color: white;">
                                                             <td>On-Site Search Engine</td>
                                                             <td>&nbsp;Total</td>
                                                         </tr>
                                                         <?php
-                                                        foreach ( $agencydata[ 'searchenginedata' ] as $skey => $sval ) {
-                                                            print "<tr style='text-transform: capitalize;'><td>" . ucfirst( $skey ) . "</td><td align='center'>   $sval</td> </tr>";
-                                                        }
-                                                        ?>
+foreach ($agencydata['searchenginedata'] as $skey => $sval) {
+    print "<tr style='text-transform: capitalize;'><td>" . ucfirst($skey) . "</td><td align='center'>   $sval</td> </tr>";
+}
+?>
                                                     </table>
                                                 </div>
                                                 <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient second bar-chart" >
 
                                                     <div id="piechart2"></div>
                                                     <?php print $agencydata['searchenginestatus_graph'];
-                                                    //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines by category</span>";
-                                                    $searchenginestatus = $agencydata[ 'searchenginestatus' ];
-                                                    ?>
+//print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines by category</span>";
+$searchenginestatus = $agencydata['searchenginestatus'];
+?>
                                                     <table>
                                                         <tr style="background-color: #215393;color: white;">
                                                             <td> On-Site Search Available</td>
                                                             <td>On-Site Search Not Available</td>
                                                         </tr>
                                                         <tr>
-                                                            <td><?=($searchenginestatus['search_available'] == "")?0:$searchenginestatus['search_available']?></td>
-                                                            <td><?=($searchenginestatus['search_notavailable'] == "")?0:$searchenginestatus['search_notavailable']?></td>
+                                                            <td><?=($searchenginestatus['search_available'] == "") ? 0 : $searchenginestatus['search_available']?></td>
+                                                            <td><?=($searchenginestatus['search_notavailable'] == "") ? 0 : $searchenginestatus['search_notavailable']?></td>
                                                         </tr>
                                                     </table><span style="font-size:12px;">(Note: website redirects are excluded)</span> </div>
                                             </div>
@@ -582,7 +604,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                 <div class="col-xs-2 nopadding">
                                     <div id="tooltip2" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
                     HTTPS Data is collected through a custom scanner component of digital dashboard that last ran on
-                                            <?php dotgov_common_lastScanDate(); ?>
+                                            <?php dotgov_common_lastScanDate();?>
                     </span> </div>
                                 </div>
                                 <br clear="all"/>
@@ -593,7 +615,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                 <h5>HTTPS score breakdown</h5>
                                                 <div class="col-sm-12 col-lg-6 nopadding">
                                                     <p>  HTTPS Overall Average Score :
-                                                        <?= $agency_https_score ?>
+                                                        <?=$agency_https_score?>
                                                         % </p>
                                                     <span style="font-size:12px;" class="font-italic">The individual site score is based on several different metrics. See scoring methods for more info.</span>
                                                 </div>
@@ -637,7 +659,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                     tickPositions: [],
 
                                                                     title: {
-                                                                        text: '<?php echo $agency_https_score;?> %',
+                                                                        text: '<?php echo $agency_https_score; ?> %',
                                                                         style: {
                                                                             fontSize: '22px',
                                                                             color: '<?php echo dotgov_common_getChartColor($agency_https_score); ?>'
@@ -666,7 +688,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                         color: '<?php echo dotgov_common_getChartColor($agency_https_score); ?>',
                                                                         radius: '118%',
                                                                         innerRadius: '80%',
-                                                                        y: <?php echo trim($agency_https_score);?>
+                                                                        y: <?php echo trim($agency_https_score); ?>
                                                                     } ]
                                                                 } ]
                                                             }
@@ -683,27 +705,27 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                 <th style="background-color: #215393;color: white">Non Supporting Websites </th>
                                                 <tr>
                                                     <td>Enforce HTTPS</td>
-                                                    <td align="center"><?= dotgov_common_applyDataColor($agencydata['enfhttps_support'], $agency_website_num,'#29643a') ?></td>
-                                                    <td align="center"><?= dotgov_common_applyDataColor($agencydata['enfhttps_nosupport'], $agency_website_num,'#ac0600') ?></td>
+                                                    <td align="center"><?=dotgov_common_applyDataColor($agencydata['enfhttps_support'], $agency_website_num, '#29643a')?></td>
+                                                    <td align="center"><?=dotgov_common_applyDataColor($agencydata['enfhttps_nosupport'], $agency_website_num, '#ac0600')?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>HSTS Status</td>
-                                                    <td align="center"><?= dotgov_common_applyDataColor($agencydata['hsts_support'], $agency_website_num,'#29643a') ?></td>
-                                                    <td align="center"><?= dotgov_common_applyDataColor($agencydata['hsts_nosupport'], $agency_website_num,'#ac0600') ?></td>
+                                                    <td align="center"><?=dotgov_common_applyDataColor($agencydata['hsts_support'], $agency_website_num, '#29643a')?></td>
+                                                    <td align="center"><?=dotgov_common_applyDataColor($agencydata['hsts_nosupport'], $agency_website_num, '#ac0600')?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>HTTPS Status</td>
-                                                    <td align="center"><?= dotgov_common_applyDataColor($agencydata['https_support'], $agency_website_num,'#29643a') ?></td>
-                                                    <td align="center"><?= dotgov_common_applyDataColor($agencydata['https_nosupport'], $agency_website_num,'#ac0600') ?></td>
+                                                    <td align="center"><?=dotgov_common_applyDataColor($agencydata['https_support'], $agency_website_num, '#29643a')?></td>
+                                                    <td align="center"><?=dotgov_common_applyDataColor($agencydata['https_nosupport'], $agency_website_num, '#ac0600')?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Preload Status</td>
-                                                    <td align="center"><?= dotgov_common_applyDataColor($agencydata['preload_support'], $agency_website_num,'#29643a') ?></td>
-                                                    <td align="center"><?= dotgov_common_applyDataColor($agencydata['preload_nosupport'], $agency_website_num,'#ac0600') ?></td>
+                                                    <td align="center"><?=dotgov_common_applyDataColor($agencydata['preload_support'], $agency_website_num, '#29643a')?></td>
+                                                    <td align="center"><?=dotgov_common_applyDataColor($agencydata['preload_nosupport'], $agency_website_num, '#ac0600')?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Preload Ready</td>
-                                                    <td align="center"><?= dotgov_common_applyDataColor($agencydata['preload_readysupport'], $agency_website_num,'#29643a') ?></td>
+                                                    <td align="center"><?=dotgov_common_applyDataColor($agencydata['preload_readysupport'], $agency_website_num, '#29643a')?></td>
                                                     <td align="center">NA</td>
                                                 </tr>
                                             </table>
@@ -712,11 +734,11 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                         <div class="row">
 
                                             <?php
-                                            $blockObject3 = block_load( 'trend_analysis', 'agency_https' );
-                                            $block3 = _block_get_renderable_array( _block_render_blocks( array( $blockObject3 ) ) );
-                                            $output3 = drupal_render( $block3 );
-                                            print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . dotgov_common_getChartColor( $agency_https_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly HTTPS Trend</span>";
-                                            ?>
+$blockObject3 = block_load('trend_analysis', 'agency_https');
+$block3 = _block_get_renderable_array(_block_render_blocks(array($blockObject3)));
+$output3 = drupal_render($block3);
+print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . dotgov_common_getChartColor($agency_https_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly HTTPS Trend</span>";
+?>
                                         </div>
                                     </div>
                                     <div class="view-button">
@@ -738,7 +760,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                 <div class="col-xs-2 nopadding">
                                     <div id="tooltip7" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
                     M-15-13 and BOD 18-01 Data is collected through a custom scanner component of dotgov dashboard that last ran on
-                                            <?php dotgov_common_lastScanDate(); ?>
+                                            <?php dotgov_common_lastScanDate();?>
                     </span> </div>
                                 </div>
                                 <br clear="all"/>
@@ -753,7 +775,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                             <div class="col-xs-12"><h5>M-15-13 and BOD 18-01 score breakdown</h5>
                                                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
                                                                     <p> Compliant with M-15-13 and BOD 18-01 Overall Average Score :
-                                                                        <?= $agency_m15_score ?>
+                                                                        <?=$agency_m15_score?>
                                                                         % </p>
                                                                     <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
                                                                 </div>
@@ -797,7 +819,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                                     tickPositions: [],
 
                                                                                     title: {
-                                                                                        text: '<?php echo $agency_m15_score;?> %',
+                                                                                        text: '<?php echo $agency_m15_score; ?> %',
                                                                                         style: {
                                                                                             fontSize: '22px',
                                                                                             color: '<?php echo dotgov_common_getChartColor($agency_m15_score); ?>'
@@ -826,7 +848,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                                         color: '<?php echo dotgov_common_getChartColor($agency_m15_score); ?>',
                                                                                         radius: '118%',
                                                                                         innerRadius: '80%',
-                                                                                        y: <?php echo trim($agency_m15_score);?>
+                                                                                        y: <?php echo trim($agency_m15_score); ?>
                                                                                     } ]
                                                                                 } ]
                                                                             }
@@ -841,22 +863,22 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                 <th style="background-color: #215393;color: white;"> Websites </th>
                                                                 <tr>
                                                                     <td>M-15-13 and BOD 18-01 Compliant Websites </td>
-                                                                    <td><?= dotgov_common_applyDataColor($agencydata['m15_compliant'], $agencydata['m15_tracked'],'#29643a') ?></td>
+                                                                    <td><?=dotgov_common_applyDataColor($agencydata['m15_compliant'], $agencydata['m15_tracked'], '#29643a')?></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>M-15-13 and BOD 18-01 Non Compliant Websites </td>
-                                                                    <td><?= dotgov_common_applyDataColor($agencydata['m15_noncompliant'], $agencydata['m15_tracked'],'#ac0600') ?></td>
+                                                                    <td><?=dotgov_common_applyDataColor($agencydata['m15_noncompliant'], $agencydata['m15_tracked'], '#ac0600')?></td>
                                                                 </tr>
                                                             </table>
                                                             <span class="col-xs-12 text-center clearfix" style="font-size:10px;">(website redirects are excluded)</span>
                                                         </div>
                                                         <div class="col-xs-12 clearfix">
                                                             <?php
-                                                            $blockObject2 = block_load( 'trend_analysis', 'agency_m15' );
-                                                            $block2 = _block_get_renderable_array( _block_render_blocks( array( $blockObject2 ) ) );
-                                                            $output2 = drupal_render( $block2 );
-                                                            print "$output2 <br><span class='col-xs-12 text-center'style='color: " . dotgov_common_getChartColor( $agency_m15_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly M-15-13 Trend</span>";
-                                                            ?>
+$blockObject2 = block_load('trend_analysis', 'agency_m15');
+$block2 = _block_get_renderable_array(_block_render_blocks(array($blockObject2)));
+$output2 = drupal_render($block2);
+print "$output2 <br><span class='col-xs-12 text-center'style='color: " . dotgov_common_getChartColor($agency_m15_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly M-15-13 Trend</span>";
+?>
                                                         </div>
 
                                                     </div>
@@ -897,7 +919,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                 <div class="col-xs-12"><h5>IPV6 score breakdown</h5>
                                                                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
                                                                         <p>IPV6 Overall Average Score :
-                                                                            <?= $agency_ipv6_score ?>
+                                                                            <?=$agency_ipv6_score?>
                                                                             %
 
                                                                         </p><span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
@@ -942,7 +964,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                                         tickPositions: [],
 
                                                                                         title: {
-                                                                                            text: '<?php echo $agency_ipv6_score;?> %',
+                                                                                            text: '<?php echo $agency_ipv6_score; ?> %',
                                                                                             style: {
                                                                                                 fontSize: '22px',
                                                                                                 color: '<?php echo dotgov_common_getChartColor($agency_ipv6_score); ?>'
@@ -971,7 +993,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                                             color: '<?php echo dotgov_common_getChartColor($agency_ipv6_score); ?>',
                                                                                             radius: '118%',
                                                                                             innerRadius: '80%',
-                                                                                            y: <?php echo trim($agency_ipv6_score);?>
+                                                                                            y: <?php echo trim($agency_ipv6_score); ?>
                                                                                         } ]
                                                                                     } ]
                                                                                 }
@@ -986,20 +1008,20 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                     <th style="background-color: #215393;color: white;"> Websites </th>
                                                                     <tr width="100%">
                                                                         <td>IPv6 Compliant Websites</td>
-                                                                        <td><?= dotgov_common_applyDataColor($agencydata['ipv6_compliant'], $agency_website_num,'#29643a') ?></td>
+                                                                        <td><?=dotgov_common_applyDataColor($agencydata['ipv6_compliant'], $agency_website_num, '#29643a')?></td>
                                                                     </tr>
                                                                     <tr width="100%">
                                                                         <td>IPv6 Non Compliant Websites</td>
-                                                                        <td><?= dotgov_common_applyDataColor($agencydata['ipv6_noncompliant'], $agency_website_num,'#ac0600') ?></td>
+                                                                        <td><?=dotgov_common_applyDataColor($agencydata['ipv6_noncompliant'], $agency_website_num, '#ac0600')?></td>
                                                                     </tr>
                                                                 </table><span class="col-xs-12 text-center clearfix" style="font-size:10px;">(website redirects are excluded)</span></div>
                                                             <div class="row">
                                                                 <?php
-                                                                $blockObject7 = block_load( 'trend_analysis', 'agency_ipv6' );
-                                                                $block7 = _block_get_renderable_array( _block_render_blocks( array( $blockObject7 ) ) );
-                                                                $output7 = drupal_render( $block7 );
-                                                                print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . dotgov_common_getChartColor( $agency_ipv6_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly IPv6 Trend</span>";
-                                                                ?>
+$blockObject7 = block_load('trend_analysis', 'agency_ipv6');
+$block7 = _block_get_renderable_array(_block_render_blocks(array($blockObject7)));
+$output7 = drupal_render($block7);
+print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . dotgov_common_getChartColor($agency_ipv6_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly IPv6 Trend</span>";
+?>
                                                             </div>
                                                         </div>
                                                         <div class="view-button">
@@ -1025,35 +1047,40 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                     <div class="col-xs-12 col-lg-4">
                         <div class="white-back">
                             <div class="panel-pane pane-views pane-website-information">
-                                <div class="col-xs-10 nopadding">
+                            <div class="col-xs-10 nopadding">
                                     <h2 class="pane-title">DAP Information</h2>
                                 </div>
                                 <div class="col-xs-2 nopadding">
-                                    <div id="tooltip3" class="infor"> <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"><br>
-                    DAP Overall Average Score :
-                                            <?= $agency_dap_score ?>
-                                            % </span> </div>
-                                </div>
-                                <br clear="all"/>
-                                <div class="pane-content clearfix">
-                                    <div class="view-wrapper">
-
-                                        <div class="view-content">
-
-
-                                            <div class="field-content col-lg-12 nopadding">
-                                                <div class="grey-gradient clearfix">
-                                                    <div class="col-xs-12"><h5>DAP score breakdown</h5></div>
-                                                    <div class = "col-xs-12-col-sm-12 col-lg-6">
-                                                        <p>DAP Overall Average Score :
-                                                            <?= $agency_dap_score ?>
-                                                            %</p>
-                                                        <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
-
-                                                    </div>
-                                                    <div class = "col-xs-12-col-sm-12 col-lg-6">
-                                                        <div id="dap_chart">&nbsp;</div>
-                                                        <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
+                        <div id="tooltip3" class="infor">
+                           <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                           <span class="tooltiptext tooltip-left">
+                           <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"><br>
+                           DAP Overall Average Score :
+                           <?=$agency_dap_score?>%
+                           </span>
+                        </div>
+                     </div>
+                     <br clear="all"/>
+                     <div class="pane-content clearfix">
+                        <div class="view-wrapper">
+                           <div class="view-content">
+                              <div class="field-content col-lg-12 nopadding">
+                                 <div class="grey-gradient clearfix">
+                                    <div class="col-xs-12">
+                                       <h5>DAP score breakdown</h5>
+                                    </div>
+                                    <div class = "col-xs-12">
+                                       <p>DAP Overall Average Score :
+                                          <?=$agency_dap_score?>
+                                          %
+                                       </p>
+                                    </div>
+                                    <div class="col-xs-12-col-sm-12 col-lg-6" style="margin-top: 50px;">
+                                       <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
+                                    </div>
+                                    <div class = "col-xs-12-col-sm-12 col-lg-6" style="margin-top: 23px;">
+                                       <div id="dap_chart">&nbsp;</div>
+                                       <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                                         <script type="text/javascript">
                                                             Highcharts.chart( 'dap_chart', {
 
@@ -1091,7 +1118,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                         tickPositions: [],
 
                                                                         title: {
-                                                                            text: '<?php echo $agency_dap_score;?> %',
+                                                                            text: '<?php echo $agency_dap_score; ?> %',
                                                                             style: {
                                                                                 fontSize: '22px',
                                                                                 color: '<?php echo dotgov_common_getChartColor($agency_dap_score); ?>'
@@ -1120,7 +1147,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                             color: '<?php echo dotgov_common_getChartColor($agency_dap_score); ?>',
                                                                             radius: '118%',
                                                                             innerRadius: '80%',
-                                                                            y: <?php echo trim($agency_dap_score);?>
+                                                                            y: <?php echo trim($agency_dap_score); ?>
                                                                         } ]
                                                                     } ]
                                                                 }
@@ -1135,11 +1162,11 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                         <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
                                                         <tr>
                                                             <td> DAP Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
-                                                            <td><?= dotgov_common_applyDataColor($agencydata['dap_compliant'], $agencydata['dap_tottracked'],'#29643a') ?></td>
+                                                            <td><?=dotgov_common_applyDataColor($agencydata['dap_compliant'], $agencydata['dap_tottracked'], '#29643a')?></td>
                                                         </tr>
                                                         <tr>
                                                             <td>DAP Non Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
-                                                            <td><?= dotgov_common_applyDataColor($agencydata['dap_noncompliant'], $agencydata['dap_tottracked'],'#ac0600') ?></td>
+                                                            <td><?=dotgov_common_applyDataColor($agencydata['dap_noncompliant'], $agencydata['dap_tottracked'], '#ac0600')?></td>
                                                         </tr>
                                                     </table>
                                                     <div class="col-xs-12 clearfix">
@@ -1148,11 +1175,11 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12 nopadding clearfix"> <?php
-                                                    $blockObject6 = block_load( 'trend_analysis', 'agency_dap' );
-                                                    $block6 = _block_get_renderable_array( _block_render_blocks( array( $blockObject6 ) ) );
-                                                    $output6 = drupal_render( $block6 );
-                                                    print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: " . dotgov_common_getChartColor( $agency_dap_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly DAP Trend</span>";
-                                                    ?></div>
+$blockObject6 = block_load('trend_analysis', 'agency_dap');
+$block6 = _block_get_renderable_array(_block_render_blocks(array($blockObject6)));
+$output6 = drupal_render($block6);
+print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: " . dotgov_common_getChartColor($agency_dap_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly DAP Trend</span>";
+?></div>
                                             </div>
 
 
@@ -1177,29 +1204,31 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                     <h2 class="pane-title">Free of Insecure Protocols Information</h2>
                                 </div>
                                 <div class="col-xs-2 nopadding">
-                                    <div id="tooltip8" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
-                    Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner component of dotgov dashboard that last ran on
-                                            <?php dotgov_common_lastScanDate(); ?>
-                    </span> </div>
-                                </div>
-                                <br clear="all"/>
-                                <div class="pane-content clearfix">
-
-
-
-
-                                    <div class="view-wrapper">
-                                        <div class="grey-gradient clearfix">
-                                            <div class="col-xs-12 clearfix">Free of RC4/3DES and SSLv2/SSLv3 score breakdown</h5></div>
-                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                                <p>Free of RC4/3DES and SSLv2/SSLv3 Overall Average Score :
-                                                    <?= $agency_insecprot_score ?>
-                                                    %</p>
-                                                <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                                <div id="freeofinsecureprot_chart">&nbsp;</div>
-                                                <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
+                        <div id="tooltip8" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                           <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+                           Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate();?></span>
+                        </div>
+                     </div>
+                     <br clear="all" />
+                     <div class="pane-content clearfix">
+                        <div class="view-wrapper">
+                           <div class="grey-gradient clearfix">
+                              <div class="col-xs-12 clearfix">
+                                <h5>Free of RC4/3DES and SSLv2/SSLv3 score breakdown</h5></div>
+                              <div class="col-xs-12">
+                                 <p>Free of RC4/3DES and SSLv2/SSLv3 Overall Average Score :
+                                    <?=$agency_insecprot_score?>
+                                    %
+                                 </p>
+                               </div>
+                               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"  style="
+                            margin-top: 30px;
+                            " >
+                                 <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
+                              </div>
+                              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                 <div id="freeofinsecureprot_chart">&nbsp;</div>
+                                 <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                                 <script type="text/javascript">
                                                     Highcharts.chart( 'freeofinsecureprot_chart', {
 
@@ -1237,7 +1266,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                 tickPositions: [],
 
                                                                 title: {
-                                                                    text: '<?php echo $agency_insecprot_score;?> %',
+                                                                    text: '<?php echo $agency_insecprot_score; ?> %',
                                                                     style: {
                                                                         fontSize: '22px',
                                                                         color: '<?php echo dotgov_common_getChartColor($agency_insecprot_score); ?>'
@@ -1266,7 +1295,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                     color: '<?php echo dotgov_common_getChartColor($agency_insecprot_score); ?>',
                                                                     radius: '118%',
                                                                     innerRadius: '80%',
-                                                                    y: <?php echo trim($agency_insecprot_score);?>
+                                                                    y: <?php echo trim($agency_insecprot_score); ?>
                                                                 } ]
                                                             } ]
                                                         }
@@ -1281,11 +1310,11 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                 <th style="background-color: #215393;color: white;"> Websites </th>
                                                 <tr>
                                                     <td>Websites Free of RC4/3DES and SSLv2/SSLv3 </td>
-                                                    <td><?= dotgov_common_applyDataColor($agencydata['insec_compliant'], $agencydata['free_tracked'],'#29643a') ?></td>
+                                                    <td><?=dotgov_common_applyDataColor($agencydata['insec_compliant'], $agencydata['free_tracked'], '#29643a')?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Websites Not Free of RC4/3DES and SSLv2/SSLv3 </td>
-                                                    <td><?= dotgov_common_applyDataColor($agencydata['insec_noncompliant'], $agencydata['free_tracked'],'#ac0600') ?></td>
+                                                    <td><?=dotgov_common_applyDataColor($agencydata['insec_noncompliant'], $agencydata['free_tracked'], '#ac0600')?></td>
                                                 </tr>
                                             </table>
 
@@ -1294,11 +1323,11 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                         </div>
                                         <div class="col-xs-12">
                                             <?php
-                                            $blockObject5 = block_load( 'trend_analysis', 'agency_rc4' );
-                                            $block5 = _block_get_renderable_array( _block_render_blocks( array( $blockObject5 ) ) );
-                                            $output5 = drupal_render( $block5 );
-                                            print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: " . dotgov_common_getChartColor( $agency_insecprot_score ) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly Insecure Protocol Trend</span>";
-                                            ?>
+$blockObject5 = block_load('trend_analysis', 'agency_rc4');
+$block5 = _block_get_renderable_array(_block_render_blocks(array($blockObject5)));
+$output5 = drupal_render($block5);
+print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: " . dotgov_common_getChartColor($agency_insecprot_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly Insecure Protocol Trend</span>";
+?>
                                         </div>
                                     </div>
                                     <div class="row col-xs-12 nopadding">
@@ -1319,22 +1348,27 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                     <h2 class="pane-title">USWDS Code</h2>
                                 </div>
                                 <div class="col-xs-2 nopadding">
-                                    <div id="tooltip3" class="infor"> <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> </a> </div>
-                                </div>
-                                <br clear="all"/>
-                                <div class="pane-content clearfix">
-                                    <div class="view-wrapper">
-                                        <div class="view-content">
-                                            <div class="field-content col-lg-12 nopadding">
-                                                <div class="grey-gradient clearfix">
-                                                    <div class="col-xs-12"><h5>USWDS Code Usage</h5></div>
-                                                    <div class="col-xs-12">
-                                                        <br><p> The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
-                                                    </div>
-                                                    <div class="col-xs-12">
-                                                        <div id="piechartLast" ></div>
-                                                    </div>
-                                                </div>
+                        <div id="tooltip10" class="infor">
+                           <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
+                        </div>
+                     </div>
+                     <br clear="all"/>
+                     <div class="pane-content clearfix">
+                        <div class="view-wrapper">
+                           <div class="view-content">
+                              <div class="field-content col-lg-12 nopadding">
+                                 <div class="grey-gradient clearfix">
+                                    <div class="col-xs-12">
+                                       <h5>USWDS Code Usage</h5>
+                                       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
+                                          <p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
+                                       </div>
+                                       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
+                                          <div class="uswds-chart">
+                                          <div id="piechartLast"></div>
+                                          </div>
+                                       </div>
+                                    </div>
                                                 <script language="JavaScript">
                                                     google.charts.load('current', {'packages':['corechart']});
                                                     google.charts.setOnLoadCallback(drawuswdsChart);
@@ -1343,8 +1377,8 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
 
                                                         var data = google.visualization.arrayToDataTable([
                                                             ['Type', 'Number'],
-                                                            ['USWDS Code Detected',  <?php echo number_format($agencydata['uswds_compliant'],1, '.', '');?>],
-                                                            ['USWDS Code Not Detected', <?php echo number_format($agencydata['uswds_noncompliant'],1, '.', '');?>],
+                                                            ['USWDS Code Detected',  <?php echo number_format($agencydata['uswds_compliant'], 1, '.', ''); ?>],
+                                                            ['USWDS Code Not Detected', <?php echo number_format($agencydata['uswds_noncompliant'], 1, '.', ''); ?>],
                                                         ]);
                                                         var options = {
                                                             colors: ['#66746a', '#8ac99c'],
@@ -1370,11 +1404,11 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                     <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
                                                     <tr>
                                                         <td> Websites with USWDS code detected<font style="font-size: larger;font-color:blue;"></font></td>
-                                                        <td><?= dotgov_common_applyDataColor($agencydata['uswds_compliant'], $agencydata['uswds_tottracked'],'#66746a') ?></td>
+                                                        <td><?=dotgov_common_applyDataColor($agencydata['uswds_compliant'], $agencydata['uswds_tottracked'], '#66746a')?></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Websites without USWDS code detected<font style="font-size: larger;font-color:blue;"></font></td>
-                                                        <td><?= dotgov_common_applyDataColor($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'],'#8ac99c') ?></td>
+                                                        <td><?=dotgov_common_applyDataColor($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'], '#8ac99c')?></td>
                                                     </tr>
                                                 </table>
                                                 <div class="col-xs-12 clearfix">
@@ -1404,83 +1438,83 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                 <div class="view-wrapper" style="">
                                                     <div class="field-content col-lg-12">
                                                         <?php
-                                                        $message = "Below are the most popular technology stacks used in ";
-                                                        $no_data = 1;
-                                                        if ( $agencydata[ 'ag_webserver' ] != '' ) {
-                                                            if ( $no_data == 1 ) {
-                                                                $no_data = 0;
-                                                                print "<p>" . $message . $agencynode->title . ".</p>";
-                                                            }
-                                                            print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Web Server :";
-                                                            foreach ( $agencydata[ 'ag_webserver' ] as $akey => $aval ) {
-                                                                print "$akey($aval) ";
-                                                            }
-                                                            print "</span></div>";
-                                                        }
-                                                        if ( $agencydata[ 'ag_proglang' ] != '' ) {
-                                                            if ( $no_data == 1 ) {
-                                                                $no_data = 0;
-                                                                print "<p>" . $message . $agencynode->title . ".</p>";
-                                                            }
-                                                            print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Languages :";
-                                                            foreach ( $agencydata[ 'ag_proglang' ] as $akey => $aval ) {
-                                                                print "$akey($aval) ";
-                                                            }
-                                                            print "</span></div>";
-                                                        }
+$message = "Below are the most popular technology stacks used in ";
+$no_data = 1;
+if ($agencydata['ag_webserver'] != '') {
+    if ($no_data == 1) {
+        $no_data = 0;
+        print "<p>" . $message . $agencynode->title . ".</p>";
+    }
+    print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Web Server :";
+    foreach ($agencydata['ag_webserver'] as $akey => $aval) {
+        print "$akey($aval) ";
+    }
+    print "</span></div>";
+}
+if ($agencydata['ag_proglang'] != '') {
+    if ($no_data == 1) {
+        $no_data = 0;
+        print "<p>" . $message . $agencynode->title . ".</p>";
+    }
+    print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Languages :";
+    foreach ($agencydata['ag_proglang'] as $akey => $aval) {
+        print "$akey($aval) ";
+    }
+    print "</span></div>";
+}
 
-                                                        if ( $agencydata[ 'ag_cms' ] != '' ) {
-                                                            if ( $no_data == 1 ) {
-                                                                $no_data = 0;
-                                                                print "<p>" . $message . $agencynode->title . ".</p>";
-                                                            }
-                                                            print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">CMS :";
-                                                            foreach ( $agencydata[ 'ag_cms' ] as $akey => $aval ) {
-                                                                print "$akey($aval) ";
-                                                            }
-                                                            print "</span></div>";
-                                                        }
+if ($agencydata['ag_cms'] != '') {
+    if ($no_data == 1) {
+        $no_data = 0;
+        print "<p>" . $message . $agencynode->title . ".</p>";
+    }
+    print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">CMS :";
+    foreach ($agencydata['ag_cms'] as $akey => $aval) {
+        print "$akey($aval) ";
+    }
+    print "</span></div>";
+}
 
-                                                        if ( $agencydata[ 'ag_os' ] != '' ) {
-                                                            if ( $no_data == 1 ) {
-                                                                $no_data = 0;
-                                                                print "<p>" . $message . $agencynode->title . ".</p>";
-                                                            }
-                                                            print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Operating Systems :";
-                                                            foreach ( $agencydata[ 'ag_os' ] as $akey => $aval ) {
-                                                                print "$akey($aval) ";
-                                                            }
-                                                            print "</span></div>";
-                                                        }
+if ($agencydata['ag_os'] != '') {
+    if ($no_data == 1) {
+        $no_data = 0;
+        print "<p>" . $message . $agencynode->title . ".</p>";
+    }
+    print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">Operating Systems :";
+    foreach ($agencydata['ag_os'] as $akey => $aval) {
+        print "$akey($aval) ";
+    }
+    print "</span></div>";
+}
 
-                                                        //       if($agencydata['ag_js'] != ''){
-                                                        //if($no_data == 1) {
-                                                        //                                        $no_data = 0;
-                                                        //                                        print "<p>". $message . $agencynode->title .".</p>";
-                                                        //                                      }
-                                                        //        print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">JS Frameworks :";
-                                                        //        foreach($agencydata['ag_js'] as $akey=>$aval){
-                                                        //         print "$akey($aval) ";
-                                                        //        }
-                                                        //        print "</span></div>";
-                                                        //       }
+//       if($agencydata['ag_js'] != ''){
+//if($no_data == 1) {
+//                                        $no_data = 0;
+//                                        print "<p>". $message . $agencynode->title .".</p>";
+//                                      }
+//        print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">JS Frameworks :";
+//        foreach($agencydata['ag_js'] as $akey=>$aval){
+//         print "$akey($aval) ";
+//        }
+//        print "</span></div>";
+//       }
 
-                                                        if ( $agencydata[ 'ag_cdn' ] != '' ) {
-                                                            if ( $no_data == 1 ) {
-                                                                $no_data = 0;
-                                                                print "<p>" . $message . $agencynode->title . ".</p>";
-                                                            }
-                                                            print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">CDN :";
-                                                            foreach ( $agencydata[ 'ag_cdn' ] as $akey => $aval ) {
-                                                                print "$akey($aval) ";
-                                                            }
-                                                            print "</span></div>";
-                                                        }
+if ($agencydata['ag_cdn'] != '') {
+    if ($no_data == 1) {
+        $no_data = 0;
+        print "<p>" . $message . $agencynode->title . ".</p>";
+    }
+    print "<div class=\"col-sm-12 nopadding dataset-resources\"><span id=\"app-button\" class=\"app-button\">CDN :";
+    foreach ($agencydata['ag_cdn'] as $akey => $aval) {
+        print "$akey($aval) ";
+    }
+    print "</span></div>";
+}
 
-                                                        if ( $no_data == 1 ) {
-                                                            print "<div><span style='font-size: 12px;font-style: italic;color: darkred;'>Data is not currently available.</span></div>";
-                                                        }
-                                                        ?>
+if ($no_data == 1) {
+    print "<div><span style='font-size: 12px;font-style: italic;color: darkred;'>Data is not currently available.</span></div>";
+}
+?>
                                                     </div>
                                                 </div>
                                                 <div class="view-button">
