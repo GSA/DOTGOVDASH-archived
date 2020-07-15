@@ -60,7 +60,7 @@ dotgov_common_tooltip("tooltip10","id");
 </div>
 <div class="col-xs-2 nopadding">
     <div id="tooltip3" class="infor">
-        <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
+        <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/live/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
     </div>
 </div>
 </div>
@@ -111,11 +111,11 @@ $chartdatafont = "12px";
 
 <?php
 if ($chartdata <= 50) {
-    $chartcolor = '#ac0600';
+    $chartcolor = '#664f02';
 } elseif($chartdata>50 and $chartdata<=75) {
-    $chartcolor='#654f00';
+    $chartcolor='#664f02';
 } else {
-    $chartcolor='#29643a';
+    $chartcolor='#664f02';
 }
 ?>
 

@@ -1334,7 +1334,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                     <h2 class="pane-title">USWDS Code</h2>
                                 </div>
                                 <div class="col-xs-2 nopadding">
-                        <div id="tooltip10" class="infor">
+                        <div id="tooltip3" class="infor">
                            <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
                         </div>
                      </div>

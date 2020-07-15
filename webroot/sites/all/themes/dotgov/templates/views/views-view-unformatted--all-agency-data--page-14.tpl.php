@@ -175,9 +175,9 @@ if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
                                                             <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                                                 <h5>Mobile Score Breakdown</h5>
                                                             </div>
-                                                            <div class="col-lg-4 col-md-4" style="padding-right:0px;margin-top:15px;padding-left:10px;"> <span class="dot low"></span>Low <br/>
-                                                                <span class="dot avg"></span>Average <br/>
-                                                                <span class="dot good"></span>Good<br/>
+                                                            <div class="col-lg-4 col-md-4" style="padding-right:0px;margin-top:15px;padding-left:10px;"> <span class="dot low"></span>Slow <br/>
+                                                                <span class="dot avg"></span>Moderate <br/>
+                                                                <span class="dot good"></span>Fast<br/>
                                                                 <span class="dot na"></span>NA </div>
                                                             <div class="col-lg-8 col-md-8 nopadding">
                                                                 <div id="piechart1" style="margin-top:-17px;height:140px;margin-left:30px;"></div>
@@ -1357,7 +1357,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                     <h2 class="pane-title">USWDS Code</h2>
                                 </div>
                                 <div class="col-xs-2 nopadding">
-                        <div id="tooltip10" class="infor">
+                        <div id="tooltip3" class="infor">
                            <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
                         </div>
                      </div>
