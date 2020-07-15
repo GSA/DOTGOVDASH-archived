@@ -559,7 +559,7 @@
                         <div class="pane-content">
                            <div class="view-wrapper">
                               <div class="grey-gradient clearfix">
-                                 <div class="col-xs-12">
+                                 <div class="col-xs-12 height-wrap-first">
                                     <h5>HTTPS score breakdown</h5>
                                     <div class="col-sm-12 col-lg-6 nopadding">
                                        <p> HTTPS Overall Average Score :
@@ -717,7 +717,7 @@
                                  <div class="views-field views-field-php-2 col-lg-12">
                                     <div class="view-wrapper">
                                        <div class="grey-gradient clearfix">
-                                          <div class="col-xs-12">
+                                          <div class="col-xs-12 height-wrap-first">
                                              <h5>M-15-13 and BOD 18-01 score breakdown</h5>
                                              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
                                                 <p> Compliant with M-15-13 and BOD 18-01 Overall Average Score :
@@ -864,7 +864,7 @@
                                     <div class="field-content col-lg-12">
                                        <div class="view-wrapper">
                                           <div class="grey-gradient clearfix">
-                                             <div class="col-xs-12">
+                                             <div class="col-xs-12 height-wrap-first">
                                                 <h5>IPV6 score breakdown</h5>
                                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
                                                    <p>IPV6 Overall Average Score :
@@ -1015,10 +1015,11 @@
                            <div class="view-content">
                               <div class="field-content col-lg-12 nopadding">
                                  <div class="grey-gradient clearfix">
+                                 <div class="col-xs-12 height-wrap-second">
                                     <div class="col-xs-12">
                                        <h5>DAP score breakdown</h5>
                                     </div>
-                                    <div class = "col-xs-12">
+                                    <div class = "col-xs-12 chart-inner-percent">
                                        <p>DAP Overall Average Score :
                                           <?= $agency_dap_score ?>
                                           %
@@ -1104,7 +1105,7 @@
 
                                           );
                                        </script>
-                                    </div>
+                                    </div></div>
                                     <table style="width:100%;">
                                        <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
                                        <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
@@ -1155,20 +1156,21 @@
                      <div class="pane-content clearfix">
                         <div class="view-wrapper">
                            <div class="grey-gradient clearfix">
+                           <div class="col-xs-12 height-wrap-second">
                               <div class="col-xs-12 clearfix">
                                 <h5>Free of RC4/3DES and SSLv2/SSLv3 score breakdown</h5></div>
-                              <div class="col-xs-12">
+                              <div class="col-xs-12 chart-inner-percent">
                                  <p>Free of RC4/3DES and SSLv2/SSLv3 Overall Average Score :
                                     <?= $agency_insecprot_score ?>
                                     %
                                  </p>
                                </div>
                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"  style="
-                            margin-top: 30px;
+                            margin-top: 50px;
                             " >
                                  <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
                               </div>
-                              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 height-wrap"  style="margin-top: 23px;">
                                  <div id="freeofinsecureprot_chart">&nbsp;</div>
                                  <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                  <script type="text/javascript">
@@ -1245,7 +1247,7 @@
 
                                     );
                                  </script>
-                              </div>
+                              </div></div>
                               <table width="100%">
                                  <th style="background-color: #215393;color: white;"> Breakdown </th>
                                  <th style="background-color: #215393;color: white;"> Websites </th>
@@ -1294,12 +1296,13 @@
                            <div class="view-content">
                               <div class="field-content col-lg-12 nopadding">
                                  <div class="grey-gradient clearfix">
+                                 <div class="col-xs-12 height-wrap-second uswds-chart-wrap">
                                     <div class="col-xs-12">
                                        <h5>USWDS Code Usage</h5>
-                                       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
+                                       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding chart-inner-percent">
                                           <p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
                                        </div>
-                                       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
+                                       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding pre-table">
                                           <div class="uswds-chart">
                                           <div id="piechartLast"></div>
                                           </div>
@@ -1332,7 +1335,7 @@
 
                                            chart.draw(data, options);
                                        }
-                                    </script>
+                                    </script></div>
                                     <table style="width:100%;">
                                        <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
                                        <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
