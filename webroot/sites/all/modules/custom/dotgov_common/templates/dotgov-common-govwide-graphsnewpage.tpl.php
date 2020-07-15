@@ -2,11 +2,22 @@
    .page-overall-gov-wide-compliance .view-wrapper {
    min-height: 430px;
    }
+
    .font-italic {
    font-style:italic;
    }
+
    .panel-pane h2.pane-title{
    height:40px;
+   }
+   .white-back{
+        min-height:530px!important;
+        height:auto;
+    }
+
+   .no-height{
+      min-height:150px!important;
+      height:auto!important;
    }
 </style>
 <?php
@@ -56,7 +67,7 @@
          <div class="out-wrapper">
             <div class="col-xs-12 nopadding clearfix">
                <div class="col-xs-12 col-lg-6">
-                  <div class="white-back">
+                  <div class="white-back no-height">
                      <div class="panel-pane pane-views pane-website-information">
                         <div class="col-xs-12 nopadding">
                            <div class="col-xs-10 nopadding">
@@ -235,7 +246,7 @@
                   </div>
                </div>
                <div class="col-xs-12 col-lg-6">
-                  <div class="white-back">
+                  <div class="white-back no-height">
                      <div class="panel-pane pane-views pane-website-information">
                         <div class="col-xs-10 nopadding">
                            <h2 class="pane-title">Accessibility Issues</h2>
@@ -296,7 +307,7 @@
                                                },
                                                showInLegend: true,
                                                backgroundColor:"transparent",
-                                               chartArea:{left:0,top:20,width:'100%',height:130},
+                                               chartArea:{left:0,top:20,width:'100%',height:'50%'},
                                                legend:{position:'left',alignment:'center'}
                                            };
 
@@ -331,7 +342,7 @@
          <div class="out-wrapper">
             <div class="col-xs-12 nopadding clearfix">
                <div class="col-xs-12 col-lg-6">
-                  <div class="white-back">
+                  <div class="white-back no-height">
                      <div class="col-xs-10 nopadding">
                         <h2 class="pane-title">DNSSEC Information</h2>
                      </div>
@@ -474,7 +485,7 @@
                   </div>
                </div>
                <div class="col-xs-12 col-lg-6">
-                  <div class="white-back">
+                  <div class="white-back no-height">
                      <div class="col-xs-10 nopadding">
                         <h2 class="pane-title"> On-Site Search Information </h2>
                      </div>
@@ -543,7 +554,7 @@
          <div class="out-wrapper">
             <div class="col-xs-12 nopadding clearfix">
                <div class="col-xs-12  col-lg-4">
-                  <div class="white-back">
+                  <div class="white-back no-height">
                      <div class="panel-pane pane-views pane-website-information">
                         <div class="col-xs-10 nopadding">
                            <h2 class="pane-title"> HTTPS Information </h2>
@@ -842,7 +853,7 @@
                   </div>
                </div>
                <div class="col-xs-12 col-lg-4">
-                  <div class="white-back">
+                  <div class="white-back no-height">
                      <div class="col-xs-10 nopadding">
                         <h2 class="pane-title"> IPV6 Information </h2>
                      </div>
@@ -1015,20 +1026,20 @@
                            <div class="view-content">
                               <div class="field-content col-lg-12 nopadding">
                                  <div class="grey-gradient clearfix">
-                                 <div class="col-xs-12 height-wrap-second">
                                     <div class="col-xs-12">
                                        <h5>DAP score breakdown</h5>
                                     </div>
-                                    <div class = "col-xs-12 chart-inner-percent">
+                                    <div class = "col-xs-12" style="min-height:55px;">
                                        <p>DAP Overall Average Score :
-                                          <?= $agency_dap_score ?>
+                                          <?=$agency_dap_score?>
                                           %
                                        </p>
                                     </div>
-                                    <div class="col-xs-12-col-sm-12 col-lg-6" style="margin-top: 50px;">
+                                    <div style="display:block; float:left;min-height:145px; width:100%;">
+                                    <div class="col-xs-12-col-sm-12 col-lg-6" style="margin-top: 30px;">
                                        <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
                                     </div>
-                                    <div class = "col-xs-12-col-sm-12 col-lg-6" style="margin-top: 23px;">
+                                    <div class = "col-xs-12-col-sm-12 col-lg-6">
                                        <div id="dap_chart">&nbsp;</div>
                                        <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                        <script type="text/javascript">
@@ -1119,7 +1130,6 @@
                                        </tr>
                                     </table>
                                     <div class="col-xs-12 clearfix">
-                                       <p><span style="font-size: 10px;font-color:blue;">*</span> : DAP information is based on data collected from <span style="font-color:blue"></span><a href="https://pulse.cio.gov/analytics/agencies" target="_new">pulse.cio.gov</a></span></p>
                                        <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span>
                                     </div>
                                  </div>
@@ -1156,21 +1166,19 @@
                      <div class="pane-content clearfix">
                         <div class="view-wrapper">
                            <div class="grey-gradient clearfix">
-                           <div class="col-xs-12 height-wrap-second">
                               <div class="col-xs-12 clearfix">
                                 <h5>Free of RC4/3DES and SSLv2/SSLv3 score breakdown</h5></div>
-                              <div class="col-xs-12 chart-inner-percent">
+                              <div class="col-xs-12" style="min-height:55px;">
                                  <p>Free of RC4/3DES and SSLv2/SSLv3 Overall Average Score :
-                                    <?= $agency_insecprot_score ?>
+                                    <?=$agency_insecprot_score?>
                                     %
                                  </p>
                                </div>
-                               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"  style="
-                            margin-top: 50px;
-                            " >
+                               <div style="display:block; float:left;min-height:145px;width:100%">
+                               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"  style="margin-top: 30px;" >
                                  <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
                               </div>
-                              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 height-wrap"  style="margin-top: 23px;">
+                              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                  <div id="freeofinsecureprot_chart">&nbsp;</div>
                                  <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                  <script type="text/javascript">
@@ -1296,72 +1304,76 @@
                            <div class="view-content">
                               <div class="field-content col-lg-12 nopadding">
                                  <div class="grey-gradient clearfix">
-                                 <div class="col-xs-12 height-wrap-second uswds-chart-wrap">
-                                    <div class="col-xs-12">
+                                 <div class="col-xs-12" style="min-height:89px;">
                                        <h5>USWDS Code Usage</h5>
-                                       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding chart-inner-percent">
+                                       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
                                           <p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
                                        </div>
-                                       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding pre-table">
+                                                </div>
+                                       <div style="display:block; float:left;min-height:145px">
+                                       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
                                           <div class="uswds-chart">
-                                          <div id="piechartLast"></div>
+                                          <div id="piechartLast" style="display: block;position: relative;"></div>
                                           </div>
                                        </div>
                                     </div>
-                                    <script language="JavaScript">
-                                       google.charts.load('current', {'packages':['corechart']});
-                                       google.charts.setOnLoadCallback(drawuswdsChart);
+                                                <script language="JavaScript">
+                                                    google.charts.load('current', {'packages':['corechart']});
+                                                    google.charts.setOnLoadCallback(drawuswdsChart);
 
-                                       function drawuswdsChart() {
+                                                    function drawuswdsChart() {
 
-                                           var data = google.visualization.arrayToDataTable([
-                                               ['Type', 'Number'],
-                                               ['USWDS Code Detected',<?php echo number_format($agencydata['uswds_compliant'],1, '.', '');?>],
-                                               ['USWDS Code Not Detected',<?php echo number_format($agencydata['uswds_noncompliant'],1, '.', '');?>],
-                                           ]);
-                                           var options = {
-                                               colors: ['#66746a', '#8ac99c'],
-                                               sliceVisibilityThreshold: 0,
-                                               dataLabels: {
-                                                   enabled: true
-                                               },
-                                               showInLegend: true,
-                                               backgroundColor:"transparent",
-                                               chartArea:{left:0,top:0,width:'100%'},
-                                               legend:{position:'left',alignment:'center'}
-                                           };
+                                                        var data = google.visualization.arrayToDataTable([
+                                                            ['Type', 'Number'],
+                                                            ['USWDS Code Detected',  <?php echo number_format($agencydata['uswds_compliant'], 1, '.', ''); ?>],
+                                                            ['USWDS Code Not Detected', <?php echo number_format($agencydata['uswds_noncompliant'], 1, '.', ''); ?>],
+                                                        ]);
+                                                        var options = {
+                                                            colors: ['#66746a', '#8ac99c'],
+                                                            sliceVisibilityThreshold: 0,
+                                                            dataLabels: {
+                                                                enabled: true
+                                                            },
+                                                            showInLegend: true,
+                                                            backgroundColor:"transparent",
+                                                            chartArea:{left:15,top:15,height: '55%',width:'100%'},
+                                                            legend:{position:'left',alignment:'center'}
+                                                        };
 
-                                           var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));
+                                                        var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));
 
-                                           chart.draw(data, options);
-                                       }
-                                    </script></div>
-                                    <table style="width:100%;">
-                                       <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
-                                       <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
-                                       <tr>
-                                          <td> Websites with USWDS code detected</td>
-                                          <td><?= dotgov_common_applyDataColor($agencydata['uswds_compliant'], $agencydata['uswds_tottracked'],'#66746a') ?></td>
-                                       </tr>
-                                       <tr>
-                                          <td>Websites without USWDS code detected</td>
-                                          <td><?= dotgov_common_applyDataColor($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'],'#8ac99c') ?></td>
-                                       </tr>
-                                    </table>
-                                    <div class="col-xs-12 clearfix">
-                                       <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span>
+                                                        chart.draw(data, options);
+                                                    }
+                                                </script>
+
+                                                <table style="width:100%;">
+
+                                                    <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
+                                                    <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
+                                                    <tr>
+                                                        <td> Websites with USWDS code detected<font style="font-size: larger;font-color:blue;"></font></td>
+                                                        <td><?=dotgov_common_applyDataColor($agencydata['uswds_compliant'], $agencydata['uswds_tottracked'], '#66746a')?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Websites without USWDS code detected<font style="font-size: larger;font-color:blue;"></font></td>
+                                                        <td><?=dotgov_common_applyDataColor($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'], '#8ac99c')?></td>
+                                                    </tr>
+                                                </table>
+                                                <div class="col-xs-12 clearfix">
+                                                    <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span> </div>
+                                            </div>
+                                        </div>
+                                        <div class="view-button">
+                                        <div class="row text-center">
+                                          <a class="" href="/website/all/uswds"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                          <a href="https://designsystem.digital.gov/maturity-model/"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""/></a>
+                                       </div>
+                                        </div>
                                     </div>
-                                 </div>
-                              </div>
-                           </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="view-button">
-                           <div class="row text-center">
-                              <a class="" href="/website/all/uswds"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                              <a href="https://designsystem.digital.gov/maturity-model/"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""/></a>
-                           </div>
-                        </div>
-                     </div>
+                    </div>
                   </div>
                </div>
             </div>
@@ -1370,7 +1382,7 @@
          <div class="out-wrapper">
             <div class="col-xs-12 nopadding clearfix">
                <div class="col-xs-12 col-lg-4">
-                  <div class="white-back">
+                  <div class="white-back no-height">
                      <h2 class="pane-title"> Popular Technologies </h2>
                      <div class="pane-content">
                         <div class="view  view-display-id-block_8 view-dom-id-b6c9491539ed2fa13d8d26fb2e0fc9c7">

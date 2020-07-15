@@ -5,6 +5,17 @@
     .font-italic {
         font-style:italic;
     }
+
+    .white-back{
+        min-height:530px!important;
+        height:auto;
+    }
+
+    .no-height{
+        min-height:150px!important;
+        height:auto!important;
+    }
+
 </style>
 <?php
 /**
@@ -50,7 +61,7 @@ $agencynode = node_load(arg(1));
             <div class="col-xs-12 nopadding clearfix">
                 <div class="col-xs-12">
                     <div class="field-content">
-                        <div class="col-xs-12  white-back">
+                        <div class="col-xs-12 no-height white-back">
                             <div class="col-lg-4 col-sm-12 col-xs-12 text-center">
                                 <h3>Agency</h3>
                                 <p>
@@ -84,7 +95,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
             <div class="out-wrapper">
                 <div class="col-xs-12 nopadding clearfix">
                     <div class="col-xs-12 col-lg-6">
-                        <div class="white-back">
+                        <div class="white-back no-height">
                             <div class="panel-pane pane-views pane-website-information">
                                 <div class="col-xs-12 nopadding">
                                     <div class="col-xs-10 nopadding">
@@ -259,7 +270,7 @@ print "$output1";
                         </div>
                     </div>
                     <div class="col-xs-12 col-lg-6">
-                        <div class="white-back">
+                        <div class="white-back no-height">
                             <div class="panel-pane pane-views pane-website-information">
                                 <div class="col-xs-10 nopadding">
                                     <h2 class="pane-title">Accessibility Issues</h2>
@@ -318,7 +329,7 @@ print "$output1";
                                                             },
                                                             showInLegend: true,
                                                             backgroundColor:"transparent",
-                                                            chartArea:{left:0,top:0,width:'100%',height:130},
+                                                            chartArea:{left:0,top:0,height: '50%',width:'100%'},
                                                             legend:{position:'left',alignment:'center'}
                                                         };
 
@@ -354,7 +365,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
             <div class="out-wrapper">
                 <div class="col-xs-12 nopadding clearfix">
                     <div class="col-xs-12 col-lg-6">
-                        <div class="white-back">
+                        <div class="white-back no-height">
                             <div class="panel-pane pane-views pane-website-information">
                                 <div class="col-xs-10 nopadding">
                                     <h2 class="pane-title">DNSSEC Information</h2>
@@ -501,7 +512,7 @@ print "$output4<br><div class='col-lg-12 text-center clearfix'><span style='colo
                         </div>
                     </div>
                     <div class="col-xs-12 col-lg-6">
-                        <div class="white-back">
+                        <div class="white-back no-height">
                             <div class="panel-pane pane-views pane-website-information">
                                 <div class="col-xs-10 nopadding">
                                     <h2 class="pane-title"> On-Site Search Information </h2>
@@ -571,7 +582,7 @@ $searchenginestatus = $agencydata['searchenginestatus'];
             <div class="out-wrapper">
                 <div class="col-xs-12 nopadding clearfix">
                     <div class="col-xs-12  col-lg-4">
-                        <div class="white-back">
+                        <div class="white-back no-height">
                             <div class="panel-pane pane-views pane-website-information">
                                 <div class="col-xs-10 nopadding">
                                     <h2 class="pane-title"> HTTPS Information </h2>
@@ -727,7 +738,7 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                         </div>
                     </div>
                     <div class="col-xs-12 col-lg-4">
-                        <div class="white-back">
+                        <div class="white-back no-height">
                             <div class="panel-pane pane-views pane-website-information">
                                 <div class="col-xs-10 nopadding">
                                     <h2 class="pane-title">M-15-13 and BOD 18-01 Information</h2>
@@ -747,7 +758,7 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                                     <div class="view-wrapper">
                                                         <div class="grey-gradient clearfix">
 
-                                                            <div class="col-xs-12"><h5>M-15-13 and BOD 18-01 score breakdown</h5>
+                                                            <div class="col-xs-12 height-wrap-first"><h5>M-15-13 and BOD 18-01 score breakdown</h5>
                                                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
                                                                     <p> Compliant with M-15-13 and BOD 18-01 Overall Average Score :
                                                                         <?=$agency_m15_score?>
@@ -872,7 +883,7 @@ print "$output2 <br><span class='col-xs-12 text-center'style='color: " . dotgov_
                         </div>
                     </div>
                     <div class="col-xs-12 col-lg-4">
-                        <div class="white-back">
+                        <div class="white-back no-height">
                             <div class="panel-pane pane-views pane-website-information">
                                 <div class="col-xs-10 nopadding">
                                     <h2 class="pane-title"> IPV6 Information </h2>
@@ -891,7 +902,7 @@ print "$output2 <br><span class='col-xs-12 text-center'style='color: " . dotgov_
                                                     <div class="field-content col-lg-12">
                                                         <div class="view-wrapper">
                                                             <div class="grey-gradient clearfix">
-                                                                <div class="col-xs-12"><h5>IPV6 score breakdown</h5>
+                                                                <div class="col-xs-12 height-wrap-first"><h5>IPV6 score breakdown</h5>
                                                                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
                                                                         <p>IPV6 Overall Average Score :
                                                                             <?=$agency_ipv6_score?>
@@ -1044,17 +1055,19 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                     <div class="col-xs-12">
                                        <h5>DAP score breakdown</h5>
                                     </div>
-                                    <div class = "col-xs-12">
+                                    <div class = "col-xs-12" style="min-height:55px;">
                                        <p>DAP Overall Average Score :
                                           <?=$agency_dap_score?>
                                           %
                                        </p>
                                     </div>
-                                    <div class="col-xs-12-col-sm-12 col-lg-6" style="margin-top: 50px;">
+                                    <div style="display:block; float:left;min-height:145px; width:100%;">
+                                    <div class="col-xs-12-col-sm-12 col-lg-6" style="margin-top: 30px;">
                                        <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
                                     </div>
-                                    <div class = "col-xs-12-col-sm-12 col-lg-6" style="margin-top: 23px;">
+                                    <div class = "col-xs-12-col-sm-12 col-lg-6">
                                        <div id="dap_chart">&nbsp;</div>
+                                      
                                        <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                                         <script type="text/javascript">
                                                             Highcharts.chart( 'dap_chart', {
@@ -1131,6 +1144,7 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                                             );
                                                         </script>
                                                     </div>
+                                                        </div>
                                                     <table style="width:100%;">
 
                                                         <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
@@ -1145,7 +1159,6 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                                         </tr>
                                                     </table>
                                                     <div class="col-xs-12 clearfix">
-                                                        <p><span style="font-size: 10px;font-color:blue;">*</span> : DAP information is based on data collected from <span style="font-color:blue"></span><a href="https://pulse.cio.gov/analytics/agencies" target="_new">pulse.cio.gov</a></span></p>
                                                         <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span> </div>
                                                 </div>
                                                 <div class="col-xs-12 nopadding clearfix"> <?php
@@ -1154,6 +1167,7 @@ $block6 = _block_get_renderable_array(_block_render_blocks(array($blockObject6))
 $output6 = drupal_render($block6);
 print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: " . dotgov_common_getChartColor($agency_dap_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly DAP Trend</span>";
 ?></div>
+
                                             </div>
 
 
@@ -1189,15 +1203,14 @@ print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: "
                            <div class="grey-gradient clearfix">
                               <div class="col-xs-12 clearfix">
                                 <h5>Free of RC4/3DES and SSLv2/SSLv3 score breakdown</h5></div>
-                              <div class="col-xs-12">
+                              <div class="col-xs-12" style="min-height:55px;">
                                  <p>Free of RC4/3DES and SSLv2/SSLv3 Overall Average Score :
                                     <?=$agency_insecprot_score?>
                                     %
                                  </p>
                                </div>
-                               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"  style="
-                            margin-top: 30px;
-                            " >
+                               <div style="display:block; float:left;min-height:145px;width:100%">
+                               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"  style="margin-top: 30px;" >
                                  <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
                               </div>
                               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
@@ -1278,6 +1291,7 @@ print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: "
                                                     );
                                                 </script>
                                             </div>
+                                                </div>
                                             <table width="100%">
 
                                                 <th style="background-color: #215393;color: white;"> Breakdown </th>
@@ -1314,11 +1328,12 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                         </div>
                     </div>
                     <div class="col-xs-12 col-lg-4">
-                       <div class="white-back">
-                     <div class="col-xs-10 nopadding">
-                        <h2 class="pane-title">USWDS Code</h2>
-                     </div>
-                     <div class="col-xs-2 nopadding">
+                        <div class="white-back">
+                            <div class="panel-pane pane-views pane-website-information">
+                                <div class="col-xs-10 nopadding">
+                                    <h2 class="pane-title">USWDS Code</h2>
+                                </div>
+                                <div class="col-xs-2 nopadding">
                         <div id="tooltip10" class="infor">
                            <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
                         </div>
@@ -1329,14 +1344,16 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                            <div class="view-content">
                               <div class="field-content col-lg-12 nopadding">
                                  <div class="grey-gradient clearfix">
-                                    <div class="col-xs-12">
+                                 <div class="col-xs-12" style="min-height:89px;">
                                        <h5>USWDS Code Usage</h5>
                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
                                           <p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
                                        </div>
+                                                </div>
+                                       <div style="display:block; float:left;min-height:145px">
                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
                                           <div class="uswds-chart">
-                                          <div id="piechartLast"></div>
+                                          <div id="piechartLast" style="display: block;position: relative;"></div>
                                           </div>
                                        </div>
                                     </div>
@@ -1359,7 +1376,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                             },
                                                             showInLegend: true,
                                                             backgroundColor:"transparent",
-                                                            chartArea:{left:0,top:0,width:'100%'},
+                                                            chartArea:{left:15,top:15,height: '55%',width:'100%'},
                                                             legend:{position:'left',alignment:'center'}
                                                         };
 
@@ -1386,12 +1403,8 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                     <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span> </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="view-button">
-                                    <div class="row text-center">
-                                        <a class=""href="/website/all/uswds?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                        <a href="https://designsystem.digital.gov/maturity-model/"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""/></a>
+                                        <div class="view-button">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1403,7 +1416,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
             <div class="out-wrapper">
               <div class="col-xs-12 nopadding clearfix">
                   <div class="col-xs-12 col-lg-4">
-                      <div class="white-back">
+                      <div class="white-back no-height">
                           <div class="panel-pane pane-views pane-website-information" style="">
                               <h2 class="pane-title"> Popular Technologies </h2>
                               <div class="pane-content">
