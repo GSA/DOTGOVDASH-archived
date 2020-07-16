@@ -16,6 +16,10 @@
         height:auto!important;
     }
 
+    .min-295 {
+        min-height: 295px;
+    }
+
 </style>
 <?php
 /**
@@ -756,7 +760,7 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                             <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
                                                 <div class="views-field views-field-php-2 col-lg-12">
                                                     <div class="view-wrapper">
-                                                        <div class="grey-gradient clearfix">
+                                                        <div class="grey-gradient clearfix min-295">
 
                                                             <div class="col-xs-12 height-wrap-first"><h5>M-15-13 and BOD 18-01 score breakdown</h5>
                                                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
@@ -901,7 +905,7 @@ print "$output2 <br><span class='col-xs-12 text-center'style='color: " . dotgov_
                                                 <div class="views-field views-field-nothing">
                                                     <div class="field-content col-lg-12">
                                                         <div class="view-wrapper">
-                                                            <div class="grey-gradient clearfix">
+                                                            <div class="grey-gradient clearfix min-295">
                                                                 <div class="col-xs-12 height-wrap-first"><h5>IPV6 score breakdown</h5>
                                                                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
                                                                         <p>IPV6 Overall Average Score :
@@ -1376,7 +1380,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                             },
                                                             showInLegend: true,
                                                             backgroundColor:"transparent",
-                                                            chartArea:{left:15,top:15,height: '55%',width:'100%'},
+                                                            chartArea:{left:15,top:15,height: '55%',width:'65%'},
                                                             legend:{position:'left',alignment:'center'}
                                                         };
 
@@ -1403,13 +1407,21 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                     <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span> </div>
                                             </div>
                                         </div>
-                                        <div class="view-button">
-                                        </div>
+                                      
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                        <div class="view-button">
+                                        <div class="row text-center">
+                                          <a class="" href="/website/all/uswds"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""></a>
+                                          <a href="https://designsystem.digital.gov/maturity-model/" target="_blank" rel="noopener noreferrer"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""></a>
+                                       </div>
+                              </div>
+                                    
+</div>
                 </div>
             </div>
             <div class="panel-separator clearfix"></div>

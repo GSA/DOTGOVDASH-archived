@@ -19,6 +19,10 @@
       min-height:150px!important;
       height:auto!important;
    }
+
+   .min-295 {
+        min-height: 295px;
+    }
 </style>
 <?php
 global $base_url;
@@ -554,7 +558,7 @@ $searchenginestatus = $agencydata['searchenginestatus'];
          <div class="out-wrapper">
             <div class="col-xs-12 nopadding clearfix">
                <div class="col-xs-12  col-lg-4">
-                  <div class="white-back no-height">
+                  <div class="white-back">
                      <div class="panel-pane pane-views pane-website-information">
                         <div class="col-xs-10 nopadding">
                            <h2 class="pane-title"> HTTPS Information </h2>
@@ -727,7 +731,7 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                               <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
                                  <div class="views-field views-field-php-2 col-lg-12">
                                     <div class="view-wrapper">
-                                       <div class="grey-gradient clearfix">
+                                       <div class="grey-gradient clearfix min-295">
                                           <div class="col-xs-12 height-wrap-first">
                                              <h5>M-15-13 and BOD 18-01 score breakdown</h5>
                                              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
@@ -853,7 +857,7 @@ print "$output2 <br><span class='col-xs-12 text-center'style='color: " . dotgov_
                   </div>
                </div>
                <div class="col-xs-12 col-lg-4">
-                  <div class="white-back no-height">
+                  <div class="white-back">
                      <div class="col-xs-10 nopadding">
                         <h2 class="pane-title"> IPV6 Information </h2>
                      </div>
@@ -874,7 +878,7 @@ print "$output2 <br><span class='col-xs-12 text-center'style='color: " . dotgov_
                                  <div class="views-field views-field-nothing">
                                     <div class="field-content col-lg-12">
                                        <div class="view-wrapper">
-                                          <div class="grey-gradient clearfix">
+                                          <div class="grey-gradient clearfix min-295">
                                              <div class="col-xs-12 height-wrap-first">
                                                 <h5>IPV6 score breakdown</h5>
                                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
@@ -1336,7 +1340,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                             },
                                                             showInLegend: true,
                                                             backgroundColor:"transparent",
-                                                            chartArea:{left:15,top:15,height: '55%',width:'100%'},
+                                                            chartArea:{left:15,top:15,height: '55%',width:'65%'},
                                                             legend:{position:'left',alignment:'center'}
                                                         };
 
