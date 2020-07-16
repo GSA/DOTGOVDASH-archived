@@ -12,6 +12,11 @@
         min-height:150px!important;
         height:auto!important;
     }
+
+    .min-290 {
+        min-height: 290px;
+    }
+
 </style>
 <?php
 /**
@@ -780,7 +785,7 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                             <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
                                                 <div class="views-field views-field-php-2 col-lg-12">
                                                     <div class="view-wrapper">
-                                                        <div class="grey-gradient clearfix">
+                                                        <div class="grey-gradient clearfix min-290">
 
                                                             <div class="col-xs-12"><h5>M-15-13 and BOD 18-01 score breakdown</h5>
                                                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
@@ -925,7 +930,7 @@ print "$output2 <br><span class='col-xs-12 text-center'style='color: " . dotgov_
                                                 <div class="views-field views-field-nothing">
                                                     <div class="field-content col-lg-12">
                                                         <div class="view-wrapper">
-                                                            <div class="grey-gradient clearfix">
+                                                            <div class="grey-gradient clearfix min-290">
                                                                 <div class="col-xs-12"><h5>IPV6 score breakdown</h5>
                                                                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
                                                                         <p>IPV6 Overall Average Score :
@@ -1055,7 +1060,7 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
             <div class="out-wrapper">
                 <div class="col-xs-12 nopadding clearfix">
                     <div class="col-xs-12 col-lg-4">
-                        <div class="white-back">
+                        <div class="white-back no-height">
                             <div class="panel-pane pane-views pane-website-information">
                                 <div class="col-xs-10 nopadding">
                                     <h2 class="pane-title">DAP Information</h2>
@@ -1209,7 +1214,7 @@ print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: "
                         </div>
                     </div>
                     <div class="col-xs-12 col-lg-4">
-                        <div class="white-back">
+                        <div class="white-back no-height">
                             <div class="panel-pane pane-views pane-website-information">
                             <div class="col-xs-10 nopadding">
                         <h2 class="pane-title">Free of Insecure Protocols Information</h2>
@@ -1339,19 +1344,13 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
 ?>
                                         </div>
                                     </div>
-                                    <div class="row text-center">
-                                        <a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                        <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
-                                    </div>
-
-
-
+                                    
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-12 col-lg-4">
-                        <div class="white-back">
+                        <div class="white-back no-height">
                             <div class="panel-pane pane-views pane-website-information">
                                 <div class="col-xs-10 nopadding">
                                     <h2 class="pane-title">USWDS Code</h2>
@@ -1399,7 +1398,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                             },
                                                             showInLegend: true,
                                                             backgroundColor:"transparent",
-                                                            chartArea:{left:15,top:15,height: '55%',width:'100%'},
+                                                            chartArea:{left:15,top:15,height: '55%',width:'65%'},
                                                             legend:{position:'left',alignment:'center'}
                                                         };
 
