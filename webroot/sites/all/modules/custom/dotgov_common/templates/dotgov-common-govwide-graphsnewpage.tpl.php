@@ -23,6 +23,11 @@
    .min-295 {
         min-height: 295px;
     }
+
+    .min-300 {
+        min-height: 300px;
+    }
+
 </style>
 <?php
 global $base_url;
@@ -521,7 +526,7 @@ foreach ($agencydata['searchenginedata'] as $skey => $sval) {
 ?>
                                     </table>
                                  </div>
-                                 <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient second bar-chart" >
+                                 <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient min-300 second bar-chart" >
                                     <div id="piechart2"></div>
                                     <?php print $agencydata['searchenginestatus_graph'];
 //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines by category</span>";
@@ -1321,7 +1326,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                           </div>
                                        </div>
                                     </div>
-                                                <script language="JavaScript">
+                                    <script language="JavaScript">
                                                     google.charts.load('current', {'packages':['corechart']});
                                                     google.charts.setOnLoadCallback(drawuswdsChart);
 
