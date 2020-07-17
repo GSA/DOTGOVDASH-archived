@@ -1376,7 +1376,8 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                           <p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
                                        </div>
                                                 </div>
-                                                <div style="display:block;float:left;min-height:145px;position: relative;right: -16%;max-width: 250px;">                                       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
+                                                <div class="uswds-chart-container-2" style="display:block;float:left;min-height:145px;position: relative;max-width: 250px;">                                       
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
                                           <div class="uswds-chart">
                                           <div id="piechartLast" style="display: block;position: relative;"></div>
                                           </div>
