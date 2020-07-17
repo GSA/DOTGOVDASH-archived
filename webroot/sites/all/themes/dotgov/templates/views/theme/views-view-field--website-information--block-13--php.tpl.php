@@ -103,7 +103,7 @@ $chartdatafont = "12px";
     }
   } else {
     print '<div class="col-lg-12">';
-    print 'USWDS Code: <span style="color:#a70000;">Website Redirect - Metric Not Applicable</span></br>';
+    print 'USWDS Code: <span>Website Redirect - Metric Not Applicable</span></br>';
   }
   print '<br><p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version</p>';
   ?>
@@ -111,11 +111,11 @@ $chartdatafont = "12px";
 
 <?php
 if ($chartdata <= 50) {
-    $chartcolor = '#ac0600';
+    $chartcolor = '#664f02';
 } elseif($chartdata>50 and $chartdata<=75) {
-    $chartcolor='#654f00';
+    $chartcolor='#664f02';
 } else {
-    $chartcolor='#29643a';
+    $chartcolor='#664f02';
 }
 ?>
 

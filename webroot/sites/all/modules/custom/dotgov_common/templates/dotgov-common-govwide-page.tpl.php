@@ -1,4 +1,11 @@
-<div class="view view-all-agency-data view-id-all_agency_data view-display-id-block_15 white-back view-dom-id-149e4767a827975c222867424f37ca00">
+<style>
+.no-height{
+    min-height:150px!important;
+    height:auto!important;
+}
+</style>
+
+<div class="view view-all-agency-data view-id-all_agency_data view-display-id-block_15 white-back no-height view-dom-id-149e4767a827975c222867424f37ca00">
     <div class="view-content">
         <div class="table-responsive">
             <table class="views-table cols-11 table table-hover table-striped">
@@ -63,4 +70,3 @@
         </div>
     </div>
 </div>
-
