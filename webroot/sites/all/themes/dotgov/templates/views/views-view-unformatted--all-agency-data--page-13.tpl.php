@@ -871,7 +871,7 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
 $blockObject2 = block_load('trend_analysis', 'agency_m15');
 $block2 = _block_get_renderable_array(_block_render_blocks(array($blockObject2)));
 $output2 = drupal_render($block2);
-print "$output2 <br><span class='col-xs-12 text-center'style='color: " . dotgov_common_getChartColor($agency_m15_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly M-15-13 Trend</span>";
+print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_common_getChartColor($agency_m15_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly M-15-13 Trend</span>";
 ?>
                                                         </div>
 
@@ -1358,8 +1358,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                           <p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
                                        </div>
                                                 </div>
-                                       <div style="display:block; float:left;min-height:145px">
-                                       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
+                                                <div style="display:block;float:left;min-height:145px;position: relative;right: -16%;max-width: 250px;">                                       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
                                           <div class="uswds-chart">
                                           <div id="piechartLast" style="display: block;position: relative;"></div>
                                           </div>
