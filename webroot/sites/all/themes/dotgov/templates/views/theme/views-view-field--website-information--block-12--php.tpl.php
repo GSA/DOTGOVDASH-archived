@@ -143,6 +143,7 @@ $scanpath = drupal_get_path_alias("node/" . arg(1));
             pane: {
                 startAngle: 0,
                 endAngle: 360,
+                size: '75%',
                 background: [{
                     outerRadius: '118%',
                     innerRadius: '80%',
