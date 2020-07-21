@@ -120,7 +120,7 @@ dotgov_common_tooltip("tooltip9","id");
                 dataLabels: {
                     enabled: false
                 },
-                size: '115.35',
+                size: '101.78',
                 <?php if($showlegend == 1) print "showInLegend: true"; ?>
             }
         },
