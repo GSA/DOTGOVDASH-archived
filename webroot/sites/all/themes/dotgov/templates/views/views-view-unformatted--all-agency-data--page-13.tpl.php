@@ -1075,7 +1075,7 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                     </div>
                                     <div class = "col-xs-12-col-sm-12 col-lg-6">
                                        <div id="dap_chart">&nbsp;</div>
-                                      
+
                                        <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                                         <script type="text/javascript">
                                                             Highcharts.chart( 'dap_chart', {
@@ -1410,20 +1410,20 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                     <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span> </div>
                                             </div>
                                         </div>
-                                      
+
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
 
                         <div class="view-button">
                                         <div class="row text-center">
-                                          <a class="" href="/website/all/uswds"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""></a>
+                                          <a class="" href="/website/all/uswds?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""></a>
                                           <a href="https://designsystem.digital.gov/maturity-model/" target="_blank" rel="noopener noreferrer"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""></a>
                                        </div>
                               </div>
-                                    
+
 </div>
                 </div>
             </div>
