@@ -108,7 +108,7 @@ dotgov_common_tooltip("tooltip9","id");
             text: ''
         },
         legend:{
-
+            width: 220
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -120,6 +120,7 @@ dotgov_common_tooltip("tooltip9","id");
                 dataLabels: {
                     enabled: false
                 },
+                size: '115.35',
                 <?php if($showlegend == 1) print "showInLegend: true"; ?>
             }
         },
