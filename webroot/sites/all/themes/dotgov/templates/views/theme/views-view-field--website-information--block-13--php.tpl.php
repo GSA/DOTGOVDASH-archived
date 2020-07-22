@@ -174,6 +174,7 @@ if ($chartdata <= 50) {
                     dataLabels: {
                         enabled: false
                     },
+                    size: '115.35',
                     linecap: 'round',
                     stickyTracking: false,
                     rounded: true

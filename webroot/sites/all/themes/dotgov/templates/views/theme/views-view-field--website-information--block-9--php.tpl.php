@@ -86,7 +86,7 @@ dotgov_common_tooltip("tooltip9","id");
     </div>
 <?php endif; ?>
 
-<div class="col-lg-12 clearfix report-buttons">
+<div class="col-lg-12 clearfix report-buttons nopadding">
     <p>
         <a href="/improve-my-score">How to Improve Score</a>
     </p>

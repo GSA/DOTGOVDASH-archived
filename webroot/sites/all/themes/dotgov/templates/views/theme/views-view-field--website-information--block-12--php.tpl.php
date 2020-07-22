@@ -84,7 +84,7 @@
     ?>
 </div>
 
-<div class="col-lg-6">
+<div class="col-lg-6 site-search-graph">
     <div id="searchengine_chart" style="width: 130px; height:130px; margin: 0 auto">&nbsp;</div>
 </div>
 <?php else: ?>
@@ -143,7 +143,6 @@ $scanpath = drupal_get_path_alias("node/" . arg(1));
             pane: {
                 startAngle: 0,
                 endAngle: 360,
-                size: '75%',
                 background: [{
                     outerRadius: '118%',
                     innerRadius: '80%',
@@ -170,6 +169,7 @@ $scanpath = drupal_get_path_alias("node/" . arg(1));
                     dataLabels: {
                         enabled: false
                     },
+                    size: '115.35',
                     linecap: 'round',
                     stickyTracking: false,
                     rounded: true
