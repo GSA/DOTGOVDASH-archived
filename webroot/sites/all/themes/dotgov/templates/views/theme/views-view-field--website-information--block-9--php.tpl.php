@@ -86,7 +86,7 @@ dotgov_common_tooltip("tooltip9","id");
     </div>
 <?php endif; ?>
 
-<div class="col-lg-12 clearfix report-buttons">
+<div class="col-lg-12 clearfix report-buttons nopadding">
     <p>
         <a href="/improve-my-score">How to Improve Score</a>
     </p>
@@ -108,7 +108,7 @@ dotgov_common_tooltip("tooltip9","id");
             text: ''
         },
         legend:{
-
+            width: 220
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -120,6 +120,7 @@ dotgov_common_tooltip("tooltip9","id");
                 dataLabels: {
                     enabled: false
                 },
+                size: '101.78',
                 <?php if($showlegend == 1) print "showInLegend: true"; ?>
             }
         },

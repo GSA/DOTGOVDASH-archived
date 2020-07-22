@@ -96,6 +96,7 @@ elseif(trim($chartdata) == ''){
             pane: {
                 startAngle: 0,
                 endAngle: 360,
+                size: '75%',
                 background: [{
                     outerRadius: '118%',
                     innerRadius: '80%',

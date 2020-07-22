@@ -28,6 +28,7 @@ else
                 enabled: true
             },
             showInLegend: true,
+            chartArea:{height:'50%',width:'100%'},
             legend: 'none'
         };
 
