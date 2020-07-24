@@ -81,7 +81,8 @@
     // Choose the element and save the PDF for our user.
     html2pdf()
     .set({
-        jsPDF: {format:[500,380]}
+        filename: 'report.pdf',
+        jsPDF: {format:[500,380]},
     })
     .from(element)
     .save();
@@ -169,7 +170,7 @@ Helping Federal Agencies Do Digital Better			</h2>
                     </div>
     </div>
 </div>
-<div class="main-container"  id="main-container" <?php print $container_class; ?>">
+<div class="main-container <?php print $container_class; ?>" id="main-container">
 
   <header role="banner" id="page-header">
     <?php if (!empty($site_slogan)): ?>
