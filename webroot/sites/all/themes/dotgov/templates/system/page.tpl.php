@@ -73,6 +73,20 @@
  * @ingroup templates
  */
 ?>
+<script src="/sites/all/themes/dotgov/js/html2pdf.bundle.min.js"></script>
+<script type="text/javascript">
+  function generatePDF() {
+    // Choose the element that our invoice is rendered in.
+    var element = document.getElementById("main-container");
+    // Choose the element and save the PDF for our user.
+    html2pdf()
+    .set({
+        jsPDF: {format:[500,380]}
+    })
+    .from(element)
+    .save();
+  }
+</script>
 <div class="top-bar">
 			<!-- top header-->
 			<div class="container-fluid">
@@ -155,7 +169,7 @@ Helping Federal Agencies Do Digital Better			</h2>
                     </div>
     </div>
 </div>
-<div class="main-container <?php print $container_class; ?>">
+<div class="main-container"  id="main-container" <?php print $container_class; ?>">
 
   <header role="banner" id="page-header">
     <?php if (!empty($site_slogan)): ?>
