@@ -889,7 +889,7 @@ function getSiteInspectorOutput($domain){
  */
 
 function getDnssecStatus($domain){
-    $dnsseccom = "dig +dnssec $domain @8.8.8.8|grep -i 'rrsig'";
+    $dnsseccom = "dig +dnssec $domain @205.171.2.65|grep -i 'rrsig'";
     $outp = array();
     $comret = "";
     execCommand("$dnsseccom",$outp,$comret);
