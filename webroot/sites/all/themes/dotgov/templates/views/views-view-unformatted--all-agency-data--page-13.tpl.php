@@ -63,6 +63,8 @@ $agency_uswds_score = round(db_query("select avg(c.field_uswds_score_value) as a
 $agencynode = node_load(arg(1));
 
 ?>
+<!-- <div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="unfinished bingo card" onclick="generatePDF()"></div> -->
+
 <div class="main-container container-fluid">
     <div class="row">
         <section class="col-sm-12">
@@ -184,6 +186,7 @@ if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
                                                                     Highcharts.chart( 'mobile_chart', {
                                                                             chart: {
                                                                                 type: 'solidgauge',
+                                                                                height:140
                                                                                 backgroundColor: 'transparent'
                                                                             },
                                                                             title: {
@@ -225,6 +228,7 @@ if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
                                                                                     dataLabels: {
                                                                                         enabled: false
                                                                                     },
+                                                                                    size: '115.35',
                                                                                     linecap: 'round',
                                                                                     stickyTracking: false,
                                                                                     rounded: true
@@ -1075,7 +1079,7 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                     </div>
                                     <div class = "col-xs-12-col-sm-12 col-lg-6">
                                        <div id="dap_chart">&nbsp;</div>
-
+                                      
                                        <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                                         <script type="text/javascript">
                                                             Highcharts.chart( 'dap_chart', {
@@ -1410,20 +1414,20 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                     <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span> </div>
                                             </div>
                                         </div>
-
+                                      
                                     </div>
-
+                                    
                                 </div>
                             </div>
                         </div>
 
                         <div class="view-button">
                                         <div class="row text-center">
-                                          <a class="" href="/website/all/uswds?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""></a>
+                                          <a class="" href="/website/all/uswds"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""></a>
                                           <a href="https://designsystem.digital.gov/maturity-model/" target="_blank" rel="noopener noreferrer"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""></a>
                                        </div>
                               </div>
-
+                                    
 </div>
                 </div>
             </div>
