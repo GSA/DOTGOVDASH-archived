@@ -31,12 +31,12 @@ $chartseries = array_values($chartdata);
 <?php
 drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
 ?>
-<div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="unfinished bingo card" onclick="generatePDF()"></div>
+<!-- <div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="unfinished bingo card" onclick="generatePDF()"></div> -->
 <div id="demo-page">
    <div  class="main-govwidecontents">
       <div class="content-wrap">
          <div class="col-lg-4 col-sm-12 col-xs-12 text-center">
-            <br> <span style="font-size:15px;text-align:center;">Total Anvesh Federal Executive Branch Agencies Reported: <?=$agencynos?></span>
+            <br> <span style="font-size:15px;text-align:center;">Total Federal Executive Branch Agencies Reported: <?=$agencynos?></span>
          </div>
          <div class="col-lg-4 col-sm-12 col-xs-12 text-center">
             <img src="<?php echo $base_url; ?>/sites/all/modules/custom/dotgov_common/images/gov-wide-report-logo.png " alt="Govwide Report" style="width:100px; height:100px;"/>
