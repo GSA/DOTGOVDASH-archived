@@ -63,7 +63,7 @@ $agency_uswds_score = round(db_query("select avg(c.field_uswds_score_value) as a
 $agencynode = node_load(arg(1));
 
 ?>
-<!-- <div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="unfinished bingo card" onclick="generatePDF()"></div> -->
+<div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="unfinished bingo card" onclick="generatePDF()"></div>
 
 <div class="main-container container-fluid">
     <div class="row">
@@ -1394,8 +1394,24 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                         var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));
 
                                                         chart.draw(data, options);
+
+                                                        var svgTags = document.querySelectorAll('#piechartLast svg');
+
+                                                        // Process SVG tags
+                                                        for (var i=0; i<svgTags.length; i++) {
+                                                            var svgTag = svgTags[i];
+                                                            var c = document.createElement('canvas');
+                                                            c.width = svgTag.clientWidth;
+                                                            c.height = svgTag.clientHeight;
+                                                            svgTag.parentNode.insertBefore(c, svgTag);
+                                                            svgTag.parentNode.removeChild(svgTag);
+                                                            var div = document.createElement('div');
+                                                            div.appendChild(svgTag);
+                                                            canvg(c, div.innerHTML);
+                                                        }
                                                     }
-                                                </script>
+                                    </script>
+                                    
 
                                                 <table style="width:100%;">
 
