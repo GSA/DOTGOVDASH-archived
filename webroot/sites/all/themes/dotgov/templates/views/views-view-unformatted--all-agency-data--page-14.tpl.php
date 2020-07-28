@@ -91,10 +91,10 @@ foreach ($view->style_plugin->rendered_fields[0] as $key => $val) {
 $agencynode = node_load($curuserAgency);
 drupal_set_title($agencynode->title);
 ?>
-<!-- <div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="unfinished bingo card" onclick="generatePDF()"></div> -->
-<div class="main-container container-fluid">
+<div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="unfinished bingo card" onclick="generatePDF()"></div>
+<div class="main-container container-fluid nopadding">
     <div class="row">
-        <section class="col-sm-12">
+        <section class="col-sm-12 nopadding">
             <div class="col-xs-12 nopadding clearfix">
                 <div class="col-xs-12">
                     <div class="field-content">
@@ -1375,15 +1375,21 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
                                           <p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
                                        </div>
-                                                </div>
-                                                <div class="uswds-chart-container-2" style="display:block;float:left;min-height:145px;position: relative;max-width: 250px;">                                       
-                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
-                                          <div class="uswds-chart">
-                                          <div id="piechartLast" style="display: block;position: relative;"></div>
-                                          </div>
-                                       </div>
+                                </div>
+                                <div style="display:block; float:left;max-height:145px; width:100%;">
+                                    <div class="col-xs-6 col-sm-6 col-lg-6" style="margin-top: 30px;">
+                                        
+                                        <ul class="uswds nopadding" style="font-size:12px; margin-left: 16px; line-height: 16px;">
+                                        <li class="ud">USWDS Code Detected</li>
+                                        <li class="und">USWDS Code Not Detected</li>
+                                        </ul>
+                                        
                                     </div>
-                                                <script language="JavaScript">
+                                    <div class="col-xs-6 col-sm-6 col-lg-6">
+                                        <div id="piechartLast" style="max-width: 265px;float: right;"></div>
+                                    </div>
+                            
+                                    <script language="JavaScript">
                                                     google.charts.load('current', {'packages':['corechart']});
                                                     google.charts.setOnLoadCallback(drawuswdsChart);
 
@@ -1400,17 +1406,21 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                             dataLabels: {
                                                                 enabled: true
                                                             },
+                                                            legend: {position: 'none'},
                                                             showInLegend: true,
                                                             backgroundColor:"transparent",
-                                                            chartArea:{left:15,top:15,height: '55%',width:'65%'},
-                                                            legend:{position:'left',alignment:'center'}
+                                                            chartArea:{left:'35%',bottom: '30%',height: 180,width:115.35},
+                                                            // legend:{position:'left',alignment:'center'}
                                                         };
 
                                                         var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));
 
                                                         chart.draw(data, options);
+                                                        
+                                                              
                                                     }
                                                 </script>
+                                            </div>
 
                                                 <table style="width:100%;">
 
