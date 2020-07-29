@@ -1090,8 +1090,6 @@
                                                              y: 30
                                                          },
                                              
-                                             
-                                             
                                                      },
                                              
                                                      plotOptions: {
@@ -1118,6 +1116,9 @@
                                              
                                              
                                              );
+
+                                            
+                                             
                                           </script>
                                        </div>
                                     </div>
@@ -1303,7 +1304,7 @@
                      <div class="col-xs-2 nopadding">
                         <div id="tooltip10" class="infor">
                            <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i
-                              class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
+                              class='icon glyphicon glyphicon-info-sign' style="padding-right: 4px;"></i></a>
                         </div>
                      </div>
                      <br clear="all" />
@@ -1343,7 +1344,7 @@
                                                   ['USWDS Code Not Detected', <?php echo number_format($agencydata['uswds_noncompliant'], 1, '.', ''); ?>],
                                               ]);
                                               var options = {
-                                               
+                                                  width: 200,
                                                   colors: ['#66746a', '#8ac99c'],
                                                   sliceVisibilityThreshold: 0,
                                                   dataLabels: {
@@ -1353,13 +1354,11 @@
                                                   showInLegend: true,
                                                   backgroundColor:"transparent",
                                                   chartArea:{left:'35%',bottom: '30%',height: 180,width:115.35},
-                                                  // legend:{position:'left',alignment:'center'}
                                               };
                                           
                                               var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));
                                           
                                               chart.draw(data, options);
-                                              
                                           }
                                        </script>
                                     </div>

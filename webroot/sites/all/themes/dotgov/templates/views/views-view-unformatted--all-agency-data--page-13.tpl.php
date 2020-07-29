@@ -1347,7 +1347,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                 </div>
                                 <div class="col-xs-2 nopadding">
                         <div id="tooltip3" class="infor">
-                           <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
+                           <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign' style="padding-right: 4px;"></i></a>
                         </div>
                      </div>
                      <br clear="all"/>
@@ -1362,7 +1362,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                           <p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
                                        </div>
                                                 </div>
-                                                <div style="display:block; float:left;max-height:145px; margin-left: 16px; width:100%;">
+                                                <div style="display:block; float:left;max-height:145px; width:100%;">
                                     <div class="col-xs-6 col-sm-6 col-lg-6" style="margin-top: 30px;">
                                         
                                         <ul class="uswds nopadding" style="font-size:12px; line-height: 16px;">
@@ -1387,6 +1387,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                             ['USWDS Code Not Detected', <?php echo number_format($agencydata['uswds_noncompliant'], 1, '.', ''); ?>],
                                                         ]);
                                                         var options = {
+                                                            width: 200,
                                                             colors: ['#66746a', '#8ac99c'],
                                                             sliceVisibilityThreshold: 0,
                                                             dataLabels: {
@@ -1396,12 +1397,12 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                             showInLegend: true,
                                                             backgroundColor:"transparent",
                                                             chartArea:{left:'35%',bottom: '30%',height: 180,width:115.35},
-                                                            // legend:{position:'left',alignment:'center'}
                                                         };
 
                                                         var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));
 
                                                         chart.draw(data, options);
+                                                        
                                                                                                           
                                                     }
                                                 </script>
@@ -1433,7 +1434,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
 
                         <div class="view-button">
                                         <div class="row text-center">
-                                          <a class="" href="/website/all/uswds"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""></a>
+                                          <a class="" href="/website/all/uswds?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""></a>
                                           <a href="https://designsystem.digital.gov/maturity-model/" target="_blank" rel="noopener noreferrer"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""></a>
                                        </div>
                               </div>
