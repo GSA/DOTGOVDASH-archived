@@ -1361,7 +1361,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                 </div>
                                 <div class="col-xs-2 nopadding">
                         <div id="tooltip3" class="infor">
-                           <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
+                           <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign' style="padding-right: 4px;"></i></a>
                         </div>
                      </div>
                      <br clear="all"/>
@@ -1380,8 +1380,8 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                     <div class="col-xs-6 col-sm-6 col-lg-6" style="margin-top: 30px;">
                                         
                                         <ul class="uswds nopadding" style="font-size:12px; margin-left: 16px; line-height: 16px;">
-                                        <li class="ud">USWDS Code Detected</li>
-                                        <li class="und">USWDS Code Not Detected</li>
+                                            <li class="und">USWDS Code Detected</li>
+                                            <li class="ud">USWDS Code Not Detected</li>
                                         </ul>
                                         
                                     </div>

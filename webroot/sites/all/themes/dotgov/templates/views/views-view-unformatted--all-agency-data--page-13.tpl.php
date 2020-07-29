@@ -1347,7 +1347,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                 </div>
                                 <div class="col-xs-2 nopadding">
                         <div id="tooltip3" class="infor">
-                           <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
+                           <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign' style="padding-right: 4px;"></i></a>
                         </div>
                      </div>
                      <br clear="all"/>
@@ -1366,8 +1366,8 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                     <div class="col-xs-6 col-sm-6 col-lg-6" style="margin-top: 30px;">
                                         
                                         <ul class="uswds nopadding" style="font-size:12px; line-height: 16px;">
-                                        <li class="ud">USWDS Code Detected</li>
-                                        <li class="und">USWDS Code Not Detected</li>
+                                            <li class="und">USWDS Code Detected</li>
+                                            <li class="ud">USWDS Code Not Detected</li>
                                         </ul>
                                         
                                     </div>
@@ -1434,7 +1434,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
 
                         <div class="view-button">
                                         <div class="row text-center">
-                                          <a class="" href="/website/all/uswds"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""></a>
+                                          <a class="" href="/website/all/uswds?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""></a>
                                           <a href="https://designsystem.digital.gov/maturity-model/" target="_blank" rel="noopener noreferrer"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""></a>
                                        </div>
                               </div>
