@@ -1387,13 +1387,7 @@
                                     excluded)</span>
                                  </div>
                               </div>
-                              <div class="col-xs-12 nopadding clearfix"> <?php
-                                 $blockObject6 = block_load('trend_analysis', 'agency_dap');
-                                 $block6 = _block_get_renderable_array(_block_render_blocks(array($blockObject6)));
-                                 $output6 = drupal_render($block6);
-                                 print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: " . dotgov_common_getChartColor($agency_dap_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly DAP Trend</span>";
-                                 ?>
-                              </div>
+                              
                            </div>
                         </div>
                      </div>
