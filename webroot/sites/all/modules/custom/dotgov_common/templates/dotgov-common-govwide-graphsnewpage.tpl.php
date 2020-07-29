@@ -2,73 +2,67 @@
    .page-overall-gov-wide-compliance .view-wrapper {
    min-height: 430px;
    }
-
    .font-italic {
    font-style:italic;
    }
-
    .panel-pane h2.pane-title{
    height:40px;
    }
    .white-back{
-        min-height:530px!important;
-        height:auto;
-    }
-
-   .no-height{
-      min-height:150px!important;
-      height:auto!important;
+   min-height:530px!important;
+   height:auto;
    }
-
+   .no-height{
+   min-height:150px!important;
+   height:auto!important;
+   }
    .min-295 {
-        min-height: 295px;
-    }
-
-    .min-300 {
-        min-height: 300px;
-    }
-
+   min-height: 295px;
+   }
+   .min-300 {
+   min-height: 300px;
+   }
 </style>
 <?php
-global $base_url;
-
-drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
-$labeldesc['avg_https'] = 'HTTPS Score';
-$labeldesc['avg_dap'] = 'DAP Score';
-$labeldesc['avg_mob_overall'] = 'Mobile Overall Score';
-$labeldesc['avg_mob_perform'] = 'Mobile Performance Score';
-$labeldesc['avg_mob_usab'] = 'Mobile Usability Score';
-$labeldesc['avg_sitespeed'] = 'Site Speed Score';
-$labeldesc['avg_ipv6'] = 'IPv6 Score';
-$labeldesc['avg_dnssec'] = 'DNSSEC Score';
-$labeldesc['avg_rc4'] = 'Free of RC4/3DES and SSLv2/SSLv3 Score';
-$labeldesc['avg_m15'] = 'M-15-13 and BOD 18-01 Compliance Score';
-$labeldesc['avg_uswds'] = 'USWDS Score';
-
-$no_of_agency = $govwidedata['actualdata']['agencynos'];
-$agency_website_num = $govwidedata['actualdata']['websitenos'];
-$agency_dap_score = $govwidedata['actualdata']['avg_dap'];
-$agency_https_score = $govwidedata['actualdata']['avg_https'];
-$agency_mobovr_score = $govwidedata['actualdata']['avg_mob_overall'];
-$agency_mobperf_score = $govwidedata['actualdata']['avg_mob_perform'];
-$agency_mobusab_score = $govwidedata['actualdata']['avg_mob_usab'];
-$agency_dnssec_score = $govwidedata['actualdata']['avg_dnssec'];
-$agency_ipv6_score = $govwidedata['actualdata']['avg_ipv6'];
-$agency_insecprot_score = $govwidedata['actualdata']['avg_rc4'];
-$agency_m15_score = $govwidedata['actualdata']['avg_m15'];
-$agency_uswds_score = $govwidedata['actualdata']['avg_uswds'];
-
-$agencydata = dotgov_common_getAllAgencyComplianceData();
-dotgov_common_tooltip("tooltip2", "id");
-dotgov_common_tooltip("tooltip4", "id");
-dotgov_common_tooltip("tooltip3", "id");
-dotgov_common_tooltip("tooltip5", "id");
-dotgov_common_tooltip("tooltip7", "id");
-dotgov_common_tooltip("tooltip6", "id");
-dotgov_common_tooltip("tooltip9", "id");
-dotgov_common_tooltip("tooltip8", "id");
-dotgov_common_tooltip("tooltip10", "id");
-?>
+   global $base_url;
+   
+   drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
+   $labeldesc['avg_https'] = 'HTTPS Score';
+   $labeldesc['avg_dap'] = 'DAP Score';
+   $labeldesc['avg_mob_overall'] = 'Mobile Overall Score';
+   $labeldesc['avg_mob_perform'] = 'Mobile Performance Score';
+   $labeldesc['avg_mob_usab'] = 'Mobile Usability Score';
+   $labeldesc['avg_sitespeed'] = 'Site Speed Score';
+   $labeldesc['avg_ipv6'] = 'IPv6 Score';
+   $labeldesc['avg_dnssec'] = 'DNSSEC Score';
+   $labeldesc['avg_rc4'] = 'Free of RC4/3DES and SSLv2/SSLv3 Score';
+   $labeldesc['avg_m15'] = 'M-15-13 and BOD 18-01 Compliance Score';
+   $labeldesc['avg_uswds'] = 'USWDS Score';
+   
+   $no_of_agency = $govwidedata['actualdata']['agencynos'];
+   $agency_website_num = $govwidedata['actualdata']['websitenos'];
+   $agency_dap_score = $govwidedata['actualdata']['avg_dap'];
+   $agency_https_score = $govwidedata['actualdata']['avg_https'];
+   $agency_mobovr_score = $govwidedata['actualdata']['avg_mob_overall'];
+   $agency_mobperf_score = $govwidedata['actualdata']['avg_mob_perform'];
+   $agency_mobusab_score = $govwidedata['actualdata']['avg_mob_usab'];
+   $agency_dnssec_score = $govwidedata['actualdata']['avg_dnssec'];
+   $agency_ipv6_score = $govwidedata['actualdata']['avg_ipv6'];
+   $agency_insecprot_score = $govwidedata['actualdata']['avg_rc4'];
+   $agency_m15_score = $govwidedata['actualdata']['avg_m15'];
+   $agency_uswds_score = $govwidedata['actualdata']['avg_uswds'];
+   
+   $agencydata = dotgov_common_getAllAgencyComplianceData();
+   dotgov_common_tooltip("tooltip2", "id");
+   dotgov_common_tooltip("tooltip4", "id");
+   dotgov_common_tooltip("tooltip3", "id");
+   dotgov_common_tooltip("tooltip5", "id");
+   dotgov_common_tooltip("tooltip7", "id");
+   dotgov_common_tooltip("tooltip6", "id");
+   dotgov_common_tooltip("tooltip9", "id");
+   dotgov_common_tooltip("tooltip8", "id");
+   dotgov_common_tooltip("tooltip10", "id");
+   ?>
 <?php //print_r($govwidedata);print_r($agencydata);  ?>
 <div class="row">
    <div class="col-sm-12 nopadding">
@@ -101,29 +95,29 @@ dotgov_common_tooltip("tooltip10", "id");
                                  <div class="view-wrapper-new clearfix">
                                     <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
                                        <?php
-if ($agency_mobperf_score >= '0' && $agency_mobperf_score < '50') {
-    $mobperfmstat = "Slow";
-
-} elseif ($agency_mobperf_score >= '50' && $agency_mobperf_score < '90') {
-    $mobperfmstat = "Moderate";
-
-} elseif ($agency_mobperf_score >= '90' && $agency_mobperf_score <= '100') {
-    $mobperfmstat = "Fast";
-
-}
-
-if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
-    $mobusabstat = "Low";
-
-} elseif ($agency_mobusab_score >= '50' && $agency_mobusab_score < '90') {
-    $mobusabstat = "Medium";
-
-} elseif ($agency_mobusab_score >= '90' && $agency_mobusab_score <= '100') {
-    $mobusabstat = "Good";
-
-}
-
-?>
+                                          if ($agency_mobperf_score >= '0' && $agency_mobperf_score < '50') {
+                                             $mobperfmstat = "Slow";
+                                          
+                                          } elseif ($agency_mobperf_score >= '50' && $agency_mobperf_score < '90') {
+                                             $mobperfmstat = "Moderate";
+                                          
+                                          } elseif ($agency_mobperf_score >= '90' && $agency_mobperf_score <= '100') {
+                                             $mobperfmstat = "Fast";
+                                          
+                                          }
+                                          
+                                          if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
+                                             $mobusabstat = "Low";
+                                          
+                                          } elseif ($agency_mobusab_score >= '50' && $agency_mobusab_score < '90') {
+                                             $mobusabstat = "Medium";
+                                          
+                                          } elseif ($agency_mobusab_score >= '90' && $agency_mobusab_score <= '100') {
+                                             $mobusabstat = "Good";
+                                          
+                                          }
+                                          
+                                          ?>
                                        <div class="col-xs-12 clearfix">
                                           <div class="views-field views-field-php-2 col-lg-6 nopadding grey-gradient" style="height:155px;">
                                              <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
@@ -183,7 +177,7 @@ if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
                                                                max: 100,
                                                                lineWidth: 0,
                                                                tickPositions: [],
-
+                                                   
                                                                title: {
                                                                    text: '<?php echo $agency_mobovr_score; ?>',
                                                                    style: {
@@ -192,11 +186,11 @@ if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
                                                                    },
                                                                    y: 30
                                                                },
-
-
-
+                                                   
+                                                   
+                                                   
                                                            },
-
+                                                   
                                                            plotOptions: {
                                                                solidgauge: {
                                                                    dataLabels: {
@@ -207,7 +201,7 @@ if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
                                                                    rounded: true
                                                                }
                                                            },
-
+                                                   
                                                            series: [ {
                                                                name: 'Mobile Chart',
                                                                data: [ {
@@ -218,8 +212,8 @@ if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
                                                                } ]
                                                            } ]
                                                        }
-
-
+                                                   
+                                                   
                                                    );
                                                 </script>
                                              </div>
@@ -229,11 +223,11 @@ if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
                                        <div class="views-field views-field-php-1 clearfix">
                                           <div class="field-content">
                                              <?php
-$blockObject1 = block_load('trend_analysis', 'agency_mob');
-$block1 = _block_get_renderable_array(_block_render_blocks(array($blockObject1)));
-$output1 = drupal_render($block1);
-print "$output1";
-?>
+                                                $blockObject1 = block_load('trend_analysis', 'agency_mob');
+                                                $block1 = _block_get_renderable_array(_block_render_blocks(array($blockObject1)));
+                                                $output1 = drupal_render($block1);
+                                                print "$output1";
+                                                ?>
                                           </div>
                                        </div>
                                     </div>
@@ -299,9 +293,9 @@ print "$output1";
                                     <script language="JavaScript">
                                        google.charts.load('current', {'packages':['corechart']});
                                        google.charts.setOnLoadCallback(drawChart);
-
+                                       
                                        function drawChart() {
-
+                                       
                                            var data = google.visualization.arrayToDataTable([
                                                ['Type', 'Number'],
                                                ['Color Contrast Issues',     <?php echo number_format($agencydata['ag_col_contrast'], 1, '.', ''); ?>],
@@ -319,19 +313,19 @@ print "$output1";
                                                chartArea:{left:0,top:20,width:'100%',height:'50%'},
                                                legend:{position:'left',alignment:'center'}
                                            };
-
+                                       
                                            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
+                                       
                                            chart.draw(data, options);
                                        }
                                     </script>
                                     <?php
-if (($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydata['ag_miss_image']) != 0) {
-    print "<div class='col-lg-12 text-center clearfix'><span style='color:#29643a; font-size: 10px;font-style: italic;'>
-                                       Above graph shows the breakdown of Accessibility issues by category</span></div>
-                                       ";
-}
-?>
+                                       if (($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydata['ag_miss_image']) != 0) {
+                                          print "<div class='col-lg-12 text-center clearfix'><span style='color:#29643a; font-size: 10px;font-style: italic;'>
+                                                                              Above graph shows the breakdown of Accessibility issues by category</span></div>
+                                                                              ";
+                                       }
+                                       ?>
                                  </div>
                               </div>
                            </div>
@@ -397,23 +391,23 @@ if (($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydat
                                              <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                              <script type="text/javascript">
                                                 Highcharts.chart( 'dnssec_chart', {
-
+                                                
                                                         chart: {
                                                             type: 'solidgauge',
                                                             backgroundColor: 'transparent'
-
+                                                
                                                         },
-
+                                                
                                                         title: {
-
+                                                
                                                             text: ''
-
+                                                
                                                         },
-
+                                                
                                                         tooltip: {
                                                             enabled: false,
                                                         },
-
+                                                
                                                         pane: {
                                                             startAngle: 0,
                                                             endAngle: 360,
@@ -424,13 +418,13 @@ if (($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydat
                                                                 borderWidth: 0
                                                             } ]
                                                         },
-
+                                                
                                                         yAxis: {
                                                             min: 0,
                                                             max: 100,
                                                             lineWidth: 0,
                                                             tickPositions: [],
-
+                                                
                                                             title: {
                                                                 text: '<?php echo $agency_dnssec_score; ?> %',
                                                                 style: {
@@ -439,11 +433,11 @@ if (($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydat
                                                                 },
                                                                 y: 30
                                                             },
-
-
-
+                                                
+                                                
+                                                
                                                         },
-
+                                                
                                                         plotOptions: {
                                                             solidgauge: {
                                                                 dataLabels: {
@@ -454,7 +448,7 @@ if (($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydat
                                                                 rounded: true
                                                             }
                                                         },
-
+                                                
                                                         series: [ {
                                                             name: 'DNSSEC Chart',
                                                             data: [ {
@@ -465,18 +459,18 @@ if (($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydat
                                                             } ]
                                                         } ]
                                                     }
-
-
+                                                
+                                                
                                                 );
                                              </script>
                                           </div>
                                           <div class="col-xs-12 col-lg-12">
                                              <?php
-$blockObject4 = block_load('trend_analysis', 'agency_dnssec');
-$block4 = _block_get_renderable_array(_block_render_blocks(array($blockObject4)));
-$output4 = drupal_render($block4);
-print "$output4<br><div class='col-lg-12 text-center clearfix'><span style='color: " . dotgov_common_getChartColor($agency_dnssec_score) . ";font-size: 10px;font-style: italic;'>Above graph represents a monthly DNSSEC Trend</span></div>";
-?>
+                                                $blockObject4 = block_load('trend_analysis', 'agency_dnssec');
+                                                $block4 = _block_get_renderable_array(_block_render_blocks(array($blockObject4)));
+                                                $output4 = drupal_render($block4);
+                                                print "$output4<br><div class='col-lg-12 text-center clearfix'><span style='color: " . dotgov_common_getChartColor($agency_dnssec_score) . ";font-size: 10px;font-style: italic;'>Above graph represents a monthly DNSSEC Trend</span></div>";
+                                                ?>
                                           </div>
                                        </div>
                                        <div class="view-button">
@@ -512,26 +506,26 @@ print "$output4<br><div class='col-lg-12 text-center clearfix'><span style='colo
                                  <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient pie-chart" >
                                     <div id="piechart3"></div>
                                     <?php print $agencydata['searchengines_graph'];
-//print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines</span>";
-?>
+                                       //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines</span>";
+                                       ?>
                                     <table style="width:100%">
                                        <tr style="background-color: #215393;color: white;">
                                           <td>On-Site Search Engine</td>
                                           <td>&nbsp;Total</td>
                                        </tr>
                                        <?php
-foreach ($agencydata['searchenginedata'] as $skey => $sval) {
-    print "<tr style='text-transform: capitalize;'><td>" . ucfirst($skey) . "</td><td align='center'>   $sval</td> </tr>";
-}
-?>
+                                          foreach ($agencydata['searchenginedata'] as $skey => $sval) {
+                                             print "<tr style='text-transform: capitalize;'><td>" . ucfirst($skey) . "</td><td align='center'>   $sval</td> </tr>";
+                                          }
+                                          ?>
                                     </table>
                                  </div>
                                  <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient min-300 second bar-chart" >
                                     <div id="piechart2"></div>
                                     <?php print $agencydata['searchenginestatus_graph'];
-//print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines by category</span>";
-$searchenginestatus = $agencydata['searchenginestatus'];
-?>
+                                       //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines by category</span>";
+                                       $searchenginestatus = $agencydata['searchenginestatus'];
+                                       ?>
                                     <table>
                                        <tr style="background-color: #215393;color: white;">
                                           <td> On-Site Search Available</td>
@@ -593,23 +587,23 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                        <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                        <script type="text/javascript">
                                           Highcharts.chart( 'https_chart', {
-
+                                          
                                                   chart: {
                                                       type: 'solidgauge',
                                                       backgroundColor: 'transparent'
-
+                                          
                                                   },
-
+                                          
                                                   title: {
-
+                                          
                                                       text: ''
-
+                                          
                                                   },
-
+                                          
                                                   tooltip: {
                                                       enabled: false,
                                                   },
-
+                                          
                                                   pane: {
                                                       startAngle: 0,
                                                       endAngle: 360,
@@ -620,13 +614,13 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                                           borderWidth: 0
                                                       } ]
                                                   },
-
+                                          
                                                   yAxis: {
                                                       min: 0,
                                                       max: 100,
                                                       lineWidth: 0,
                                                       tickPositions: [],
-
+                                          
                                                       title: {
                                                           text: '<?php echo $agency_https_score; ?> %',
                                                           style: {
@@ -635,11 +629,11 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                                           },
                                                           y: 30
                                                       },
-
-
-
+                                          
+                                          
+                                          
                                                   },
-
+                                          
                                                   plotOptions: {
                                                       solidgauge: {
                                                           dataLabels: {
@@ -650,7 +644,7 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                                           rounded: true
                                                       }
                                                   },
-
+                                          
                                                   series: [ {
                                                       name: 'Free of Insecure Protocol Chart',
                                                       data: [ {
@@ -661,8 +655,8 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                                       } ]
                                                   } ]
                                               }
-
-
+                                          
+                                          
                                           );
                                        </script>
                                     </div>
@@ -701,11 +695,11 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                               </div>
                               <div class="row">
                                  <?php
-$blockObject3 = block_load('trend_analysis', 'agency_https');
-$block3 = _block_get_renderable_array(_block_render_blocks(array($blockObject3)));
-$output3 = drupal_render($block3);
-print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . dotgov_common_getChartColor($agency_https_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly HTTPS Trend</span>";
-?>
+                                    $blockObject3 = block_load('trend_analysis', 'agency_https');
+                                    $block3 = _block_get_renderable_array(_block_render_blocks(array($blockObject3)));
+                                    $output3 = drupal_render($block3);
+                                    print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . dotgov_common_getChartColor($agency_https_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly HTTPS Trend</span>";
+                                    ?>
                               </div>
                            </div>
                            <div class="view-button">
@@ -751,23 +745,23 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                                 <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                                 <script type="text/javascript">
                                                    Highcharts.chart( 'm1513_chart', {
-
+                                                   
                                                            chart: {
                                                                type: 'solidgauge',
                                                                backgroundColor:'transparent'
-
+                                                   
                                                            },
-
+                                                   
                                                            title: {
-
+                                                   
                                                                text: ''
-
+                                                   
                                                            },
-
+                                                   
                                                            tooltip: {
                                                                enabled: false,
                                                            },
-
+                                                   
                                                            pane: {
                                                                startAngle: 0,
                                                                endAngle: 360,
@@ -778,13 +772,13 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                                                    borderWidth: 0
                                                                } ]
                                                            },
-
+                                                   
                                                            yAxis: {
                                                                min: 0,
                                                                max: 100,
                                                                lineWidth: 0,
                                                                tickPositions: [],
-
+                                                   
                                                                title: {
                                                                    text: '<?php echo $agency_m15_score; ?> %',
                                                                    style: {
@@ -793,11 +787,11 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                                                    },
                                                                    y: 30
                                                                },
-
-
-
+                                                   
+                                                   
+                                                   
                                                            },
-
+                                                   
                                                            plotOptions: {
                                                                solidgauge: {
                                                                    dataLabels: {
@@ -808,7 +802,7 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                                                    rounded: true
                                                                }
                                                            },
-
+                                                   
                                                            series: [ {
                                                                name: 'M-15-13 Chart',
                                                                data: [ {
@@ -819,8 +813,8 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                                                } ]
                                                            } ]
                                                        }
-
-
+                                                   
+                                                   
                                                    );
                                                 </script>
                                              </div>
@@ -841,11 +835,11 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                        </div>
                                        <div class="col-xs-12 clearfix">
                                           <?php
-$blockObject2 = block_load('trend_analysis', 'agency_m15');
-$block2 = _block_get_renderable_array(_block_render_blocks(array($blockObject2)));
-$output2 = drupal_render($block2);
-print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_common_getChartColor($agency_m15_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly M-15-13 Trend</span>";
-?>
+                                             $blockObject2 = block_load('trend_analysis', 'agency_m15');
+                                             $block2 = _block_get_renderable_array(_block_render_blocks(array($blockObject2)));
+                                             $output2 = drupal_render($block2);
+                                             print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_common_getChartColor($agency_m15_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly M-15-13 Trend</span>";
+                                             ?>
                                        </div>
                                     </div>
                                     <div class="view-button">
@@ -898,23 +892,23 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                                    <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                                    <script type="text/javascript">
                                                       Highcharts.chart( 'ipv6_chart', {
-
+                                                      
                                                               chart: {
                                                                   type: 'solidgauge',
                                                                   backgroundColor:'transparent'
-
+                                                      
                                                               },
-
+                                                      
                                                               title: {
-
+                                                      
                                                                   text: ''
-
+                                                      
                                                               },
-
+                                                      
                                                               tooltip: {
                                                                   enabled: false,
                                                               },
-
+                                                      
                                                               pane: {
                                                                   startAngle: 0,
                                                                   endAngle: 360,
@@ -925,13 +919,13 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                                                       borderWidth: 0
                                                                   } ]
                                                               },
-
+                                                      
                                                               yAxis: {
                                                                   min: 0,
                                                                   max: 100,
                                                                   lineWidth: 0,
                                                                   tickPositions: [],
-
+                                                      
                                                                   title: {
                                                                       text: '<?php echo $agency_ipv6_score; ?> %',
                                                                       style: {
@@ -940,11 +934,11 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                                                       },
                                                                       y: 30
                                                                   },
-
-
-
+                                                      
+                                                      
+                                                      
                                                               },
-
+                                                      
                                                               plotOptions: {
                                                                   solidgauge: {
                                                                       dataLabels: {
@@ -955,7 +949,7 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                                                       rounded: true
                                                                   }
                                                               },
-
+                                                      
                                                               series: [ {
                                                                   name: 'Free of Insecure Protocol Chart',
                                                                   data: [ {
@@ -966,8 +960,8 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                                                   } ]
                                                               } ]
                                                           }
-
-
+                                                      
+                                                      
                                                       );
                                                    </script>
                                                 </div>
@@ -988,11 +982,11 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                           </div>
                                           <div class="row">
                                              <?php
-$blockObject7 = block_load('trend_analysis', 'agency_ipv6');
-$block7 = _block_get_renderable_array(_block_render_blocks(array($blockObject7)));
-$output7 = drupal_render($block7);
-print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . dotgov_common_getChartColor($agency_ipv6_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly IPv6 Trend</span>";
-?>
+                                                $blockObject7 = block_load('trend_analysis', 'agency_ipv6');
+                                                $block7 = _block_get_renderable_array(_block_render_blocks(array($blockObject7)));
+                                                $output7 = drupal_render($block7);
+                                                print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . dotgov_common_getChartColor($agency_ipv6_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly IPv6 Trend</span>";
+                                                ?>
                                           </div>
                                        </div>
                                        <div class="view-button">
@@ -1045,87 +1039,88 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                        </p>
                                     </div>
                                     <div style="display:block; float:left;min-height:145px; width:100%;">
-                                    <div class="col-xs-12-col-sm-12 col-lg-6" style="margin-top: 30px;">
-                                       <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
+                                       <div class="col-xs-12-col-sm-12 col-lg-6" style="margin-top: 30px;">
+                                          <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
+                                       </div>
+                                       <div class = "col-xs-12-col-sm-12 col-lg-6">
+                                          <div id="dap_chart">&nbsp;</div>
+                                          <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
+                                          <script type="text/javascript">
+                                             Highcharts.chart( 'dap_chart', {
+                                             
+                                                     chart: {
+                                                         type: 'solidgauge',
+                                                         backgroundColor:'transparent'
+                                             
+                                                     },
+                                             
+                                                     title: {
+                                             
+                                                         text: ''
+                                             
+                                                     },
+                                             
+                                                     tooltip: {
+                                                         enabled: false,
+                                                     },
+                                             
+                                                     pane: {
+                                                         startAngle: 0,
+                                                         endAngle: 360,
+                                                         background: [ {
+                                                             outerRadius: '118%',
+                                                             innerRadius: '80%',
+                                                             backgroundColor: '#d6d7d9',
+                                                             borderWidth: 0
+                                                         } ]
+                                                     },
+                                             
+                                                     yAxis: {
+                                                         min: 0,
+                                                         max: 100,
+                                                         lineWidth: 0,
+                                                         tickPositions: [],
+                                             
+                                                         title: {
+                                                             text: '<?php echo $agency_dap_score; ?> %',
+                                                             style: {
+                                                                 fontSize: '22px',
+                                                                 color: '<?php echo dotgov_common_getChartColor($agency_dap_score); ?>'
+                                                             },
+                                                             y: 30
+                                                         },
+                                             
+                                             
+                                             
+                                                     },
+                                             
+                                                     plotOptions: {
+                                                         solidgauge: {
+                                                             dataLabels: {
+                                                                 enabled: false
+                                                             },
+                                                             linecap: 'round',
+                                                             stickyTracking: false,
+                                                             rounded: true
+                                                         }
+                                                     },
+                                             
+                                                     series: [ {
+                                                         name: 'DAP Chart',
+                                                         data: [ {
+                                                             color: '<?php echo dotgov_common_getChartColor($agency_dap_score); ?>',
+                                                             radius: '118%',
+                                                             innerRadius: '80%',
+                                                             y: <?php echo trim($agency_dap_score); ?>
+                                                         } ]
+                                                     } ]
+                                                 }
+                                             
+                                             
+                                             );
+                                          </script>
+                                       </div>
                                     </div>
-                                    <div class = "col-xs-12-col-sm-12 col-lg-6">
-                                       <div id="dap_chart">&nbsp;</div>
-                                       <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
-                                       <script type="text/javascript">
-                                          Highcharts.chart( 'dap_chart', {
-
-                                                  chart: {
-                                                      type: 'solidgauge',
-                                                      backgroundColor:'transparent'
-
-                                                  },
-
-                                                  title: {
-
-                                                      text: ''
-
-                                                  },
-
-                                                  tooltip: {
-                                                      enabled: false,
-                                                  },
-
-                                                  pane: {
-                                                      startAngle: 0,
-                                                      endAngle: 360,
-                                                      background: [ {
-                                                          outerRadius: '118%',
-                                                          innerRadius: '80%',
-                                                          backgroundColor: '#d6d7d9',
-                                                          borderWidth: 0
-                                                      } ]
-                                                  },
-
-                                                  yAxis: {
-                                                      min: 0,
-                                                      max: 100,
-                                                      lineWidth: 0,
-                                                      tickPositions: [],
-
-                                                      title: {
-                                                          text: '<?php echo $agency_dap_score; ?> %',
-                                                          style: {
-                                                              fontSize: '22px',
-                                                              color: '<?php echo dotgov_common_getChartColor($agency_dap_score); ?>'
-                                                          },
-                                                          y: 30
-                                                      },
-
-
-
-                                                  },
-
-                                                  plotOptions: {
-                                                      solidgauge: {
-                                                          dataLabels: {
-                                                              enabled: false
-                                                          },
-                                                          linecap: 'round',
-                                                          stickyTracking: false,
-                                                          rounded: true
-                                                      }
-                                                  },
-
-                                                  series: [ {
-                                                      name: 'DAP Chart',
-                                                      data: [ {
-                                                          color: '<?php echo dotgov_common_getChartColor($agency_dap_score); ?>',
-                                                          radius: '118%',
-                                                          innerRadius: '80%',
-                                                          y: <?php echo trim($agency_dap_score); ?>
-                                                      } ]
-                                                  } ]
-                                              }
-
-
-                                          );
-                                       </script>
-                                    </div></div>
                                     <table style="width:100%;">
                                        <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
                                        <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
@@ -1143,11 +1138,12 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                     </div>
                                  </div>
                                  <div class="col-xs-12 nopadding clearfix"> <?php
-$blockObject6 = block_load('trend_analysis', 'agency_dap');
-$block6 = _block_get_renderable_array(_block_render_blocks(array($blockObject6)));
-$output6 = drupal_render($block6);
-print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: " . dotgov_common_getChartColor($agency_dap_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly DAP Trend</span>";
-?></div>
+                                    $blockObject6 = block_load('trend_analysis', 'agency_dap');
+                                    $block6 = _block_get_renderable_array(_block_render_blocks(array($blockObject6)));
+                                    $output6 = drupal_render($block6);
+                                    print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: " . dotgov_common_getChartColor($agency_dap_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly DAP Trend</span>";
+                                    ?>
+                                 </div>
                               </div>
                            </div>
                         </div>
@@ -1176,95 +1172,97 @@ print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: "
                         <div class="view-wrapper">
                            <div class="grey-gradient clearfix">
                               <div class="col-xs-12 clearfix">
-                                <h5>Free of RC4/3DES and SSLv2/SSLv3 score breakdown</h5></div>
+                                 <h5>Free of RC4/3DES and SSLv2/SSLv3 score breakdown</h5>
+                              </div>
                               <div class="col-xs-12" style="min-height:55px;">
                                  <p>Free of RC4/3DES and SSLv2/SSLv3 Overall Average Score :
                                     <?=$agency_insecprot_score?>
                                     %
                                  </p>
-                               </div>
-                               <div style="display:block; float:left;min-height:145px;width:100%">
-                               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"  style="margin-top: 30px;" >
-                                 <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
                               </div>
-                              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                 <div id="freeofinsecureprot_chart">&nbsp;</div>
-                                 <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
-                                 <script type="text/javascript">
-                                    Highcharts.chart( 'freeofinsecureprot_chart', {
-
-                                            chart: {
-                                                type: 'solidgauge',
-                                                backgroundColor:'transparent'
-
-                                            },
-
-                                            title: {
-
-                                                text: ''
-
-                                            },
-
-                                            tooltip: {
-                                                enabled: false,
-                                            },
-
-                                            pane: {
-                                                startAngle: 0,
-                                                endAngle: 360,
-                                                background: [ {
-                                                    outerRadius: '118%',
-                                                    innerRadius: '80%',
-                                                    backgroundColor: '#d6d7d9',
-                                                    borderWidth: 0
-                                                } ]
-                                            },
-
-                                            yAxis: {
-                                                min: 0,
-                                                max: 100,
-                                                lineWidth: 0,
-                                                tickPositions: [],
-
-                                                title: {
-                                                    text: '<?php echo $agency_insecprot_score; ?> %',
-                                                    style: {
-                                                        fontSize: '22px',
-                                                        color: '<?php echo dotgov_common_getChartColor($agency_insecprot_score); ?>'
-                                                    },
-                                                    y: 30
-                                                },
-
-
-
-                                            },
-
-                                            plotOptions: {
-                                                solidgauge: {
-                                                    dataLabels: {
-                                                        enabled: false
-                                                    },
-                                                    linecap: 'round',
-                                                    stickyTracking: false,
-                                                    rounded: true
-                                                }
-                                            },
-
-                                            series: [ {
-                                                name: 'Free of Insecure Protocol Chart',
-                                                data: [ {
-                                                    color: '<?php echo dotgov_common_getChartColor($agency_insecprot_score); ?>',
-                                                    radius: '118%',
-                                                    innerRadius: '80%',
-                                                    y: <?php echo trim($agency_insecprot_score); ?>
-                                                } ]
-                                            } ]
-                                        }
-
-
-                                    );
-                                 </script>
-                              </div></div>
+                              <div style="display:block; float:left;min-height:145px;width:100%">
+                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"  style="margin-top: 30px;" >
+                                    <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
+                                 </div>
+                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <div id="freeofinsecureprot_chart">&nbsp;</div>
+                                    <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
+                                    <script type="text/javascript">
+                                       Highcharts.chart( 'freeofinsecureprot_chart', {
+                                       
+                                               chart: {
+                                                   type: 'solidgauge',
+                                                   backgroundColor:'transparent'
+                                       
+                                               },
+                                       
+                                               title: {
+                                       
+                                                   text: ''
+                                       
+                                               },
+                                       
+                                               tooltip: {
+                                                   enabled: false,
+                                               },
+                                       
+                                               pane: {
+                                                   startAngle: 0,
+                                                   endAngle: 360,
+                                                   background: [ {
+                                                       outerRadius: '118%',
+                                                       innerRadius: '80%',
+                                                       backgroundColor: '#d6d7d9',
+                                                       borderWidth: 0
+                                                   } ]
+                                               },
+                                       
+                                               yAxis: {
+                                                   min: 0,
+                                                   max: 100,
+                                                   lineWidth: 0,
+                                                   tickPositions: [],
+                                       
+                                                   title: {
+                                                       text: '<?php echo $agency_insecprot_score; ?> %',
+                                                       style: {
+                                                           fontSize: '22px',
+                                                           color: '<?php echo dotgov_common_getChartColor($agency_insecprot_score); ?>'
+                                                       },
+                                                       y: 30
+                                                   },
+                                       
+                                       
+                                       
+                                               },
+                                       
+                                               plotOptions: {
+                                                   solidgauge: {
+                                                       dataLabels: {
+                                                           enabled: false
+                                                       },
+                                                       linecap: 'round',
+                                                       stickyTracking: false,
+                                                       rounded: true
+                                                   }
+                                               },
+                                       
+                                               series: [ {
+                                                   name: 'Free of Insecure Protocol Chart',
+                                                   data: [ {
+                                                       color: '<?php echo dotgov_common_getChartColor($agency_insecprot_score); ?>',
+                                                       radius: '118%',
+                                                       innerRadius: '80%',
+                                                       y: <?php echo trim($agency_insecprot_score); ?>
+                                                   } ]
+                                               } ]
+                                           }
+                                       
+                                       
+                                       );
+                                    </script>
+                                 </div>
+                              </div>
                               <table width="100%">
                                  <th style="background-color: #215393;color: white;"> Breakdown </th>
                                  <th style="background-color: #215393;color: white;"> Websites </th>
@@ -1281,11 +1279,11 @@ print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: "
                            </div>
                            <div class="col-xs-12">
                               <?php
-$blockObject5 = block_load('trend_analysis', 'agency_rc4');
-$block5 = _block_get_renderable_array(_block_render_blocks(array($blockObject5)));
-$output5 = drupal_render($block5);
-print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: " . dotgov_common_getChartColor($agency_insecprot_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly Insecure Protocol Trend</span>";
-?>
+                                 $blockObject5 = block_load('trend_analysis', 'agency_rc4');
+                                 $block5 = _block_get_renderable_array(_block_render_blocks(array($blockObject5)));
+                                 $output5 = drupal_render($block5);
+                                 print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: " . dotgov_common_getChartColor($agency_insecprot_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly Insecure Protocol Trend</span>";
+                                 ?>
                            </div>
                         </div>
                         <div class="view-button">
@@ -1304,146 +1302,160 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                      </div>
                      <div class="col-xs-2 nopadding">
                         <div id="tooltip10" class="infor">
-                           <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
+                           <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i
+                              class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
                         </div>
                      </div>
-                     <br clear="all"/>
+                     <br clear="all" />
                      <div class="pane-content clearfix">
                         <div class="view-wrapper">
                            <div class="view-content">
                               <div class="field-content col-lg-12 nopadding">
                                  <div class="grey-gradient clearfix">
-                                 <div class="col-xs-12" style="min-height:89px;">
+                                    <div class="col-xs-12">
                                        <h5>USWDS Code Usage</h5>
-                                       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
-                                          <p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
-                                       </div>
-                                                </div>
-                                       <div class="uswds-chart-container-3" style="display:block;float:left;min-height:145px;position: relative;max-width: 250px;">
-                                       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
-                                          <div class="uswds-chart">
-                                          <div id="piechartLast" style="display: block;position: relative;"></div>
-                                          </div>
-                                       </div>
                                     </div>
-                                    <script language="JavaScript">
-                                                    google.charts.load('current', {'packages':['corechart']});
-                                                    google.charts.setOnLoadCallback(drawuswdsChart);
-
-                                                    function drawuswdsChart() {
-
-                                                        var data = google.visualization.arrayToDataTable([
-                                                            ['Type', 'Number'],
-                                                            ['USWDS Code Detected',  <?php echo number_format($agencydata['uswds_compliant'], 1, '.', ''); ?>],
-                                                            ['USWDS Code Not Detected', <?php echo number_format($agencydata['uswds_noncompliant'], 1, '.', ''); ?>],
-                                                        ]);
-                                                        var options = {
-                                                            colors: ['#66746a', '#8ac99c'],
-                                                            sliceVisibilityThreshold: 0,
-                                                            dataLabels: {
-                                                                enabled: true
-                                                            },
-                                                            showInLegend: true,
-                                                            backgroundColor:"transparent",
-                                                            chartArea:{left:15,top:15,height: '55%',width:'65%'},
-                                                            legend:{position:'left',alignment:'center'}
-                                                        };
-
-                                                        var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));
-
-                                                        chart.draw(data, options);
-                                                    }
-                                                </script>
-
-                                                <table style="width:100%;">
-
-                                                    <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
-                                                    <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
-                                                    <tr>
-                                                        <td> Websites with USWDS code detected<font style="font-size: larger;font-color:blue;"></font></td>
-                                                        <td><?=dotgov_common_applyDataColor($agencydata['uswds_compliant'], $agencydata['uswds_tottracked'], '#66746a')?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Websites without USWDS code detected<font style="font-size: larger;font-color:blue;"></font></td>
-                                                        <td><?=dotgov_common_applyDataColor($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'], '#8ac99c')?></td>
-                                                    </tr>
-                                                </table>
-                                                <div class="col-xs-12 clearfix">
-                                                    <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span> </div>
-                                            </div>
-                                        </div>
-
+                                    <div class="col-xs-12" style="min-height:55px;">
+                                       <p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and
+                                          the code version.
+                                       </p>
                                     </div>
-                                </div>
-                                <div class="view-button">
-                                        <div class="row text-center">
-                                          <a class="" href="/website/all/uswds"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                          <a href="https://designsystem.digital.gov/maturity-model/"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""/></a>
+                                    <div style="display:block; float:left;max-height:145px; width:100%;">
+                                       <div class="col-xs-6 col-sm-6 col-lg-6" style="margin-top: 30px;">
+                                          <ul class="uswds nopadding" style="font-size:12px; margin-left: 16px; line-height: 16px;">
+                                             <li class="ud">USWDS Code Detected</li>
+                                             <li class="und">USWDS Code Not Detected</li>
+                                          </ul>
                                        </div>
+                                       <div class="col-xs-6 col-sm-6 col-lg-6">
+                                          <div id="piechartLast" style="max-width: 265px;float: right;"></div>
+                                       </div>
+                                      
+                                       <script language="JavaScript">
+                                          google.charts.load('current', {'packages':['corechart']});
+                                          google.charts.setOnLoadCallback(drawuswdsChart);
+                                          
+                                          function drawuswdsChart() {
+                                          
+                                              var data = google.visualization.arrayToDataTable([
+                                                  ['Type', 'Number'],
+                                                  ['USWDS Code Detected',  <?php echo number_format($agencydata['uswds_compliant'], 1, '.', ''); ?>],
+                                                  ['USWDS Code Not Detected', <?php echo number_format($agencydata['uswds_noncompliant'], 1, '.', ''); ?>],
+                                              ]);
+                                              var options = {
+                                               
+                                                  colors: ['#66746a', '#8ac99c'],
+                                                  sliceVisibilityThreshold: 0,
+                                                  dataLabels: {
+                                                      enabled: true
+                                                  },
+                                                  legend: {position: 'none'},
+                                                  showInLegend: true,
+                                                  backgroundColor:"transparent",
+                                                  chartArea:{left:'35%',bottom: '30%',height: 180,width:115.35},
+                                                  // legend:{position:'left',alignment:'center'}
+                                              };
+                                          
+                                              var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));
+                                          
+                                              chart.draw(data, options);
+                                              
+                                          }
+                                       </script>
+                                    </div>
+                                 </div>
+                                 <table style="width:100%;">
+                                    <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
+                                    <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
+                                    <tr>
+                                       <td> Websites with USWDS code detected<font style="font-size: larger;font-color:blue;">
+                                          </font>
+                                       </td>
+                                       <td><?=dotgov_common_applyDataColor($agencydata['uswds_compliant'], $agencydata['uswds_tottracked'], '#66746a')?>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td>Websites without USWDS code detected<font style="font-size: larger;font-color:blue;">
+                                          </font>
+                                       </td>
+                                       <td><?=dotgov_common_applyDataColor($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'], '#8ac99c')?>
+                                       </td>
+                                    </tr>
+                                 </table>
+                                 <div class="col-xs-12 clearfix">
+                                    <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are
+                                    excluded)</span>
+                                 </div>
                               </div>
-                            </div>
+                              
+                           </div>
                         </div>
-                    </div>
-
+                     </div>
+                     <div class="view-button">
+                        <div class="row text-center">
+                           <a class="" href="/website/all/uswds"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                           <a href="https://designsystem.digital.gov/maturity-model/"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""/></a>
+                        </div>
+                     </div>
                   </div>
                </div>
             </div>
          </div>
-         <div class="panel-separator clearfix"></div>
-         <div class="out-wrapper">
-            <div class="col-xs-12 nopadding clearfix">
-               <div class="col-xs-12 col-lg-4">
-                  <div class="white-back no-height">
-                     <h2 class="pane-title"> Popular Technologies </h2>
-                     <div class="pane-content">
-                        <div class="view  view-display-id-block_8 view-dom-id-b6c9491539ed2fa13d8d26fb2e0fc9c7">
-                           <div class="view-content">
-                              <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
-                                 <div class="views-field views-field-nothing">
-                                    <div class="view-wrapper" style="min-height:454px;">
-                                       <div class="field-content col-lg-12">
-                                          <p> Below are the most popular technology stacks used </p>
-                                          <?php
-if ($agencydata['ag_webserver'] != '') {
-    print "<div class=\"col-sm-12 nopadding dataset-resources\"><span class=\"app-button\" style=\"height:auto;\">Web Server : ";
-    foreach ($agencydata['ag_webserver'] as $akey => $aval) {
-        print "$akey($aval) ";
-    }
-    print "</span></div>";
-}
-if ($agencydata['ag_proglang'] != '') {
-    print "<div class=\"col-sm-12 nopadding dataset-resources\"><span style=\"height:auto;\" class=\"app-button\">Languages : ";
-    foreach ($agencydata['ag_proglang'] as $akey => $aval) {
-        print "$akey($aval) ";
-    }
-    print "</span></div>";
-}
-
-if ($agencydata['ag_cms'] != '') {
-    print "<div class=\"col-sm-12 nopadding dataset-resources\"><span style=\"height:auto;\" class=\"app-button\">CMS : ";
-    foreach ($agencydata['ag_cms'] as $akey => $aval) {
-        print "$akey($aval) ";
-    }
-    print "</span></div>";
-}
-
-if ($agencydata['ag_os'] != '') {
-    print "<div class=\"col-sm-12 nopadding dataset-resources\"><span style=\"height:auto;\" class=\"app-button\">Operating Systems : ";
-    foreach ($agencydata['ag_os'] as $akey => $aval) {
-        print "$akey($aval) ";
-    }
-    print "</span></div>";
-}
-
-if ($agencydata['ag_cdn'] != '') {
-    print "<div class=\"col-sm-12 nopadding dataset-resources\"><span style=\"height:auto;\" class=\"app-button\">CDN : ";
-    foreach ($agencydata['ag_cdn'] as $akey => $aval) {
-        print "$akey($aval) ";
-    }
-    print "</span></div>";
-}
-?>
-                                       </div>
+      </div>
+      <div class="panel-separator clearfix"></div>
+      <div class="out-wrapper">
+         <div class="col-xs-12 nopadding clearfix">
+            <div class="col-xs-12 col-lg-4">
+               <div class="white-back no-height">
+                  <h2 class="pane-title"> Popular Technologies </h2>
+                  <div class="pane-content">
+                     <div class="view  view-display-id-block_8 view-dom-id-b6c9491539ed2fa13d8d26fb2e0fc9c7">
+                        <div class="view-content">
+                           <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
+                              <div class="views-field views-field-nothing">
+                                 <div class="view-wrapper" style="min-height:454px;">
+                                    <div class="field-content col-lg-12">
+                                       <p> Below are the most popular technology stacks used </p>
+                                       <?php
+                                          if ($agencydata['ag_webserver'] != '') {
+                                             print "<div class=\"col-sm-12 nopadding dataset-resources\"><span class=\"app-button\" style=\"height:auto;\">Web Server : ";
+                                             foreach ($agencydata['ag_webserver'] as $akey => $aval) {
+                                                print "$akey($aval) ";
+                                             }
+                                             print "</span></div>";
+                                          }
+                                          if ($agencydata['ag_proglang'] != '') {
+                                             print "<div class=\"col-sm-12 nopadding dataset-resources\"><span style=\"height:auto;\" class=\"app-button\">Languages : ";
+                                             foreach ($agencydata['ag_proglang'] as $akey => $aval) {
+                                                print "$akey($aval) ";
+                                             }
+                                             print "</span></div>";
+                                          }
+                                          
+                                          if ($agencydata['ag_cms'] != '') {
+                                             print "<div class=\"col-sm-12 nopadding dataset-resources\"><span style=\"height:auto;\" class=\"app-button\">CMS : ";
+                                             foreach ($agencydata['ag_cms'] as $akey => $aval) {
+                                                print "$akey($aval) ";
+                                             }
+                                             print "</span></div>";
+                                          }
+                                          
+                                          if ($agencydata['ag_os'] != '') {
+                                             print "<div class=\"col-sm-12 nopadding dataset-resources\"><span style=\"height:auto;\" class=\"app-button\">Operating Systems : ";
+                                             foreach ($agencydata['ag_os'] as $akey => $aval) {
+                                                print "$akey($aval) ";
+                                             }
+                                             print "</span></div>";
+                                          }
+                                          
+                                          if ($agencydata['ag_cdn'] != '') {
+                                             print "<div class=\"col-sm-12 nopadding dataset-resources\"><span style=\"height:auto;\" class=\"app-button\">CDN : ";
+                                             foreach ($agencydata['ag_cdn'] as $akey => $aval) {
+                                                print "$akey($aval) ";
+                                             }
+                                             print "</span></div>";
+                                          }
+                                          ?>
                                     </div>
                                  </div>
                               </div>
@@ -1456,4 +1468,5 @@ if ($agencydata['ag_cdn'] != '') {
          </div>
       </div>
    </div>
+</div>
 </div>
