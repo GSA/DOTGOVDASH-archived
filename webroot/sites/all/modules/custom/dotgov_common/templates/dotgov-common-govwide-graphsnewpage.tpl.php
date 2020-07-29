@@ -1323,8 +1323,8 @@
                                     <div style="display:block; float:left;max-height:145px; width:100%;">
                                        <div class="col-xs-6 col-sm-6 col-lg-6" style="margin-top: 30px;">
                                           <ul class="uswds nopadding" style="font-size:12px; margin-left: 16px; line-height: 16px;">
-                                             <li class="ud">USWDS Code Detected</li>
-                                             <li class="und">USWDS Code Not Detected</li>
+                                             <li class="und">USWDS Code Detected</li>
+                                             <li class="ud">USWDS Code Not Detected</li>
                                           </ul>
                                        </div>
                                        <div class="col-xs-6 col-sm-6 col-lg-6">
