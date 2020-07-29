@@ -1090,8 +1090,6 @@
                                                              y: 30
                                                          },
                                              
-                                             
-                                             
                                                      },
                                              
                                                      plotOptions: {
@@ -1118,6 +1116,9 @@
                                              
                                              
                                              );
+
+                                            
+                                             
                                           </script>
                                        </div>
                                     </div>
@@ -1323,8 +1324,8 @@
                                     <div style="display:block; float:left;max-height:145px; width:100%;">
                                        <div class="col-xs-6 col-sm-6 col-lg-6" style="margin-top: 30px;">
                                           <ul class="uswds nopadding" style="font-size:12px; margin-left: 16px; line-height: 16px;">
-                                             <li class="und">USWDS Code Detected</li>
-                                             <li class="ud">USWDS Code Not Detected</li>
+                                             <li class="ud">USWDS Code Detected</li>
+                                             <li class="und">USWDS Code Not Detected</li>
                                           </ul>
                                        </div>
                                        <div class="col-xs-6 col-sm-6 col-lg-6">
@@ -1343,7 +1344,7 @@
                                                   ['USWDS Code Not Detected', <?php echo number_format($agencydata['uswds_noncompliant'], 1, '.', ''); ?>],
                                               ]);
                                               var options = {
-                                               
+                                                  width: 200,
                                                   colors: ['#66746a', '#8ac99c'],
                                                   sliceVisibilityThreshold: 0,
                                                   dataLabels: {
@@ -1353,13 +1354,11 @@
                                                   showInLegend: true,
                                                   backgroundColor:"transparent",
                                                   chartArea:{left:'35%',bottom: '30%',height: 180,width:115.35},
-                                                  // legend:{position:'left',alignment:'center'}
                                               };
                                           
                                               var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));
                                           
                                               chart.draw(data, options);
-                                              
                                           }
                                        </script>
                                     </div>
