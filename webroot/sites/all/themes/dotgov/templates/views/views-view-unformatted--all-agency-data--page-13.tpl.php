@@ -63,7 +63,7 @@ $agency_uswds_score = round(db_query("select avg(c.field_uswds_score_value) as a
 $agencynode = node_load(arg(1));
 
 ?>
-<div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="pdf" onclick="generatePDF()"></div>
+<!-- <div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="pdf" onclick="generatePDF()"></div> -->
 
 <div class="main-container container-fluid nopadding">
     <div class="row">
@@ -1428,7 +1428,6 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                 </div>
                             </div>
                         </div>
-
                         <div class="view-button">
                                         <div class="row text-center">
                                           <a class="" href="/website/all/uswds?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""></a>
