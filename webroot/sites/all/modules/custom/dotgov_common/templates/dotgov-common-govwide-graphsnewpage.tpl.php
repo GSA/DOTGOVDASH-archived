@@ -215,6 +215,14 @@
                                                    
                                                    
                                                    );
+                                                   var svgTags = document.querySelectorAll('#mobile_chart svg');
+                                                   var c = document.createElement('canvas');
+                                                   c.width = svgTags.clientWidth;
+                                                   c.height = svgTags.clientHeight;
+                                                   svgTags.parentNode.insertBefore(c, svgTags);
+                                                   var div = document.createElement('div');
+                                                   div.appendChild(svgTags);
+                                                   canvg(c, div.innerHTML);   
                                                 </script>
                                              </div>
                                           </div>
@@ -317,6 +325,14 @@
                                            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
                                        
                                            chart.draw(data, options);
+                                             var svgTags = document.querySelectorAll('#piechart svg');
+                                             var c = document.createElement('canvas');
+                                             c.width = svgTags.clientWidth;
+                                             c.height = svgTags.clientHeight;
+                                             svgTags.parentNode.insertBefore(c, svgTags);
+                                             var div = document.createElement('div');
+                                             div.appendChild(svgTags);
+                                             canvg(c, div.innerHTML);   
                                        }
                                     </script>
                                     <?php
@@ -462,6 +478,14 @@
                                                 
                                                 
                                                 );
+                                                var svgTags = document.querySelectorAll('#dnssec_chart svg');
+                                                var c = document.createElement('canvas');
+                                                c.width = svgTags.clientWidth;
+                                                c.height = svgTags.clientHeight;
+                                                svgTags.parentNode.insertBefore(c, svgTags);
+                                                var div = document.createElement('div');
+                                                div.appendChild(svgTags);
+                                                canvg(c, div.innerHTML);   
                                              </script>
                                           </div>
                                           <div class="col-xs-12 col-lg-12">
@@ -658,6 +682,14 @@
                                           
                                           
                                           );
+                                          var svgTags = document.querySelectorAll('#https_chart svg');
+                                                var c = document.createElement('canvas');
+                                                c.width = svgTags.clientWidth;
+                                                c.height = svgTags.clientHeight;
+                                                svgTags.parentNode.insertBefore(c, svgTags);
+                                                var div = document.createElement('div');
+                                                div.appendChild(svgTags);
+                                                canvg(c, div.innerHTML);  
                                        </script>
                                     </div>
                                  </div>
@@ -816,6 +848,15 @@
                                                    
                                                    
                                                    );
+
+                                                   var svgTags = document.querySelectorAll('#m1513_chart svg');
+                                                var c = document.createElement('canvas');
+                                                c.width = svgTags.clientWidth;
+                                                c.height = svgTags.clientHeight;
+                                                svgTags.parentNode.insertBefore(c, svgTags);
+                                                var div = document.createElement('div');
+                                                div.appendChild(svgTags);
+                                                canvg(c, div.innerHTML);  
                                                 </script>
                                              </div>
                                           </div>
@@ -963,6 +1004,15 @@
                                                       
                                                       
                                                       );
+
+                                                      var svgTags = document.querySelectorAll('#ipv6_chart svg');
+                                                      var c = document.createElement('canvas');
+                                                      c.width = svgTags.clientWidth;
+                                                      c.height = svgTags.clientHeight;
+                                                      svgTags.parentNode.insertBefore(c, svgTags);
+                                                      var div = document.createElement('div');
+                                                      div.appendChild(svgTags);
+                                                      canvg(c, div.innerHTML); 
                                                    </script>
                                                 </div>
                                              </div>
@@ -1117,6 +1167,14 @@
                                              
                                              );
 
+                                                var svgTags = document.querySelectorAll('#dap_chart svg');                                 
+                                                var c = document.createElement('canvas');
+                                                c.width = svgTags.clientWidth;
+                                                c.height = svgTags.clientHeight;
+                                                svgTags.parentNode.insertBefore(c, svgTags);
+                                                var div = document.createElement('div');
+                                                div.appendChild(svgTags);
+                                                canvg(c, div.innerHTML);
                                             
                                              
                                           </script>
@@ -1261,6 +1319,15 @@
                                        
                                        
                                        );
+
+                                             var svgTags = document.querySelectorAll('#freeofinsecureprot_chart svg');                                 
+                                             var c = document.createElement('canvas');
+                                             c.width = svgTags.clientWidth;
+                                             c.height = svgTags.clientHeight;
+                                             svgTags.parentNode.insertBefore(c, svgTags);
+                                             var div = document.createElement('div');
+                                             div.appendChild(svgTags);
+                                             canvg(c, div.innerHTML);
                                     </script>
                                  </div>
                               </div>
@@ -1359,6 +1426,15 @@
                                               var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));
                                           
                                               chart.draw(data, options);
+                                                // Process SVGTags in IE
+                                                var svgTags = document.querySelectorAll('#piechartLast svg');
+                                                var c = document.createElement('canvas');
+                                                c.width = svgTags.clientWidth;
+                                                c.height = svgTags.clientHeight;
+                                                svgTags.parentNode.insertBefore(c, svgTags);
+                                                var div = document.createElement('div');
+                                                div.appendChild(svgTags);
+                                                canvg(c, div.innerHTML);   
                                           }
                                        </script>
                                     </div>
