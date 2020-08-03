@@ -1360,7 +1360,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                           <p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
                                        </div>
                                                 </div>
-                                                <div style="display:block; float:left;max-height:145px; margin-left: 16px; width:100%;">
+                                                <div style="display:block; float:left;max-height:145px; width:100%;">
                                     <div class="col-xs-6 col-sm-6 col-lg-6" style="margin-top: 30px;">
                                         
                                         <ul class="uswds nopadding" style="font-size:12px; line-height: 16px;">
