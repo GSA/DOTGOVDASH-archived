@@ -63,7 +63,7 @@ $agency_uswds_score = round(db_query("select avg(c.field_uswds_score_value) as a
 $agencynode = node_load(arg(1));
 
 ?>
-<div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="pdf" onclick="generatePDF()"></div>
+<!-- <div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="pdf" onclick="generatePDF()"></div> -->
 
 <div class="main-container container-fluid nopadding">
     <div class="row">
@@ -129,29 +129,29 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                             <div class="view-wrapper-new clearfix">
                                                 <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
                                                     <?php
-if ($agency_mobperf_score >= '0' && $agency_mobperf_score < '50') {
-    $mobperfmstat = "Slow";
+                                                        if ($agency_mobperf_score >= '0' && $agency_mobperf_score < '50') {
+                                                            $mobperfmstat = "Slow";
 
-} elseif ($agency_mobperf_score >= '50' && $agency_mobperf_score < '90') {
-    $mobperfmstat = "Moderate";
+                                                        } elseif ($agency_mobperf_score >= '50' && $agency_mobperf_score < '90') {
+                                                            $mobperfmstat = "Moderate";
 
-} elseif ($agency_mobperf_score >= '90' && $agency_mobperf_score <= '100') {
-    $mobperfmstat = "Fast";
+                                                        } elseif ($agency_mobperf_score >= '90' && $agency_mobperf_score <= '100') {
+                                                            $mobperfmstat = "Fast";
 
-}
+                                                        }
 
-if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
-    $mobusabstat = "Low";
+                                                        if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
+                                                            $mobusabstat = "Low";
 
-} elseif ($agency_mobusab_score >= '50' && $agency_mobusab_score < '90') {
-    $mobusabstat = "Medium";
+                                                        } elseif ($agency_mobusab_score >= '50' && $agency_mobusab_score < '90') {
+                                                            $mobusabstat = "Medium";
 
-} elseif ($agency_mobusab_score >= '90' && $agency_mobusab_score <= '100') {
-    $mobusabstat = "Good";
+                                                        } elseif ($agency_mobusab_score >= '90' && $agency_mobusab_score <= '100') {
+                                                            $mobusabstat = "Good";
 
-}
+                                                        }
 
-?>
+                                                        ?>
                                                     <div class="col-xs-12 clearfix">
                                                         <div class="views-field views-field-php-2 col-lg-6 nopadding grey-gradient" style="height:155px;">
                                                             <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
@@ -186,7 +186,6 @@ if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
                                                                     Highcharts.chart( 'mobile_chart', {
                                                                             chart: {
                                                                                 type: 'solidgauge',
-                                                                                height:140
                                                                                 backgroundColor: 'transparent'
                                                                             },
                                                                             title: {
@@ -228,7 +227,6 @@ if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
                                                                                     dataLabels: {
                                                                                         enabled: false
                                                                                     },
-                                                                                    size: '115.35',
                                                                                     linecap: 'round',
                                                                                     stickyTracking: false,
                                                                                     rounded: true
@@ -255,13 +253,13 @@ if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
                                                     <?php print $agencydata['ag_mob_chart'];?> <br clear="all" />
                                                     <div class="views-field views-field-php-1 clearfix">
                                                         <div class="field-content">
-                                                            <?php
-$blockObject1 = block_load('trend_analysis', 'agency_mob');
-$block1 = _block_get_renderable_array(_block_render_blocks(array($blockObject1)));
-$output1 = drupal_render($block1);
-print "$output1";
-?>
-                                                        </div>
+                                                                                                                    <?php
+                                                        $blockObject1 = block_load('trend_analysis', 'agency_mob');
+                                                        $block1 = _block_get_renderable_array(_block_render_blocks(array($blockObject1)));
+                                                        $output1 = drupal_render($block1);
+                                                        print "$output1";
+                                                        ?>
+                                                                                                                </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -316,7 +314,7 @@ print "$output1";
                                                 </div>
                                                 <div class="col-lg-6 grey-gradient second" style="height:200px;">
                                                     <div class ="col-md-12 col-lg-12 nopadding" >
-                                                        <h5>Average Accessibility issues by type Per website<br><br></h5>
+                                                        <h5>Average Accessibility issues by type Per website</h5>
                                                     </div>
                                                     <div  class="clearfix"></div>
                                                     <div id="piechart"></div>
@@ -351,12 +349,12 @@ print "$output1";
                                                     }
                                                 </script>
                                                 <?php
-if (($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydata['ag_miss_image']) != 0) {
-    print "<div class='col-lg-12 text-center clearfix'><span style='color:#29643a; font-size: 10px;font-style: italic;'>
-Above graph shows the breakdown of Accessibility issues by category</span></div>
-";
-}
-?>
+                                                    if (($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydata['ag_miss_image']) != 0) {
+                                                        print "<div class='col-lg-12 text-center clearfix'><span style='color:#29643a; font-size: 10px;font-style: italic;'>
+                                                    Above graph shows the breakdown of Accessibility issues by category</span></div>
+                                                    ";
+                                                    }
+                                                    ?>
                                             </div>
                                         </div>
                                     </div>
@@ -381,7 +379,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                             <div class="panel-pane pane-views pane-website-information">
                                 <div class="col-xs-10 nopadding">
                                     <h2 class="pane-title">DNSSEC Information</h2>
-                                </div>
+                                </div>  
                                 <div class="col-xs-2 nopadding">
                                     <div id="tooltip5" class="infor"> <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
                     DNSSEC Data is collected through a custom scanner component of dotgov dashboard that last ran on
@@ -1362,7 +1360,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                           <p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version.</p>
                                        </div>
                                                 </div>
-                                                <div style="display:block; float:left;max-height:145px; margin-left: 16px; width:100%;">
+                                                <div style="display:block; float:left;max-height:145px; width:100%;">
                                     <div class="col-xs-6 col-sm-6 col-lg-6" style="margin-top: 30px;">
                                         
                                         <ul class="uswds nopadding" style="font-size:12px; line-height: 16px;">
@@ -1430,10 +1428,9 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                 </div>
                             </div>
                         </div>
-
                         <div class="view-button">
                                         <div class="row text-center">
-                                          <a class="" href="/website/all/uswds"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""></a>
+                                          <a class="" href="/website/all/uswds?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""></a>
                                           <a href="https://designsystem.digital.gov/maturity-model/" target="_blank" rel="noopener noreferrer"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""></a>
                                        </div>
                               </div>
