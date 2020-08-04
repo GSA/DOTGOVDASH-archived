@@ -184,7 +184,7 @@ dotgov_common_tooltip("tooltip10", "id");
                         </div>
                         <br clear="all"/>
                         <div class="pane-content clearfix">
-                           <div class="view-wrapper" style="min-height:233px;">
+                           <div class="view-wrapper" style="min-height:290px;">
                               <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                                  <div class="view-empty clearfix">
                                     <div class="col-lg-6 grey-gradient" style="height:200px;">
