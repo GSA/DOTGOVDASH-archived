@@ -129,15 +129,15 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
                         {
                             name: 'DAP Score',
                         },
-                        {
-                            name: 'Mobile Overall Score',
-                        },
-                        {
-                            name: 'Mobile Performance Score',
-                        },
-                        {
-                            name: 'Mobile Usability score',
-                        },
+                        // {
+                        //     name: 'Mobile Overall Score',
+                        // },
+                        // {
+                        //     name: 'Mobile Performance Score',
+                        // },
+                        // {
+                        //     name: 'Mobile Usability score',
+                        // },
                         {
                             name: 'Site Speed Score',
                         },

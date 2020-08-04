@@ -40,6 +40,11 @@ function dotgov_common_theme($existing, $type, $theme, $path) {
             'variables' => array('nid' => NULL),
             'path' => drupal_get_path('module', 'dotgov_common') . '/templates',
         ),
+        'govwide_mobusabgraphs_page' => array(
+          'template' => 'dotgov-common-govwidemobile-usab-graph',
+          'variables' => array('nid' => NULL),
+          'path' => drupal_get_path('module', 'dotgov_common') . '/templates',
+        ),
         'govwide_collapsible_page' => array(
             'template' => 'dotgov-common-collapsible-graphspage',
             'variables' => array('nid' => NULL),
@@ -424,9 +429,9 @@ function dotgov_common_govwideTrendData(){
     $govwidewebsite['agencynos'] = $agencynos;
     $govwidewebsite['avg_https'] = $avg_https;
     $govwidewebsite['avg_dap'] = $avg_dap;
-    $govwidewebsite['avg_mob_overall'] = $avg_mob_overall;
-    $govwidewebsite['avg_mob_perform'] = $avg_mob_perform;
-    $govwidewebsite['avg_mob_usab'] = $avg_mob_usab;
+//    $govwidewebsite['avg_mob_overall'] = $avg_mob_overall;
+//    $govwidewebsite['avg_mob_perform'] = $avg_mob_perform;
+//    $govwidewebsite['avg_mob_usab'] = $avg_mob_usab;
     $govwidewebsite['avg_sitespeed'] = $avg_sitespeed;
     $govwidewebsite['avg_ipv6'] = $avg_ipv6;
     $govwidewebsite['avg_dnssec'] = $avg_dnssec;
@@ -1129,7 +1134,22 @@ function dotgov_common_getAllAgencyComplianceData(){
     $agencydata['ag_access_chart'] = $agencyaccess_output;
 
 
-    $govwide_mob['govwide_mob_bad'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='49' and entity_id in (SELECT node.nid AS nid
+  $govwide_mob['mob_perf_good_nos'] = db_query("SELECT accessb_good FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+  $govwide_mob['mob_perf_improve_nos'] = db_query("SELECT accessb_improve FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+  $govwide_mob['mob_perf_poor_nos'] = db_query("SELECT accessb_poor FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+  $govwide_mob['mob_usab_friendly_nos'] = db_query("SELECT accessb_friendly FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+  $govwide_mob['mob_usab_notfriendly_nos'] = db_query("SELECT accessb_nonfriendly FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+
+
+  $agencydata['poor_nos'] = $govwide_mob['mob_perf_poor_nos'] ;
+  $agencydata['good_nos'] = $govwide_mob['mob_perf_good_nos'] ;
+  $agencydata['improve_nos'] = $govwide_mob['mob_perf_improve_nos'] ;
+  $agencydata['friendly_nos'] = $govwide_mob['mob_usab_friendly_nos'] ;
+  $agencydata['nonfriendly_nos'] = $govwide_mob['mob_usab_notfriendly_nos'] ;
+
+
+
+  $govwide_mob['govwide_mob_bad'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='49' and entity_id in (SELECT node.nid AS nid
 FROM
 node node
 LEFT JOIN field_data_field_web_agency_id field_data_field_web_agency_id ON node.nid = field_data_field_web_agency_id.entity_id AND (field_data_field_web_agency_id.entity_type = 'node' AND field_data_field_web_agency_id.deleted = '0')
@@ -1153,6 +1173,9 @@ WHERE (( (node.status = '1') AND (node.type IN  ('website')) )))")->fetchField()
     $govwideaccess_output = theme('govwide_mobgraphs_page', array('govwidedata' => $govwide_mob));
 
     $agencydata['gov_mob_chart'] = $govwideaccess_output;
+
+    $govwideaccess_mob_output = theme('govwide_mobusabgraphs_page', array('govwidedata' => $govwide_mob));
+    $agencydata['gov_mob_usab_chart'] = $govwideaccess_mob_output;
 
     //Query to get Search Engine Name for Government wide
     $searchengines = db_query("select field_search_engine_name_value,count(field_search_engine_name_value) as complnum from node a , field_data_field_search_engine_name b  where a.status='1' and a.nid=b.entity_id and a.type='website' group by field_search_engine_name_value");
