@@ -25,7 +25,7 @@
 </style>
 <?php
    global $base_url;
-   
+
    drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
    $labeldesc['avg_https'] = 'HTTPS Score';
    $labeldesc['avg_dap'] = 'DAP Score';
@@ -38,7 +38,7 @@
    $labeldesc['avg_rc4'] = 'Free of RC4/3DES and SSLv2/SSLv3 Score';
    $labeldesc['avg_m15'] = 'M-15-13 and BOD 18-01 Compliance Score';
    $labeldesc['avg_uswds'] = 'USWDS Score';
-   
+
    $no_of_agency = $govwidedata['actualdata']['agencynos'];
    $agency_website_num = $govwidedata['actualdata']['websitenos'];
    $agency_dap_score = $govwidedata['actualdata']['avg_dap'];
@@ -51,7 +51,7 @@
    $agency_insecprot_score = $govwidedata['actualdata']['avg_rc4'];
    $agency_m15_score = $govwidedata['actualdata']['avg_m15'];
    $agency_uswds_score = $govwidedata['actualdata']['avg_uswds'];
-   
+
    $agencydata = dotgov_common_getAllAgencyComplianceData();
    dotgov_common_tooltip("tooltip2", "id");
    dotgov_common_tooltip("tooltip4", "id");
@@ -69,185 +69,100 @@
       <div class="graph-container">
          <div class="out-wrapper">
             <div class="col-xs-12 nopadding clearfix">
-               <div class="col-xs-12 col-lg-6">
-                  <div class="white-back no-height">
-                     <div class="panel-pane pane-views pane-website-information">
-                        <div class="col-xs-12 nopadding">
-                           <div class="col-xs-10 nopadding">
-                              <h2 class="pane-title"> Mobile Information </h2>
-                           </div>
-                           <div class="col-xs-2 nopadding">
-                              <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
-                                 Mobile Overall Average Score : <?php print $agency_mobovr_score;?> <br>
-                                 Mobile Performance Score :
-                                 <?=$agency_mobperf_score;?>
-                                 <br>
-                                 Mobile Usability Score:
-                                 <?=$agency_mobusab_score;?>
-                                 <br>
-                                 </span>
-                              </div>
-                           </div>
+              <div class="col-xs-12 col-lg-6">
+                <div class="white-back no-height">
+                  <div class="panel-pane pane-views pane-website-information">
+                    <div class="col-xs-12 nopadding">
+                      <div class="col-xs-10 nopadding">
+                        <h2 class="pane-title"> Mobile Information </h2>
+                      </div>
+                      <div class="col-xs-2 nopadding">
+                        <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
+                              Mobile Data is collected from Google API though a scan that last ran on
+                              <?php dotgov_common_lastScanDate();?>
+                              </span>
                         </div>
-                        <div class="pane-content clearfix">
-                           <div class="view  view-display-id-block_6 view-dom-id-146fb84eddbe3dc34d2b2cff5758c7bc">
-                              <div class="view-content">
-                                 <div class="view-wrapper-new clearfix">
-                                    <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
-                                       <?php
-                                          if ($agency_mobperf_score >= '0' && $agency_mobperf_score < '50') {
-                                             $mobperfmstat = "Slow";
-                                          
-                                          } elseif ($agency_mobperf_score >= '50' && $agency_mobperf_score < '90') {
-                                             $mobperfmstat = "Moderate";
-                                          
-                                          } elseif ($agency_mobperf_score >= '90' && $agency_mobperf_score <= '100') {
-                                             $mobperfmstat = "Fast";
-                                          
-                                          }
-                                          
-                                          if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
-                                             $mobusabstat = "Low";
-                                          
-                                          } elseif ($agency_mobusab_score >= '50' && $agency_mobusab_score < '90') {
-                                             $mobusabstat = "Medium";
-                                          
-                                          } elseif ($agency_mobusab_score >= '90' && $agency_mobusab_score <= '100') {
-                                             $mobusabstat = "Good";
-                                          
-                                          }
-                                          
-                                          ?>
-                                       <div class="col-xs-12 clearfix">
-                                          <div class="views-field views-field-php-2 col-lg-6 nopadding grey-gradient" style="height:155px;">
-                                             <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
-                                                <h5>Mobile Score Breakdown</h5>
-                                             </div>
-                                             <div class="col-lg-4 col-md-4" style="padding-right:0px;margin-top:15px;padding-left:10px;"> <span class="dot low"></span>Slow <br/>
-                                                <span class="dot avg"></span>Moderate <br/>
-                                                <span class="dot good"></span>Fast<br/>
-                                                <span class="dot na"></span>NA
-                                             </div>
-                                             <div class="col-lg-8 col-md-8 nopadding">
-                                                <div id="piechart1" style="margin-top:-17px;height:140px;margin-left:30px;"></div>
-                                                <?php print $agencydata['gov_mob_chart'];?>
-                                             </div>
-                                          </div>
-                                          <div class="col-xs-12 col-lg-6 nopadding grey-gradient second" style="height:155px;">
-                                             <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
-                                                <h5>Mobile Overall Average Score: <?php print $agency_mobovr_score?></h5>
-                                             </div>
-                                             <div class="field-content clearfix">
-                                                <div class="col-lg-7 col-md-7" style="font-size:11px;margin-top:20px; padding-right:0;padding-left:10px;"> Performance Score :
-                                                   <?=$agency_mobperf_score . ' (' . $mobperfmstat . ')'?>
-                                                   <br >
-                                                   Usability Score:
-                                                   <?=$agency_mobusab_score . ' (' . $mobusabstat . ')'?>
-                                                   <br />
-                                                   <br/>
-                                                   <span style="font-size:10px;">(website redirects are excluded)</span>
-                                                </div>
-                                                <div class="col-lg-5 col-md-5 nopadding">
-                                                   <div id="mobile_chart" style="width:120px;height:120px;">&nbsp;</div>
-                                                </div>
-                                                <div class="sr-only">The graphic below indicates the level of Mobile compliance, and this score is 100%.</div>
-                                                <script type="text/javascript">
-                                                   Highcharts.chart( 'mobile_chart', {
-                                                           chart: {
-                                                               type: 'solidgauge',
-                                                               backgroundColor: 'transparent'
-                                                           },
-                                                           title: {
-                                                               text: ''
-                                                           },
-                                                           tooltip: {
-                                                               enabled: false,
-                                                           },
-                                                           pane: {
-                                                               startAngle: 0,
-                                                               endAngle: 360,
-                                                               background: [ {
-                                                                   outerRadius: '118%',
-                                                                   innerRadius: '80%',
-                                                                   backgroundColor: '#d6d7d9',
-                                                                   borderWidth: 0
-                                                               } ]
-                                                           },
-                                                           yAxis: {min: 0,
-                                                               max: 100,
-                                                               lineWidth: 0,
-                                                               tickPositions: [],
-                                                   
-                                                               title: {
-                                                                   text: '<?php echo $agency_mobovr_score; ?>',
-                                                                   style: {
-                                                                       fontSize: '22px',
-                                                                       color: '<?php echo dotgov_common_getChartColor($agency_mobovr_score); ?>'
-                                                                   },
-                                                                   y: 30
-                                                               },
-                                                   
-                                                   
-                                                   
-                                                           },
-                                                   
-                                                           plotOptions: {
-                                                               solidgauge: {
-                                                                   dataLabels: {
-                                                                       enabled: false
-                                                                   },
-                                                                   linecap: 'round',
-                                                                   stickyTracking: false,
-                                                                   rounded: true
-                                                               }
-                                                           },
-                                                   
-                                                           series: [ {
-                                                               name: 'Mobile Chart',
-                                                               data: [ {
-                                                                   color: '<?php echo dotgov_common_getChartColor($agency_mobovr_score); ?>',
-                                                                   radius: '118%',
-                                                                   innerRadius: '80%',
-                                                                   y: <?php echo trim($agency_mobovr_score); ?>
-                                                               } ]
-                                                           } ]
-                                                       }
-                                                   
-                                                   
-                                                   );
-                                                </script>
-                                             </div>
-                                          </div>
-                                       </div>
-                                       <?php print $agencydata['ag_mob_chart'];?> <br clear="all" />
-                                       <div class="views-field views-field-php-1 clearfix">
-                                          <div class="field-content">
-                                             <?php
-                                                $blockObject1 = block_load('trend_analysis', 'agency_mob');
-                                                $block1 = _block_get_renderable_array(_block_render_blocks(array($blockObject1)));
-                                                $output1 = drupal_render($block1);
-                                                print "$output1";
-                                                ?>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <br clear="all" />
-                                 <div class="col-xs-12 clearfix text-center" style="margin-top:-30px;"> <span style="font-size: 10px;font-style:italic;">&nbsp;&nbsp;Above graph represents a monthly Mobile Trend</span><br/>
-                                 </div>
-                                 <br clear="all" />
-                                 <div class="view-button clearfix">
-                                    <div class="row text-center">
-                                       <a class="" href="/website/mobile/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                       <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
-                                    </div>
-                                 </div>
+                      </div>
+                      <br clear="all"/>
+                    </div>
+                    <div class="pane-content clearfix">
+                      <div class="view  view-display-id-block_6 view-dom-id-146fb84eddbe3dc34d2b2cff5758c7bc">
+                        <div class="view-content">
+                          <div class="view-wrapper-new clearfix">
+                            <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
+                              <div class="col-xs-12 clearfix">
+                                <div class="views-field views-field-php-2 col-lg-6 nopadding grey-gradient" style="height:250px;">
+                                  <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
+                                    <h5>Mobile Performance Breakdown</h5>
+                                  </div>
+                                  <div class="col-lg-4 col-md-4" style="padding-right:0px;margin-top:15px;padding-left:10px;"> <span class="dot low"></span>Poor <br/>
+                                    <span class="dot avg"></span>Needs Improvement <br/>
+                                    <span class="dot good"></span>Good<br/>
+                                    <!--                                                <span class="dot na"></span>NA-->
+                                  </div>
+                                  <div class="col-lg-8 col-md-8 nopadding">
+                                    <div id="piechart1" style="margin-top:-17px;height:140px;margin-left:30px;"></div>
+                                    <?php print $agencydata['gov_mob_chart'];?>
+                                  </div>
+                                  <table style="width:100%">
+                                    <th style="background-color: #215393;color: white;"> Breakdown </th>
+                                    <th style="background-color: #215393;color: white;"> Websites </th>
+                                    <tr>
+                                      <td>Poor</td>
+                                      <td><?=dotgov_common_applyDataColor($agencydata['poor_nos'], $agency_website_num, '#ae0100') ?>
+                                    <tr>
+                                      <td>Need Improvement</td>
+                                      <td><?=dotgov_common_applyDataColor($agencydata['improve_nos'], $agency_website_num, '#665000') ?>
+                                    </tr>
+                                    <tr>
+                                      <td>Good</td>
+                                      <td><?=dotgov_common_applyDataColor($agencydata['good_nos'], $agency_website_num, '#276437') ?>
+                                    </tr>
+                                  </table>
+                                </div>
+                                <div class="col-xs-12 col-lg-6 nopadding grey-gradient second" style="height:250px;">
+                                  <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
+                                    <h5>Mobile Usability Breakdown
+                                  </div>
+                                  <div class="col-lg-4 col-md-4" style="padding-right:0px;margin-top:15px;padding-left:10px;"> <span class="dot good"></span>Mobile Friendly <br/>
+                                    <span class="dot low"></span>Not Mobile Friendly <br/>
+                                  </div>
+                                  <div class="col-lg-8 col-md-8 nopadding">
+                                    <div id="piechartusab" style="margin-top:-17px;height:140px;margin-left:30px;"></div>
+                                    <?php print $agencydata['gov_mob_usab_chart'];?>
+                                  </div>
+                                  <table style="width:100%">
+                                    <th style="background-color: #215393;color: white;"> Breakdown </th>
+                                    <th style="background-color: #215393;color: white;"> Websites </th>
+                                    <tr>
+                                      <td>Mobile Friendly</td>
+                                      <td><?=dotgov_common_applyDataColor($agencydata['friendly_nos'], $agency_website_num, '#276437') ?>
+                                    </tr>
+                                    <tr>
+                                      <td>Not Mobile Friendly</td>
+                                      <td><?=dotgov_common_applyDataColor($agencydata['nonfriendly_nos'], $agency_website_num, '#ae0100') ?>
+                                    </tr>
+                                  </table>
+                                </div>
                               </div>
-                           </div>
+                            </div>
+                          </div>
+                          <br clear="all" />
+                          <div class='col-lg-12 text-center clearfix'><span style='color:#29643a; font-size: 10px;font-style: italic;'>
+                                       Above graph shows the breakdown of Mobile Perf by category</span></div>
+                          <br clear="all" />
+                          <div class="view-button clearfix">
+                            <div class="row text-center">
+                              <a class="" href="/website/mobile/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                              <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                            </div>
+                          </div>
                         </div>
-                     </div>
+                      </div>
+                    </div>
                   </div>
-               </div>
+                </div>
+              </div>
                <div class="col-xs-12 col-lg-6">
                   <div class="white-back no-height">
                      <div class="panel-pane pane-views pane-website-information">
@@ -263,7 +178,7 @@
                         </div>
                         <br clear="all"/>
                         <div class="pane-content clearfix">
-                           <div class="view-wrapper" style="min-height:233px;">
+                           <div class="view-wrapper" style="min-height:290px;">
                               <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                                  <div class="view-empty clearfix">
                                     <div class="col-lg-6 grey-gradient" style="height:200px;">
@@ -293,9 +208,9 @@
                                     <script language="JavaScript">
                                        google.charts.load('current', {'packages':['corechart']});
                                        google.charts.setOnLoadCallback(drawChart);
-                                       
+
                                        function drawChart() {
-                                       
+
                                            var data = google.visualization.arrayToDataTable([
                                                ['Type', 'Number'],
                                                ['Color Contrast Issues',     <?php echo number_format($agencydata['ag_col_contrast'], 1, '.', ''); ?>],
@@ -313,10 +228,18 @@
                                                chartArea:{left:0,top:20,width:'100%',height:'50%'},
                                                legend:{position:'left',alignment:'center'}
                                            };
-                                       
+
                                            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-                                       
+
                                            chart.draw(data, options);
+                                             var svgTags = document.querySelectorAll('#piechart svg');
+                                             var c = document.createElement('canvas');
+                                             c.width = svgTags.clientWidth;
+                                             c.height = svgTags.clientHeight;
+                                             svgTags.parentNode.insertBefore(c, svgTags);
+                                             var div = document.createElement('div');
+                                             div.appendChild(svgTags);
+                                             canvg(c, div.innerHTML);
                                        }
                                     </script>
                                     <?php
@@ -391,23 +314,23 @@
                                              <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                              <script type="text/javascript">
                                                 Highcharts.chart( 'dnssec_chart', {
-                                                
+
                                                         chart: {
                                                             type: 'solidgauge',
                                                             backgroundColor: 'transparent'
-                                                
+
                                                         },
-                                                
+
                                                         title: {
-                                                
+
                                                             text: ''
-                                                
+
                                                         },
-                                                
+
                                                         tooltip: {
                                                             enabled: false,
                                                         },
-                                                
+
                                                         pane: {
                                                             startAngle: 0,
                                                             endAngle: 360,
@@ -418,13 +341,13 @@
                                                                 borderWidth: 0
                                                             } ]
                                                         },
-                                                
+
                                                         yAxis: {
                                                             min: 0,
                                                             max: 100,
                                                             lineWidth: 0,
                                                             tickPositions: [],
-                                                
+
                                                             title: {
                                                                 text: '<?php echo $agency_dnssec_score; ?> %',
                                                                 style: {
@@ -433,11 +356,11 @@
                                                                 },
                                                                 y: 30
                                                             },
-                                                
-                                                
-                                                
+
+
+
                                                         },
-                                                
+
                                                         plotOptions: {
                                                             solidgauge: {
                                                                 dataLabels: {
@@ -448,7 +371,7 @@
                                                                 rounded: true
                                                             }
                                                         },
-                                                
+
                                                         series: [ {
                                                             name: 'DNSSEC Chart',
                                                             data: [ {
@@ -459,9 +382,17 @@
                                                             } ]
                                                         } ]
                                                     }
-                                                
-                                                
+
+
                                                 );
+                                                var svgTags = document.querySelectorAll('#dnssec_chart svg');
+                                                var c = document.createElement('canvas');
+                                                c.width = svgTags.clientWidth;
+                                                c.height = svgTags.clientHeight;
+                                                svgTags.parentNode.insertBefore(c, svgTags);
+                                                var div = document.createElement('div');
+                                                div.appendChild(svgTags);
+                                                canvg(c, div.innerHTML);
                                              </script>
                                           </div>
                                           <div class="col-xs-12 col-lg-12">
@@ -577,23 +508,23 @@
                                        <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                        <script type="text/javascript">
                                           Highcharts.chart( 'https_chart', {
-                                          
+
                                                   chart: {
                                                       type: 'solidgauge',
                                                       backgroundColor: 'transparent'
-                                          
+
                                                   },
-                                          
+
                                                   title: {
-                                          
+
                                                       text: ''
-                                          
+
                                                   },
-                                          
+
                                                   tooltip: {
                                                       enabled: false,
                                                   },
-                                          
+
                                                   pane: {
                                                       startAngle: 0,
                                                       endAngle: 360,
@@ -604,13 +535,13 @@
                                                           borderWidth: 0
                                                       } ]
                                                   },
-                                          
+
                                                   yAxis: {
                                                       min: 0,
                                                       max: 100,
                                                       lineWidth: 0,
                                                       tickPositions: [],
-                                          
+
                                                       title: {
                                                           text: '<?php echo $agency_https_score; ?> %',
                                                           style: {
@@ -619,11 +550,11 @@
                                                           },
                                                           y: 30
                                                       },
-                                          
-                                          
-                                          
+
+
+
                                                   },
-                                          
+
                                                   plotOptions: {
                                                       solidgauge: {
                                                           dataLabels: {
@@ -634,7 +565,7 @@
                                                           rounded: true
                                                       }
                                                   },
-                                          
+
                                                   series: [ {
                                                       name: 'Free of Insecure Protocol Chart',
                                                       data: [ {
@@ -645,9 +576,17 @@
                                                       } ]
                                                   } ]
                                               }
-                                          
-                                          
+
+
                                           );
+                                          var svgTags = document.querySelectorAll('#https_chart svg');
+                                                var c = document.createElement('canvas');
+                                                c.width = svgTags.clientWidth;
+                                                c.height = svgTags.clientHeight;
+                                                svgTags.parentNode.insertBefore(c, svgTags);
+                                                var div = document.createElement('div');
+                                                div.appendChild(svgTags);
+                                                canvg(c, div.innerHTML);
                                        </script>
                                     </div>
                                  </div>
@@ -723,23 +662,23 @@
                                                 <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                                 <script type="text/javascript">
                                                    Highcharts.chart( 'm1513_chart', {
-                                                   
+
                                                            chart: {
                                                                type: 'solidgauge',
                                                                backgroundColor:'transparent'
-                                                   
+
                                                            },
-                                                   
+
                                                            title: {
-                                                   
+
                                                                text: ''
-                                                   
+
                                                            },
-                                                   
+
                                                            tooltip: {
                                                                enabled: false,
                                                            },
-                                                   
+
                                                            pane: {
                                                                startAngle: 0,
                                                                endAngle: 360,
@@ -750,13 +689,13 @@
                                                                    borderWidth: 0
                                                                } ]
                                                            },
-                                                   
+
                                                            yAxis: {
                                                                min: 0,
                                                                max: 100,
                                                                lineWidth: 0,
                                                                tickPositions: [],
-                                                   
+
                                                                title: {
                                                                    text: '<?php echo $agency_m15_score; ?> %',
                                                                    style: {
@@ -765,11 +704,11 @@
                                                                    },
                                                                    y: 30
                                                                },
-                                                   
-                                                   
-                                                   
+
+
+
                                                            },
-                                                   
+
                                                            plotOptions: {
                                                                solidgauge: {
                                                                    dataLabels: {
@@ -780,7 +719,7 @@
                                                                    rounded: true
                                                                }
                                                            },
-                                                   
+
                                                            series: [ {
                                                                name: 'M-15-13 Chart',
                                                                data: [ {
@@ -791,9 +730,18 @@
                                                                } ]
                                                            } ]
                                                        }
-                                                   
-                                                   
+
+
                                                    );
+
+                                                   var svgTags = document.querySelectorAll('#m1513_chart svg');
+                                                var c = document.createElement('canvas');
+                                                c.width = svgTags.clientWidth;
+                                                c.height = svgTags.clientHeight;
+                                                svgTags.parentNode.insertBefore(c, svgTags);
+                                                var div = document.createElement('div');
+                                                div.appendChild(svgTags);
+                                                canvg(c, div.innerHTML);
                                                 </script>
                                              </div>
                                           </div>
@@ -858,23 +806,23 @@
                                                    <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                                    <script type="text/javascript">
                                                       Highcharts.chart( 'ipv6_chart', {
-                                                      
+
                                                               chart: {
                                                                   type: 'solidgauge',
                                                                   backgroundColor:'transparent'
-                                                      
+
                                                               },
-                                                      
+
                                                               title: {
-                                                      
+
                                                                   text: ''
-                                                      
+
                                                               },
-                                                      
+
                                                               tooltip: {
                                                                   enabled: false,
                                                               },
-                                                      
+
                                                               pane: {
                                                                   startAngle: 0,
                                                                   endAngle: 360,
@@ -885,13 +833,13 @@
                                                                       borderWidth: 0
                                                                   } ]
                                                               },
-                                                      
+
                                                               yAxis: {
                                                                   min: 0,
                                                                   max: 100,
                                                                   lineWidth: 0,
                                                                   tickPositions: [],
-                                                      
+
                                                                   title: {
                                                                       text: '<?php echo $agency_ipv6_score; ?> %',
                                                                       style: {
@@ -900,11 +848,11 @@
                                                                       },
                                                                       y: 30
                                                                   },
-                                                      
-                                                      
-                                                      
+
+
+
                                                               },
-                                                      
+
                                                               plotOptions: {
                                                                   solidgauge: {
                                                                       dataLabels: {
@@ -915,7 +863,7 @@
                                                                       rounded: true
                                                                   }
                                                               },
-                                                      
+
                                                               series: [ {
                                                                   name: 'Free of Insecure Protocol Chart',
                                                                   data: [ {
@@ -926,9 +874,18 @@
                                                                   } ]
                                                               } ]
                                                           }
-                                                      
-                                                      
+
+
                                                       );
+
+                                                      var svgTags = document.querySelectorAll('#ipv6_chart svg');
+                                                      var c = document.createElement('canvas');
+                                                      c.width = svgTags.clientWidth;
+                                                      c.height = svgTags.clientHeight;
+                                                      svgTags.parentNode.insertBefore(c, svgTags);
+                                                      var div = document.createElement('div');
+                                                      div.appendChild(svgTags);
+                                                      canvg(c, div.innerHTML);
                                                    </script>
                                                 </div>
                                              </div>
@@ -1010,23 +967,23 @@
                                           <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                           <script type="text/javascript">
                                              Highcharts.chart( 'dap_chart', {
-                                             
+
                                                      chart: {
                                                          type: 'solidgauge',
                                                          backgroundColor:'transparent'
-                                             
+
                                                      },
-                                             
+
                                                      title: {
-                                             
+
                                                          text: ''
-                                             
+
                                                      },
-                                             
+
                                                      tooltip: {
                                                          enabled: false,
                                                      },
-                                             
+
                                                      pane: {
                                                          startAngle: 0,
                                                          endAngle: 360,
@@ -1037,13 +994,13 @@
                                                              borderWidth: 0
                                                          } ]
                                                      },
-                                             
+
                                                      yAxis: {
                                                          min: 0,
                                                          max: 100,
                                                          lineWidth: 0,
                                                          tickPositions: [],
-                                             
+
                                                          title: {
                                                              text: '<?php echo $agency_dap_score; ?> %',
                                                              style: {
@@ -1052,11 +1009,9 @@
                                                              },
                                                              y: 30
                                                          },
-                                             
-                                             
-                                             
+
                                                      },
-                                             
+
                                                      plotOptions: {
                                                          solidgauge: {
                                                              dataLabels: {
@@ -1067,7 +1022,7 @@
                                                              rounded: true
                                                          }
                                                      },
-                                             
+
                                                      series: [ {
                                                          name: 'DAP Chart',
                                                          data: [ {
@@ -1078,9 +1033,20 @@
                                                          } ]
                                                      } ]
                                                  }
-                                             
-                                             
+
+
                                              );
+
+                                                var svgTags = document.querySelectorAll('#dap_chart svg');
+                                                var c = document.createElement('canvas');
+                                                c.width = svgTags.clientWidth;
+                                                c.height = svgTags.clientHeight;
+                                                svgTags.parentNode.insertBefore(c, svgTags);
+                                                var div = document.createElement('div');
+                                                div.appendChild(svgTags);
+                                                canvg(c, div.innerHTML);
+
+
                                           </script>
                                        </div>
                                     </div>
@@ -1144,23 +1110,23 @@
                                     <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                     <script type="text/javascript">
                                        Highcharts.chart( 'freeofinsecureprot_chart', {
-                                       
+
                                                chart: {
                                                    type: 'solidgauge',
                                                    backgroundColor:'transparent'
-                                       
+
                                                },
-                                       
+
                                                title: {
-                                       
+
                                                    text: ''
-                                       
+
                                                },
-                                       
+
                                                tooltip: {
                                                    enabled: false,
                                                },
-                                       
+
                                                pane: {
                                                    startAngle: 0,
                                                    endAngle: 360,
@@ -1171,13 +1137,13 @@
                                                        borderWidth: 0
                                                    } ]
                                                },
-                                       
+
                                                yAxis: {
                                                    min: 0,
                                                    max: 100,
                                                    lineWidth: 0,
                                                    tickPositions: [],
-                                       
+
                                                    title: {
                                                        text: '<?php echo $agency_insecprot_score; ?> %',
                                                        style: {
@@ -1186,11 +1152,11 @@
                                                        },
                                                        y: 30
                                                    },
-                                       
-                                       
-                                       
+
+
+
                                                },
-                                       
+
                                                plotOptions: {
                                                    solidgauge: {
                                                        dataLabels: {
@@ -1201,7 +1167,7 @@
                                                        rounded: true
                                                    }
                                                },
-                                       
+
                                                series: [ {
                                                    name: 'Free of Insecure Protocol Chart',
                                                    data: [ {
@@ -1212,9 +1178,18 @@
                                                    } ]
                                                } ]
                                            }
-                                       
-                                       
+
+
                                        );
+
+                                             var svgTags = document.querySelectorAll('#freeofinsecureprot_chart svg');
+                                             var c = document.createElement('canvas');
+                                             c.width = svgTags.clientWidth;
+                                             c.height = svgTags.clientHeight;
+                                             svgTags.parentNode.insertBefore(c, svgTags);
+                                             var div = document.createElement('div');
+                                             div.appendChild(svgTags);
+                                             canvg(c, div.innerHTML);
                                     </script>
                                  </div>
                               </div>
@@ -1255,7 +1230,7 @@
                      <div class="col-xs-2 nopadding">
                         <div id="tooltip10" class="infor">
                            <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i
-                              class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
+                              class='icon glyphicon glyphicon-info-sign' style="padding-right: 4px;"></i></a>
                         </div>
                      </div>
                      <br clear="all" />
@@ -1275,27 +1250,27 @@
                                     <div style="display:block; float:left;max-height:145px; width:100%;">
                                        <div class="col-xs-6 col-sm-6 col-lg-6" style="margin-top: 30px;">
                                           <ul class="uswds nopadding" style="font-size:12px; margin-left: 16px; line-height: 16px;">
-                                             <li class="ud">USWDS Code Detected</li>
-                                             <li class="und">USWDS Code Not Detected</li>
+                                             <li class="und">USWDS Code Detected</li>
+                                             <li class="ud">USWDS Code Not Detected</li>
                                           </ul>
                                        </div>
                                        <div class="col-xs-6 col-sm-6 col-lg-6">
                                           <div id="piechartLast" style="max-width: 265px;float: right;"></div>
                                        </div>
-                                      
+
                                        <script language="JavaScript">
                                           google.charts.load('current', {'packages':['corechart']});
                                           google.charts.setOnLoadCallback(drawuswdsChart);
-                                          
+
                                           function drawuswdsChart() {
-                                          
+
                                               var data = google.visualization.arrayToDataTable([
                                                   ['Type', 'Number'],
                                                   ['USWDS Code Detected',  <?php echo number_format($agencydata['uswds_compliant'], 1, '.', ''); ?>],
                                                   ['USWDS Code Not Detected', <?php echo number_format($agencydata['uswds_noncompliant'], 1, '.', ''); ?>],
                                               ]);
                                               var options = {
-                                               
+                                                  width: 200,
                                                   colors: ['#66746a', '#8ac99c'],
                                                   sliceVisibilityThreshold: 0,
                                                   dataLabels: {
@@ -1305,13 +1280,20 @@
                                                   showInLegend: true,
                                                   backgroundColor:"transparent",
                                                   chartArea:{left:'35%',bottom: '30%',height: 180,width:115.35},
-                                                  // legend:{position:'left',alignment:'center'}
                                               };
-                                          
+
                                               var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));
-                                          
+
                                               chart.draw(data, options);
-                                              
+                                                // Process SVGTags in IE
+                                                var svgTags = document.querySelectorAll('#piechartLast svg');
+                                                var c = document.createElement('canvas');
+                                                c.width = svgTags.clientWidth;
+                                                c.height = svgTags.clientHeight;
+                                                svgTags.parentNode.insertBefore(c, svgTags);
+                                                var div = document.createElement('div');
+                                                div.appendChild(svgTags);
+                                                canvg(c, div.innerHTML);
                                           }
                                        </script>
                                     </div>
@@ -1338,13 +1320,6 @@
                                     <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are
                                     excluded)</span>
                                  </div>
-                              </div>
-                              <div class="col-xs-12 nopadding clearfix"> <?php
-                                 $blockObject6 = block_load('trend_analysis', 'agency_dap');
-                                 $block6 = _block_get_renderable_array(_block_render_blocks(array($blockObject6)));
-                                 $output6 = drupal_render($block6);
-                                 print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: " . dotgov_common_getChartColor($agency_dap_score) . ";font-size: 12px;font-style: italic;'>Above graph represents a monthly DAP Trend</span>";
-                                 ?>
                               </div>
                            </div>
                         </div>
@@ -1386,7 +1361,7 @@
                                              }
                                              print "</span></div>";
                                           }
-                                          
+
                                           if ($agencydata['ag_cms'] != '') {
                                              print "<div class=\"col-sm-12 nopadding dataset-resources\"><span style=\"height:auto;\" class=\"app-button\">CMS : ";
                                              foreach ($agencydata['ag_cms'] as $akey => $aval) {
@@ -1394,7 +1369,7 @@
                                              }
                                              print "</span></div>";
                                           }
-                                          
+
                                           if ($agencydata['ag_os'] != '') {
                                              print "<div class=\"col-sm-12 nopadding dataset-resources\"><span style=\"height:auto;\" class=\"app-button\">Operating Systems : ";
                                              foreach ($agencydata['ag_os'] as $akey => $aval) {
@@ -1402,7 +1377,7 @@
                                              }
                                              print "</span></div>";
                                           }
-                                          
+
                                           if ($agencydata['ag_cdn'] != '') {
                                              print "<div class=\"col-sm-12 nopadding dataset-resources\"><span style=\"height:auto;\" class=\"app-button\">CDN : ";
                                              foreach ($agencydata['ag_cdn'] as $akey => $aval) {
@@ -1423,5 +1398,4 @@
          </div>
       </div>
    </div>
-</div>
 </div>
