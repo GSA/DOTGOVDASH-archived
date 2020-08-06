@@ -20,12 +20,12 @@
                         Average DAP Score          </th>
                     <th class="views-field views-field-field-https-score" scope="col">
                         Average HTTPS Score          </th>
-                    <th class="views-field views-field-field-mobile-overall-score" scope="col">
-                        Average Mobile Overall Score          </th>
-                    <th class="views-field views-field-field-mobile-performance-score" scope="col">
-                        Average Mobile Performance Score          </th>
-                    <th class="views-field views-field-field-mobile-usability-score" scope="col">
-                        Average Mobile Usability Score          </th>
+<!--                    <th class="views-field views-field-field-mobile-overall-score" scope="col">-->
+<!--                        Average Mobile Overall Score          </th>-->
+<!--                    <th class="views-field views-field-field-mobile-performance-score" scope="col">-->
+<!--                        Average Mobile Performance Score          </th>-->
+<!--                    <th class="views-field views-field-field-mobile-usability-score" scope="col">-->
+<!--                        Average Mobile Usability Score          </th>-->
                     <th class="views-field views-field-field-site-speed-score" scope="col">
                         Average Site Speed Score          </th>
                     <th class="views-field views-field-field-ipv6-score" scope="col">
@@ -48,12 +48,12 @@
                         <?=$govwidedata['actualdata']['avg_dap']?>          </td>
                     <td class="views-field views-field-field-https-score">
                         <?=$govwidedata['actualdata']['avg_https']?>          </td>
-                    <td class="views-field views-field-field-mobile-overall-score">
-                        <?=$govwidedata['actualdata']['avg_mob_overall']?>          </td>
-                    <td class="views-field views-field-field-mobile-performance-score">
-                        <?=$govwidedata['actualdata']['avg_mob_perform']?>          </td>
-                    <td class="views-field views-field-field-mobile-usability-score">
-                        <?=$govwidedata['actualdata']['avg_mob_usab']?>          </td>
+<!--                    <td class="views-field views-field-field-mobile-overall-score">-->
+<!--                        --><?//=$govwidedata['actualdata']['avg_mob_overall']?><!--          </td>-->
+<!--                    <td class="views-field views-field-field-mobile-performance-score">-->
+<!--                        --><?//=$govwidedata['actualdata']['avg_mob_perform']?><!--          </td>-->
+<!--                    <td class="views-field views-field-field-mobile-usability-score">-->
+<!--                        --><?//=$govwidedata['actualdata']['avg_mob_usab']?><!--          </td>-->
                     <td class="views-field views-field-field-site-speed-score">
                         <?=$govwidedata['actualdata']['avg_sitespeed']?>          </td>
                     <td class="views-field views-field-field-ipv6-score">

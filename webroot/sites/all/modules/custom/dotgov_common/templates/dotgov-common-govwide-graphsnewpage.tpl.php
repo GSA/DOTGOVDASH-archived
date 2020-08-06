@@ -490,19 +490,29 @@
                <div class="col-xs-12  col-lg-4">
                   <div class="white-back">
                      <div class="panel-pane pane-views pane-website-information">
-                        <?php
-                         echo title('HTTPS');
-                         echo infoIcon("HTTPS Data is collected through a custom scanner component of digital dashboard that last ran on", "tooltip2", dotgov_common_lastScanDateStr());
-                       ?>
+                        <div class="col-xs-10 nopadding">
+                           <h2 class="pane-title"> HTTPS Information </h2>
+                        </div>
+                        <div class="col-xs-2 nopadding">
+                           <div id="tooltip2" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+                              HTTPS Data is collected through a custom scanner component of digital dashboard that last ran on
+                              <?php dotgov_common_lastScanDate();?>
+                              </span>
+                           </div>
+                        </div>
                         <br clear="all"/>
                         <div class="pane-content">
                            <div class="view-wrapper">
                               <div class="grey-gradient clearfix">
                                  <div class="col-xs-12 height-wrap-first">
                                     <h5>HTTPS score breakdown</h5>
-                                    <?php
-                                       echo subtext("HTTPS", $agency_https_score, "The individual site score is based on several different metrics. See scoring methods for more info.");
-                                    ?>
+                                    <div class="col-sm-12 col-lg-6 nopadding">
+                                       <p> HTTPS Overall Average Score :
+                                          <?=$agency_https_score?>
+                                          %
+                                       </p>
+                                       <span style="font-size:12px;" class="font-italic">The individual site score is based on several different metrics. See scoring methods for more info.</span>
+                                    </div>
                                     <div class="col-sm-12 col-lg-6 nopadding">
                                        <div id="https_chart">&nbsp;</div>
                                        <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
@@ -631,19 +641,27 @@
                                     ?>
                               </div>
                            </div>
-                           <?php
-                              echo footer();
-                           ?>
+                           <div class="view-button">
+                              <div class="row text-center">
+                                 <a class="" href="/website/all/reports"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                 <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                              </div>
+                           </div>
                         </div>
                      </div>
                   </div>
                </div>
                <div class="col-xs-12 col-lg-4">
                   <div class="white-back">
-                     <?php
-                       echo title('M-15-13 and BOD 18-01');
-                       echo infoIcon("M-15-13 and BOD 18-01 Data is collected through a custom scanner component of dotgov dashboard that last ran on", "tooltip7", dotgov_common_lastScanDateStr());
-                     ?>
+                     <div class="col-xs-10 nopadding">
+                        <h2 class="pane-title">M-15-13 and BOD 18-01 Information</h2>
+                     </div>
+                     <div class="col-xs-2 nopadding">
+                        <div id="tooltip7" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                           <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+                           M-15-13 and BOD 18-01 Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate();?></span>
+                        </div>
+                     </div>
                      <br clear="all"/>
                      <div class="pane-content clearfix">
                         <div class="view  view-display-id-block_10 view-dom-id-93e7fd06306700be9064f5e8954f211b">
@@ -654,9 +672,13 @@
                                        <div class="grey-gradient clearfix min-295">
                                           <div class="col-xs-12 height-wrap-first">
                                              <h5>M-15-13 and BOD 18-01 score breakdown</h5>
-                                             <?php
-                                                echo subtext("Compliant with M-15-13 and BOD 18-01", $agency_m15_score, "The individual site score is 100 for compliant 0 for non-compliant", "col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding");
-                                             ?>
+                                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
+                                                <p> Compliant with M-15-13 and BOD 18-01 Overall Average Score :
+                                                   <?=$agency_m15_score?>
+                                                   %
+                                                </p>
+                                                <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
+                                             </div>
                                              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
                                                 <div id="m1513_chart">&nbsp;</div>
                                                 <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
@@ -768,9 +790,12 @@
                                              ?>
                                        </div>
                                     </div>
-                                    <?php
-                                       echo footer();
-                                    ?>
+                                    <div class="view-button">
+                                       <div class="row text-center">
+                                          <a class="" href="/website/all/reports"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                          <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                                       </div>
+                                    </div>
                                  </div>
                               </div>
                            </div>
@@ -783,10 +808,15 @@
                      <div class="col-xs-10 nopadding">
                         <h2 class="pane-title"> IPV6 Information </h2>
                      </div>
-                     <?php
-                       echo title('IPV6');
-                       echo infoIcon("IPV6 Data is collected through a custom scanner component of dotgov dashboard that last ran on", "tooltip6", dotgov_common_lastScanDateStr());
-                     ?>
+                     <div class="col-xs-2">
+                        <div id="tooltip6" class="infor">
+                           <i class='icon glyphicon glyphicon-info-sign'>&nbsp</i>
+                           <span class="tooltiptext tooltip-left">
+                           <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code">
+                           IPV6 Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate();?>
+                           </span>
+                        </div>
+                     </div>
                      <br clear="all"/>
                      <div class="pane-content clearfix">
                         <div class="view  view-display-id-block_8 view-dom-id-b6c9491539ed2fa13d8d26fb2e0fc9c7">
@@ -798,9 +828,13 @@
                                           <div class="grey-gradient clearfix min-295">
                                              <div class="col-xs-12 height-wrap-first">
                                                 <h5>IPV6 score breakdown</h5>
-                                                <?php
-                                                  echo subtext("IPV6", $agency_ipv6_score, "The individual site score is 100 for compliant 0 for non-compliant", "col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding");
-                                                ?>
+                                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
+                                                   <p>IPV6 Overall Average Score :
+                                                      <?=$agency_ipv6_score?>
+                                                      %
+                                                   </p>
+                                                   <span style="font-size:12px;" class="font-italic">The individual site score is 100 for compliant 0 for non-compliant</span>
+                                                </div>
                                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
                                                    <div id="ipv6_chart">&nbsp;</div>
                                                    <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
@@ -912,9 +946,12 @@
                                                 ?>
                                           </div>
                                        </div>
-                                       <?php
-                                          echo footer();
-                                       ?>
+                                       <div class="view-button">
+                                          <div class="row text-center">
+                                             <a class="" href="/website/all/reports"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                             <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                                          </div>
+                                       </div>
                                     </div>
                                  </div>
                               </div>
@@ -949,9 +986,9 @@
                            <div class="view-content">
                               <div class="field-content col-lg-12 nopadding">
                                  <div class="grey-gradient clearfix">
-                                 <?php
-                                    echo title("DAP");
-                                 ?>
+                                    <div class="col-xs-12">
+                                       <h5>DAP score breakdown</h5>
+                                    </div>
                                     <div class = "col-xs-12" style="min-height:55px;">
                                        <p>DAP Overall Average Score :
                                           <?=$agency_dap_score?>
@@ -1076,18 +1113,26 @@
                               </div>
                            </div>
                         </div>
-                        <?php
-                           echo footer();
-                        ?>
+                        <div class="view-button">
+                           <div class="row text-center">
+                              <a class="" href="/website/all/reports"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                              <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                           </div>
+                        </div>
                      </div>
                   </div>
                </div>
                <div class="col-xs-12 col-lg-4">
                   <div class="white-back">
-                     <?php
-                       echo title('Free of Insecure Protocols');
-                       echo infoIcon("Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner component of dotgov dashboard that last ran on", "tooltip8", dotgov_common_lastScanDateStr());
-                     ?>
+                     <div class="col-xs-10 nopadding">
+                        <h2 class="pane-title">Free of Insecure Protocols Information</h2>
+                     </div>
+                     <div class="col-xs-2 nopadding">
+                        <div id="tooltip8" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                           <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+                           Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate();?></span>
+                        </div>
+                     </div>
                      <br clear="all" />
                      <div class="pane-content clearfix">
                         <div class="view-wrapper">
@@ -1216,9 +1261,12 @@
                                  ?>
                            </div>
                         </div>
-                        <?php
-                           echo footer();
-                        ?>
+                        <div class="view-button">
+                           <div class="row text-center">
+                              <a class="" href="/website/all/reports"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                              <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                           </div>
+                        </div>
                      </div>
                   </div>
                </div>
@@ -1324,9 +1372,12 @@
                            </div>
                         </div>
                      </div>
-                     <?php
-                        echo footer("/website/all/uswds", "https://designsystem.digital.gov/maturity-model/", "/sites/all/themes/dotgov/images/DD-btn_learn-more1.png");
-                     ?>
+                     <div class="view-button">
+                        <div class="row text-center">
+                           <a class="" href="/website/all/uswds"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                           <a href="https://designsystem.digital.gov/maturity-model/"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""/></a>
+                        </div>
+                     </div>
                   </div>
                </div>
             </div>
