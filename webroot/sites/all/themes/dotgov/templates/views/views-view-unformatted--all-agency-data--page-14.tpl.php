@@ -157,7 +157,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                       <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                         <h5>Mobile Performance Breakdown</h5>
                                       </div>
-                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size=10px;"> <span class="dot low"></span>Poor <br/>
+                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size:10px;"> <span class="dot low"></span>Poor <br/>
                                         <span class="dot avg"></span>Needs Improvement <br/>
                                         <span class="dot good"></span>Good<br/>
                                         <!--                                                <span class="dot na"></span>NA-->
@@ -215,8 +215,8 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                               <br clear="all" />
                               <div class="view-button clearfix">
                                 <div class="row text-center">
-                                  <a class="" href="/website/mobile/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                  <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+<!--                                  <a class="" href="/website/mobile/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>-->
+                                  <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="30" alt=""/></a>
                                 </div>
                               </div>
                             </div>
@@ -239,7 +239,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                 </div>
                                 <br clear="all"/>
                                 <div class="pane-content clearfix">
-                                    <div class="view-wrapper" style="min-height:233px;">
+                                    <div class="view-wrapper" style="min-height:285px;">
                                         <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                                             <div class="view-empty clearfix">
                                                 <div class="col-lg-6 grey-gradient" style="height:200px;">
