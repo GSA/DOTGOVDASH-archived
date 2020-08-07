@@ -9,7 +9,7 @@ function drawChart1() {
         ['Poor',  <?php echo number_format($agencydata['mob_perf_poor_nos'],1, '.', ''); ?>],
         ['Need Improvement',      <?php echo number_format($agencydata['mob_perf_improve_nos'],1, '.', '');?>],
         ['Good',  <?php echo number_format($agencydata['mob_perf_good_nos'],1, '.', ''); ?>],
-        ['NA',  <?php echo number_format($agencydata['mob_null'],1, '.', ''); ?>]
+        ['NA',  <?php echo number_format($agencydata['null'],1, '.', ''); ?>]
 
     ]);
     var options = {
@@ -23,7 +23,7 @@ function drawChart1() {
         },
         showInLegend: false,
     };
-var chart = new google.visualization.PieChart(document.getElementById('piechart1'));
+var chart = new google.visualization.PieChart(document.getElementById('piechartmob'));
 
 chart.draw(data, options);
 }

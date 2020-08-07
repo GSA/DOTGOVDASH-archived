@@ -9,7 +9,7 @@
             ['Type', 'Number'],
             ['Mobile Friendly',     <?php echo number_format($agencydata['mob_usab_friendly_nos'],1, '.', '');?>],
             ['Not Mobile Friendly',      <?php echo number_format($agencydata['mob_usab_notfriendly_nos'],1, '.', '');?>],
-            ['NA',  <?php echo number_format($agencydata['mob_null'],1, '.', ''); ?>]
+            ['NA',  <?php echo number_format($agencydata['usab_null'],1, '.', ''); ?>]
 
         ])
         var options = {
