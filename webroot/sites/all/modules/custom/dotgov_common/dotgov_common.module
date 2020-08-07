@@ -698,8 +698,8 @@ function dotgov_common_getAgencyComplianceData($agencyid){
   $agency_mob['mob_usab_notfriendly_nos'] = db_query("SELECT mob_usab_nonfriendly FROM custom_agencywide_archive where date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY)",array(':agencyid' => $agencyid))->fetchField();
   $agency_mob['total_websites'] = db_query("SELECT sum(num_of_websites) FROM custom_agencywide_archive where date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY)")->fetchField();
   $agency_mob['no_of_websites']=  db_query("SELECT num_of_websites FROM custom_agencywide_archive where date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY)",array(':agencyid' => $agencyid))->fetchField();
-  $agency_mob['null'] = $agency_mob['total_websites'] - ($agency_mob['mob_perf_good_nos']+ $agency_mob['mob_perf_improve_nos']+ $agency_mob['mob_perf_poor_nos']);
-  $agency_mob['usab_null'] = $agency_mob['total_websites'] - ($agency_mob['mob_usab_friendly_nos']+ $agency_mob['mob_usab_notfriendly_nos']);
+  $agency_mob['null'] = $agency_mob['no_of_websites'] - ($agency_mob['mob_perf_good_nos']+ $agency_mob['mob_perf_improve_nos']+ $agency_mob['mob_perf_poor_nos']);
+  $agency_mob['usab_null'] = $agency_mob['no_of_websites'] - ($agency_mob['mob_usab_friendly_nos']+ $agency_mob['mob_usab_notfriendly_nos']);
 
   $agencydata['good']=$agency_mob['mob_perf_good_nos'];
   $agencydata['improve']=$agency_mob['mob_perf_improve_nos'];
