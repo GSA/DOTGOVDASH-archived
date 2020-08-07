@@ -5,23 +5,24 @@ google.charts.setOnLoadCallback(drawChart1);
 
 function drawChart1() {
 
-var data = google.visualization.arrayToDataTable([
-['Type', 'Number'],
-    ['Poor',     <?php echo number_format($govwidedata['mob_perf_poor_nos'],1, '.', '');?>],
-    ['Needs Improvement',      <?php echo number_format($govwidedata['mob_perf_improve_nos'],1, '.', '');?>],
-    ['Good',  <?php echo number_format($govwidedata['mob_perf_good_nos'],1, '.', ''); ?>],
-])
+    var data = google.visualization.arrayToDataTable([
+        ['Type', 'Number'],
+        ['Poor',   <?php echo number_format($govwidedata['mob_perf_poor_nos'],1, '.', '');?>],
+        ['Needs Improvement', <?php echo number_format($govwidedata['mob_perf_improve_nos'],1, '.', '');?>],
+        ['Good',  <?php echo number_format($govwidedata['mob_perf_good_nos'],1, '.', ''); ?>],
+        ['NA',  <?php echo number_format($govwidedata['null'],1, '.', ''); ?>],
+    ]);
     var options = {
-        colors: ['#ae0100', '#665000','#276437'],
-    sliceVisibilityThreshold: 0,
-    legend: {position: 'none'},
-    backgroundColor: { fill:'transparent' },
-    pieSliceText: 'label',
-    dataLabels: {
-        enabled: false
-    },
-    showInLegend: false,
-};
+        colors: ['#ae0100', '#665000','#276437','#66746a'],
+        sliceVisibilityThreshold: 0,
+        legend: {position: 'none'},
+        backgroundColor: { fill:'transparent' },
+        pieSliceText: 'percentage',
+        dataLabels: {
+            enabled: false
+        },
+        showInLegend: false,
+    };
 
 var chart = new google.visualization.PieChart(document.getElementById('piechart1'));
 

@@ -95,13 +95,13 @@
                                   <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                     <h5>Mobile Performance Breakdown</h5>
                                   </div>
-                                  <div class="col-lg-4 col-md-4" style="padding-right:0px;margin-top:15px;padding-left:10px;"> <span class="dot low"></span>Poor <br/>
+                                  <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 12px"> <span class="dot low"></span>Poor <br/>
                                     <span class="dot avg"></span>Needs Improvement <br/>
                                     <span class="dot good"></span>Good<br/>
                                     <!--                                                <span class="dot na"></span>NA-->
                                   </div>
-                                  <div class="col-lg-8 col-md-8 nopadding">
-                                    <div id="piechart1" style="margin-top:-17px;height:140px;margin-left:30px;"></div>
+                                  <div class="col-lg-6 col-md-6 nopadding">
+                                    <div id="piechart1" style="margin-top:-17px;height:140px;"></div>
                                     <?php print $agencydata['gov_mob_chart'];?>
                                   </div>
                                   <table style="width:100%">
@@ -124,11 +124,11 @@
                                   <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                     <h5>Mobile Usability Breakdown
                                   </div>
-                                  <div class="col-lg-4 col-md-4" style="padding-right:0px;margin-top:15px;padding-left:10px;"> <span class="dot good"></span>Mobile Friendly <br/>
+                                  <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 12px"> <span class="dot good"></span>Mobile Friendly <br/>
                                     <span class="dot low"></span>Not Mobile Friendly <br/>
                                   </div>
-                                  <div class="col-lg-8 col-md-8 nopadding">
-                                    <div id="piechartusab" style="margin-top:-17px;height:140px;margin-left:30px;"></div>
+                                  <div class="col-lg-6 col-md-6 nopadding">
+                                    <div id="piechartusab" style="margin-top:-17px;height:140px;"></div>
                                     <?php print $agencydata['gov_mob_usab_chart'];?>
                                   </div>
                                   <table style="width:100%">
@@ -163,7 +163,7 @@
                   </div>
                 </div>
               </div>
-               <div class="col-xs-12 col-lg-6">
+              <div class="col-xs-12 col-lg-6">
                   <div class="white-back no-height">
                      <div class="panel-pane pane-views pane-website-information">
                         <div class="col-xs-10 nopadding">
