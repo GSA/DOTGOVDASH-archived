@@ -63,8 +63,10 @@ $agency_uswds_score = round(db_query("select avg(c.field_uswds_score_value) as a
 $agencynode = node_load(arg(1));
 
 ?>
-<div onclick="generatePDF()" style="float: right;cursor: pointer;"><p>Download PDF<img alt="Download PDF" src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;"></p></div>
-<div class="main-container container-fluid nopadding">
+<div class="download-pdf">
+    <a href="#" onclick="generatePDF()"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="Download Pdf">
+    </a>
+</div><div class="main-container container-fluid nopadding">
     <div class="row">
         <section class="col-sm-12 nopadding">
             <div class="col-xs-12 nopadding clearfix">
