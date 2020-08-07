@@ -31,7 +31,7 @@ $chartseries = array_values($chartdata);
 <?php
 drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
 ?>
-<!-- <div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="unfinished bingo card" onclick="generatePDF()"></div> -->
+<div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="unfinished bingo card" onclick="generatePDF()"></div>
 <div id="demo-page">
    <div  class="main-govwidecontents">
       <div class="content-wrap">
