@@ -65,9 +65,8 @@
         <tr>
             <th>Website</th>
             <th>Updated Date</th>
-            <th>Mobile Overall Score</th>
-            <th>Mobile Performance Score</th>
-            <th>Mobile Usability Score</th>
+            <th>Mobile Usability Status</th>
+            <th>Mobile Performance Status</th>
         </tr>
     <?php else: ?>
         <tr>
@@ -79,11 +78,10 @@
             <th>HTTPS score</th>
             <th>IPv6  Score</th>
             <th>M-15-13 and BOD 18-01 Compliance Score</th>
-            <th>Mobile Overall Score</th>
-            <th>Mobile Performance Score</th>
-            <th>Mobile Usability Score</th>
             <th>Site Speed Score</th>
             <th>SSL Score</th>
+            <th>Mobile Usability Status</th>
+            <th>Mobile Performance Status</th>
         </tr>
     <?php endif; ?>
     </thead>
@@ -154,27 +152,6 @@
             print "<td>".$val['m15']."</td>";
             }
 
-            if(!isset($val['mobovr']) || ($val['mobovr'] == '') || ($val['mobovr'] == NULL)){
-            print "<td>Not Available</td>";
-            }
-            else{
-            print "<td>".$val['mobovr']."</td>";
-            }
-
-            if(!isset($val['mobperf']) || ($val['mobperf'] == '') || ($val['mobperf'] == NULL)){
-            print "<td>Not Available</td>";
-            }
-            else{
-            print "<td>".$val['mobperf']."</td>";
-            }
-
-            if(!isset($val['mobusab']) || ($val['mobusab'] == '') || ($val['mobusab'] == NULL)){
-            print "<td>Not Available</td>";
-            }
-            else{
-            print "<td>".$val['mobusab']."</td>";
-            }
-
             if(!isset($val['sitespeed']) || ($val['sitespeed'] == '') || ($val['sitespeed'] == NULL)){
             print "<td>Not Available</td>";
             }
@@ -187,6 +164,20 @@
             }
             else{
             print "<td>".$val['ssl']."</td>";
+            }
+
+            if(!isset($val['mobile_usability_stat']) || ($val['mobile_usability_stat'] == '') || ($val['mobile_usability_stat'] == NULL)){
+                print "<td>Not Available</td>";
+            }
+            else{
+                print "<td>".$val['mobile_usability_stat']."</td>";
+            }
+
+            if(!isset($val['mobile_perf_stat']) || ($val['mobile_perf_stat'] == '') || ($val['mobile_perf_stat'] == NULL)){
+                print "<td>Not Available</td>";
+            }
+            else{
+                print "<td>".$val['mobile_perf_stat']."</td>";
             }
             print "</tr>";
         }
