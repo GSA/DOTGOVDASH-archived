@@ -149,7 +149,7 @@
                           </div>
                           <br clear="all" />
                           <div class='col-lg-12 text-center clearfix'><span style='color:#29643a; font-size: 10px;font-style: italic;'>
-                                       Above graph shows the breakdown of Mobile Perf by category</span></div>
+                                       Above graphs show the breakdown of Mobile Performance and Mobile Usability</span></div>
                           <br clear="all" />
                           <div class="view-button clearfix">
                             <div class="row text-center">

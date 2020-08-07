@@ -13,7 +13,7 @@ function drawChart1() {
 
     ]);
     var options = {
-        colors: ['#ae0100', '#665000','#276437',66746a],
+        colors: ['#ae0100', '#665000','#276437','#66746a'],
         sliceVisibilityThreshold: 0,
         legend: {position: 'none'},
         backgroundColor: { fill:'transparent' },
