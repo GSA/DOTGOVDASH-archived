@@ -171,14 +171,14 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                         <th style="background-color: #215393;color: white;"> Websites </th>
                                         <tr>
                                           <td>Poor</td>
-                                          <td><?=dotgov_common_applyDataColor($agencydata['poor'], $agencydata['no_of_websites'], '#ae0100') ?>
+                                          <td><?=dotgov_common_applyDataColor($agencydata['poor'], $agencydata['no_of_non_na__websites'], '#ae0100') ?>
                                         <tr>
                                           <td>Need Improvement</td>
-                                          <td><?=dotgov_common_applyDataColor($agencydata['improve'], $agencydata['no_of_websites'], '#665000') ?>
+                                          <td><?=dotgov_common_applyDataColor($agencydata['improve'], $agencydata['no_of_non_na__websites'], '#665000') ?>
                                         </tr>
                                         <tr>
                                           <td>Good</td>
-                                          <td><?=dotgov_common_applyDataColor($agencydata['good'], $agencydata['no_of_websites'], '#276437') ?>
+                                          <td><?=dotgov_common_applyDataColor($agencydata['good'], $agencydata['no_of_non_na__websites'], '#276437') ?>
                                         </tr>
                                       </table>
                                     </div>
@@ -198,11 +198,11 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                         <th style="background-color: #215393;color: white;"> Websites </th>
                                         <tr>
                                           <td>Mobile Friendly</td>
-                                          <td><?=dotgov_common_applyDataColor($agencydata['friendly_nos'], $agencydata['no_of_websites'], '#276437') ?>
+                                          <td><?=dotgov_common_applyDataColor($agencydata['friendly_nos'], $agencydata['friendly_nos']+$agencydata['nonfriendly_nos'], '#276437') ?>
                                         </tr>
                                         <tr>
                                           <td>Not Mobile Friendly</td>
-                                          <td><?=dotgov_common_applyDataColor($agencydata['nonfriendly_nos'], $agencydata['no_of_websites'], '#ae0100') ?>
+                                          <td><?=dotgov_common_applyDataColor($agencydata['nonfriendly_nos'], $agencydata['friendly_nos']+$agencydata['nonfriendly_nos'], '#ae0100') ?>
                                         </tr>
                                       </table>
                                     </div>
