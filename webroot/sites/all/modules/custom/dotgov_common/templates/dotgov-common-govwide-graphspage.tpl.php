@@ -31,7 +31,7 @@ $chartseries = array_values($chartdata);
 <?php
 drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
 ?>
-<!-- <div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="unfinished bingo card" onclick="generatePDF()"></div> -->
+<div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="unfinished bingo card" onclick="generatePDF()"></div>
 <div id="demo-page">
    <div  class="main-govwidecontents">
       <div class="content-wrap">
@@ -59,6 +59,9 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
                    title: {
                        text: ''
                    },
+                   credits: {
+                        enabled: false
+                    },
                    xAxis: {
                        //categories: ['HTTPS Score', 'DAP Score', 'Mobile Overall Score', 'Mobile Performance Score', 'Mobile Usability score', 'Site Speed Score', 'IPv6 Score', 'DNSSEC Score', 'Free for RC4/3DES & SSLv2/SSLv3 Score', 'M-15-13 and BOD 18-01 Compliance Score'],
                        labels: {
@@ -75,6 +78,9 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
                            }
                        }
                    },
+                   credits: {
+                        enabled: false
+                    },
                    yAxis: {
                        labels:
                        {

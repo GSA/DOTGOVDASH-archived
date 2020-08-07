@@ -165,6 +165,9 @@ $scanpath = drupal_get_path_alias("node/" . $scanids['https_dap_scan_information
             chart: {
                 type: 'solidgauge',
             },
+            credits: {
+                enabled: false
+            },
             title: {
 
                 text: ''

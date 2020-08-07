@@ -163,6 +163,9 @@
                                                            tooltip: {
                                                                enabled: false,
                                                            },
+                                                           credits: {
+                                                               enabled: false
+                                                            },
                                                            pane: {
                                                                startAngle: 0,
                                                                endAngle: 360,
@@ -413,6 +416,9 @@
                                                             backgroundColor: 'transparent'
                                                 
                                                         },
+                                                        credits: {
+                                                               enabled: false
+                                                         },
                                                 
                                                         title: {
                                                 
@@ -617,7 +623,9 @@
                                                       backgroundColor: 'transparent'
                                           
                                                   },
-                                          
+                                                  credits: {
+                                                      enabled: false
+                                                   },
                                                   title: {
                                           
                                                       text: ''
@@ -783,6 +791,9 @@
                                                                backgroundColor:'transparent'
                                                    
                                                            },
+                                                           credits: {
+                                                               enabled: false
+                                                            },
                                                    
                                                            title: {
                                                    
@@ -937,8 +948,11 @@
                                                               chart: {
                                                                   type: 'solidgauge',
                                                                   backgroundColor:'transparent'
-                                                      
+                                      
                                                               },
+                                                              credits: {
+                                                               enabled: false
+                                                            },
                                                       
                                                               title: {
                                                       
@@ -1103,7 +1117,9 @@
                                                          backgroundColor:'transparent'
                                              
                                                      },
-                                             
+                                                     credits: {
+                                                         enabled: false
+                                                      },
                                                      title: {
                                              
                                                          text: ''
@@ -1254,7 +1270,9 @@
                                                    backgroundColor:'transparent'
                                        
                                                },
-                                       
+                                               credits: {
+                                                   enabled: false
+                                                },
                                                title: {
                                        
                                                    text: ''

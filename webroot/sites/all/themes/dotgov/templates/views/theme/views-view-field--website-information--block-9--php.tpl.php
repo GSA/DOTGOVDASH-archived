@@ -110,6 +110,9 @@ dotgov_common_tooltip("tooltip9","id");
         legend:{
             width: 220
         },
+        credits: {
+            enabled: false
+        },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },

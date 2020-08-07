@@ -91,7 +91,7 @@ foreach ($view->style_plugin->rendered_fields[0] as $key => $val) {
 $agencynode = node_load($curuserAgency);
 drupal_set_title($agencynode->title);
 ?>
-<!-- <div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="unfinished bingo card" onclick="generatePDF()"></div> -->
+<div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="unfinished bingo card" onclick="generatePDF()"></div>
 <div class="main-container container-fluid nopadding">
     <div class="row">
         <section class="col-sm-12 nopadding">
@@ -217,6 +217,9 @@ if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
                                                                             },
                                                                             title: {
                                                                                 text: ''
+                                                                            },
+                                                                            credits: {
+                                                                                enabled: false
                                                                             },
                                                                             tooltip: {
                                                                                 enabled: false,
@@ -452,6 +455,9 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                                 backgroundColor: 'transparent'
 
                                                                             },
+                                                                            credits: {
+                                                                                enabled: false
+                                                                            },
 
                                                                             title: {
 
@@ -649,6 +655,9 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                                                     backgroundColor: 'transparent'
 
                                                                 },
+                                                                credits: {
+                                                                    enabled: false
+                                                                },
 
                                                                 title: {
 
@@ -809,6 +818,9 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                                                                     backgroundColor:'transparent'
 
                                                                                 },
+                                                                                credits: {
+                                                                                    enabled: false
+                                                                                },
 
                                                                                 title: {
 
@@ -953,6 +965,9 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                                                                         type: 'solidgauge',
                                                                                         backgroundColor:'transparent'
 
+                                                                                    },
+                                                                                    credits: {
+                                                                                        enabled: false
                                                                                     },
 
                                                                                     title: {
@@ -1110,6 +1125,9 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                                                         backgroundColor:'transparent'
 
                                                                     },
+                                                                    credits: {
+                                                                        enabled: false
+                                                                    },
 
                                                                     title: {
 
@@ -1256,7 +1274,9 @@ print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: "
                                                                 backgroundColor:'transparent'
 
                                                             },
-
+                                                            credits: {
+                                                                enabled: false
+                                                            },
                                                             title: {
 
                                                                 text: ''

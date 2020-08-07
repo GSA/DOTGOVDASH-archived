@@ -63,7 +63,7 @@ $agency_uswds_score = round(db_query("select avg(c.field_uswds_score_value) as a
 $agencynode = node_load(arg(1));
 
 ?>
-<!-- <div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="pdf" onclick="generatePDF()"></div> -->
+<div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="pdf" onclick="generatePDF()"></div>
 
 <div class="main-container container-fluid nopadding">
     <div class="row">
@@ -190,6 +190,9 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                                                             },
                                                                             title: {
                                                                                 text: ''
+                                                                            },
+                                                                            credits: {
+                                                                                enabled: false
                                                                             },
                                                                             tooltip: {
                                                                                 enabled: false,
@@ -427,7 +430,9 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                                                                 backgroundColor: 'transparent'
 
                                                                             },
-
+                                                                            credits: {
+                                                                                enabled: false
+                                                                            },
                                                                             title: {
 
                                                                                 text: ''
@@ -626,7 +631,9 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                                                     backgroundColor: 'transparent'
 
                                                                 },
-
+                                                                credits: {
+                                                                    enabled: false
+                                                                },
                                                                 title: {
 
                                                                     text: ''
@@ -786,7 +793,9 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                                                                     backgroundColor:'transparent'
 
                                                                                 },
-
+                                                                                credits: {
+                                                                                    enabled: false
+                                                                                },
                                                                                 title: {
 
                                                                                     text: ''
@@ -931,7 +940,9 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                                                                         backgroundColor:'transparent'
 
                                                                                     },
-
+                                                                                    credits: {
+                                                                                        enabled: false
+                                                                                    },
                                                                                     title: {
 
                                                                                         text: ''
@@ -1087,7 +1098,9 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                                                         backgroundColor:'transparent'
 
                                                                     },
-
+                                                                    credits: {
+                                                                        enabled: false
+                                                                    },
                                                                     title: {
 
                                                                         text: ''
@@ -1234,7 +1247,9 @@ print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: "
                                                                 backgroundColor:'transparent'
 
                                                             },
-
+                                                            credits: {
+                                                                enabled: false
+                                                            },
                                                             title: {
 
                                                                 text: ''

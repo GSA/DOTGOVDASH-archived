@@ -107,6 +107,9 @@ $scanpath = drupal_get_path_alias("node/" . $scanids['domain_scan_information'])
             tooltip: {
                 enabled:false,
             },
+            credits: {
+                enabled: false
+            },
             pane: {
                 startAngle: 0,
                 endAngle: 360,
