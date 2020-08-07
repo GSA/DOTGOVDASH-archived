@@ -9,11 +9,11 @@
             ['Type', 'Number'],
             ['Mobile Friendly',     <?php echo number_format($govwidedata['mob_usab_friendly_nos'],1, '.', '');?>],
             ['Not Mobile Friendly',      <?php echo number_format($govwidedata['mob_usab_notfriendly_nos'],1, '.', '');?>],
-            ['NA',  <?php echo number_format($govwidedata['usab_null'],1, '.', ''); ?>],
+            //['NA',  <?php //echo number_format($govwidedata['usab_null'],1, '.', ''); ?>//],
 
         ])
         var options = {
-            colors: ['#276437','#ae0100','#66746a'],
+            colors: ['#276437','#ae0100'],
             sliceVisibilityThreshold: 0,
             legend: {position: 'none'},
             backgroundColor: { fill:'transparent' },

@@ -701,12 +701,13 @@ function dotgov_common_getAgencyComplianceData($agencyid){
   $agency_mob['null'] = $agency_mob['no_of_websites'] - ($agency_mob['mob_perf_good_nos']+ $agency_mob['mob_perf_improve_nos']+ $agency_mob['mob_perf_poor_nos']);
   $agency_mob['usab_null'] = $agency_mob['no_of_websites'] - ($agency_mob['mob_usab_friendly_nos']+ $agency_mob['mob_usab_notfriendly_nos']);
 
+
   $agencydata['good']=$agency_mob['mob_perf_good_nos'];
   $agencydata['improve']=$agency_mob['mob_perf_improve_nos'];
   $agencydata['poor']=$agency_mob['mob_perf_poor_nos'];
   $agencydata['friendly_nos'] = $agency_mob['mob_usab_friendly_nos'] ;
   $agencydata['nonfriendly_nos'] = $agency_mob['mob_usab_notfriendly_nos'] ;
-  $agencydata['no_of_websites']= $agency_mob['no_of_websites'];
+  $agencydata['no_of_non_na__websites']= $agency_mob['mob_perf_good_nos']+ $agency_mob['mob_perf_improve_nos']+ $agency_mob['mob_perf_poor_nos'];
 
     $agency_mob['agency_mob_bad'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='49' and entity_id in (SELECT node.nid AS nid
 FROM
@@ -1170,7 +1171,7 @@ function dotgov_common_getAllAgencyComplianceData(){
   $govwide_mob['null'] = $govwide_mob['total_websites'] - ($govwide_mob['mob_perf_good_nos']+ $govwide_mob['mob_perf_improve_nos']+ $govwide_mob['mob_perf_poor_nos']);
   $govwide_mob['usab_null'] = $govwide_mob['total_websites'] - ($govwide_mob['mob_usab_friendly_nos']+ $govwide_mob['mob_usab_notfriendly_nos']);
 
-
+  $agencydata['total_non_na_websites'] =  $govwide_mob['mob_perf_good_nos']+ $govwide_mob['mob_perf_improve_nos']+ $govwide_mob['mob_perf_poor_nos'];
   $agencydata['poor_nos'] = $govwide_mob['mob_perf_poor_nos'] ;
   $agencydata['good_nos'] = $govwide_mob['mob_perf_good_nos'] ;
   $agencydata['improve_nos'] = $govwide_mob['mob_perf_improve_nos'] ;
