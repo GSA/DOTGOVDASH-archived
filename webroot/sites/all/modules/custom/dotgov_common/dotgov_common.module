@@ -35,6 +35,11 @@ function dotgov_common_theme($existing, $type, $theme, $path) {
             'variables' => array('nid' => NULL),
             'path' => drupal_get_path('module', 'dotgov_common') . '/templates',
         ),
+        'agencywide_mobusabgraphs_page' => array(
+          'template' => 'dotgov-common-agencymobile-usab-graph',
+          'variables' => array('nid' => NULL),
+          'path' => drupal_get_path('module', 'dotgov_common') . '/templates',
+        ),
         'govwide_mobgraphs_page' => array(
             'template' => 'dotgov-common-govwidemobile-graph',
             'variables' => array('nid' => NULL),
@@ -685,6 +690,24 @@ function dotgov_common_getAgencyComplianceData($agencyid){
 
     $agencydata['ag_access_chart'] = $agencyaccess_output;
 
+
+  $agency_mob['mob_perf_good_nos'] = db_query("SELECT accessb_good FROM custom_agencywide_archive where date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY)",array(':agencyid' => $agencyid))->fetchField();
+  $agency_mob['mob_perf_improve_nos'] = db_query("SELECT accessb_improve FROM custom_agencywide_archive where date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY)",array(':agencyid' => $agencyid))->fetchField();
+  $agency_mob['mob_perf_poor_nos'] = db_query("SELECT accessb_poor FROM custom_agencywide_archive where date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY)",array(':agencyid' => $agencyid))->fetchField();
+  $agency_mob['mob_usab_friendly_nos'] = db_query("SELECT accessb_friendly FROM custom_agencywide_archive where date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY)",array(':agencyid' => $agencyid))->fetchField();
+  $agency_mob['mob_usab_notfriendly_nos'] = db_query("SELECT accessb_nonfriendly FROM custom_agencywide_archive where date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY)",array(':agencyid' => $agencyid))->fetchField();
+  $agency_mob['total_websites'] = db_query("SELECT sum(num_of_websites) FROM custom_agencywide_archive where date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY)")->fetchField();
+  $agency_mob['no_of_websites']=  db_query("SELECT num_of_websites FROM custom_agencywide_archive where date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY)",array(':agencyid' => $agencyid))->fetchField();
+  $agency_mob['null'] = $agency_mob['total_websites'] - ($agency_mob['mob_perf_good_nos']+ $agency_mob['mob_perf_improve_nos']+ $agency_mob['mob_perf_poor_nos']);
+  $agency_mob['usab_null'] = $agency_mob['total_websites'] - ($agency_mob['mob_usab_friendly_nos']+ $agency_mob['mob_usab_notfriendly_nos']);
+
+  $agencydata['good']=$agency_mob['mob_perf_good_nos'];
+  $agencydata['improve']=$agency_mob['mob_perf_improve_nos'];
+  $agencydata['poor']=$agency_mob['mob_perf_poor_nos'];
+  $agencydata['friendly_nos'] = $agency_mob['mob_usab_friendly_nos'] ;
+  $agencydata['nonfriendly_nos'] = $agency_mob['mob_usab_notfriendly_nos'] ;
+  $agencydata['no_of_websites']= $agency_mob['no_of_websites'];
+
     $agency_mob['agency_mob_bad'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='49' and entity_id in (SELECT node.nid AS nid
 FROM
 node node
@@ -710,7 +733,12 @@ WHERE (( (node.status = '1') AND (node.type IN  ('website')) AND (field_data_fie
 
     $agencydata['ag_mob_chart'] = $agencyaccess_output;
 
-    //Query to get Search data for an agency
+  $agencyaccessusab_output = theme('agencywide_mobusabgraphs_page', array('agencydata' => $agency_mob));
+
+  $agencydata['ag_mob_usab_chart'] = $agencyaccessusab_output;
+
+
+  //Query to get Search data for an agency
     $searchresults = db_query("select field_search_status_value,count(field_search_status_value) as complnum from node a , field_data_field_search_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='website' group by field_search_status_value", array(':agencyid' => $agencyid));
     $agency_search_status = array();
     foreach ($searchresults as $searchresult) {
@@ -1138,6 +1166,9 @@ function dotgov_common_getAllAgencyComplianceData(){
   $govwide_mob['mob_perf_poor_nos'] = db_query("SELECT accessb_poor FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
   $govwide_mob['mob_usab_friendly_nos'] = db_query("SELECT accessb_friendly FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
   $govwide_mob['mob_usab_notfriendly_nos'] = db_query("SELECT accessb_nonfriendly FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+  $govwide_mob['total_websites'] = db_query("SELECT num_of_websites FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+  $govwide_mob['null'] = $govwide_mob['total_websites'] - ($govwide_mob['mob_perf_good_nos']+ $govwide_mob['mob_perf_improve_nos']+ $govwide_mob['mob_perf_poor_nos']);
+  $govwide_mob['usab_null'] = $govwide_mob['total_websites'] - ($govwide_mob['mob_usab_friendly_nos']+ $govwide_mob['mob_usab_notfriendly_nos']);
 
 
   $agencydata['poor_nos'] = $govwide_mob['mob_perf_poor_nos'] ;
