@@ -83,6 +83,9 @@ elseif(trim($chartdata) == ''){
                 type: 'solidgauge',
 
             },
+            credits: {
+                enabled: false
+            },
 
             title: {
 

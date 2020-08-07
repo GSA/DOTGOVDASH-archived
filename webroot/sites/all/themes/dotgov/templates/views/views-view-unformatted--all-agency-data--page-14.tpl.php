@@ -372,7 +372,9 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                                 backgroundColor: 'transparent'
 
                                                                             },
-
+                                                                            credits: {
+                                                                                enabled: false
+                                                                            },
                                                                             title: {
 
                                                                                 text: ''
@@ -569,7 +571,9 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                                                     backgroundColor: 'transparent'
 
                                                                 },
-
+                                                                credits: {
+                                                                    enabled: false
+                                                                },
                                                                 title: {
 
                                                                     text: ''
@@ -729,7 +733,9 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                                                                     backgroundColor:'transparent'
 
                                                                                 },
-
+                                                                                credits: {
+                                                                                    enabled: false
+                                                                                },
                                                                                 title: {
 
                                                                                     text: ''
@@ -873,6 +879,9 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                                                                         type: 'solidgauge',
                                                                                         backgroundColor:'transparent'
 
+                                                                                    },
+                                                                                    credits: {
+                                                                                        enabled: false
                                                                                     },
 
                                                                                     title: {
@@ -1030,6 +1039,9 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                                                         backgroundColor:'transparent'
 
                                                                     },
+                                                                    credits: {
+                                                                        enabled: false
+                                                                    },
 
                                                                     title: {
 
@@ -1176,7 +1188,9 @@ print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: "
                                                                 backgroundColor:'transparent'
 
                                                             },
-
+                                                            credits: {
+                                                                enabled: false
+                                                            },
                                                             title: {
 
                                                                 text: ''

@@ -37,6 +37,9 @@ Highcharts.chart('access_chart', {
     title: {
         text: ''
     },
+    credits: {
+        enabled: false
+    },
 	legend: {
                     enabled: true,
                     floating: false,

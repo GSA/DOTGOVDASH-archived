@@ -320,7 +320,9 @@
                                                             backgroundColor: 'transparent'
 
                                                         },
-
+                                                        credits: {
+                                                            enabled: false
+                                                         },
                                                         title: {
 
                                                             text: ''
@@ -524,6 +526,9 @@
                                                       backgroundColor: 'transparent'
 
                                                   },
+                                                  credits: {
+                                                      enabled: false
+                                                   },
 
                                                   title: {
 
@@ -690,6 +695,9 @@
                                                                backgroundColor:'transparent'
 
                                                            },
+                                                           credits: {
+                                                               enabled: false
+                                                            },
 
                                                            title: {
 
@@ -846,6 +854,9 @@
                                                                   backgroundColor:'transparent'
 
                                                               },
+                                                              credits: {
+                                                                  enabled: false
+                                                               },
 
                                                               title: {
 
@@ -1010,6 +1021,9 @@
                                                          backgroundColor:'transparent'
 
                                                      },
+                                                     credits: {
+                                                         enabled: false
+                                                      },
 
                                                      title: {
 
@@ -1161,6 +1175,9 @@
                                                    backgroundColor:'transparent'
 
                                                },
+                                               credits: {
+                                                   enabled: false
+                                                },
 
                                                title: {
 

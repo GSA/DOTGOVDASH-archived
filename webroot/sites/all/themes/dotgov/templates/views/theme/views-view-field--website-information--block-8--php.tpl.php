@@ -109,6 +109,9 @@ if ($chartdata == 0) {
             title: {
                 text: ''
             },
+            credits: {
+                enabled: false
+            },
             tooltip: {
                 enabled:false,
             },
