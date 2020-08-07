@@ -91,7 +91,7 @@ foreach ($view->style_plugin->rendered_fields[0] as $key => $val) {
 $agencynode = node_load($curuserAgency);
 drupal_set_title($agencynode->title);
 ?>
-<div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="unfinished bingo card" onclick="generatePDF()"></div>
+<div onclick="generatePDF()" style="float: right;cursor: pointer;"><p>Download PDF<img alt="Download PDF" src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;"></p></div>
 <div class="main-container container-fluid nopadding">
     <div class="row">
         <section class="col-sm-12 nopadding">
