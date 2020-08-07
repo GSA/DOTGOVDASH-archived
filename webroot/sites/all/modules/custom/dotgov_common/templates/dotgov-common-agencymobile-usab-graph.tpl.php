@@ -13,7 +13,7 @@
 
         ])
         var options = {
-            colors: ['#276437','#ae0100'],
+            colors: ['#276437','#ae0100','#66746a'],
             sliceVisibilityThreshold: 0,
             legend: {position: 'none'},
             backgroundColor: { fill:'transparent' },
