@@ -91,23 +91,20 @@
         print "<tr><td>".$trend_vars['trend_title']."</td>";
         print "<td>".$key."</td>";
         if($trend_vars['is_mobile_scan'] === true) {
-            if(!isset($val['mobovr']) || ($val['mobovr'] == '') || ($val['mobovr'] == NULL)){
+            if(!isset($val['mobile_usability_stat']) || ($val['mobile_usability_stat'] == '') || ($val['mobile_usability_stat'] == NULL)){
                 print "<td>Not Available</td>";
-            } else{
-                print "<td>".$val['mobovr']."</td>";
+            }
+            else{
+                print "<td>".$val['mobile_usability_stat']."</td>";
             }
 
-            if(!isset($val['mobperf']) || ($val['mobperf'] == '') || ($val['mobperf'] == NULL)){
+            if(!isset($val['mobile_perf_stat']) || ($val['mobile_perf_stat'] == '') || ($val['mobile_perf_stat'] == NULL)){
                 print "<td>Not Available</td>";
-            } else{
-                print "<td>".$val['mobperf']."</td>";
+            }
+            else{
+                print "<td>".$val['mobile_perf_stat']."</td>";
             }
 
-            if(!isset($val['mobusab']) || ($val['mobusab'] == '') || ($val['mobusab'] == NULL)){
-                print "<td>Not Available</td>";
-            } else{
-                print "<td>".$val['mobusab']."</td>";
-            }
             print "</tr>";
         } else {
             if(!isset($val['dap']) || ($val['dap'] == '') || ($val['dap'] == NULL)){
