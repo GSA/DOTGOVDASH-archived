@@ -252,6 +252,9 @@ $scanpath = drupal_get_path_alias("node/" . $row->nid);
             title: {
                 text: ''
             },
+            credits: {
+                enabled: false
+            },
             tooltip: {
                 enabled:false,
             },

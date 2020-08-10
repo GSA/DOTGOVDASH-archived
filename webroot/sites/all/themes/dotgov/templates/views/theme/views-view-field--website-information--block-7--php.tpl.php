@@ -104,6 +104,9 @@ $scanpath = drupal_get_path_alias("node/" . $scanids['domain_scan_information'])
             title: {
                 text: ''
             },
+            credits: {
+                enabled: false
+            },
             tooltip: {
                 enabled:false,
             },

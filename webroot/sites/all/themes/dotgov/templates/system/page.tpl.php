@@ -83,7 +83,7 @@
     html2pdf()
     .set({
         filename: 'report.pdf',
-        jsPDF: {format:[500,380]},
+        jsPDF: {format:[500,800]},
     })
     .from(element)
     .save();
