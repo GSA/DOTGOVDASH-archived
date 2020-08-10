@@ -160,11 +160,11 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                       <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                         <h5>Mobile Usability Breakdown
                                       </div>
-                                      <div class="col-lg-4 col-md-4" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 10px"> <span class="dot good"></span>Mobile Friendly <br/>
+                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 10px"> <span class="dot good"></span>Mobile Friendly <br/>
                                         <span class="dot low"></span>Not Mobile Friendly <br/>
                                       </div>
-                                      <div class="col-lg-8 col-md-8 nopadding">
-                                        <div id="piechartmobusab" style="margin-top:-17px;height:140px;margin-left:30px;"></div>
+                                      <div class="col-lg-6 col-md-6 nopadding">
+                                        <div id="piechartmobusab" style="margin-top:-17px;height:140px;"></div>
                                         <?php print $agencydata['ag_mob_usab_chart'];?>
                                       </div>
                                       <table style="width:100%">
