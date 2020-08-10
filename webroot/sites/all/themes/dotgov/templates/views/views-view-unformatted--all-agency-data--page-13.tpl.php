@@ -113,7 +113,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                           </div>
                           <div class="col-xs-2 nopadding">
                             <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
-                              Mobile Data is collected from Google API though a scan that last ran on
+                              Mobile Data is collected from Google API through a scan that last ran on
                               <?php dotgov_common_lastScanDate();?>
                               </span>
                             </div>
@@ -130,13 +130,13 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                       <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                         <h5>Mobile Performance Breakdown</h5>
                                       </div>
-                                      <div class="col-lg-4 col-md-4" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 10px;"> <span class="dot low"></span>Poor <br/>
+                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 10px;"> <span class="dot low"></span>Poor <br/>
                                         <span class="dot avg"></span>Needs Improvement <br/>
                                         <span class="dot good"></span>Good<br/>
                                         <!--                                                <span class="dot na"></span>NA-->
                                       </div>
-                                      <div class="col-lg-8 col-md-8 nopadding">
-                                        <div id="piechartmob" style="margin-top:-17px;height:140px;margin-left:30px;"></div>
+                                      <div class="col-lg-6 col-md-6 nopadding">
+                                        <div id="piechartmob" style="margin-top:-17px;height:140px;"></div>
                                         <?php print $agencydata['ag_mob_chart'];?>
                                       </div>
                                       <table style="width:100%">
@@ -188,7 +188,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                               <br clear="all" />
                               <div class="view-button clearfix">
                                 <div class="row text-center">
-                                  <a class="" href="/website/mobile/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                  <a class="" href="/website/mobile/reports?field_web_agency_id_nid=<?=arg(1)?>"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
                                   <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
                                 </div>
                               </div>
