@@ -34,7 +34,7 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
 <div class="download-pdf">
     <a href="#" onclick="generatePDF()"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="Download Pdf">
     </a>
-</div><div id="demo-page">
+</div>
    <div  class="main-govwidecontents">
       <div class="content-wrap">
          <div class="col-lg-4 col-sm-12 col-xs-12 text-center">
@@ -88,9 +88,6 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
                        title: {
                            enabled: false,
                        }
-                   },
-                   credits: {
-                       enabled: true
                    },
                    plotOptions: {
                        series: {
@@ -184,4 +181,3 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
          <div class="field-content col-lg-6"> <a class="btn btn-primary" href="<?php echo $base_url; ?>/website/all/reports">Complete List </a>&nbsp;( Last scan date: <?=dotgov_common_lastScanDate()?> )</div>
       </div>
    </div>
-</div>
