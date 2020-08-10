@@ -117,9 +117,12 @@ dotgov_common_tooltip("tooltip4","id");
 
 <div class="col-lg-12 clearfix">
 <?php
-$chart_data_font = "9px";
+$chart_data_font = "7.5px";
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
-  if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 50 ) {
+  if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] == "" || $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
+    $performance_chart_data_text = "Not Available";
+    $performance_chart_color = "#ac0600";
+  } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 50 ) {
     $performance_chart_data_text = "Poor";
     $performance_chart_color = "#ac0600";
   } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 90 ) {
@@ -136,7 +139,11 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
 }
 
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
-  if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] == 100) {
+  if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === "" || $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
+    $usability_chart_data_text = "Not Available";
+    $usability_chart_data = "0";
+    $usability_chart_color = "#ac0600";
+  } else if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] == 100) {
     $usability_chart_data_text = "Mobile Friendly";
     $usability_chart_data = "100";
     $usability_chart_color = "#29643a";
@@ -167,7 +174,7 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
 $scanids = dotgov_common_siteAsocScanids(arg(1));
 $scanpath = drupal_get_path_alias("node/" . $row->nid);
 ?>
-<div class="col-lg-12 clearfix report-buttons" style="margin-top:10px;">
+<div class="col-lg-12 clearfix report-buttons">
     <p>
         <a href="/improve-my-score">How to Improve Score</a>
     </p>
