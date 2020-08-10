@@ -83,7 +83,7 @@ if ($chartdata <= 50) {
 // Mobile Information PHP1
 $redirect_message = 'Website Redirect - Metric Not Applicable';
 $crit_text = '';
-if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
+if (!is_redirect(arg(1))) {
   if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] != '' ) {
     $crit_text .= "Mobile Performance Score by Google : " . $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] ."\n";
   } else {
@@ -93,7 +93,7 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   $crit_text .= "Mobile Performance Score by Google: <span style=\"color:white;\">" . $redirect_message . "</span><br>";
 }
 
-if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
+if (!is_redirect(arg(1))) {
   if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] != '' ) {
     $crit_text .= "Mobile Compatibility Score by Google : " . $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ]." ";
   } else {
@@ -118,27 +118,20 @@ dotgov_common_tooltip("tooltip4","id");
 <div class="col-lg-12 clearfix">
 <?php
 $chart_data_font = "9px";
-if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 50 ) {
     $performance_chart_data_text = "Poor";
-    $performance_chart_data = $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ];
     $performance_chart_color = "#ac0600";
   } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 90 ) {
     $performance_chart_data_text = "Needs Improvement";
-    $performance_chart_data = $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ];
     $performance_chart_color = "#654f00";
   } else {
     $performance_chart_data_text = "Good";
-    $performance_chart_data = $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ];
     $performance_chart_color = "#29643a";
   }
+  $performance_chart_data = intval($row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ]);
   print "Mobile Performance: $performance_chart_data_text<br>";
-} else {
-  print "Mobile Performance Score: <span style=\"color:#a70000;\">" . $redirect_message . "</span><br>";
-}
 
-if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
-  if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] !== NULL && $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] != '0') {
+  if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] == 100) {
     $usability_chart_data_text = "Mobile Friendly";
     $usability_chart_data = "100";
     $usability_chart_color = "#29643a";
@@ -148,21 +141,16 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
     $usability_chart_color = "#ac0600";
   }
   print "Mobile Usability: $usability_chart_data_text";
-} else {
-  print "Mobile Usability: <span style=\"color:#a70000;\">" . $redirect_message . "</span><br>";
-}
 ?>
 </div>
 
 <div class="col-lg-12 clearfix">
-  <?php if (!is_redirect(arg(1))): ?>
     <div class="col-lg-6">
         <div id="performance_chart" style="width: 140px; height:140px; margin: 0 auto">&nbsp;</div>
     </div>
     <div class="col-lg-6">
         <div id="usability_chart" style="width: 140px; height:140px; margin: 0 auto">&nbsp;</div>
     </div>
-  <?php endif; ?>
 </div>
 
 <?php
