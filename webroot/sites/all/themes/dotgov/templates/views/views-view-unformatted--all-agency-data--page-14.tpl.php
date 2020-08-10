@@ -173,7 +173,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                           <td>Poor</td>
                                           <td><?=dotgov_common_applyDataColor($agencydata['poor'], $agencydata['no_of_non_na__websites'], '#ae0100') ?>
                                         <tr>
-                                          <td>Need Improvement</td>
+                                          <td>Needs Improvement</td>
                                           <td><?=dotgov_common_applyDataColor($agencydata['improve'], $agencydata['no_of_non_na__websites'], '#665000') ?>
                                         </tr>
                                         <tr>
