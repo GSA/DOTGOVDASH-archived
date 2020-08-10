@@ -142,7 +142,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                           </div>
                           <div class="col-xs-2 nopadding">
                             <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
-                              Mobile Data is collected from Google API though a scan that last ran on
+                              Mobile Data is collected from Google API through a scan that last ran on
                               <?php dotgov_common_lastScanDate();?>
                               </span>
                             </div>
