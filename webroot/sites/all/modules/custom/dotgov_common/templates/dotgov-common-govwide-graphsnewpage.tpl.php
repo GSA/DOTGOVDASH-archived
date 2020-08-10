@@ -111,7 +111,7 @@
                                       <td>Poor</td>
                                       <td><?=dotgov_common_applyDataColor($agencydata['poor_nos'], $agencydata['total_non_na_websites'], '#ae0100') ?>
                                     <tr>
-                                      <td>Need Improvement</td>
+                                      <td>Needs Improvement</td>
                                       <td><?=dotgov_common_applyDataColor($agencydata['improve_nos'],$agencydata['total_non_na_websites'], '#665000') ?>
                                     </tr>
                                     <tr>
