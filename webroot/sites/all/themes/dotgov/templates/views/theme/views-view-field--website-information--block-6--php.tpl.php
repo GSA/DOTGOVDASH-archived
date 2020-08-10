@@ -121,24 +121,22 @@ $chart_data_font = "9px";
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 50 ) {
     $performance_chart_data_text = "Poor";
-    $performance_chart_data = $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ];
     $performance_chart_color = "#ac0600";
   } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 90 ) {
     $performance_chart_data_text = "Needs Improvement";
-    $performance_chart_data = $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ];
     $performance_chart_color = "#654f00";
   } else {
     $performance_chart_data_text = "Good";
-    $performance_chart_data = $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ];
     $performance_chart_color = "#29643a";
   }
+  $performance_chart_data = intval($row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ]);
   print "Mobile Performance: $performance_chart_data_text<br>";
 } else {
   print "Mobile Performance Score: <span style=\"color:#a70000;\">" . $redirect_message . "</span><br>";
 }
 
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
-  if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] !== NULL && $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] != '0') {
+  if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] == 100) {
     $usability_chart_data_text = "Mobile Friendly";
     $usability_chart_data = "100";
     $usability_chart_color = "#29643a";
