@@ -118,6 +118,8 @@ dotgov_common_tooltip("tooltip4","id");
 <div class="col-lg-12 clearfix">
 <?php
 $chart_data_font = "7.5px";
+$performance_title = "Mobile Performance";
+$usability_title = "Mobile Usability";
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] == "" || $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
     $performance_chart_data_text = "Not Available";
@@ -133,9 +135,9 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
     $performance_chart_color = "#29643a";
   }
   $performance_chart_data = intval($row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ]);
-  print "Mobile Performance: $performance_chart_data_text<br>";
+  print "$performance_title: $performance_chart_data_text<br>";
 } else {
-  print "Mobile Performance Score: <span style=\"color:#a70000;\">" . $redirect_message . "</span><br>";
+  print "$performance_title: <span style=\"color:#a70000;\">" . $redirect_message . "</span><br>";
 }
 
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
@@ -152,13 +154,23 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
     $usability_chart_data = "0";
     $usability_chart_color = "#ac0600";
   }
-  print "Mobile Usability: $usability_chart_data_text";
+  print "$usability_title: $usability_chart_data_text";
 } else {
-  print "Mobile Usability: <span style=\"color:#a70000;\">" . $redirect_message . "</span><br>";
+  print "$usability_title: <span style=\"color:#a70000;\">" . $redirect_message . "</span><br>";
 }
 ?>
 </div>
 
+<?php if (!is_redirect(arg(1))): ?>
+<div class="col-lg-12 clearfix" style="margin-top: 15px;">
+  <div class="col-lg-6" style="left: 50px;">
+    <p><?php echo($performance_title); ?></p>
+  </div>
+  <div class="col-lg-6" style="left: 60px;">
+    <p><?php echo($usability_title); ?></p>
+  </div>
+</div>
+<?php endif; ?>
 <div class="col-lg-12 clearfix">
   <?php if (!is_redirect(arg(1))): ?>
     <div class="col-lg-6">
@@ -174,7 +186,7 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
 $scanids = dotgov_common_siteAsocScanids(arg(1));
 $scanpath = drupal_get_path_alias("node/" . $row->nid);
 ?>
-<div class="col-lg-12 clearfix report-buttons">
+<div class="col-lg-12 clearfix report-buttons" style="margin-top: 0px;">
     <p>
         <a href="/improve-my-score">How to Improve Score</a>
     </p>
@@ -192,10 +204,7 @@ $scanpath = drupal_get_path_alias("node/" . $row->nid);
                 type: 'solidgauge',
             },
             title: {
-                text: '',
-                style: {
-                  fontSize: '12px',
-                }
+                text: ''
             },
             tooltip: {
                 enabled:false,
