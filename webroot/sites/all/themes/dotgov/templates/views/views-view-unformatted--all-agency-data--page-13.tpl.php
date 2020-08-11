@@ -63,9 +63,10 @@ $agency_uswds_score = round(db_query("select avg(c.field_uswds_score_value) as a
 $agencynode = node_load(arg(1));
 
 ?>
-<div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="pdf" onclick="generatePDF()"></div>
-
-<div class="main-container container-fluid nopadding">
+<div class="download-pdf">
+    <a href="#" onclick="generatePDF()"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="Download Pdf">
+    </a>
+</div><div class="main-container container-fluid nopadding">
     <div class="row">
         <section class="col-sm-12 nopadding">
             <div class="col-xs-12 nopadding clearfix">
@@ -105,180 +106,99 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
             <div class="out-wrapper">
                 <div class="col-xs-12 nopadding clearfix">
                     <div class="col-xs-12 col-lg-6">
-                        <div class="white-back no-height">
-                            <div class="panel-pane pane-views pane-website-information">
-                                <div class="col-xs-12 nopadding">
-                                    <div class="col-xs-10 nopadding">
-                                        <h2 class="pane-title"> Mobile Information </h2>
-                                    </div>
-                                    <div class="col-xs-2 nopadding">
-                                        <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
-                      Mobile Overall Average Score : <?php print $agency_mobovr_score;?> <br>
-                      Mobile Performance Score :
-                                                <?=$agency_mobperf_score;?>
-                                                <br>
-                      Mobile Usability Score:
-                                                <?=$agency_mobusab_score;?>
-                                                <br>
-                      </span> </div>
-                                    </div>
-                                </div>
-                                <div class="pane-content clearfix">
-                                    <div class="view  view-display-id-block_6 view-dom-id-146fb84eddbe3dc34d2b2cff5758c7bc">
-                                        <div class="view-content">
-                                            <div class="view-wrapper-new clearfix">
-                                                <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
-                                                    <?php
-                                                        if ($agency_mobperf_score >= '0' && $agency_mobperf_score < '50') {
-                                                            $mobperfmstat = "Slow";
-
-                                                        } elseif ($agency_mobperf_score >= '50' && $agency_mobperf_score < '90') {
-                                                            $mobperfmstat = "Moderate";
-
-                                                        } elseif ($agency_mobperf_score >= '90' && $agency_mobperf_score <= '100') {
-                                                            $mobperfmstat = "Fast";
-
-                                                        }
-
-                                                        if ($agency_mobusab_score >= '0' && $agency_mobusab_score < '50') {
-                                                            $mobusabstat = "Low";
-
-                                                        } elseif ($agency_mobusab_score >= '50' && $agency_mobusab_score < '90') {
-                                                            $mobusabstat = "Medium";
-
-                                                        } elseif ($agency_mobusab_score >= '90' && $agency_mobusab_score <= '100') {
-                                                            $mobusabstat = "Good";
-
-                                                        }
-
-                                                        ?>
-                                                    <div class="col-xs-12 clearfix">
-                                                        <div class="views-field views-field-php-2 col-lg-6 nopadding grey-gradient" style="height:155px;">
-                                                            <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
-                                                                <h5>Mobile Score Breakdown</h5>
-                                                            </div>
-                                                            <div class="col-lg-4 col-md-4" style="padding-right:0px;margin-top:15px;padding-left:10px;"> <span class="dot low"></span>Slow <br/>
-                                                                <span class="dot avg"></span>Moderate <br/>
-                                                                <span class="dot good"></span>Fast<br/>
-                                                                <span class="dot na"></span>NA </div>
-                                                            <div class="col-lg-8 col-md-8 nopadding">
-                                                                <div id="piechart1" style="margin-top:-17px;height:140px;margin-left:30px;"></div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xs-12 col-lg-6 nopadding grey-gradient second" style="height:155px;">
-                                                            <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
-                                                                <h5>Mobile Overall Average Score: <?php print $agency_mobovr_score?></h5>
-                                                            </div>
-                                                            <div class="field-content clearfix">
-                                                                <div class="col-lg-7 col-md-7" style="font-size:11px;margin-top:20px; padding-right:0;padding-left:10px;"> Performance Score :
-                                                                    <?=$agency_mobperf_score . ' (' . $mobperfmstat . ')'?>
-                                                                    <br >
-                                                                    Usability Score:
-                                                                    <?=$agency_mobusab_score . ' (' . $mobusabstat . ')'?>
-                                                                    <br />
-                                                                    <br/>
-                                                                    <span style="font-size:10px;">(website redirects are excluded)</span> </div>
-                                                                <div class="col-lg-5 col-md-5 nopadding">
-                                                                    <div id="mobile_chart" style="width:120px;height:120px;">&nbsp;</div>
-                                                                </div>
-                                                                <div class="sr-only">The graphic below indicates the level of Mobile compliance, and this score is 100%.</div>
-                                                                <script type="text/javascript">
-                                                                    Highcharts.chart( 'mobile_chart', {
-                                                                            chart: {
-                                                                                type: 'solidgauge',
-                                                                                backgroundColor: 'transparent'
-                                                                            },
-                                                                            title: {
-                                                                                text: ''
-                                                                            },
-                                                                            tooltip: {
-                                                                                enabled: false,
-                                                                            },
-                                                                            pane: {
-                                                                                startAngle: 0,
-                                                                                endAngle: 360,
-                                                                                background: [ {
-                                                                                    outerRadius: '118%',
-                                                                                    innerRadius: '80%',
-                                                                                    backgroundColor: '#d6d7d9',
-                                                                                    borderWidth: 0
-                                                                                } ]
-                                                                            },
-                                                                            yAxis: {min: 0,
-                                                                                max: 100,
-                                                                                lineWidth: 0,
-                                                                                tickPositions: [],
-
-                                                                                title: {
-                                                                                    text: '<?php echo $agency_mobovr_score; ?>',
-                                                                                    style: {
-                                                                                        fontSize: '22px',
-                                                                                        color: '<?php echo dotgov_common_getChartColor($agency_mobovr_score); ?>'
-                                                                                    },
-                                                                                    y: 30
-                                                                                },
-
-
-
-                                                                            },
-
-                                                                            plotOptions: {
-                                                                                solidgauge: {
-                                                                                    dataLabels: {
-                                                                                        enabled: false
-                                                                                    },
-                                                                                    linecap: 'round',
-                                                                                    stickyTracking: false,
-                                                                                    rounded: true
-                                                                                }
-                                                                            },
-
-                                                                            series: [ {
-                                                                                name: 'Mobile Chart',
-                                                                                data: [ {
-                                                                                    color: '<?php echo dotgov_common_getChartColor($agency_mobovr_score); ?>',
-                                                                                    radius: '118%',
-                                                                                    innerRadius: '80%',
-                                                                                    y: <?php echo trim($agency_mobovr_score); ?>
-                                                                                } ]
-                                                                            } ]
-                                                                        }
-
-
-                                                                    );
-                                                                </script>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <?php print $agencydata['ag_mob_chart'];?> <br clear="all" />
-                                                    <div class="views-field views-field-php-1 clearfix">
-                                                        <div class="field-content">
-                                                                                                                    <?php
-                                                        $blockObject1 = block_load('trend_analysis', 'agency_mob');
-                                                        $block1 = _block_get_renderable_array(_block_render_blocks(array($blockObject1)));
-                                                        $output1 = drupal_render($block1);
-                                                        print "$output1";
-                                                        ?>
-                                                                                                                </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br clear="all" />
-                                            <div class="col-xs-12 clearfix text-center" style="margin-top:-30px;"> <span style="font-size: 10px;font-style:italic;">&nbsp;&nbsp;Above graph represents a monthly Mobile Trend</span><br/>
-                                            </div>
-                                            <br clear="all" />
-                                            <div class="view-button clearfix">
-                                                <div class="row text-center">
-                                                    <a class="" href="/website/mobile/reports?field_web_agency_id_nid=<?=arg(1)?>"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                                    <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="white-back no-height">
+                      <div class="panel-pane pane-views pane-website-information">
+                        <div class="col-xs-12 nopadding">
+                          <div class="col-xs-10 nopadding">
+                            <h2 class="pane-title"> Mobile Information </h2>
+                          </div>
+                          <div class="col-xs-2 nopadding">
+                            <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
+                              Mobile Data is collected from Google API through a scan that last ran on
+                              <?php dotgov_common_lastScanDate();?>
+                              </span>
                             </div>
+                          </div>
+                          <br clear="all"/>
                         </div>
+                        <div class="pane-content clearfix">
+                          <div class="view  view-display-id-block_6 view-dom-id-146fb84eddbe3dc34d2b2cff5758c7bc">
+                            <div class="view-content">
+                              <div class="view-wrapper-new clearfix">
+                                <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
+                                  <div class="col-xs-12 clearfix">
+                                    <div class="views-field views-field-php-2 col-lg-6 nopadding grey-gradient" style="height:250px;">
+                                      <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
+                                        <h5>Mobile Performance Breakdown</h5>
+                                      </div>
+                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 10px;"> <span class="dot low"></span>Poor <br/>
+                                        <span class="dot avg"></span>Needs Improvement <br/>
+                                        <span class="dot good"></span>Good<br/>
+                                        <!--                                                <span class="dot na"></span>NA-->
+                                      </div>
+                                      <div class="col-lg-6 col-md-6 nopadding">
+                                        <div id="piechartmob" style="margin-top:-17px;height:140px;"></div>
+                                        <?php print $agencydata['ag_mob_chart'];?>
+                                      </div>
+                                      <table style="width:100%">
+                                        <th style="background-color: #215393;color: white;"> Breakdown </th>
+                                        <th style="background-color: #215393;color: white;"> Websites </th>
+                                        <tr>
+                                          <td>Poor</td>
+                                          <td><?=dotgov_common_applyDataColor($agencydata['poor'], $agencydata['no_of_non_na__websites'], '#ae0100') ?>
+                                        <tr>
+                                          <td>Needs Improvement</td>
+                                          <td><?=dotgov_common_applyDataColor($agencydata['improve'], $agencydata['no_of_non_na__websites'], '#665000') ?>
+                                        </tr>
+                                        <tr>
+                                          <td>Good</td>
+                                          <td><?=dotgov_common_applyDataColor($agencydata['good'], $agencydata['no_of_non_na__websites'], '#276437') ?>
+                                        </tr>
+                                      </table>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6 nopadding grey-gradient second" style="height:250px;">
+                                      <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
+                                        <h5>Mobile Usability Breakdown
+                                      </div>
+                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 10px"> <span class="dot good"></span>Mobile Friendly <br/>
+                                        <span class="dot low"></span>Not Mobile Friendly <br/>
+                                      </div>
+                                      <div class="col-lg-6 col-md-6 nopadding">
+                                        <div id="piechartmobusab" style="margin-top:-17px;height:140px;"></div>
+                                        <?php print $agencydata['ag_mob_usab_chart'];?>
+                                      </div>
+                                      <table style="width:100%">
+                                        <th style="background-color: #215393;color: white;"> Breakdown </th>
+                                        <th style="background-color: #215393;color: white;"> Websites </th>
+                                        <tr>
+                                          <td>Mobile Friendly</td>
+                                          <td><?=dotgov_common_applyDataColor($agencydata['friendly_nos'], $agencydata['friendly_nos']+$agencydata['nonfriendly_nos'], '#276437') ?>
+                                        </tr>
+                                        <tr>
+                                          <td>Not Mobile Friendly</td>
+                                          <td><?=dotgov_common_applyDataColor($agencydata['nonfriendly_nos'], $agencydata['friendly_nos']+$agencydata['nonfriendly_nos'], '#ae0100') ?>
+                                        </tr>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <br clear="all" />
+                              <div class='col-lg-12 text-center clearfix'><span style='color:#29643a; font-size: 10px;font-style: italic;'>
+                                       Above graphs show the breakdown of Mobile Performance and Mobile Usability</span></div>
+                              <br clear="all" />
+                              <div class="view-button clearfix">
+                                <div class="row text-center">
+                                  <a class="" href="/website/mobile/reports?field_web_agency_id_nid=<?=arg(1)?>"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                  <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+                  </div>
                     <div class="col-xs-12 col-lg-6">
                         <div class="white-back no-height">
                             <div class="panel-pane pane-views pane-website-information">
@@ -293,7 +213,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                 </div>
                                 <br clear="all"/>
                                 <div class="pane-content clearfix">
-                                    <div class="view-wrapper" style="min-height:233px;">
+                                    <div class="view-wrapper" style="min-height:290px;">
                                         <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                                             <div class="view-empty clearfix">
                                                 <div class="col-lg-6 grey-gradient" style="height:200px;">
@@ -379,7 +299,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                             <div class="panel-pane pane-views pane-website-information">
                                 <div class="col-xs-10 nopadding">
                                     <h2 class="pane-title">DNSSEC Information</h2>
-                                </div>  
+                                </div>
                                 <div class="col-xs-2 nopadding">
                                     <div id="tooltip5" class="infor"> <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
                     DNSSEC Data is collected through a custom scanner component of dotgov dashboard that last ran on
@@ -426,6 +346,9 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                                                                 type: 'solidgauge',
                                                                                 backgroundColor: 'transparent'
 
+                                                                            },
+                                                                            credits: {
+                                                                                enabled: false
                                                                             },
 
                                                                             title: {
@@ -626,6 +549,9 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                                                     backgroundColor: 'transparent'
 
                                                                 },
+                                                                credits: {
+                                                                    enabled: false
+                                                                },
 
                                                                 title: {
 
@@ -786,6 +712,9 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                                                                     backgroundColor:'transparent'
 
                                                                                 },
+                                                                                credits: {
+                                                                                    enabled: false
+                                                                                },
 
                                                                                 title: {
 
@@ -930,6 +859,9 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                                                                         type: 'solidgauge',
                                                                                         backgroundColor:'transparent'
 
+                                                                                    },
+                                                                                    credits: {
+                                                                                        enabled: false
                                                                                     },
 
                                                                                     title: {
@@ -1077,7 +1009,7 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                     </div>
                                     <div class = "col-xs-12-col-sm-12 col-lg-6">
                                        <div id="dap_chart">&nbsp;</div>
-                                      
+
                                        <div class="sr-only">The graphic below indicates the level of HTTPS compliance, and this score is 100%.</div>
                                                         <script type="text/javascript">
                                                             Highcharts.chart( 'dap_chart', {
@@ -1086,6 +1018,9 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                                                         type: 'solidgauge',
                                                                         backgroundColor:'transparent'
 
+                                                                    },
+                                                                    credits: {
+                                                                        enabled: false
                                                                     },
 
                                                                     title: {
@@ -1234,7 +1169,9 @@ print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: "
                                                                 backgroundColor:'transparent'
 
                                                             },
-
+                                                            credits: {
+                                                                enabled: false
+                                                            },
                                                             title: {
 
                                                                 text: ''
@@ -1362,17 +1299,17 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                 </div>
                                                 <div style="display:block; float:left;max-height:145px; width:100%;">
                                     <div class="col-xs-6 col-sm-6 col-lg-6" style="margin-top: 30px;">
-                                        
+
                                         <ul class="uswds nopadding" style="font-size:12px; line-height: 16px;">
                                         <li class="und">USWDS Code Detected</li>
                                         <li class="ud">USWDS Code Not Detected</li>
                                         </ul>
-                                        
+
                                     </div>
                                     <div class="col-xs-6 col-sm-6 col-lg-6">
                                         <div id="piechartLast" style="max-width: 265px;float: right;"></div>
                                     </div>
-                            
+
                                     <script language="JavaScript">
                                                     google.charts.load('current', {'packages':['corechart']});
                                                     google.charts.setOnLoadCallback(drawuswdsChart);
@@ -1401,7 +1338,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                         var chart = new google.visualization.PieChart(document.getElementById('piechartLast'));
 
                                                         chart.draw(data, options);
-                                                                                                          
+
                                                     }
                                                 </script>
                                             </div>
@@ -1423,9 +1360,9 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                     <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span> </div>
                                             </div>
                                         </div>
-                                      
+
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -1435,7 +1372,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                           <a href="https://designsystem.digital.gov/maturity-model/" target="_blank" rel="noopener noreferrer"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""></a>
                                        </div>
                               </div>
-                                    
+
 </div>
                 </div>
             </div>

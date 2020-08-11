@@ -91,8 +91,10 @@ foreach ($view->style_plugin->rendered_fields[0] as $key => $val) {
 $agencynode = node_load($curuserAgency);
 drupal_set_title($agencynode->title);
 ?>
-<div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="unfinished bingo card" onclick="generatePDF()"></div>
-<div class="main-container container-fluid nopadding">
+<div class="download-pdf">
+    <a href="#" onclick="generatePDF()"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="Download Pdf">
+    </a>
+</div><div class="main-container container-fluid nopadding">
     <div class="row">
         <section class="col-sm-12 nopadding">
             <div class="col-xs-12 nopadding clearfix">
@@ -140,7 +142,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                           </div>
                           <div class="col-xs-2 nopadding">
                             <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
-                              Mobile Data is collected from Google API though a scan that last ran on
+                              Mobile Data is collected from Google API through a scan that last ran on
                               <?php dotgov_common_lastScanDate();?>
                               </span>
                             </div>
@@ -157,7 +159,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                       <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                         <h5>Mobile Performance Breakdown</h5>
                                       </div>
-                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size=10px;"> <span class="dot low"></span>Poor <br/>
+                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size:10px;"> <span class="dot low"></span>Poor <br/>
                                         <span class="dot avg"></span>Needs Improvement <br/>
                                         <span class="dot good"></span>Good<br/>
                                         <!--                                                <span class="dot na"></span>NA-->
@@ -173,7 +175,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                           <td>Poor</td>
                                           <td><?=dotgov_common_applyDataColor($agencydata['poor'], $agencydata['no_of_non_na__websites'], '#ae0100') ?>
                                         <tr>
-                                          <td>Need Improvement</td>
+                                          <td>Needs Improvement</td>
                                           <td><?=dotgov_common_applyDataColor($agencydata['improve'], $agencydata['no_of_non_na__websites'], '#665000') ?>
                                         </tr>
                                         <tr>
@@ -215,8 +217,8 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                               <br clear="all" />
                               <div class="view-button clearfix">
                                 <div class="row text-center">
-                                  <a class="" href="/website/mobile/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                  <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+<!--                                  <a class="" href="/website/mobile/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>-->
+                                  <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="30" alt=""/></a>
                                 </div>
                               </div>
                             </div>
@@ -239,7 +241,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                 </div>
                                 <br clear="all"/>
                                 <div class="pane-content clearfix">
-                                    <div class="view-wrapper" style="min-height:233px;">
+                                    <div class="view-wrapper" style="min-height:285px;">
                                         <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                                             <div class="view-empty clearfix">
                                                 <div class="col-lg-6 grey-gradient" style="height:200px;">
@@ -372,7 +374,9 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                                                                 backgroundColor: 'transparent'
 
                                                                             },
-
+                                                                            credits: {
+                                                                                enabled: false
+                                                                            },
                                                                             title: {
 
                                                                                 text: ''
@@ -569,7 +573,9 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                                                     backgroundColor: 'transparent'
 
                                                                 },
-
+                                                                credits: {
+                                                                    enabled: false
+                                                                },
                                                                 title: {
 
                                                                     text: ''
@@ -729,7 +735,9 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                                                                     backgroundColor:'transparent'
 
                                                                                 },
-
+                                                                                credits: {
+                                                                                    enabled: false
+                                                                                },
                                                                                 title: {
 
                                                                                     text: ''
@@ -873,6 +881,9 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                                                                         type: 'solidgauge',
                                                                                         backgroundColor:'transparent'
 
+                                                                                    },
+                                                                                    credits: {
+                                                                                        enabled: false
                                                                                     },
 
                                                                                     title: {
@@ -1030,6 +1041,9 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                                                         backgroundColor:'transparent'
 
                                                                     },
+                                                                    credits: {
+                                                                        enabled: false
+                                                                    },
 
                                                                     title: {
 
@@ -1176,7 +1190,9 @@ print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: "
                                                                 backgroundColor:'transparent'
 
                                                             },
-
+                                                            credits: {
+                                                                enabled: false
+                                                            },
                                                             title: {
 
                                                                 text: ''

@@ -7,7 +7,7 @@ function drawChart1() {
     var data = google.visualization.arrayToDataTable([
         ['Type', 'Number'],
         ['Poor',  <?php echo number_format($agencydata['mob_perf_poor_nos'],1, '.', ''); ?>],
-        ['Need Improvement',      <?php echo number_format($agencydata['mob_perf_improve_nos'],1, '.', '');?>],
+        ['Needs Improvement',      <?php echo number_format($agencydata['mob_perf_improve_nos'],1, '.', '');?>],
         ['Good',  <?php echo number_format($agencydata['mob_perf_good_nos'],1, '.', ''); ?>],
         //['NA',  <?php //echo number_format($agencydata['null'],1, '.', ''); ?>//]
 

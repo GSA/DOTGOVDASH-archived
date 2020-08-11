@@ -142,6 +142,9 @@ if ($chartdata <= 50) {
 
                 text: ''
             },
+            credits: {
+                enabled: false
+            },
             tooltip: {
                 enabled:false,
             },

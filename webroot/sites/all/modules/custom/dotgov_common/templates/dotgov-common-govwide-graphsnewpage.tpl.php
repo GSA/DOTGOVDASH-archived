@@ -78,7 +78,7 @@
                       </div>
                       <div class="col-xs-2 nopadding">
                         <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
-                              Mobile Data is collected from Google API though a scan that last ran on
+                              Mobile Data is collected from Google API through a scan that last ran on
                               <?php dotgov_common_lastScanDate();?>
                               </span>
                         </div>
@@ -111,7 +111,7 @@
                                       <td>Poor</td>
                                       <td><?=dotgov_common_applyDataColor($agencydata['poor_nos'], $agencydata['total_non_na_websites'], '#ae0100') ?>
                                     <tr>
-                                      <td>Need Improvement</td>
+                                      <td>Needs Improvement</td>
                                       <td><?=dotgov_common_applyDataColor($agencydata['improve_nos'],$agencydata['total_non_na_websites'], '#665000') ?>
                                     </tr>
                                     <tr>
@@ -153,7 +153,7 @@
                           <br clear="all" />
                           <div class="view-button clearfix">
                             <div class="row text-center">
-                              <a class="" href="/website/mobile/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                              <a class="" href="/mobile/report"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
                               <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
                             </div>
                           </div>
@@ -320,7 +320,9 @@
                                                             backgroundColor: 'transparent'
 
                                                         },
-
+                                                        credits: {
+                                                            enabled: false
+                                                         },
                                                         title: {
 
                                                             text: ''
@@ -524,6 +526,9 @@
                                                       backgroundColor: 'transparent'
 
                                                   },
+                                                  credits: {
+                                                      enabled: false
+                                                   },
 
                                                   title: {
 
@@ -690,6 +695,9 @@
                                                                backgroundColor:'transparent'
 
                                                            },
+                                                           credits: {
+                                                               enabled: false
+                                                            },
 
                                                            title: {
 
@@ -846,6 +854,9 @@
                                                                   backgroundColor:'transparent'
 
                                                               },
+                                                              credits: {
+                                                                  enabled: false
+                                                               },
 
                                                               title: {
 
@@ -1010,6 +1021,9 @@
                                                          backgroundColor:'transparent'
 
                                                      },
+                                                     credits: {
+                                                         enabled: false
+                                                      },
 
                                                      title: {
 
@@ -1161,6 +1175,9 @@
                                                    backgroundColor:'transparent'
 
                                                },
+                                               credits: {
+                                                   enabled: false
+                                                },
 
                                                title: {
 

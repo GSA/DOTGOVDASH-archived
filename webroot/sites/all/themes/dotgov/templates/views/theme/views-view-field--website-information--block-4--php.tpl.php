@@ -169,6 +169,9 @@ $scanpath = drupal_get_path_alias("node/" . $scanids['https_dap_scan_information
 
                 text: ''
             },
+            credits: {
+                enabled: false
+            },
             tooltip: {
                 enabled:false,
             },
