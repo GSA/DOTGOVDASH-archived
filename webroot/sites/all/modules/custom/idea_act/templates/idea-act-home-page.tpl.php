@@ -1,28 +1,15 @@
+<style>
+@import "/sites/all/modules/custom/idea_act/css/style.css";
+</style>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Idea ACT Home Page</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/sites/all/modules/custom/idea_act/css/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <style>
-
-    </style>
-</head>
-<body class="idea_home">
-<div class="container-fluid idea-container">
+<div class="idea-container">
     <div class="row">
         <div class="col-lg-10 col-lg-offset-1">
             <div class="row row-no-gutters">
                 <div class="col-md-12 dashboard-wrap">
                     <div class="col-md-9 dashboard-left">
                         <h1>21st Century IDEA Act Dashboard</h1>
-                        <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across faderal government executive branch public-facing websites.</p>
+                        <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
                     </div>
                     <div class="col-md-2 col-md-offset-1 text-right dashboard-right">
                         <a href="#">
@@ -159,5 +146,3 @@
         html: true,
         background: '#000'
     });    </script>
-</body>
-</html>

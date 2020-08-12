@@ -2,29 +2,11 @@
 print "Agency Id is ".$processed_vars['agencyid'];
 print "<br>Agency Title is ".$processed_vars['agency_title'];
 ?>
-<!DOCTYPE html>
-<html lang="en">
+<style>
+@import "/sites/all/modules/custom/idea_act/css/style.css";
+</style>
 
-<head>
-    <title>Agency Home</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="/sites/all/modules/custom/idea_act/css/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
-    <style>
-
-    </style>
-</head>
-
-<body class="agency_home">
-<div class="container-fluid idea-container">
+<div class="idea-container">
     <div class="row">
         <div class="col-lg-10 col-lg-offset-1">
             <div class="row row-no-gutters">
@@ -90,7 +72,7 @@ print "<br>Agency Title is ".$processed_vars['agency_title'];
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="chart-container">
-                                        <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
+                                        <canvas id="chart-gov1" width="200" height="250" aria-label="Charts" role="img"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -212,7 +194,7 @@ print "<br>Agency Title is ".$processed_vars['agency_title'];
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                     <div class="chart-container">
-                                        <canvas id="chart-gov2" width="250" height="300" aria-label="Charts" role="img"></canvas>
+                                        <canvas id="chart-gov2" width="200" height="250" aria-label="Charts" role="img"></canvas>
 
                                     </div>
                                 </div>
@@ -335,7 +317,7 @@ print "<br>Agency Title is ".$processed_vars['agency_title'];
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                     <div class="chart-container">
-                                        <canvas id="chart-gov3" width="250" height="300" aria-label="Charts" role="img"></canvas>
+                                        <canvas id="chart-gov3" width="200" height="250" aria-label="Charts" role="img"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -472,7 +454,7 @@ print "<br>Agency Title is ".$processed_vars['agency_title'];
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                     <div class="chart-container">
-                                        <canvas id="chart-gov-search" width="250" height="300" aria-label="Charts" role="img"></canvas>
+                                        <canvas id="chart-gov-search" width="200" height="250" aria-label="Charts" role="img"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -569,7 +551,7 @@ print "<br>Agency Title is ".$processed_vars['agency_title'];
                                     </a>
                                 </div>                                    <div class="col-md-6 mb-2">
                                     <div class="chart-container">
-                                        <canvas id="chart-6" width="250" height="300" aria-label="Charts" role="img"></canvas>
+                                        <canvas id="chart-6" width="200" height="250" aria-label="Charts" role="img"></canvas>
                                     </div>
 
                                     <div class="legend-container">
@@ -662,7 +644,7 @@ print "<br>Agency Title is ".$processed_vars['agency_title'];
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                     <div class="chart-container">
-                                        <canvas id="chart-5" width="250" height="300" aria-label="Charts" role="img"></canvas>
+                                        <canvas id="chart-5" width="200" height="250" aria-label="Charts" role="img"></canvas>
                                     </div>
                                     <div class="legend-container">
                                         <div id="chart-6-legend"></div>
@@ -828,7 +810,7 @@ print "<br>Agency Title is ".$processed_vars['agency_title'];
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                     <div class="chart-container">
-                                        <canvas id="chart-7" width="250" height="300" aria-label="Charts" role="img"></canvas>
+                                        <canvas id="chart-7" width="200" height="250" aria-label="Charts" role="img"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -944,6 +926,4 @@ print "<br>Agency Title is ".$processed_vars['agency_title'];
             flexTable();
         };
     </script>
-</body>
 
-</html>
