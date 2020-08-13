@@ -1,6 +1,10 @@
 <style>
 @import "/sites/all/modules/custom/idea_act/css/style.css";
 </style>
+<?php
+drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+?>
+
 <div class="idea-container">
     <div class="row">
         <div class="col-lg-10 col-lg-offset-1">
@@ -71,7 +75,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="chart-container">
-                                        <canvas id="chart-gov1" width="200" height="250" aria-label="Charts" role="img"></canvas>
+                                        <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +123,7 @@
                                         plugins: {
 
                                             labels: {
-                                                render: 'value',
+                                                render: 'data',
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
@@ -196,7 +200,7 @@
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                     <div class="chart-container">
-                                        <canvas id="chart-gov2" width="200" height="250" aria-label="Charts" role="img"></canvas>
+                                        <canvas id="chart-gov2" width="250" height="300" aria-label="Charts" role="img"></canvas>
 
                                     </div>
                                 </div>
@@ -317,7 +321,7 @@
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                     <div class="chart-container">
-                                        <canvas id="chart-gov3" width="200" height="250" aria-label="Charts" role="img"></canvas>
+                                        <canvas id="chart-gov3" width="250" height="300" aria-label="Charts" role="img"></canvas>
 
                                     </div>
                                 </div>
@@ -453,7 +457,7 @@
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                     <div class="chart-container">
-                                        <canvas id="chart-gov-search" width="200" height="250" aria-label="Charts" role="img"></canvas>
+                                        <canvas id="chart-gov-search" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -548,7 +552,7 @@
                                     </a>
                                 </div>                                    <div class="col-md-6 mb-2">
                                     <div class="chart-container">
-                                        <canvas id="chart-gov4" width="200" height="250" aria-label="Charts" role="img"></canvas>
+                                        <canvas id="chart-gov4" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
                                     <div class="legend-container">
                                         <div id="chart-5-legend"></div>
@@ -640,7 +644,7 @@
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                     <div class="chart-container">
-                                        <canvas id="chart-gov5" width="200" height="250" aria-label="Charts" role="img"></canvas>
+                                        <canvas id="chart-gov5" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
                                     <div class="legend-container">
                                         <div id="chart-6-legend"></div>
@@ -784,7 +788,7 @@
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                     <div class="chart-container">
-                                        <canvas id="chart-gov6" width="200" height="250" aria-label="Charts" role="img"></canvas>
+                                        <canvas id="chart-gov6" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -857,45 +861,4 @@
         </div>
     </div>
 </div>
-<script>
-    $('#tooltip-container [data-toggle="tooltip"]').tooltip({
-        animated: 'fade',
-        placement: 'left',
-        html: true,
-        background: '#000'
-    });
 
-    $('table').find("th").each(function (i) {
-        $('table td:nth-child(' + (i + 1) + ')').prepend('<span class="table-responsive-stack-thead">'+ $(this).text() + ':</span> ');
-        $('.table-responsive-stack-thead').hide();
-    });
-
-    $( 'table' ).each(function() {
-        var thCount = $(this).find("th").length;
-        var rowGrow = 100 / thCount + '%';
-        //console.log(rowGrow);
-        $(this).find("th, td").css('flex-basis', rowGrow);
-    });
-
-    function flexTable(){
-        if ($(window).width() < 768) {
-            $("table").each(function (i) {
-                $(this).find(".table-responsive-stack-thead").show();
-                $(this).find('thead').hide();
-            });
-            // window is less than 768px
-        } else {
-            $("table").each(function (i) {
-                $(this).find(".table-responsive-stack-thead").hide();
-                $(this).find('thead').show();
-            });
-        }
-        // flextable
-    }
-
-    flexTable();
-
-    window.onresize = function(event) {
-        flexTable();
-    };
-</script>

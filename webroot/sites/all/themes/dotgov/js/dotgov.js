@@ -90,3 +90,25 @@ $( ".facetapi-active" ).parents(".collapse").addClass( "in" );
 
 	$( ".facetapi-active" ).parent().css( "background-color","#f1c393" );
 });
+
+
+function flexTable(){
+	if ($(window).width() < 768) {
+		$("table").each(function (i) {
+			$(this).find(".table-responsive-stack-thead").show();
+			$(this).find('thead').hide();
+		});
+		// window is less than 768px
+	} else {
+		$("table").each(function (i) {
+			$(this).find(".table-responsive-stack-thead").hide();
+			$(this).find('thead').show();
+		});
+	}
+	// flextable
+}
+
+flexTable();
+window.onresize = function(event) {
+	flexTable();
+};
