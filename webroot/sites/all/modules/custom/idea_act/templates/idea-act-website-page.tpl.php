@@ -1,25 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>Website Home</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/sites/all/modules/custom/idea_act/css/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
-    <style>
-
-    </style>
-</head>
-
-<body class="website_home">
-<div class="container-fluid idea-container">
+<style>
+@import "/sites/all/modules/custom/idea_act/css/style.css";
+</style>
+<?php
+drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+?>
+<div class="idea-container">
     <div class="row">
         <div class="col-lg-10 col-lg-offset-1">
             <div class="row row-no-gutters">
@@ -458,49 +443,3 @@
         </div>
     </div>
 </div>
-<script>
-    // $("[data-toggle=tooltip]").tooltip();
-    $('#tooltip-container [data-toggle="tooltip"]').tooltip({
-        animated: 'fade',
-        placement: 'left',
-        html: true,
-        background: '#000'
-    });
-
-    $('table').find("th").each(function (i) {
-        $('table td:nth-child(' + (i + 1) + ')').prepend('<span class="table-responsive-stack-thead">'+ $(this).text() + ':</span> ');
-        $('.table-responsive-stack-thead').hide();
-    });
-
-    $( 'table' ).each(function() {
-        var thCount = $(this).find("th").length;
-        var rowGrow = 100 / thCount + '%';
-        //console.log(rowGrow);
-        $(this).find("th, td").css('flex-basis', rowGrow);
-    });
-
-    function flexTable(){
-        if ($(window).width() < 768) {
-            $("table").each(function (i) {
-                $(this).find(".table-responsive-stack-thead").show();
-                $(this).find('thead').hide();
-            });
-            // window is less than 768px
-        } else {
-            $("table").each(function (i) {
-                $(this).find(".table-responsive-stack-thead").hide();
-                $(this).find('thead').show();
-            });
-        }
-        // flextable
-    }
-
-    flexTable();
-
-    window.onresize = function(event) {
-        flexTable();
-    };
-</script>
-</body>
-
-</html>

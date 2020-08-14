@@ -1,26 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+<style>
+@import "/sites/all/modules/custom/idea_act/css/style.css";
+</style>
+<?php
+drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+$no_of_agency = $govwidedata['actualdata']['agencynos'];
+   $agency_website_num = $govwidedata['actualdata']['websitenos'];
+   $agency_dap_score = $govwidedata['actualdata']['avg_dap'];
+   $agency_https_score = $govwidedata['actualdata']['avg_https'];
+   $agency_mobovr_score = $govwidedata['actualdata']['avg_mob_overall'];
+   $agency_mobperf_score = $govwidedata['actualdata']['avg_mob_perform'];
+   $agency_mobusab_score = $govwidedata['actualdata']['avg_mob_usab'];
+   $agency_dnssec_score = $govwidedata['actualdata']['avg_dnssec'];
+   $agency_ipv6_score = $govwidedata['actualdata']['avg_ipv6'];
+   $agency_insecprot_score = $govwidedata['actualdata']['avg_rc4'];
+   $agency_m15_score = $govwidedata['actualdata']['avg_m15'];
+   $agency_uswds_score = $govwidedata['actualdata']['avg_uswds'];
+   
+   $agencydata = idea_act_getAllAgencyComplianceData();
 
-<head>
-    <title>Gov wide Home</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="/sites/all/modules/custom/idea_act/css/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
-    <style>
+?>
 
-    </style>
-</head>
-
-<body class="gov_home">
-<div class="container-fluid idea-container">
+<div class="idea-container">
     <div class="row">
         <div class="col-lg-10 col-lg-offset-1">
             <div class="row row-no-gutters">
@@ -83,9 +83,9 @@
                                     </a>
                                 </div>                                    <div class="col-sm-6 mt-xs-1">
                                     <h4>Average Accessibility Issues by Type Per Website</h4>
-                                    <p>Average Color Contrast: 3.5</p>
-                                    <p>Average HTML Attribute: 3.7</p>
-                                    <p>Average Missing Image Description: 1.2</p>
+                                    <p>Average Color Contrast: <?=round($agencydata['ag_col_contrast'] / $agency_website_num, 1);?></p>
+                                    <p>Average HTML Attribute: <?=round($agencydata['ag_html_attrib'] / $agency_website_num, 1);?></p>
+                                    <p>Average Missing Image Description: <?=round($agencydata['ag_miss_image'] / $agency_website_num, 1);?></p>
                                     <p>(Note: website redirects are excluded)</p>
                                 </div>
                                 <div class="col-sm-6">
@@ -111,7 +111,7 @@
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [1339, 4219, 3980],
+                                            data: [<?php echo number_format($agencydata['ag_col_contrast'], 1, '.', ''); ?>, <?php echo number_format($agencydata['ag_miss_image'], 1, '.', ''); ?>, <?php echo number_format($agencydata['ag_html_attrib'], 1, '.', ''); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#563eb6',
@@ -121,7 +121,7 @@
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['Color Contrast Issues', 'Missing Image Description Issues', 'HTML Attribute Issues']
+                                        labels: ['Color Contrast Issues', 'HTML Attribute Issues','Missing Image Description Issues']
                                     },
 
                                     // Configuration options go here
@@ -138,7 +138,7 @@
                                         plugins: {
 
                                             labels: {
-                                                render: 'value',
+                                                render: 'data',
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
@@ -876,48 +876,4 @@
         </div>
     </div>
 </div>
-<script>
-    $('#tooltip-container [data-toggle="tooltip"]').tooltip({
-        animated: 'fade',
-        placement: 'left',
-        html: true,
-        background: '#000'
-    });
 
-    $('table').find("th").each(function (i) {
-        $('table td:nth-child(' + (i + 1) + ')').prepend('<span class="table-responsive-stack-thead">'+ $(this).text() + ':</span> ');
-        $('.table-responsive-stack-thead').hide();
-    });
-
-    $( 'table' ).each(function() {
-        var thCount = $(this).find("th").length;
-        var rowGrow = 100 / thCount + '%';
-        //console.log(rowGrow);
-        $(this).find("th, td").css('flex-basis', rowGrow);
-    });
-
-    function flexTable(){
-        if ($(window).width() < 768) {
-            $("table").each(function (i) {
-                $(this).find(".table-responsive-stack-thead").show();
-                $(this).find('thead').hide();
-            });
-            // window is less than 768px
-        } else {
-            $("table").each(function (i) {
-                $(this).find(".table-responsive-stack-thead").hide();
-                $(this).find('thead').show();
-            });
-        }
-        // flextable
-    }
-
-    flexTable();
-
-    window.onresize = function(event) {
-        flexTable();
-    };
-</script>
-</body>
-
-</html>

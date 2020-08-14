@@ -1,4 +1,6 @@
 <?php
+module_load_include('inc', 'idea_act', 'includes/idea_act_gov_wide');
+
 /*
 * Dotgov Dashboard IDEA Act Module
 */
@@ -75,7 +77,8 @@ function idea_act_home_page() {
  */
 function idea_act_govwide_dashboard_page() {
     $processed_vars['govwide_dashboard'] = "Test";
-    return theme('govwide_dashboard_page', array('processed_vars' => $processed_vars));
+    $processed_vars['actualdata'] = idea_act_govwideTrendData();
+    return theme('govwide_dashboard_page', array('govwidedata' => $processed_vars));
 }
 
 /*
