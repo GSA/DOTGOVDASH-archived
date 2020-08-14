@@ -3,6 +3,21 @@
 </style>
 <?php
 drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+$no_of_agency = $govwidedata['actualdata']['agencynos'];
+   $agency_website_num = $govwidedata['actualdata']['websitenos'];
+   $agency_dap_score = $govwidedata['actualdata']['avg_dap'];
+   $agency_https_score = $govwidedata['actualdata']['avg_https'];
+   $agency_mobovr_score = $govwidedata['actualdata']['avg_mob_overall'];
+   $agency_mobperf_score = $govwidedata['actualdata']['avg_mob_perform'];
+   $agency_mobusab_score = $govwidedata['actualdata']['avg_mob_usab'];
+   $agency_dnssec_score = $govwidedata['actualdata']['avg_dnssec'];
+   $agency_ipv6_score = $govwidedata['actualdata']['avg_ipv6'];
+   $agency_insecprot_score = $govwidedata['actualdata']['avg_rc4'];
+   $agency_m15_score = $govwidedata['actualdata']['avg_m15'];
+   $agency_uswds_score = $govwidedata['actualdata']['avg_uswds'];
+   
+   $agencydata = idea_act_getAllAgencyComplianceData();
+
 ?>
 
 <div class="idea-container">
@@ -68,9 +83,9 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     </a>
                                 </div>                                    <div class="col-sm-6 mt-xs-1">
                                     <h4>Average Accessibility Issues by Type Per Website</h4>
-                                    <p>Average Color Contrast: 3.5</p>
-                                    <p>Average HTML Attribute: 3.7</p>
-                                    <p>Average Missing Image Description: 1.2</p>
+                                    <p>Average Color Contrast: <?=round($agencydata['ag_col_contrast'] / $agency_website_num, 1);?></p>
+                                    <p>Average HTML Attribute: <?=round($agencydata['ag_html_attrib'] / $agency_website_num, 1);?></p>
+                                    <p>Average Missing Image Description: <?=round($agencydata['ag_miss_image'] / $agency_website_num, 1);?></p>
                                     <p>(Note: website redirects are excluded)</p>
                                 </div>
                                 <div class="col-sm-6">
@@ -96,7 +111,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [1339, 4219, 3980],
+                                            data: [<?php echo number_format($agencydata['ag_col_contrast'], 1, '.', ''); ?>, <?php echo number_format($agencydata['ag_miss_image'], 1, '.', ''); ?>, <?php echo number_format($agencydata['ag_html_attrib'], 1, '.', ''); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#563eb6',
@@ -106,7 +121,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['Color Contrast Issues', 'Missing Image Description Issues', 'HTML Attribute Issues']
+                                        labels: ['Color Contrast Issues', 'HTML Attribute Issues','Missing Image Description Issues']
                                     },
 
                                     // Configuration options go here
