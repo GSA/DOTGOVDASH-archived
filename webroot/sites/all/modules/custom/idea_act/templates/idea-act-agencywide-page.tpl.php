@@ -1,6 +1,8 @@
 <?php
-print "Agency Id is ".$processed_vars['agencyid'];
-print "<br>Agency Title is ".$processed_vars['agency_title'];
+$agency_data = ideaact_get_agencywide_data(arg(3));
+//print "Agency Id is ".$agency_data['agencyid'];
+
+$agencynode = node_load(arg(1));
 drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 ?>
 <style>
@@ -31,7 +33,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                     <div class="col-sm-12">
                         <div class="col-sm-10 col-md-8">
                             <p>Total Public-Facing Websites Reported</p>
-                            <p class="number">110</p>
+                            <p class="number"><?= $agency_data['no_of_websites']?></p>
                         </div>
                         <div class="col-sm-2 col-md-4">
                             <div class="text-md-right">
@@ -64,12 +66,13 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                 <div class="info-icon" id="tooltip-container">
                                     <a data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div>                                    <div class="col-sm-6 mt-xs-1">
-                                    <h4>Average Accessibility Issues by Type Per Website</h4>
-                                    <p>Average Color Contrast: 3.5</p>
-                                    <p>Average HTML Attribute: 3.7</p>
-                                    <p>Average Missing Image Description: 1.2</p>
-                                    <p>(Note: website redirects are excluded)</p>
+                                </div>
+                                <div class="col-sm-6 mt-xs-1">
+                                        <h4>Average Accessibility Issues by Type Per Website</h4>
+                                        <p>Average Color Contrast: <?= round($agency_data['ag_col_contrast'] / $agency_data['no_of_websites'], 1);?></p>
+                                        <p>Average HTML Attribute: <?=  round($agency_data['ag_html_attrib'] / $agency_data['no_of_websites'], 1);?></p>
+                                        <p>Average Missing Image Description: <?=  round($agency_data['ag_miss_image'] / $agency_data['no_of_websites'], 1);?></p>
+                                        <p>(Note: website redirects are excluded)</p>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="chart-container">
@@ -94,7 +97,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [116, 305, 217],
+                                            data: [<?=$agency_data['ag_col_contrast'] ?>, <?=$agency_data['ag_html_attrib'] ?>, <?=$agency_data['ag_miss_image'] ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#563eb6',
@@ -180,14 +183,14 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>Websites with USWDS code detected</td>
-                                                <td>42</td>
-                                                <td>56%</td>
+                                              <td>Websites with USWDS code detected</td>
+                                              <td><?= $agency_data['uswds_compliant']?></td>
+                                              <td><?=round(($agency_data['uswds_compliant'] / $agency_data['uswds_tottracked'] ) * 100);?> %</td>
                                             </tr>
                                             <tr>
-                                                <td>Websites without USWDS code detected</td>
-                                                <td>55</td>
-                                                <td>43%</td>
+                                              <td>Websites without USWDS code detected</td>
+                                              <td><?=$agency_data['uswds_noncompliant']?></td>
+                                              <td><?=round(($agency_data['uswds_noncompliant'] / $agency_data['uswds_tottracked']) * 100);?> % </td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -217,7 +220,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [43, 56],
+                                            data: [<?=$agency_data['uswds_compliant']?>, <?=$agency_data['uswds_noncompliant']?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#00699e',
@@ -303,14 +306,14 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>HTTPS Status Websites</td>
-                                                <td>73</td>
-                                                <td>26</td>
+                                              <td>HTTPS Status Websites</td>
+                                              <td><?= $agency_data['https_support']?></td>
+                                              <td><?=$agency_data['https_nosupport']?></td>
                                             </tr>
                                             <tr>
-                                                <td>HTTPS Status Percentage</td>
-                                                <td>74%</td>
-                                                <td>26%</td>
+                                              <td>HTTPS Status Percentage</td>
+                                              <td><?= round($agencydata['https_support'] / $agency_data['no_of_websites'], 1);?>%</td>
+                                              <td><?= round($agencydata['https_nosupport'] / $agency_data['no_of_websites'], 1);?>%</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -338,7 +341,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [26, 74],
+                                            data: [<?= round($agencydata['https_support'] / $agency_data['no_of_websites'], 1)?>, <?= round($agencydata['https_nosupport'] / $agency_data['no_of_websites'], 1)?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#97d1ff',
@@ -571,18 +574,18 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             <tbody>
                                             <tr>
                                                 <td>Good</td>
-                                                <td>14</td>
-                                                <td>19%</td>
+                                                <td><?=$agency_data['mob_perf_good_nos']?></td>
+                                                <td><?= round($agencydata['mob_perf_good_nos'] / $agency_data['no_of_websites'], 1)?>%</td>
                                             </tr>
                                             <tr>
                                                 <td>Poor</td>
-                                                <td>43</td>
-                                                <td>41%</td>
+                                                <td><?=$agency_data['mob_perf_improve_nos']?></td>
+                                                <td><?= round($agencydata['mob_perf_improve_nos'] / $agency_data['no_of_websites'], 1)?>%</td>
                                             </tr>
                                             <tr>
                                                 <td>Needs Improvement</td>
-                                                <td>42</td>
-                                                <td>40%</td>
+                                                <td><?= $agency_data['mob_perf_poor_nos']?></td>
+                                                <td><?= round($agencydata['mob_perf_poor_nos'] / $agency_data['no_of_websites'], 1)?>%</td>
                                             </tr>
 
                                             </tbody>
@@ -594,7 +597,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             type: 'doughnut',
                                             data: {
                                                 datasets: [{
-                                                    data: [19, 19, 40],
+                                                    data: [<?= round($agencydata['mob_perf_good_nos'] / $agency_data['no_of_websites'], 1)?>, <?= round($agencydata['mob_perf_poor_nos'] / $agency_data['no_of_websites'], 1)?>, <?= round($agencydata['mob_perf_improve_nos'] / $agency_data['no_of_websites'], 1)?>],
                                                     borderWidth: 0,
                                                     backgroundColor: [
                                                         '#563eb6',
@@ -662,12 +665,12 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             <tbody>
                                             <tr>
                                                 <td>Mobile Friendly</td>
-                                                <td>50</td>
+                                                <td><?= $agency_data['mob_usab_friendly_nos']?></td>
                                                 <td>44%</td>
                                             </tr>
                                             <tr>
                                                 <td>Not Mobile Friendly</td>
-                                                <td>60</td>
+                                                <td><?= $agency_data['mob_usab_notfriendly_nos']?></td>
                                                 <td>56%</td>
                                             </tr>
                                             <tr>
@@ -684,7 +687,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             type: 'doughnut',
                                             data: {
                                                 datasets: [{
-                                                    data: [44, 56],
+                                                    data: [<?= round($agencydata['mob_usab_friendly_nos'] / $agency_data['no_of_websites'], 1)?>, <?= round($agencydata['mob_usab_notfriendly_nos'] / $agency_data['no_of_websites'], 1)?>],
                                                     borderWidth: 0,
                                                     backgroundColor: [
                                                         '#8ea116',
@@ -797,13 +800,13 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             <tbody>
                                             <tr>
                                                 <td>DAP Compliant</td>
-                                                <td>68</td>
-                                                <td>71%</td>
+                                                <td><?= $agency_data['dap_compliant']?></td>
+                                                <td><?= round($agencydata['dap_compliant'] / $agency_data['dap_tottracked'], 1)?>%</td>
                                             </tr>
                                             <tr>
                                                 <td>DAP Non-Compliant Websites</td>
-                                                <td>38</td>
-                                                <td>29%</td>
+                                                <td><?= $agency_data['dap_noncompliant']?></td>
+                                                <td><?= round($agencydata['dap_noncompliant'] / $agency_data['dap_tottracked'], 1)?>%</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -831,7 +834,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [71, 29],
+                                            data: [<?= round($agencydata['dap_compliant'] / $agency_data['dap_tottracked'], 1)?>, <?= round($agencydata['dap_noncompliant'] / $agency_data['dap_tottracked'], 1)?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#00a1be',
@@ -885,5 +888,5 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
             </div>
         </div>
     </div>
-    
+
 
