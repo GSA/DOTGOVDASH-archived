@@ -77,14 +77,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/amstockchart/3.13.0/exporting/canvg.js"></script>
 
 <script type="text/javascript">
-  function generatePDF() {
+  function generatePDF(pageType) {
     // Choose the element that our invoice is rendered in.
     var element = document.getElementById("main-container");
     // Choose the element and save the PDF for our user.
     html2pdf()
     .set({
-        filename: 'report.pdf',
-        jsPDF: {format:[500,380]},
+        filename: pageType,
+        jsPDF: {format:[500,800]},
     })
     .from(element)
     .save();

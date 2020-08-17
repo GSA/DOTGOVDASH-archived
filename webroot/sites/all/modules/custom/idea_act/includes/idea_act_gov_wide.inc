@@ -16,8 +16,13 @@ function idea_act_govwideTrendData(){
     $avg_rc4 = round(db_query("select avg(a.field_free_of_insecr_prot_score_value) as avg_value from field_data_field_free_of_insecr_prot_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
     $avg_m15 = round(db_query("select avg(a.field_m15_13_compliance_score_value) as avg_value from field_data_field_m15_13_compliance_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
     $avg_uswds = round(db_query("select avg(a.field_uswds_score_value) as avg_value from field_data_field_uswds_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
-
-  $govwidewebsite['websitenos'] = $websitenos;
+    // $govwide_mob['mob_usab_friendly_nos'] = db_query("SELECT mob_usab_friendly FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+    // $govwide_mob['mob_usab_notfriendly_nos'] = db_query("SELECT mob_usab_nonfriendly FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+    // $govwide_mob['mob_perf_good_nos'] = db_query("SELECT mob_perf_good FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+    // $govwide_mob['mob_perf_improve_nos'] = db_query("SELECT mob_perf_improve FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+    // $govwide_mob['mob_perf_poor_nos'] = db_query("SELECT mob_perf_poor FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+   
+    $govwidewebsite['websitenos'] = $websitenos;
     $govwidewebsite['agencynos'] = $agencynos;
     $govwidewebsite['avg_https'] = $avg_https;
     $govwidewebsite['avg_dap'] = $avg_dap;
@@ -29,6 +34,11 @@ function idea_act_govwideTrendData(){
     $govwidewebsite['avg_dnssec'] = $avg_dnssec;
     $govwidewebsite['avg_rc4'] = $avg_rc4;
     $govwidewebsite['avg_m15'] = $avg_m15;
+    // $agencydata['poor_nos'] = $govwide_mob['mob_perf_poor_nos'] ;
+    // $agencydata['good_nos'] = $govwide_mob['mob_perf_good_nos'] ;
+    // $agencydata['improve_nos'] = $govwide_mob['mob_perf_improve_nos'] ;
+    // $agencydata['friendly_nos'] = $agency_mob['mob_usab_friendly_nos'] ;
+    // $agencydata['nonfriendly_nos'] = $agency_mob['mob_usab_notfriendly_nos'] ;
     return $govwidewebsite;
 }
 
@@ -254,8 +264,23 @@ function idea_act_getAllAgencyComplianceData(){
     }
     $agencydata['ag_access_chart'] = $agencyaccess_output;
 
+  $govwide_mob['mob_perf_good_nos'] = db_query("SELECT mob_perf_good FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+  $govwide_mob['mob_perf_improve_nos'] = db_query("SELECT mob_perf_improve FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+  $govwide_mob['mob_perf_poor_nos'] = db_query("SELECT mob_perf_poor FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+  $govwide_mob['mob_usab_friendly_nos'] = db_query("SELECT mob_usab_friendly FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+  $govwide_mob['mob_usab_notfriendly_nos'] = db_query("SELECT mob_usab_nonfriendly FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+  $govwide_mob['total_websites'] = db_query("SELECT num_of_websites FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+  $govwide_mob['null'] = $govwide_mob['total_websites'] - ($govwide_mob['mob_perf_good_nos']+ $govwide_mob['mob_perf_improve_nos']+ $govwide_mob['mob_perf_poor_nos']);
+  $govwide_mob['usab_null'] = $govwide_mob['total_websites'] - ($govwide_mob['mob_usab_friendly_nos']+ $govwide_mob['mob_usab_notfriendly_nos']);
 
-    $govwide_mob['govwide_mob_bad'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='49' and entity_id in (SELECT node.nid AS nid
+  $agencydata['total_non_na_websites'] =  $govwide_mob['mob_perf_good_nos']+ $govwide_mob['mob_perf_improve_nos']+ $govwide_mob['mob_perf_poor_nos'];
+  $agencydata['poor_nos'] = $govwide_mob['mob_perf_poor_nos'] ;
+  $agencydata['good_nos'] = $govwide_mob['mob_perf_good_nos'] ;
+  $agencydata['improve_nos'] = $govwide_mob['mob_perf_improve_nos'] ;
+  $agencydata['friendly_nos'] = $govwide_mob['mob_usab_friendly_nos'] ;
+  $agencydata['nonfriendly_nos'] = $govwide_mob['mob_usab_notfriendly_nos'] ;
+
+  $govwide_mob['govwide_mob_bad'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='49' and entity_id in (SELECT node.nid AS nid
 FROM
 node node
 LEFT JOIN field_data_field_web_agency_id field_data_field_web_agency_id ON node.nid = field_data_field_web_agency_id.entity_id AND (field_data_field_web_agency_id.entity_type = 'node' AND field_data_field_web_agency_id.deleted = '0')
@@ -279,6 +304,9 @@ WHERE (( (node.status = '1') AND (node.type IN  ('website')) )))")->fetchField()
     $govwideaccess_output = theme('govwide_mobgraphs_page', array('govwidedata' => $govwide_mob));
 
     $agencydata['gov_mob_chart'] = $govwideaccess_output;
+
+    $govwideaccess_mob_output = theme('govwide_mobusabgraphs_page', array('govwidedata' => $govwide_mob));
+    $agencydata['gov_mob_usab_chart'] = $govwideaccess_mob_output;
 
     //Query to get Search Engine Name for Government wide
     $searchengines = db_query("select field_search_engine_name_value,count(field_search_engine_name_value) as complnum from node a , field_data_field_search_engine_name b  where a.status='1' and a.nid=b.entity_id and a.type='website' group by field_search_engine_name_value");
@@ -322,4 +350,37 @@ WHERE (( (node.status = '1') AND (node.type IN  ('website')) )))")->fetchField()
     $agencydata['searchenginestatus_graph'] = $search_status_graph_output;
 
     return $agencydata;
+
+}
+
+/*
+ * Find Last scan date
+ */
+function idea_act_lastScanDate(){
+    $query = db_query("select nid,created from node where type='scans' order by nid desc limit 1");
+    foreach ($query as $result) {
+        $lastscantime = $result->created;
+    }
+    // Scan takes 2 or 3 days to complete.
+    // Query returns lastscan date at the start of the scan not when scan completes.
+    // Adding 2 or 3 days makes san date to show scan completion date.
+    print date("m/d/Y",$lastscantime + + (2 * 24 * 60 * 60));
+}
+
+
+/*
+ * Get Percentage
+ */
+function idea_act_applyDataPercentage($data,$websites)
+{
+    $percent = round(($data / $websites) * 100);
+
+    if ($data != '') {
+        $dataPercentage = "$percent%";
+    }
+    else{
+        $dataPercentage = "0";
+    }
+    return $dataPercentage;
+
 }

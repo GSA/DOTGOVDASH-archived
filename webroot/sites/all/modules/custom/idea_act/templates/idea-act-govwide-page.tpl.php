@@ -4,19 +4,29 @@
 <?php
 drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 $no_of_agency = $govwidedata['actualdata']['agencynos'];
-   $agency_website_num = $govwidedata['actualdata']['websitenos'];
-   $agency_dap_score = $govwidedata['actualdata']['avg_dap'];
-   $agency_https_score = $govwidedata['actualdata']['avg_https'];
-   $agency_mobovr_score = $govwidedata['actualdata']['avg_mob_overall'];
-   $agency_mobperf_score = $govwidedata['actualdata']['avg_mob_perform'];
-   $agency_mobusab_score = $govwidedata['actualdata']['avg_mob_usab'];
-   $agency_dnssec_score = $govwidedata['actualdata']['avg_dnssec'];
-   $agency_ipv6_score = $govwidedata['actualdata']['avg_ipv6'];
-   $agency_insecprot_score = $govwidedata['actualdata']['avg_rc4'];
-   $agency_m15_score = $govwidedata['actualdata']['avg_m15'];
-   $agency_uswds_score = $govwidedata['actualdata']['avg_uswds'];
-   
-   $agencydata = idea_act_getAllAgencyComplianceData();
+$agency_website_num = $govwidedata['actualdata']['websitenos'];
+$agency_dap_score = $govwidedata['actualdata']['avg_dap'];
+$agency_https_score = $govwidedata['actualdata']['avg_https'];
+$agency_mobovr_score = $govwidedata['actualdata']['avg_mob_overall'];
+$agency_mobperf_score = $govwidedata['actualdata']['avg_mob_perform'];
+$agency_mobusab_score = $govwidedata['actualdata']['avg_mob_usab'];
+$agency_dnssec_score = $govwidedata['actualdata']['avg_dnssec'];
+$agency_ipv6_score = $govwidedata['actualdata']['avg_ipv6'];
+$agency_insecprot_score = $govwidedata['actualdata']['avg_rc4'];
+$agency_m15_score = $govwidedata['actualdata']['avg_m15'];
+$agency_uswds_score = $govwidedata['actualdata']['avg_uswds'];
+$chartdata = $govwidedata['actualdata'];
+$websitenos = $chartdata['websitenos'];
+$agencynos = $chartdata['agencynos'];
+unset($chartdata['websitenos']);
+unset($chartdata['agencynos']);
+foreach ($chartdata as $key => $val) {
+    $chartseries1 .= "{\"name\":\"$labeldesc[$key]\",\"y\":" . (int) $val . ",\"showInLegend\":true},";
+}
+$chartseries = array_values($chartdata);
+$agencydata = idea_act_getAllAgencyComplianceData();
+if(trim($search_engine_data_for_agencygraph) == "")
+$search_engine_data_for_agencygraph = "0,0";
 
 ?>
 
@@ -26,7 +36,7 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
             <div class="row row-no-gutters">
                 <div class="col-md-12 dashboard-wrap">
                     <div class="col-md-9 dashboard-left">
-                        <h1>Government Wide - <span>Century IDEA Act Dashboard</span></h1>
+                        <h1>Government Wide - <span>21st Century IDEA Act Dashboard</span></h1>
                         <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
                     </div>
                     <div class="col-md-2 col-md-offset-1 text-right dashboard-right">
@@ -35,7 +45,7 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                  data-placement="left" data-toggle="tooltip"
                                  title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
                         </a>
-                        <button class="button download-button" type="submit">Download</button>
+                        <button class="button download-button" onclick="generatePDF('21st-gov-wide.pdf')" type="submit">Download</button>
                     </div>
                 </div>
             </div>
@@ -44,11 +54,11 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                     <div class="col-sm-12">
                         <div class="col-sm-5 col-md-4">
                             <p>Total Federal Branch Agencies Reported</p>
-                            <p class="number">143</p>
+                            <p class="number"><?=$agencynos?></p>
                         </div>
                         <div class="col-sm-5 col-md-4">
                             <p>Total Public-Facing Websites Reported</p>
-                            <p class="number">1142</p>
+                            <p class="number"><?=$websitenos?></p>
                         </div>
                         <div class="col-sm-2 col-md-4">
                             <div class="text-md-right">
@@ -72,16 +82,18 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                         <div>
                                             <div><i><b>21st Century IDEA Act</b></i></div>
                                             <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                            <a href="#"><b>Read More</b></a>
+                                            <a class="pe-none" href="#"><b>Read More</b></a>
+                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div>                                    <div class="col-sm-6 mt-xs-1">
+                                </div>                                   
+                                 <div class="col-sm-6 mt-xs-1">
                                     <h4>Average Accessibility Issues by Type Per Website</h4>
                                     <p>Average Color Contrast: <?=round($agencydata['ag_col_contrast'] / $agency_website_num, 1);?></p>
                                     <p>Average HTML Attribute: <?=round($agencydata['ag_html_attrib'] / $agency_website_num, 1);?></p>
@@ -128,6 +140,7 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                     options: {
                                         // responsive: true,
                                         maintainAspectRatio: false,
+                                        rotation: (-5.5*Math.PI) - (25/180 * Math.PI),
 
                                         title: {
                                             display: true,
@@ -165,7 +178,7 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                     </div>
                 </div>
             </div>
-
+ 
             <div class="relative-position mb-2">
                 <div class="row">
                     <div class="col-sm-12">
@@ -179,16 +192,19 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                         <div>
                                             <div><i><b>21st Century IDEA Act</b></i></div>
                                             <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                            <a href="#"><b>Read More</b></a>
+                                             <a class="pe-none" href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <!-- add data-toggle="tooltip" on valid text for tooltip -->
+                                    <a title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div>                                    <div class="col-md-6">
+                                </div>     
+                                
+                                <div class="col-md-6">
                                     <div class="table-responsive">
                                         <table>
                                             <thead>
@@ -201,13 +217,13 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                             <tbody>
                                             <tr>
                                                 <td>Websites with USWDS code detected</td>
-                                                <td>911</td>
-                                                <td>78%</td>
+                                                <td><?php echo number_format($agencydata['uswds_compliant']); ?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['uswds_compliant'], $agencydata['uswds_tottracked'])?></td>
                                             </tr>
                                             <tr>
                                                 <td>Websites without USWDS code detected</td>
-                                                <td>218</td>
-                                                <td>22%</td>
+                                                <td><?php echo number_format($agencydata['uswds_noncompliant']); ?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'])?></td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -235,7 +251,7 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [22, 78],
+                                            data: [<?php echo number_format($agencydata['uswds_compliant']); ?>, <?php echo number_format($agencydata['uswds_noncompliant']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#00699e',
@@ -243,13 +259,14 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['USWDS Code Not Detected', 'USWDS Code Usage']
+                                        labels: ['USWDS Code Detected', 'USWDS Code Not Detected']
                                     },
 
                                     // Configuration options go here
                                     options: {
                                         // responsive: true,
                                         maintainAspectRatio: false,
+                                        rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
 
                                         title: {
                                             display: true,
@@ -300,36 +317,38 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                         <div>
                                             <div><i><b>21st Century IDEA Act</b></i></div>
                                             <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                            <a href="#"><b>Read More</b></a>
+                                             <a class="pe-none" href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> HTTPS Data is collected through a custom scanner component of digital dashboard that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div>                                    <div class="col-md-6">
+                                </div> 
+                                <div class="col-md-6">
                                     <div class="table-responsive">
                                         <table>
                                             <thead>
                                             <tr>
                                                 <th>Criteria</th>
-                                                <th>Compliant</th>
                                                 <th>Non-compliant</th>
+                                                <th>Compliant</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
                                                 <td>HTTPS Status Websites</td>
-                                                <td>887</td>
-                                                <td>74%</td>
+                                                <td><?php echo number_format($agencydata['https_nosupport']); ?></td>
+                                                <td><?php echo number_format($agencydata['https_support']); ?></td>
                                             </tr>
                                             <tr>
                                                 <td>HTTPS Status Percentage</td>
-                                                <td>257</td>
-                                                <td>26%</td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['https_nosupport'], $agency_website_num)?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['https_support'], $agency_website_num)?></td>
                                             </tr>
+                                            
                                             </tbody>
                                         </table>
                                     </div>
@@ -356,7 +375,8 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [26, 74],
+                                            data: [<?php echo number_format($agencydata['https_nosupport']); ?>, 
+                                                    <?php echo number_format($agencydata['https_support']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#97d1ff',
@@ -371,7 +391,7 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                     options: {
                                         // responsive: true,
                                         maintainAspectRatio: false,
-
+                                        rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
                                         title: {
                                             display: true,
                                             text: 'HTTPS Websites Compliance',
@@ -421,57 +441,43 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                         <div>
                                             <div><i><b>21st Century IDEA Act</b></i></div>
                                             <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                            <a href="#"><b>Read More</b></a>
+                                             <a class="pe-none" href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a data-toggle="tooltip" title="<span><p class='tt-text'> On-Site Search Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div>                                    <div class="col-md-6">
+                                </div>         
+                                
+                                <div class="col-md-6">
                                     <div class="table-responsive">
                                         <table>
                                             <thead>
                                             <tr>
                                                 <th>On-Site Search Engine</th>
                                                 <th>Total</th>
-                                                <th>Percentage</th>
+                                                <!-- <th>Percentage</th> -->
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <td>Custom Search</td>
-                                                <td>228</td>
-                                                <td>25%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Search.usa.gov</td>
-                                                <td>151</td>
-                                                <td>15%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Drupal Core Search</td>
-                                                <td>104</td>
-                                                <td>9%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Google Custom Search</td>
-                                                <td>27</td>
-                                                <td>3%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Apache Solr</td>
-                                                <td>6</td>
-                                                <td>< 1%</td>
-                                            </tr>
+                                            <?php
+                                            foreach ($agencydata['searchenginedata'] as $skey => $sval) {
+                                                print "<tr style='text-transform: capitalize;'><td>" . ucfirst($skey) . "</td><td> $sval</td>
+                                                </tr>";
+                                            }
+                                          
+                                          ?>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                     <div class="chart-container">
+                                    <?php $searchenginestatus = $agencydata['searchenginestatus'];
+                                       ?>
                                         <canvas id="chart-gov-search" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
                                 </div>
@@ -491,7 +497,8 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [67, 33],
+                                            data: [<?=($searchenginestatus['search_notavailable'] == "") ? 0 : $searchenginestatus['search_notavailable']?>, 
+                                            <?=($searchenginestatus['search_available'] == "") ? 0 : $searchenginestatus['search_available']?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#a52700',
@@ -506,6 +513,7 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                     options: {
                                         // responsive: true,
                                         maintainAspectRatio: false,
+                                        rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
 
                                         title: {
                                             display: true,
@@ -556,16 +564,18 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                         <div>
                                             <div><i><b>21st Century IDEA Act</b></i></div>
                                             <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                            <a href="#"><b>Read More</b></a>
+                                             <a class="pe-none" href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Mobile Data is collected from Google API through a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div>                                    <div class="col-md-6 mb-2">
+                                </div>    
+                                
+                                <div class="col-md-6 mb-2">
                                     <div class="chart-container">
                                         <canvas id="chart-gov4" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -573,8 +583,10 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                         <div id="chart-5-legend"></div>
                                     </div>
                                     <div class="table-responsive">
+                                    
                                         <table class="mt-1">
                                             <thead>
+                                        
                                             <tr>
                                                 <th>Breakdown</th>
                                                 <th>Websites</th>
@@ -584,18 +596,18 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                             <tbody>
                                             <tr>
                                                 <td>Good</td>
-                                                <td>294</td>
-                                                <td>19%</td>
+                                                <td><?php echo number_format($agencydata['good_nos']); ?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['good_nos'], $agencydata['total_non_na_websites'])?></td>
                                             </tr>
                                             <tr>
                                                 <td>Poor</td>
-                                                <td>430</td>
-                                                <td>41%</td>
+                                                <td><?php echo number_format($agencydata['poor_nos']); ?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['poor_nos'], $agencydata['total_non_na_websites'])?></td>
                                             </tr>
                                             <tr>
                                                 <td>Needs Improvement</td>
-                                                <td>420</td>
-                                                <td>40%</td>
+                                                <td><?php echo number_format($agencydata['improve_nos']); ?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['improve_nos'],$agencydata['total_non_na_websites'])?></td>
                                             </tr>
 
                                             </tbody>
@@ -607,7 +619,9 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                             type: 'doughnut',
                                             data: {
                                                 datasets: [{
-                                                    data: [19, 19, 40],
+                                                    data: [<?php echo number_format($agencydata['good_nos']); ?>,
+                                                            <?php echo number_format($agencydata['poor_nos']); ?>, 
+                                                            <?php echo number_format($agencydata['improve_nos']); ?>],
                                                     borderWidth: 0,
                                                     backgroundColor: [
                                                         '#563eb6',
@@ -623,6 +637,7 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                             options: {
                                                 // responsive: true,
                                                 maintainAspectRatio: false,
+                                                rotation: (-5.5*Math.PI) - (25/180 * Math.PI),
 
                                                 title: {
                                                     display: true,
@@ -657,7 +672,7 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                     </script>
 
                                 </div>
-                                <div class="col-md-6 mt-xs-1">
+                                <div class="col-md-6 mt-xs-1 px-xs-0">
                                     <div class="chart-container">
                                         <canvas id="chart-gov5" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -676,13 +691,13 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                             <tbody>
                                             <tr>
                                                 <td>Mobile Friendly</td>
-                                                <td>460</td>
-                                                <td>44%</td>
+                                                <td><?php echo number_format($agencydata['friendly_nos']); ?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['friendly_nos'], $agencydata['friendly_nos']+$agencydata['nonfriendly_nos'])?></td>
                                             </tr>
                                             <tr>
                                                 <td>Not Mobile Friendly</td>
-                                                <td>570</td>
-                                                <td>56%</td>
+                                                <td><?php echo number_format($agencydata['nonfriendly_nos']); ?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['nonfriendly_nos'],$agencydata['friendly_nos']+$agencydata['nonfriendly_nos'])?></td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -693,7 +708,8 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                             type: 'doughnut',
                                             data: {
                                                 datasets: [{
-                                                    data: [44, 56],
+                                                    data: [<?php echo number_format($agencydata['friendly_nos']); ?>,
+                                                            <?php echo number_format($agencydata['nonfriendly_nos']); ?>],
                                                     borderWidth: 0,
                                                     backgroundColor: [
                                                         '#8ea116',
@@ -708,6 +724,7 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                             options: {
                                                 // responsive: true,
                                                 maintainAspectRatio: false,
+                                                rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
 
                                                 title: {
                                                     display: true,
@@ -742,7 +759,7 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                     </script>
                                 </div>
                             </div>
-                            <div class="card-body relative-position row nmt-3">
+                            <div class="card-body relative-position row nmt-3 mt-sm-0">
                                 <div class="col-md-6 mb-2">
                                     <div class="explore">
                                         <a href="/test" class="btn btn-digital disabled">Explore</a>
@@ -767,16 +784,18 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                         <div>
                                             <div><i><b>21st Century IDEA Act</b></i></div>
                                             <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                            <a href="#"><b>Read More</b></a>
+                                             <a class="pe-none" href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body relative-position row">
-                                <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                            <div class="info-icon" id="tooltip-container">
+                                    <a data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> DAP Overall Average Score : <?=$agency_dap_score?>%"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div>                                    <div class="col-md-6">
+                                </div>  
+                                
+                                <div class="col-md-6">
                                     <div class="table-responsive">
                                         <table>
                                             <thead>
@@ -788,14 +807,14 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>DAP Compliant</td>
-                                                <td>718</td>
-                                                <td>71%</td>
+                                                <td>DAP Non-Compliant</td>
+                                                <td><?php echo number_format($agencydata['dap_noncompliant']); ?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['dap_noncompliant'], $agencydata['dap_tottracked'])?></td>
                                             </tr>
                                             <tr>
-                                                <td>DAP Non-Compliant Websites</td>
-                                                <td>334</td>
-                                                <td>29%</td>
+                                                <td>DAP Compliant</td>
+                                                <td><?php echo number_format($agencydata['dap_compliant']); ?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['dap_compliant'], $agencydata['dap_tottracked'])?></td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -822,7 +841,8 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [71, 29],
+                                            data: [<?php echo number_format($agencydata['dap_noncompliant']); ?>, 
+                                                    <?php echo number_format($agencydata['dap_compliant']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#00a1be',
@@ -837,6 +857,7 @@ $no_of_agency = $govwidedata['actualdata']['agencynos'];
                                     options: {
                                         // responsive: true,
                                         maintainAspectRatio: false,
+                                        rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
 
                                         title: {
                                             display: true,
