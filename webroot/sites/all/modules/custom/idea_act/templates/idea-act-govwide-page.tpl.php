@@ -36,15 +36,16 @@ $search_engine_data_for_agencygraph = "0,0";
             <div class="row row-no-gutters">
                 <div class="col-md-12 dashboard-wrap">
                     <div class="col-md-9 dashboard-left">
-                        <h1>Government Wide - <span>21st Century IDEA Act Dashboard</span></h1>
+                        <h1>Government-Wide - <span>21st Century IDEA Act Dashboard</span></h1>
                         <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
                     </div>
                     <div class="col-md-2 col-md-offset-1 text-right dashboard-right">
-                        <a href="#">
+                        <a class="btn disabled" href="#">
                             <img src="/sites/all/modules/custom/idea_act/images/question-icon.png" alt="question icon" class="question-icon"
                                  data-placement="left" data-toggle="tooltip"
                                  title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
                         </a>
+                       
                         <button class="button download-button" onclick="generatePDF('21st-gov-wide.pdf')" type="submit">Download</button>
                     </div>
                 </div>
@@ -140,7 +141,6 @@ $search_engine_data_for_agencygraph = "0,0";
                                     options: {
                                         // responsive: true,
                                         maintainAspectRatio: false,
-                                        rotation: (-5.5*Math.PI) - (25/180 * Math.PI),
 
                                         title: {
                                             display: true,
@@ -151,7 +151,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                         plugins: {
 
                                             labels: {
-                                                render: 'data',
+                                                render: 'value',
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
@@ -199,8 +199,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <!-- add data-toggle="tooltip" on valid text for tooltip -->
-                                    <a title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a  class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>     
                                 
@@ -266,7 +265,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     options: {
                                         // responsive: true,
                                         maintainAspectRatio: false,
-                                        rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
+                                        // rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
 
                                         title: {
                                             display: true,
@@ -333,20 +332,22 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <thead>
                                             <tr>
                                                 <th>Criteria</th>
-                                                <th>Non-compliant</th>
                                                 <th>Compliant</th>
+                                                <th>Non-compliant</th>
+
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
                                                 <td>HTTPS Status Websites</td>
-                                                <td><?php echo number_format($agencydata['https_nosupport']); ?></td>
                                                 <td><?php echo number_format($agencydata['https_support']); ?></td>
+                                                <td><?php echo number_format($agencydata['https_nosupport']); ?></td>
+
                                             </tr>
                                             <tr>
                                                 <td>HTTPS Status Percentage</td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['https_nosupport'], $agency_website_num)?></td>
                                                 <td><?=idea_act_applyDataPercentage($agencydata['https_support'], $agency_website_num)?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['https_nosupport'], $agency_website_num)?></td>
                                             </tr>
                                             
                                             </tbody>
@@ -375,23 +376,23 @@ $search_engine_data_for_agencygraph = "0,0";
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [<?php echo number_format($agencydata['https_nosupport']); ?>, 
-                                                    <?php echo number_format($agencydata['https_support']); ?>],
+                                            data: [<?php echo number_format($agencydata['https_support']); ?>,
+                                                    <?php echo number_format($agencydata['https_nosupport']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
-                                                '#97d1ff',
                                                 '#00a65f',
+                                                '#97d1ff'
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['Non-compliant Websites', 'Compliant Websites']
+                                        labels: [ 'Compliant Websites','Non-compliant Websites']
                                     },
 
                                     // Configuration options go here
                                     options: {
                                         // responsive: true,
                                         maintainAspectRatio: false,
-                                        rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
+                                        //rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
                                         title: {
                                             display: true,
                                             text: 'HTTPS Websites Compliance',
@@ -459,14 +460,14 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <tr>
                                                 <th>On-Site Search Engine</th>
                                                 <th>Total</th>
-                                                <!-- <th>Percentage</th> -->
+                                                <th>Percentage</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <?php
                                             foreach ($agencydata['searchenginedata'] as $skey => $sval) {
                                                 print "<tr style='text-transform: capitalize;'><td>" . ucfirst($skey) . "</td><td> $sval</td>
-                                                </tr>";
+                                                <td> 20%</td></tr>";
                                             }
                                           
                                           ?>
@@ -513,7 +514,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     options: {
                                         // responsive: true,
                                         maintainAspectRatio: false,
-                                        rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
+                                        // rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
 
                                         title: {
                                             display: true,
@@ -584,7 +585,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="table-responsive">
                                     
-                                        <table class="mt-1">
+                                        <table>
                                             <thead>
                                         
                                             <tr>
@@ -600,14 +601,14 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 <td><?=idea_act_applyDataPercentage($agencydata['good_nos'], $agencydata['total_non_na_websites'])?></td>
                                             </tr>
                                             <tr>
-                                                <td>Poor</td>
-                                                <td><?php echo number_format($agencydata['poor_nos']); ?></td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['poor_nos'], $agencydata['total_non_na_websites'])?></td>
-                                            </tr>
-                                            <tr>
                                                 <td>Needs Improvement</td>
                                                 <td><?php echo number_format($agencydata['improve_nos']); ?></td>
                                                 <td><?=idea_act_applyDataPercentage($agencydata['improve_nos'],$agencydata['total_non_na_websites'])?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Poor</td>
+                                                <td><?php echo number_format($agencydata['poor_nos']); ?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['poor_nos'], $agencydata['total_non_na_websites'])?></td>
                                             </tr>
 
                                             </tbody>
@@ -620,24 +621,25 @@ $search_engine_data_for_agencygraph = "0,0";
                                             data: {
                                                 datasets: [{
                                                     data: [<?php echo number_format($agencydata['good_nos']); ?>,
-                                                            <?php echo number_format($agencydata['poor_nos']); ?>, 
-                                                            <?php echo number_format($agencydata['improve_nos']); ?>],
+                                                            <?php echo number_format($agencydata['improve_nos']); ?>,
+                                                            <?php echo number_format($agencydata['poor_nos']); ?>,],
                                                     borderWidth: 0,
                                                     backgroundColor: [
                                                         '#563eb6',
-                                                        '#218967',
-                                                        '#c95d00'
+                                                        '#c95d00',
+                                                        '#218967'
+                                                        
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
-                                                labels: ['Good', 'Poor', 'Needs Improvement']
+                                                labels: ['Good', 'Needs Improvement', 'Poor']
                                             },
 
                                             // Configuration options go here
                                             options: {
                                                 // responsive: true,
                                                 maintainAspectRatio: false,
-                                                rotation: (-5.5*Math.PI) - (25/180 * Math.PI),
+                                                // rotation: (-5.5*Math.PI) - (25/180 * Math.PI),
 
                                                 title: {
                                                     display: true,
@@ -680,7 +682,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                         <div id="chart-6-legend"></div>
                                     </div>
                                     <div class="table-responsive">
-                                        <table class="mt-1">
+                                        <table>
                                             <thead>
                                             <tr>
                                                 <th>Breakdown</th>
@@ -724,7 +726,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             options: {
                                                 // responsive: true,
                                                 maintainAspectRatio: false,
-                                                rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
+                                                // rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
 
                                                 title: {
                                                     display: true,
@@ -807,14 +809,14 @@ $search_engine_data_for_agencygraph = "0,0";
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>DAP Non-Compliant</td>
-                                                <td><?php echo number_format($agencydata['dap_noncompliant']); ?></td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['dap_noncompliant'], $agencydata['dap_tottracked'])?></td>
-                                            </tr>
-                                            <tr>
                                                 <td>DAP Compliant</td>
                                                 <td><?php echo number_format($agencydata['dap_compliant']); ?></td>
                                                 <td><?=idea_act_applyDataPercentage($agencydata['dap_compliant'], $agencydata['dap_tottracked'])?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>DAP Non-Compliant</td>
+                                                <td><?php echo number_format($agencydata['dap_noncompliant']); ?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['dap_noncompliant'], $agencydata['dap_tottracked'])?></td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -841,27 +843,27 @@ $search_engine_data_for_agencygraph = "0,0";
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [<?php echo number_format($agencydata['dap_noncompliant']); ?>, 
-                                                    <?php echo number_format($agencydata['dap_compliant']); ?>],
+                                            data: [<?php echo number_format($agencydata['dap_compliant']); ?>,
+                                                    <?php echo number_format($agencydata['dap_noncompliant']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
-                                                '#00a1be',
                                                 '#de9738',
+                                                '#00a1be'
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['Non-compliant Websites', 'compliant Websites']
+                                        labels: [ 'Compliant Websites', 'Non-compliant Websites']
                                     },
 
                                     // Configuration options go here
                                     options: {
                                         // responsive: true,
                                         maintainAspectRatio: false,
-                                        rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
+                                        // rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
 
                                         title: {
                                             display: true,
-                                            text: 'DAP Website Compliance',
+                                            text: 'DAP Websites Compliance',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
