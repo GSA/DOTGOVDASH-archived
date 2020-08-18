@@ -61,6 +61,9 @@
     html {
         font-size: 14px !important;
     }
+    .page-header {
+      display: none;
+    }
 </style>
   <link rel="profile" href="<?php print $grddl_profile; ?>" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
