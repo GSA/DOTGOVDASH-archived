@@ -46,7 +46,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                  title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
                         </a>
                        
-                        <button class="button download-button" onclick="generatePDF('21st-gov-wide.pdf')" type="submit">Download</button>
+                        <button class="button download-button" onclick="generatePDF('21st-gov-wide.pdf', 400, 695)" type="submit">Download</button>
                     </div>
                 </div>
             </div>
@@ -81,8 +81,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                                            <div><p class="card-description"><i><b>21st Century IDEA Act</b></i></p></div>
+                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
                                             <a class="pe-none" href="#"><b>Read More</b></a>
                                             
                                         </div>
@@ -190,8 +190,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                                            <div><p class="card-description"><i><b>21st Century IDEA Act</b></i></p></div>
+                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
                                              <a class="pe-none" href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
@@ -314,8 +314,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                                            <div><p class="card-description"><i><b>21st Century IDEA Act</b></i></p></div>
+                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
                                              <a class="pe-none" href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
@@ -440,8 +440,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                                            <div><p class="card-description"><i><b>21st Century IDEA Act</b></i></p></div>
+                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
                                              <a class="pe-none" href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
@@ -563,8 +563,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                                            <div><p class="card-description"><i><b>21st Century IDEA Act</b></i></p></div>
+                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
                                              <a class="pe-none" href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
@@ -784,8 +784,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                                            <div><p class="card-description"><i><b>21st Century IDEA Act</b></i></p></div>
+                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
                                              <a class="pe-none" href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
