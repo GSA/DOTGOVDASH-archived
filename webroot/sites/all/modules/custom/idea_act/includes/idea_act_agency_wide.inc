@@ -33,13 +33,13 @@ function ideaact_get_agencywide_data($agencyid){
   $agency_data['ag_html_attrib'] = $ag_avrg_html_attr;
 
 //  Mobile information
-  $agency_data['mob_perf_good_nos'] = db_query("SELECT mob_perf_good FROM custom_agencywide_archive where date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY) and agency_id = :agencyid limit 1",array(':agencyid' => $agencyid))->fetchField();
-  $agency_data['mob_perf_improve_nos'] = db_query("SELECT mob_perf_improve FROM custom_agencywide_archive where date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
-  $agency_data['mob_perf_poor_nos'] = db_query("SELECT mob_perf_poor FROM custom_agencywide_archive where date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
-  $agency_data['mob_usab_friendly_nos'] = db_query("SELECT mob_usab_friendly FROM custom_agencywide_archive where date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
-  $agency_data['mob_usab_notfriendly_nos'] = db_query("SELECT mob_usab_nonfriendly FROM custom_agencywide_archive where date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
-  $agency_data['total_websites'] = db_query("SELECT sum(num_of_websites) FROM custom_agencywide_archive where date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
-  $agency_data['no_of_websites']=  db_query("SELECT num_of_websites FROM custom_agencywide_archive where date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
+  $agency_data['mob_perf_good_nos'] = db_query("SELECT mob_perf_good FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid limit 1",array(':agencyid' => $agencyid))->fetchField();
+  $agency_data['mob_perf_improve_nos'] = db_query("SELECT mob_perf_improve FROM custom_agencywide_archive where date =(select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
+  $agency_data['mob_perf_poor_nos'] = db_query("SELECT mob_perf_poor FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
+  $agency_data['mob_usab_friendly_nos'] = db_query("SELECT mob_usab_friendly FROM custom_agencywide_archive where date =(select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
+  $agency_data['mob_usab_notfriendly_nos'] = db_query("SELECT mob_usab_nonfriendly FROM custom_agencywide_archive where date=(select max(date) from custom_agencywide_archive)and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
+  $agency_data['total_websites'] = db_query("SELECT sum(num_of_websites) FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
+  $agency_data['no_of_websites']=  db_query("SELECT num_of_websites FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_data['null'] = $agency_data['no_of_websites'] - ($agency_data['mob_perf_good_nos']+ $agency_data['mob_perf_improve_nos']+ $agency_data['mob_perf_poor_nos']);
   $agency_data['usab_null'] = $agency_data['no_of_websites'] - ($agency_data['mob_usab_friendly_nos']+ $agency_data['mob_usab_notfriendly_nos']);
 

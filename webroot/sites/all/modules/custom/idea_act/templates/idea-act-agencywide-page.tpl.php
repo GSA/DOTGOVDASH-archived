@@ -312,8 +312,8 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             </tr>
                                             <tr>
                                               <td>HTTPS Status Percentage</td>
-                                              <td><?= round($agencydata['https_support'] / $agency_data['no_of_websites'], 1);?>%</td>
-                                              <td><?= round($agencydata['https_nosupport'] / $agency_data['no_of_websites'], 1);?>%</td>
+                                              <td><?= round($agency_data['https_support'] / $agency_data['no_of_websites'], 1);?>%</td>
+                                              <td><?= round($agency_data['https_nosupport'] / $agency_data['no_of_websites'], 1);?>%</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -341,7 +341,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [<?= round($agencydata['https_support'] / $agency_data['no_of_websites'], 1)?>, <?= round($agencydata['https_nosupport'] / $agency_data['no_of_websites'], 1)?>],
+                                            data: [<?= round($agency_data['https_support'] / $agency_data['no_of_websites'], 1)?>, <?= round($agency_data['https_nosupport'] / $agency_data['no_of_websites'], 1)?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#97d1ff',
