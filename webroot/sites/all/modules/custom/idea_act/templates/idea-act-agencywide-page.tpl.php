@@ -1,6 +1,10 @@
 <?php
 $agency_data = ideaact_get_agencywide_data(arg(3));
 //print "Agency Id is ".$agency_data['agencyid'];
+$agencynode = node_load(arg(3));
+$agency_data['agency_title'] = $agencynode->title;
+
+
 
 $agencynode = node_load(arg(1));
 drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
@@ -15,7 +19,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
             <div class="row row-no-gutters">
                 <div class="col-md-12 dashboard-wrap">
                     <div class="col-md-9 dashboard-left">
-                        <h1>GSA - <span>21st Century IDEA Act Dashboard</span></h1>
+                        <h1><?=$agencynode->title?> - <span>21st Century IDEA Act Dashboard</span></h1>
                         <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
                     </div>
                     <div class="col-md-2 col-md-offset-1 text-right dashboard-right">
@@ -37,7 +41,15 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                         </div>
                         <div class="col-sm-2 col-md-4">
                             <div class="text-md-right">
-                                <img src="/sites/all/modules/custom/idea_act/images/logo.png" alt="Gov Logo" width="100" />
+                              <?php
+                              if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
+                                ?>
+                                <img src="<?php print file_create_url($agencynode->field_agency_logo['und'][0]['uri']);?>" alt="<?=$agencynode->title?>">
+                                <?php
+                              } else {
+                                print "&nbsp;";
+                              }
+                              ?>
                             </div>
                         </div>
                     </div>
