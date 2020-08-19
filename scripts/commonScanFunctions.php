@@ -69,7 +69,7 @@ function startScan(){
 
     //Get NIST Ipv6 data
     $ipv6dir = file_default_scheme().'://ipv6_nist_source';
-    exec("wget --no-check-certificate -O /tmp/nist_ipv6.html https://usgv6-deploymon.antd.nist.gov/cgi-bin/generate-all.www");
+    exec("timeout 15 wget --no-check-certificate -O /tmp/nist_ipv6.html https://usgv6-deploymon.antd.nist.gov/cgi-bin/generate-all.www");
     file_prepare_directory($ipv6dir, FILE_CREATE_DIRECTORY);
     $ipv6filedata = file_get_contents('/tmp/nist_ipv6.html', true);
     $ipv6datafile = file_save_data($ipv6filedata,file_default_scheme().'://ipv6_nist_source/'.nist_ipv6.'_'.date("Y-m-d-h-i-s-a").'.html', FILE_EXISTS_REPLACE);
@@ -91,7 +91,7 @@ function startScan(){
 */
 function runUswdsScan(){
     //exec("../tools/domain-scan/scan /tmp/current-federal.csv --scan=uswds2 --workers=50 --output=/tmp/");
-    exec("wget -O /tmp/results/uswds2.csv \"https://api.gsa.gov/technology/site-scanner/v1/scans/uswds2/csv/?domaintype=Federal%20Agency%20-%20Executive&api_key=6i0A3HhMw1FAmhXokiEWrpjfWqGztEtaodHxGFfj\"");
+    exec("timeout 15 wget -O /tmp/results/uswds2.csv \"https://api.gsa.gov/technology/site-scanner/v1/scans/uswds2/csv/?domaintype=Federal%20Agency%20-%20Executive&api_key=6i0A3HhMw1FAmhXokiEWrpjfWqGztEtaodHxGFfj\"");
 }
 
 
@@ -238,7 +238,7 @@ function updateUswdsScanInfo($webscanId){
  */
 
 function getWebSnapshots($website,$storage){
-    exec("pageres ". $website. " --format=jpg --filename=\"".$storage."<%= url %>\"");
+    exec("timeout 15 pageres ". $website. " --format=jpg --filename=\"".$storage."<%= url %>\"");
 }
 
 /*
@@ -264,7 +264,7 @@ function execCommand($com, &$out, &$ret){
  */
 
 function getIPInfo($domain){
-    $command = "dig $domain +short";
+    $command = "timeout 15 dig $domain +short";
     $outp = array();
     $comret = "";
     execCommand("$command",$outp,$comret);
@@ -278,7 +278,7 @@ function getIPInfo($domain){
 
 function getNSInfo($domain){
     $basedomain = getBaseDomain($domain);
-    $command = "dig $basedomain +short";
+    $command = "timeout 15 dig $basedomain +short";
     $outp = array();
     $comret = "";
     execCommand("$command",$outp,$comret);
@@ -290,7 +290,7 @@ function getNSInfo($domain){
  */
 
 function getSiteRedirectDest($domain){
-    $redirectUrl = shell_exec("curl -w \"%{url_effective}\n\" -I -L -s -S -k http://".$domain." -o /dev/null");
+    $redirectUrl = shell_exec("timeout 15 curl -w \"%{url_effective}\n\" -I -L -s -S -k http://".$domain." -o /dev/null");
     return $redirectUrl;
 }
 
@@ -301,7 +301,7 @@ function getSiteRedirectDest($domain){
 
 function getSSLInfo($domain){
     $sslinfo = array();
-    $output = shell_exec("sslyze --regular --http_headers $domain");
+    $output = shell_exec("timeout 15 python3.6 -m sslyze --regular --http_headers $domain");
     $sslinfo['raw'] = $output;
     $outputarr = explode("*",$output);
     foreach($outputarr as $val){
@@ -514,7 +514,7 @@ function initiateSslLabsHostScan(){
     foreach($listWebsites as $key=>$website){
         print $website['domain']." Scan Initiated at SSLlabs\n";
         //collectSslLabsDomInfo($website['domain']);
-        $spout = shell_exec("../tools/ssllabs-scan/ssllabs-scan -grade -usecache=true ".$website['domain']);
+        $spout = shell_exec("timeout 15 ../tools/ssllabs-scan/ssllabs-scan -grade -usecache=true ".$website['domain']);
     }
 }
 
@@ -924,7 +924,7 @@ function getSiteInspectorOutput($domain){
  */
 
 function getDnssecStatus($domain){
-    $dnsseccom = "dig +dnssec $domain @205.171.2.65|grep -i 'rrsig'";
+    $dnsseccom = "timeout 15 dig +dnssec $domain @205.171.2.65|grep -i 'rrsig'";
     $outp = array();
     $comret = "";
     execCommand("$dnsseccom",$outp,$comret);
@@ -947,7 +947,7 @@ function getDnssecStatus($domain){
  */
 
 function getCustomIpv6Status($domain){
-    $ipv6com = "nslookup -q=aaaa $domain";
+    $ipv6com = "timeout 15 nslookup -q=aaaa $domain";
     $outp = array();
     $comret = "";
     execCommand("$ipv6com",$outp,$comret);
@@ -960,9 +960,9 @@ function getCustomIpv6Status($domain){
         $ipv6stat = '0';
     }
 
-    $ipv6address = shell_exec("dig AAAA +short $domain");
+    $ipv6address = shell_exec("timeout 15 dig AAAA +short $domain");
     $ipv6ret['status'] = $ipv6stat;
-    execCommand("dig AAAA +short $domain",$ipv6outp,$ipcomret);
+    execCommand("timeout 15 dig AAAA +short $domain",$ipv6outp,$ipcomret);
     $ipv6ret['address'] = $ipv6outp[0];
     $ipv6ret['output'] = $commandOutputforStore;
     return $ipv6ret;
@@ -1003,7 +1003,7 @@ function getPulseData(){
     //Get Pulse dap data and enter to a temp table
     //file_put_contents("$localdapfile", file_get_contents("$pulsedapurl"));
     //This is the latest scan which uses GSA analytics api instead of pulse and generates a file at /tmp/pulsedap.csv
-    shell_exec("/usr/bin/python3.6 ../scripts/custom_pulse_scanner_analytics/secondLevelDomain.py");
+    shell_exec("timeout 15 /usr/bin/python3.6 ../scripts/custom_pulse_scanner_analytics/secondLevelDomain.py");
 
     db_query("truncate table custom_pulse_dap_data");
     db_query("LOAD DATA LOCAL INFILE '".$localdapfile."' INTO TABLE `custom_pulse_dap_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
@@ -2012,7 +2012,7 @@ function findCDNProvider($website){
         ".yimg."=>"Yahoo",
         ".zenedge.net"=>"Zenedge"
     );
-    $comout = shell_exec("dig +trace $website");
+    $comout = shell_exec("timeout 15 dig +trace $website");
     $cdnMatched = array();
     $match = "false";
     //print $comout;
@@ -2088,7 +2088,7 @@ function updateTechStackInfo($website){
     $weburl = "http://".$website;
     //$command = "node index.js $weburl";
     //$tsout = shell_exec("export npm_config_loglevel=silent;cd ../tools/wappalyzer/;$command");
-    $command = "node /usr/lib/node_modules/wappalyzer/index.js $weburl";
+    $command = "timeout 15 node /usr/lib/node_modules/wappalyzer/index.js $weburl";
     shell_exec("export npm_config_loglevel=silent");
     $tsout = shell_exec("export npm_config_loglevel=silent;$command");
     if (strpos($tsout, 'JQMIGRATE:') !== false) {
@@ -2717,7 +2717,7 @@ function archiveAgencywideTrendData(){
  * Extract Accessibility Info
  */
 function extractAccessibilityErrors($domain){
-    $comOut = shell_exec("/usr/bin/pa11y --ignore 'warning;notice' --reporter json https://".$domain);
+    $comOut = shell_exec("timeout 15 /usr/bin/pa11y --ignore 'warning;notice' --reporter json https://".$domain);
     $decodedJson =  json_decode($comOut);
     $errorArr = array();
     foreach ($decodedJson as $stObj){
@@ -2925,14 +2925,14 @@ function runSearchEngineScan(){
 //    else{
 //        $weburl = "http://www.".trim($result->title);
 //    }
-            $curl_stat_code = trim(shell_exec("curl -I  --stderr /dev/null $weburl | head -1 | cut -d' ' -f2"));
+            $curl_stat_code = trim(shell_exec("timeout 15 curl -I  --stderr /dev/null $weburl | head -1 | cut -d' ' -f2"));
 
             if ($curl_stat_code != '') {
                 //$html = shell_exec("curl -L -k --silent https://".trim($result->title));
                 //$html = shell_exec("wget  --no-check-certificate --trust-server-names -qO- --max-redirect=1 -T 5 -t 1 ".$weburl);
                 //$html = shell_exec("phantomjs ../scripts/phantomjs_website.js \"".$weburl."/\"");
                 if(in_array($result->title,$curl_domains)) {
-                    $html = shell_exec("curl -L -k --silent https://".trim($result->title));
+                    $html = shell_exec("timeout 15 curl -L -k --silent https://".trim($result->title));
                 }
                 else {
                     $html = shell_exec("timeout 15 google-chrome --no-sandbox --headless --disable-gpu --dump-dom --ignore-certificate-errors --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36\"  --timeout=15000  \"" . $weburl . "/\"");
@@ -2990,7 +2990,7 @@ function runSearchEngineScan(){
                         } elseif (strpos($forms[$k][1], 'http') === FALSE) {
                             $searchtype = "custom search";
                             //In custom search append action urls and find if the search has solr
-                            $html_search = shell_exec("wget --no-check-certificate --trust-server-names -qO- --max-redirect=1 -T 5 -t 1 https://" . trim($result->title) . "/" . $forms[$k][1] . "?keys=test");
+                            $html_search = shell_exec("timeout 15 wget --no-check-certificate --trust-server-names -qO- --max-redirect=1 -T 5 -t 1 https://" . trim($result->title) . "/" . $forms[$k][1] . "?keys=test");
                             //Check if the site is Drupal based by checking against tag 32
                             $check_drupal =  db_query("select b.title from field_data_field_cms_applications a, node b where a.field_cms_applications_tid='32' and a.entity_id=b.nid and b.title=:title", array(':title' => trim($result->title)))->fetchField();
                             //print $html_search;
