@@ -1,6 +1,10 @@
 <?php
 $agency_data = ideaact_get_agencywide_data(arg(3));
 //print "Agency Id is ".$agency_data['agencyid'];
+$agencynode = node_load(arg(3));
+$agency_data['agency_title'] = $agencynode->title;
+
+
 
 $agencynode = node_load(arg(1));
 drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
@@ -15,7 +19,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
             <div class="row row-no-gutters">
                 <div class="col-md-12 dashboard-wrap">
                     <div class="col-md-9 dashboard-left">
-                        <h1>GSA - <span>21st Century IDEA Act Dashboard</span></h1>
+                        <h1><?=$agencynode->title?> - <span>21st Century IDEA Act Dashboard</span></h1>
                         <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
                     </div>
                     <div class="col-md-2 col-md-offset-1 text-right dashboard-right">
@@ -37,7 +41,15 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                         </div>
                         <div class="col-sm-2 col-md-4">
                             <div class="text-md-right">
-                                <img src="/sites/all/modules/custom/idea_act/images/logo.png" alt="Gov Logo" width="100" />
+                              <?php
+                              if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
+                                ?>
+                                <img src="<?php print file_create_url($agencynode->field_agency_logo['und'][0]['uri']);?>" alt="<?=$agencynode->title?>">
+                                <?php
+                              } else {
+                                print "&nbsp;";
+                              }
+                              ?>
                             </div>
                         </div>
                     </div>
@@ -97,7 +109,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [<?=$agency_data['ag_col_contrast'] ?>, <?=$agency_data['ag_html_attrib'] ?>, <?=$agency_data['ag_miss_image'] ?>],
+                                            data: [<?php echo number_format($agency_data['ag_col_contrast'], 1, '.', ''); ?>, <?php echo number_format($agency_data['ag_miss_image'], 1, '.', ''); ?>, <?php echo number_format($agency_data['ag_html_attrib'], 1, '.', ''); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#563eb6',
@@ -184,13 +196,13 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             <tbody>
                                             <tr>
                                               <td>Websites with USWDS code detected</td>
-                                              <td><?= $agency_data['uswds_compliant']?></td>
-                                              <td><?=round(($agency_data['uswds_compliant'] / $agency_data['uswds_tottracked'] ) * 100);?> %</td>
+                                              <td><?php echo number_format($agency_data['uswds_compliant']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['uswds_compliant'], $agency_data['uswds_tottracked'])?></td>
                                             </tr>
                                             <tr>
                                               <td>Websites without USWDS code detected</td>
-                                              <td><?=$agency_data['uswds_noncompliant']?></td>
-                                              <td><?=round(($agency_data['uswds_noncompliant'] / $agency_data['uswds_tottracked']) * 100);?> % </td>
+                                              <td><?php echo number_format($agency_data['uswds_noncompliant']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['uswds_noncompliant'], $agency_data['uswds_tottracked'])?></td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -220,7 +232,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [<?=$agency_data['uswds_compliant']?>, <?=$agency_data['uswds_noncompliant']?>],
+                                            data: [<?php echo number_format($agency_data['uswds_compliant']); ?>, <?php echo number_format($agency_data['uswds_noncompliant']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#00699e',
@@ -307,13 +319,13 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             <tbody>
                                             <tr>
                                               <td>HTTPS Status Websites</td>
-                                              <td><?= $agency_data['https_support']?></td>
-                                              <td><?=$agency_data['https_nosupport']?></td>
+                                              <td><?php echo number_format($agency_data['https_support']); ?></td>
+                                              <td><?php echo number_format($agency_data['https_nosupport']); ?></td>
                                             </tr>
                                             <tr>
                                               <td>HTTPS Status Percentage</td>
-                                              <td><?= round($agency_data['https_support'] / $agency_data['no_of_websites'], 1);?>%</td>
-                                              <td><?= round($agency_data['https_nosupport'] / $agency_data['no_of_websites'], 1);?>%</td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['https_support'], $agency_data['no_of_websites'])?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['https_nosupport'], $agency_data['no_of_websites'])?></td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -341,7 +353,8 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [<?= round($agency_data['https_support'] / $agency_data['no_of_websites'], 1)?>, <?= round($agency_data['https_nosupport'] / $agency_data['no_of_websites'], 1)?>],
+                                            data: [<?php echo number_format($agency_data['https_support']); ?>,
+                                              <?php echo number_format($agency_data['https_nosupport']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#97d1ff',
@@ -573,19 +586,19 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>Good</td>
-                                                <td><?=$agency_data['mob_perf_good_nos']?></td>
-                                                <td><?= round($agencydata['mob_perf_good_nos'] / $agency_data['no_of_websites'], 1)?>%</td>
+                                              <td>Good</td>
+                                              <td><?php echo number_format($agency_data['mob_perf_good_nos']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_perf_good_nos'], $agency_data['total_non_na_websites'])?></td>
                                             </tr>
                                             <tr>
-                                                <td>Poor</td>
-                                                <td><?=$agency_data['mob_perf_improve_nos']?></td>
-                                                <td><?= round($agencydata['mob_perf_improve_nos'] / $agency_data['no_of_websites'], 1)?>%</td>
+                                              <td>Needs Improvement</td>
+                                              <td><?php echo number_format($agency_data['mob_perf_improve_nos']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_perf_improve_nos'],$agency_data['total_non_na_websites'])?></td>
                                             </tr>
                                             <tr>
-                                                <td>Needs Improvement</td>
-                                                <td><?= $agency_data['mob_perf_poor_nos']?></td>
-                                                <td><?= round($agencydata['mob_perf_poor_nos'] / $agency_data['no_of_websites'], 1)?>%</td>
+                                              <td>Poor</td>
+                                              <td><?php echo number_format($agency_data['mob_perf_poor_nos']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_perf_poor_nos'], $agency_data['total_non_na_websites'])?></td>
                                             </tr>
 
                                             </tbody>
@@ -597,7 +610,9 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             type: 'doughnut',
                                             data: {
                                                 datasets: [{
-                                                    data: [<?= round($agencydata['mob_perf_good_nos'] / $agency_data['no_of_websites'], 1)?>, <?= round($agencydata['mob_perf_poor_nos'] / $agency_data['no_of_websites'], 1)?>, <?= round($agencydata['mob_perf_improve_nos'] / $agency_data['no_of_websites'], 1)?>],
+                                                    data: [<?php echo number_format($agency_data['mob_perf_good_nos']); ?>,
+                                                      <?php echo number_format($agency_data['mob_perf_improve_nos']); ?>,
+                                                      <?php echo number_format($agency_data['mob_perf_poor_nos']); ?>,],
                                                     borderWidth: 0,
                                                     backgroundColor: [
                                                         '#563eb6',
@@ -606,7 +621,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
-                                                labels: ['Good', 'Poor', 'Needs Improvement']
+                                                labels: ['Good', 'Needs Improvement', 'Poor']
                                             },
 
                                             // Configuration options go here
@@ -664,19 +679,14 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>Mobile Friendly</td>
-                                                <td><?= $agency_data['mob_usab_friendly_nos']?></td>
-                                                <td>44%</td>
+                                              <td>Mobile Friendly</td>
+                                              <td><?php echo number_format($agency_data['mob_usab_friendly_nos']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_usab_friendly_nos'], $agency_data['mob_usab_friendly_nos']+$agency_data['mob_usab_notfriendly_nos'])?></td>
                                             </tr>
                                             <tr>
-                                                <td>Not Mobile Friendly</td>
-                                                <td><?= $agency_data['mob_usab_notfriendly_nos']?></td>
-                                                <td>56%</td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                              <td>Not Mobile Friendly</td>
+                                              <td><?php echo number_format($agency_data['mob_usab_notfriendly_nos']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_usab_notfriendly_nos'],$agency_data['mob_usab_friendly_nos']+$agency_data['mob_usab_notfriendly_nos'])?></td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -687,7 +697,8 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             type: 'doughnut',
                                             data: {
                                                 datasets: [{
-                                                    data: [<?= round($agencydata['mob_usab_friendly_nos'] / $agency_data['no_of_websites'], 1)?>, <?= round($agencydata['mob_usab_notfriendly_nos'] / $agency_data['no_of_websites'], 1)?>],
+                                                    data: [<?php echo number_format($agency_data['mob_usab_friendly_nos']); ?>,
+                                                      <?php echo number_format($agency_data['mob_usab_notfriendly_nos']); ?>],
                                                     borderWidth: 0,
                                                     backgroundColor: [
                                                         '#8ea116',
@@ -705,7 +716,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
 
                                                 title: {
                                                     display: true,
-                                                    text: 'GSA Mobile Friendly Breakdown',
+                                                    text: 'GSA Mobile Usability Breakdown',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
                                                 },
@@ -799,14 +810,14 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>DAP Compliant</td>
-                                                <td><?= $agency_data['dap_compliant']?></td>
-                                                <td><?= round($agencydata['dap_compliant'] / $agency_data['dap_tottracked'], 1)?>%</td>
+                                              <td>DAP Compliant</td>
+                                              <td><?php echo number_format($agency_data['dap_compliant']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['dap_compliant'], $agency_data['dap_tottracked'])?></td>
                                             </tr>
                                             <tr>
-                                                <td>DAP Non-Compliant Websites</td>
-                                                <td><?= $agency_data['dap_noncompliant']?></td>
-                                                <td><?= round($agencydata['dap_noncompliant'] / $agency_data['dap_tottracked'], 1)?>%</td>
+                                              <td>DAP Non-Compliant</td>
+                                              <td><?php echo number_format($agency_data['dap_noncompliant']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['dap_noncompliant'], $agency_data['dap_tottracked'])?></td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -834,7 +845,8 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [<?= round($agencydata['dap_compliant'] / $agency_data['dap_tottracked'], 1)?>, <?= round($agencydata['dap_noncompliant'] / $agency_data['dap_tottracked'], 1)?>],
+                                            data: [<?php echo number_format($agency_data['dap_compliant']); ?>,
+                                              <?php echo number_format($agency_data['dap_noncompliant']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#00a1be',
@@ -842,7 +854,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['Non-compliant Websites', 'compliant Websites']
+                                        labels: ['Non-compliant Websites', 'Compliant Websites']
                                     },
 
                                     // Configuration options go here
@@ -852,7 +864,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
 
                                         title: {
                                             display: true,
-                                            text: 'GSA DAP Website Compliance',
+                                            text: 'GSA DAP Websites Compliance',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
