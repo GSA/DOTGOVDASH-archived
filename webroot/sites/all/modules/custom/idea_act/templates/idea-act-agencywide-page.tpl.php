@@ -105,7 +105,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [<?php echo number_format($agency_data['ag_col_contrast'], 1, '.', ''); ?>, <?php echo number_format($agency_data['ag_miss_image'], 1, '.', ''); ?>, <?php echo number_format($agency_data['ag_html_attrib'], 1, '.', ''); ?>],
+                                            data: [<?php echo number_format($agency_data['ag_col_contrast'], 1, '.', ''); ?>, <?php echo number_format($agency_data['ag_html_attrib'], 1, '.', ''); ?>, <?php echo number_format($agency_data['ag_miss_image'], 1, '.', ''); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#563eb6',
@@ -114,7 +114,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['Color Contrast Issues', 'Missing Image Description Issues', 'HTML Attribute Issues']
+                                        labels: ['Color Contrast Issues', 'HTML Attribute Issues','Missing Image Description Issues']
                                     },
 
                                     // Configuration options go here
@@ -124,7 +124,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
 
                                         title: {
                                             display: true,
-                                            text: 'Total Number of Accessibility Issues for GSA Websites',
+                                            text: 'Total Number of Accessibility Issues for <?= $agency_data['agency_title']?> Websites',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
@@ -246,7 +246,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
 
                                         title: {
                                             display: true,
-                                            text: 'USWDS Code Usage Breakdown for GSA Websites',
+                                            text: 'USWDS Code Usage Breakdown for <?= $agency_data['agency_title']?> Websites',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
@@ -368,7 +368,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
 
                                         title: {
                                             display: true,
-                                            text: 'GSA HTTPS Websites Compliance',
+                                            text: '<?= $agency_data['agency_title']?> HTTPS Websites Compliance',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
@@ -506,7 +506,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
 
                                         title: {
                                             display: true,
-                                            text: 'GSA On-site Search Engine Breakdown',
+                                            text: '<?= $agency_data['agency_title']?> On-site Search Engine Breakdown',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
@@ -627,7 +627,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
 
                                                 title: {
                                                     display: true,
-                                                    text: 'GSA Mobile Performance Breakdown',
+                                                    text: '<?= $agency_data['agency_title']?> Mobile Performance Breakdown',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
                                                 },
@@ -712,7 +712,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
 
                                                 title: {
                                                     display: true,
-                                                    text: 'GSA Mobile Usability Breakdown',
+                                                    text: '<?= $agency_data['agency_title']?> Mobile Usability Breakdown',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
                                                 },
@@ -860,7 +860,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
 
                                         title: {
                                             display: true,
-                                            text: 'GSA DAP Websites Compliance',
+                                            text: '<?= $agency_data['agency_title']?> DAP Websites Compliance',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
