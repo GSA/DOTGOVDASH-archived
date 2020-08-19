@@ -716,7 +716,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
 
                                                 title: {
                                                     display: true,
-                                                    text: 'GSA Mobile Friendly Breakdown',
+                                                    text: 'GSA Mobile Usability Breakdown',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
                                                 },
