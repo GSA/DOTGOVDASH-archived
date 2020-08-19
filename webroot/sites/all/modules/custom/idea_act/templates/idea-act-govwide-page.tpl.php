@@ -466,10 +466,11 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <tbody>
                                             <?php
                                             foreach ($agencydata['searchenginedata'] as $skey => $sval) {
+                                                $percent = round(($sval / $websitenos) *100);
+                                                $percent =  ($percent < 1) ?  '< 1' : $percent;
                                                 print "<tr style='text-transform: capitalize;'><td>" . ucfirst($skey) . "</td><td> $sval</td>
-                                                <td> 20%</td></tr>";
+                                                <td>$percent%</td></tr>";
                                             }
-                                          
                                           ?>
                                             </tbody>
                                         </table>
@@ -730,7 +731,7 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                                 title: {
                                                     display: true,
-                                                    text: 'Mobile Friendly Breakdown',
+                                                    text: 'Mobile Usability Breakdown',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
                                                 },
@@ -899,4 +900,3 @@ $search_engine_data_for_agencygraph = "0,0";
         </div>
     </div>
 </div>
-
