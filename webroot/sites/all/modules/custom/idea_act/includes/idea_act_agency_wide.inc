@@ -40,7 +40,7 @@ function ideaact_get_agencywide_data($agencyid){
   $agency_data['mob_usab_notfriendly_nos'] = db_query("SELECT mob_usab_nonfriendly FROM custom_agencywide_archive where date=(select max(date) from custom_agencywide_archive)and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_data['total_websites'] = db_query("SELECT sum(num_of_websites) FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_data['no_of_websites']=  db_query("SELECT num_of_websites FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
-  $agency_data['null'] = $agency_data['no_of_websites'] - ($agency_data['mob_perf_good_nos']+ $agency_data['mob_perf_improve_nos']+ $agency_data['mob_perf_poor_nos']);
+  $agency_data['total_non_na_websites'] = ($agency_data['mob_perf_good_nos']+ $agency_data['mob_perf_improve_nos']+ $agency_data['mob_perf_poor_nos']);
   $agency_data['usab_null'] = $agency_data['no_of_websites'] - ($agency_data['mob_usab_friendly_nos']+ $agency_data['mob_usab_notfriendly_nos']);
 
 //  Search results
