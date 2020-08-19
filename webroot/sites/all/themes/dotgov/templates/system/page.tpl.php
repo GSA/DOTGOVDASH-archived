@@ -76,14 +76,12 @@
 <script src="/sites/all/themes/dotgov/js/html2pdf.bundle.min.js"></script>
 
 <script type="text/javascript">
-  function generatePDF() {
-    // Choose the element that our invoice is rendered in.
-    var element = document.getElementById("main-container");
-    // Choose the element and save the PDF for our user.
+  function generatePDF(fileName, pageWidth, pageHeight) {
+   var element = document.getElementById("main-container");
     html2pdf()
     .set({
-        filename: 'report.pdf',
-        jsPDF: {format:[500,800]},
+        filename: fileName,
+        jsPDF: {format:[pageWidth,pageHeight]},    
     })
     .from(element)
     .save();
