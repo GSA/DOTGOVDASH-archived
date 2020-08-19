@@ -114,7 +114,7 @@ dotgov_common_tooltip("tooltip4","id");
 <div class="col-xs-10">
     <h2 class="pane-title"> Mobile Information </h2>
 </div>
-<div class="col-xs-2 nopadding">
+<div class="col-xs-2 nopadding" style="z-index: 3;">
     <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
         <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
           <?php print nl2br($crit_text);?></span>
@@ -168,22 +168,23 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
 </div>
 
 <?php if (!is_redirect(arg(1))): ?>
-<div class="col-lg-12 clearfix" style="margin-top: 15px;">
+<div class="col-lg-12 clearfix">
   <div class="col-lg-6" style="left: 50px;">
-    <p><?php echo($performance_title); ?></p>
+
   </div>
   <div class="col-lg-6" style="left: 60px;">
-    <p><?php echo($usability_title); ?></p>
   </div>
 </div>
 <?php endif; ?>
-<div class="col-lg-12 clearfix">
+<div class="col-lg-12 clearfix" style="min-height: 210px;">
   <?php if (!is_redirect(arg(1))): ?>
     <div class="col-lg-6">
         <div id="performance_chart" style="width: 140px; height:140px; margin: 0 auto">&nbsp;</div>
+        <p class="text-center" style="color: #1c5295; font-size: 17px;"><?php echo($performance_title); ?></p>
     </div>
     <div class="col-lg-6">
         <div id="usability_chart" style="width: 140px; height:140px; margin: 0 auto">&nbsp;</div>
+        <p class="text-center" style="color: #1c5295; font-size: 17px;"><?php echo($usability_title); ?></p>
     </div>
   <?php endif; ?>
 </div>
