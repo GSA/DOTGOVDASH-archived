@@ -469,7 +469,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 $percent = round(($sval / $websitenos) *100);
                                                 $percent =  ($percent < 1) ?  '< 1' : $percent;
                                                 print "<tr style='text-transform: capitalize;'><td>" . ucfirst($skey) . "</td><td> $sval</td>
-                                                <td>" . $percent . "% </td></tr>";
+                                                <td>$percent% </td></tr>";
                                             }
                                           ?>
                                             </tbody>
