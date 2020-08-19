@@ -84,23 +84,29 @@ if ($chartdata <= 50) {
 $redirect_message = 'Website Redirect - Metric Not Applicable';
 $crit_text = '';
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
-  if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] != '' ) {
-    $crit_text .= "Mobile Performance Score by Google : " . $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] ."\n";
+  if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] == "" || $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
+    $crit_text .= "Mobile Performance: Not Available\n";
+  } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 50 ) {
+    $crit_text .= "Mobile Performance: Poor\n";
+  } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 90 ) {
+    $crit_text .= "Mobile Performance: Needs Improvement\n";
   } else {
-    $crit_text .= "Mobile Performance Score by Google : Not Available";
+    $crit_text .= "Mobile Performance Good";
   }
 } else {
-  $crit_text .= "Mobile Performance Score by Google: <span style=\"color:white;\">" . $redirect_message . "</span><br>";
+  $crit_text .= "Mobile Performance: <span style=\"color:white;\">" . $redirect_message . "</span><br>";
 }
 
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
-  if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] != '' ) {
-    $crit_text .= "Mobile Compatibility Score by Google : " . $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ]." ";
+  if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === "" || $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
+    $crit_text .= "Mobile Usability: Not Available";
+  } else if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] == 100) {
+    $crit_text .= "Mobile Usability: Mobile Friendly";
   } else {
-    $crit_text .= "Mobile Compatibility Score by Google : Not Available";
+    $crit_text .= "Mobile Usability: Not Mobile Friendly";
   }
 } else {
-  $crit_text .= "Mobile Compatibility Score by Google: <span style=\"color:white;\">" . $redirect_message . "</span><br>";
+  $crit_text .= "Mobile Usability: <span style=\"color:white;\">" . $redirect_message . "</span><br>";
 }
 
 dotgov_common_tooltip("tooltip4","id");
