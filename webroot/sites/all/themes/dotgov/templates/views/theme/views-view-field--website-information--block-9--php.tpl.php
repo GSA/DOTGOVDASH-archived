@@ -107,6 +107,9 @@ dotgov_common_tooltip("tooltip9","id");
         title: {
             text: ''
         },
+        credits: {
+            enabled: false
+        },
         legend:{
             width: 220
         },

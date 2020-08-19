@@ -74,7 +74,6 @@
  */
 ?>
 <script src="/sites/all/themes/dotgov/js/html2pdf.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/amstockchart/3.13.0/exporting/canvg.js"></script>
 
 <script type="text/javascript">
   function generatePDF(fileName, pageWidth, pageHeight) {

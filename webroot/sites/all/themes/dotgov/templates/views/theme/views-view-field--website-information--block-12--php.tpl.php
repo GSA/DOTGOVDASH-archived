@@ -137,6 +137,9 @@ $scanpath = drupal_get_path_alias("node/" . arg(1));
             title: {
                 text: ''
             },
+            credits: {
+                enabled: false
+            },
             tooltip: {
                 enabled:false,
             },
