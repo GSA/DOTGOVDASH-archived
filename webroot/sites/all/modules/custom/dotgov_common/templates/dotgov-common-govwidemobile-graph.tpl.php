@@ -21,6 +21,7 @@ function drawChart1() {
         dataLabels: {
             enabled: false
         },
+        chartArea:{left:0,top:20,width:'100%',height:'70%'},
         showInLegend: false,
     };
 
