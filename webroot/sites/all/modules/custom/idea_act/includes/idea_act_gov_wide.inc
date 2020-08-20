@@ -379,7 +379,7 @@ function idea_act_applyDataPercentage($data,$websites)
         $dataPercentage = "$percent%";
     }
     else{
-        $dataPercentage = "0%";
+        $dataPercentage = "0 %";
     }
     return $dataPercentage;
 
