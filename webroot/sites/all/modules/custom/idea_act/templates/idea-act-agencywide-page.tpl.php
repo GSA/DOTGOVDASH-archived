@@ -4,6 +4,15 @@ $agency_data = ideaact_get_agencywide_data(arg(3));
 $agencynode = node_load(arg(3));
 $agency_data['agency_title'] = $agencynode->title;
 drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+foreach ($chartdata as $key => $val) {
+  $chartseries1 .= "{\"name\":\"$labeldesc[$key]\",\"y\":" . (int) $val . ",\"showInLegend\":true},";
+}
+$chartseries = array_values($chartdata);
+$agency_data = ideaact_get_agencywide_data(arg(3));
+if(trim($search_engine_data_for_agencygraph) == "")
+  $search_engine_data_for_agencygraph = "0,0";
+
+?>
 ?>
 <style>
 @import "/sites/all/modules/custom/idea_act/css/style.css";
@@ -71,11 +80,11 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                 </div>
                             </div>
                             <div class="card-body relative-position row">
-                                <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 mt-xs-1">
+                              <div class="info-icon" id="tooltip-container">
+                                <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                </a>
+                              </div>
+                              <div class="col-sm-6 mt-xs-1">
                                         <h4>Average Accessibility Issues by Type Per Website</h4>
                                         <p>Average Color Contrast: <?= round($agency_data['ag_col_contrast'] / $agency_data['no_of_websites'], 1);?></p>
                                         <p>Average HTML Attribute: <?=  round($agency_data['ag_html_attrib'] / $agency_data['no_of_websites'], 1);?></p>
@@ -194,10 +203,11 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                 </div>
                             </div>
                             <div class="card-body relative-position row">
-                                <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
-                                    </a>
-                                </div>                                    <div class="col-md-6">
+                              <div class="info-icon" id="tooltip-container">
+                                <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                </a>
+                              </div>
+                              <div class="col-md-6">
                                     <div class="table-responsive">
                                         <table>
                                             <thead>
@@ -248,15 +258,15 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [<?php echo number_format($agency_data['uswds_compliant']); ?>, <?php echo number_format($agency_data['uswds_noncompliant']); ?>],
+                                            data: [ <?php echo number_format($agency_data['uswds_noncompliant']); ?>, <?php echo number_format($agency_data['uswds_compliant']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
-                                                '#00699e',
                                                 '#ed4878',
+                                                '#00699e',
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['USWDS Code Not Detected', 'USWDS Code Detected']
+                                        labels: [ 'USWDS Code Detected','USWDS Code Not Detected']
                                     },
 
                                     // Configuration options go here
@@ -336,10 +346,10 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                 </div>
                             </div>
                             <div class="card-body relative-position row">
-                                <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
-                                    </a>
-                                </div>                                    <div class="col-md-6">
+                              <div class="info-icon" id="tooltip-container">
+                                <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                </a>
+                              </div>                                      <div class="col-md-6">
                                     <div class="table-responsive">
                                         <table>
                                             <thead>
@@ -388,16 +398,16 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [<?php echo number_format($agency_data['https_support']); ?>,
-                                              <?php echo number_format($agency_data['https_nosupport']); ?>],
+                                            data: [<?php echo number_format($agency_data['https_nosupport']); ?>,
+                                              <?php echo number_format($agency_data['https_support']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
-                                                '#97d1ff',
                                                 '#00a65f',
+                                                '#97d1ff',
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['Non-Compliant Websites', 'Compliant Websites']
+                                        labels: ['Compliant Websites','Non-Compliant Websites']
                                     },
 
                                     // Configuration options go here
@@ -478,10 +488,11 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                 </div>
                             </div>
                             <div class="card-body relative-position row">
-                                <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
-                                    </a>
-                                </div>                                    <div class="col-md-6">
+                              <div class="info-icon" id="tooltip-container">
+                                <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                </a>
+                              </div>
+                              <div class="col-md-6">
                                     <div class="table-responsive">
                                         <table>
                                             <thead>
@@ -492,37 +503,22 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <td>Custom Search</td>
-                                                <td>43</td>
-                                                <td>45%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Search.usa.gov</td>
-                                                <td>30</td>
-                                                <td>32%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Drupal Core Search</td>
-                                                <td>11</td>
-                                                <td>10%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Google Custom Search</td>
-                                                <td>4</td>
-                                                <td>< 1%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Apache Solr</td>
-                                                <td>3</td>
-                                                <td>< 1%</td>
-                                            </tr>
+                                            <?php
+                                            foreach ($agency_data['searchenginedata'] as $skey => $sval) {
+                                              $percent = round(($sval /  $agency_data['no_of_websites']) *100);
+                                              $percent =  ($percent < 1) ?  '< 1' : $percent;
+                                              print "<tr style='text-transform: capitalize;'><td>" . ucfirst($skey) . "</td><td> $sval</td>
+                                                <td>$percent% </td></tr>";
+                                            }
+                                            ?>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                     <div class="chart-container">
+                                      <?php $searchenginestatus = $agency_data['searchenginestatus'];
+                                      ?>
                                         <canvas id="chart-gov-search" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
                                   <div id="chart-4-legend-mobile"></div>
@@ -546,7 +542,8 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [67, 33],
+                                            data: [<?=($searchenginestatus['search_notavailable'] == "") ? 0 : $searchenginestatus['search_notavailable']?>,
+                                              <?=($searchenginestatus['search_available'] == "") ? 0 : $searchenginestatus['search_available']?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#a52700',
@@ -634,10 +631,11 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                 </div>
                             </div>
                             <div class="card-body relative-position row">
-                                <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
-                                    </a>
-                                </div>                                    <div class="col-md-6 mb-2">
+                              <div class="info-icon" id="tooltip-container">
+                                <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                </a>
+                              </div>
+                              <div class="col-md-6 mb-2">
                                     <div class="chart-container">
                                         <canvas id="chart-6" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -897,9 +895,10 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
-                                    </a>
-                                </div>                                <div class="col-md-6">
+                                  <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                  </a>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="table-responsive">
                                         <table>
                                             <thead>
@@ -947,16 +946,18 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [<?php echo number_format($agency_data['dap_compliant']); ?>,
-                                              <?php echo number_format($agency_data['dap_noncompliant']); ?>],
+                                            data: [
+                                              <?php echo number_format($agency_data['dap_noncompliant']); ?>,
+                                              <?php echo number_format($agency_data['dap_compliant']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
-                                                '#00a1be',
                                                 '#de9738',
+                                                '#00a1be',
+
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['Non-Compliant Websites', 'Compliant Websites']
+                                        labels: ['Compliant Websites','Non-Compliant Websites']
                                     },
 
                                     // Configuration options go here

@@ -43,7 +43,7 @@ function ideaact_get_agencywide_data($agencyid){
   $agency_data['total_non_na_websites'] = ($agency_data['mob_perf_good_nos']+ $agency_data['mob_perf_improve_nos']+ $agency_data['mob_perf_poor_nos']);
   $agency_data['usab_null'] = $agency_data['no_of_websites'] - ($agency_data['mob_usab_friendly_nos']+ $agency_data['mob_usab_notfriendly_nos']);
 
-//  Search results
+  //Query to get Search data for an agency
   $searchresults = db_query("select field_search_status_value,count(field_search_status_value) as complnum from node a , field_data_field_search_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='website' group by field_search_status_value", array(':agencyid' => $agencyid));
   $agency_search_status = array();
   foreach ($searchresults as $searchresult) {
@@ -53,6 +53,10 @@ function ideaact_get_agencywide_data($agencyid){
       $agency_search_status['search_notavailable'] += $searchresult->complnum;
   }
   $agency_data['searchenginestatus'] = $agency_search_status;
+
+  $search_status_graph_output = theme('agencywide_searchstatus_page', array('$agency_data' => $agency_search_status));
+  $agency_data['searchenginestatus_graph'] = $search_status_graph_output;
+
 
   //Query to get Search Engine Name for an agency
   $searchengines = db_query("select field_search_engine_name_value,count(field_search_engine_name_value) as complnum from node a , field_data_field_search_engine_name b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='website' group by field_search_engine_name_value", array(':agencyid' => $agencyid));
@@ -77,6 +81,8 @@ function ideaact_get_agencywide_data($agencyid){
     $search_engine_data_for_agencygraph .= "['$skey' , $sval],";
   }
   $agency_data['searchenginedata'] = $search_engine_data;
+  $search_engine_graph_output = theme('agencywide_searchengines_page', array('search_engine_data_for_agencygraph' => $search_engine_data_for_agencygraph));
+  $agency_data['searchengines_graph'] = $search_engine_graph_output;
 
 
   //Query to get Search data for an agency
@@ -89,6 +95,9 @@ function ideaact_get_agencywide_data($agencyid){
       $agency_search_status['search_notavailable'] += $searchresult->complnum;
   }
   $agency_data['searchenginestatus'] = $agency_search_status;
+
+  $search_status_graph_output = theme('agencywide_searchstatus_page', array('$agency_data' => $agency_search_status));
+  $agencydata['searchenginestatus_graph'] = $search_status_graph_output;
 
   //Query to get DAP data
   $dapresults = db_query("select field_dap_score_value,count(field_dap_score_value)  as complnum from field_data_field_dap_score a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid group by field_dap_score_value", array(':agencyid' => $agencyid));
