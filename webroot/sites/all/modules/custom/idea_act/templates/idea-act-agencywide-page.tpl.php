@@ -152,7 +152,7 @@ if(trim($search_engine_data_for_agencygraph) == "")
                                                     return label + ': ' + Math.round( val * 100 / total) + '%';
                                                 }
                                             }
-                                        }
+                                        },
                                         plugins: {
                                             labels: {
                                                 render: 'value',

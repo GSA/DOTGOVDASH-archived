@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 function idea_act_govwideTrendData(){
     //Find Number of published websites
@@ -21,7 +21,7 @@ function idea_act_govwideTrendData(){
     // $govwide_mob['mob_perf_good_nos'] = db_query("SELECT mob_perf_good FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
     // $govwide_mob['mob_perf_improve_nos'] = db_query("SELECT mob_perf_improve FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
     // $govwide_mob['mob_perf_poor_nos'] = db_query("SELECT mob_perf_poor FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
-   
+
     $govwidewebsite['websitenos'] = $websitenos;
     $govwidewebsite['agencynos'] = $agencynos;
     $govwidewebsite['avg_https'] = $avg_https;
@@ -379,7 +379,7 @@ function idea_act_applyDataPercentage($data,$websites)
         $dataPercentage = "$percent%";
     }
     else{
-        $dataPercentage = "0";
+        $dataPercentage = "0%";
     }
     return $dataPercentage;
 
