@@ -1,8 +1,7 @@
 <?php
 $agency_data = ideaact_get_agencywide_data(arg(3));
-//print "Agency Id is ".$agency_data['agencyid'];
 $agencynode = node_load(arg(3));
-$agency_data['agency_title'] = $agencynode->title;
+//$agency_data['agency_title'] = $agencynode->title;
 drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 foreach ($chartdata as $key => $val) {
   $chartseries1 .= "{\"name\":\"$labeldesc[$key]\",\"y\":" . (int) $val . ",\"showInLegend\":true},";
@@ -12,7 +11,6 @@ $agency_data = ideaact_get_agencywide_data(arg(3));
 if(trim($search_engine_data_for_agencygraph) == "")
   $search_engine_data_for_agencygraph = "0,0";
 
-?>
 ?>
 <style>
 @import "/sites/all/modules/custom/idea_act/css/style.css";
@@ -152,7 +150,7 @@ if(trim($search_engine_data_for_agencygraph) == "")
                                                     return label + ': ' + Math.round( val * 100 / total) + '%';
                                                 }
                                             }
-                                        }
+                                        },
                                         plugins: {
                                             labels: {
                                                 render: 'value',
