@@ -34,12 +34,12 @@ $search_engine_data_for_agencygraph = "0,0";
     <div class="row">
         <div class="col-lg-10 col-lg-offset-1">
             <div class="row row-no-gutters">
-                <div class="col-md-12 dashboard-wrap">
-                    <div class="col-md-9 dashboard-left">
+                <div class="col-sm-12 dashboard-wrap">
+                    <div class="col-sm-8 col-md-9 dashboard-left">
                         <h1>Government-Wide - <span>21st Century IDEA Act Dashboard</span></h1>
                         <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
                     </div>
-                    <div class="col-md-2 col-md-offset-1 text-right dashboard-right">
+                    <div class="col-sm-4 col-md-2 col-md-offset-1 text-right dashboard-right">
                         <a class="btn disabled" href="#">
                             <img src="/sites/all/modules/custom/idea_act/images/question-icon.png" alt="question icon" class="question-icon"
                                  data-placement="left" data-toggle="tooltip"
@@ -91,7 +91,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>                                   
                                  <div class="col-sm-6 mt-xs-1">
@@ -105,6 +105,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     <div class="chart-container">
                                         <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
+                                    <div id="chart-1-legend-mobile"></div>
                                 </div>
                             </div>
 
@@ -115,7 +116,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <div id="chart-1-legend"></div></div>
+                                    <div id="chart-1-legend"></div>
+                                </div>
                             </div>
 
                             <script lang="javascript">
@@ -130,7 +132,6 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 '#563eb6',
                                                 '#d07413',
                                                 '#808f4e',
-
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -141,15 +142,29 @@ $search_engine_data_for_agencygraph = "0,0";
                                     options: {
                                         // responsive: true,
                                         maintainAspectRatio: false,
-
+                                        
                                         title: {
                                             display: true,
                                             text: 'Total Number of Accessibility Issues for Websites',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
+                                        tooltips: {
+                                            yPadding: 10,
+                                            xPadding: 10,
+                                            caretPadding: 5,
+                                            caretSize: 5,
+                                            displayColors: false,
+                                            callbacks: {
+                                                label: function(tooltipItem, data) {
+                                                    var label = data.labels[tooltipItem.index];
+                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var val = data.datasets[0].data[tooltipItem.index];
+                                                    return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                }
+                                            }
+                                        },
                                         plugins: {
-
                                             labels: {
                                                 render: 'value',
                                                 fontColor: '#102e54',
@@ -172,6 +187,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                 });
                                 var myLegendContainer = document.getElementById("chart-1-legend");
                                 myLegendContainer.innerHTML = chart.generateLegend();
+                                var myLegendContainerMobile = document.getElementById("chart-1-legend-mobile");
+                                myLegendContainerMobile.innerHTML = chart.generateLegend();
                             </script>
 
                         </div>
@@ -199,11 +216,11 @@ $search_engine_data_for_agencygraph = "0,0";
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a  class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a  class="btn disabled" href="//github.com/18F/site-scanning-documentation/blob/main/scans/live/uswds.md" target="_blank"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>     
                                 
-                                <div class="col-md-6">
+                                <div class="col-md-6 uswds-table">
                                     <div class="table-responsive">
                                         <table>
                                             <thead>
@@ -215,12 +232,12 @@ $search_engine_data_for_agencygraph = "0,0";
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>Websites with USWDS code detected</td>
+                                                <td class="">Websites with USWDS code detected</td>
                                                 <td><?php echo number_format($agencydata['uswds_compliant']); ?></td>
                                                 <td><?=idea_act_applyDataPercentage($agencydata['uswds_compliant'], $agencydata['uswds_tottracked'])?></td>
                                             </tr>
                                             <tr>
-                                                <td>Websites without USWDS code detected</td>
+                                                <td class="">Websites without USWDS code detected</td>
                                                 <td><?php echo number_format($agencydata['uswds_noncompliant']); ?></td>
                                                 <td><?=idea_act_applyDataPercentage($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'])?></td>
                                             </tr>
@@ -231,8 +248,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                 <div class="col-md-6 mt-xs-1">
                                     <div class="chart-container">
                                         <canvas id="chart-gov2" width="250" height="300" aria-label="Charts" role="img"></canvas>
-
                                     </div>
+                                    <div id="chart-2-legend-mobile"></div>
                                 </div>
                             </div>
                             <div class="card-body relative-position row nmt-3">
@@ -242,7 +259,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <div id="chart-2-legend"></div></div>
+                                    <div id="chart-2-legend"></div>
+                                </div>
                             </div>
                             <script lang="javascript">
                                 var ctx = document.getElementById('chart-gov2').getContext('2d');
@@ -273,6 +291,21 @@ $search_engine_data_for_agencygraph = "0,0";
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
+                                        tooltips: {
+                                            yPadding: 10,
+                                            xPadding: 10,
+                                            caretPadding: 5,
+                                            caretSize: 5,
+                                            displayColors: false,
+                                            callbacks: {
+                                                label: function(tooltipItem, data) {
+                                                    var label = data.labels[tooltipItem.index];
+                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var val = data.datasets[0].data[tooltipItem.index];
+                                                    return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                }
+                                            }
+                                        },
                                         plugins: {
 
                                             labels: {
@@ -297,6 +330,9 @@ $search_engine_data_for_agencygraph = "0,0";
                                 });
                                 var myLegendContainer = document.getElementById("chart-2-legend");
                                 myLegendContainer.innerHTML = chart.generateLegend();
+
+                                var myLegendContainerMobile = document.getElementById("chart-2-legend-mobile");
+                                myLegendContainerMobile.innerHTML = chart.generateLegend();
                             </script>
                         </div>
                     </div>
@@ -323,7 +359,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> HTTPS Data is collected through a custom scanner component of digital dashboard that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> HTTPS Data is collected through a custom scanner component of digital dashboard that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div> 
                                 <div class="col-md-6">
@@ -357,8 +393,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                 <div class="col-md-6 mt-xs-1">
                                     <div class="chart-container">
                                         <canvas id="chart-gov3" width="250" height="300" aria-label="Charts" role="img"></canvas>
-
                                     </div>
+                                    <div id="chart-3-legend-mobile"></div>
                                 </div>
                             </div>
                             <div class="card-body relative-position row nmt-3">
@@ -399,6 +435,21 @@ $search_engine_data_for_agencygraph = "0,0";
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
+                                        tooltips: {
+                                            yPadding: 10,
+                                            xPadding: 10,
+                                            caretPadding: 5,
+                                            caretSize: 5,
+                                            displayColors: false,
+                                            callbacks: {
+                                                label: function(tooltipItem, data) {
+                                                    var label = data.labels[tooltipItem.index];
+                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var val = data.datasets[0].data[tooltipItem.index];
+                                                    return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                }
+                                            }
+                                        },
                                         plugins: {
 
                                             labels: {
@@ -423,6 +474,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                 });
                                 var myLegendContainer = document.getElementById("chart-3-legend");
                                 myLegendContainer.innerHTML = chart.generateLegend();
+                                var myLegendContainerMobile = document.getElementById("chart-3-legend-mobile");
+                                myLegendContainerMobile.innerHTML = chart.generateLegend();
                             </script>
                         </div>
                     </div>
@@ -449,7 +502,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><p class='tt-text'> On-Site Search Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn disabled" data-toggle="tooltip" title="<span><p class='tt-text'> On-Site Search Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>         
                                 
@@ -469,7 +522,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 $percent = round(($sval / $websitenos) *100);
                                                 $percent =  ($percent < 1) ?  '< 1' : $percent;
                                                 print "<tr style='text-transform: capitalize;'><td>" . ucfirst($skey) . "</td><td> $sval</td>
-                                                <td>$percent%</td></tr>";
+                                                <td>$percent% </td></tr>";
                                             }
                                           ?>
                                             </tbody>
@@ -482,6 +535,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                        ?>
                                         <canvas id="chart-gov-search" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
+                                    <div id="chart-4-legend-mobile"></div>
                                 </div>
                             </div>
                             <div class="card-body relative-position row nmt-3">
@@ -523,8 +577,22 @@ $search_engine_data_for_agencygraph = "0,0";
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
+                                        tooltips: {
+                                            yPadding: 10,
+                                            xPadding: 10,
+                                            caretPadding: 5,
+                                            caretSize: 5,
+                                            displayColors: false,
+                                            callbacks: {
+                                                label: function(tooltipItem, data) {
+                                                    var label = data.labels[tooltipItem.index];
+                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var val = data.datasets[0].data[tooltipItem.index];
+                                                    return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                }
+                                            }
+                                        },
                                         plugins: {
-
                                             labels: {
                                                 render: 'data',
                                                 fontColor: '#102e54',
@@ -547,6 +615,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                 });
                                 var myLegendContainer = document.getElementById("chart-4-legend");
                                 myLegendContainer.innerHTML = chart.generateLegend();
+                                var myLegendContainerMobile = document.getElementById("chart-4-legend-mobile");
+                                myLegendContainerMobile.innerHTML = chart.generateLegend();
                             </script>
                         </div>
                     </div>
@@ -573,7 +643,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Mobile Data is collected from Google API through a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Mobile Data is collected from Google API through a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>    
                                 
@@ -647,6 +717,21 @@ $search_engine_data_for_agencygraph = "0,0";
                                                     text: 'Mobile Performance Breakdown',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
+                                                },
+                                                tooltips: {
+                                                    yPadding: 10,
+                                                    xPadding: 10,
+                                                    caretPadding: 5,
+                                                    caretSize: 5,
+                                                    displayColors: false,
+                                                    callbacks: {
+                                                        label: function(tooltipItem, data) {
+                                                            var label = data.labels[tooltipItem.index];
+                                                            var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                            var val = data.datasets[0].data[tooltipItem.index];
+                                                            return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                        }
+                                                    }
                                                 },
                                                 plugins: {
 
@@ -735,8 +820,22 @@ $search_engine_data_for_agencygraph = "0,0";
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
                                                 },
+                                                tooltips: {
+                                                    yPadding: 10,
+                                                    xPadding: 10,
+                                                    caretPadding: 5,
+                                                    caretSize: 5,
+                                                    displayColors: false,
+                                                    callbacks: {
+                                                        label: function(tooltipItem, data) {
+                                                            var label = data.labels[tooltipItem.index];
+                                                            var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                            var val = data.datasets[0].data[tooltipItem.index];
+                                                            return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                        }
+                                                    }
+                                                },
                                                 plugins: {
-
                                                     labels: {
                                                         render: 'data',
                                                         fontColor: '#102e54',
@@ -794,7 +893,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             </div>
                             <div class="card-body relative-position row">
                             <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> DAP Overall Average Score : <?=$agency_dap_score?>%"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> DAP Overall Average Score : <?=$agency_dap_score?>%"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>  
                                 
@@ -827,6 +926,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     <div class="chart-container">
                                         <canvas id="chart-gov6" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
+                                    <div id="chart-7-legend-mobile"></div>
                                 </div>
                             </div>
                             <div class="card-body relative-position row nmt-3">
@@ -853,7 +953,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: [ 'Compliant Websites', 'Non-compliant Websites']
+                                        labels: [ 'Compliant Websites', 'Non-Compliant Websites']
                                     },
 
                                     // Configuration options go here
@@ -861,7 +961,21 @@ $search_engine_data_for_agencygraph = "0,0";
                                         // responsive: true,
                                         maintainAspectRatio: false,
                                         // rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
-
+                                        tooltips: {
+                                            yPadding: 10,
+                                            xPadding: 10,
+                                            caretPadding: 5,
+                                            caretSize: 5,
+                                            displayColors: false,
+                                            callbacks: {
+                                                label: function(tooltipItem, data) {
+                                                    var label = data.labels[tooltipItem.index];
+                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var val = data.datasets[0].data[tooltipItem.index];
+                                                    return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                }
+                                            }
+                                        },
                                         title: {
                                             display: true,
                                             text: 'DAP Websites Compliance',
@@ -892,6 +1006,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                 });
                                 var myLegendContainer = document.getElementById("chart-7-legend");
                                 myLegendContainer.innerHTML = chart.generateLegend();
+                                var myLegendContainerMobile = document.getElementById("chart-7-legend-mobile");
+                                myLegendContainerMobile.innerHTML = chart.generateLegend();
                             </script>
                         </div>
                     </div>
@@ -900,3 +1016,4 @@ $search_engine_data_for_agencygraph = "0,0";
         </div>
     </div>
 </div>
+
