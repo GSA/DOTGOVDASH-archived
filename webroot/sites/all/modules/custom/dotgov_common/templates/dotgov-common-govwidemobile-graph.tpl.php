@@ -22,6 +22,7 @@ function drawChart1() {
             enabled: false
         },
         showInLegend: false,
+        chartArea:{left:0,top:20,width:'100%',height:'70%'},
     };
 
 var chart = new google.visualization.PieChart(document.getElementById('piechart1'));
