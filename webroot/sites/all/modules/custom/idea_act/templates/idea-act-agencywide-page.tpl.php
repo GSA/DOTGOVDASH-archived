@@ -86,6 +86,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     <div class="chart-container">
                                         <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
+                                    <div id="chart-1-legend-mobile"></div>
                                 </div>
                             </div>
                             <div class="card-body relative-position row nmt-3">
@@ -128,6 +129,21 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
+                                        tooltips: {
+                                            yPadding: 10,
+                                            xPadding: 10,
+                                            caretPadding: 5,
+                                            caretSize: 5,
+                                            displayColors: false,
+                                            callbacks: {
+                                                label: function(tooltipItem, data) {
+                                                    var label = data.labels[tooltipItem.index];
+                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var val = data.datasets[0].data[tooltipItem.index];
+                                                    return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                }
+                                            }
+                                        }
                                         plugins: {
                                             labels: {
                                                 render: 'value',
@@ -151,6 +167,8 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                 });
                                 var myLegendContainer = document.getElementById("chart-1-legend");
                                 myLegendContainer.innerHTML = chart.generateLegend();
+                                var myLegendContainerMobile = document.getElementById("chart-1-legend-mobile");
+                                myLegendContainerMobile.innerHTML = chart.generateLegend();
                             </script>
                         </div>
                     </div>
@@ -209,6 +227,8 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                         <canvas id="chart-gov2" width="250" height="300" aria-label="Charts" role="img"></canvas>
 
                                     </div>
+                                  <div id="chart-2-legend-mobile"></div>
+
                                 </div>
                             </div>
                             <div class="card-body relative-position row nmt-3">
@@ -250,6 +270,21 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
+                                        tooltips: {
+                                            yPadding: 10,
+                                            xPadding: 10,
+                                            caretPadding: 5,
+                                            caretSize: 5,
+                                            displayColors: false,
+                                            callbacks: {
+                                                label: function(tooltipItem, data) {
+                                                    var label = data.labels[tooltipItem.index];
+                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var val = data.datasets[0].data[tooltipItem.index];
+                                                    return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                }
+                                            }
+                                        },
                                         plugins: {
 
                                             labels: {
@@ -274,6 +309,8 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                 });
                                 var myLegendContainer = document.getElementById("chart-2-legend");
                                 myLegendContainer.innerHTML = chart.generateLegend();
+                                var myLegendContainerMobile = document.getElementById("chart-2-legend-mobile");
+                                myLegendContainerMobile.innerHTML = chart.generateLegend();
                             </script>
                         </div>
                     </div>
@@ -331,6 +368,8 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     <div class="chart-container">
                                         <canvas id="chart-gov3" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
+                                  <div id="chart-3-legend-mobile"></div>
+
                                 </div>
                             </div>
                             <div class="card-body relative-position row nmt-3">
@@ -372,6 +411,21 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
+                                        tooltips: {
+                                            yPadding: 10,
+                                            xPadding: 10,
+                                            caretPadding: 5,
+                                            caretSize: 5,
+                                            displayColors: false,
+                                            callbacks: {
+                                                label: function(tooltipItem, data) {
+                                                    var label = data.labels[tooltipItem.index];
+                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var val = data.datasets[0].data[tooltipItem.index];
+                                                    return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                }
+                                            }
+                                        },
                                         plugins: {
 
                                             labels: {
@@ -396,6 +450,8 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                 });
                                 var myLegendContainer = document.getElementById("chart-3-legend");
                                 myLegendContainer.innerHTML = chart.generateLegend();
+                                var myLegendContainerMobile = document.getElementById("chart-3-legend-mobile");
+                                myLegendContainerMobile.innerHTML = chart.generateLegend();
                             </script>
 
                         </div>
@@ -469,6 +525,8 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     <div class="chart-container">
                                         <canvas id="chart-gov-search" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
+                                  <div id="chart-4-legend-mobile"></div>
+
                                 </div>
                             </div>
 
@@ -510,6 +568,21 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
+                                        tooltips: {
+                                            yPadding: 10,
+                                            xPadding: 10,
+                                            caretPadding: 5,
+                                            caretSize: 5,
+                                            displayColors: false,
+                                            callbacks: {
+                                                label: function(tooltipItem, data) {
+                                                    var label = data.labels[tooltipItem.index];
+                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var val = data.datasets[0].data[tooltipItem.index];
+                                                    return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                }
+                                            }
+                                        },
                                         plugins: {
 
                                             labels: {
@@ -534,6 +607,8 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                 });
                                 var myLegendContainer = document.getElementById("chart-4-legend");
                                 myLegendContainer.innerHTML = chart.generateLegend();
+                                var myLegendContainerMobile = document.getElementById("chart-4-legend-mobile");
+                                myLegendContainerMobile.innerHTML = chart.generateLegend();
                             </script>
                         </div>
                     </div>
@@ -631,6 +706,21 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
                                                 },
+                                                tooltips: {
+                                                    yPadding: 10,
+                                                    xPadding: 10,
+                                                    caretPadding: 5,
+                                                    caretSize: 5,
+                                                    displayColors: false,
+                                                    callbacks: {
+                                                        label: function(tooltipItem, data) {
+                                                            var label = data.labels[tooltipItem.index];
+                                                            var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                            var val = data.datasets[0].data[tooltipItem.index];
+                                                            return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                        }
+                                                    }
+                                                },
                                                 plugins: {
 
                                                     labels: {
@@ -715,6 +805,21 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                                     text: '<?= $agency_data['agency_title']?> Mobile Usability Breakdown',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
+                                                },
+                                                tooltips: {
+                                                    yPadding: 10,
+                                                    xPadding: 10,
+                                                    caretPadding: 5,
+                                                    caretSize: 5,
+                                                    displayColors: false,
+                                                    callbacks: {
+                                                        label: function(tooltipItem, data) {
+                                                            var label = data.labels[tooltipItem.index];
+                                                            var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                            var val = data.datasets[0].data[tooltipItem.index];
+                                                            return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                        }
+                                                    }
                                                 },
                                                 plugins: {
 
@@ -823,6 +928,7 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                     <div class="chart-container">
                                         <canvas id="chart-7" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
+                                  <div id="chart-7-legend-mobile"></div>
                                 </div>
                             </div>
 
@@ -864,6 +970,21 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
+                                        tooltips: {
+                                            yPadding: 10,
+                                            xPadding: 10,
+                                            caretPadding: 5,
+                                            caretSize: 5,
+                                            displayColors: false,
+                                            callbacks: {
+                                                label: function(tooltipItem, data) {
+                                                    var label = data.labels[tooltipItem.index];
+                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var val = data.datasets[0].data[tooltipItem.index];
+                                                    return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                }
+                                            }
+                                        },
                                         plugins: {
 
                                             labels: {
@@ -889,6 +1010,8 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                 });
                                 var myLegendContainer = document.getElementById("chart-7-legend");
                                 myLegendContainer.innerHTML = chart.generateLegend();
+                                var myLegendContainerMobile = document.getElementById("chart-7-legend-mobile");
+                                myLegendContainerMobile.innerHTML = chart.generateLegend();
                             </script>
                         </div>
                     </div>
