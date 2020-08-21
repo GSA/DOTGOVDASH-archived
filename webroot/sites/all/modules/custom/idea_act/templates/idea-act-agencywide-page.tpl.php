@@ -1,7 +1,6 @@
 <?php
 $agency_data = ideaact_get_agencywide_data(arg(3));
-$agencynode = node_load(arg(3));
-//$agency_data['agency_title'] = $agencynode->title;
+
 drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 foreach ($chartdata as $key => $val) {
   $chartseries1 .= "{\"name\":\"$labeldesc[$key]\",\"y\":" . (int) $val . ",\"showInLegend\":true},";
@@ -11,6 +10,9 @@ $agency_data = ideaact_get_agencywide_data(arg(3));
 if(trim($search_engine_data_for_agencygraph) == "")
   $search_engine_data_for_agencygraph = "0,0";
 
+$agencynode = node_load(arg(3));
+$agency_data['agency_title'] = $agencynode->title;
+ $pdf_file_name = '21st_Century_'.$agencynode->title.'.pdf';
 ?>
 <style>
 @import "/sites/all/modules/custom/idea_act/css/style.css";
@@ -31,7 +33,8 @@ if(trim($search_engine_data_for_agencygraph) == "")
                                  data-placement="left" data-toggle="tooltip"
                                  title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
                         </a>
-                        <button class="button download-button" type="submit">Download</button>
+
+                      <button class="button download-button" onclick="generatePDF( '<?= $pdf_file_name?>', 400, 695)" type="submit">Download</button>
                     </div>
                 </div>
             </div>
@@ -145,10 +148,9 @@ if(trim($search_engine_data_for_agencygraph) == "")
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];
-                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    // var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
                                                     var val = data.datasets[0].data[tooltipItem.index];
-                                                    return label + ': ' + Math.round( val * 100 / total) + '%';
-                                                }
+                                                    return label + ': ' + val;
                                             }
                                         },
                                         plugins: {
@@ -256,7 +258,7 @@ if(trim($search_engine_data_for_agencygraph) == "")
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [ <?php echo number_format($agency_data['uswds_noncompliant']); ?>, <?php echo number_format($agency_data['uswds_compliant']); ?>],
+                                            data: [ <?php echo number_format($agency_data['uswds_compliant']); ?>, <?php echo number_format($agency_data['uswds_noncompliant']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#ed4878',
@@ -396,8 +398,8 @@ if(trim($search_engine_data_for_agencygraph) == "")
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [<?php echo number_format($agency_data['https_nosupport']); ?>,
-                                              <?php echo number_format($agency_data['https_support']); ?>],
+                                            data: [<?php echo number_format($agency_data['https_support']); ?>,
+                                              <?php echo number_format($agency_data['https_nosupport']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#00a65f',
@@ -945,8 +947,8 @@ if(trim($search_engine_data_for_agencygraph) == "")
                                     data: {
                                         datasets: [{
                                             data: [
-                                              <?php echo number_format($agency_data['dap_noncompliant']); ?>,
-                                              <?php echo number_format($agency_data['dap_compliant']); ?>],
+                                              <?php echo number_format($agency_data['dap_compliant']); ?>,
+                                              <?php echo number_format($agency_data['dap_noncompliant']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#de9738',
