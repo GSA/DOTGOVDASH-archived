@@ -126,7 +126,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [<?php echo number_format($agencydata['ag_col_contrast'], 1, '.', ''); ?>, <?php echo number_format($agencydata['ag_miss_image'], 1, '.', ''); ?>, <?php echo number_format($agencydata['ag_html_attrib'], 1, '.', ''); ?>],
+                                            data: [<?php echo number_format($agencydata['ag_col_contrast'], 1, '.', ''); ?>, <?php echo number_format($agencydata['ag_html_attrib'], 1, '.', ''); ?>,, <?php echo number_format($agencydata['ag_miss_image'], 1, '.', ''); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#563eb6',
@@ -369,7 +369,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <tr>
                                                 <th>Criteria</th>
                                                 <th>Compliant</th>
-                                                <th>Non-compliant</th>
+                                                <th>Non-Compliant</th>
 
                                             </tr>
                                             </thead>
