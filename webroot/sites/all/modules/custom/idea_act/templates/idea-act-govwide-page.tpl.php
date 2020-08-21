@@ -160,7 +160,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                     var label = data.labels[tooltipItem.index];
                                                     var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
                                                     var val = data.datasets[0].data[tooltipItem.index];
-                                                    return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                    return label + ': ' + val ;
                                                 }
                                             }
                                         },
@@ -271,8 +271,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                             data: [<?php echo number_format($agencydata['uswds_compliant']); ?>, <?php echo number_format($agencydata['uswds_noncompliant']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
-                                                '#00699e',
                                                 '#ed4878',
+                                                '#00699e',
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -421,7 +421,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: [ 'Compliant Websites','Non-compliant Websites']
+                                        labels: [ 'Compliant Websites','Non-Compliant Websites']
                                     },
 
                                     // Configuration options go here
