@@ -110,75 +110,76 @@ $agency_data['agency_title'] = $agencynode->title;
                             </div>
 
                             <!-- script to render the pie chart -->
-                            <script lang="javascript">
-                                var ctx = document.getElementById('chart-gov1').getContext('2d');
-                                var chart = new Chart(ctx, {
-                                    type: 'doughnut',
-                                    data: {
-                                        datasets: [{
-                                            data: [<?php echo number_format($agency_data['ag_col_contrast'], 1, '.', ''); ?>, <?php echo number_format($agency_data['ag_html_attrib'], 1, '.', ''); ?>, <?php echo number_format($agency_data['ag_miss_image'], 1, '.', ''); ?>],
-                                            borderWidth: 0,
-                                            backgroundColor: [
-                                                '#563eb6',
-                                                '#d07413',
-                                                '#808f4e',
-                                            ]
-                                        }],
-                                        // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['Color Contrast Issues', 'HTML Attribute Issues','Missing Image Description Issues']
-                                    },
+                          <script lang="javascript">
+                              var ctx = document.getElementById('chart-gov1').getContext('2d');
+                              var chart = new Chart(ctx, {
+                                  type: 'doughnut',
+                                  data: {
+                                      datasets: [{
+                                          data: [<?php echo number_format($agency_data['ag_col_contrast'], 1, '.', ''); ?>, <?php echo number_format($agency_data['ag_html_attrib'], 1, '.', ''); ?>, <?php echo number_format($agency_data['ag_miss_image'], 1, '.', ''); ?>],
+                                          borderWidth: 0,
+                                          backgroundColor: [
+                                              '#563eb6',
+                                              '#d07413',
+                                              '#808f4e',
+                                          ]
+                                      }],
+                                      // These labels appear in the legend and in the tooltips when hovering different arcs
+                                      labels: ['Color Contrast Issues', 'HTML Attribute Issues','Missing Image Description Issues']
+                                  },
+                                  // Configuration options go here
+                                  options: {
+                                      // responsive: true,
+                                      maintainAspectRatio: false,
 
-                                    // Configuration options go here
-                                    options: {
-                                        // responsive: true,
-                                        maintainAspectRatio: false,
+                                      title: {
+                                          display: true,
+                                          text: 'Total Number of Accessibility Issues for <?= $agency_data['agency_title']?> Websites',
+                                          fontSize: 18,
+                                          fontColor: '#203b5f'
+                                      },
+                                      tooltips: {
+                                          yPadding: 10,
+                                          xPadding: 10,
+                                          caretPadding: 5,
+                                          caretSize: 5,
+                                          displayColors: false,
+                                          callbacks: {
+                                              label: function(tooltipItem, data) {
+                                                  var label = data.labels[tooltipItem.index];
+                                                  var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                  var val = data.datasets[0].data[tooltipItem.index];
+                                                  return label + ': ' + val ;
+                                              }
+                                          }
+                                      },
+                                      plugins: {
+                                          labels: {
+                                              render: 'value',
+                                              fontColor: '#102e54',
+                                              position: 'outside',
+                                              fontSize: 18,
+                                              textMargin: 12,
+                                              fontStyle: 'bold',
+                                          }
+                                      },
+                                      legend: {
+                                          position: 'bottom',
+                                          display: false,
+                                          labels: {
+                                              fontColor: 'rgb(0, 0, 0)',
+                                              usePointStyle: true,
+                                              pointStyle: String
+                                          }
+                                      }
+                                  }
+                              });
+                              var myLegendContainer = document.getElementById("chart-1-legend");
+                              myLegendContainer.innerHTML = chart.generateLegend();
+                              var myLegendContainerMobile = document.getElementById("chart-1-legend-mobile");
+                              myLegendContainerMobile.innerHTML = chart.generateLegend();
+                          </script>
 
-                                        title: {
-                                            display: true,
-                                            text: 'Total Number of Accessibility Issues for <?= $agency_data['agency_title']?> Websites',
-                                            fontSize: 18,
-                                            fontColor: '#203b5f'
-                                        },
-                                        tooltips: {
-                                            yPadding: 10,
-                                            xPadding: 10,
-                                            caretPadding: 5,
-                                            caretSize: 5,
-                                            displayColors: false,
-                                            callbacks: {
-                                                label: function(tooltipItem, data) {
-                                                    var label = data.labels[tooltipItem.index];
-                                                    // var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
-                                                    var val = data.datasets[0].data[tooltipItem.index];
-                                                    return label + ': ' + val;
-                                            }
-                                        },
-                                        plugins: {
-                                            labels: {
-                                                render: 'value',
-                                                fontColor: '#102e54',
-                                                position: 'outside',
-                                                fontSize: 18,
-                                                textMargin: 12,
-                                                fontStyle: 'bold',
-                                            }
-                                        },
-                                        legend: {
-                                            position: 'bottom',
-                                            display: false,
-                                            labels: {
-                                                fontColor: 'rgb(0, 0, 0)',
-                                                usePointStyle: true,
-                                                pointStyle: String
-                                            }
-                                        }
-                                    }
-                                });
-                                var myLegendContainer = document.getElementById("chart-1-legend");
-                                myLegendContainer.innerHTML = chart.generateLegend();
-                                var myLegendContainerMobile = document.getElementById("chart-1-legend-mobile");
-                                myLegendContainerMobile.innerHTML = chart.generateLegend();
-                            </script>
                         </div>
                     </div>
                 </div>
