@@ -29,7 +29,10 @@ $outputorig =  	file_create_url($mobsnap['uri']);
 
 ?>
 <?php //print $output; ?>
-
+<div class="download-pdf">
+    <a href="#" onclick="generatePDF('<?php print 'Website ' . ($row->field_field_parent_agency_name[0]['rendered']['#markup']); ?>' ,600,1150, true)"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="Download Pdf">
+    </a>
+</div>
 <div class="col-xs-12  white-back">
 <div class="col-xs-4 text-center">
 <h3>Agency</h3>
