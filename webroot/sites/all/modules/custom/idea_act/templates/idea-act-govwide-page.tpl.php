@@ -369,7 +369,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <tr>
                                                 <th>Criteria</th>
                                                 <th>Compliant</th>
-                                                <th>Non-compliant</th>
+                                                <th>Non-Compliant</th>
 
                                             </tr>
                                             </thead>
