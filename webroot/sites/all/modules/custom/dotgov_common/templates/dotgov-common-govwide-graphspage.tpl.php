@@ -32,7 +32,7 @@ $chartseries = array_values($chartdata);
 drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
 ?>
 <div class="download-pdf">
-    <a href="#" onclick="generatePDF()"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="Download Pdf">
+    <a href="#" onclick="generatePDF('Government wide page.pdf',600,1150,false)"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="Download Pdf">
     </a>
 </div>
    <div  class="main-govwidecontents">
