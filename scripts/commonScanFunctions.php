@@ -3153,3 +3153,22 @@ function dateDifference($startdate,$enddate){
     $datediff  = "$days days, $hours hours, $minutes minutes, $seconds seconds";
     return $datediff;
 }
+
+function unPublishNode($nid){
+    // Load a node
+    $node = node_load($nid);
+    // set status property to 0
+    $node->status = 0;
+    // re-save the node
+    node_save($node);
+    print "Unpublished ".$node->title." ".$node->nid." of type ".$node->type."\n";
+}
+function publishNode($nid){
+    // Load a node
+    $node = node_load($nid);
+    // set status property to 0
+    $node->status = 1;
+    // re-save the node
+    node_save($node);
+    print "Published ".$node->title." ".$node->nid." of type ".$node->type."\n";
+}
