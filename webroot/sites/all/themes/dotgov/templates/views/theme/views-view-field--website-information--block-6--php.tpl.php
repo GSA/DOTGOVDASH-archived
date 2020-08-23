@@ -43,6 +43,10 @@
  * @ingroup themeable
  */
 ?>
+<style>
+.height-175 { min-height: 175px !important; }
+.height-80 { min-height: 80px !important; }
+</style>
 <?php print $output; ?>
 <?php
 $data_performance = $row->field_field_mobile_performance_score[0]['raw']['value'];
@@ -98,6 +102,8 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
 }
 
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
+  $heightChange = "";
+  $height80 = "";
   if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === "" || $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
     $crit_text .= "Mobile Usability: Not Available";
   } else if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] == 100) {
@@ -106,6 +112,8 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
     $crit_text .= "Mobile Usability: Not Mobile Friendly";
   }
 } else {
+  $heightChange = "height-175";
+  $height80 = "height-80";
   $crit_text .= "Mobile Usability: <span style=\"color:white;\">" . $redirect_message . "</span><br>";
 }
 
@@ -121,7 +129,7 @@ dotgov_common_tooltip("tooltip4","id");
     </div>
 </div>
 
-<div class="col-lg-12 clearfix">
+<div class="col-sm-12 clearfix <?php echo $height80?>" style="float: left;">
 <?php
 $chart_data_font = "7.5px";
 $performance_title = "Mobile Performance";
@@ -176,15 +184,15 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   </div>
 </div>
 <?php endif; ?>
-<div class="col-lg-12 clearfix" style="min-height: 210px;">
+<div class="col-lg-12 clearfix <?php echo $heightChange?>" style="min-height: 210px;">
   <?php if (!is_redirect(arg(1))): ?>
-    <div class="col-lg-6">
+    <div class="col-sm-6">
         <div id="performance_chart" style="width: 140px; height:140px; margin: 0 auto">&nbsp;</div>
-        <p class="text-center" style="color: #1c5295; font-size: 17px;"><?php echo($performance_title); ?></p>
+        <p class="text-center" style="font-size: 17px;"><?php echo($performance_title); ?></p>
     </div>
-    <div class="col-lg-6">
+    <div class="col-sm-6">
         <div id="usability_chart" style="width: 140px; height:140px; margin: 0 auto">&nbsp;</div>
-        <p class="text-center" style="color: #1c5295; font-size: 17px;"><?php echo($usability_title); ?></p>
+        <p class="text-center" style="font-size: 17px;"><?php echo($usability_title); ?></p>
     </div>
   <?php endif; ?>
 </div>
