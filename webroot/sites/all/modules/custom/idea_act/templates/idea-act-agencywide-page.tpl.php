@@ -1,3 +1,77 @@
+<style>
+  @import "/sites/all/modules/custom/idea_act/css/style.css";
+</style>
+
+<script>
+    function customChartTooltip(chartId, toolTipId) {
+        var customTooltip= function(tooltip) {
+            // Tooltip Element
+            var tooltipEl = document.getElementById(toolTipId);
+
+            if (!tooltipEl) {
+                tooltipEl = document.createElement('div');
+                tooltipEl.id = toolTipId;
+                tooltipEl.innerHTML = "<table></table>"
+                document.getElementById(chartId).appendChild(tooltipEl);
+            }
+
+            // Hide if no tooltip
+            if (tooltip.opacity === 0) {
+                tooltipEl.style.opacity = 0;
+                return;
+            }
+
+            // Set caret Position
+            tooltipEl.classList.remove('above', 'below', 'no-transform');
+            if (tooltip.yAlign) {
+                tooltipEl.classList.add(tooltip.yAlign);
+            } else {
+                tooltipEl.classList.add('no-transform');
+            }
+
+            function getBody(bodyItem) {
+                return bodyItem.lines;
+            }
+
+            // Set Text
+            if (tooltip.body) {
+                var titleLines = tooltip.title || [];
+                var bodyLines = tooltip.body.map(getBody);
+
+                var innerHtml = '<thead>';
+
+                titleLines.forEach(function(title) {
+                    innerHtml += '<tr><th>' + title + '</th></tr>';
+                });
+                innerHtml += '</thead><tbody>';
+
+                bodyLines.forEach(function(body, i) {
+                    var colors = tooltip.labelColors[i];
+                    var style = 'background:' + colors.backgroundColor;
+                    style += '; border-color:' + colors.borderColor;
+                    style += '; border-width: 2px';
+                    var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
+                    innerHtml += '<tr><td>' + span + body + '</td></tr>';
+                });
+                innerHtml += '</tbody>';
+
+                var tableRoot = tooltipEl.querySelector('table');
+                tableRoot.innerHTML = innerHtml;
+            }
+
+            var position = this._chart.canvas.getBoundingClientRect();
+            tooltipEl.style.opacity = 1;
+            tooltipEl.style.left = tooltip.caretX + 'px';
+            tooltipEl.style.top = tooltip.caretY + 'px';
+            tooltipEl.style.fontSize = tooltip.fontSize;
+            tooltipEl.style.fontStyle = tooltip._fontStyle;
+            tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
+        };
+        return customTooltip;
+
+    }
+
+</script>
 <?php
 $agency_data = ideaact_get_agencywide_data(arg(3));
 
@@ -14,9 +88,6 @@ $agencynode = node_load(arg(3));
 $agency_data['agency_title'] = $agencynode->title;
  $pdf_file_name = '21st_Century_'.$agencynode->title.'.pdf';
 ?>
-<style>
-@import "/sites/all/modules/custom/idea_act/css/style.css";
-</style>
 
 <div class="idea-container">
     <div class="row">
@@ -93,7 +164,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                         <p>(Note: website redirects are excluded)</p>
                                 </div>
                                 <div class="col-sm-6">
-                                    <div class="chart-container">
+                                  <div class="chart-container" id="chart-1-ref">
                                         <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
                                     <div id="chart-1-legend-mobile"></div>
@@ -139,6 +210,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                           fontColor: '#203b5f'
                                       },
                                       tooltips: {
+                                          enabled: false,
+                                          custom: customChartTooltip('chart-1-ref','chartjs-tooltip1'),
                                           yPadding: 10,
                                           xPadding: 10,
                                           caretPadding: 5,
@@ -234,7 +307,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                    <div class="chart-container">
+                                     <div class="chart-container" id="chart-2-ref">
                                         <canvas id="chart-gov2" width="250" height="300" aria-label="Charts" role="img"></canvas>
 
                                     </div>
@@ -282,6 +355,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                             fontColor: '#203b5f'
                                         },
                                         tooltips: {
+                                            enabled: false,
+                                            custom: customChartTooltip('chart-2-ref','chartjs-tooltip2'),
                                             yPadding: 10,
                                             xPadding: 10,
                                             caretPadding: 5,
@@ -376,8 +451,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                    <div class="chart-container">
-                                        <canvas id="chart-gov3" width="250" height="300" aria-label="Charts" role="img"></canvas>
+                                    <div class="chart-container" id="chart-3-ref">
+                                  <canvas id="chart-gov3" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
                                   <div id="chart-3-legend-mobile"></div>
 
@@ -428,6 +503,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                             caretPadding: 5,
                                             caretSize: 5,
                                             displayColors: false,
+                                            enabled: false,
+                                            custom: customChartTooltip('chart-3-ref','chartjs-tooltip3'),
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];
@@ -517,7 +594,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                    <div class="chart-container">
+                                  <div class="chart-container" id="chart-4-ref">
                                       <?php $searchenginestatus = $agency_data['searchenginestatus'];
                                       ?>
                                         <canvas id="chart-gov-search" width="250" height="300" aria-label="Charts" role="img"></canvas>
@@ -572,6 +649,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                             caretPadding: 5,
                                             caretSize: 5,
                                             displayColors: false,
+                                            enabled: false,
+                                            custom: customChartTooltip('chart-4-ref','chartjs-tooltip4'),c
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];
@@ -637,7 +716,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </a>
                               </div>
                               <div class="col-md-6 mb-2">
-                                    <div class="chart-container">
+                                    <div class="chart-container" id="chart-5-ref">
                                         <canvas id="chart-6" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
 
@@ -711,6 +790,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                                     caretPadding: 5,
                                                     caretSize: 5,
                                                     displayColors: false,
+                                                    enabled: false,
+                                                    custom: customChartTooltip('chart-5-ref','chartjs-tooltip5'),
                                                     callbacks: {
                                                         label: function(tooltipItem, data) {
                                                             var label = data.labels[tooltipItem.index];
@@ -747,7 +828,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </script>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                    <div class="chart-container">
+                                    <div class="chart-container" id="chart-6-ref">
                                         <canvas id="chart-5" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
                                     <div class="legend-container">
@@ -811,6 +892,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                                     caretPadding: 5,
                                                     caretSize: 5,
                                                     displayColors: false,
+                                                    enabled: false,
+                                                    custom: customChartTooltip('chart-6-ref','chartjs-tooltip6'),
                                                     callbacks: {
                                                         label: function(tooltipItem, data) {
                                                             var label = data.labels[tooltipItem.index];
@@ -925,7 +1008,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                    <div class="chart-container">
+                                    <div class="chart-container" id="chart-7-ref">
                                         <canvas id="chart-7" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
                                   <div id="chart-7-legend-mobile"></div>
@@ -978,6 +1061,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                             caretPadding: 5,
                                             caretSize: 5,
                                             displayColors: false,
+                                            enabled: false,
+                                            custom: customChartTooltip('chart-7-ref','chartjs-tooltip7'),
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];
