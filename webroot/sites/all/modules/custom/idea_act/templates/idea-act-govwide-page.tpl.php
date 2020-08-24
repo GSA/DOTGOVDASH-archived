@@ -638,7 +638,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <?=($searchenginestatus['search_available'] == "") ? 0 : $searchenginestatus['search_available']?>],
                                             borderWidth: 0,
                                             backgroundColor: [
-                                                '#a52700',
+                                               '#224a58',
                                                 '#00b8ad',
                                             ]
                                         }],
