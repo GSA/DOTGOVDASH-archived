@@ -650,7 +650,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                             caretSize: 5,
                                             displayColors: false,
                                             enabled: false,
-                                            custom: customChartTooltip('chart-4-ref','chartjs-tooltip4'),c
+                                            custom: customChartTooltip('chart-4-ref','chartjs-tooltip4'),
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];
