@@ -145,7 +145,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
                                             <a href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
@@ -270,7 +270,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
                                             <a href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
@@ -415,7 +415,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
                                             <a href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
@@ -559,7 +559,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
                                             <a href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
@@ -624,7 +624,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                               <?=($searchenginestatus['search_available'] == "") ? 0 : $searchenginestatus['search_available']?>],
                                             borderWidth: 0,
                                             backgroundColor: [
-                                                '#a52700',
+                                                '#224a58',
                                                 '#00b8ad',
                                             ]
                                         }],
@@ -704,7 +704,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
                                             <a href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
@@ -971,7 +971,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
                                             <a href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
