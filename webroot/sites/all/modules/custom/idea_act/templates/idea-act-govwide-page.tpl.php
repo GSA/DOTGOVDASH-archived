@@ -164,7 +164,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>                                   
-                                 <div class="col-sm-6 mt-xs-1">
+                                 <div class="col-sm-6 mt-xs-1 center-mb-2">
                                     <h4>Average Accessibility Issues by Type Per Website</h4>
                                     <p>Average Color Contrast: <?=round($agencydata['ag_col_contrast'] / $agency_website_num, 1);?></p>
                                     <p>Average HTML Attribute: <?=round($agencydata['ag_html_attrib'] / $agency_website_num, 1);?></p>
@@ -172,6 +172,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     <p>(Note: website redirects are excluded)</p>
                                 </div>
                                 <div class="col-sm-6">
+                                <h4 class="text-center">Total Number of Accessibility Issues for Websites</h4>
                                     <div class="chart-container" id="chart-1-ref">
                                         <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -214,7 +215,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                         maintainAspectRatio: false,
                                         
                                         title: {
-                                            display: true,
+                                            display: false,
                                             text: 'Total Number of Accessibility Issues for Websites',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
@@ -318,6 +319,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
+                                <h4 class="text-center">USWDS Code Usage Breakdown for Websites</h4>
                                     <div class="chart-container" id="chart-2-ref">
                                         <canvas id="chart-gov2" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -358,7 +360,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                         // rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
 
                                         title: {
-                                            display: true,
+                                            display: false,
                                             text: 'USWDS Code Usage Breakdown for Websites',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
@@ -465,6 +467,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
+                                <h4 class="text-center">HTTPS Websites Compliance</h4>
                                     <div class="chart-container" id="chart-3-ref"> 
                                         <canvas id="chart-gov3" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -504,7 +507,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                         maintainAspectRatio: false,
                                         //rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
                                         title: {
-                                            display: true,
+                                            display: false,
                                             text: 'HTTPS Websites Compliance',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
@@ -606,6 +609,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
+                                <h4 class="text-center">On-site Search Engine Breakdown</h4>
+
                                     <div class="chart-container" id="chart-4-ref">
                                     <?php $searchenginestatus = $agencydata['searchenginestatus'];
                                        ?>
@@ -648,7 +653,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                         // rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
 
                                         title: {
-                                            display: true,
+                                            display: false,
                                             text: 'On-site Search Engine Breakdown',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
@@ -725,6 +730,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                 </div>    
                                 
                                 <div class="col-md-6 mb-2">
+                                <h4 class="text-center">Mobile Performance Breakdown</h4>
+
                                     <div class="chart-container" id="chart-5-ref">
                                         <canvas id="chart-gov4" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -790,7 +797,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 // rotation: (-5.5*Math.PI) - (25/180 * Math.PI),
 
                                                 title: {
-                                                    display: true,
+                                                    display: false,
                                                     text: 'Mobile Performance Breakdown',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
@@ -839,6 +846,8 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                 </div>
                                 <div class="col-md-6 mt-xs-1 px-xs-0">
+                                <h4 class="text-center">Mobile Usability Breakdown</h4>
+
                                     <div class="chart-container" id="chart-6-ref">
                                         <canvas id="chart-gov5" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -893,7 +902,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 // rotation: (-1.5*Math.PI) - (10/180 * Math.PI),
 
                                                 title: {
-                                                    display: true,
+                                                    display: false,
                                                     text: 'Mobile Usability Breakdown',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
@@ -1001,6 +1010,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
+                                <h4 class="text-center">DAP Websites Compliance</h4>
+
                                     <div class="chart-container" id="chart-7-ref">
                                         <canvas id="chart-gov6" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -1056,7 +1067,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             }
                                         },
                                         title: {
-                                            display: true,
+                                            display: false,
                                             text: 'DAP Websites Compliance',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
