@@ -492,16 +492,10 @@
                <div class="col-xs-12  col-lg-4">
                   <div class="white-back">
                      <div class="panel-pane pane-views pane-website-information">
-                        <div class="col-xs-10 nopadding">
-                           <h2 class="pane-title"> HTTPS Information </h2>
-                        </div>
-                        <div class="col-xs-2 nopadding">
-                           <div id="tooltip2" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
-                              HTTPS Data is collected through a custom scanner component of digital dashboard that last ran on
-                              <?php dotgov_common_lastScanDate();?>
-                              </span>
-                           </div>
-                        </div>
+                        <?php
+                         echo trim(title('HTTPS'));
+                         echo trim(infoIcon("HTTPS Data is collected through a custom scanner component of digital dashboard that last ran on", "tooltip2", dotgov_common_lastScanDateStr()));
+                        ?>
                         <br clear="all"/>
                         <div class="pane-content">
                            <div class="view-wrapper">
