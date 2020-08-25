@@ -646,12 +646,7 @@
                                     ?>
                               </div>
                            </div>
-                           <div class="view-button">
-                              <div class="row text-center">
-                                 <a class="" href="/website/all/reports"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                 <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
-                              </div>
-                           </div>
+                           <?php echo trim(footer()); ?>
                         </div>
                      </div>
                   </div>
@@ -798,12 +793,7 @@
                                              ?>
                                        </div>
                                     </div>
-                                    <div class="view-button">
-                                       <div class="row text-center">
-                                          <a class="" href="/website/all/reports"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                          <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
-                                       </div>
-                                    </div>
+                                    <?php echo trim(footer()); ?>
                                  </div>
                               </div>
                            </div>
@@ -957,12 +947,7 @@
                                                 ?>
                                           </div>
                                        </div>
-                                       <div class="view-button">
-                                          <div class="row text-center">
-                                             <a class="" href="/website/all/reports"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                             <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
-                                          </div>
-                                       </div>
+                                       <?php echo trim(footer()); ?>
                                     </div>
                                  </div>
                               </div>
@@ -1127,12 +1112,7 @@
                               </div>
                            </div>
                         </div>
-                        <div class="view-button">
-                           <div class="row text-center">
-                              <a class="" href="/website/all/reports"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                              <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
-                           </div>
-                        </div>
+                        <?php echo trim(footer()); ?>
                      </div>
                   </div>
                </div>
@@ -1278,12 +1258,7 @@
                                  ?>
                            </div>
                         </div>
-                        <div class="view-button">
-                           <div class="row text-center">
-                              <a class="" href="/website/all/reports"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                              <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
-                           </div>
-                        </div>
+                        <?php echo trim(footer()); ?>
                      </div>
                   </div>
                </div>
