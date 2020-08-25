@@ -1365,12 +1365,7 @@
                            </div>
                         </div>
                      </div>
-                     <div class="view-button">
-                        <div class="row text-center">
-                           <a class="" href="/website/all/uswds"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                           <a href="https://designsystem.digital.gov/maturity-model/"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""/></a>
-                        </div>
-                     </div>
+                     <?php echo trim(footer("/website/all/uswds", "https://designsystem.digital.gov/maturity-model/", "/sites/all/themes/dotgov/images/DD-btn_learn-more1.png")); ?>
                   </div>
                </div>
             </div>
