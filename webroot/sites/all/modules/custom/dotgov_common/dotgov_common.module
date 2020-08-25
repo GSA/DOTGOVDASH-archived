@@ -116,6 +116,17 @@ function dotgov_common_lastScanDate(){
 }
 
 /*
+ * Find Last scan date and return as str
+ */
+function dotgov_common_lastScanDateStr(){
+    $query = db_query("select nid,created from node where type='scans' order by nid desc limit 1");
+    foreach ($query as $result) {
+        $lastscantime = $result->created;
+    }
+    return date("m/d/Y",$lastscantime + + (2 * 24 * 60 * 60))."";
+}
+
+/*
 * Hook Facet Alter
 */
 
