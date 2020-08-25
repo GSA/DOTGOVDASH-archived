@@ -1299,3 +1299,60 @@ function get_mobile_score_information($nid, $performance_score = -1, $usability_
         return NULL;
     }
 }
+
+/*
+ * Title function for widget titles
+ */
+function title($title) {
+ $div = <<<TEMP
+  <div class="col-xs-10 nopadding">
+      <h2 class="pane-title"> $title Information </h2>
+  </div>
+TEMP;
+return $div;
+}
+
+/*
+ * Title function for widget info icons
+ */
+function infoIcon($text, $tooltip, $a) {
+  $div = <<<TEMP
+  <div class="col-xs-2 nopadding">
+      <div id="$tooltip" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+$text $a
+</span> </div>
+  </div>
+TEMP;
+  return $div;
+}
+
+/*
+ * Title function for widget subtext information
+ */
+function subtext($title, $score, $subtext, $divclass = "col-sm-12 col-lg-6 nopadding", $style = "") {
+  $div = <<<TEMP
+  <div class="$divclass" $style>
+     <p> $title Overall Average Score :
+        $score
+        %
+     </p>
+     <span style="font-size:12px;" class="font-italic">$subtext</span>
+  </div>
+TEMP;
+  return $div;
+}
+
+/*
+ * Footer function for widgets
+ */
+function footer($report_link = "/website/all/reports", $img_link = "/improve-my-score", $img_src = "/sites/all/themes/dotgov/images/DD-btn_imp_scores.png") {
+$footer = <<<TEMP
+  <div class="view-button">
+      <div class="row text-center">
+          <a class="$report_link" href="/website/all/reports"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+          <a href="$img_link"><img src="$img_src" width="" height="25" alt=""/></a>
+      </div>
+  </div>
+TEMP;
+  return $footer;
+}
