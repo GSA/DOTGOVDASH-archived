@@ -40,55 +40,55 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                     </div>
                 </div>
             </div>
-            <div class="relative-position mb-2 web-info">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="card card-default shadow">
-                            <div class="card-header card-title">Website Information</div>
-                            <div class="card-body card-5-7 clearfix">
-                                <div class="card-left">
-                                    <img class="dblock-center img-responsive" src="/sites/all/modules/custom/idea_act/images/geography.png" alt="geography" width="70">
-                                </div>
-                                <div class="card-right" style="min-height: 200px;">
-
-                                    <ul class="list-unstyled">
-                                        <li>ID: National Archives and Records Administration</li>
-                                        <li>Site: Domain Scan 911commission.gov</li>
-                                        <li>IP: 129.120.93.242</li>
-                                        <li>DNS: 129.120.93.242</li>
-                                        <li>Hosted At: Not Available</li>
-                                        <li>Cloud Provider:Not Available</li>
-                                        <li>Alexa Ranking: 0</li></ul>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 mt-xs-1">
-                        <div class="card card-default shadow">
-                            <div class="card-header card-title">Certificate Information</div>
-                            <div class="card-body card-5-7 clearfix">
-                                <div class="card-left">
-                                    <img class="dblock-center img-responsive" src="/sites/all/modules/custom/idea_act/images/cloud.png" alt="cloud" width="70">
-                                </div>
-                                <div class="card-right" style="min-height: 200px; ">
-                                    <ul class="list-unstyled">
-                                        <li>Common Name: Not Available</li>
-                                        <li> Not Available</li>
-                                        <li>Valid From: Not Available</li>
-                                        <li>Valid To: Not Available</li>
-                                        <li>Certificate Issuer: Not Available</li>
-                                        <li>Certificate provider: Not Available</li>
-                                        <li>Certificate Status: Not Available</li>
-                                        <li>Certificate Chain: Not Available</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!--            <div class="relative-position mb-2 web-info">-->
+<!--                <div class="row">-->
+<!--                    <div class="col-sm-6">-->
+<!--                        <div class="card card-default shadow">-->
+<!--                            <div class="card-header card-title">Website Information</div>-->
+<!--                            <div class="card-body card-5-7 clearfix">-->
+<!--                                <div class="card-left">-->
+<!--                                    <img class="dblock-center img-responsive" src="/sites/all/modules/custom/idea_act/images/geography.png" alt="geography" width="70">-->
+<!--                                </div>-->
+<!--                                <div class="card-right" style="min-height: 200px;">-->
+<!---->
+<!--                                    <ul class="list-unstyled">-->
+<!--                                        <li>ID: National Archives and Records Administration</li>-->
+<!--                                        <li>Site: Domain Scan 911commission.gov</li>-->
+<!--                                        <li>IP: 129.120.93.242</li>-->
+<!--                                        <li>DNS: 129.120.93.242</li>-->
+<!--                                        <li>Hosted At: Not Available</li>-->
+<!--                                        <li>Cloud Provider:Not Available</li>-->
+<!--                                        <li>Alexa Ranking: 0</li></ul>-->
+<!---->
+<!---->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-sm-6 mt-xs-1">-->
+<!--                        <div class="card card-default shadow">-->
+<!--                            <div class="card-header card-title">Certificate Information</div>-->
+<!--                            <div class="card-body card-5-7 clearfix">-->
+<!--                                <div class="card-left">-->
+<!--                                    <img class="dblock-center img-responsive" src="/sites/all/modules/custom/idea_act/images/cloud.png" alt="cloud" width="70">-->
+<!--                                </div>-->
+<!--                                <div class="card-right" style="min-height: 200px; ">-->
+<!--                                    <ul class="list-unstyled">-->
+<!--                                        <li>Common Name: Not Available</li>-->
+<!--                                        <li> Not Available</li>-->
+<!--                                        <li>Valid From: Not Available</li>-->
+<!--                                        <li>Valid To: Not Available</li>-->
+<!--                                        <li>Certificate Issuer: Not Available</li>-->
+<!--                                        <li>Certificate provider: Not Available</li>-->
+<!--                                        <li>Certificate Status: Not Available</li>-->
+<!--                                        <li>Certificate Chain: Not Available</li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
             <div class="relative-position mb-2">
                 <div class="row">
@@ -364,20 +364,21 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                                             <thead>
                                             <tr>
                                                 <th>USWDS Checks</th>
-                                                <th>Status</th>
+                                                <th> Status</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>USWDS Code:</td>
-                                                <td>Detected</td>
+                                                <td>USWDS Code</td>
+                                                <td><?php
+                                                  print $websitedata['uswdsstatus']?></td>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-title">This website has USWDS code present. This does not mean it is fully compliant, but it is on the right track</p>
+                                    <p class="card-title"> <?= $websitedata['uswdstext'] ?></p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
