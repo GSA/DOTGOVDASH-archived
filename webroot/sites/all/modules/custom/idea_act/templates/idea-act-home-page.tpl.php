@@ -1,8 +1,30 @@
 <style>
 @import "/sites/all/modules/custom/idea_act/css/style.css";
+.mh-235 {   
+    min-height: 235px;
+    line-height: 1.25rem;
+    padding-top: 0.875rem;
+}
+
+/* .info-icon {
+    right: 0 !important;
+} */
+.h2-title {
+    padding-bottom: 2rem;
+}
+
+.d-none {
+    display: none;
+}
 </style>
+
 <?php
 drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+$agencies = $agency_data['actualdata']['agency_data'];
+$total_websites_count = $agency_data['actualdata']['total_websites_count'];
+
+//print "<pre>";  print_r($agencies); print "</pre>"; exit;
 ?>
 
 <div class="idea-container">
@@ -15,32 +37,33 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                         <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
                     </div>
                     <div class="col-md-2 col-md-offset-1 text-right dashboard-right">
-                        <a href="#">
+                        <!-- <a href="#">
                             <img src="/sites/all/modules/custom/idea_act/images/question-icon.png" alt="question icon" class="question-icon" data-placement="left" data-toggle="tooltip" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
-                        </a>
-                        <button class="button download-button" type="submit">Download</button>
+                        </a> -->
+                        <button class="button download-button"  onclick="generatePDF('idea_act_home_page.pdf', 400, 735)" type="submit">Download</button>
                     </div>
                 </div>
             </div>
             <div class="reports bg-white shadow">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="col-sm-6 col-md-4">
+                        <div class="col-sm-6 col-md-4 mb-2 mt-2">
                             <p>Total Public-Facing Websites Reported</p>
-                            <p class="number">1142</p>
+                            <p class="number"><?php echo $total_websites_count['total_websites'] ?></p>
                         </div>
-                        <div class="col-sm-6 col-md-4">
+                        <div class="col-sm-6 col-md-4 mb-2 mt-2">
                             <p>Total Federal Branch Agencies Reported</p>
-                            <p class="number">143</p>
+                            <p class="number"><?php echo $total_websites_count['total_agencies'] ?></p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="requirements bg-white shadow relative-position">
                 <div class="info-icon" id="tooltip-container">
-                    <a data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                    <a  class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                     </a>
-                </div>                    <h2 class="h2-title">Modernization Requirements</h2>
+                </div>                    
+                <h2 class="h2-title">Modernization Requirements</h2>
                 <div class="row text-center">
                     <div class="col-sm-12 modern-wrap mb-2">
                         <div class="col-sm-6 col-md-2 modern-item">
@@ -70,73 +93,41 @@ drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,1
                     </div>
                 </div>
                 <div class="explore text-center">
-                    <a href="/test" class="btn btn-digital disabled">Explore All</a>
+                    <a href="//digital.gov/resources/21st-century-integrated-digital-experience-act/" class="btn btn-digital">Explore All</a>
                 </div>
             </div>
             <div class="agencies bg-white shadow relative-position">
-                <h2 class="h2-title">Browse by Agencies</h2>
                 <div class="info-icon" id="tooltip-container">
-                    <a data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                    <a  class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                     </a>
-                </div>                    <div class="row text-center">
-                    <div class="col-sm-12">
-                        <div class="col-sm-6 col-md-3">
-                            <img src="/sites/all/modules/custom/idea_act/images/general-services.png" alt="General Services" />
-                            <div>General Services Administration</div>
+                </div>     
+                <h2 class="h2-title">Browse by Agencies</h2>          
+                <div class="row text-center">
+                    <div class="row1">
+                    <!-- <div class="col-sm-12"> -->
+                       <?php
+                       $count = 0;
+                        foreach ($agencies as $key => $agency) {
+                            print "<a href=".$agency['nid']."><div class='col-sm-6 col-md-3 mh-235 '>
+                            <img src='" . $agency['url'] . "' alt='". $agency['title'] ."' />
+                            <p>". $agency['title'] ."</p>
                             <p><strong><i>Total Websites</i></strong></p>
-                            <p class="number">98</p>
+                            <p class='number'>". $agency['websitenos'] ."</p>
+                          </div></a>";
+                          if ($count == 3) {
+                              print "</div><div class='row2 d-none' id='row-none'>";
+                          }
+                          $count++;
+                        }
+                        ?>
                         </div>
-                        <div class="col-sm-6 col-md-3">
-                            <img src="/sites/all/modules/custom/idea_act/images/commerce.png" alt="Commerce">
-                            <div>Department of Commerce</div>
-                            <p><strong><i>Total Websites</i></strong></p>
-                            <p class="number">50</p>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <img src="/sites/all/modules/custom/idea_act/images/human-services.png" alt="Human Services" />
-                            <div>Health & Human Services </div>
-                            <p><strong><i>Total Websites</i></strong></p>
-                            <p class="number">107</p>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <img src="/sites/all/modules/custom/idea_act/images/justice.png" alt="Justice" />
-                            <div>Department of Justice </div>
-                            <p><strong><i>Total Websites</i></strong></p>
-                            <p class="number">70</p>
-                        </div>
-                    </div>
-                </div>
-                <div id="explore-all"class="row text-center collapse">
-                    <div class="col-sm-12">
-                        <div class="col-sm-6 col-md-3">
-                            <img src="/sites/all/modules/custom/idea_act/images/general-services.png" alt="General Services" />
-                            <div>General Services Administration</div>
-                            <p><strong><i>Total Websites</i></strong></p>
-                            <p class="number">98</p>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <img src="/sites/all/modules/custom/idea_act/images/commerce.png" alt="Commerce">
-                            <div>Department of Commerce</div>
-                            <p><strong><i>Total Websites</i></strong></p>
-                            <p class="number">50</p>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <img src="/sites/all/modules/custom/idea_act/images/human-services.png" alt="Human Services" />
-                            <div>Health & Human Services </div>
-                            <p><strong><i>Total Websites</i></strong></p>
-                            <p class="number">107</p>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <img src="/sites/all/modules/custom/idea_act/images/justice.png" alt="Justice" />
-                            <div>Department of Justice </div>
-                            <p><strong><i>Total Websites</i></strong></p>
-                            <p class="number">70</p>
-                        </div>
-                    </div>
+                    <!-- </div> -->
                 </div>
 
                 <div class="explore text-center">
-                    <a data-toggle="collapse" data-target="#explore-all" class="btn btn-digital disabled">Explore All</a>
+                    <a class="btn btn-digital show-agencies" id="btn-explore" >Explore All</a>
+                </div>
+               
                 </div>
             </div>
         </div>

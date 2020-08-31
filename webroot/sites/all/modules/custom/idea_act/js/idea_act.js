@@ -1,4 +1,26 @@
+/**
+ * @file
+ * Global utilities.
+ *
+ */
+(function($, Drupal) {
+
+    'use strict';
+  
 jQuery(document).ready(function ($) {
+
+    $("#btn-explore").click(function(){
+        var btn_text = $(this).text();
+        if (btn_text == 'Explore All') {
+          $(this).html("Collapse All");
+          $("#row-none").removeClass( "d-none" );
+        }
+        else {
+          $(this).html("Explore All");
+          $("#row-none").addClass( "d-none" );
+        }
+      });
+
     $('#tooltip-container [data-toggle="tooltip"]').tooltip({
         animated: 'fade',
         placement: 'left',
@@ -41,3 +63,5 @@ jQuery(document).ready(function ($) {
     };
 
 });
+})(jQuery, Drupal);
+  
