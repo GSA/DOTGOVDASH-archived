@@ -71,7 +71,7 @@ $total_websites_count = $agency_data['actualdata']['total_websites_count'];
                             <p>Websites shall be accessible to individuals with disabilities</p>
                         </div>
                         <div class="col-sm-6 col-md-2 modern-item">
-                            <h4><strong>USDWS</strong></h4>
+                            <h4><strong>USWDS</strong></h4>
                             <p>Websites shall be consistent in  appearance</p>
                         </div>
                         <div class="col-sm-6 col-md-2 modern-item">
