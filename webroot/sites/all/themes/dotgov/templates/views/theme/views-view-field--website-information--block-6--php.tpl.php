@@ -149,6 +149,7 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
     $performance_chart_color = "#654f00";
   } else {
     $performance_chart_data_text = "Good";
+    $performance_chart_pie_title = "Good";
     $performance_chart_color = "#29643a";
   }
   $performance_chart_data = intval($row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ]);
