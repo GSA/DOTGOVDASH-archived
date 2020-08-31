@@ -77,19 +77,17 @@
 <script type="text/javascript">
     function generatePDF(fileName, pageWidth, pageHeight, websiteInfoPage) {
       if(websiteInfoPage) {
-        let divElement = document.querySelector("#techstack");
-        divElement.classList.add("split-column");
+          jQuery( "#techstack" ).addClass( "split-column" );
       }
       var element = document.getElementById("main-container");
-      // Choose the element and save the PDF for our user.
       html2pdf()
       .set({
-          filename: fileName,
+          filename: fileName + '.pdf',
           jsPDF: {format:[pageWidth,pageHeight]},
       })
       .from(element)
       .save().then(function () {
-        divElement.classList.remove("split-column");
+        jQuery( "#techstack" ).removeClass( "split-column" );
         });
     }
 </script>

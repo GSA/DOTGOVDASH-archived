@@ -43,6 +43,10 @@
  * @ingroup themeable
  */
 ?>
+<style>
+.height-175 { min-height: 175px !important; }
+.height-80 { min-height: 80px !important; }
+</style>
 <?php print $output; ?>
 <?php
 $data_performance = $row->field_field_mobile_performance_score[0]['raw']['value'];
@@ -98,6 +102,8 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
 }
 
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
+  $heightChange = "";
+  $height80 = "";
   if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === "" || $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
     $crit_text .= "Mobile Usability: Not Available";
   } else if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] == 100) {
@@ -106,6 +112,8 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
     $crit_text .= "Mobile Usability: Not Mobile Friendly";
   }
 } else {
+  $heightChange = "height-175";
+  $height80 = "height-80";
   $crit_text .= "Mobile Usability: <span style=\"color:white;\">" . $redirect_message . "</span><br>";
 }
 
@@ -114,27 +122,27 @@ dotgov_common_tooltip("tooltip4","id");
 <div class="col-xs-10">
     <h2 class="pane-title"> Mobile Information </h2>
 </div>
-<div class="col-xs-2 nopadding">
+<div class="col-xs-2 nopadding" style="z-index: 3;">
     <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
         <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
           <?php print nl2br($crit_text);?></span>
     </div>
 </div>
 
-<div class="col-lg-12 clearfix">
+<div class="col-sm-12 clearfix <?php echo $height80?>" style="float: left;">
 <?php
 $chart_data_font = "7.5px";
 $performance_title = "Mobile Performance";
 $usability_title = "Mobile Usability";
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] == "" || $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
-    $performance_chart_data_text = "Not Available";
+    $performance_chart_data_text = "Not<br>Available";
     $performance_chart_color = "#ac0600";
   } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 50 ) {
     $performance_chart_data_text = "Poor";
     $performance_chart_color = "#ac0600";
   } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 90 ) {
-    $performance_chart_data_text = "Needs Improvement";
+    $performance_chart_data_text = "Needs<br>Improvement";
     $performance_chart_color = "#654f00";
   } else {
     $performance_chart_data_text = "Good";
@@ -148,15 +156,15 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
 
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === "" || $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
-    $usability_chart_data_text = "Not Available";
+    $usability_chart_data_text = "Not<br>Available";
     $usability_chart_data = "0";
     $usability_chart_color = "#ac0600";
   } else if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] == 100) {
-    $usability_chart_data_text = "Mobile Friendly";
+    $usability_chart_data_text = "Mobile<br>Friendly";
     $usability_chart_data = "100";
     $usability_chart_color = "#29643a";
   } else {
-    $usability_chart_data_text = "Not Mobile Friendly";
+    $usability_chart_data_text = "Not Mobile<br>Friendly";
     $usability_chart_data = "0";
     $usability_chart_color = "#ac0600";
   }
@@ -168,22 +176,23 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
 </div>
 
 <?php if (!is_redirect(arg(1))): ?>
-<div class="col-lg-12 clearfix" style="margin-top: 15px;">
+<div class="col-lg-12 clearfix">
   <div class="col-lg-6" style="left: 50px;">
-    <p><?php echo($performance_title); ?></p>
+
   </div>
   <div class="col-lg-6" style="left: 60px;">
-    <p><?php echo($usability_title); ?></p>
   </div>
 </div>
 <?php endif; ?>
-<div class="col-lg-12 clearfix">
+<div class="col-lg-12 clearfix <?php echo $heightChange?>" style="min-height: 210px;">
   <?php if (!is_redirect(arg(1))): ?>
-    <div class="col-lg-6">
+    <div class="col-sm-6">
         <div id="performance_chart" style="width: 140px; height:140px; margin: 0 auto">&nbsp;</div>
+        <p class="text-center" style="font-size: 17px;"><?php echo($performance_title); ?></p>
     </div>
-    <div class="col-lg-6">
+    <div class="col-sm-6">
         <div id="usability_chart" style="width: 140px; height:140px; margin: 0 auto">&nbsp;</div>
+        <p class="text-center" style="font-size: 17px;"><?php echo($usability_title); ?></p>
     </div>
   <?php endif; ?>
 </div>
@@ -212,12 +221,16 @@ $scanpath = drupal_get_path_alias("node/" . $row->nid);
             title: {
                 text: ''
             },
+            credits: {
+                enabled: false
+             },
             tooltip: {
                 enabled:false,
             },
             pane: {
                 startAngle: 0,
                 endAngle: 360,
+                size: '75%',
                 background: [{
                     outerRadius: '118%',
                     innerRadius: '80%',
@@ -236,7 +249,7 @@ $scanpath = drupal_get_path_alias("node/" . $row->nid);
                         fontSize: '<?=$chart_data_font?>',
                         color:'<?php echo $performance_chart_color; ?>',
                     },
-                    y: 30
+                    y: 20
                 },
             },
             plotOptions: {
@@ -276,6 +289,7 @@ $scanpath = drupal_get_path_alias("node/" . $row->nid);
             pane: {
                 startAngle: 0,
                 endAngle: 360,
+                size: '75%',
                 background: [{
                     outerRadius: '118%',
                     innerRadius: '80%',
@@ -294,7 +308,7 @@ $scanpath = drupal_get_path_alias("node/" . $row->nid);
                         fontSize: '<?=$chart_data_font?>',
                         color:'<?php echo $usability_chart_color; ?>',
                     },
-                    y: 30
+                    y: 20
                 },
             },
             plotOptions: {
