@@ -136,13 +136,16 @@ $performance_title = "Mobile Performance";
 $usability_title = "Mobile Usability";
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] == "" || $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
-    $performance_chart_data_text = "Not<br>Available";
+    $performance_chart_data_text = "Not Available";
+    $performance_chart_pie_title = "Not Available";
     $performance_chart_color = "#ac0600";
   } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 50 ) {
     $performance_chart_data_text = "Poor";
+    $performance_chart_pie_title = "Poor";
     $performance_chart_color = "#ac0600";
   } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 90 ) {
-    $performance_chart_data_text = "Needs<br>Improvement";
+    $performance_chart_data_text = "Needs Improvement";
+    $performance_chart_pie_title = "Needs<br>Improvement";
     $performance_chart_color = "#654f00";
   } else {
     $performance_chart_data_text = "Good";
@@ -156,15 +159,18 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
 
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === "" || $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
-    $usability_chart_data_text = "Not<br>Available";
+    $usability_chart_data_text = "Not Available";
+    $usability_chart_pie_title = "Not Available";
     $usability_chart_data = "0";
     $usability_chart_color = "#ac0600";
   } else if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] == 100) {
-    $usability_chart_data_text = "Mobile<br>Friendly";
+    $usability_chart_data_text = "Mobile Friendly";
+    $usability_chart_pie_title = "Mobile<br>Friendly";
     $usability_chart_data = "100";
     $usability_chart_color = "#29643a";
   } else {
-    $usability_chart_data_text = "Not Mobile<br>Friendly";
+    $usability_chart_data_text = "Not Mobile Friendly";
+    $usability_chart_pie_title = "Not Mobile<br>Friendly";
     $usability_chart_data = "0";
     $usability_chart_color = "#ac0600";
   }
@@ -184,7 +190,7 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   </div>
 </div>
 <?php endif; ?>
-<div class="col-lg-12 clearfix <?php echo $heightChange?>" style="min-height: 170px;">
+<div class="col-lg-12 clearfix <?php echo $heightChange?>" style="min-height: 210px;">
   <?php if (!is_redirect(arg(1))): ?>
     <div class="col-sm-6">
         <div id="performance_chart" style="width: 140px; height:140px; margin: 0 auto">&nbsp;</div>
@@ -244,7 +250,7 @@ $scanpath = drupal_get_path_alias("node/" . $row->nid);
                 lineWidth: 0,
                 tickPositions: [],
                 title: {
-                    text: '<?php echo ($performance_chart_data_text); ?>',
+                    text: '<?php echo ($performance_chart_pie_title); ?>',
                     style: {
                         fontSize: '<?=$chart_data_font?>',
                         color:'<?php echo $performance_chart_color; ?>',
@@ -303,7 +309,7 @@ $scanpath = drupal_get_path_alias("node/" . $row->nid);
                 lineWidth: 0,
                 tickPositions: [],
                 title: {
-                    text: '<?php echo ($usability_chart_data_text); ?>',
+                    text: '<?php echo ($usability_chart_pie_title); ?>',
                     style: {
                         fontSize: '<?=$chart_data_font?>',
                         color:'<?php echo $usability_chart_color; ?>',
