@@ -131,7 +131,7 @@ dotgov_common_tooltip("tooltip4","id");
 
 <div class="col-sm-12 clearfix <?php echo $height80?>" style="float: left;">
 <?php
-$chart_data_font = "7.5px";
+$chart_data_font = "10px";
 $performance_title = "Mobile Performance";
 $usability_title = "Mobile Usability";
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
@@ -184,7 +184,7 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   </div>
 </div>
 <?php endif; ?>
-<div class="col-lg-12 clearfix <?php echo $heightChange?>" style="min-height: 210px;">
+<div class="col-lg-12 clearfix <?php echo $heightChange?>" style="min-height: 170px;">
   <?php if (!is_redirect(arg(1))): ?>
     <div class="col-sm-6">
         <div id="performance_chart" style="width: 140px; height:140px; margin: 0 auto">&nbsp;</div>
