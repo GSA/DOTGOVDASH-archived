@@ -2,6 +2,8 @@
 module_load_include('inc', 'idea_act', 'includes/idea_act_gov_wide');
 module_load_include('inc', 'idea_act', 'includes/idea_act_agency_wide');
 module_load_include('inc', 'idea_act', 'includes/idea_act_website');
+module_load_include('inc', 'idea_act', 'includes/idea_act_home_page');
+
 
 
 
@@ -73,7 +75,8 @@ function idea_act_theme($existing, $type, $theme, $path) {
  */
 function idea_act_home_page() {
     $processed_vars['idea_home'] = "Test";
-    return theme('idea_home_page', array('processed_vars' => $processed_vars));
+    $processed_vars['actualdata'] = idea_act_home_Agencydata();
+    return theme('idea_home_page', array('agency_data' => $processed_vars));
 }
 
 /*
