@@ -1,20 +1,7 @@
 <style>
 @import "/sites/all/modules/custom/idea_act/css/style.css";
-.mh-235 {   
-    min-height: 235px;
-    line-height: 1.25rem;
-    padding-top: 0.875rem;
-}
-
-/* .info-icon {
-    right: 0 !important;
-} */
 .h2-title {
     padding-bottom: 2rem;
-}
-
-.d-none {
-    display: none;
 }
 </style>
 
@@ -102,15 +89,15 @@ $total_websites_count = $agency_data['actualdata']['total_websites_count'];
                     </a>
                 </div>     
                 <h2 class="h2-title">Browse by Agencies</h2>          
-                <div class="row text-center">
+                <div class="row text-center browse-agencies">
                     <div class="row1">
                     <!-- <div class="col-sm-12"> -->
                        <?php
                        $count = 0;
                         foreach ($agencies as $key => $agency) {
-                            print "<a href=/ideaact/agencywide/dashboard/".$agency['nid']." target='_blank'><div class='col-sm-6 col-md-3 mh-235 '>
-                            <img src='" . $agency['url'] . "' alt='". $agency['title'] ."' />
-                            <p>". $agency['title'] ."</p>
+                            print "<a href=/ideaact/agencywide/dashboard/".$agency['nid']." target='_blank'><div class='col-sm-6 col-md-3 agency-info '>
+                            <img class='agency-logo' src='" . $agency['url'] . "' alt='". $agency['title'] ."' />
+                            <p class='agency-title'>". $agency['title'] ."</p>
                             <p><strong><i>Total Websites</i></strong></p>
                             <p class='number'>". $agency['websitenos'] ."</p>
                           </div></a>";
