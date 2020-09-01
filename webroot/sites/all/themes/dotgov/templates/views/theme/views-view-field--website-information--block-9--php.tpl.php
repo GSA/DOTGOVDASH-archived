@@ -70,14 +70,26 @@ dotgov_common_tooltip("tooltip9","id");
 </div>
 </div>
 <?php if (!is_redirect(arg(1))): ?>
-    <div class="col-lg-<?php echo (emptyOrNull($colorcont) && emptyOrNull($htmlattri) && emptyOrNull($missingim)) ? '8' : '5'; ?> nopadding">
+    <div class="col-xs-12 nopadding">
         Color Contrast: <?php print !emptyOrNull($colorcont) ? $colorcont : 0; ?> <br/>
         HTML Attribute: <?php print !emptyOrNull($htmlattri) ? $htmlattri : 0; ?> <br/>
         Missing Image Description: <?php print !emptyOrNull($missingim) ? $missingim : 0; ?>
     </div>
-    <div class="col-lg-<?php echo (emptyOrNull($colorcont) && emptyOrNull($htmlattri) && emptyOrNull($missingim)) ? '4' : '7'; ?> nopadding">
-        <div id="access_chart" style="height:198px;">&nbsp</div>
-    </div>
+    <div class="col-xs-12 nopadding">
+        <div style="display:block; float:left;min-height: 185px; width:100%;">
+            <div class="col-xs-7">
+            <ul class="access-issues nopadding" style="margin-left: auto;margin-top: 30px;font-size:12px; line-height: 16px;">
+            <li class="b-1">Color Contrast Issues</li>
+            <li class="b-2">HTML Attribute issues</li>
+            <li class="b-3">Missing Image description</li>
+        </ul>
+            </div>
+            <div class="col-xs-5">
+            <div id="access_chart" style="height: 110px;width: 110px;float: right;margin-top: -2px; "></div>
+            </div>
+        </div>    
+        <!-- <div id="access_chart" style="height:192px;">&nbsp</div> -->
+    </div> 
 <?php else: ?>
     <div class="col-lg-12 nopadding" style="min-height: 235px;">
         Color Contrast: <span style="color:#a70000;"><?php print $redirect_message; ?></span><br>
@@ -111,7 +123,7 @@ dotgov_common_tooltip("tooltip9","id");
             enabled: false
         },
         legend:{
-            width: 220
+            enabled: false
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
