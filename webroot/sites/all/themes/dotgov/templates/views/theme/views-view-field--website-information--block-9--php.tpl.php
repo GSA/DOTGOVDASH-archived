@@ -76,7 +76,7 @@ dotgov_common_tooltip("tooltip9","id");
         Missing Image Description: <?php print !emptyOrNull($missingim) ? $missingim : 0; ?>
     </div>
     <div class="col-lg-<?php echo (emptyOrNull($colorcont) && emptyOrNull($htmlattri) && emptyOrNull($missingim)) ? '4' : '7'; ?> nopadding">
-        <div id="access_chart" style="height:198px;">&nbsp</div>
+        <div id="access_chart" style="height:192px;">&nbsp</div>
     </div>
 <?php else: ?>
     <div class="col-lg-12 nopadding" style="min-height: 235px;">
