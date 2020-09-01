@@ -16,7 +16,7 @@ function ideaact_get_website_data($websiteid){
       $websitedata['uswdstext'] = 'Data Not Available for this website.';
     } elseif ($websitedata['uswdsscore'] == '0') {
       $websitedata['uswdsstatus'] = "Not Detected";
-      $websitedata['uswdstext'] = 'This website has no USWDS code present.';
+      $websitedata['uswdstext'] = 'This website does not have USWDS code present.';
     } elseif ($websitedata['uswdsscore'] == '100') {
       $websitedata['uswdsstatus'] = "Detected";
       $websitedata['uswdstext'] = 'This website has USWDS code present. This does not mean it is fully compliant, but it is on the right track.';
