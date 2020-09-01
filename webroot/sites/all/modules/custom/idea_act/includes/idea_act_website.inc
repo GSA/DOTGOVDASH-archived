@@ -45,10 +45,93 @@ function ideaact_get_website_data($websiteid){
   }
   else{
     $websitedata['onsitestatus'] = 'Website Redirect - Metric Not Applicable';
-    $websitedata['onsiteengine']='Not Applicabale';
+    $websitedata['onsiteengine']='Not Applicable';
     $websitedata['onsitetext'] = 'The Metric is not applicable for this website (This website is a redirect).';
   }
 
+  #Security Information
+  if(!is_redirect($websiteid)) {
+    if ($wnode ->field_m15_13_compliance_score['und'][0]['value'] = 0){
+      $websitedata['m1513status'] = 'Non Complaint';
+      $websitedata['HttpsStatus'] = $wnode -> field_m15_13_compliance_score['und'][0]['value'];
+      $websitedata['EnforceHttps'] = 'This website has an on-site search.';
+    }
+    elseif($wnode ->field_m15_13_compliance_score['und'][0]['value'] = 0){
+      $websitedata['m1513status'] = 'Complaint';
+      $websitedata['HttpsStatus'] = $wnode -> field_m15_13_compliance_score['und'][0]['value'];
+      $websitedata['EnforceHttps'] = 'This website has an on-site search.';
+    }
+    else{
+      $websitedata['m1513status'] = 'Data Not Available';
+      $websitedata['HttpsStatus'] = 'Not Available';
+      $websitedata['EnforceHttps'] = 'This website has an no on-site search.';
+    }
+  }
+  else{
+    $websitedata['m1513status'] = 'Website Redirect - Metric Not Applicable';
+    $websitedata['HttpsStatus']='Not Applicable';
+    $websitedata['EnforceHttps'] = 'The Metric is not applicable for this website (This website is a redirect).';
+
+  }
+
+  #free secure protocols
+  if(!is_redirect($websiteid)) {
+    if ($wnode ->field_free_of_insecr_prot_score['und'][0]['value'] = 0){
+      $websitedata['Freestatus'] = 'No';
+    }
+    elseif ($wnode ->field_free_of_insecr_prot_score['und'][0]['value'] = 100){
+      $websitedata['Freestatus'] = 'Yes';
+    }
+    else{
+      $websitedata['Freestatus'] = 'Data Not Available';
+    }
+  }
+  else{
+    $websitedata['Freestatus']  = 'Website Redirect - Metric Not Applicable';
+//    $websitedata['onsiteengine']='Not Applicabale';
+//    $websitedata['Freestatus']  = 'The Metric is not applicable for this website (This website is a redirect).';
+  }
+
+
+
+  # Mobile Information
+  if(!is_redirect($websiteid)) {
+    if ($wnode->field_mobile_performance_status['und'][0]['safe_value'] = 'Poor') {
+      $websitedata['mobileperf'] = 'Poor';
+      $websitedata['mobileperftext'] = 'This website is not responsive';
+    } elseif ($wnode->field_mobile_performance_status['und'][0]['safe_value'] = 'Good') {
+      $websitedata['mobileperf'] = 'Good';
+      $websitedata['mobileperftext'] = 'This website is very responsive';
+    } elseif ($wnode->field_mobile_performance_status['und'][0]['safe_value'] = 'Needs Improvement') {
+      $websitedata['mobileperf'] = 'Needs Improvement';
+      $websitedata['mobileperftext'] = 'This website is responsive';
+    } else {
+      $websitedata['mobileperf'] = 'Not Available';
+      $websitedata['mobileperftext'] = 'Data Not Available';
+    }
+  }
+  else{
+    $websitedata['mobileperf'] = 'Website Redirect - Metric Not Applicable';
+    $websitedata['mobileperftext'] = 'The Metric is not applicable for this website (This website is a redirect).';
+  }
+
+
+  # Mobile Usability Information
+  if(!is_redirect($websiteid)) {
+    if ($wnode->field_mobile_usability_status['und'][0]['safe_value'] = 'Not Mobile Friendly') {
+      $websitedata['mobileusab'] = 'Not Mobile Friendly';
+      $websitedata['mobileperftext'] = 'This website is not responsive';
+    } elseif ($wnode->field_mobile_usability_status['und'][0]['safe_value'] = 'Mobile Friendly') {
+      $websitedata['mobileusab'] = 'Mobile Friendly';
+    } else {
+      $websitedata['mobileusab'] = 'Data Not Available';
+      $websitedata['mobileusabtext'] = 'Not Available';
+    }
+  }
+  else{
+    $websitedata['mobileusab'] = 'Website Redirect - Metric Not Applicable';
+    $websitedata['mobileusabtext'] = 'The Metric is not applicable for this website (This website is a redirect).';
+  }
 
   return $websitedata;
 }

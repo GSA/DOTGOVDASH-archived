@@ -221,24 +221,24 @@ $websitedata = ideaact_get_website_data(arg(3));
                                             <thead>
                                             <tr>
                                                 <th>Mobile Information</th>
-                                                <th>Score</th>
+                                                <th>Status</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>Mobile Performance Score </td>
-                                                <td>97</td>
+                                                <td>Mobile Performance </td>
+                                                <td><?= $websitedata['mobileperf'] ?></td>
                                             </tr>
                                             <tr>
-                                                <td>Mobile Usability Score</td>
-                                                <td>99</td>
+                                                <td>Mobile Usability</td>
+                                                <td><?= $websitedata['mobileusab'] ?></td>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-title">This website is very responsive and mobile friendly.</p>
+                                    <p class="card-title"> <?=$websitedata['mobileperftext']?> and <?=$websitedata['mobileusabtext']?></p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
@@ -301,14 +301,14 @@ $websitedata = ideaact_get_website_data(arg(3));
                                             <div class="col-md-5 pl-0 mt-xs-2">
                                                 <div class="shadow p-1">
                                                     <h5>M-15-13 and BOD 18-01 Information</h5>
-                                                    <div>Compliant</div>
+                                                    <div><?= $websitedata['m1513status']?>></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-5 col-md-offset-1 mt-xs-2 pr-0">
                                                 <div class="shadow p-1">
                                                     <h5>Free of Insecure Protocols Information</h5>
                                                     <div>Free of RC4/3DES and </div>
-                                                    <div>SSLv2/SSlv3: Yes </div>
+                                                    <div>SSLv2/SSlv3: <?= $websitedata['Freestatus']?> </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -417,7 +417,9 @@ $websitedata = ideaact_get_website_data(arg(3));
                                             </tr>
                                             <tr>
                                               <td>Search engine</td>
-                                              <td> <?= $websitedata['onsiteengine'] ?> </td>
+                                              <td> <?php
+                                                print "<span style='text-transform: capitalize;'>".$websitedata['onsiteengine']."</span>";?> </td>
+                                            </tr>
                                             </tr>
                                             </tbody>
                                         </table>
