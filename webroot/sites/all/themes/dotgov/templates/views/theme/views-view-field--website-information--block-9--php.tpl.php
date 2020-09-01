@@ -109,6 +109,20 @@ dotgov_common_tooltip("tooltip9","id");
 </div>
 
 <script type="text/javascript">
+    var data = [];
+    data = colorPercentage(data, 'Color Contrast Issues', <?php print_r(!emptyOrNull($colorcont) ? $colorcont : 0); ?>);
+    data = colorPercentage(data, 'HTML Attribute Issues', <?php print_r(!emptyOrNull($htmlattri) ? $htmlattri : 0); ?>);
+    data = colorPercentage(data, 'Missing Image Description Issues', <?php print_r(!emptyOrNull($missingim) ? $missingim : 0); ?>);
+
+    function colorPercentage(data, dataName, dataY) {
+      if (dataY >= 0) {
+        data.push({
+          name: dataName,
+          y: dataY
+        });
+      }
+      return data;
+    }
     Highcharts.chart('access_chart', {
         chart: {
             plotBackgroundColor: null,
@@ -133,7 +147,14 @@ dotgov_common_tooltip("tooltip9","id");
                 allowPointSelect: true,
                 cursor: 'pointer',
                 dataLabels: {
-                    enabled: false
+                    enabled: true,
+                    format: "<br>{point.percentage:.1f}%",
+                    distance: -16,
+                    filter: {
+                      property: 'percentage',
+                      operator: '>',
+                      value: 18
+                    }
                 },
                 size: '101.78',
                 <?php if($showlegend == 1) print "showInLegend: true"; ?>
@@ -142,16 +163,7 @@ dotgov_common_tooltip("tooltip9","id");
         series: [{
             name: 'Percentage',
             colorByPoint: true,
-            data: [{
-                name: 'Color Contrast Issues',
-                y: <?php print_r(!emptyOrNull($colorcont) ? $colorcont : 0); ?>
-            }, {
-                name: 'HTML Attribute Issues',
-                y: <?php print_r(!emptyOrNull($htmlattri) ? $htmlattri : 0); ?>
-            }, {
-                name: 'Missing Image Description Issues',
-                y: <?php print_r(!emptyOrNull($missingim) ? $missingim : 0); ?>
-            }]
+            data: data
         }]
     });
 </script>
