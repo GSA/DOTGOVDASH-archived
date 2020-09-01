@@ -112,7 +112,7 @@ $websitedata = ideaact_get_website_data(arg(3));
 
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
                                 <div class="col-sm-6">
@@ -212,7 +212,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
                                 <div class="col-sm-6">
@@ -287,20 +287,8 @@ $websitedata = ideaact_get_website_data(arg(3));
                                                 <td>Yes</td>
                                             </tr>
                                             <tr>
-                                                <td>HSTS Status</td>
-                                                <td>Yes</td>
-                                            </tr>
-                                            <tr>
-                                                <td>HTTPS Score</td>
-                                                <td>90</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Preload Status</td>
-                                                <td>No</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Preload Ready</td>
-                                                <td>No</td>
+                                              <td>HTTPS Status</td>
+                                              <td>Enabled</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -314,14 +302,13 @@ $websitedata = ideaact_get_website_data(arg(3));
                                                 <div class="shadow p-1">
                                                     <h5>M-15-13 and BOD 18-01 Information</h5>
                                                     <div>Compliant</div>
-                                                    <div>Score: 100</div>
                                                 </div>
                                             </div>
                                             <div class="col-md-5 col-md-offset-1 mt-xs-2 pr-0">
                                                 <div class="shadow p-1">
                                                     <h5>Free of Insecure Protocols Information</h5>
                                                     <div>Free of RC4/3DES and </div>
-                                                    <div>SSLv2/SSlv3: 1 </div>
+                                                    <div>SSLv2/SSlv3: Yes </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -379,7 +366,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                                     </div>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-title"> <?= $websitedata['uswdstext'] ?></p>
+                                    <p class="card-title" > <?= $websitedata['uswdstext'] ?></p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
@@ -410,7 +397,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
                                 <div class="col-sm-6">
@@ -424,15 +411,20 @@ $websitedata = ideaact_get_website_data(arg(3));
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>On-site search engine:</td>
-                                                <td>Available</td>
+                                                <td>On-site search</td>
+                                                <td> <?= $websitedata['onsitestatus']
+                                                ?> </td>
+                                            </tr>
+                                            <tr>
+                                              <td>Search engine</td>
+                                              <td> <?= $websitedata['onsiteengine'] ?> </td>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-title">This website has an on-site search.</p>
+                                  <p class="card-title"> <?= $websitedata['onsitetext'] ?></p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
