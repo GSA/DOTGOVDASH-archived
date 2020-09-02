@@ -4,10 +4,29 @@ function ideaact_get_website_data($websiteid){
   $websitedata = array();
   $websitedata['websiteid'] = $websiteid;
 
+  $wnode = node_load(arg(3));
+
+  #website header info
+  $websitedata['websitename'] = $wnode->body['und'][0]['value'];
+  $websitedata['agencyname'] = $wnode->field_parent_agency_name['und'][0]['value'];
+  $websitedata['agencyid'] = $wnode->field_web_agency_id['und'][0]['nid'];
+  $websitedata['agencylogo'] = '';
+  $websitedata['agencyacr'] = '';
+  $agencynode = node_load($websitedata['agencyid'] );
+  if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
+    $logo_url = file_create_url($agencynode->field_agency_logo['und'][0]['uri']);
+    $websitedata['agencylogo'] = "<img src='". $logo_url ."' alt='".$websitedata['agencyname']."' width='100'>";
+  } 
+  if ($agencynode->field_agency_code['und'][0]['value'] != '') {
+    $acronym_name = $agencynode->field_agency_code['und'][0]['value'];
+    // $websitedata['agencyacr'] = $agencynode->field_agency_code['und'][0]['value'];
+    $websitedata['agencyacr'] = "<p class='acr-wrap'>".$acronym_name."</p>";
+
+  } 
+  
 #uswds code results
   $scanids = dotgov_common_siteAsocScanids(arg(3));
   $scanpath = drupal_get_path_alias("node/" . $scanids['uswds_scan']);
-  $wnode = node_load(arg(3));
 
   $websitedata['uswdsscore'] = db_query("select a.field_uswds_score_value from field_data_field_uswds_score a , field_data_field_uswds_status b,field_data_field_website_id c where a.entity_id=c.field_website_id_nid and b.entity_id=c.entity_id and a.entity_id=:nid", array(":nid" => $websiteid))->fetchField();
   if(!is_redirect($websiteid)) {
