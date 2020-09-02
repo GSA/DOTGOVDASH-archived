@@ -283,12 +283,12 @@ $websitedata = ideaact_get_website_data(arg(3));
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>Enforce HTTPS</td>
-                                                <td>Yes</td>
+                                              <td>Enforce HTTPS</td>
+                                              <td><?=$websitedata['EnforceHttps']?></td>
                                             </tr>
                                             <tr>
-                                              <td>HTTPS Status</td>
-                                              <td>Enabled</td>
+                                              <td>Https Status</td>
+                                              <td><?=$websitedata['HttpsStatus']?></td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -301,7 +301,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                                             <div class="col-md-5 pl-0 mt-xs-2">
                                                 <div class="shadow p-1">
                                                     <h5>M-15-13 and BOD 18-01 Information</h5>
-                                                    <div><?= $websitedata['m1513status']?>></div>
+                                                    <div><?= $websitedata['m1513status']?></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-5 col-md-offset-1 mt-xs-2 pr-0">
