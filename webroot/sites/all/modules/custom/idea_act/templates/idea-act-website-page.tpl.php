@@ -28,10 +28,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                         <div class="col-sm-9 col-md-6">
                             <div class="row">
                                 <div class="col-md-12 d-flex">
-                                    <div class="col-sm-3"> <?php print $websitedata['agencylogo']; ?></div>
-                                    <div class="col-sm-9">
-                                        <p class="fs-1-5"><b><?php print $websitedata['agencyname']; ?></b></p>
-                                    </div>
+                                    <?php print $websitedata['agency_header_info'] ?>
                                 </div>
                             </div>
                         </div>

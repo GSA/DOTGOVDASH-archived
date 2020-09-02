@@ -12,6 +12,7 @@ function ideaact_get_website_data($websiteid){
   $websitedata['agencyid'] = $wnode->field_web_agency_id['und'][0]['nid'];
   $websitedata['agencylogo'] = '';
   $websitedata['agencyacr'] = '';
+  $websitedata['agency_header_info'] = '';
   $httpsid = $wnode -> field_https_scan_node['und'][0]['target_id'];
   $httpsnode = node_load($httpsid );
   $agencynode = node_load($websitedata['agencyid'] );
@@ -23,7 +24,16 @@ function ideaact_get_website_data($websiteid){
     $acronym_name = $agencynode->field_agency_code['und'][0]['value'];
     // $websitedata['agencyacr'] = $agencynode->field_agency_code['und'][0]['value'];
     $websitedata['agencyacr'] = "<p class='acr-wrap'>".$acronym_name."</p>";
-
+  }
+  if($agencynode->field_agency_logo['und'][0]['uri'] != '') {
+    $websitedata['agency_header_info'] = "<div class='col-sm-3'>".$websitedata['agencylogo']."</div>
+    <div class='col-sm-9'>
+        <p class='fs-1-5'><b>".$websitedata['agencyname']."</b></p>
+    </div>";
+  } else {
+    $websitedata['agency_header_info'] = "<div class='col-sm-12'>
+        <p class='fs-1-5'><b>".$websitedata['agencyname']."</b></p>
+    </div>";
   }
 
 #uswds code results
