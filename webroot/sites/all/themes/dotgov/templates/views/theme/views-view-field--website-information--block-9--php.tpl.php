@@ -85,7 +85,7 @@ dotgov_common_tooltip("tooltip9","id");
         </ul>
             </div>
             <div class="col-xs-5">
-            <div id="access_chart" style="height: 110px;width: 110px;float: right;margin-top: -2px; "></div>
+            <div id="access_chart" style="height: 125px;width: 140px;margin-top: -7px;"></div>
             </div>
         </div>    
         <!-- <div id="access_chart" style="height:192px;">&nbsp</div> -->
