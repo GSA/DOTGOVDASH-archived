@@ -264,7 +264,7 @@ function execCommand($com, &$out, &$ret){
  */
 
 function getIPInfo($domain){
-    $command = "timeout 15 dig $domain +short";
+    $command = "timeout 15 dig $domain +short @205.171.2.65";
     $outp = array();
     $comret = "";
     execCommand("$command",$outp,$comret);
@@ -278,7 +278,7 @@ function getIPInfo($domain){
 
 function getNSInfo($domain){
     $basedomain = getBaseDomain($domain);
-    $command = "timeout 15 dig $basedomain +short";
+    $command = "timeout 15 dig $basedomain +short @205.171.2.65";
     $outp = array();
     $comret = "";
     execCommand("$command",$outp,$comret);
@@ -960,9 +960,9 @@ function getCustomIpv6Status($domain){
         $ipv6stat = '0';
     }
 
-    $ipv6address = shell_exec("timeout 15 dig AAAA +short $domain");
+    $ipv6address = shell_exec("timeout 15 dig AAAA +short $domain @205.171.2.65");
     $ipv6ret['status'] = $ipv6stat;
-    execCommand("timeout 15 dig AAAA +short $domain",$ipv6outp,$ipcomret);
+    execCommand("timeout 15 dig AAAA +short $domain @205.171.2.65",$ipv6outp,$ipcomret);
     $ipv6ret['address'] = $ipv6outp[0];
     $ipv6ret['output'] = $commandOutputforStore;
     return $ipv6ret;
@@ -2012,7 +2012,7 @@ function findCDNProvider($website){
         ".yimg."=>"Yahoo",
         ".zenedge.net"=>"Zenedge"
     );
-    $comout = shell_exec("timeout 15 dig +trace $website");
+    $comout = shell_exec("timeout 15 dig +trace $website @205.171.2.65");
     $cdnMatched = array();
     $match = "false";
     //print $comout;
