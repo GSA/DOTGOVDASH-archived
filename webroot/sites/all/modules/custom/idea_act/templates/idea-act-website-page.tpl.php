@@ -11,13 +11,13 @@ $websitedata = ideaact_get_website_data(arg(3));
             <div class="row row-no-gutters">
                 <div class="col-md-12 dashboard-wrap">
                     <div class="col-md-8 dashboard-left">
-                        <h1>GSA.gov <span>(General Services Administration)</span></h1>
+                    <h1><?php print $websitedata['websitename']; ?> <span>(<?php print $websitedata['agencyname']; ?>)</span></h1>
                         <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
                     </div>
                     <div class="col-md-2 col-md-offset-2 text-right dashboard-right">
-                        <a href="#">
+                        <!-- <a href="#">
                             <img src="/sites/all/modules/custom/idea_act/images/question-icon.png" alt="question icon" class="question-icon" data-placement="left" data-toggle="tooltip" title="" data-original-title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do">
-                        </a>
+                        </a> -->
                         <button class="button download-button" onclick="generatePDF('idea_act_website_<?php print strtr($websitedata['websitename'], '.', '_'); ?>.pdf', 400, 800)" type="submit">Download</button>
                     </div>
                 </div>
