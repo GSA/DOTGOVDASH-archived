@@ -12,7 +12,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                 <div class="col-md-12 dashboard-wrap">
                     <div class="col-md-8 dashboard-left">
                     <h1><?php print $websitedata['websitename']; ?> <span>(<?php print $websitedata['agencyname']; ?>)</span></h1>
-                        <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
+                        <p class="description">This is an act that aims to improve the digital experience for government customers and reinforces existing requirements for federal public websites.</p>
                     </div>
                     <div class="col-md-2 col-md-offset-2 text-right dashboard-right">
                         <!-- <a href="#">
