@@ -131,21 +131,25 @@ dotgov_common_tooltip("tooltip4","id");
 
 <div class="col-sm-12 clearfix <?php echo $height80?>" style="float: left;">
 <?php
-$chart_data_font = "7.5px";
+$chart_data_font = "10px";
 $performance_title = "Mobile Performance";
 $usability_title = "Mobile Usability";
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] == "" || $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
     $performance_chart_data_text = "Not Available";
+    $performance_chart_pie_title = "Not Available";
     $performance_chart_color = "#ac0600";
   } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 50 ) {
     $performance_chart_data_text = "Poor";
+    $performance_chart_pie_title = "Poor";
     $performance_chart_color = "#ac0600";
   } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 90 ) {
     $performance_chart_data_text = "Needs Improvement";
+    $performance_chart_pie_title = "Needs<br>Improvement";
     $performance_chart_color = "#654f00";
   } else {
     $performance_chart_data_text = "Good";
+    $performance_chart_pie_title = "Good";
     $performance_chart_color = "#29643a";
   }
   $performance_chart_data = intval($row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ]);
@@ -157,14 +161,17 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === "" || $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
     $usability_chart_data_text = "Not Available";
+    $usability_chart_pie_title = "Not Available";
     $usability_chart_data = "0";
     $usability_chart_color = "#ac0600";
   } else if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] == 100) {
     $usability_chart_data_text = "Mobile Friendly";
+    $usability_chart_pie_title = "Mobile<br>Friendly";
     $usability_chart_data = "100";
     $usability_chart_color = "#29643a";
   } else {
     $usability_chart_data_text = "Not Mobile Friendly";
+    $usability_chart_pie_title = "Not Mobile<br>Friendly";
     $usability_chart_data = "0";
     $usability_chart_color = "#ac0600";
   }
@@ -230,6 +237,7 @@ $scanpath = drupal_get_path_alias("node/" . $row->nid);
             pane: {
                 startAngle: 0,
                 endAngle: 360,
+                size: '75%',
                 background: [{
                     outerRadius: '118%',
                     innerRadius: '80%',
@@ -243,12 +251,12 @@ $scanpath = drupal_get_path_alias("node/" . $row->nid);
                 lineWidth: 0,
                 tickPositions: [],
                 title: {
-                    text: '<?php echo ($performance_chart_data_text); ?>',
+                    text: '<?php echo ($performance_chart_pie_title); ?>',
                     style: {
                         fontSize: '<?=$chart_data_font?>',
                         color:'<?php echo $performance_chart_color; ?>',
                     },
-                    y: 30
+                    y: 20
                 },
             },
             plotOptions: {
@@ -288,6 +296,7 @@ $scanpath = drupal_get_path_alias("node/" . $row->nid);
             pane: {
                 startAngle: 0,
                 endAngle: 360,
+                size: '75%',
                 background: [{
                     outerRadius: '118%',
                     innerRadius: '80%',
@@ -301,12 +310,12 @@ $scanpath = drupal_get_path_alias("node/" . $row->nid);
                 lineWidth: 0,
                 tickPositions: [],
                 title: {
-                    text: '<?php echo ($usability_chart_data_text); ?>',
+                    text: '<?php echo ($usability_chart_pie_title); ?>',
                     style: {
                         fontSize: '<?=$chart_data_font?>',
                         color:'<?php echo $usability_chart_color; ?>',
                     },
-                    y: 30
+                    y: 20
                 },
             },
             plotOptions: {
