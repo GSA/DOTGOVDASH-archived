@@ -18,25 +18,25 @@ $websitedata = ideaact_get_website_data(arg(3));
                         <a href="#">
                             <img src="/sites/all/modules/custom/idea_act/images/question-icon.png" alt="question icon" class="question-icon" data-placement="left" data-toggle="tooltip" title="" data-original-title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do">
                         </a>
-                        <button class="button download-button" type="submit">Download</button>
+                        <button class="button download-button" onclick="generatePDF('idea_act_website_<?php print strtr($websitedata['websitename'], '.', '_'); ?>.pdf', 400, 800)" type="submit">Download</button>
                     </div>
                 </div>
             </div>
-            <div class="general-services-wrap bg-white shadow">
+            <div class="bg-white shadow">
                 <div class="row row-no-gutters">
                     <div class="col-sm-12">
                         <div class="col-sm-9 col-md-6">
                             <div class="row">
                                 <div class="col-md-12 d-flex">
-                                    <div class="col-sm-3"> <img src="/sites/all/modules/custom/idea_act/images/general-services.png" alt="General Services" width="100"></div>
+                                    <div class="col-sm-3"> <?php print $websitedata['agencylogo']; ?></div>
                                     <div class="col-sm-9">
-                                        <p><b>General Services Administration</b></p>
+                                        <p class="fs-1-5"><b><?php print $websitedata['agencyname']; ?></b></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 col-md-2 col-md-offset-4 logo-wrap">
-                            <img src="/sites/all/modules/custom/idea_act/images/logo.png" alt="logo" width="100">
+                        <div class="col-sm-3 col-md-2 col-md-offset-4">
+                            <?php print $websitedata['agencyacr']; ?>
                         </div>
                     </div>
                 </div>
@@ -181,7 +181,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                                     </script>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-title">This website has 14 issues with missing image descriptions, 10 issues with HTML attributes and 6 issues with color contrast. </p>
+                                    <p class="card-wi-desc">This website has 14 issues with missing image descriptions, 10 issues with HTML attributes and 6 issues with color contrast. </p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
@@ -238,7 +238,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                                     </div>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-title"> <?= $websitedata['mobileperftext']?> and <?= $websitedata['mobileusabtext']?></p>
+                                    <p class="card-wi-desc"> <?= $websitedata['mobileperftext']?> and <?= $websitedata['mobileusabtext']?></p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
@@ -295,7 +295,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                                     </div>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-title">This website meets security requirements. The data on the left shows the evaluation criteria. </p>
+                                    <p class="card-wi-desc">This website meets security requirements. The data on the left shows the evaluation criteria. </p>
                                     <div class="row">
                                         <div class="col-sm-12 website--inner">
                                             <div class="col-md-5 pl-0 mt-xs-2">
@@ -366,7 +366,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                                     </div>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-title" > <?= $websitedata['uswdstext'] ?></p>
+                                    <p class="card-wi-desc" > <?= $websitedata['uswdstext'] ?></p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
@@ -426,7 +426,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                                     </div>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                  <p class="card-title"> <?= $websitedata['onsitetext'] ?></p>
+                                  <p class="card-wi-desc"> <?= $websitedata['onsitetext'] ?></p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
