@@ -505,7 +505,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                     var label = data.labels[tooltipItem.index];
                                                     var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
                                                     var val = data.datasets[0].data[tooltipItem.index];
-                                                    return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                    return label + ': ' + val;
                                                 }
                                             }
                                         },
