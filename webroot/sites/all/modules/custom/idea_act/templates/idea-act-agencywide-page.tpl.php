@@ -437,14 +437,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                             </thead>
                                             <tbody>
                                             <tr>
-                                              <td>HTTPS Status Websites</td>
-                                              <td><?php echo number_format($agency_data['https_support']); ?></td>
-                                              <td><?php echo number_format($agency_data['https_nosupport']); ?></td>
-                                            </tr>
-                                            <tr>
-                                              <td>HTTPS Status Percentage</td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['https_support'], $agency_data['no_of_websites'])?></td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['https_nosupport'], $agency_data['no_of_websites'])?></td>
+                                                <td>HTTPS Status (Number of Websites)</td>
+                                                <td><?php echo number_format($agency_data['https_support']); ?></td>
+                                                <td><?php echo number_format($agency_data['https_nosupport']); ?></td>
                                             </tr>
                                             </tbody>
                                         </table>
