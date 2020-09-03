@@ -43,7 +43,14 @@
  * @ingroup themeable
  */
 ?>
-
+<style>
+    .mn-height-90 {
+        min-height: 90px !important;
+    }
+    .mn-height-150 {
+        min-height: 150px !important;
+    }
+</style>
 <?php
 $crit_text = '';
 $redirect_message = 'Website Redirect - Metric Not Applicable';
@@ -102,10 +109,10 @@ $chartdatafont = "12px";
       $chartdata = $uswdsscore;
     }
   } else {
-    print '<div class="col-lg-12">';
-    print 'USWDS Code: <span>Website Redirect - Metric Not Applicable</span></br>';
+    print '<div class="col-sm-12 mn-height-90">';
+    print '<p>USWDS Code: <span>Website Redirect - Metric Not Applicable</span></p><br>';
   }
-  print '<br><p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version</p>';
+  print '<p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version</p>';
   ?>
 </div>
 
@@ -123,6 +130,8 @@ if ($chartdata <= 50) {
   <div class="col-lg-6">
       <div id="uswds_chart" style="width: 130px; height:130px; margin: 0 auto">&nbsp;</div>
   </div>
+<?php else: ?>
+<div class="col-sm-12 mn-height-150">&nbsp;</div>
 <?php endif; ?>
 
 </div>

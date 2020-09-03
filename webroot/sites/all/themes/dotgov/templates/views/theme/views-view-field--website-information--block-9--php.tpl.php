@@ -22,6 +22,10 @@
  * the view is modified.
  */
 ?>
+<style>
+.mn-height-165 { min-height: 165px !important; }
+.mn-height-80 { min-height: 60px !important; }
+</style>
 
 <?php
 $scanids = dotgov_common_siteAsocScanids(arg(1));
@@ -85,17 +89,18 @@ dotgov_common_tooltip("tooltip9","id");
         </ul>
             </div>
             <div class="col-xs-5">
-            <div id="access_chart" style="height: 125px;width: 140px;margin-top: -7px;"></div>
+            <div id="access_chart" style="height: 150px;width: 150px;margin-top: -22px;margin-left: -10px;"></div>
             </div>
         </div>    
         <!-- <div id="access_chart" style="height:192px;">&nbsp</div> -->
     </div> 
 <?php else: ?>
-    <div class="col-lg-12 nopadding" style="min-height: 235px;">
+    <div class="col-sm-12 mn-height-80 nopadding">
         Color Contrast: <span style="color:#a70000;"><?php print $redirect_message; ?></span><br>
         HTML Attribute: <span style="color:#a70000;"><?php print $redirect_message; ?></span><br>
         Missing Image Description: <span style="color:#a70000;"><?php print $redirect_message; ?></span>
     </div>
+    <div class="col-sm-12 mn-height-165">&nbsp;</div>
 <?php endif; ?>
 
 <div class="col-lg-12 clearfix report-buttons nopadding">

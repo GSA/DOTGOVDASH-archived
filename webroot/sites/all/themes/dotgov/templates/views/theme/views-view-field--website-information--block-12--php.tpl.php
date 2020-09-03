@@ -47,6 +47,9 @@
 #searchengine_chart .highcharts-container {
     height:160px !important;
 }
+.mn-height-180 {
+    min-height: 180px !important;
+}
 </style>
 
 <div class="col-lg-12 nopadding clearfix">
@@ -95,6 +98,7 @@
       print "On-Site Search Engine Identified: " . $redirect_message;
       ?>
     </div>
+    <div class="col-sm-12 mn-height-180">&nbsp;</div>
 <?php endif; ?>
 
 <?php
