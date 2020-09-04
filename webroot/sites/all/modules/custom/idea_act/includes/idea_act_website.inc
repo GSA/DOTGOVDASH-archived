@@ -101,8 +101,11 @@ function ideaact_get_website_data($websiteid){
   else{
     $websitedata['Freestatus']  = 'Website Redirect - Metric Not Applicable';
   }
-
   $websitedata['EnforceHttps'] =$httpsnode -> field_enforce_https['und'][0]['value'];
+
+  if ($httpsnode -> field_enforce_https['und'][0]['value']== NULL || $httpsnode -> field_enforce_https['und'][0]['value']== ''){
+    $websitedata['EnforceHttps'] = 'Data Not Available';
+  }
 
   if ($httpsnode -> field_https_status['und'][0]['value'] =='Yes'){
     $websitedata['HttpsStatus'] = 'Enabled';
@@ -115,8 +118,13 @@ function ideaact_get_website_data($websiteid){
 
   }
 
+  if ( $websitedata['HttpsStatus'] == 'Enabled' && $websitedata['EnforceHttps'] == 'Yes'){
+    $websitedata['Securitytext'] = 'This website meets the security requierements. Data on the left shows the evaluation criteria';
+  }
 
-
+  else{
+    $websitedata['Securitytext'] = 'Data on the left shows the evaluation criteria.';
+  }
   # Mobile Information
   if(!is_redirect($websiteid)) {
     if ($wnode->field_mobile_performance_status['und'][0]['safe_value'] == 'Poor') {
@@ -183,6 +191,7 @@ function ideaact_get_website_data($websiteid){
   }
   if($websitedata['mobileperf'] == 'Website Redirect - Metric Not Applicable' && $websitedata['mobileusab'] == "Website Redirect - Metric Not Applicable") {
     $websitedata['mobtext'] = 'The Metric is not applicable for this website (This website is a redirect)';
+  }
   return $websitedata;
 }
 
