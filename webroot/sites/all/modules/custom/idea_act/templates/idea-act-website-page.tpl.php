@@ -238,7 +238,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                                     </div>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-wi-desc"> <?= $websitedata['mobileperftext']?> and <?= $websitedata['mobileusabtext']?></p>
+                                    <p class="card-wi-desc"> <?= $websitedata['mobtext']?></p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">

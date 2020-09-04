@@ -121,21 +121,16 @@ function ideaact_get_website_data($websiteid){
   if(!is_redirect($websiteid)) {
     if ($wnode->field_mobile_performance_status['und'][0]['safe_value'] == 'Poor') {
       $websitedata['mobileperf'] = 'Poor';
-      $websitedata['mobileperftext'] = 'This website is not responsive';
     } elseif ($wnode->field_mobile_performance_status['und'][0]['safe_value'] == 'Good') {
       $websitedata['mobileperf'] = 'Good';
-      $websitedata['mobileperftext'] = 'This website is very responsive';
     } elseif ($wnode->field_mobile_performance_status['und'][0]['safe_value'] == 'Needs Improvement') {
       $websitedata['mobileperf'] = 'Needs Improvement';
-      $websitedata['mobileperftext'] = 'This website is responsive';
     } else {
       $websitedata['mobileperf'] = 'Data Not Available';
-      $websitedata['mobileperftext'] = 'Mobile Performance Data is not Available';
     }
   }
   else{
     $websitedata['mobileperf'] = 'Website Redirect - Metric Not Applicable';
-    $websitedata['mobileperftext'] = 'The Metric is not applicable for this website (This website is a redirect).';
   }
 
 
@@ -143,19 +138,51 @@ function ideaact_get_website_data($websiteid){
   if(!is_redirect($websiteid)) {
     if ($wnode->field_mobile_usability_status['und'][0]['safe_value'] == 'Not Mobile Friendly') {
       $websitedata['mobileusab'] = 'Not Mobile Friendly';
-      $websitedata['mobileusabtext'] = 'Not Mobile Friendly';
     } elseif ($wnode->field_mobile_usability_status['und'][0]['safe_value'] == 'Mobile Friendly') {
       $websitedata['mobileusab'] = 'Mobile Friendly';
-      $websitedata['mobileusabtext'] = 'Mobile Friendly';
     } else {
-      $websitedata['mobileusab'] = 'Not Available';
-      $websitedata['mobileusabtext'] = 'Mobile Usablity data is not Available';
+      $websitedata['mobileusab'] = 'Data Not Available';
     }
   }
   else{
-//    $websitedata['mobileusab'] = 'Website Redirect - Metric Not Applicable';
-//    $websitedata['mobileusabtext'] = 'The Metric is not applicable for this website (This website is a redirect).';
+    $websitedata['mobileusab'] = 'Website Redirect - Metric Not Applicable';
   }
+
+  if($websitedata['mobileperf'] == 'Good' || $websitedata['mobileperf'] == 'Needs Improvement'){
+    if($websitedata['mobileusab'] == 'Not Mobile Friendly'){
+      $websitedata['mobtext']= 'This website is responsive but not mobile friendly';
+    }
+    if($websitedata['mobileusab'] == 'Data Not Available'){
+      $websitedata['mobtext']= 'This website is responsive but does not have available data for the mobile usability';
+    }
+    if($websitedata['mobileusab'] == 'Mobile Friendly') {
+      $websitedata['mobtext'] = 'This website is responsive and mobile friendly';
+    }
+  }
+  if($websitedata['mobileperf'] == 'Poor'){
+    if($websitedata['mobileusab'] == 'Not Mobile Friendly'){
+      $websitedata['mobtext']= 'This website is not responsive and not mobile friendly';
+    }
+    if($websitedata['mobileusab'] == 'Data Not Available'){
+      $websitedata['mobtext']= 'This website is not responsive and does not have available data for the mobile usability';
+    }
+    if($websitedata['mobileusab'] == 'Mobile Friendly') {
+      $websitedata['mobtext'] = 'This website is not responsive but it is mobile friendly';
+    }
+  }
+  if($websitedata['mobileperf'] == 'Data Not Available'){
+    if($websitedata['mobileusab'] == 'Not Mobile Friendly'){
+      $websitedata['mobtext']= 'This website does not have available data for responsiveness, and not mobile friendly' ;
+    }
+    if($websitedata['mobileusab'] == ' Data Not Available'){
+      $websitedata['mobtext']= 'This website does not have available data for responsiveness and does not have available data for mobile usability';
+    }
+    if($websitedata['mobileusab'] == 'Mobile Friendly') {
+      $websitedata['mobtext'] = 'This website does not have available data for responsiveness, but it is mobile friendly';
+    }
+  }
+  if($websitedata['mobileperf'] == 'Website Redirect - Metric Not Applicable' && $websitedata['mobileusab'] == "Website Redirect - Metric Not Applicable") {
+    $websitedata['mobtext'] = 'The Metric is not applicable for this website (This website is a redirect)';
   return $websitedata;
 }
 
