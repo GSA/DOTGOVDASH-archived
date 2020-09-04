@@ -83,7 +83,7 @@ $agencynode = node_load(arg(1));
                                 <?php
 if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
     ?>
-                                    <img src="<?php print file_create_url($agencynode->field_agency_logo['und'][0]['uri']);?>" alt="<?=$agencynode->title?>">
+                                    <img width='100' src="<?php print file_create_url($agencynode->field_agency_logo['und'][0]['uri']);?>" alt="<?=$agencynode->title?>">
                                     <?php
 } else {
     print "&nbsp;";
