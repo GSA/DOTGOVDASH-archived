@@ -18,7 +18,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                         <!-- <a href="#">
                             <img src="/sites/all/modules/custom/idea_act/images/question-icon.png" alt="question icon" class="question-icon" data-placement="left" data-toggle="tooltip" title="" data-original-title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do">
                         </a> -->
-                        <button class="button download-button" onclick="generatePDF('idea_act_website_<?php print strtr($websitedata['websitename'], '.', '_'); ?>.pdf', 400, 800)" type="submit">Download</button>
+                        <button class="button download-button" onclick="generatePDF('idea_act_website_<?php print strtr($websitedata['websitename'], '.', '_'); ?>.pdf', 500, 800)" type="submit">Download</button>
                     </div>
                 </div>
             </div>
@@ -235,7 +235,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                                     </div>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-wi-desc"> <?= $websitedata['mobileperftext']?> and <?= $websitedata['mobileusabtext']?></p>
+                                    <p class="card-wi-desc"> <?= $websitedata['mobtext']?></p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
@@ -292,7 +292,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                                     </div>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-wi-desc">This website meets security requirements. The data on the left shows the evaluation criteria. </p>
+                                    <p class="card-wi-desc"><?=$websitedata['Securitytext'] ?> </p>
                                     <div class="row">
                                         <div class="col-sm-12 website--inner">
                                             <div class="col-md-5 pl-0 mt-xs-2">

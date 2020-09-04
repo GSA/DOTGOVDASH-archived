@@ -164,6 +164,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                         <p>(Note: website redirects are excluded)</p>
                                 </div>
                                 <div class="col-sm-6">
+                                  <h4 class="text-center"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center">Total Number of Accessibility Issues </h4>
                                   <div class="chart-container" id="chart-1-ref">
                                         <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -204,7 +206,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                       maintainAspectRatio: false,
 
                                       title: {
-                                          display: true,
+                                          display: false,
                                           text: 'Total Number of Accessibility Issues for <?= $agency_data['agency_title']?> Websites',
                                           fontSize: 18,
                                           fontColor: '#203b5f'
@@ -307,6 +309,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
+                                  <h4 class="text-center"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center"> USWDS Code Usage Breakdown of Websites</h4>
                                      <div class="chart-container" id="chart-2-ref">
                                         <canvas id="chart-gov2" width="250" height="300" aria-label="Charts" role="img"></canvas>
 
@@ -349,7 +353,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                         maintainAspectRatio: false,
 
                                         title: {
-                                            display: true,
+                                            display: false,
                                             text: 'USWDS Code Usage Breakdown for <?= $agency_data['agency_title']?> Websites',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
@@ -437,12 +441,12 @@ $agency_data['agency_title'] = $agencynode->title;
                                             </thead>
                                             <tbody>
                                             <tr>
-                                              <td>HTTPS Status Websites</td>
-                                              <td><?php echo number_format($agency_data['https_support']); ?></td>
-                                              <td><?php echo number_format($agency_data['https_nosupport']); ?></td>
+                                                <td><p style="display: flex;"><span class="text-nowrap">HTTPS Status</span><span class="custom-span">(Number of Websites)</span></p></td>
+                                                <td><?php echo number_format($agency_data['https_support']); ?></td>
+                                                <td><?php echo number_format($agency_data['https_nosupport']); ?></td>
                                             </tr>
                                             <tr>
-                                              <td>HTTPS Status Percentage</td>
+                                              <td>&nbsp;</td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['https_support'], $agency_data['no_of_websites'])?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['https_nosupport'], $agency_data['no_of_websites'])?></td>
                                             </tr>
@@ -451,6 +455,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
+                                  <h4 class="text-center"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center">HTTPS Websites Compliance</h4>
                                     <div class="chart-container" id="chart-3-ref">
                                   <canvas id="chart-gov3" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -492,7 +498,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                         maintainAspectRatio: false,
 
                                         title: {
-                                            display: true,
+                                            display: false,
                                             text: '<?= $agency_data['agency_title']?> HTTPS Websites Compliance',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
@@ -594,6 +600,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
+                                  <h4 class="text-center"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center"> On-site Search Engine Breakdown </h4>
                                   <div class="chart-container" id="chart-4-ref">
                                       <?php $searchenginestatus = $agency_data['searchenginestatus'];
                                       ?>
@@ -638,7 +646,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                         maintainAspectRatio: false,
 
                                         title: {
-                                            display: true,
+                                            display: false,
                                             text: '<?= $agency_data['agency_title']?> On-site Search Engine Breakdown',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
@@ -716,6 +724,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </a>
                               </div>
                               <div class="col-md-6 mb-2">
+                                <h4 class="text-center"> <?= $agency_data['agency_title']?> </h4>
+                                <h4 class="text-center"> Mobile Performance Breakdown</h4>
                                     <div class="chart-container" id="chart-5-ref">
                                         <canvas id="chart-6" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -779,7 +789,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                 maintainAspectRatio: false,
 
                                                 title: {
-                                                    display: true,
+                                                    display: false,
                                                     text: '<?= $agency_data['agency_title']?> Mobile Performance Breakdown',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
@@ -828,6 +838,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </script>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
+                                  <h4 class="text-center"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center"> Mobile Usability Breakdown</h4>
                                     <div class="chart-container" id="chart-6-ref">
                                         <canvas id="chart-5" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -881,7 +893,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                 maintainAspectRatio: false,
 
                                                 title: {
-                                                    display: true,
+                                                    display: false,
                                                     text: '<?= $agency_data['agency_title']?> Mobile Usability Breakdown',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
@@ -1008,6 +1020,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
+                                  <h4 class="text-center"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center"> DAP Websites Compliance</h4>
                                     <div class="chart-container" id="chart-7-ref">
                                         <canvas id="chart-7" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -1050,7 +1064,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                         maintainAspectRatio: false,
 
                                         title: {
-                                            display: true,
+                                            display: false,
                                             text: '<?= $agency_data['agency_title']?> DAP Websites Compliance',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
