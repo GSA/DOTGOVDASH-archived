@@ -105,7 +105,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                  title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
                         </a> -->
 
-                      <button class="button download-button" onclick="generatePDF( '<?= $pdf_file_name?>', 400, 695)" type="submit">Download</button>
+                        <button class="button download-button" onclick="generatePDF( '<?= $pdf_file_name?>', 500,760)" type="submit">Download</button>
                     </div>
                 </div>
             </div>
@@ -295,12 +295,12 @@ $agency_data['agency_title'] = $agencynode->title;
                                             </thead>
                                             <tbody>
                                             <tr>
-                                              <td>Websites with USWDS code detected</td>
+                                              <td>USWDS code detected</td>
                                               <td><?php echo number_format($agency_data['uswds_compliant']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['uswds_compliant'], $agency_data['uswds_tottracked'])?></td>
                                             </tr>
                                             <tr>
-                                              <td>Websites without USWDS code detected</td>
+                                              <td>USWDS code not detected</td>
                                               <td><?php echo number_format($agency_data['uswds_noncompliant']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['uswds_noncompliant'], $agency_data['uswds_tottracked'])?></td>
                                             </tr>

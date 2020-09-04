@@ -305,12 +305,12 @@ $search_engine_data_for_agencygraph = "0,0";
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td class="">Websites with USWDS code detected</td>
+                                                <td class="">USWDS code detected</td>
                                                 <td><?php echo number_format($agencydata['uswds_compliant']); ?></td>
                                                 <td><?=idea_act_applyDataPercentage($agencydata['uswds_compliant'], $agencydata['uswds_tottracked'])?></td>
                                             </tr>
                                             <tr>
-                                                <td class="">Websites without USWDS code detected</td>
+                                                <td class="">USWDS code not detected</td>
                                                 <td><?php echo number_format($agencydata['uswds_noncompliant']); ?></td>
                                                 <td><?=idea_act_applyDataPercentage($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'])?></td>
                                             </tr>
