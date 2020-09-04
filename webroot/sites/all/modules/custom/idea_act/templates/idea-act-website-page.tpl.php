@@ -292,7 +292,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                                     </div>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-wi-desc">This website meets security requirements. The data on the left shows the evaluation criteria. </p>
+                                    <p class="card-wi-desc"><?=$websitedata['Securitytext'] ?> </p>
                                     <div class="row">
                                         <div class="col-sm-12 website--inner">
                                             <div class="col-md-5 pl-0 mt-xs-2">
