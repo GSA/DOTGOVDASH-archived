@@ -89,7 +89,7 @@ dotgov_common_tooltip("tooltip9","id");
         </ul>
             </div>
             <div class="col-xs-5">
-            <div id="access_chart" style="height: 150px;width: 150px;margin-top: -22px;margin-left: -10px;"></div>
+            <div id="access_chart" style="height: 175px;width: 170px;margin-top: -33px;margin-left: calc(100% - 140px);"></div>
             </div>
         </div>    
         <!-- <div id="access_chart" style="height:192px;">&nbsp</div> -->
@@ -154,7 +154,10 @@ dotgov_common_tooltip("tooltip9","id");
                 dataLabels: {
                     enabled: true,
                     format: "<br>{point.percentage:.1f}%",
-                    distance: -25,
+                    distance: -18,
+                    style: {
+                        fontSize: 8 
+                    },
                     filter: {
                       property: 'percentage',
                       operator: '>',
