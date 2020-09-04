@@ -109,7 +109,7 @@ $agency_data['agency_title'] = $agencynode->title;
                     </div>
                 </div>
             </div>
-            <div class="reports bg-white shadow">
+            <div class="reports bg-white shadow header-info">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-10 col-md-8">
