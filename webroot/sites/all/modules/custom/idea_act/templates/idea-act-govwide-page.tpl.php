@@ -454,7 +454,11 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 <td>HTTPS Status (Number of Websites)</td>
                                                 <td><?php echo number_format($agencydata['https_support']); ?></td>
                                                 <td><?php echo number_format($agencydata['https_nosupport']); ?></td>
-
+                                            </tr>
+                                            <tr>
+                                                <td>HTTPS Status Percentage</td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['https_support'], $agency_website_num)?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['https_nosupport'], $agency_website_num)?></td>
                                             </tr>
                                             </tbody>
                                         </table>
