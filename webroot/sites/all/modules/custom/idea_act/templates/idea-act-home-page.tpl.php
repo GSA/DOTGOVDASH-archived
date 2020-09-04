@@ -20,7 +20,7 @@ $total_websites_count = $agency_data['actualdata']['total_websites_count'];
             <div class="row row-no-gutters">
                 <div class="col-md-12 dashboard-wrap">
                     <div class="col-md-9 dashboard-left">
-                        <h1>21st Century IDEA Act Dashboard</h1>
+                        <h1>21st Century IDEA Act Report</h1>
                         <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
                     </div>
                     <div class="col-md-2 col-md-offset-1 text-right dashboard-right">
