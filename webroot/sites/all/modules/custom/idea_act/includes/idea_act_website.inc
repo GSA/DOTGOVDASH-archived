@@ -175,7 +175,7 @@ function ideaact_get_website_data($websiteid){
     if($websitedata['mobileusab'] == 'Not Mobile Friendly'){
       $websitedata['mobtext']= 'This website does not have available data for responsiveness, and not mobile friendly' ;
     }
-    if($websitedata['mobileusab'] == ' Data Not Available'){
+    if($websitedata['mobileusab'] == 'Data Not Available'){
       $websitedata['mobtext']= 'This website does not have available data for responsiveness and does not have available data for mobile usability';
     }
     if($websitedata['mobileusab'] == 'Mobile Friendly') {
