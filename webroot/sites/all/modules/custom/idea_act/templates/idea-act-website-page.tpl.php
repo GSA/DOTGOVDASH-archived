@@ -185,7 +185,7 @@ drupal_set_title($websitedata['agencyname']);
                                     </a>
                                 </div>
                                 <div class="col-sm-6">
-                                    <div class="chart-container" id="chart-11-ref>
+                                    <div class="chart-container" id="chart-11-ref">
                                         <canvas id="chart-webhome" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
 
