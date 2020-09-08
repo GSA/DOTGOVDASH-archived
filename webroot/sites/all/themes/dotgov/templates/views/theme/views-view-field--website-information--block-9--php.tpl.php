@@ -175,7 +175,7 @@ dotgov_common_tooltip("tooltip9","id");
                     filter: {
                       property: 'percentage',
                       operator: '>',
-                      value: 18
+                      value: 20
                     }
                 },
                 size: '101.78',
