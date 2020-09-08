@@ -181,7 +181,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                                     </script>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                  <p class="card-title"><?= $websitedata['Accestext']?> </p>
+                                    <p class="card-wi-desc">T<?= $websitedata['Accestext']?> </p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
