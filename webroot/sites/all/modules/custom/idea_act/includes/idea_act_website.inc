@@ -67,6 +67,9 @@ function ideaact_get_website_data($websiteid){
       $websitedata['onsitestatus'] = 'Detected';
       $websitedata['onsiteengine'] = $wnode -> field_search_engine_name['und'][0]['value'];
       $websitedata['onsitetext'] = 'On-site Search detected for this website.';
+      if($wnode -> field_search_engine_name['und'][0]['value'] == NULL || ''){
+        $websitedata['onsiteengine'] = 'Data Not Available';
+      }
     }
     else{
       $websitedata['onsitestatus'] = 'Not Detected';
