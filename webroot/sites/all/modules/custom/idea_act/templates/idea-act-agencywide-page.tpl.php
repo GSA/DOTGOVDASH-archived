@@ -220,14 +220,14 @@ $agency_data['agency_title'] = $agencynode->title;
                                           caretPadding: 5,
                                           caretSize: 5,
                                           displayColors: false,
-                                          callbacks: {
-                                              label: function(tooltipItem, data) {
-                                                  var label = data.labels[tooltipItem.index];
-                                                  var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
-                                                  var val = data.datasets[0].data[tooltipItem.index];
-                                                  return label + ': ' + val ;
-                                              }
-                                          }
+                                        //   callbacks: {
+                                        //       label: function(tooltipItem, data) {
+                                        //           var label = data.labels[tooltipItem.index];
+                                        //           var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                        //           var val = data.datasets[0].data[tooltipItem.index];
+                                        //           return label + ': ' + val ;
+                                        //       }
+                                        //   }
                                       },
                                       plugins: {
                                           labels: {
@@ -360,21 +360,21 @@ $agency_data['agency_title'] = $agencynode->title;
                                             fontColor: '#203b5f'
                                         },
                                         tooltips: {
-                                            enabled: false,
-                                            custom: customChartTooltip('chart-2-ref','chartjs-tooltip2'),
+                                            enabled: true,
+                                          //  custom: customChartTooltip('chart-2-ref','chartjs-tooltip2'),
                                             yPadding: 10,
                                             xPadding: 10,
                                             caretPadding: 5,
                                             caretSize: 5,
                                             displayColors: false,
-                                            callbacks: {
-                                                label: function(tooltipItem, data) {
-                                                    var label = data.labels[tooltipItem.index];
-                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
-                                                    var val = data.datasets[0].data[tooltipItem.index];
-                                                    return label + ': ' + Math.round( val * 100 / total) + '%';
-                                                }
-                                            }
+                                            // callbacks: {
+                                            //     label: function(tooltipItem, data) {
+                                            //         var label = data.labels[tooltipItem.index];
+                                            //         var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                            //         var val = data.datasets[0].data[tooltipItem.index];
+                                            //         return label + ': ' + Math.round( val * 100 / total) + '%';
+                                            //     }
+                                            // }
                                         },
                                         plugins: {
 
