@@ -198,7 +198,8 @@ drupal_set_title($websitedata['agencyname']);
                                             type: 'doughnut',
                                             data: {
                                                 datasets: [{
-                                                    data: [<?php echo number_format( $websitedata['colorcont'], 1, '.', ''); ?>, <?php echo number_format($websitedata['htmlattri'], 1, '.', ''); ?>, <?php echo number_format($websitedata['missingim'], 1, '.', ''); ?>],
+                                                    data: [14,10,6],
+                                                    //data: [<?php //echo number_format( $websitedata['colorcont'], 1, '.', ''); ?>//, <?php //echo number_format($websitedata['htmlattri'], 1, '.', ''); ?>//, <?php //echo number_format($websitedata['missingim'], 1, '.', ''); ?>//],
                                                     borderWidth: 0,
                                                     backgroundColor: [
                                                         '#563eb6',
@@ -267,7 +268,8 @@ drupal_set_title($websitedata['agencyname']);
                                     </script>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-wi-desc"><?= $websitedata['Accestext']?> </p>
+                                    <p class="card-wi-desc">  This website has 14 issues with missing image descriptions, 10 issues with HTML attributes and 6 issues with color contrast';
+                                    </p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
