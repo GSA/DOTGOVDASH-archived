@@ -91,9 +91,9 @@ dotgov_common_tooltip("tooltip9","id");
             <div class="col-xs-5">
             <div id="access_chart" style="height: 175px;width: 170px;margin-top: -33px;margin-left: calc(100% - 140px);"></div>
             </div>
-        </div>    
+        </div>
         <!-- <div id="access_chart" style="height:192px;">&nbsp</div> -->
-    </div> 
+    </div>
 <?php else: ?>
     <div class="col-sm-12 mn-height-80 nopadding">
         Color Contrast: <span style="color:#a70000;"><?php print $redirect_message; ?></span><br>
@@ -115,9 +115,22 @@ dotgov_common_tooltip("tooltip9","id");
 
 <script type="text/javascript">
     var data = [];
-    data = colorPercentage(data, 'Color Contrast Issues', <?php print_r(!emptyOrNull($colorcont) ? $colorcont : 0); ?>);
-    data = colorPercentage(data, 'HTML Attribute Issues', <?php print_r(!emptyOrNull($htmlattri) ? $htmlattri : 0); ?>);
-    data = colorPercentage(data, 'Missing Image Description Issues', <?php print_r(!emptyOrNull($missingim) ? $missingim : 0); ?>);
+    var dist = -20;
+    var count = false;
+    var colorcont = <?php print_r(!emptyOrNull($colorcont) ? $colorcont : 0); ?>;
+    var htmlattr = <?php print_r(!emptyOrNull($htmlattri) ? $htmlattri : 0); ?>;
+    var missingim = <?php print_r(!emptyOrNull($missingim) ? $missingim : 0); ?>;
+    data = colorPercentage(data, 'Color Contrast Issues', colorcont);
+    data = colorPercentage(data, 'HTML Attribute Issues', htmlattr);
+    data = colorPercentage(data, 'Missing Image Description Issues', missingim);
+    if (colorcont > 0 && htmlattr == 0 && missingim == 0 ||
+        colorcont == 0 && htmlattr > 0 && missingim == 0 ||
+        colorcont == 0 && htmlattr == 0 && missingim > 0) {
+          count = true;
+    }
+    if (count) {
+      dist = -30;
+    }
 
     function colorPercentage(data, dataName, dataY) {
       if (dataY >= 0) {
@@ -154,9 +167,9 @@ dotgov_common_tooltip("tooltip9","id");
                 dataLabels: {
                     enabled: true,
                     format: "<br>{point.percentage:.1f}%",
-                    distance: -18,
+                    distance: dist,
                     style: {
-                        fontSize: 8 
+                        fontSize: 8
                     },
                     filter: {
                       property: 'percentage',
