@@ -85,6 +85,7 @@ if(trim($search_engine_data_for_agencygraph) == "")
   $search_engine_data_for_agencygraph = "0,0";
 
 $agencynode = node_load(arg(3));
+drupal_set_title($agencynode->title);
 $agency_data['agency_title'] = $agencynode->title;
  $pdf_file_name = '21st_Century_'.$agencynode->title.'.pdf';
 ?>
