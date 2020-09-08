@@ -219,7 +219,7 @@ drupal_set_title($websitedata['agencyname']);
                                                 title: {
 
                                                     display: true,
-                                                    text: 'GSA Accessibility spotchecks',
+                                                    text: 'Accessibility spot checks',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
 
@@ -268,8 +268,7 @@ drupal_set_title($websitedata['agencyname']);
                                     </script>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-wi-desc">  This website has 14 issues with missing image descriptions, 10 issues with HTML attributes and 6 issues with color contrast';
-                                    </p>
+                                    <p class="card-wi-desc">  This website has 14 issues with missing image descriptions, 10 issues with HTML attributes and 6 issues with color contrast</p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">

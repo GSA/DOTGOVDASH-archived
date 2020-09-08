@@ -86,10 +86,10 @@ function ideaact_get_website_data($websiteid){
   #Security Information
 
     if ($wnode ->field_m15_13_compliance_score['und'][0]['value'] == 0){
-      $websitedata['m1513status'] = 'Non Complaint';
+      $websitedata['m1513status'] = 'Non Compliant';
     }
     if($wnode ->field_m15_13_compliance_score['und'][0]['value'] == 100){
-      $websitedata['m1513status'] = 'Complaint';
+      $websitedata['m1513status'] = 'Compliant';
     }
     if($wnode ->field_m15_13_compliance_score['und'][0]['value'] == NULL || $wnode ->field_m15_13_compliance_score['und'][0]['value'] ==  ''){
       $websitedata['m1513status'] = 'Data Not Available';
@@ -125,7 +125,7 @@ function ideaact_get_website_data($websiteid){
   }
 
   if ( $websitedata['HttpsStatus'] == 'Enabled' && $websitedata['EnforceHttps'] == 'Yes'){
-    $websitedata['Securitytext'] = 'This website meets the security requierements. Data on the left shows the evaluation criteria';
+    $websitedata['Securitytext'] = 'This website meets the security requirements. Data on the left shows the evaluation criteria.';
   }
 
   else{
@@ -206,7 +206,6 @@ function ideaact_get_website_data($websiteid){
       $websitedata['colorcont']  = $acesssresult->field_accessible_group_colorcont_value;
       $websitedata['htmlattri'] = $acesssresult->field_accessible_group_htmlattri_value;
       $websitedata['missingim'] = $acesssresult ->field_accessible_group_htmlattri_value;
-      $websitedata['accesszero'] = Null;
       $websitedata['Accestext'] = 'This website' .  $websitedata['missingim'] . 'issues with missing image descriptions,' . $websitedata['htmlattri'] . 'issues with HTML attributes and' . $websitedata['colorcont'].'issues with color contrast' ;
     }
     $websitedata['id'] = "chart-1-legend";
@@ -226,18 +225,9 @@ function ideaact_get_website_data($websiteid){
 
       $websitedata['Accestext'] = 'This website has ' . $websitedata['missingim'] . ' issues with missing image descriptions, ' . $websitedata['htmlattri'] . ' issues with HTML attributes and ' . $websitedata['colorcont'] . ' issues with color contrast';
 
-      if ($websitedata['missingim'] == 0 && $websitedata['htmlattri'] == 0 &&  $websitedata['colorcont'] == 0){
-        $websitedata['accesszero'] = 0;
-        $websitedata['id'] = "access-chart";
-
-      }
-
     }
     else {
-
-      $websitedata['accesszero'] = null;
       $websitedata['Accestext'] = 'The Metric is not applicable for this website (This website is a redirect).';
-      $websitedata['id'] = "access-chart";
     }
   }
   return $websitedata;
