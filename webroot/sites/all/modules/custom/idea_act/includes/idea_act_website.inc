@@ -85,10 +85,10 @@ function ideaact_get_website_data($websiteid){
     if ($wnode ->field_m15_13_compliance_score['und'][0]['value'] == 0){
       $websitedata['m1513status'] = 'Non Complaint';
     }
-    elseif($wnode ->field_m15_13_compliance_score['und'][0]['value'] == 100){
+    if($wnode ->field_m15_13_compliance_score['und'][0]['value'] == 100){
       $websitedata['m1513status'] = 'Complaint';
     }
-    else{
+    if($wnode ->field_m15_13_compliance_score['und'][0]['value'] == NULL || $wnode ->field_m15_13_compliance_score['und'][0]['value'] ==  ''){
       $websitedata['m1513status'] = 'Data Not Available';
     }
 
@@ -97,10 +97,10 @@ function ideaact_get_website_data($websiteid){
     if ($wnode ->field_free_of_insecr_prot_score['und'][0]['value'] == 0){
       $websitedata['Freestatus'] = 'No';
     }
-    elseif ($wnode ->field_free_of_insecr_prot_score['und'][0]['value'] == 100){
+    if ($wnode ->field_free_of_insecr_prot_score['und'][0]['value'] == 100){
       $websitedata['Freestatus'] = 'Yes';
     }
-    else{
+    if($wnode ->field_free_of_insecr_prot_score['und'][0]['value'] == NULL || $wnode ->field_free_of_insecr_prot_score['und'][0]['value'] ==  ''){
       $websitedata['Freestatus'] = 'Data Not Available';
     }
 
