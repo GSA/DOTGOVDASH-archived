@@ -126,7 +126,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                                             type: 'doughnut',
                                             data: {
                                                 datasets: [{
-                                                    data: [6, 2, 14],
+                                                    data: [<?php echo number_format( $websitedata['colorcont'], 1, '.', ''); ?>, <?php echo number_format($websitedata['htmlattri'], 1, '.', ''); ?>, <?php echo number_format($websitedata['missingim'], 1, '.', ''); ?>],
                                                     borderWidth: 0,
                                                     backgroundColor: [
                                                         '#563eb6',
@@ -178,7 +178,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                                     </script>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-wi-desc">This website has 14 issues with missing image descriptions, 10 issues with HTML attributes and 6 issues with color contrast. </p>
+                                  <p class="card-title"><?= $websitedata['Accestext']?> </p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
