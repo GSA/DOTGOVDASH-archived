@@ -170,7 +170,8 @@ dotgov_common_tooltip("tooltip9","id");
                     format: "<br>{point.percentage:.1f}%",
                     distance: dist,
                     style: {
-                        fontSize: 8
+                        fontSize: 8,
+                        color: "white"
                     },
                     filter: {
                       property: 'percentage',
