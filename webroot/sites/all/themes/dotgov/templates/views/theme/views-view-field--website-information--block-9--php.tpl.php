@@ -22,6 +22,7 @@
  * the view is modified.
  */
 ?>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <style>
 .mn-height-165 { min-height: 165px !important; }
 .mn-height-80 { min-height: 60px !important; }
