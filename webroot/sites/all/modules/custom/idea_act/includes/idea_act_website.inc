@@ -71,7 +71,7 @@ function ideaact_get_website_data($websiteid){
   }
 
   #Security Information
-  if(!is_redirect($websiteid)) {
+
     if ($wnode ->field_m15_13_compliance_score['und'][0]['value'] == 0){
       $websitedata['m1513status'] = 'Non Complaint';
     }
@@ -81,13 +81,9 @@ function ideaact_get_website_data($websiteid){
     else{
       $websitedata['m1513status'] = 'Data Not Available';
     }
-  }
-  else{
-    $websitedata['m1513status'] = 'Website Redirect - Metric Not Applicable';
-  }
 
   #free secure protocols
-  if(!is_redirect($websiteid)) {
+
     if ($wnode ->field_free_of_insecr_prot_score['und'][0]['value'] == 0){
       $websitedata['Freestatus'] = 'No';
     }
@@ -97,10 +93,7 @@ function ideaact_get_website_data($websiteid){
     else{
       $websitedata['Freestatus'] = 'Data Not Available';
     }
-  }
-  else{
-    $websitedata['Freestatus']  = 'Website Redirect - Metric Not Applicable';
-  }
+
   $websitedata['EnforceHttps'] =$httpsnode -> field_enforce_https['und'][0]['value'];
 
   if ($httpsnode -> field_enforce_https['und'][0]['value']== NULL || $httpsnode -> field_enforce_https['und'][0]['value']== ''){
