@@ -116,7 +116,7 @@ dotgov_common_tooltip("tooltip9","id");
 
 <script type="text/javascript">
     var data = [];
-    var dist = -20;
+    var dist = -22;
     var count = false;
     var colorcont = <?php print_r(!emptyOrNull($colorcont) ? $colorcont : 0); ?>;
     var htmlattr = <?php print_r(!emptyOrNull($htmlattri) ? $htmlattri : 0); ?>;
