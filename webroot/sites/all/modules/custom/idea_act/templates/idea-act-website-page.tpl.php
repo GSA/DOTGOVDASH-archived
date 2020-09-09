@@ -3,6 +3,9 @@
 </style>
 
 <script>
+    function sumIt(total, num) {
+        return total + num;
+    }
     function customChartTooltip(chartId, toolTipId) {
         var customTooltip= function(tooltip) {
             // Tooltip Element
@@ -235,7 +238,7 @@ drupal_set_title($websitedata['agencyname']);
                                                     callbacks: {
                                                         label: function(tooltipItem, data) {
                                                             var label = data.labels[tooltipItem.index];
-                                                            var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                            var total = data.datasets[0].data.reduce(sumIt);
                                                             var val = data.datasets[0].data[tooltipItem.index];
                                                             return label + ': ' + val ;
                                                         }
