@@ -168,14 +168,14 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </a>
                                 </div>                                   
                                  <div class="col-sm-6 mt-xs-1 center-mb-2">
-                                    <h4>Average Accessibility Issues by Type Per Website</h4>
+                                    <h4 class="chart-data-title">Average Accessibility Issues by Type Per Website</h4>
                                     <p>Average Color Contrast: <?=round($agencydata['ag_col_contrast'] / $agency_website_num, 1);?></p>
                                     <p>Average HTML Attribute: <?=round($agencydata['ag_html_attrib'] / $agency_website_num, 1);?></p>
                                     <p>Average Missing Image Description: <?=round($agencydata['ag_miss_image'] / $agency_website_num, 1);?></p>
                                     <p>(Note: website redirects are excluded)</p>
                                 </div>
                                 <div class="col-sm-6">
-                                <h4 class="text-center">Total Number of Accessibility Issues for Websites</h4>
+                                <h4 class="chart-data-title text-center">Total Number of Accessibility Issues for Websites</h4>
                                     <div class="chart-container" id="chart-1-ref">
                                         <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -322,7 +322,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                <h4 class="text-center">USWDS Code Usage Breakdown for Websites</h4>
+                                <h4 class="text-center chart-data-title">USWDS Code Usage Breakdown for Websites</h4>
                                     <div class="chart-container" id="chart-2-ref">
                                         <canvas id="chart-gov2" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -468,7 +468,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                <h4 class="text-center">HTTPS Websites Compliance</h4>
+                                <h4 class="text-center chart-data-title">HTTPS Websites Compliance</h4>
                                     <div class="chart-container" id="chart-3-ref"> 
                                         <canvas id="chart-gov3" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -610,7 +610,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                <h4 class="text-center">On-site Search Engine Breakdown</h4>
+                                <h4 class="text-center chart-data-title">On-site Search Engine Breakdown</h4>
 
                                     <div class="chart-container" id="chart-4-ref">
                                     <?php $searchenginestatus = $agencydata['searchenginestatus'];
@@ -731,7 +731,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                 </div>    
                                 
                                 <div class="col-md-6 mb-2">
-                                <h4 class="text-center">Mobile Performance Breakdown</h4>
+                                <h4 class="text-center chart-data-title">Mobile Performance Breakdown</h4>
 
                                     <div class="chart-container" id="chart-5-ref">
                                         <canvas id="chart-gov4" width="250" height="300" aria-label="Charts" role="img"></canvas>
@@ -847,7 +847,7 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                 </div>
                                 <div class="col-md-6 mt-xs-1 px-xs-0">
-                                <h4 class="text-center">Mobile Usability Breakdown</h4>
+                                <h4 class="text-center chart-data-title">Mobile Usability Breakdown</h4>
 
                                     <div class="chart-container" id="chart-6-ref">
                                         <canvas id="chart-gov5" width="250" height="300" aria-label="Charts" role="img"></canvas>
@@ -1011,7 +1011,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                <h4 class="text-center">DAP Websites Compliance</h4>
+                                <h4 class="text-center chart-data-title">DAP Websites Compliance</h4>
 
                                     <div class="chart-container" id="chart-7-ref">
                                         <canvas id="chart-gov6" width="250" height="300" aria-label="Charts" role="img"></canvas>
