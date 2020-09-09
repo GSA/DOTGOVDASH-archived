@@ -161,15 +161,15 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </a>
                               </div>
                               <div class="col-sm-6 mt-xs-1">
-                                        <h4>Average Accessibility Issues by Type Per Website</h4>
+                                        <h4 class="chart-data-title">Average Accessibility Issues by Type Per Website</h4>
                                         <p>Average Color Contrast: <?= round($agency_data['ag_col_contrast'] / $agency_data['no_of_websites'], 1);?></p>
                                         <p>Average HTML Attribute: <?=  round($agency_data['ag_html_attrib'] / $agency_data['no_of_websites'], 1);?></p>
                                         <p>Average Missing Image Description: <?=  round($agency_data['ag_miss_image'] / $agency_data['no_of_websites'], 1);?></p>
                                         <p>(Note: website redirects are excluded)</p>
                                 </div>
                                 <div class="col-sm-6">
-                                  <h4 class="text-center"> <?= $agency_data['agency_title']?> </h4>
-                                  <h4 class="text-center">Total Number of Accessibility Issues </h4>
+                                  <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center chart-data-title">Total Number of Accessibility Issues </h4>
                                   <div class="chart-container" id="chart-1-ref">
                                         <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -313,8 +313,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                  <h4 class="text-center"> <?= $agency_data['agency_title']?> </h4>
-                                  <h4 class="text-center"> USWDS Code Usage Breakdown of Websites</h4>
+                                  <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center chart-data-title"> USWDS Code Usage Breakdown of Websites</h4>
                                      <div class="chart-container" id="chart-2-ref">
                                         <canvas id="chart-gov2" width="250" height="300" aria-label="Charts" role="img"></canvas>
 
@@ -459,8 +459,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                  <h4 class="text-center"> <?= $agency_data['agency_title']?> </h4>
-                                  <h4 class="text-center">HTTPS Websites Compliance</h4>
+                                  <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center chart-data-title">HTTPS Websites Compliance</h4>
                                     <div class="chart-container" id="chart-3-ref">
                                   <canvas id="chart-gov3" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -604,8 +604,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                  <h4 class="text-center"> <?= $agency_data['agency_title']?> </h4>
-                                  <h4 class="text-center"> On-site Search Engine Breakdown </h4>
+                                  <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center chart-data-title"> On-site Search Engine Breakdown </h4>
                                   <div class="chart-container" id="chart-4-ref">
                                       <?php $searchenginestatus = $agency_data['searchenginestatus'];
                                       ?>
@@ -728,8 +728,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </a>
                               </div>
                               <div class="col-md-6 mb-2">
-                                <h4 class="text-center"> <?= $agency_data['agency_title']?> </h4>
-                                <h4 class="text-center"> Mobile Performance Breakdown</h4>
+                                <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
+                                <h4 class="text-center chart-data-title"> Mobile Performance Breakdown</h4>
                                     <div class="chart-container" id="chart-5-ref">
                                         <canvas id="chart-6" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -842,8 +842,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </script>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                  <h4 class="text-center"> <?= $agency_data['agency_title']?> </h4>
-                                  <h4 class="text-center"> Mobile Usability Breakdown</h4>
+                                  <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center chart-data-title"> Mobile Usability Breakdown</h4>
                                     <div class="chart-container" id="chart-6-ref">
                                         <canvas id="chart-5" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -1024,8 +1024,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                  <h4 class="text-center"> <?= $agency_data['agency_title']?> </h4>
-                                  <h4 class="text-center"> DAP Websites Compliance</h4>
+                                  <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center chart-data-title"> DAP Websites Compliance</h4>
                                     <div class="chart-container" id="chart-7-ref">
                                         <canvas id="chart-7" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>

@@ -220,8 +220,7 @@ drupal_set_title($websitedata['agencyname']);
                                                 maintainAspectRatio: false,
 
                                                 title: {
-
-                                                    display: true,
+                                                    display: false,
                                                     text: 'Accessibility spot checks',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
