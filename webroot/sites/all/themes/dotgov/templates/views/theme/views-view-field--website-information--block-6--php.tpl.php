@@ -43,6 +43,10 @@
  * @ingroup themeable
  */
 ?>
+<style>
+.height-175 { min-height: 175px !important; }
+.height-80 { min-height: 80px !important; }
+</style>
 <?php print $output; ?>
 <?php
 $data_performance = $row->field_field_mobile_performance_score[0]['raw']['value'];
@@ -84,23 +88,33 @@ if ($chartdata <= 50) {
 $redirect_message = 'Website Redirect - Metric Not Applicable';
 $crit_text = '';
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
-  if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] != '' ) {
-    $crit_text .= "Mobile Performance Score by Google : " . $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] ."\n";
+  if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] == "" || $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
+    $crit_text .= "Mobile Performance: Not Available\n";
+  } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 50 ) {
+    $crit_text .= "Mobile Performance: Poor\n";
+  } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 90 ) {
+    $crit_text .= "Mobile Performance: Needs Improvement\n";
   } else {
-    $crit_text .= "Mobile Performance Score by Google : Not Available";
+    $crit_text .= "Mobile Performance Good";
   }
 } else {
-  $crit_text .= "Mobile Performance Score by Google: <span style=\"color:white;\">" . $redirect_message . "</span><br>";
+  $crit_text .= "Mobile Performance: <span style=\"color:white;\">" . $redirect_message . "</span><br>";
 }
 
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
-  if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] != '' ) {
-    $crit_text .= "Mobile Compatibility Score by Google : " . $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ]." ";
+  $heightChange = "";
+  $height80 = "";
+  if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === "" || $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
+    $crit_text .= "Mobile Usability: Not Available";
+  } else if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] == 100) {
+    $crit_text .= "Mobile Usability: Mobile Friendly";
   } else {
-    $crit_text .= "Mobile Compatibility Score by Google : Not Available";
+    $crit_text .= "Mobile Usability: Not Mobile Friendly";
   }
 } else {
-  $crit_text .= "Mobile Compatibility Score by Google: <span style=\"color:white;\">" . $redirect_message . "</span><br>";
+  $heightChange = "height-175";
+  $height80 = "height-80";
+  $crit_text .= "Mobile Usability: <span style=\"color:white;\">" . $redirect_message . "</span><br>";
 }
 
 dotgov_common_tooltip("tooltip4","id");
@@ -108,79 +122,122 @@ dotgov_common_tooltip("tooltip4","id");
 <div class="col-xs-10">
     <h2 class="pane-title"> Mobile Information </h2>
 </div>
-<div class="col-xs-2 nopadding">
+<div class="col-xs-2 nopadding" style="z-index: 3;">
     <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
         <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
           <?php print nl2br($crit_text);?></span>
     </div>
 </div>
 
-<div class="col-lg-12 clearfix">
+<div class="col-sm-12 clearfix <?php echo $height80?>" style="float: left;">
 <?php
+$chart_data_font = "10px";
+$performance_title = "Mobile Performance";
+$usability_title = "Mobile Usability";
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
-  if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] == NULL ) {
-    print "Mobile Performance Score: <a class=\"nostyle\" data-toggle=\"tooltip\" title=\"Scanning failed to return data for this component, so it is marked as Not Available\">Not Available</a><br>";
+  if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] == "" || $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
+    $performance_chart_data_text = "Not Available";
+    $performance_chart_pie_title = "Not Available";
+    $performance_chart_color = "#ac0600";
+  } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 50 ) {
+    $performance_chart_data_text = "Poor";
+    $performance_chart_pie_title = "Poor";
+    $performance_chart_color = "#ac0600";
+  } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 90 ) {
+    $performance_chart_data_text = "Needs Improvement";
+    $performance_chart_pie_title = "Needs<br>Improvement";
+    $performance_chart_color = "#654f00";
   } else {
-    print "Mobile Performance Score: " . $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] . "<br>";
+    $performance_chart_data_text = "Good";
+    $performance_chart_pie_title = "Good";
+    $performance_chart_color = "#29643a";
   }
+  $performance_chart_data = intval($row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ]);
+  print "$performance_title: $performance_chart_data_text<br>";
 } else {
-  print "Mobile Performance Score: <span style=\"color:#a70000;\">" . $redirect_message . "</span><br>";
+  print "$performance_title: <span style=\"color:#a70000;\">" . $redirect_message . "</span><br>";
 }
 
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
-  if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] == NULL ) {
-    print "Mobile Usability Score: <a class=\"nostyle\" data-toggle=\"tooltip\" title=\"Scanning failed to return data for this component, so it is marked as Not Available\">Not Available</a><br>";
+  if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === "" || $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
+    $usability_chart_data_text = "Not Available";
+    $usability_chart_pie_title = "Not Available";
+    $usability_chart_data = "0";
+    $usability_chart_color = "#ac0600";
+  } else if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] == 100) {
+    $usability_chart_data_text = "Mobile Friendly";
+    $usability_chart_pie_title = "Mobile<br>Friendly";
+    $usability_chart_data = "100";
+    $usability_chart_color = "#29643a";
   } else {
-    print "Mobile Usability Score: " . $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] . "<br>";
+    $usability_chart_data_text = "Not Mobile Friendly";
+    $usability_chart_pie_title = "Not Mobile<br>Friendly";
+    $usability_chart_data = "0";
+    $usability_chart_color = "#ac0600";
   }
+  print "$usability_title: $usability_chart_data_text";
 } else {
-  print "Mobile Usability Score: <span style=\"color:#a70000;\">" . $redirect_message . "</span><br>";
+  print "$usability_title: <span style=\"color:#a70000;\">" . $redirect_message . "</span><br>";
 }
 ?>
 </div>
 
+<?php if (!is_redirect(arg(1))): ?>
 <div class="col-lg-12 clearfix">
-<?php
-$blockObject = block_load('trend_analysis', 'trends_mobile_spark');
-$block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
-$output = drupal_render($block);
+  <div class="col-lg-6" style="left: 50px;">
 
-if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
-  print $output;
-}
-?>
+  </div>
+  <div class="col-lg-6" style="left: 60px;">
+  </div>
+</div>
+<?php endif; ?>
+<div class="col-lg-12 clearfix <?php echo $heightChange?>" style="min-height: 210px;">
+  <?php if (!is_redirect(arg(1))): ?>
+    <div class="col-sm-6">
+        <div id="performance_chart" style="width: 140px; height:140px; margin: 0 auto">&nbsp;</div>
+        <p class="text-center" style="font-size: 17px;"><?php echo($performance_title); ?></p>
+    </div>
+    <div class="col-sm-6">
+        <div id="usability_chart" style="width: 140px; height:140px; margin: 0 auto">&nbsp;</div>
+        <p class="text-center" style="font-size: 17px;"><?php echo($usability_title); ?></p>
+    </div>
+  <?php endif; ?>
 </div>
 
 <?php
 $scanids = dotgov_common_siteAsocScanids(arg(1));
 $scanpath = drupal_get_path_alias("node/" . $row->nid);
 ?>
-<div class="col-lg-12 clearfix report-buttons" style="margin-top:10px;">
+<div class="col-lg-12 clearfix report-buttons" style="margin-top: 0px;">
     <p>
         <a href="/improve-my-score">How to Improve Score</a>
     </p>
     <p>
         <a class="link-all-reports" href="/<?=$scanpath;?>">Go to Full Report</a>
-        <a class="trend-analysis-reports link-all-reports" href="/historical_scan_score_data/<?=$row->nid;?>">Trend Analysis Report</a>
+        <a class="trend-analysis-reports link-all-reports" href="/historical_scan_score_data/<?=arg(1);?>">Trend Analysis Report</a>
     </p>
 </div>
 
 <div class="sr-only">The graphic below indicates the level of Mobile score, and this score is <?php echo $chartdata; ?>%.</div>
 
 <script type="text/javascript">
-    Highcharts.chart('mobile_chart', {
+    Highcharts.chart('performance_chart', {
             chart: {
                 type: 'solidgauge',
             },
             title: {
                 text: ''
             },
+            credits: {
+                enabled: false
+             },
             tooltip: {
                 enabled:false,
             },
             pane: {
                 startAngle: 0,
                 endAngle: 360,
+                size: '75%',
                 background: [{
                     outerRadius: '118%',
                     innerRadius: '80%',
@@ -194,12 +251,12 @@ $scanpath = drupal_get_path_alias("node/" . $row->nid);
                 lineWidth: 0,
                 tickPositions: [],
                 title: {
-                    text: '<?php echo (!isNullNotZero($chartdata) && $chartdata != -1 ? $chartdata : '<span style="font-size: 12px;">Not Available</span>'); ?>',
+                    text: '<?php echo ($performance_chart_pie_title); ?>',
                     style: {
-                        fontSize: '22px',
-                        color:'<?php echo $chartcolor; ?>'
+                        fontSize: '<?=$chart_data_font?>',
+                        color:'<?php echo $performance_chart_color; ?>',
                     },
-                    y: 30
+                    y: 20
                 },
             },
             plotOptions: {
@@ -213,12 +270,71 @@ $scanpath = drupal_get_path_alias("node/" . $row->nid);
                 }
             },
             series: [{
-                name: 'HTTPS',
+                name: 'Mobile Performance',
                 data: [{
-                    color: '<?php echo $chartcolor; ?>',
+                    color: '<?php echo $performance_chart_color; ?>',
                     radius: '118%',
                     innerRadius: '80%',
-                    y:<?php echo ($chartdata); ?>
+                    y:<?=$performance_chart_data?>
+                }]
+            }]
+        }
+    );
+    Highcharts.chart('usability_chart', {
+            chart: {
+                type: 'solidgauge',
+            },
+            title: {
+                text: ''
+            },
+            credits: {
+                enabled: false
+            },
+            tooltip: {
+                enabled:false,
+            },
+            pane: {
+                startAngle: 0,
+                endAngle: 360,
+                size: '75%',
+                background: [{
+                    outerRadius: '118%',
+                    innerRadius: '80%',
+                    backgroundColor: '#d6d7d9',
+                    borderWidth: 0
+                }]
+            },
+            yAxis: {
+                min: 0,
+                max: 100,
+                lineWidth: 0,
+                tickPositions: [],
+                title: {
+                    text: '<?php echo ($usability_chart_pie_title); ?>',
+                    style: {
+                        fontSize: '<?=$chart_data_font?>',
+                        color:'<?php echo $usability_chart_color; ?>',
+                    },
+                    y: 20
+                },
+            },
+            plotOptions: {
+                solidgauge: {
+                    dataLabels: {
+                        enabled: false
+                    },
+                    linecap: 'round',
+                    stickyTracking: false,
+                    rounded: true
+                }
+            },
+            series: [{
+                name: '<?php echo ($usability_chart_data_text); ?>',
+                data: [{
+                    color: '<?php echo $usability_chart_color; ?>',
+                    radius: '118%',
+                    innerRadius: '80%',
+                    y:<?=$usability_chart_data?>
                 }]
             }]
         }

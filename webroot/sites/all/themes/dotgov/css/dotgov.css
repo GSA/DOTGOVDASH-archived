@@ -243,6 +243,11 @@ body {
 	color: #ffffff;
 	min-height: 270px;
 }
+
+.split-column {
+	columns: 2 !important;
+	height: auto !important;
+}
 .page-homepage .pond-column .pond-column-inner .panel-pane.domain-information {
 	/*min-height: 160px;*/
 }
@@ -630,14 +635,14 @@ h2.pane-title a {
 	-moz-border-radius: 6px 0 6px 6px;
 	border-radius: 6px 0 6px 6px
 }
-/*.ui-accordion-content-active { height: auto !important; }
-section#block-favorites-0 {
-	width: 300px;
-	position: fixed;
-	top: 300px;
-	right: 10px;
-	background: #fff;
-}*/
+.pane-trend-analysis-trends-dap h2.pane-title,
+.pane-trend-analysis-trends-dnssec h2.pane-title,
+.pane-trend-analysis-trends-ipv6 h2.pane-title,
+.pane-trend-analysis-trends-freerc4 h2.pane-title,
+.pane-trend-analysis-trends-m1513 h2.pane-title,
+.pane-trend-analysis-trends-accessible-chart h2.pane-title{
+	min-height: 70px;
+}
 #block-favorites-0 h2.block-title {
 	font-weight: bold;
 	padding: 10px 5px;
@@ -1583,8 +1588,8 @@ th.views-field.sorting_asc {
 }
 
 .dot {
-	height: 15px;
-	width: 15px;
+	height: 12px;
+	width: 12px;
 	border-radius: 50%;
 	display: inline-block;
 	vertical-align:middle;
@@ -1623,6 +1628,19 @@ table.dnssec-table td, table.dnssec-table th {
 .uswds-chart {
 	height: 140px;
 	padding-top: 3px;
+}
+
+.download-pdf {
+	float: right;
+	padding-bottom: 12px;
+}
+.download-pdf img {
+	height: 40px;
+    cursor: pointer;
+    background: white;
+    border: 1px solid gray;
+    border-radius: 50%;
+    box-shadow: 0rem 1rem 3rem 1rem grey;
 }
 /* media Queries*/
 @media (orientation: portrait) {
@@ -1892,7 +1910,7 @@ table.dnssec-table td, table.dnssec-table th {
 
 
 @media (max-width: 768px) {
-	.wi-https-info .link-all-reports,.m-15 .link-all-reports, .free-insecure .link-all-reports, .ssl-info .link-all-reports{ 
+	.wi-https-info .link-all-reports,.m-15 .link-all-reports, .free-insecure .link-all-reports, .ssl-info .link-all-reports{
 		margin-left: 0 !important;
 		margin-right: 4px !important;
 	}
@@ -1907,14 +1925,13 @@ table.dnssec-table td, table.dnssec-table th {
 	.wi-domain-info , .wi-web-info, .wi-tech-info{
 		min-height: 300px !important;
 	}
+	.web-info-acc-issues .report-buttons {
+    	margin-top: 4px !important;
+	}
 	.wi-widget {
 		min-height: 375px;
 		max-height: 375px;
 	}
-	.web-info-acc-issues #access_chart {
-		margin-top: 30px;
-	}
-
 	.wi-https-info #https_chart {
 		margin-top: 44px;
 	}
@@ -1951,15 +1968,15 @@ table.dnssec-table td, table.dnssec-table th {
 		top: -44px !important;
 	}
 
-	
+
 	.wi-https-info .link-all-reports, .m-15 .link-all-reports, .free-insecure .link-all-reports, .ssl-info .link-all-reports  {
-		margin-left: 0 !important; 
+		margin-left: 0 !important;
 		margin-right: 4px !important;
 		padding: 4px 9px !important;
 	}
 
 	.wi-https-info .link-all-reports, .m-15 .link-all-reports, .free-insecure .link-all-reports, .ssl-info .link-all-reports  {
-		margin-left: 0 !important; 
+		margin-left: 0 !important;
 		margin-right: 4px !important;
 		padding: 4px 9px !important;
 	}
@@ -1967,7 +1984,7 @@ table.dnssec-table td, table.dnssec-table th {
 	.wi-https-info .report-buttons, .web-info-acc-issues .report-buttons{
 		padding: 0 !important;
 	}
-	
+
 }
 
 @media (min-width: 768px) {
@@ -1996,7 +2013,7 @@ table.dnssec-table td, table.dnssec-table th {
 	.navbar-default .navbar-nav > .last.active > a {
 		background: none;
 	}
-	
+
 }
 
 @media screen and (max-width: 370px) {
@@ -2022,17 +2039,21 @@ table.dnssec-table td, table.dnssec-table th {
 		left: 10%;
 	}
 
-} 
+}
 
-ul.uswds {
+ul.uswds,ul.access-issues  {
 	font-size: 12px;
     margin-left: 16px;
     line-height: 20px;
 }
 
-li.ud, li.und {
+li.ud, li.und, 
+li.b-1, li.b-2,
+li.b-3
+ {
 	list-style: none;
 }
+
 li.und:before {
 	color: rgb(102, 116, 106);
 }
@@ -2040,7 +2061,20 @@ li.und:before {
 li.ud:before {
 	color: rgb(138, 201, 156);
 }
-li.ud:before, li.und:before {
+
+li.b-1:before {
+	color: #7BB4EC;
+}
+li.b-2:before {
+	color: #434448;
+}
+li.b-3:before {
+	color: #90ED7D;
+}
+
+li.ud:before, li.und:before,
+li.b-1:before, li.b-2:before, 
+li.b-3:before  {
 	content: "\2022";
     font-size: 3.5em;
     font-weight: bold;

@@ -74,21 +74,22 @@
  */
 ?>
 <script src="/sites/all/themes/dotgov/js/html2pdf.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/amstockchart/3.13.0/exporting/canvg.js"></script>
-
 <script type="text/javascript">
-  function generatePDF() {
-    // Choose the element that our invoice is rendered in.
-    var element = document.getElementById("main-container");
-    // Choose the element and save the PDF for our user.
-    html2pdf()
-    .set({
-        filename: 'report.pdf',
-        jsPDF: {format:[500,380]},
-    })
-    .from(element)
-    .save();
-  }
+    function generatePDF(fileName, pageWidth, pageHeight, websiteInfoPage) {
+      if(websiteInfoPage) {
+          jQuery( "#techstack" ).addClass( "split-column" );
+      }
+      var element = document.getElementById("main-container");
+      html2pdf()
+      .set({
+          filename: fileName + '.pdf',
+          jsPDF: {format:[pageWidth,pageHeight]},
+      })
+      .from(element)
+      .save().then(function () {
+        jQuery( "#techstack" ).removeClass( "split-column" );
+        });
+    }
 </script>
 <div class="top-bar">
 			<!-- top header-->

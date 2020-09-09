@@ -31,8 +31,10 @@ $chartseries = array_values($chartdata);
 <?php
 drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
 ?>
-<!-- <div style="float: right;"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="unfinished bingo card" onclick="generatePDF()"></div> -->
-<div id="demo-page">
+<div class="download-pdf">
+    <a href="#" onclick="generatePDF('Government wide page.pdf',600,1150,false)"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="Download Pdf">
+    </a>
+</div>
    <div  class="main-govwidecontents">
       <div class="content-wrap">
          <div class="col-lg-4 col-sm-12 col-xs-12 text-center">
@@ -59,6 +61,9 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
                    title: {
                        text: ''
                    },
+                   credits: {
+                        enabled: false
+                    },
                    xAxis: {
                        //categories: ['HTTPS Score', 'DAP Score', 'Mobile Overall Score', 'Mobile Performance Score', 'Mobile Usability score', 'Site Speed Score', 'IPv6 Score', 'DNSSEC Score', 'Free for RC4/3DES & SSLv2/SSLv3 Score', 'M-15-13 and BOD 18-01 Compliance Score'],
                        labels: {
@@ -83,9 +88,6 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
                        title: {
                            enabled: false,
                        }
-                   },
-                   credits: {
-                       enabled: true
                    },
                    plotOptions: {
                        series: {
@@ -129,15 +131,15 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
                        {
                            name: 'DAP Score',
                        },
-                       {
-                           name: 'Mobile Overall Score',
-                       },
-                       {
-                           name: 'Mobile Performance Score',
-                       },
-                       {
-                           name: 'Mobile Usability score',
-                       },
+                       // {
+                       //     name: 'Mobile Overall Score',
+                       // },
+                       // {
+                       //     name: 'Mobile Performance Score',
+                       // },
+                       // {
+                       //     name: 'Mobile Usability score',
+                       // },
                        {
                            name: 'Site Speed Score',
                        },
@@ -179,4 +181,3 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
          <div class="field-content col-lg-6"> <a class="btn btn-primary" href="<?php echo $base_url; ?>/website/all/reports">Complete List </a>&nbsp;( Last scan date: <?=dotgov_common_lastScanDate()?> )</div>
       </div>
    </div>
-</div>

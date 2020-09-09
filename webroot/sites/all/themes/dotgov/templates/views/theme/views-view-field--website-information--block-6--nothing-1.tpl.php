@@ -72,6 +72,9 @@ else{
                 type: 'solidgauge',
 
             },
+            credits: {
+                enabled: false
+            },
 
             title: {
 

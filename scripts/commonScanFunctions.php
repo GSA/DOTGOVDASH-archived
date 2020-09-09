@@ -69,7 +69,7 @@ function startScan(){
 
     //Get NIST Ipv6 data
     $ipv6dir = file_default_scheme().'://ipv6_nist_source';
-    exec("wget --no-check-certificate -O /tmp/nist_ipv6.html https://usgv6-deploymon.antd.nist.gov/cgi-bin/generate-all.www");
+    exec("timeout 15 wget --no-check-certificate -O /tmp/nist_ipv6.html https://usgv6-deploymon.antd.nist.gov/cgi-bin/generate-all.www");
     file_prepare_directory($ipv6dir, FILE_CREATE_DIRECTORY);
     $ipv6filedata = file_get_contents('/tmp/nist_ipv6.html', true);
     $ipv6datafile = file_save_data($ipv6filedata,file_default_scheme().'://ipv6_nist_source/'.nist_ipv6.'_'.date("Y-m-d-h-i-s-a").'.html', FILE_EXISTS_REPLACE);
@@ -91,7 +91,7 @@ function startScan(){
 */
 function runUswdsScan(){
     //exec("../tools/domain-scan/scan /tmp/current-federal.csv --scan=uswds2 --workers=50 --output=/tmp/");
-    exec("wget -O /tmp/results/uswds2.csv \"https://api.gsa.gov/technology/site-scanner/v1/scans/uswds2/csv/?domaintype=Federal%20Agency%20-%20Executive&api_key=6i0A3HhMw1FAmhXokiEWrpjfWqGztEtaodHxGFfj\"");
+    exec("timeout 15 wget -O /tmp/results/uswds2.csv \"https://api.gsa.gov/technology/site-scanner/v1/scans/uswds2/csv/?domaintype=Federal%20Agency%20-%20Executive&api_key=6i0A3HhMw1FAmhXokiEWrpjfWqGztEtaodHxGFfj\"");
 }
 
 
@@ -211,14 +211,14 @@ function updateUswdsScanInfo($webscanId){
                 }
             }
 
-                $wnode->field_uswds_score['und'][0]['value'] = $uswds_score;
+            $wnode->field_uswds_score['und'][0]['value'] = $uswds_score;
 
-                //Update Parent Website Node
-                $wnode->field_uswds_scan_node['und'][0]['target_id'] = $node->nid;
-                node_object_prepare($wnode);
-                if ($wnode = node_submit($wnode)) {
-                    node_save($wnode);
-                }
+            //Update Parent Website Node
+            $wnode->field_uswds_scan_node['und'][0]['target_id'] = $node->nid;
+            node_object_prepare($wnode);
+            if ($wnode = node_submit($wnode)) {
+                node_save($wnode);
+            }
 
             print "$hostname -- $siteid , $scan_stat_code , $custom_score , $uswds_status , $uswds_score \n";
 
@@ -238,7 +238,7 @@ function updateUswdsScanInfo($webscanId){
  */
 
 function getWebSnapshots($website,$storage){
-    exec("pageres ". $website. " --format=jpg --filename=\"".$storage."<%= url %>\"");
+    exec("timeout 15 pageres ". $website. " --format=jpg --filename=\"".$storage."<%= url %>\"");
 }
 
 /*
@@ -264,7 +264,7 @@ function execCommand($com, &$out, &$ret){
  */
 
 function getIPInfo($domain){
-    $command = "dig $domain +short";
+    $command = "timeout 15 dig $domain +short @205.171.2.65";
     $outp = array();
     $comret = "";
     execCommand("$command",$outp,$comret);
@@ -278,7 +278,7 @@ function getIPInfo($domain){
 
 function getNSInfo($domain){
     $basedomain = getBaseDomain($domain);
-    $command = "dig $basedomain +short";
+    $command = "timeout 15 dig $basedomain +short @205.171.2.65";
     $outp = array();
     $comret = "";
     execCommand("$command",$outp,$comret);
@@ -290,7 +290,7 @@ function getNSInfo($domain){
  */
 
 function getSiteRedirectDest($domain){
-    $redirectUrl = shell_exec("curl -w \"%{url_effective}\n\" -I -L -s -S -k http://".$domain." -o /dev/null");
+    $redirectUrl = shell_exec("timeout 15 curl -w \"%{url_effective}\n\" -I -L -s -S -k http://".$domain." -o /dev/null");
     return $redirectUrl;
 }
 
@@ -301,7 +301,7 @@ function getSiteRedirectDest($domain){
 
 function getSSLInfo($domain){
     $sslinfo = array();
-    $output = shell_exec("sslyze --regular --http_headers $domain");
+    $output = shell_exec("timeout 15 python3.6 -m sslyze --regular --http_headers $domain");
     $sslinfo['raw'] = $output;
     $outputarr = explode("*",$output);
     foreach($outputarr as $val){
@@ -514,7 +514,7 @@ function initiateSslLabsHostScan(){
     foreach($listWebsites as $key=>$website){
         print $website['domain']." Scan Initiated at SSLlabs\n";
         //collectSslLabsDomInfo($website['domain']);
-        $spout = shell_exec("../tools/ssllabs-scan/ssllabs-scan -grade -usecache=true ".$website['domain']);
+        $spout = shell_exec("timeout 15 ../tools/ssllabs-scan/ssllabs-scan -grade -usecache=true ".$website['domain']);
     }
 }
 
@@ -659,28 +659,28 @@ function getMobileApiDataPagespeedV5($domain){
     $https_domain = "https://".$domain;
     $googleApiKey = "AIzaSyDXNreglPI5GTgZRi2Le71DZUGQe2o77h4";
     $googMobileFriendlyApiData = mobileFriendlyApidataNewAPI($https_domain,$googleApiKey);
-        //$mobileAPIdataArr['mobFriendlyFile'] = "sites/default/files/mobilefriendly_reports/" . $domain . ".json";
-        //Get Json data and enter to a file
-        //file_put_contents($mobileAPIdataArr['mobFriendlyFile'], $googMobileFriendlyApiData);
-        $mobFriendlyFile = file_save_data($googMobileFriendlyApiData['returnstack'],file_default_scheme().'://mobilefriendly_reports/'.$domain.'.json', FILE_EXISTS_REPLACE);
-        $mobileAPIdataArr['mobFriendlyFile'] = array('fid' => $mobFriendlyFile->fid,'display' => 1, 'description' => '');
+    //$mobileAPIdataArr['mobFriendlyFile'] = "sites/default/files/mobilefriendly_reports/" . $domain . ".json";
+    //Get Json data and enter to a file
+    //file_put_contents($mobileAPIdataArr['mobFriendlyFile'], $googMobileFriendlyApiData);
+    $mobFriendlyFile = file_save_data($googMobileFriendlyApiData['returnstack'],file_default_scheme().'://mobilefriendly_reports/'.$domain.'.json', FILE_EXISTS_REPLACE);
+    $mobileAPIdataArr['mobFriendlyFile'] = array('fid' => $mobFriendlyFile->fid,'display' => 1, 'description' => '');
 //        $jsonMFarr = json_decode($googMobileFriendlyApiData, true);
 //        if(isset($jsonMFarr['error']['errors'])){
-        if(stripos($googMobileFriendlyApiData['returnstack'],"<title>Error") !== false){
-            $mobileAPIdataArr['mobFriendlyErrorCode'] = '502';
-            $mobileAPIdataArr['mobFriendlyErrorMessage'] = $googMobileFriendlyApiData['returnstack'];
-        }
+    if(stripos($googMobileFriendlyApiData['returnstack'],"<title>Error") !== false){
+        $mobileAPIdataArr['mobFriendlyErrorCode'] = '502';
+        $mobileAPIdataArr['mobFriendlyErrorMessage'] = $googMobileFriendlyApiData['returnstack'];
+    }
 
-        $mobileAPIdataArr['mobFriendlyScore'] = $googMobileFriendlyApiData['score'];
-        $mobileAPIdataArr['mobFriendlyResult'] =$googMobileFriendlyApiData['stat'];
+    $mobileAPIdataArr['mobFriendlyScore'] = $googMobileFriendlyApiData['score'];
+    $mobileAPIdataArr['mobFriendlyResult'] =$googMobileFriendlyApiData['stat'];
 //        $mobSnapshotData = str_replace('_', '/', $googMobileFriendlyApiData['image']);
 //        $mobSnapshotData = str_replace('-', '+', $mobSnapshotData);
 //        $mobSnapshotData = base64_decode($googMobileFriendlyApiData['image']);
-        $mobileAPIdataArr['mobSnapshotData'] = base64_decode($googMobileFriendlyApiData['image']);
+    $mobileAPIdataArr['mobSnapshotData'] = base64_decode($googMobileFriendlyApiData['image']);
 
-        $snapshotfile = file_save_data($mobileAPIdataArr['mobSnapshotData'],file_default_scheme().'://mobile_snapshots/'.$domain.'.png', FILE_EXISTS_REPLACE);
-        $mobileAPIdataArr['mobSnapshotFile'] = array('fid' => $snapshotfile->fid,'display' => 1, 'description' => '');
-        //file_put_contents($mobileAPIdataArr['mobSnapshotFile'], $mobSnapshotData);
+    $snapshotfile = file_save_data($mobileAPIdataArr['mobSnapshotData'],file_default_scheme().'://mobile_snapshots/'.$domain.'.png', FILE_EXISTS_REPLACE);
+    $mobileAPIdataArr['mobSnapshotFile'] = array('fid' => $snapshotfile->fid,'display' => 1, 'description' => '');
+    //file_put_contents($mobileAPIdataArr['mobSnapshotFile'], $mobSnapshotData);
 
     //Call to Google Inights Speed API
     //$googMobilePerformApi = "https://www.googleapis.com/pagespeedonline/v2/runPagespeed?screenshot=true&key=AIzaSyDXNreglPI5GTgZRi2Le71DZUGQe2o77h4&strategy=mobile&url=".$domain."";
@@ -924,7 +924,7 @@ function getSiteInspectorOutput($domain){
  */
 
 function getDnssecStatus($domain){
-    $dnsseccom = "dig +dnssec $domain @205.171.2.65|grep -i 'rrsig'";
+    $dnsseccom = "timeout 15 dig +dnssec $domain @205.171.2.65|grep -i 'rrsig'";
     $outp = array();
     $comret = "";
     execCommand("$dnsseccom",$outp,$comret);
@@ -947,7 +947,7 @@ function getDnssecStatus($domain){
  */
 
 function getCustomIpv6Status($domain){
-    $ipv6com = "nslookup -q=aaaa $domain";
+    $ipv6com = "timeout 15 nslookup -q=aaaa $domain";
     $outp = array();
     $comret = "";
     execCommand("$ipv6com",$outp,$comret);
@@ -960,9 +960,9 @@ function getCustomIpv6Status($domain){
         $ipv6stat = '0';
     }
 
-    $ipv6address = shell_exec("dig AAAA +short $domain");
+    $ipv6address = shell_exec("timeout 15 dig AAAA +short $domain @205.171.2.65");
     $ipv6ret['status'] = $ipv6stat;
-    execCommand("dig AAAA +short $domain",$ipv6outp,$ipcomret);
+    execCommand("timeout 15 dig AAAA +short $domain @205.171.2.65",$ipv6outp,$ipcomret);
     $ipv6ret['address'] = $ipv6outp[0];
     $ipv6ret['output'] = $commandOutputforStore;
     return $ipv6ret;
@@ -1003,7 +1003,7 @@ function getPulseData(){
     //Get Pulse dap data and enter to a temp table
     //file_put_contents("$localdapfile", file_get_contents("$pulsedapurl"));
     //This is the latest scan which uses GSA analytics api instead of pulse and generates a file at /tmp/pulsedap.csv
-    shell_exec("/usr/bin/python3.6 ../scripts/custom_pulse_scanner_analytics/secondLevelDomain.py");
+    shell_exec("timeout 15 /usr/bin/python3.6 ../scripts/custom_pulse_scanner_analytics/secondLevelDomain.py");
 
     db_query("truncate table custom_pulse_dap_data");
     db_query("LOAD DATA LOCAL INFILE '".$localdapfile."' INTO TABLE `custom_pulse_dap_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
@@ -2012,7 +2012,7 @@ function findCDNProvider($website){
         ".yimg."=>"Yahoo",
         ".zenedge.net"=>"Zenedge"
     );
-    $comout = shell_exec("dig +trace $website");
+    $comout = shell_exec("timeout 15 dig +trace $website @205.171.2.65");
     $cdnMatched = array();
     $match = "false";
     //print $comout;
@@ -2088,7 +2088,7 @@ function updateTechStackInfo($website){
     $weburl = "http://".$website;
     //$command = "node index.js $weburl";
     //$tsout = shell_exec("export npm_config_loglevel=silent;cd ../tools/wappalyzer/;$command");
-    $command = "node /usr/lib/node_modules/wappalyzer/index.js $weburl";
+    $command = "timeout 15 node /usr/lib/node_modules/wappalyzer/index.js $weburl";
     shell_exec("export npm_config_loglevel=silent");
     $tsout = shell_exec("export npm_config_loglevel=silent;$command");
     if (strpos($tsout, 'JQMIGRATE:') !== false) {
@@ -2636,12 +2636,12 @@ function archiveGovwideTrendData(){
     $ag_avrg_html_attr =  round(db_query("select sum(c.field_accessible_group_htmlattri_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_accessible_group_htmlattri c  where a.type='508_scan_information' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id ", array())->fetchField());
     $agencynos = db_query("select count(*) from node a, field_data_field_agency_branch b where a.type='agency' and a.status ='1' and a.nid=b.entity_id and  b.field_agency_branch_value='executive'")->fetchField();
 
-    //Queries for new Accessibility
-    $accessb_poor_sites =  db_query("select count(a.field_mobile_performance_status_value) from field_data_field_mobile_performance_status a, node b where  a.entity_id=b.nid  and b.type='website' and b.status=1 and a.field_mobile_performance_status_value='Poor'")->fetchField();
-    $accessb_improve_sites =  db_query("select count(a.field_mobile_performance_status_value) from field_data_field_mobile_performance_status a, node b where  a.entity_id=b.nid  and b.type='website' and b.status=1 and a.field_mobile_performance_status_value='Needs Improvement'")->fetchField();
-    $accessb_good_sites =  db_query("select count(a.field_mobile_performance_status_value) from field_data_field_mobile_performance_status a, node b where  a.entity_id=b.nid  and b.type='website' and b.status=1 and a.field_mobile_performance_status_value='Good'")->fetchField();
-    $accessb_friendly_sites =  db_query("select count(a.field_mobile_usability_status_value) from field_data_field_mobile_usability_status a, node b where  a.entity_id=b.nid  and b.type='website' and b.status=1 and a.field_mobile_usability_status_value='Mobile Friendly'")->fetchField();
-    $accessb_unfriendly_sites =  db_query("select count(a.field_mobile_usability_status_value) from field_data_field_mobile_usability_status a, node b where  a.entity_id=b.nid  and b.type='website' and b.status=1 and a.field_mobile_usability_status_value='Not Mobile Friendly'")->fetchField();
+    //Queries for new Mobile Data
+    $mobnew_poor_sites =  db_query("select count(a.field_mobile_performance_status_value) from field_data_field_mobile_performance_status a, node b where  a.entity_id=b.nid  and b.type='website' and b.status=1 and a.field_mobile_performance_status_value='Poor'")->fetchField();
+    $mobnew_improve_sites =  db_query("select count(a.field_mobile_performance_status_value) from field_data_field_mobile_performance_status a, node b where  a.entity_id=b.nid  and b.type='website' and b.status=1 and a.field_mobile_performance_status_value='Needs Improvement'")->fetchField();
+    $mobnew_good_sites =  db_query("select count(a.field_mobile_performance_status_value) from field_data_field_mobile_performance_status a, node b where  a.entity_id=b.nid  and b.type='website' and b.status=1 and a.field_mobile_performance_status_value='Good'")->fetchField();
+    $mobnew_friendly_sites =  db_query("select count(a.field_mobile_usability_status_value) from field_data_field_mobile_usability_status a, node b where  a.entity_id=b.nid  and b.type='website' and b.status=1 and a.field_mobile_usability_status_value='Mobile Friendly'")->fetchField();
+    $mobnew_unfriendly_sites =  db_query("select count(a.field_mobile_usability_status_value) from field_data_field_mobile_usability_status a, node b where  a.entity_id=b.nid  and b.type='website' and b.status=1 and a.field_mobile_usability_status_value='Not Mobile Friendly'")->fetchField();
 
     //Query to get Search data for govtwide
     $searchresults = db_query("select field_search_status_value,count(field_search_status_value) as complnum from node a , field_data_field_search_status b  where a.status='1' and a.nid=b.entity_id  and a.type='website' group by field_search_status_value");
@@ -2654,12 +2654,12 @@ function archiveGovwideTrendData(){
         if($searchresult->field_search_status_value == '0')
             $search_notavailable += $searchresult->complnum;
     }
-    print  " $websitenos - $agencynos - $avg_https -- $avg_dap -- $avg_mob_overall -- $avg_mob_perform -- $avg_mob_usab - $avg_sitespeed - $avg_ipv6 - $avg_dnssec -  $avg_rc4 - $avg_m15 - $ag_avrg_color_cont - $ag_avrg_miss_image - $ag_avrg_html_attr - $search_available - $search_notavailable - $avg_uswds ,$accessb_poor_sites,$accessb_improve_sites,$accessb_good_sites,$accessb_friendly_sites,$accessb_unfriendly_sites \n";
+    print  " $websitenos - $agencynos - $avg_https -- $avg_dap -- $avg_mob_overall -- $avg_mob_perform -- $avg_mob_usab - $avg_sitespeed - $avg_ipv6 - $avg_dnssec -  $avg_rc4 - $avg_m15 - $ag_avrg_color_cont - $ag_avrg_miss_image - $ag_avrg_html_attr - $search_available - $search_notavailable - $avg_uswds ,$mobnew_poor_sites,$mobnew_improve_sites,$mobnew_good_sites,$mobnew_friendly_sites,$mobnew_unfriendly_sites \n";
     print "insert into custom_government_wide_archive values(NULL,CURDATE(),NOW(),$websitenos,$avg_https,$avg_dap,$avg_mob_overall,$avg_mob_usab,$avg_mob_perform,$avg_sitespeed,$avg_ipv6,$avg_dnssec,$avg_rc4,$avg_m15,$ag_avrg_color_cont,$ag_avrg_html_attr,$ag_avrg_miss_image,$search_available,$search_notavailable,$agencynos,$avg_uswds) ON DUPLICATE KEY UPDATE    
-num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',num_of_agencies='$agencynos',search_available='$search_available',search_notavailable='$search_notavailable',average_uswds_score='$avg_uswds', accessb_good='$accessb_good_sites',accessb_improve='$accessb_improve_sites',accessb_poor='$accessb_poor_sites',accessb_friendly='$accessb_friendly_sites',accessb_nonfriendly='$accessb_unfriendly_sites'";
+num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',num_of_agencies='$agencynos',search_available='$search_available',search_notavailable='$search_notavailable',average_uswds_score='$avg_uswds', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites'";
 //Update/Insert Archive record for current data sets
-    db_query("insert into custom_government_wide_archive values(NULL,CURDATE(),NOW(),$websitenos,$avg_https,$avg_dap,$avg_mob_overall,$avg_mob_usab,$avg_mob_perform,$avg_sitespeed,$avg_ipv6,$avg_dnssec,$avg_rc4,$avg_m15,$ag_avrg_color_cont,$ag_avrg_html_attr,$ag_avrg_miss_image,$search_available,$search_notavailable,$agencynos,$avg_uswds,$accessb_good_sites,$accessb_improve_sites,$accessb_poor_sites,$accessb_friendly_sites,$accessb_unfriendly_sites) ON DUPLICATE KEY UPDATE    
-num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',num_of_agencies='$agencynos',search_available='$search_available',search_notavailable='$search_notavailable',average_uswds_score='$avg_uswds', accessb_good='$accessb_good_sites',accessb_improve='$accessb_improve_sites',accessb_poor='$accessb_poor_sites',accessb_friendly='$accessb_friendly_sites',accessb_nonfriendly='$accessb_unfriendly_sites'");
+    db_query("insert into custom_government_wide_archive values(NULL,CURDATE(),NOW(),$websitenos,$avg_https,$avg_dap,$avg_mob_overall,$avg_mob_usab,$avg_mob_perform,$avg_sitespeed,$avg_ipv6,$avg_dnssec,$avg_rc4,$avg_m15,$ag_avrg_color_cont,$ag_avrg_html_attr,$ag_avrg_miss_image,$search_available,$search_notavailable,$agencynos,$avg_uswds,$mobnew_good_sites,$mobnew_improve_sites,$mobnew_poor_sites,$mobnew_friendly_sites,$mobnew_unfriendly_sites) ON DUPLICATE KEY UPDATE    
+num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',num_of_agencies='$agencynos',search_available='$search_available',search_notavailable='$search_notavailable',average_uswds_score='$avg_uswds', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites'");
 
 }
 
@@ -2683,12 +2683,12 @@ function archiveAgencywideTrendData(){
         $ag_avrg_html_attr =  round(db_query("select sum(c.field_accessible_group_htmlattri_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_accessible_group_htmlattri c  where a.type='508_scan_information' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
         $ag_avrg_uswds_score =  round(db_query("select avg(c.field_uswds_score_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_uswds_score c  where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
 
-        //Queries for new Accessibility
-        $accessb_poor_sites =  db_query("select count(a.field_mobile_performance_status_value) from field_data_field_mobile_performance_status a, node b, field_data_field_web_agency_id c  where   b.nid=a.entity_id and c.entity_id=a.entity_id   and b.type='website' and b.status=1 and  b.type=c.bundle and a.field_mobile_performance_status_value='Poor' and c.field_web_agency_id_nid=:agencyid", array(':agencyid' =>  $result->nid))->fetchField();
-        $accessb_improve_sites =  db_query("select count(a.field_mobile_performance_status_value) from field_data_field_mobile_performance_status a, node b, field_data_field_web_agency_id c  where   b.nid=a.entity_id and c.entity_id=a.entity_id   and b.type='website' and b.status=1 and  b.type=c.bundle and a.field_mobile_performance_status_value='Needs Improvement' and c.field_web_agency_id_nid=:agencyid", array(':agencyid' =>  $result->nid))->fetchField();
-        $accessb_good_sites =  db_query("select count(a.field_mobile_performance_status_value) from field_data_field_mobile_performance_status a, node b, field_data_field_web_agency_id c  where   b.nid=a.entity_id and c.entity_id=a.entity_id   and b.type='website' and b.status=1 and  b.type=c.bundle and a.field_mobile_performance_status_value='Good' and c.field_web_agency_id_nid=:agencyid", array(':agencyid' =>  $result->nid))->fetchField();
-        $accessb_friendly_sites =  db_query("select count(field_mobile_usability_status_value) from field_data_field_mobile_usability_status a, node b, field_data_field_web_agency_id c  where   b.nid=a.entity_id and c.entity_id=a.entity_id   and b.type='website' and b.status=1 and  b.type=c.bundle and field_mobile_usability_status_value='Mobile Friendly'  and c.field_web_agency_id_nid=:agencyid", array(':agencyid' =>  $result->nid))->fetchField();
-        $accessb_unfriendly_sites =  db_query("select count(field_mobile_usability_status_value) from field_data_field_mobile_usability_status a, node b, field_data_field_web_agency_id c  where   b.nid=a.entity_id and c.entity_id=a.entity_id   and b.type='website' and b.status=1 and  b.type=c.bundle and field_mobile_usability_status_value='Not Mobile Friendly' and c.field_web_agency_id_nid=:agencyid", array(':agencyid' =>  $result->nid))->fetchField();
+        //Queries for new Mobile Data
+        $mobnew_poor_sites =  db_query("select count(a.field_mobile_performance_status_value) from field_data_field_mobile_performance_status a, node b, field_data_field_web_agency_id c  where   b.nid=a.entity_id and c.entity_id=a.entity_id   and b.type='website' and b.status=1 and  b.type=c.bundle and a.field_mobile_performance_status_value='Poor' and c.field_web_agency_id_nid=:agencyid", array(':agencyid' =>  $result->nid))->fetchField();
+        $mobnew_improve_sites =  db_query("select count(a.field_mobile_performance_status_value) from field_data_field_mobile_performance_status a, node b, field_data_field_web_agency_id c  where   b.nid=a.entity_id and c.entity_id=a.entity_id   and b.type='website' and b.status=1 and  b.type=c.bundle and a.field_mobile_performance_status_value='Needs Improvement' and c.field_web_agency_id_nid=:agencyid", array(':agencyid' =>  $result->nid))->fetchField();
+        $mobnew_good_sites =  db_query("select count(a.field_mobile_performance_status_value) from field_data_field_mobile_performance_status a, node b, field_data_field_web_agency_id c  where   b.nid=a.entity_id and c.entity_id=a.entity_id   and b.type='website' and b.status=1 and  b.type=c.bundle and a.field_mobile_performance_status_value='Good' and c.field_web_agency_id_nid=:agencyid", array(':agencyid' =>  $result->nid))->fetchField();
+        $mobnew_friendly_sites =  db_query("select count(field_mobile_usability_status_value) from field_data_field_mobile_usability_status a, node b, field_data_field_web_agency_id c  where   b.nid=a.entity_id and c.entity_id=a.entity_id   and b.type='website' and b.status=1 and  b.type=c.bundle and field_mobile_usability_status_value='Mobile Friendly'  and c.field_web_agency_id_nid=:agencyid", array(':agencyid' =>  $result->nid))->fetchField();
+        $mobnew_unfriendly_sites =  db_query("select count(field_mobile_usability_status_value) from field_data_field_mobile_usability_status a, node b, field_data_field_web_agency_id c  where   b.nid=a.entity_id and c.entity_id=a.entity_id   and b.type='website' and b.status=1 and  b.type=c.bundle and field_mobile_usability_status_value='Not Mobile Friendly' and c.field_web_agency_id_nid=:agencyid", array(':agencyid' =>  $result->nid))->fetchField();
 
         //Query to get Search data for an agency
         $searchresults = db_query("select field_search_status_value,count(field_search_status_value) as complnum from node a , field_data_field_search_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='website' group by field_search_status_value", array(':agencyid' => $result->nid));
@@ -2703,10 +2703,10 @@ function archiveAgencywideTrendData(){
         }
 
         //  print  $result->nid."-- $result->title -- $websitenos - $avg_https\n";
-        print  "$result->nid -- $result->title -- $websitenos - $avg_https -- $avg_dap -- $avg_mob_overall -- $avg_mob_perform -- $avg_mob_usab - $avg_sitespeed - $avg_ipv6 - $avg_dnssec -  $avg_rc4 - $avg_m15 - $ag_avrg_color_cont - $ag_avrg_miss_image - $ag_avrg_html_attr - $search_available - $search_notavailable - $ag_avrg_uswds_score,$accessb_poor_sites,$accessb_improve_sites,$accessb_good_sites,$accessb_friendly_sites,$accessb_unfriendly_sites  \n";
+        print  "$result->nid -- $result->title -- $websitenos - $avg_https -- $avg_dap -- $avg_mob_overall -- $avg_mob_perform -- $avg_mob_usab - $avg_sitespeed - $avg_ipv6 - $avg_dnssec -  $avg_rc4 - $avg_m15 - $ag_avrg_color_cont - $ag_avrg_miss_image - $ag_avrg_html_attr - $search_available - $search_notavailable - $ag_avrg_uswds_score,$mobnew_poor_sites,$mobnew_improve_sites,$mobnew_good_sites,$mobnew_friendly_sites,$mobnew_unfriendly_sites  \n";
         if($websitenos != '0'){
-            print "insert into custom_agencywide_archive values(NULL,CURDATE(),NOW(),'$result->title','$result->nid',$websitenos,$avg_https,$avg_dap,$avg_mob_overall,$avg_mob_usab,$avg_mob_perform,$avg_sitespeed,$avg_ipv6,$avg_dnssec,$avg_rc4,$avg_m15,$ag_avrg_color_cont,$ag_avrg_html_attr,$ag_avrg_miss_image,$search_available,$search_notavailable,$ag_avrg_uswds_score) ON DUPLICATE KEY UPDATE     num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',search_available='$search_available',search_notavailable='$search_notavailable', average_uswds_score='$ag_avrg_uswds_score', accessb_good='$accessb_good_sites',accessb_improve='$accessb_improve_sites',accessb_poor='$accessb_poor_sites',accessb_friendly='$accessb_friendly_sites',accessb_nonfriendly='$accessb_unfriendly_sites' \n";
-            db_query("insert into custom_agencywide_archive values(NULL,CURDATE(),NOW(),'$result->title','$result->nid',$websitenos,$avg_https,$avg_dap,$avg_mob_overall,$avg_mob_usab,$avg_mob_perform,$avg_sitespeed,$avg_ipv6,$avg_dnssec,$avg_rc4,$avg_m15,$ag_avrg_color_cont,$ag_avrg_html_attr,$ag_avrg_miss_image,$search_available,$search_notavailable,$ag_avrg_uswds_score,$accessb_good_sites,$accessb_improve_sites,$accessb_poor_sites,$accessb_friendly_sites,$accessb_unfriendly_sites) ON DUPLICATE KEY UPDATE     num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',search_available='$search_available',search_notavailable='$search_notavailable', average_uswds_score='$ag_avrg_uswds_score', accessb_good='$accessb_good_sites',accessb_improve='$accessb_improve_sites',accessb_poor='$accessb_poor_sites',accessb_friendly='$accessb_friendly_sites',accessb_nonfriendly='$accessb_unfriendly_sites'");
+            print "insert into custom_agencywide_archive values(NULL,CURDATE(),NOW(),'$result->title','$result->nid',$websitenos,$avg_https,$avg_dap,$avg_mob_overall,$avg_mob_usab,$avg_mob_perform,$avg_sitespeed,$avg_ipv6,$avg_dnssec,$avg_rc4,$avg_m15,$ag_avrg_color_cont,$ag_avrg_html_attr,$ag_avrg_miss_image,$search_available,$search_notavailable,$ag_avrg_uswds_score) ON DUPLICATE KEY UPDATE     num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',search_available='$search_available',search_notavailable='$search_notavailable', average_uswds_score='$ag_avrg_uswds_score', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites' \n";
+            db_query("insert into custom_agencywide_archive values(NULL,CURDATE(),NOW(),'$result->title','$result->nid',$websitenos,$avg_https,$avg_dap,$avg_mob_overall,$avg_mob_usab,$avg_mob_perform,$avg_sitespeed,$avg_ipv6,$avg_dnssec,$avg_rc4,$avg_m15,$ag_avrg_color_cont,$ag_avrg_html_attr,$ag_avrg_miss_image,$search_available,$search_notavailable,$ag_avrg_uswds_score,$mobnew_good_sites,$mobnew_improve_sites,$mobnew_poor_sites,$mobnew_friendly_sites,$mobnew_unfriendly_sites) ON DUPLICATE KEY UPDATE     num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',search_available='$search_available',search_notavailable='$search_notavailable', average_uswds_score='$ag_avrg_uswds_score', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites'");
 
         }
     }
@@ -2717,7 +2717,7 @@ function archiveAgencywideTrendData(){
  * Extract Accessibility Info
  */
 function extractAccessibilityErrors($domain){
-    $comOut = shell_exec("/usr/bin/pa11y --ignore 'warning;notice' --reporter json https://".$domain);
+    $comOut = shell_exec("timeout 15 /usr/bin/pa11y --ignore 'warning;notice' --reporter json https://".$domain);
     $decodedJson =  json_decode($comOut);
     $errorArr = array();
     foreach ($decodedJson as $stObj){
@@ -2925,14 +2925,14 @@ function runSearchEngineScan(){
 //    else{
 //        $weburl = "http://www.".trim($result->title);
 //    }
-            $curl_stat_code = trim(shell_exec("curl -I  --stderr /dev/null $weburl | head -1 | cut -d' ' -f2"));
+            $curl_stat_code = trim(shell_exec("timeout 15 curl -I  --stderr /dev/null $weburl | head -1 | cut -d' ' -f2"));
 
             if ($curl_stat_code != '') {
                 //$html = shell_exec("curl -L -k --silent https://".trim($result->title));
                 //$html = shell_exec("wget  --no-check-certificate --trust-server-names -qO- --max-redirect=1 -T 5 -t 1 ".$weburl);
                 //$html = shell_exec("phantomjs ../scripts/phantomjs_website.js \"".$weburl."/\"");
                 if(in_array($result->title,$curl_domains)) {
-                    $html = shell_exec("curl -L -k --silent https://".trim($result->title));
+                    $html = shell_exec("timeout 15 curl -L -k --silent https://".trim($result->title));
                 }
                 else {
                     $html = shell_exec("timeout 15 google-chrome --no-sandbox --headless --disable-gpu --dump-dom --ignore-certificate-errors --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36\"  --timeout=15000  \"" . $weburl . "/\"");
@@ -2990,7 +2990,7 @@ function runSearchEngineScan(){
                         } elseif (strpos($forms[$k][1], 'http') === FALSE) {
                             $searchtype = "custom search";
                             //In custom search append action urls and find if the search has solr
-                            $html_search = shell_exec("wget --no-check-certificate --trust-server-names -qO- --max-redirect=1 -T 5 -t 1 https://" . trim($result->title) . "/" . $forms[$k][1] . "?keys=test");
+                            $html_search = shell_exec("timeout 15 wget --no-check-certificate --trust-server-names -qO- --max-redirect=1 -T 5 -t 1 https://" . trim($result->title) . "/" . $forms[$k][1] . "?keys=test");
                             //Check if the site is Drupal based by checking against tag 32
                             $check_drupal =  db_query("select b.title from field_data_field_cms_applications a, node b where a.field_cms_applications_tid='32' and a.entity_id=b.nid and b.title=:title", array(':title' => trim($result->title)))->fetchField();
                             //print $html_search;
@@ -3152,4 +3152,23 @@ function dateDifference($startdate,$enddate){
 // Print the result
     $datediff  = "$days days, $hours hours, $minutes minutes, $seconds seconds";
     return $datediff;
+}
+
+function unPublishNode($nid){
+    // Load a node
+    $node = node_load($nid);
+    // set status property to 0
+    $node->status = 0;
+    // re-save the node
+    node_save($node);
+    print "Unpublished ".$node->title." ".$node->nid." of type ".$node->type."\n";
+}
+function publishNode($nid){
+    // Load a node
+    $node = node_load($nid);
+    // set status property to 0
+    $node->status = 1;
+    // re-save the node
+    node_save($node);
+    print "Published ".$node->title." ".$node->nid." of type ".$node->type."\n";
 }

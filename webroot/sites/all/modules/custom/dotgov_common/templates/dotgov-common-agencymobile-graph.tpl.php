@@ -4,26 +4,27 @@ google.charts.setOnLoadCallback(drawChart1);
 
 function drawChart1() {
 
-var data = google.visualization.arrayToDataTable([
-['Type', 'Number'],
-['Slow',     <?php echo number_format($agencydata['agency_mob_bad'],1, '.', '');?>],
-['Moderate',      <?php echo number_format($agencydata['agency_mob_avg'],1, '.', '');?>],
-['Fast',  <?php echo number_format($agencydata['agency_mob_good'],1, '.', ''); ?>],
-['NA',  <?php echo number_format($agencydata['agency_mob_null'],1, '.', ''); ?>]
-]);
-var options = {
-    colors: ['#ae0100', '#665000','#276437','#337ab7'],
-    sliceVisibilityThreshold: 0,
-    legend: {position: 'none'},
-    backgroundColor: { fill:'transparent' },
-    pieSliceText: 'label',
-    dataLabels: {
-        enabled: false
-    },
-    showInLegend: false,
-};
+    var data = google.visualization.arrayToDataTable([
+        ['Type', 'Number'],
+        ['Poor',  <?php echo number_format($agencydata['mob_perf_poor_nos'],1, '.', ''); ?>],
+        ['Needs Improvement',      <?php echo number_format($agencydata['mob_perf_improve_nos'],1, '.', '');?>],
+        ['Good',  <?php echo number_format($agencydata['mob_perf_good_nos'],1, '.', ''); ?>],
+        //['NA',  <?php //echo number_format($agencydata['null'],1, '.', ''); ?>//]
 
-var chart = new google.visualization.PieChart(document.getElementById('piechart1'));
+    ]);
+    var options = {
+        colors: ['#ae0100', '#665000','#276437'],
+        sliceVisibilityThreshold: 0,
+        legend: {position: 'none'},
+        backgroundColor: { fill:'transparent' },
+        pieSliceText: 'percentage',
+        dataLabels: {
+            enabled: false
+        },
+        chartArea:{left:0,top:20,width:'100%',height:'70%'},
+        showInLegend: false,
+    };
+var chart = new google.visualization.PieChart(document.getElementById('piechartmob'));
 
 chart.draw(data, options);
 }
