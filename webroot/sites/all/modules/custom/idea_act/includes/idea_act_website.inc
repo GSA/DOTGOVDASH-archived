@@ -144,7 +144,7 @@ function ideaact_get_website_data($websiteid){
     }
   }
   else{
-    $websitedata['mobileperf'] = 'Website Redirect - Metric Not Applicable.';
+    $websitedata['mobileperf'] = 'Website Redirect - Metric Not Applicable';
   }
 
 
@@ -159,7 +159,7 @@ function ideaact_get_website_data($websiteid){
     }
   }
   else{
-    $websitedata['mobileusab'] = 'Website Redirect - Metric Not Applicable.';
+    $websitedata['mobileusab'] = 'Website Redirect - Metric Not Applicable';
   }
 
   if($websitedata['mobileperf'] == 'Good' || $websitedata['mobileperf'] == 'Needs Improvement'){
