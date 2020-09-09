@@ -104,9 +104,9 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   $heightChange = "";
   $height80 = "";
-  if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === "" || $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
+  if ( $row->field_field_mobile_usability_status[ '0' ][ 'raw' ][ 'value' ] === "" || $row->field_field_mobile_usability_status[ '0' ][ 'raw' ][ 'value' ] === NULL) {
     $crit_text .= "Mobile Usability: Not Available";
-  } else if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] == 100) {
+  } else if ( trim($row->field_field_mobile_usability_status[ '0' ][ 'raw' ][ 'value' ]) == "Mobile Friendly") {
     $crit_text .= "Mobile Usability: Mobile Friendly";
   } else {
     $crit_text .= "Mobile Usability: Not Mobile Friendly";
@@ -159,12 +159,12 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
 }
 
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
-  if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === "" || $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
+  if ( $row->field_field_mobile_usability_status[ '0' ][ 'raw' ][ 'value' ] === "" || $row->field_field_mobile_usability_status[ '0' ][ 'raw' ][ 'value' ] === NULL) {
     $usability_chart_data_text = "Not Available";
     $usability_chart_pie_title = "Not Available";
     $usability_chart_data = "0";
     $usability_chart_color = "#ac0600";
-  } else if ( $row->field_field_mobile_usability_score[ '0' ][ 'raw' ][ 'value' ] == 100) {
+  } else if ( $row->field_field_mobile_usability_status[ '0' ][ 'raw' ][ 'value' ] == "Mobile Friendly") {
     $usability_chart_data_text = "Mobile Friendly";
     $usability_chart_pie_title = "Mobile<br>Friendly";
     $usability_chart_data = "100";
