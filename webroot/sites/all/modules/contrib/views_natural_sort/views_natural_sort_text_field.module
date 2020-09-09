@@ -1,0 +1,274 @@
+<?php
+
+/**
+ * @file
+ * The Views Natural Sort Text Field module file.
+ */
+
+/**
+ * Implements hook_views_api().
+ */
+function views_natural_sort_text_field_views_api() {
+  return array(
+    'api' => 3.0,
+  );
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function views_natural_sort_text_field_module_implements_alter(&$implementations, $hook) {
+  if ($hook == 'form_alter' && isset($implementations['views_natural_sort_text_field'])) {
+    unset($implementations['views_natural_sort_text_field']);
+    $implementations['views_natural_sort_text_field'] = FALSE;
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function views_natural_sort_text_field_form_field_ui_field_edit_form_alter(&$form, &$form_state, $form_id) {
+  $potential_fields = views_natrual_sort_text_get_potential_fields();
+  if (!isset($potential_fields[$form['#field']['id']])) {
+    return;
+  }
+  // TODO: Inform the user that this field is being used in views.
+  $form['field']['views_natural_sort_enable_sort'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Enable natural sorting.'),
+    '#description' => t("Selecting this option will process and index this field's value for natural sorting in views."),
+    '#default_value' => empty($form['#field']['views_natural_sort_enable_sort']) ? 0 : $form['#field']['views_natural_sort_enable_sort'],
+  );
+  $form['#submit'][] = 'views_natural_sort_text_field_form_field_ui_field_edit_form_alter_submit';
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function views_natural_sort_text_field_form_field_ui_field_edit_form_alter_submit($form, $form_state) {
+  // Rebuild index for this field.
+  if ($form_state['input']['field']['views_natural_sort_enable_sort'] != 1) {
+    // TODO: Revert views back to regular sort ASC & DESC.
+    db_delete('views_natural_sort')
+      ->condition('field', $form['#field']['field_name'])
+      ->execute();
+  }
+  else {
+    module_load_include('inc', 'views_natural_sort', 'views_natural_sort.admin');
+    views_natural_sort_rebuild_index_batch_set(views_natural_sort_text_field_views_natural_sort_get_entry_types(array($form['#field'])));
+  }
+}
+
+/**
+ * Implements hook_views_natural_sort_get_entry_types().
+ */
+function views_natural_sort_text_field_views_natural_sort_get_entry_types($fields = array()) {
+  if (empty($fields)) {
+    $fields = views_natural_sort_text_field_get_configured_fields();
+  }
+  $entry_types = array();
+  foreach ($fields as $field) {
+    $entry_types = array_merge($entry_types, views_natural_sort_text_field_get_entry_types_from_field($field));
+  }
+  return $entry_types;
+}
+
+/**
+ * Returns the possible vns entry types from the text field.
+ *
+ * @return array
+ *   An array taking on the form expected by
+ *    hook_views_natural_sort_get_entry_types().
+ */
+function views_natural_sort_text_field_get_entry_types_from_field($field) {
+  $entry_types = array();
+  foreach ($field['bundles'] as $entity_type => $bundles) {
+    $entry_types[] = array(
+      'entity_type' => $entity_type,
+      'field' => $field['field_name'],
+      'module' => 'views_natural_sort_text_field',
+    );
+  }
+  return $entry_types;
+}
+
+/**
+ * Implements hook_views_natural_sort_queue_rebuild_data().
+ */
+function views_natural_sort_text_field_views_natural_sort_queue_rebuild_data($entry_type, $offset = 0, $limit = NULL) {
+  if (!in_array($entry_type, views_natural_sort_text_field_views_natural_sort_get_entry_types())) {
+    return array();
+  }
+  $field = field_info_field($entry_type['field']);
+  $data = array();
+  $bundles = array();
+
+  if (isset($field['bundles'][$entry_type['entity_type']])) {
+    foreach ($field['bundles'][$entry_type['entity_type']] as $key => $bundle) {
+      $bundles[] = $bundle;
+    }
+  }
+  $entity_info = entity_get_info($entry_type['entity_type']);
+  // Get rows for each field value so we can accurately use count functionality
+  // on this query. Not putting a distinct here because it would throw off the
+  // calculation. Ordering by entity id because newer ones should have entries
+  // built as they are entered.
+  $query = db_select($entity_info['base table'], 'e')
+    ->fields('e', array($entity_info['entity keys']['id']))
+    ->condition('e.' . $entity_info['bundle keys']['bundle'], $bundles, 'IN')
+    ->orderBy('e.' . $entity_info['entity keys']['id']);
+  $query->join('field_data_' . $entry_type['field'], 'f', 'f.entity_type = :entity_type AND f.deleted = 0 AND f.entity_id = e.' . $entity_info['entity keys']['id'], array('entity_type' => $entry_type['entity_type']));
+  if ($limit) {
+    $query->range($offset, $limit);
+  }
+  $entity_ids = $query->execute()
+    ->fetchCol();
+  array_unique($entity_ids);
+  if (!empty($entity_ids)) {
+    foreach ($entity_ids as $entity_id) {
+      $results = entity_load($entry_type['entity_type'], array($entity_id), array(), TRUE);
+      $entity = reset($results);
+      $entries = _views_natural_sort_text_field_to_vns($entry_type['entity_type'], $entity, $field);
+      $data = array_merge($data, $entries);
+    }
+  }
+  return $data;
+}
+
+function views_natural_sort_text_field_views_natural_sort_queue_rebuild_data_count($entry_type) {
+  if (!in_array($entry_type, views_natural_sort_text_field_views_natural_sort_get_entry_types())) {
+    return array();
+  }
+  $field = field_info_field($entry_type['field']);
+  $data = array();
+  $bundles = array();
+
+  if (isset($field['bundles'][$entry_type['entity_type']])) {
+    foreach ($field['bundles'][$entry_type['entity_type']] as $key => $bundle) {
+      $bundles[] = $bundle;
+    }
+  }
+  $entity_info = entity_get_info($entry_type['entity_type']);
+  $query = db_select($entity_info['base table'], 'e')
+    ->fields('e', array($entity_info['entity keys']['id']))
+    ->condition('e.' . $entity_info['bundle keys']['bundle'], $bundles, 'IN');
+  $query->join('field_data_' . $entry_type['field'], 'f', 'f.entity_type = :entity_type AND f.deleted = 0 AND f.entity_id = e.' . $entity_info['entity keys']['id'], array('entity_type' => $entry_type['entity_type']));
+  return $query->execute()
+    ->rowCount();
+}
+
+/**
+ * Implements hook_field_attach_insert().
+ */
+function views_natural_sort_text_field_field_attach_insert($entity_type, $entity) {
+  $configured_fields = views_natural_sort_text_field_get_configured_fields();
+  foreach ($configured_fields as $field) {
+    if (in_array($entity_type, array_keys($field['bundles']))) {
+      _views_natural_sort_text_field_store($entity_type, $entity, $field);
+    }
+  }
+}
+
+/**
+ * Implements hook_field_attach_update().
+ */
+function views_natural_sort_text_field_field_attach_update($entity_type, $entity) {
+  $configured_fields = views_natural_sort_text_field_get_configured_fields();
+  foreach ($configured_fields as $field) {
+    if (in_array($entity_type, array_keys($field['bundles']))) {
+      _views_natural_sort_text_field_store($entity_type, $entity, $field);
+    }
+  }
+}
+
+/**
+ * Return a list of fields that have vns sort enabled on them.
+ *
+ * @return array
+ *   An array of field information. See field_info_fields().
+ */
+function views_natural_sort_text_field_get_configured_fields() {
+  $potential_fields = views_natrual_sort_text_get_potential_fields();
+  $returned_fields = array();
+  foreach ($potential_fields as $field) {
+    if (!empty($field['views_natural_sort_enable_sort'])) {
+      $returned_fields[$field['id']] = $field;
+    }
+  }
+  return $returned_fields;
+}
+
+/**
+ * Get a list of fields that are regular text fields that we could use vns on.
+ *
+ * @return array
+ *   An array of field information. See field_info_fields().
+ */
+function views_natrual_sort_text_get_potential_fields() {
+  $all_fields = field_info_fields();
+  $returned_fields = array();
+  foreach ($all_fields as $field_name => $field) {
+    if ($field['module'] == 'text' &&
+      $field['storage']['type'] == 'field_sql_storage' &&
+      $field['columns']['value']['type'] == 'varchar') {
+      $returned_fields[$field['id']] = $field;
+    }
+  }
+  return $returned_fields;
+}
+
+/**
+ * Helper function to store the text field vns records.
+ *
+ * @param string $entity_type
+ *   A valid drupal entity type machine name.
+ * @param object $entity
+ *   A standard object representing an entity from like entity_load().
+ * @param array $field
+ *   An array representing a field's info record. See field_info_fields().
+ */
+function _views_natural_sort_text_field_store($entity_type, $entity, array $field) {
+  views_natural_sort_store_multiple(_views_natural_sort_text_field_to_vns($entity_type, $entity, $field));
+}
+
+/**
+ * Convert an entity object to a vns record.
+ *
+ * @param string $entity_type
+ *   A valid drupal entity type machine name.
+ * @param object $entity
+ *   A standard object representing an entity from like entity_load().
+ * @param array $field
+ *   An array reprenting a field's info record. See field_info_fields().
+ *
+ * @return array
+ *   An array of records formatted as:
+ *     array(
+ *       eid => Entity Id,
+ *       entity_type => Entity Type Machine Name,
+ *       field => Field Machine Name,
+ *       delta => Data's Field Delta,
+ *       content => Data,
+ *     )
+ */
+function _views_natural_sort_text_field_to_vns($entity_type, $entity, array $field) {
+  $entity_info = entity_get_info($entity_type);
+  $entity_id_property = $entity_info['entity keys']['id'];
+  $field_name = $field['field_name'];
+
+  // TODO: add support for Field Language.
+  $entries = array();
+  $field_items = field_get_items($entity_type, $entity, $field_name);
+  if (!empty($field_items)) {
+    foreach ($field_items as $delta => $row) {
+      $entries[] = array(
+        'eid' => $entity->$entity_id_property,
+        'entity_type' => $entity_type,
+        'field' => $field_name,
+        'delta' => $delta,
+        'content' => $row['value'],
+      );
+    }
+  }
+  return $entries;
+}
