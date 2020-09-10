@@ -10,8 +10,8 @@ function idea_act_home_AgencyData() {
       $agencies['agency_data'][] = $agency_data;
     }
      $count = idea_act_websites_agency_info();
-     $agencies['total_websites_count']['total_websites'] = $count[0]->type_count;
-     $agencies['total_websites_count']['total_agencies'] = $count[1]->type_count;
+     $agencies['total_websites_count']['total_agencies'] = $count[0]->type_count;
+     $agencies['total_websites_count']['total_websites'] = $count[1]->type_count;
      //print "<pre>";  print_r($agencies); print "</pre>"; exit;
     return $agencies;
   }

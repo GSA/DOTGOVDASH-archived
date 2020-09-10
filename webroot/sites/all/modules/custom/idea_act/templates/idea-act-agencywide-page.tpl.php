@@ -3,6 +3,9 @@
 </style>
 
 <script>
+    function sumIt(total, num) {
+        return total + num;
+    }
     function customChartTooltip(chartId, toolTipId) {
         var customTooltip= function(tooltip) {
             // Tooltip Element
@@ -85,6 +88,7 @@ if(trim($search_engine_data_for_agencygraph) == "")
   $search_engine_data_for_agencygraph = "0,0";
 
 $agencynode = node_load(arg(3));
+drupal_set_title($agencynode->title);
 $agency_data['agency_title'] = $agencynode->title;
  $pdf_file_name = '21st_Century_'.$agencynode->title.'.pdf';
 ?>
@@ -99,17 +103,17 @@ $agency_data['agency_title'] = $agencynode->title;
                         <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
                     </div>
                     <div class="col-md-2 col-md-offset-1 text-right dashboard-right">
-                        <a href="#">
+                        <!-- <a href="#">
                             <img src="/sites/all/modules/custom/idea_act/images/question-icon.png" alt="question icon" class="question-icon"
                                  data-placement="left" data-toggle="tooltip"
                                  title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
-                        </a>
+                        </a> -->
 
-                      <button class="button download-button" onclick="generatePDF( '<?= $pdf_file_name?>', 400, 695)" type="submit">Download</button>
+                        <button class="button download-button" onclick="generatePDF( '<?= $pdf_file_name?>', 500,760)" type="submit">Download</button>
                     </div>
                 </div>
             </div>
-            <div class="reports bg-white shadow">
+            <div class="reports bg-white shadow header-info">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-10 col-md-8">
@@ -121,7 +125,7 @@ $agency_data['agency_title'] = $agencynode->title;
                               <?php
                               if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                 ?>
-                                <img src="<?php print file_create_url($agencynode->field_agency_logo['und'][0]['uri']);?>" alt="<?=$agencynode->title?>">
+                                <img width="100" src="<?php print file_create_url($agencynode->field_agency_logo['und'][0]['uri']);?>" alt="<?=$agencynode->title?>">
                                 <?php
                               } else {
                                 print "&nbsp;";
@@ -157,13 +161,15 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </a>
                               </div>
                               <div class="col-sm-6 mt-xs-1">
-                                        <h4>Average Accessibility Issues by Type Per Website</h4>
+                                        <h4 class="chart-data-title">Average Accessibility Issues by Type Per Website</h4>
                                         <p>Average Color Contrast: <?= round($agency_data['ag_col_contrast'] / $agency_data['no_of_websites'], 1);?></p>
                                         <p>Average HTML Attribute: <?=  round($agency_data['ag_html_attrib'] / $agency_data['no_of_websites'], 1);?></p>
                                         <p>Average Missing Image Description: <?=  round($agency_data['ag_miss_image'] / $agency_data['no_of_websites'], 1);?></p>
                                         <p>(Note: website redirects are excluded)</p>
                                 </div>
                                 <div class="col-sm-6">
+                                  <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center chart-data-title">Total Number of Accessibility Issues </h4>
                                   <div class="chart-container" id="chart-1-ref">
                                         <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -204,7 +210,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                       maintainAspectRatio: false,
 
                                       title: {
-                                          display: true,
+                                          display: false,
                                           text: 'Total Number of Accessibility Issues for <?= $agency_data['agency_title']?> Websites',
                                           fontSize: 18,
                                           fontColor: '#203b5f'
@@ -218,13 +224,13 @@ $agency_data['agency_title'] = $agencynode->title;
                                           caretSize: 5,
                                           displayColors: false,
                                           callbacks: {
-                                              label: function(tooltipItem, data) {
-                                                  var label = data.labels[tooltipItem.index];
-                                                  var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
-                                                  var val = data.datasets[0].data[tooltipItem.index];
-                                                  return label + ': ' + val ;
-                                              }
-                                          }
+                                                label: function(tooltipItem, data) {
+                                                    var label = data.labels[tooltipItem.index];
+                                                    var total = data.datasets[0].data.reduce(sumIt);
+                                                    var val = data.datasets[0].data[tooltipItem.index];
+                                                    return label + ': ' + val ;
+                                                }
+                                            }
                                       },
                                       plugins: {
                                           labels: {
@@ -265,7 +271,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-header row row-no-gutters">
                                 <div class="col-sm-12">
                                     <div class="col-sm-6">
-                                        <div class="card-title">USWDS Code Usage</div>
+                                        <div class="card-title">Websites with USWDS Code Usage</div>
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
@@ -293,12 +299,12 @@ $agency_data['agency_title'] = $agencynode->title;
                                             </thead>
                                             <tbody>
                                             <tr>
-                                              <td>Websites with USWDS code detected</td>
+                                              <td>USWDS code detected</td>
                                               <td><?php echo number_format($agency_data['uswds_compliant']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['uswds_compliant'], $agency_data['uswds_tottracked'])?></td>
                                             </tr>
                                             <tr>
-                                              <td>Websites without USWDS code detected</td>
+                                              <td>USWDS code not detected</td>
                                               <td><?php echo number_format($agency_data['uswds_noncompliant']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['uswds_noncompliant'], $agency_data['uswds_tottracked'])?></td>
                                             </tr>
@@ -307,6 +313,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
+                                  <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center chart-data-title"> USWDS Code Usage Breakdown of Websites</h4>
                                      <div class="chart-container" id="chart-2-ref">
                                         <canvas id="chart-gov2" width="250" height="300" aria-label="Charts" role="img"></canvas>
 
@@ -349,7 +357,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                         maintainAspectRatio: false,
 
                                         title: {
-                                            display: true,
+                                            display: false,
                                             text: 'USWDS Code Usage Breakdown for <?= $agency_data['agency_title']?> Websites',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
@@ -361,11 +369,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                             xPadding: 10,
                                             caretPadding: 5,
                                             caretSize: 5,
-                                            displayColors: false,
+                                            displayColors: false,                                         
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];
-                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var total = data.datasets[0].data.reduce(sumIt);
                                                     var val = data.datasets[0].data[tooltipItem.index];
                                                     return label + ': ' + Math.round( val * 100 / total) + '%';
                                                 }
@@ -410,7 +418,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-header row row-no-gutters">
                                 <div class="col-sm-12">
                                     <div class="col-sm-6">
-                                        <div class="card-title">Security Requirements</div>
+                                        <div class="card-title">Websites with Security Requirements</div>
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
@@ -437,12 +445,12 @@ $agency_data['agency_title'] = $agencynode->title;
                                             </thead>
                                             <tbody>
                                             <tr>
-                                              <td>HTTPS Status Websites</td>
-                                              <td><?php echo number_format($agency_data['https_support']); ?></td>
-                                              <td><?php echo number_format($agency_data['https_nosupport']); ?></td>
+                                                <td><p style="display: flex;"><span class="text-nowrap">HTTPS Status</span><span class="custom-span">(Number of Websites)</span></p></td>
+                                                <td><?php echo number_format($agency_data['https_support']); ?></td>
+                                                <td><?php echo number_format($agency_data['https_nosupport']); ?></td>
                                             </tr>
                                             <tr>
-                                              <td>HTTPS Status Percentage</td>
+                                              <td>&nbsp;</td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['https_support'], $agency_data['no_of_websites'])?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['https_nosupport'], $agency_data['no_of_websites'])?></td>
                                             </tr>
@@ -451,6 +459,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
+                                  <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center chart-data-title">HTTPS Websites Compliance</h4>
                                     <div class="chart-container" id="chart-3-ref">
                                   <canvas id="chart-gov3" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -492,7 +502,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                         maintainAspectRatio: false,
 
                                         title: {
-                                            display: true,
+                                            display: false,
                                             text: '<?= $agency_data['agency_title']?> HTTPS Websites Compliance',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
@@ -508,7 +518,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];
-                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var total = data.datasets[0].data.reduce(sumIt);
                                                     var val = data.datasets[0].data[tooltipItem.index];
                                                     return label + ': ' + Math.round( val * 100 / total) + '%';
                                                 }
@@ -554,7 +564,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-header row row-no-gutters">
                                 <div class="col-sm-12">
                                     <div class="col-sm-6">
-                                        <div class="card-title">On-site Search</div>
+                                        <div class="card-title">Websites with On-site Search</div>
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
@@ -594,6 +604,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
+                                  <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center chart-data-title"> On-site Search Engine Breakdown </h4>
                                   <div class="chart-container" id="chart-4-ref">
                                       <?php $searchenginestatus = $agency_data['searchenginestatus'];
                                       ?>
@@ -638,7 +650,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                         maintainAspectRatio: false,
 
                                         title: {
-                                            display: true,
+                                            display: false,
                                             text: '<?= $agency_data['agency_title']?> On-site Search Engine Breakdown',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
@@ -654,7 +666,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];
-                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var total = data.datasets[0].data.reduce(sumIt);
                                                     var val = data.datasets[0].data[tooltipItem.index];
                                                     return label + ': ' + Math.round( val * 100 / total) + '%';
                                                 }
@@ -699,7 +711,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-header row row-no-gutters">
                                 <div class="col-sm-12">
                                     <div class="col-sm-6">
-                                        <div class="card-title">Mobile Requirements</div>
+                                        <div class="card-title">Websites with Mobile Requirements</div>
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
@@ -716,6 +728,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </a>
                               </div>
                               <div class="col-md-6 mb-2">
+                                <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
+                                <h4 class="text-center chart-data-title"> Mobile Performance Breakdown</h4>
                                     <div class="chart-container" id="chart-5-ref">
                                         <canvas id="chart-6" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -779,7 +793,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                 maintainAspectRatio: false,
 
                                                 title: {
-                                                    display: true,
+                                                    display: false,
                                                     text: '<?= $agency_data['agency_title']?> Mobile Performance Breakdown',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
@@ -795,7 +809,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                     callbacks: {
                                                         label: function(tooltipItem, data) {
                                                             var label = data.labels[tooltipItem.index];
-                                                            var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                            var total = data.datasets[0].data.reduce(sumIt);
                                                             var val = data.datasets[0].data[tooltipItem.index];
                                                             return label + ': ' + Math.round( val * 100 / total) + '%';
                                                         }
@@ -828,6 +842,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </script>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
+                                  <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center chart-data-title"> Mobile Usability Breakdown</h4>
                                     <div class="chart-container" id="chart-6-ref">
                                         <canvas id="chart-5" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -881,7 +897,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                 maintainAspectRatio: false,
 
                                                 title: {
-                                                    display: true,
+                                                    display: false,
                                                     text: '<?= $agency_data['agency_title']?> Mobile Usability Breakdown',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
@@ -897,7 +913,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                     callbacks: {
                                                         label: function(tooltipItem, data) {
                                                             var label = data.labels[tooltipItem.index];
-                                                            var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                            var total = data.datasets[0].data.reduce(sumIt);
                                                             var val = data.datasets[0].data[tooltipItem.index];
                                                             return label + ': ' + Math.round( val * 100 / total) + '%';
                                                         }
@@ -966,7 +982,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-header row row-no-gutters">
                                 <div class="col-sm-12">
                                     <div class="col-sm-6">
-                                        <div class="card-title">Digital Analytics</div>
+                                        <div class="card-title">Websites with Digital Analytics</div>
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
@@ -1008,6 +1024,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
+                                  <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center chart-data-title"> DAP Websites Compliance</h4>
                                     <div class="chart-container" id="chart-7-ref">
                                         <canvas id="chart-7" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -1050,7 +1068,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                         maintainAspectRatio: false,
 
                                         title: {
-                                            display: true,
+                                            display: false,
                                             text: '<?= $agency_data['agency_title']?> DAP Websites Compliance',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
@@ -1066,7 +1084,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];
-                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var total = data.datasets[0].data.reduce(sumIt);
                                                     var val = data.datasets[0].data[tooltipItem.index];
                                                     return label + ': ' + Math.round( val * 100 / total) + '%';
                                                 }

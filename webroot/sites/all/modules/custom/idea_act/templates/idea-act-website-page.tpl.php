@@ -1,9 +1,84 @@
 <style>
 @import "/sites/all/modules/custom/idea_act/css/style.css";
 </style>
+
+<script>
+    function sumIt(total, num) {
+        return total + num;
+    }
+    function customChartTooltip(chartId, toolTipId) {
+        var customTooltip= function(tooltip) {
+            // Tooltip Element
+            var tooltipEl = document.getElementById(toolTipId);
+
+            if (!tooltipEl) {
+                tooltipEl = document.createElement('div');
+                tooltipEl.id = toolTipId;
+                tooltipEl.innerHTML = "<table></table>"
+                document.getElementById(chartId).appendChild(tooltipEl);
+            }
+
+            // Hide if no tooltip
+            if (tooltip.opacity === 0) {
+                tooltipEl.style.opacity = 0;
+                return;
+            }
+
+            // Set caret Position
+            tooltipEl.classList.remove('above', 'below', 'no-transform');
+            if (tooltip.yAlign) {
+                tooltipEl.classList.add(tooltip.yAlign);
+            } else {
+                tooltipEl.classList.add('no-transform');
+            }
+
+            function getBody(bodyItem) {
+                return bodyItem.lines;
+            }
+
+            // Set Text
+            if (tooltip.body) {
+                var titleLines = tooltip.title || [];
+                var bodyLines = tooltip.body.map(getBody);
+
+                var innerHtml = '<thead>';
+
+                titleLines.forEach(function(title) {
+                    innerHtml += '<tr><th>' + title + '</th></tr>';
+                });
+                innerHtml += '</thead><tbody>';
+
+                bodyLines.forEach(function(body, i) {
+                    var colors = tooltip.labelColors[i];
+                    var style = 'background:' + colors.backgroundColor;
+                    style += '; border-color:' + colors.borderColor;
+                    style += '; border-width: 2px';
+                    var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
+                    innerHtml += '<tr><td>' + span + body + '</td></tr>';
+                });
+                innerHtml += '</tbody>';
+
+                var tableRoot = tooltipEl.querySelector('table');
+                tableRoot.innerHTML = innerHtml;
+            }
+
+            var position = this._chart.canvas.getBoundingClientRect();
+            tooltipEl.style.opacity = 1;
+            tooltipEl.style.left = tooltip.caretX + 'px';
+            tooltipEl.style.top = tooltip.caretY + 'px';
+            tooltipEl.style.fontSize = tooltip.fontSize;
+            tooltipEl.style.fontStyle = tooltip._fontStyle;
+            tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
+        };
+        return customTooltip;
+
+    }
+
+</script>
 <?php
 drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 $websitedata = ideaact_get_website_data(arg(3));
+drupal_set_title($websitedata['agencyname']);
 ?>
 <div class="idea-container">
     <div class="row">
@@ -11,32 +86,29 @@ $websitedata = ideaact_get_website_data(arg(3));
             <div class="row row-no-gutters">
                 <div class="col-md-12 dashboard-wrap">
                     <div class="col-md-8 dashboard-left">
-                        <h1>GSA.gov <span>(General Services Administration)</span></h1>
-                        <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
+                    <h1><?php print $websitedata['websitename']; ?> <span>(<?php print $websitedata['agencyname']; ?>)</span></h1>
+                        <p class="description">This is an act that aims to improve the digital experience for government customers and reinforces existing requirements for federal public websites.</p>
                     </div>
                     <div class="col-md-2 col-md-offset-2 text-right dashboard-right">
-                        <a href="#">
+                        <!-- <a href="#">
                             <img src="/sites/all/modules/custom/idea_act/images/question-icon.png" alt="question icon" class="question-icon" data-placement="left" data-toggle="tooltip" title="" data-original-title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do">
-                        </a>
-                        <button class="button download-button" type="submit">Download</button>
+                        </a> -->
+                        <button class="button download-button" onclick="generatePDF('idea_act_website_<?php print strtr($websitedata['websitename'], '.', '_'); ?>.pdf', 500, 800)" type="submit">Download</button>
                     </div>
                 </div>
             </div>
-            <div class="general-services-wrap bg-white shadow">
+            <div class="bg-white shadow">
                 <div class="row row-no-gutters">
                     <div class="col-sm-12">
                         <div class="col-sm-9 col-md-6">
                             <div class="row">
                                 <div class="col-md-12 d-flex">
-                                    <div class="col-sm-3"> <img src="/sites/all/modules/custom/idea_act/images/general-services.png" alt="General Services" width="100"></div>
-                                    <div class="col-sm-9">
-                                        <p><b>General Services Administration</b></p>
-                                    </div>
+                                    <?php print $websitedata['agency_header_info']; ?>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 col-md-2 col-md-offset-4 logo-wrap">
-                            <img src="/sites/all/modules/custom/idea_act/images/logo.png" alt="logo" width="100">
+                        <div class="col-sm-3 col-md-2 col-md-offset-4">
+                            <?php print $websitedata['agencyacr']; ?>
                         </div>
                     </div>
                 </div>
@@ -112,7 +184,7 @@ $websitedata = ideaact_get_website_data(arg(3));
 
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
                                 <div class="col-sm-6">
@@ -129,7 +201,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                                             type: 'doughnut',
                                             data: {
                                                 datasets: [{
-                                                    data: [6, 2, 14],
+                                                    data: [<?php echo number_format( $websitedata['colorcont'], 1, '.', ''); ?>, <?php echo number_format($websitedata['htmlattri'], 1, '.', ''); ?>, <?php echo number_format($websitedata['missingim'], 1, '.', ''); ?>],
                                                     borderWidth: 0,
                                                     backgroundColor: [
                                                         '#563eb6',
@@ -147,12 +219,28 @@ $websitedata = ideaact_get_website_data(arg(3));
                                                 maintainAspectRatio: false,
 
                                                 title: {
-
-                                                    display: true,
-                                                    text: 'GSA Accessibility spotchecks',
+                                                    display: false,
+                                                    text: 'Accessibility spot checks',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
 
+                                                },
+                                                tooltips: {
+                                                    enabled: false,
+                                                    custom: customChartTooltip('chart-11-ref','chartjs-tooltip1'),
+                                                    yPadding: 10,
+                                                    xPadding: 10,
+                                                    caretPadding: 5,
+                                                    caretSize: 5,
+                                                    displayColors: false,
+                                                    callbacks: {
+                                                        label: function(tooltipItem, data) {
+                                                            var label = data.labels[tooltipItem.index];
+                                                            var total = data.datasets[0].data.reduce(sumIt);
+                                                            var val = data.datasets[0].data[tooltipItem.index];
+                                                            return label + ': ' + val ;
+                                                        }
+                                                    }
                                                 },
                                                 plugins: {
 
@@ -181,7 +269,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                                     </script>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-title">This website has 14 issues with missing image descriptions, 10 issues with HTML attributes and 6 issues with color contrast. </p>
+                                    <p class="card-wi-desc"> <?=$websitedata['Accestext']?></p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
@@ -212,7 +300,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
                                 <div class="col-sm-6">
@@ -221,24 +309,24 @@ $websitedata = ideaact_get_website_data(arg(3));
                                             <thead>
                                             <tr>
                                                 <th>Mobile Information</th>
-                                                <th>Score</th>
+                                                <th>Status</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>Mobile Performance Score </td>
-                                                <td>97</td>
+                                                <td>Mobile Performance </td>
+                                                <td><?= $websitedata['mobileperf'] ?></td>
                                             </tr>
                                             <tr>
-                                                <td>Mobile Usability Score</td>
-                                                <td>99</td>
+                                                <td>Mobile Usability</td>
+                                                <td><?= $websitedata['mobileusab'] ?></td>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-title">This website is very responsive and mobile friendly.</p>
+                                    <p class="card-wi-desc"> <?= $websitedata['mobtext']?></p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
@@ -269,7 +357,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
                                 <div class="col-sm-6">
@@ -283,45 +371,32 @@ $websitedata = ideaact_get_website_data(arg(3));
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>Enforce HTTPS</td>
-                                                <td>Yes</td>
+                                              <td>Enforce HTTPS</td>
+                                              <td><?=$websitedata['EnforceHttps']?></td>
                                             </tr>
                                             <tr>
-                                                <td>HSTS Status</td>
-                                                <td>Yes</td>
-                                            </tr>
-                                            <tr>
-                                                <td>HTTPS Score</td>
-                                                <td>90</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Preload Status</td>
-                                                <td>No</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Preload Ready</td>
-                                                <td>No</td>
+                                              <td>Https Status</td>
+                                              <td><?=$websitedata['HttpsStatus']?></td>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-title">This website meets security requirements. The data on the left shows the evaluation criteria. </p>
+                                    <p class="card-wi-desc"><?=$websitedata['Securitytext'] ?> </p>
                                     <div class="row">
                                         <div class="col-sm-12 website--inner">
                                             <div class="col-md-5 pl-0 mt-xs-2">
                                                 <div class="shadow p-1">
                                                     <h5>M-15-13 and BOD 18-01 Information</h5>
-                                                    <div>Compliant</div>
-                                                    <div>Score: 100</div>
+                                                    <div><?= $websitedata['m1513status']?></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-5 col-md-offset-1 mt-xs-2 pr-0">
                                                 <div class="shadow p-1">
                                                     <h5>Free of Insecure Protocols Information</h5>
                                                     <div>Free of RC4/3DES and </div>
-                                                    <div>SSLv2/SSlv3: 1 </div>
+                                                    <div>SSLv2/SSlv3: <?= $websitedata['Freestatus']?> </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -356,7 +431,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
                                 <div class="col-sm-6">
@@ -379,7 +454,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                                     </div>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-title"> <?= $websitedata['uswdstext'] ?></p>
+                                    <p class="card-wi-desc" > <?= $websitedata['uswdstext'] ?></p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
@@ -410,7 +485,7 @@ $websitedata = ideaact_get_website_data(arg(3));
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
                                 <div class="col-sm-6">
@@ -424,15 +499,22 @@ $websitedata = ideaact_get_website_data(arg(3));
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>On-site search engine:</td>
-                                                <td>Available</td>
+                                                <td>On-site search</td>
+                                                <td> <?= $websitedata['onsitestatus']
+                                                ?> </td>
+                                            </tr>
+                                            <tr>
+                                              <td>Search engine</td>
+                                              <td> <?php
+                                                print "<span style='text-transform: capitalize;'>".$websitedata['onsiteengine']."</span>";?> </td>
+                                            </tr>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-title">This website has an on-site search.</p>
+                                  <p class="card-wi-desc"> <?= $websitedata['onsitetext'] ?></p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">

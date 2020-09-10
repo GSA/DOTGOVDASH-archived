@@ -22,6 +22,11 @@
  * the view is modified.
  */
 ?>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<style>
+.mn-height-165 { min-height: 165px !important; }
+.mn-height-80 { min-height: 60px !important; }
+</style>
 
 <?php
 $scanids = dotgov_common_siteAsocScanids(arg(1));
@@ -85,17 +90,18 @@ dotgov_common_tooltip("tooltip9","id");
         </ul>
             </div>
             <div class="col-xs-5">
-            <div id="access_chart" style="height: 110px;width: 110px;float: right;margin-top: -2px; "></div>
+            <div id="access_chart" style="height: 175px;width: 170px;margin-top: -33px;margin-left: calc(100% - 140px);"></div>
             </div>
-        </div>    
+        </div>
         <!-- <div id="access_chart" style="height:192px;">&nbsp</div> -->
-    </div> 
+    </div>
 <?php else: ?>
-    <div class="col-lg-12 nopadding" style="min-height: 235px;">
+    <div class="col-sm-12 mn-height-80 nopadding">
         Color Contrast: <span style="color:#a70000;"><?php print $redirect_message; ?></span><br>
         HTML Attribute: <span style="color:#a70000;"><?php print $redirect_message; ?></span><br>
         Missing Image Description: <span style="color:#a70000;"><?php print $redirect_message; ?></span>
     </div>
+    <div class="col-sm-12 mn-height-165">&nbsp;</div>
 <?php endif; ?>
 
 <div class="col-lg-12 clearfix report-buttons nopadding">
@@ -109,6 +115,33 @@ dotgov_common_tooltip("tooltip9","id");
 </div>
 
 <script type="text/javascript">
+    var data = [];
+    var dist = -22;
+    var count = false;
+    var colorcont = <?php print_r(!emptyOrNull($colorcont) ? $colorcont : 0); ?>;
+    var htmlattr = <?php print_r(!emptyOrNull($htmlattri) ? $htmlattri : 0); ?>;
+    var missingim = <?php print_r(!emptyOrNull($missingim) ? $missingim : 0); ?>;
+    data = colorPercentage(data, 'Color Contrast Issues', colorcont);
+    data = colorPercentage(data, 'HTML Attribute Issues', htmlattr);
+    data = colorPercentage(data, 'Missing Image Description Issues', missingim);
+    if (colorcont > 0 && htmlattr == 0 && missingim == 0 ||
+        colorcont == 0 && htmlattr > 0 && missingim == 0 ||
+        colorcont == 0 && htmlattr == 0 && missingim > 0) {
+          count = true;
+    }
+    if (count) {
+      dist = -30;
+    }
+
+    function colorPercentage(data, dataName, dataY) {
+      if (dataY >= 0) {
+        data.push({
+          name: dataName,
+          y: dataY
+        });
+      }
+      return data;
+    }
     Highcharts.chart('access_chart', {
         chart: {
             plotBackgroundColor: null,
@@ -124,7 +157,6 @@ dotgov_common_tooltip("tooltip9","id");
         },
         legend:{
             enabled: false
-           //width: 220
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -134,7 +166,18 @@ dotgov_common_tooltip("tooltip9","id");
                 allowPointSelect: true,
                 cursor: 'pointer',
                 dataLabels: {
-                    enabled: false
+                    enabled: true,
+                    format: "<br>{point.percentage:.1f}%",
+                    distance: dist,
+                    style: {
+                        fontSize: 8,
+                        color: "white"
+                    },
+                    filter: {
+                      property: 'percentage',
+                      operator: '>',
+                      value: 20
+                    }
                 },
                 size: '101.78',
                 <?php if($showlegend == 1) print "showInLegend: true"; ?>
@@ -143,16 +186,7 @@ dotgov_common_tooltip("tooltip9","id");
         series: [{
             name: 'Percentage',
             colorByPoint: true,
-            data: [{
-                name: 'Color Contrast Issues',
-                y: <?php print_r(!emptyOrNull($colorcont) ? $colorcont : 0); ?>
-            }, {
-                name: 'HTML Attribute Issues',
-                y: <?php print_r(!emptyOrNull($htmlattri) ? $htmlattri : 0); ?>
-            }, {
-                name: 'Missing Image Description Issues',
-                y: <?php print_r(!emptyOrNull($missingim) ? $missingim : 0); ?>
-            }]
+            data: data
         }]
     });
 </script>
