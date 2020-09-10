@@ -110,7 +110,7 @@ $search_engine_data_for_agencygraph = "0,0";
             <div class="row row-no-gutters">
                 <div class="col-sm-12 dashboard-wrap">
                     <div class="col-sm-8 col-md-9 dashboard-left">
-                        <h1>Government-Wide - <span>21st Century Government Wide Dashboard</span></h1>
+                        <h1>Government-Wide - <span>21st Century IDEA Act Dashboard</span></h1>
                         <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
                     </div>
                     <div class="col-sm-4 col-md-2 col-md-offset-1 text-right dashboard-right">
