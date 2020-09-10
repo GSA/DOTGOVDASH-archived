@@ -28,11 +28,11 @@ function ideaact_get_website_data($websiteid){
   if($agencynode->field_agency_logo['und'][0]['uri'] != '') {
     $websitedata['agency_header_info'] = "<div class='col-sm-3'>".$websitedata['agencylogo']."</div>
     <div class='col-sm-9'>
-        <p class='fs-1-5'><b>".$websitedata['agencyname']."</b></p>
+        <p class='fs-1-5 agency-overview-title'><b>".$websitedata['agencyname']."</b></p>
     </div>";
   } else {
     $websitedata['agency_header_info'] = "<div class='col-sm-12'>
-        <p class='fs-1-5'><b>".$websitedata['agencyname']."</b></p>
+        <p class='fs-1-5 agency-overview-title'><b>".$websitedata['agencyname']."</b></p>
     </div>";
   }
 
