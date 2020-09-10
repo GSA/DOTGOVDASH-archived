@@ -1,0 +1,237 @@
+<?php
+
+/**
+ * @file
+ * Tests for the Views Natural Sort module.
+ */
+
+module_load_include('test', 'views', 'tests/views_query');
+
+/**
+ * Basic tests for the Views Natural Sort Module.
+ */
+class ViewsNaturalSortBasicTest extends ViewsTestCase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Views Natural Sort Basic Test',
+      'description' => 'Tests basic functionality of View Natural Sort',
+      'group' => 'Views Natural Sort',
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp() {
+    parent::setUp('views', 'views_natural_sort', 'views_natural_sort_test');
+  }
+
+  /**
+   * Test the default settings for stripping out the words A, An, and The.
+   */
+  public function testNaturalSortDefaultBeginningWords() {
+    $titles = array(
+      'A Stripped Zebra',
+      'Oklahoma',
+      'The King And I',
+    );
+    $nodes = array();
+    foreach ($titles as $title) {
+      $nodes[] = $this->drupalCreateNode(array(
+        'type' => 'views_natural_sort_test_content',
+        'title' => $title,
+      ));
+    }
+    $view = views_get_view('views_natural_sort_test');
+    $this->executeView($view);
+    $this->assertIdenticalResultset(
+      $view,
+      array(
+        array('title' => 'The King And I'),
+        array('title' => 'Oklahoma'),
+        array('title' => 'A Stripped Zebra'),
+      ),
+      array('node_title' => 'title')
+    );
+  }
+
+  /**
+   * Test the default settings for symbol removal in sorting.
+   */
+  public function testNaturalSortDefaultSymbols() {
+    $titles = array(
+      'A(Z',
+      'A[B',
+      'A\\C',
+    );
+    foreach ($titles as $title) {
+      $nodes[] = $this->drupalCreateNode(array(
+        'type' => 'views_natural_sort_test_content',
+        'title' => $title,
+      ));
+    }
+    $view = views_get_view('views_natural_sort_test');
+    $this->executeView($view);
+    $this->assertIdenticalResultset(
+      $view,
+      array(
+        array('title' => 'A[B'),
+        array('title' => 'A\\C'),
+        array('title' => 'A(Z'),
+      ),
+      array('node_title' => 'title')
+    );
+  }
+
+  /**
+   * Test Unicode symbol removal in sorting.
+   */
+  public function testNaturalSortUnicodeSymbols() {
+    module_load_include('inc', 'views_natural_sort', 'views_natural_sort');
+    $symbols = variable_set('views_natural_sort_symbols_remove', "#…\",'\\()[]«?!»¡¿");
+    $titles = array(
+      'Cuando… se abre, ¿dará algún tipo de señal?',
+    );
+    $expected = array(
+      'Cuando se abre dará algún tipo de señal',
+    );
+    foreach ($titles as $key => $title) {
+      $this->assertEqual(views_natural_sort_remove_symbols($title), $expected[$key]);
+    }
+  }
+
+  /**
+   * Test sorting strings that contain numbers in them.
+   */
+  public function testNaturalSortNumbers() {
+    $titles = array(
+      '1 apple',
+      '2 apples',
+      '10 apples',
+      '-1 apples',
+      '-10 apples',
+      '-2 apples',
+      '-3.550 apples',
+      '-3.5501 apples',
+      '3.5501 apples',
+      '3.550 apples',
+    );
+    foreach ($titles as $title) {
+      $nodes[] = $this->drupalCreateNode(array(
+        'type' => 'views_natural_sort_test_content',
+        'title' => $title,
+      ));
+    }
+    $view = views_get_view('views_natural_sort_test');
+    $this->executeView($view);
+    $this->assertIdenticalResultset(
+      $view,
+      array(
+        array('title' => '-10 apples'),
+        array('title' => '-3.5501 apples'),
+        array('title' => '-3.550 apples'),
+        array('title' => '-2 apples'),
+        array('title' => '-1 apples'),
+        array('title' => '1 apple'),
+        array('title' => '2 apples'),
+        array('title' => '3.550 apples'),
+        array('title' => '3.5501 apples'),
+        array('title' => '10 apples'),
+      ),
+      array('node_title' => 'title')
+    );
+  }
+
+  public function testStoringLongUnicode() {
+    $node = $this->drupalCreateNode(array(
+      'type' => 'views_natural_sort_test_content',
+      'title' => str_repeat('⌘', 255),
+    ));
+    $content = db_select('views_natural_sort', 'vns')
+      ->fields('vns', array('content'))
+      ->condition('vns.eid', $node->nid)
+      ->condition('vns.entity_type', 'node')
+      ->execute()
+      ->fetchField();
+    $this->assertEqual($content, str_repeat('⌘', 255));
+  }
+
+}
+/**
+ * Tests all the "Days of the week" natural sort functionality.
+ */
+class ViewsNaturalSortDaysOfTheWeekTest extends DrupalWebTestCase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Views Natural Sort Days of the Week',
+      'description' => 'Tests Days of the Week Sorting',
+      'group' => 'Views Natural Sort',
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp() {
+    parent::setUp('views', 'views_natural_sort');
+    variable_set('views_natural_sort_days_of_the_week_enabled', TRUE);
+  }
+
+  /**
+   * Test tranformation functionality of the days of the week transformation.
+   */
+  public function testDefaultDayReplace() {
+    module_load_include('inc', 'views_natural_sort', 'views_natural_sort');
+    foreach (views_natural_sort_days_of_the_week_get_default_days() as $replaced => $day) {
+      $this->assertEqual(views_natural_sort_days_of_the_week_sort_days($day), $replaced);
+    }
+  }
+
+  /**
+   * Test changing the first day of the week.
+   */
+  public function testFirstDayMonday() {
+    variable_set("views_natural_sort_days_of_the_week_first_day_en", "Monday");
+    module_load_include('inc', 'views_natural_sort', 'views_natural_sort');
+    $expected = array(
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    );
+    foreach ($expected as $replaced => $day) {
+      $this->assertEqual(views_natural_sort_days_of_the_week_sort_days($day), $replaced);
+    }
+  }
+
+  /**
+   * Test sorting day abbreviations.
+   */
+  public function testAbbreviations() {
+    module_load_include('inc', 'views_natural_sort', 'views_natural_sort');
+    $expected = array(
+      "Sun",
+      "Mon.",
+      "Tues",
+      "Wed",
+      "Thur",
+      "Fri.",
+      "Sat",
+    );
+    foreach ($expected as $replaced => $day) {
+      $this->assertEqual(views_natural_sort_days_of_the_week_sort_days($day), $replaced);
+    }
+  }
+
+}
