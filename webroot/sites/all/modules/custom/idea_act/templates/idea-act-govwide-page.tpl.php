@@ -73,6 +73,7 @@ function customChartTooltip(chartId, toolTipId) {
 </script>
 <?php
 drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+drupal_set_title("21st Century Government Wide Dashboard");
 $no_of_agency = $govwidedata['actualdata']['agencynos'];
 $agency_website_num = $govwidedata['actualdata']['websitenos'];
 $agency_dap_score = $govwidedata['actualdata']['avg_dap'];
@@ -106,7 +107,7 @@ $search_engine_data_for_agencygraph = "0,0";
             <div class="row row-no-gutters">
                 <div class="col-sm-12 dashboard-wrap">
                     <div class="col-sm-8 col-md-9 dashboard-left">
-                        <h1>Government-Wide - <span>21st Century IDEA Act Dashboard</span></h1>
+                        <h1>Government-Wide - <span>21st Century Government Wide Dashboard</span></h1>
                         <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
                     </div>
                     <div class="col-sm-4 col-md-2 col-md-offset-1 text-right dashboard-right">
