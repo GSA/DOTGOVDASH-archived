@@ -1,0 +1,108 @@
+<?php
+module_load_include('inc', 'idea_act', 'includes/idea_act_gov_wide');
+module_load_include('inc', 'idea_act', 'includes/idea_act_agency_wide');
+module_load_include('inc', 'idea_act', 'includes/idea_act_website');
+module_load_include('inc', 'idea_act', 'includes/idea_act_home_page');
+
+
+
+
+/*
+* Dotgov Dashboard IDEA Act Module
+*/
+
+/**
+ * Implements hook_menu().
+ */
+function idea_act_menu() {
+    $items = [];
+    $items['ideaact/home/dashboard'] = array(
+        'title' => "21st Century IDEA Act Home Page",
+        'page callback' => 'idea_act_home_page',
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM
+    );
+    $items['ideaact/govwide/dashboard'] = array(
+        'title' => "21st Century IDEA Act Government Dashboard",
+        'page callback' => 'idea_act_govwide_dashboard_page',
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM
+    );
+    $items['ideaact/agencywide/dashboard/%'] = array(
+        'title' => "21st Century IDEA Act Agency Dashboard",
+        'page callback' => 'idea_act_agencywide_dashboard_page',
+        'page arguments' => array(1),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM
+    );
+    $items['ideaact/website/dashboard/%'] = array(
+        'title' => "21st Century IDEA Act Website Dashboard",
+        'page callback' => 'idea_act_website_dashboard_page',
+        'page arguments' => array(1),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM
+    );
+    return $items;
+}
+
+function idea_act_theme($existing, $type, $theme, $path) {
+    return array(
+        'idea_home_page' => array(
+            'template' => 'idea-act-home-page',
+            'variables' => array('nid' => NULL),
+            'path' => drupal_get_path('module', 'idea_act') . '/templates',
+        ),
+        'govwide_dashboard_page' => array(
+            'template' => 'idea-act-govwide-page',
+            'variables' => array('nid' => NULL),
+            'path' => drupal_get_path('module', 'idea_act') . '/templates',
+        ),
+        'agencywide_dashboard_page' => array(
+            'template' => 'idea-act-agencywide-page',
+            'variables' => array('nid' => NULL),
+            'path' => drupal_get_path('module', 'idea_act') . '/templates',
+        ),
+        'website_dashboard_page' => array(
+            'template' => 'idea-act-website-page',
+            'variables' => array('nid' => NULL),
+            'path' => drupal_get_path('module', 'idea_act') . '/templates',
+        ),
+    );
+}
+
+/*
+ * Idea Act  Landing Home page
+ */
+function idea_act_home_page() {
+    $processed_vars['idea_home'] = "Test";
+    $processed_vars['actualdata'] = idea_act_home_Agencydata();
+    return theme('idea_home_page', array('agency_data' => $processed_vars));
+}
+
+/*
+ * Idea Act Government wide Dashboard page
+ */
+function idea_act_govwide_dashboard_page() {
+    $processed_vars['govwide_dashboard'] = "Test";
+    $processed_vars['actualdata'] = idea_act_govwideTrendData();
+    return theme('govwide_dashboard_page', array('govwidedata' => $processed_vars));
+}
+
+/*
+ * Idea Act Agency wide Dashboard page
+ */
+function idea_act_agencywide_dashboard_page($agencyid) {
+    $processed_vars['agencyid'] = $agencyid;
+    $agencynode = node_load($agencyid);
+    $processed_vars['agency_title'] = $agencynode->title;
+    return theme('agencywide_dashboard_page', array('processed_vars' => $processed_vars));
+}
+
+/*
+ * Idea Act Website  Dashboard page
+ */
+function idea_act_website_dashboard_page($websiteid) {
+    $processed_vars['websiteid'] = $websiteid;
+    $processed_vars['website_dashboard'] = "Test";
+    return theme('website_dashboard_page', array('processed_vars' => $processed_vars));
+}

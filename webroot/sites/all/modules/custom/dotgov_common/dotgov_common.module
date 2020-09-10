@@ -116,6 +116,17 @@ function dotgov_common_lastScanDate(){
 }
 
 /*
+ * Find Last scan date and return as str
+ */
+function dotgov_common_lastScanDateStr(){
+    $query = db_query("select nid,created from node where type='scans' order by nid desc limit 1");
+    foreach ($query as $result) {
+        $lastscantime = $result->created;
+    }
+    return date("m/d/Y",$lastscantime + + (2 * 24 * 60 * 60))."";
+}
+
+/*
 * Hook Facet Alter
 */
 
@@ -690,7 +701,7 @@ function dotgov_common_getAgencyComplianceData($agencyid){
 
     $agencydata['ag_access_chart'] = $agencyaccess_output;
 
-  $agency_mob['mob_perf_good_nos'] = db_query("SELECT mob_perf_good FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
+  $agency_mob['mob_perf_good_nos'] = db_query("SELECT mob_perf_good FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid limit 1",array(':agencyid' => $agencyid))->fetchField();
   $agency_mob['mob_perf_improve_nos'] = db_query("SELECT mob_perf_improve FROM custom_agencywide_archive where date =(select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_mob['mob_perf_poor_nos'] = db_query("SELECT mob_perf_poor FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_mob['mob_usab_friendly_nos'] = db_query("SELECT mob_usab_friendly FROM custom_agencywide_archive where date =(select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
@@ -833,7 +844,7 @@ function dotgov_common_getChartColordata($data,$websites)
         $colordata = "<span style='color:$chartcolor;font-weight:bold;'>$data ($percent %)</span>";
     }
     else{
-        $colordata = "<span style='color:#ac0600;font-weight:bold;'>0</span>";
+        $colordata = "<span style='color:#ac0600;font-weight:bold;'>0 %</span>";
     }
     return $colordata;
 
@@ -1298,4 +1309,61 @@ function get_mobile_score_information($nid, $performance_score = -1, $usability_
     } else {
         return NULL;
     }
+}
+
+/*
+ * Title function for widget titles
+ */
+function title($title) {
+ $div = <<<TEMP
+  <div class="col-xs-10 nopadding">
+      <h2 class="pane-title"> $title Information </h2>
+  </div>
+TEMP;
+return $div;
+}
+
+/*
+ * Title function for widget info icons
+ */
+function infoIcon($text, $tooltip, $a) {
+  $div = <<<TEMP
+  <div class="col-xs-2 nopadding">
+      <div id="$tooltip" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+$text $a
+</span> </div>
+  </div>
+TEMP;
+  return $div;
+}
+
+/*
+ * Title function for widget subtext information
+ */
+function subtext($title, $score, $subtext, $divclass = "col-sm-12 col-lg-6 nopadding", $style = "") {
+  $div = <<<TEMP
+  <div class="$divclass" $style>
+     <p> $title Overall Average Score :
+        $score
+        %
+     </p>
+     <span style="font-size:12px;" class="font-italic">$subtext</span>
+  </div>
+TEMP;
+  return $div;
+}
+
+/*
+ * Footer function for widgets
+ */
+function footer($report_link = "/website/all/reports", $img_link = "/improve-my-score", $img_src = "/sites/all/themes/dotgov/images/DD-btn_imp_scores.png") {
+$footer = <<<TEMP
+  <div class="view-button">
+      <div class="row text-center">
+          <a class="$report_link" href="/website/all/reports"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+          <a href="$img_link"><img src="$img_src" width="" height="25" alt=""/></a>
+      </div>
+  </div>
+TEMP;
+  return $footer;
 }
