@@ -228,8 +228,7 @@ function ideaact_get_website_data($websiteid){
     }
     else {
       $websitedata['Accestext'] = 'The Metric is not applicable for this website (This website is a redirect).';
-    }
-  }
+        }
   return $websitedata;
 }
 
