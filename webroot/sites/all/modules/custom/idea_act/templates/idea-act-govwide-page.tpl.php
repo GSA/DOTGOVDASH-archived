@@ -2,73 +2,76 @@
 @import "/sites/all/modules/custom/idea_act/css/style.css";
 </style>
 <script>
-function customChartTooltip(chartId, toolTipId) {
-    var customTooltip= function(tooltip) {
-        // Tooltip Element
-        var tooltipEl = document.getElementById(toolTipId);
+    function sumIt(total, num) {
+        return total + num;
+    }
+    function customChartTooltip(chartId, toolTipId) {
+        var customTooltip= function(tooltip) {
+            // Tooltip Element
+            var tooltipEl = document.getElementById(toolTipId);
 
-        if (!tooltipEl) {
-            tooltipEl = document.createElement('div');
-            tooltipEl.id = toolTipId;
-            tooltipEl.innerHTML = "<table></table>"
-            document.getElementById(chartId).appendChild(tooltipEl);
-        }
+            if (!tooltipEl) {
+                tooltipEl = document.createElement('div');
+                tooltipEl.id = toolTipId;
+                tooltipEl.innerHTML = "<table></table>"
+                document.getElementById(chartId).appendChild(tooltipEl);
+            }
 
-        // Hide if no tooltip
-        if (tooltip.opacity === 0) {
-            tooltipEl.style.opacity = 0;
-            return;
-        }
+            // Hide if no tooltip
+            if (tooltip.opacity === 0) {
+                tooltipEl.style.opacity = 0;
+                return;
+            }
 
-        // Set caret Position
-        tooltipEl.classList.remove('above', 'below', 'no-transform');
-        if (tooltip.yAlign) {
-            tooltipEl.classList.add(tooltip.yAlign);
-        } else {
-            tooltipEl.classList.add('no-transform');
-        }
+            // Set caret Position
+            tooltipEl.classList.remove('above', 'below', 'no-transform');
+            if (tooltip.yAlign) {
+                tooltipEl.classList.add(tooltip.yAlign);
+            } else {
+                tooltipEl.classList.add('no-transform');
+            }
 
-        function getBody(bodyItem) {
-            return bodyItem.lines;
-        }
+            function getBody(bodyItem) {
+                return bodyItem.lines;
+            }
 
-        // Set Text
-        if (tooltip.body) {
-            var titleLines = tooltip.title || [];
-            var bodyLines = tooltip.body.map(getBody);
+            // Set Text
+            if (tooltip.body) {
+                var titleLines = tooltip.title || [];
+                var bodyLines = tooltip.body.map(getBody);
 
-            var innerHtml = '<thead>';
+                var innerHtml = '<thead>';
 
-            titleLines.forEach(function(title) {
-                innerHtml += '<tr><th>' + title + '</th></tr>';
-            });
-            innerHtml += '</thead><tbody>';
+                titleLines.forEach(function(title) {
+                    innerHtml += '<tr><th>' + title + '</th></tr>';
+                });
+                innerHtml += '</thead><tbody>';
 
-            bodyLines.forEach(function(body, i) {
-                var colors = tooltip.labelColors[i];
-                var style = 'background:' + colors.backgroundColor;
-                style += '; border-color:' + colors.borderColor;
-                style += '; border-width: 2px';
-                var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
-                innerHtml += '<tr><td>' + span + body + '</td></tr>';
-            });
-            innerHtml += '</tbody>';
+                bodyLines.forEach(function(body, i) {
+                    var colors = tooltip.labelColors[i];
+                    var style = 'background:' + colors.backgroundColor;
+                    style += '; border-color:' + colors.borderColor;
+                    style += '; border-width: 2px';
+                    var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
+                    innerHtml += '<tr><td>' + span + body + '</td></tr>';
+                });
+                innerHtml += '</tbody>';
 
-            var tableRoot = tooltipEl.querySelector('table');
-            tableRoot.innerHTML = innerHtml;
-        }
+                var tableRoot = tooltipEl.querySelector('table');
+                tableRoot.innerHTML = innerHtml;
+            }
 
-        var position = this._chart.canvas.getBoundingClientRect();
-        tooltipEl.style.opacity = 1;
-        tooltipEl.style.left = tooltip.caretX + 'px';
-        tooltipEl.style.top = tooltip.caretY + 'px';
-        tooltipEl.style.fontSize = tooltip.fontSize;
-        tooltipEl.style.fontStyle = tooltip._fontStyle;
-        tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
-    };
-    return customTooltip;
+            var position = this._chart.canvas.getBoundingClientRect();
+            tooltipEl.style.opacity = 1;
+            tooltipEl.style.left = tooltip.caretX + 'px';
+            tooltipEl.style.top = tooltip.caretY + 'px';
+            tooltipEl.style.fontSize = tooltip.fontSize;
+            tooltipEl.style.fontStyle = tooltip._fontStyle;
+            tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
+        };
+        return customTooltip;
 
-}
+    }
 
 </script>
 <?php
@@ -165,14 +168,14 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </a>
                                 </div>                                   
                                  <div class="col-sm-6 mt-xs-1 center-mb-2">
-                                    <h4>Average Accessibility Issues by Type Per Website</h4>
+                                    <h4 class="chart-data-title">Average Accessibility Issues by Type Per Website</h4>
                                     <p>Average Color Contrast: <?=round($agencydata['ag_col_contrast'] / $agency_website_num, 1);?></p>
                                     <p>Average HTML Attribute: <?=round($agencydata['ag_html_attrib'] / $agency_website_num, 1);?></p>
                                     <p>Average Missing Image Description: <?=round($agencydata['ag_miss_image'] / $agency_website_num, 1);?></p>
                                     <p>(Note: website redirects are excluded)</p>
                                 </div>
                                 <div class="col-sm-6">
-                                <h4 class="text-center">Total Number of Accessibility Issues for Websites</h4>
+                                <h4 class="chart-data-title text-center">Total Number of Accessibility Issues for Websites</h4>
                                     <div class="chart-container" id="chart-1-ref">
                                         <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -231,7 +234,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];
-                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var total = data.datasets[0].data.reduce(sumIt);
                                                     var val = data.datasets[0].data[tooltipItem.index];
                                                     return label + ': ' + val ;
                                                 }
@@ -319,7 +322,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                <h4 class="text-center">USWDS Code Usage Breakdown for Websites</h4>
+                                <h4 class="text-center chart-data-title">USWDS Code Usage Breakdown for Websites</h4>
                                     <div class="chart-container" id="chart-2-ref">
                                         <canvas id="chart-gov2" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -376,7 +379,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];
-                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var total = data.datasets[0].data.reduce(sumIt);
                                                     var val = data.datasets[0].data[tooltipItem.index];
                                                     return label + ': ' + Math.round( val * 100 / total) + '%';
                                                 }
@@ -465,7 +468,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                <h4 class="text-center">HTTPS Websites Compliance</h4>
+                                <h4 class="text-center chart-data-title">HTTPS Websites Compliance</h4>
                                     <div class="chart-container" id="chart-3-ref"> 
                                         <canvas id="chart-gov3" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -521,7 +524,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];
-                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var total = data.datasets[0].data.reduce(sumIt);
                                                     var val = data.datasets[0].data[tooltipItem.index];
                                                     return label + ': ' + Math.round( val * 100 / total) + '%';
                                                 }
@@ -607,7 +610,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                <h4 class="text-center">On-site Search Engine Breakdown</h4>
+                                <h4 class="text-center chart-data-title">On-site Search Engine Breakdown</h4>
 
                                     <div class="chart-container" id="chart-4-ref">
                                     <?php $searchenginestatus = $agencydata['searchenginestatus'];
@@ -666,7 +669,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];
-                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var total = data.datasets[0].data.reduce(sumIt);
                                                     var val = data.datasets[0].data[tooltipItem.index];
                                                     return label + ': ' + Math.round( val * 100 / total) + '%';
                                                 }
@@ -728,7 +731,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                 </div>    
                                 
                                 <div class="col-md-6 mb-2">
-                                <h4 class="text-center">Mobile Performance Breakdown</h4>
+                                <h4 class="text-center chart-data-title">Mobile Performance Breakdown</h4>
 
                                     <div class="chart-container" id="chart-5-ref">
                                         <canvas id="chart-gov4" width="250" height="300" aria-label="Charts" role="img"></canvas>
@@ -810,7 +813,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                     callbacks: {
                                                         label: function(tooltipItem, data) {
                                                             var label = data.labels[tooltipItem.index];
-                                                            var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                            var total = data.datasets[0].data.reduce(sumIt);
                                                             var val = data.datasets[0].data[tooltipItem.index];
                                                             return label + ': ' + Math.round( val * 100 / total) + '%';
                                                         }
@@ -844,7 +847,7 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                 </div>
                                 <div class="col-md-6 mt-xs-1 px-xs-0">
-                                <h4 class="text-center">Mobile Usability Breakdown</h4>
+                                <h4 class="text-center chart-data-title">Mobile Usability Breakdown</h4>
 
                                     <div class="chart-container" id="chart-6-ref">
                                         <canvas id="chart-gov5" width="250" height="300" aria-label="Charts" role="img"></canvas>
@@ -914,7 +917,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                     custom: customChartTooltip('chart-6-ref','chartjs-tooltip6'),                                                    callbacks: {
                                                         label: function(tooltipItem, data) {
                                                             var label = data.labels[tooltipItem.index];
-                                                            var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                            var total = data.datasets[0].data.reduce(sumIt);
                                                             var val = data.datasets[0].data[tooltipItem.index];
                                                             return label + ': ' + Math.round( val * 100 / total) + '%';
                                                         }
@@ -1008,7 +1011,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                <h4 class="text-center">DAP Websites Compliance</h4>
+                                <h4 class="text-center chart-data-title">DAP Websites Compliance</h4>
 
                                     <div class="chart-container" id="chart-7-ref">
                                         <canvas id="chart-gov6" width="250" height="300" aria-label="Charts" role="img"></canvas>
@@ -1058,7 +1061,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];
-                                                    var total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                                    var total = data.datasets[0].data.reduce(sumIt);
                                                     var val = data.datasets[0].data[tooltipItem.index];
                                                     return label + ': ' + Math.round( val * 100 / total) + '%';
                                                 }

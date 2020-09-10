@@ -22,6 +22,7 @@
  * the view is modified.
  */
 ?>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <style>
 .mn-height-165 { min-height: 165px !important; }
 .mn-height-80 { min-height: 60px !important; }
@@ -115,7 +116,7 @@ dotgov_common_tooltip("tooltip9","id");
 
 <script type="text/javascript">
     var data = [];
-    var dist = -20;
+    var dist = -22;
     var count = false;
     var colorcont = <?php print_r(!emptyOrNull($colorcont) ? $colorcont : 0); ?>;
     var htmlattr = <?php print_r(!emptyOrNull($htmlattri) ? $htmlattri : 0); ?>;
@@ -169,12 +170,13 @@ dotgov_common_tooltip("tooltip9","id");
                     format: "<br>{point.percentage:.1f}%",
                     distance: dist,
                     style: {
-                        fontSize: 8
+                        fontSize: 8,
+                        color: "white"
                     },
                     filter: {
                       property: 'percentage',
                       operator: '>',
-                      value: 18
+                      value: 20
                     }
                 },
                 size: '101.78',

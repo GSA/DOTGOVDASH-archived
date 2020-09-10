@@ -1,6 +1,80 @@
 <style>
 @import "/sites/all/modules/custom/idea_act/css/style.css";
 </style>
+
+<script>
+    function sumIt(total, num) {
+        return total + num;
+    }
+    function customChartTooltip(chartId, toolTipId) {
+        var customTooltip= function(tooltip) {
+            // Tooltip Element
+            var tooltipEl = document.getElementById(toolTipId);
+
+            if (!tooltipEl) {
+                tooltipEl = document.createElement('div');
+                tooltipEl.id = toolTipId;
+                tooltipEl.innerHTML = "<table></table>"
+                document.getElementById(chartId).appendChild(tooltipEl);
+            }
+
+            // Hide if no tooltip
+            if (tooltip.opacity === 0) {
+                tooltipEl.style.opacity = 0;
+                return;
+            }
+
+            // Set caret Position
+            tooltipEl.classList.remove('above', 'below', 'no-transform');
+            if (tooltip.yAlign) {
+                tooltipEl.classList.add(tooltip.yAlign);
+            } else {
+                tooltipEl.classList.add('no-transform');
+            }
+
+            function getBody(bodyItem) {
+                return bodyItem.lines;
+            }
+
+            // Set Text
+            if (tooltip.body) {
+                var titleLines = tooltip.title || [];
+                var bodyLines = tooltip.body.map(getBody);
+
+                var innerHtml = '<thead>';
+
+                titleLines.forEach(function(title) {
+                    innerHtml += '<tr><th>' + title + '</th></tr>';
+                });
+                innerHtml += '</thead><tbody>';
+
+                bodyLines.forEach(function(body, i) {
+                    var colors = tooltip.labelColors[i];
+                    var style = 'background:' + colors.backgroundColor;
+                    style += '; border-color:' + colors.borderColor;
+                    style += '; border-width: 2px';
+                    var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
+                    innerHtml += '<tr><td>' + span + body + '</td></tr>';
+                });
+                innerHtml += '</tbody>';
+
+                var tableRoot = tooltipEl.querySelector('table');
+                tableRoot.innerHTML = innerHtml;
+            }
+
+            var position = this._chart.canvas.getBoundingClientRect();
+            tooltipEl.style.opacity = 1;
+            tooltipEl.style.left = tooltip.caretX + 'px';
+            tooltipEl.style.top = tooltip.caretY + 'px';
+            tooltipEl.style.fontSize = tooltip.fontSize;
+            tooltipEl.style.fontStyle = tooltip._fontStyle;
+            tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
+        };
+        return customTooltip;
+
+    }
+
+</script>
 <?php
 drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 $websitedata = ideaact_get_website_data(arg(3));
@@ -127,7 +201,7 @@ drupal_set_title($websitedata['agencyname']);
                                             type: 'doughnut',
                                             data: {
                                                 datasets: [{
-                                                    data: [6, 2, 14],
+                                                    data: [<?php echo number_format( $websitedata['colorcont'], 1, '.', ''); ?>, <?php echo number_format($websitedata['htmlattri'], 1, '.', ''); ?>, <?php echo number_format($websitedata['missingim'], 1, '.', ''); ?>],
                                                     borderWidth: 0,
                                                     backgroundColor: [
                                                         '#563eb6',
@@ -145,12 +219,28 @@ drupal_set_title($websitedata['agencyname']);
                                                 maintainAspectRatio: false,
 
                                                 title: {
-
-                                                    display: true,
-                                                    text: 'GSA Accessibility spotchecks',
+                                                    display: false,
+                                                    text: 'Accessibility spot checks',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
 
+                                                },
+                                                tooltips: {
+                                                    enabled: false,
+                                                    custom: customChartTooltip('chart-11-ref','chartjs-tooltip1'),
+                                                    yPadding: 10,
+                                                    xPadding: 10,
+                                                    caretPadding: 5,
+                                                    caretSize: 5,
+                                                    displayColors: false,
+                                                    callbacks: {
+                                                        label: function(tooltipItem, data) {
+                                                            var label = data.labels[tooltipItem.index];
+                                                            var total = data.datasets[0].data.reduce(sumIt);
+                                                            var val = data.datasets[0].data[tooltipItem.index];
+                                                            return label + ': ' + val ;
+                                                        }
+                                                    }
                                                 },
                                                 plugins: {
 
@@ -179,7 +269,7 @@ drupal_set_title($websitedata['agencyname']);
                                     </script>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
-                                    <p class="card-wi-desc">This website has 14 issues with missing image descriptions, 10 issues with HTML attributes and 6 issues with color contrast. </p>
+                                    <p class="card-wi-desc"> <?=$websitedata['Accestext']?></p>
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">

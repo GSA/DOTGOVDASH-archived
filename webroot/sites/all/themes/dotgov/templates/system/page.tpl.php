@@ -74,18 +74,22 @@
  */
 ?>
 <script src="/sites/all/themes/dotgov/js/html2pdf.bundle.min.js"></script>
-
 <script type="text/javascript">
-  function generatePDF(fileName, pageWidth, pageHeight) {
-   var element = document.getElementById("main-container");
-    html2pdf()
-    .set({
-        filename: fileName,
-        jsPDF: {format:[pageWidth,pageHeight]},    
-    })
-    .from(element)
-    .save();
-  }
+    function generatePDF(fileName, pageWidth, pageHeight, websiteInfoPage) {
+      if(websiteInfoPage) {
+          jQuery( "#techstack" ).addClass( "split-column" );
+      }
+      var element = document.getElementById("main-container");
+      html2pdf()
+      .set({
+          filename: fileName + '.pdf',
+          jsPDF: {format:[pageWidth,pageHeight]},
+      })
+      .from(element)
+      .save().then(function () {
+        jQuery( "#techstack" ).removeClass( "split-column" );
+        });
+    }
 </script>
 <div class="top-bar">
 			<!-- top header-->
