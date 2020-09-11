@@ -317,6 +317,11 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 <td><?php echo number_format($agencydata['uswds_noncompliant']); ?></td>
                                                 <td><?=idea_act_applyDataPercentage($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'])?></td>
                                             </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($websitenos); ?></td>
+                                              <td>100%</td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -462,6 +467,11 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 <td>&nbsp;</td>
                                                 <td><?=idea_act_applyDataPercentage($agencydata['https_support'], $agency_website_num)?></td>
                                                 <td><?=idea_act_applyDataPercentage($agencydata['https_nosupport'], $agency_website_num)?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($websitenos); ?></td>
+                                              <td>100%</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -766,6 +776,11 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 <td><?php echo number_format($agencydata['poor_nos']); ?></td>
                                                 <td><?=idea_act_applyDataPercentage($agencydata['poor_nos'], $agencydata['total_non_na_websites'])?></td>
                                             </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($websitenos); ?></td>
+                                              <td>100%</td>
+                                            </tr>
 
                                             </tbody>
                                         </table>
@@ -874,6 +889,11 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 <td>Not Mobile Friendly</td>
                                                 <td><?php echo number_format($agencydata['nonfriendly_nos']); ?></td>
                                                 <td><?=idea_act_applyDataPercentage($agencydata['nonfriendly_nos'],$agencydata['friendly_nos']+$agencydata['nonfriendly_nos'])?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($websitenos); ?></td>
+                                              <td>100%</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -1005,6 +1025,11 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 <td>DAP Non-Compliant</td>
                                                 <td><?php echo number_format($agencydata['dap_noncompliant']); ?></td>
                                                 <td><?=idea_act_applyDataPercentage($agencydata['dap_noncompliant'], $agencydata['dap_tottracked'])?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($websitenos); ?></td>
+                                              <td>100%</td>
                                             </tr>
                                             </tbody>
                                         </table>

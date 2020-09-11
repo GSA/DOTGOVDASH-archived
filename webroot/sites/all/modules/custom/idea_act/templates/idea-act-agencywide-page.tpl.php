@@ -179,7 +179,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                        <a href="/test" class="btn btn-digital disabled">Explore</a>
+                                        <a href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>" class="btn btn-digital disabled">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
@@ -308,6 +308,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                               <td><?php echo number_format($agency_data['uswds_noncompliant']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['uswds_noncompliant'], $agency_data['uswds_tottracked'])?></td>
                                             </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
+                                              <td>100%</td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -326,7 +331,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                        <a href="/test" class="btn btn-digital disabled">Explore</a>
+                                        <a href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>" class="btn btn-digital disabled">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
@@ -369,7 +374,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                             xPadding: 10,
                                             caretPadding: 5,
                                             caretSize: 5,
-                                            displayColors: false,                                         
+                                            displayColors: false,
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];
@@ -453,6 +458,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                               <td>&nbsp;</td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['https_support'], $agency_data['no_of_websites'])?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['https_nosupport'], $agency_data['no_of_websites'])?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
+                                              <td>100%</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -763,6 +773,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                               <td><?php echo number_format($agency_data['mob_perf_poor_nos']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['mob_perf_poor_nos'], $agency_data['total_non_na_websites'])?></td>
                                             </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
+                                              <td>100%</td>
+                                            </tr>
 
                                             </tbody>
                                         </table>
@@ -869,6 +884,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                               <td>Not Mobile Friendly</td>
                                               <td><?php echo number_format($agency_data['mob_usab_notfriendly_nos']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['mob_usab_notfriendly_nos'],$agency_data['mob_usab_friendly_nos']+$agency_data['mob_usab_notfriendly_nos'])?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
+                                              <td>100%</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -1018,6 +1038,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                               <td>DAP Non-Compliant</td>
                                               <td><?php echo number_format($agency_data['dap_noncompliant']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['dap_noncompliant'], $agency_data['dap_tottracked'])?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
+                                              <td>100%</td>
                                             </tr>
                                             </tbody>
                                         </table>
