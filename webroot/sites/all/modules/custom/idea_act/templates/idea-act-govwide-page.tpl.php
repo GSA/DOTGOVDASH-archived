@@ -187,7 +187,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                        <a href="/ideaact/govwide/report" class="btn btn-digital disabled">Explore</a>
+                                      <a href="/ideaact/govwide/report" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -338,7 +338,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                        <a href="/test" class="btn btn-digital disabled">Explore</a>
+                                        <a href="/ideaact/govwide/report" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -489,7 +489,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                        <a href="/test" class="btn btn-digital disabled">Explore</a>
+                                      <a href="/ideaact/govwide/report" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -634,7 +634,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                        <a href="/test" class="btn btn-digital disabled">Explore</a>
+                                      <a href="/ideaact/govwide/report" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -973,7 +973,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3 mt-sm-0">
                                 <div class="col-md-6 mb-2">
                                     <div class="explore">
-                                        <a href="/test" class="btn btn-digital disabled">Explore</a>
+                                      <a href="/ideaact/govwide/report" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                             </div>
@@ -1048,7 +1048,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                        <a href="/test" class="btn btn-digital disabled">Explore</a>
+                                      <a href="/ideaact/govwide/report" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
