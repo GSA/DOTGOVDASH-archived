@@ -118,7 +118,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                  data-placement="left" data-toggle="tooltip"
                                  title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
                         </a> -->
-                       
+
                         <button class="button download-button" onclick="generatePDF('21st-gov-wide.pdf', 500, 736)" type="submit">Download</button>
                     </div>
                 </div>
@@ -157,7 +157,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <div><p class="card-description"><i><b>21st Century IDEA Act</b></i></p></div>
                                             <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
                                             <a class="pe-none" href="#"><b>Read More</b></a>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -166,7 +166,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                 <div class="info-icon" id="tooltip-container">
                                     <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div>                                   
+                                </div>
                                  <div class="col-sm-6 mt-xs-1 center-mb-2">
                                     <h4 class="chart-data-title">Average Accessibility Issues by Type Per Website</h4>
                                     <p>Average Color Contrast: <?=round($agencydata['ag_col_contrast'] / $agency_website_num, 1);?></p>
@@ -186,7 +186,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                        <a href="/test" class="btn btn-digital disabled">Explore</a>
+                                        <a href="/ideaact/govwide/report" class="btn btn-digital disabled">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -216,7 +216,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     options: {
                                         // responsive: true,
                                         maintainAspectRatio: false,
-                                        
+
                                         title: {
                                             display: false,
                                             text: 'Total Number of Accessibility Issues for Websites',
@@ -225,7 +225,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                         },
                                         tooltips: {
                                             enabled: false,
-                                            custom: customChartTooltip('chart-1-ref','chartjs-tooltip1'),  
+                                            custom: customChartTooltip('chart-1-ref','chartjs-tooltip1'),
                                             yPadding: 10,
                                             xPadding: 10,
                                             caretPadding: 5,
@@ -271,7 +271,7 @@ $search_engine_data_for_agencygraph = "0,0";
                     </div>
                 </div>
             </div>
- 
+
             <div class="relative-position mb-2">
                 <div class="row">
                     <div class="col-sm-12">
@@ -294,8 +294,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                 <div class="info-icon" id="tooltip-container">
                                     <a  class="btn disabled" href="//github.com/18F/site-scanning-documentation/blob/main/scans/live/uswds.md" target="_blank"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div>     
-                                
+                                </div>
+
                                 <div class="col-md-6 uswds-table">
                                     <div class="table-responsive">
                                         <table>
@@ -370,7 +370,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                         },
                                         tooltips: {
                                             enabled: false,
-                                            custom: customChartTooltip('chart-2-ref','chartjs-tooltip2'),  
+                                            custom: customChartTooltip('chart-2-ref','chartjs-tooltip2'),
                                             yPadding: 10,
                                             xPadding: 10,
                                             caretPadding: 5,
@@ -440,7 +440,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                 <div class="info-icon" id="tooltip-container">
                                     <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> HTTPS Data is collected through a custom scanner component of digital dashboard that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div> 
+                                </div>
                                 <div class="col-md-6">
                                     <div class="table-responsive">
                                         <table>
@@ -469,7 +469,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                 <h4 class="text-center chart-data-title">HTTPS Websites Compliance</h4>
-                                    <div class="chart-container" id="chart-3-ref"> 
+                                    <div class="chart-container" id="chart-3-ref">
                                         <canvas id="chart-gov3" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
                                     <div id="chart-3-legend-mobile"></div>
@@ -584,8 +584,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                 <div class="info-icon" id="tooltip-container">
                                     <a class="btn disabled" data-toggle="tooltip" title="<span><p class='tt-text'> On-Site Search Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div>         
-                                
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="table-responsive">
                                         <table>
@@ -635,7 +635,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [<?=($searchenginestatus['search_notavailable'] == "") ? 0 : $searchenginestatus['search_notavailable']?>, 
+                                            data: [<?=($searchenginestatus['search_notavailable'] == "") ? 0 : $searchenginestatus['search_notavailable']?>,
                                             <?=($searchenginestatus['search_available'] == "") ? 0 : $searchenginestatus['search_available']?>],
                                             borderWidth: 0,
                                             backgroundColor: [
@@ -728,8 +728,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                 <div class="info-icon" id="tooltip-container">
                                     <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Mobile Data is collected from Google API through a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div>    
-                                
+                                </div>
+
                                 <div class="col-md-6 mb-2">
                                 <h4 class="text-center chart-data-title">Mobile Performance Breakdown</h4>
 
@@ -740,10 +740,10 @@ $search_engine_data_for_agencygraph = "0,0";
                                         <div id="chart-5-legend"></div>
                                     </div>
                                     <div class="table-responsive">
-                                    
+
                                         <table>
                                             <thead>
-                                        
+
                                             <tr>
                                                 <th>Breakdown</th>
                                                 <th>Websites</th>
@@ -784,7 +784,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                         '#563eb6',
                                                         '#c95d00',
                                                         '#218967'
-                                                        
+
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -983,8 +983,8 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="info-icon" id="tooltip-container">
                                     <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> DAP Overall Average Score : <?=$agency_dap_score?>%"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div>  
-                                
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="table-responsive">
                                         <table>
@@ -1057,7 +1057,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             caretPadding: 5,
                                             caretSize: 5,
                                             enabled: false,
-                                            custom: customChartTooltip('chart-7-ref','chartjs-tooltip7'),  
+                                            custom: customChartTooltip('chart-7-ref','chartjs-tooltip7'),
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];
