@@ -170,10 +170,14 @@ $agency_data['agency_title'] = $agencynode->title;
                                 <div class="col-sm-6">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                   <h4 class="text-center chart-data-title">Total Number of Accessibility Issues </h4>
-                                  <div class="chart-container" id="chart-1-ref">
+                                  <div class="chart-container <?php  print  $agency_data['access-chart'];?>" id="chart-1-ref">
                                         <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
-                                    <div id="chart-1-legend-mobile"></div>
+                                    <div id="chart-1-legend-mobile" class="<?php  print  $agency_data['access-chart'];?>"></div>
+                                     <!-- Zero chart -->
+                                     <div class="<?php echo $agency_data['access-chart-zero'];?>">
+                                        <input class="alternate-chart" data-fgColor="chartreuse" data-thickness=".5" disabled="disabled" readonly value="2">
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-body relative-position row nmt-3">
@@ -182,7 +186,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                         <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 legend-container">
+                                <div class="col-sm-6 legend-container <?php  print  $agency_data['access-chart'];?>">
                                     <div id="chart-1-legend"></div></div>
                             </div>
 

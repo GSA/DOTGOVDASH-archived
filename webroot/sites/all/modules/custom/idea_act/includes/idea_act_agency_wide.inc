@@ -32,6 +32,15 @@ function ideaact_get_agencywide_data($agencyid){
   $agency_data['ag_miss_image'] = $ag_avrg_miss_image;
   $agency_data['ag_html_attrib'] = $ag_avrg_html_attr;
 
+  $agency_data['access-chart-zero'] = 'd-none';
+  $agency_data['access-valid-chart'] = ''; 
+  if($agency_data['ag_col_contrast'] == 0 && 
+    $agency_data['ag_miss_image'] == 0 && 
+    $agency_data['ag_html_attrib'] == 0) {
+      $agency_data['access-chart-zero'] = 'text-center';
+      $agency_data['access-chart'] = 'd-none'; 
+  }
+
 //  Mobile information
   $agency_data['mob_perf_good_nos'] = db_query("SELECT mob_perf_good FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid limit 1",array(':agencyid' => $agencyid))->fetchField();
   $agency_data['mob_perf_improve_nos'] = db_query("SELECT mob_perf_improve FROM custom_agencywide_archive where date =(select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
