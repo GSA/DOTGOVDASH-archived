@@ -179,7 +179,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                        <a href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>" class="btn btn-digital disabled">Explore</a>
+                                        <a href="/website/all/reports?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
@@ -443,28 +443,28 @@ $agency_data['agency_title'] = $agencynode->title;
                                         <table>
                                             <thead>
                                             <tr>
-                                                <th>Criteria</th>
-                                                <th>Compliant</th>
-                                                <th>Non-Compliant</th>
+                                              <th>Criteria</th>
+                                              <th>Websites</th>
+                                              <th>Percentage</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td><p style="display: flex;"><span class="text-nowrap">HTTPS Status</span><span class="custom-span">(Number of Websites)</span></p></td>
-                                                <td><?php echo number_format($agency_data['https_support']); ?></td>
-                                                <td><?php echo number_format($agency_data['https_nosupport']); ?></td>
-                                            </tr>
-                                            <tr>
-                                              <td>&nbsp;</td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['https_support'], $agency_data['no_of_websites'])?></td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['https_nosupport'], $agency_data['no_of_websites'])?></td>
-                                            </tr>
-                                            <tr>
-                                              <td>Total</td>
-                                              <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
-                                              <td>100%</td>
-                                            </tr>
-                                            </tbody>
+                                          <tbody>
+                                          <tr>
+                                            <td>HTTPS Compliant</td>
+                                            <td><?php echo number_format($agency_data['https_support']); ?></td>
+                                            <td><?=idea_act_applyDataPercentage($agency_data['https_support'], $agency_data['no_of_websites'])?></td>
+                                          </tr>
+                                          <tr>
+                                            <td>HTTPS Non Compliant</td>
+                                            <td><?php echo number_format($agency_data['https_nosupport']); ?></td>
+                                            <td><?=idea_act_applyDataPercentage($agency_data['https_nosupport'], $agency_data['no_of_websites'])?></td>
+                                          </tr>
+                                          <tr>
+                                            <td>Total</td>
+                                            <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
+                                            <td>100%</td>
+                                          </tr>
+                                          </tbody>
                                         </table>
                                     </div>
                                 </div>
