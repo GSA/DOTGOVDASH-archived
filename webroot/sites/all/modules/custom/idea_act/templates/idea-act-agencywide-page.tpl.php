@@ -102,7 +102,7 @@ $agency_data['agency_title'] = $agencynode->title;
                         <h1><?=$agencynode->title?> - <span>21st Century IDEA Act Dashboard</span></h1>
                         <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
                     </div>
-                    <div class="col-md-2 col-md-offset-1 text-right dashboard-right">
+                    <div id="element-to-hide" data-html2canvas-ignore="true" class="col-md-2 col-md-offset-1 text-right dashboard-right">
                         <!-- <a href="#">
                             <img src="/sites/all/modules/custom/idea_act/images/question-icon.png" alt="question icon" class="question-icon"
                                  data-placement="left" data-toggle="tooltip"
