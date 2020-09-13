@@ -13,13 +13,11 @@ jQuery(document).ready(function ($) {
         var btn_text = $(this).text();
         if (btn_text == 'Explore All') {
           $(this).html("Collapse All");
-          $("#row-none").removeClass( "d-none" );
         }
         else {
           $(this).html("Explore All");
-          $("#row-none").addClass( "d-none" );
         }
-      });
+    });
 
     $('#tooltip-container [data-toggle="tooltip"]').tooltip({
         animated: 'fade',

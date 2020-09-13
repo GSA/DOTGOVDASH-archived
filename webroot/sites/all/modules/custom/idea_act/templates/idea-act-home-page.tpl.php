@@ -102,7 +102,7 @@ $total_websites_count = $agency_data['actualdata']['total_websites_count'];
                             <p class='number'>". $agency['websitenos'] ."</p>
                           </div></a>";
                           if ($count == 3) {
-                              print "</div><div class='row2 d-none' id='row-none'>";
+                              print "</div><div class='collapse' id='toggleRow'>";
                           }
                           $count++;
                         }
@@ -112,9 +112,8 @@ $total_websites_count = $agency_data['actualdata']['total_websites_count'];
                 </div>
 
                 <div class="explore text-center">
-                    <a class="btn btn-digital show-agencies" id="btn-explore" >Explore All</a>
+                    <a class="btn btn-digital show-agencies" id="btn-explore" data-toggle="collapse" data-target="#toggleRow" aria-expanded="false" aria-controls="toggleRow" >Explore All</a>
                 </div>
-               
                 </div>
             </div>
         </div>
