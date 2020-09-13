@@ -38,7 +38,7 @@ function ideaact_get_agencywide_data($agencyid){
     $agency_data['ag_miss_image'] == 0 && 
     $agency_data['ag_html_attrib'] == 0) {
       $agency_data['access-chart-zero'] = 'text-center';
-      $agency_data['access-chart'] = 'd-none'; 
+      $agency_data['access-valid-chart'] = 'd-none'; 
   }
 
 //  Mobile information

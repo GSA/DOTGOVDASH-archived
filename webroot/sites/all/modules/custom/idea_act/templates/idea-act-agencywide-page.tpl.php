@@ -91,6 +91,7 @@ $agencynode = node_load(arg(3));
 drupal_set_title($agencynode->title);
 $agency_data['agency_title'] = $agencynode->title;
  $pdf_file_name = '21st_Century_'.$agencynode->title.'.pdf';
+ print 'hello' + $agency_data['access-valid-chart'];
 ?>
 
 <div class="idea-container">
@@ -170,23 +171,22 @@ $agency_data['agency_title'] = $agencynode->title;
                                 <div class="col-sm-6">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                   <h4 class="text-center chart-data-title">Total Number of Accessibility Issues </h4>
-                                  <div class="chart-container <?php  print  $agency_data['access-chart'];?>" id="chart-1-ref">
+                                  <div class="chart-container <?php print $agency_data['access-valid-chart'];?>" id="chart-1-ref">
                                         <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
-                                    <div id="chart-1-legend-mobile" class="<?php  print  $agency_data['access-chart'];?>"></div>
-                                     <!-- Zero chart -->
-                                     <div class="<?php echo $agency_data['access-chart-zero'];?>">
-                                        <input class="alternate-chart" data-fgColor="chartreuse" data-thickness=".5" disabled="disabled" readonly value="2">
+                                    <div id="chart-1-legend-mobile" class="<?php print $agency_data['access-valid-chart'];?>"></div>
+                                    <div class="<?php print $agency_data['access-chart-zero'];?>">
+                                         <img src="/sites/all/modules/custom/idea_act/images/zero-chart.png" width="250" height="300" class="alternate-chart-responsive">
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                        <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                       <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 legend-container <?php  print  $agency_data['access-chart'];?>">
+                                <div class="col-sm-6 legend-container <?php print $agency_data['access-valid-chart'];?>">
                                     <div id="chart-1-legend"></div></div>
                             </div>
 
@@ -312,11 +312,6 @@ $agency_data['agency_title'] = $agencynode->title;
                                               <td><?php echo number_format($agency_data['uswds_noncompliant']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['uswds_noncompliant'], $agency_data['uswds_tottracked'])?></td>
                                             </tr>
-                                            <tr>
-                                              <td>Total</td>
-                                              <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
-                                              <td>100%</td>
-                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -335,7 +330,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                      <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                       <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
@@ -378,7 +373,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                             xPadding: 10,
                                             caretPadding: 5,
                                             caretSize: 5,
-                                            displayColors: false,
+                                            displayColors: false,                                         
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];
@@ -447,28 +442,23 @@ $agency_data['agency_title'] = $agencynode->title;
                                         <table>
                                             <thead>
                                             <tr>
-                                              <th>Criteria</th>
-                                              <th>Websites</th>
-                                              <th>Percentage</th>
+                                                <th>Criteria</th>
+                                                <th>Compliant</th>
+                                                <th>Non-Compliant</th>
                                             </tr>
                                             </thead>
-                                          <tbody>
-                                          <tr>
-                                            <td>HTTPS Compliant</td>
-                                            <td><?php echo number_format($agency_data['https_support']); ?></td>
-                                            <td><?=idea_act_applyDataPercentage($agency_data['https_support'], $agency_data['no_of_websites'])?></td>
-                                          </tr>
-                                          <tr>
-                                            <td>HTTPS Non Compliant</td>
-                                            <td><?php echo number_format($agency_data['https_nosupport']); ?></td>
-                                            <td><?=idea_act_applyDataPercentage($agency_data['https_nosupport'], $agency_data['no_of_websites'])?></td>
-                                          </tr>
-                                          <tr>
-                                            <td>Total</td>
-                                            <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
-                                            <td>100%</td>
-                                          </tr>
-                                          </tbody>
+                                            <tbody>
+                                            <tr>
+                                                <td><p style="display: flex;"><span class="text-nowrap">HTTPS Status</span><span class="custom-span">(Number of Websites)</span></p></td>
+                                                <td><?php echo number_format($agency_data['https_support']); ?></td>
+                                                <td><?php echo number_format($agency_data['https_nosupport']); ?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>&nbsp;</td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['https_support'], $agency_data['no_of_websites'])?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['https_nosupport'], $agency_data['no_of_websites'])?></td>
+                                            </tr>
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -485,7 +475,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                      <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                       <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
@@ -633,7 +623,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                      <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                       <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
@@ -777,11 +767,6 @@ $agency_data['agency_title'] = $agencynode->title;
                                               <td><?php echo number_format($agency_data['mob_perf_poor_nos']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['mob_perf_poor_nos'], $agency_data['total_non_na_websites'])?></td>
                                             </tr>
-                                            <tr>
-                                              <td>Total</td>
-                                              <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
-                                              <td>100%</td>
-                                            </tr>
 
                                             </tbody>
                                         </table>
@@ -889,11 +874,6 @@ $agency_data['agency_title'] = $agencynode->title;
                                               <td><?php echo number_format($agency_data['mob_usab_notfriendly_nos']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['mob_usab_notfriendly_nos'],$agency_data['mob_usab_friendly_nos']+$agency_data['mob_usab_notfriendly_nos'])?></td>
                                             </tr>
-                                            <tr>
-                                              <td>Total</td>
-                                              <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
-                                              <td>100%</td>
-                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -989,7 +969,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-md-6 mb-2">
                                     <div class="explore">
-                                      <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                       <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                             </div>
@@ -1043,11 +1023,6 @@ $agency_data['agency_title'] = $agencynode->title;
                                               <td><?php echo number_format($agency_data['dap_noncompliant']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['dap_noncompliant'], $agency_data['dap_tottracked'])?></td>
                                             </tr>
-                                            <tr>
-                                              <td>Total</td>
-                                              <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
-                                              <td>100%</td>
-                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -1065,8 +1040,8 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                      <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
-s                                    </div>
+                                       <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                    </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
                                     <div id="chart-7-legend"></div></div>
