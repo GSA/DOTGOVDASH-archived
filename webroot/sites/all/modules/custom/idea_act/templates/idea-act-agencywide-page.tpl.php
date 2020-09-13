@@ -1061,7 +1061,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                     <div id="chart-7-legend"></div></div>
                             </div>
                             <script lang="javascript">
-                                var ctx = document.getElementById('chart-7').getContext('2d');
+                                var ctx = document.getElementById('chart-gov7').getContext('2d');
                                 var chart = new Chart(ctx, {
                                     type: 'doughnut',
                                     data: {
