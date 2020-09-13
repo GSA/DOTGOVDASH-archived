@@ -32,13 +32,18 @@ function ideaact_get_agencywide_data($agencyid){
   $agency_data['ag_miss_image'] = $ag_avrg_miss_image;
   $agency_data['ag_html_attrib'] = $ag_avrg_html_attr;
 
-  $agency_data['access-chart-zero'] = 'd-none';
-  $agency_data['access-valid-chart'] = ''; 
+  $agency_data['access-spot-checks-chart'] = '';
   if($agency_data['ag_col_contrast'] == 0 && 
     $agency_data['ag_miss_image'] == 0 && 
     $agency_data['ag_html_attrib'] == 0) {
-      $agency_data['access-chart-zero'] = 'text-center';
-      $agency_data['access-valid-chart'] = 'd-none'; 
+      $agency_data['access-spot-checks-chart'] = "<div class='text-center'>
+      <img src='/sites/all/modules/custom/idea_act/images/zero-chart.png' width='250' height='300' class='alternate-chart-responsive'>
+ </div>";
+  } else {
+    $agency_data['access-spot-checks-chart'] = "<div class='chart-container' id='chart-1-ref'>
+    <canvas id='chart-gov1' width='250' height='300' aria-label='Charts' role='img'></canvas>
+</div>
+<div id='chart-1-legend-mobile'></div>";
   }
 
 //  Mobile information
