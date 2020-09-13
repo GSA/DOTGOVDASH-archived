@@ -207,6 +207,7 @@ function ideaact_get_website_data($websiteid){
       $websitedata['htmlattri'] = $acesssresult->field_accessible_group_htmlattri_value;
       $websitedata['missingim'] = $acesssresult ->field_accessible_group_htmlattri_value;
       $websitedata['Accestext'] = 'This website' .  $websitedata['missingim'] . 'issues with missing image descriptions,' . $websitedata['htmlattri'] . 'issues with HTML attributes and' . $websitedata['colorcont'].'issues with color contrast.' ;
+      $websitedata['web-access-chart']  = "<div class='chart-container'><canvas id='chart-webhome' width='250' height='300' aria-label='Charts' role='img'></canvas></div><div class='legend-container'><div id='chart-1-legend'></div></div>";
     }
     $websitedata['id'] = "chart-1-legend";
     if(!is_redirect($websiteid)) {
@@ -220,7 +221,9 @@ function ideaact_get_website_data($websiteid){
       }
       if ($websitedata['missingim'] == NULL || $websitedata['missingim'] == '') {
         $websitedata['missingim'] = 0;
-
+        $websitedata['web-access-chart'] = "<div class='text-center'>
+        <img src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='250' height='250' class='alternate-chart-responsive'>
+   </div>";
       }
 
       $websitedata['Accestext'] = 'This website has ' . $websitedata['missingim'] . ' issues with missing image descriptions, ' . $websitedata['htmlattri'] . ' issues with HTML attributes and ' . $websitedata['colorcont'] . ' issues with color contrast.';
@@ -228,6 +231,9 @@ function ideaact_get_website_data($websiteid){
     }
     else {
       $websitedata['Accestext'] = 'The Metric is not applicable for this website (This website is a redirect).';
+      $websitedata['web-access-chart'] = "<div class='text-center'>
+      <img src='/sites/all/modules/custom/idea_act/images/not-available-chart.png' width='250' height='250' class='alternate-chart-responsive'>
+ </div>";
     }
   return $websitedata;
 }

@@ -188,13 +188,14 @@ drupal_set_title($websitedata['agencyname']);
                                     </a>
                                 </div>
                                 <div class="col-sm-6">
-                                    <div class="chart-container">
+                                    <!-- <div class="chart-container">
                                         <canvas id="chart-webhome" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
 
                                     <div class="legend-container">
                                         <div id="chart-1-legend"></div>
-                                    </div>
+                                    </div> -->
+                                    <?php print  $websitedata['web-access-chart'];?>
                                     <script lang="javascript">
                                         var ctx = document.getElementById('chart-webhome').getContext('2d');
                                         var chart = new Chart(ctx, {
