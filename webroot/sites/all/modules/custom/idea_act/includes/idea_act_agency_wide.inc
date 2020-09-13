@@ -14,6 +14,24 @@ function ideaact_get_agencywide_data($agencyid){
     $agency_data['uswds_tottracked'] += $uswdsresult->complnum;
   }
 
+  $agency_data['uswds_na']= $agency_data['no_of_websites'] -  $agency_data['uswds_tottracked'];
+
+  #zero case graph
+  $agency_data['uswds-chart'] = '';
+  if($agency_data['uswds_compliant'] == 0 &&
+    $agency_data['uswds_noncompliant'] == 0 &&
+    $agency_data['uswds_na'] == 0) {
+    $agency_data['uswds-chart'] = "<div class='text-center'>
+      <img src='/sites/all/modules/custom/idea_act/images/zero-chart.png' width='250' height='300' class='alternate-chart-responsive'>
+ </div>";
+  } else {
+    $agency_data['uswds-chart'] = "<div class='chart-container' id='chart-2-ref'>
+    <canvas id='chart-gov2' width='250' height='300' aria-label='Charts' role='img'></canvas>
+</div>
+<div id='chart-2-legend-mobile'></div>";
+  }
+
+
   //Query to get HTTPS status  data
   $httpsresults = db_query("select field_https_status_value,count(field_https_status_value)  as complnum from node a , field_data_field_https_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='https_dap_scan_information'  group by field_https_status_value
 ", array(':agencyid' => $agencyid));
@@ -24,6 +42,24 @@ function ideaact_get_agencywide_data($agencyid){
       $agency_data['https_nosupport'] += $httpsresult->complnum;
   }
 
+  $agency_data['https_na']= $agency_data['no_of_websites'] - ( $agency_data['https_support']+$agency_data['https_nosupport']);
+
+  #zero case graph
+  $agency_data['https-chart'] = '';
+  if($agency_data['https_support'] == 0 &&
+    $agency_data['https_nosupport'] == 0 &&
+    $agency_data['https_na'] == 0) {
+    $agency_data['httpss-chart'] = "<div class='text-center'>
+      <img src='/sites/all/modules/custom/idea_act/images/zero-chart.png' width='250' height='300' class='alternate-chart-responsive'>
+ </div>";
+  } else {
+    $agency_data['https-chart'] = "<div class='chart-container' id='chart-3-ref'>
+    <canvas id='chart-gov3' width='250' height='300' aria-label='Charts' role='img'></canvas>
+</div>
+<div id='chart-3-legend-mobile'></div>";
+
+  }
+
 //  #Accessbility spot checks
   $ag_avrg_color_cont =  round(db_query("select sum(c.field_accessible_group_colorcont_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_accessible_group_colorcont c  where a.type='508_scan_information' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
   $ag_avrg_miss_image =  round(db_query("select sum(c.field_accessible_group_missingim_value) as avg_value from node a , field_data_field_web_agency_id b , field_data_field_accessible_group_missingim c  where a.type='508_scan_information' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and field_web_agency_id_nid=:agencyid", array(':agencyid' => $agencyid))->fetchField());
@@ -31,6 +67,20 @@ function ideaact_get_agencywide_data($agencyid){
   $agency_data['ag_col_contrast'] = $ag_avrg_color_cont;
   $agency_data['ag_miss_image'] = $ag_avrg_miss_image;
   $agency_data['ag_html_attrib'] = $ag_avrg_html_attr;
+
+  $agency_data['access-spot-checks-chart'] = '';
+  if($agency_data['ag_col_contrast'] == 0 &&
+    $agency_data['ag_miss_image'] == 0 &&
+    $agency_data['ag_html_attrib'] == 0) {
+      $agency_data['access-spot-checks-chart'] = "<div class='text-center'>
+      <img src='/sites/all/modules/custom/idea_act/images/zero-chart.png' width='250' height='300' class='alternate-chart-responsive'>
+ </div>";
+  } else {
+    $agency_data['access-spot-checks-chart'] = "<div class='chart-container' id='chart-1-ref'>
+    <canvas id='chart-gov1' width='250' height='300' aria-label='Charts' role='img'></canvas>
+</div>
+<div id='chart-1-legend-mobile'></div>";
+  }
 
 //  Mobile information
   $agency_data['mob_perf_good_nos'] = db_query("SELECT mob_perf_good FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid limit 1",array(':agencyid' => $agencyid))->fetchField();

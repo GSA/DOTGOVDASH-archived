@@ -114,79 +114,39 @@ dotgov_common_tooltip("tooltip9","id");
     </p>
 </div>
 
-<script type="text/javascript">
-    var data = [];
-    var dist = -22;
-    var count = false;
-    var colorcont = <?php print_r(!emptyOrNull($colorcont) ? $colorcont : 0); ?>;
-    var htmlattr = <?php print_r(!emptyOrNull($htmlattri) ? $htmlattri : 0); ?>;
-    var missingim = <?php print_r(!emptyOrNull($missingim) ? $missingim : 0); ?>;
-    data = colorPercentage(data, 'Color Contrast Issues', colorcont);
-    data = colorPercentage(data, 'HTML Attribute Issues', htmlattr);
-    data = colorPercentage(data, 'Missing Image Description Issues', missingim);
-    if (colorcont > 0 && htmlattr == 0 && missingim == 0 ||
-        colorcont == 0 && htmlattr > 0 && missingim == 0 ||
-        colorcont == 0 && htmlattr == 0 && missingim > 0) {
-          count = true;
-    }
-    if (count) {
-      dist = -30;
-    }
+<script language="JavaScript">
+   google.charts.load('current', {'packages':['corechart']});
+   google.charts.setOnLoadCallback(drawChart);
 
-    function colorPercentage(data, dataName, dataY) {
-      if (dataY >= 0) {
-        data.push({
-          name: dataName,
-          y: dataY
-        });
-      }
-      return data;
-    }
-    Highcharts.chart('access_chart', {
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie'
-        },
-        title: {
-            text: ''
-        },
-        credits: {
-            enabled: false
-        },
-        legend:{
-            enabled: false
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    format: "<br>{point.percentage:.1f}%",
-                    distance: dist,
-                    style: {
-                        fontSize: 8,
-                        color: "white"
-                    },
-                    filter: {
-                      property: 'percentage',
-                      operator: '>',
-                      value: 20
-                    }
-                },
-                size: '101.78',
-                <?php if($showlegend == 1) print "showInLegend: true"; ?>
-            }
-        },
-        series: [{
-            name: 'Percentage',
-            colorByPoint: true,
-            data: data
-        }]
-    });
+   function drawChart() {
+       var data = google.visualization.arrayToDataTable([
+           ['Type', 'Number'],
+           ['Color Contrast Issues',     <?php echo number_format($colorcont, 1, '.', ''); ?>],
+           ['HTML Attribute Issues',      <?php echo number_format($htmlattri, 1, '.', ''); ?>],
+           ['Missing Image Description Issues',  <?php echo number_format($missingim, 1, '.', ''); ?>]
+       ]);
+       var options = {
+           colors: ['#7cb5ec', '#434348', '#90ed7d'],
+           sliceVisibilityThreshold: 0,
+           dataLabels: {
+               enabled: true
+           },
+           showInLegend: true,
+           backgroundColor:"transparent",
+           chartArea:{top:30,width:'100%',height:'58%'},
+           legend:{position:'none',alignment:'center'}
+       };
+
+       var chart = new google.visualization.PieChart(document.getElementById('access_chart'));
+
+       chart.draw(data, options);
+         var svgTags = document.querySelectorAll('#piechart svg');
+         var c = document.createElement('canvas');
+         c.width = svgTags.clientWidth;
+         c.height = svgTags.clientHeight;
+         svgTags.parentNode.insertBefore(c, svgTags);
+         var div = document.createElement('div');
+         div.appendChild(svgTags);
+         canvg(c, div.innerHTML);
+   }
 </script>

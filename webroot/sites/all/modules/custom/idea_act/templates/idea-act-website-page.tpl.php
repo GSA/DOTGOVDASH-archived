@@ -93,7 +93,7 @@ drupal_set_title($websitedata['agencyname']);
                         <!-- <a href="#">
                             <img src="/sites/all/modules/custom/idea_act/images/question-icon.png" alt="question icon" class="question-icon" data-placement="left" data-toggle="tooltip" title="" data-original-title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do">
                         </a> -->
-                        <button class="button download-button" onclick="generatePDF('idea_act_website_<?php print strtr($websitedata['websitename'], '.', '_'); ?>.pdf', 500, 800)" type="submit">Download</button>
+                        <button id="element-to-hide" data-html2canvas-ignore="true" class="button download-button" onclick="generatePDF('idea_act_website_<?php print strtr($websitedata['websitename'], '.', '_'); ?>.pdf', 500, 800)" type="submit">Download</button>
                     </div>
                 </div>
             </div>
@@ -273,7 +273,7 @@ drupal_set_title($websitedata['agencyname']);
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
-                                <a href="/test" class="btn btn-digital disabled">Explore</a>
+                              <a href="/ideaact/govwide/website/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                             </div>
                         </div>
                     </div>
@@ -330,7 +330,7 @@ drupal_set_title($websitedata['agencyname']);
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
-                                <a href="/test" class="btn btn-digital disabled">Explore</a>
+                              <a href="/ideaact/govwide/website/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                             </div>
                         </div>
                     </div>
@@ -404,7 +404,7 @@ drupal_set_title($websitedata['agencyname']);
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
-                                <a href="/test" class="btn btn-digital disabled">Explore</a>
+                              <a href="/ideaact/govwide/website/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                             </div>
                         </div>
                     </div>
@@ -458,7 +458,7 @@ drupal_set_title($websitedata['agencyname']);
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
-                                <a href="/test" class="btn btn-digital disabled">Explore</a>
+                              <a href="/ideaact/govwide/website/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                             </div>
                         </div>
                     </div>
@@ -518,7 +518,7 @@ drupal_set_title($websitedata['agencyname']);
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
-                                <a href="/test" class="btn btn-digital disabled">Explore</a>
+                              <a href="/ideaact/govwide/website/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                             </div>
                         </div>
                     </div>
