@@ -176,7 +176,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                       <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                      <a href="/ideaact/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
@@ -306,6 +306,16 @@ $agency_data['agency_title'] = $agencynode->title;
                                               <td><?php echo number_format($agency_data['uswds_noncompliant']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['uswds_noncompliant'], $agency_data['uswds_tottracked'])?></td>
                                             </tr>
+                                            <tr>
+                                              <td>Data Not Available</td>
+                                              <td><?php echo number_format($agencydata['uswds_na']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agencydata['uswds_na'],$agency_data['no_of_websites'])?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
+                                              <td>100%</td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -313,18 +323,13 @@ $agency_data['agency_title'] = $agencynode->title;
                                 <div class="col-md-6 mt-xs-1">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                   <h4 class="text-center chart-data-title"> USWDS Code Usage Breakdown of Websites</h4>
-                                     <div class="chart-container" id="chart-2-ref">
-                                        <canvas id="chart-gov2" width="250" height="300" aria-label="Charts" role="img"></canvas>
-
-                                    </div>
-                                  <div id="chart-2-legend-mobile"></div>
-
+                                  <?php print $agency_data['uswds-chart'];?>
                                 </div>
                             </div>
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                       <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                      <a href="/ideaact/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
@@ -338,15 +343,16 @@ $agency_data['agency_title'] = $agencynode->title;
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [ <?php echo number_format($agency_data['uswds_compliant']); ?>, <?php echo number_format($agency_data['uswds_noncompliant']); ?>],
+                                            data: [ <?php echo number_format($agency_data['uswds_compliant']); ?>, <?php echo number_format($agency_data['uswds_noncompliant']); ?>, <?php echo number_format($agency_data['uswds_na']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#ed4878',
                                                 '#00699e',
+                                                '#8168B3',
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: [ 'USWDS Code Detected','USWDS Code Not Detected']
+                                        labels: [ 'USWDS Code Detected','USWDS Code Not Detected','Data Not Available']
                                     },
 
                                     // Configuration options go here
@@ -367,7 +373,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                             xPadding: 10,
                                             caretPadding: 5,
                                             caretSize: 5,
-                                            displayColors: false,                                         
+                                            displayColors: false,
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];
@@ -443,14 +449,24 @@ $agency_data['agency_title'] = $agencynode->title;
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td><p style="display: flex;"><span class="text-nowrap">HTTPS Status</span><span class="custom-span">(Number of Websites)</span></p></td>
-                                                <td><?php echo number_format($agency_data['https_support']); ?></td>
-                                                <td><?php echo number_format($agency_data['https_nosupport']); ?></td>
+                                              <td>HTTPS Compliant</td>
+                                              <td><?php echo number_format($agencydata['https_support']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agencydata['https_support'], $agency_data['no_of_websites'])?></td>
                                             </tr>
                                             <tr>
-                                              <td>&nbsp;</td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['https_support'], $agency_data['no_of_websites'])?></td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['https_nosupport'], $agency_data['no_of_websites'])?></td>
+                                              <td>HTTPS Non Compliant</td>
+                                              <td><?php echo number_format($agencydata['https_nosupport']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agencydata['https_nosupport'],$agency_data['no_of_websites'])?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Data Not Available</td>
+                                              <td><?php echo number_format($agencydata['https_na']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agencydata['https_na'],$agency_data['no_of_websites'])?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
+                                              <td>100%</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -459,17 +475,13 @@ $agency_data['agency_title'] = $agencynode->title;
                                 <div class="col-md-6 mt-xs-1">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                   <h4 class="text-center chart-data-title">HTTPS Websites Compliance</h4>
-                                    <div class="chart-container" id="chart-3-ref">
-                                  <canvas id="chart-gov3" width="250" height="300" aria-label="Charts" role="img"></canvas>
-                                    </div>
-                                  <div id="chart-3-legend-mobile"></div>
-
+                                  <?php print $agency_data['https-chart'];?>
                                 </div>
                             </div>
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                       <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                       <a href="/ideaact/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
@@ -483,15 +495,16 @@ $agency_data['agency_title'] = $agencynode->title;
                                     data: {
                                         datasets: [{
                                             data: [<?php echo number_format($agency_data['https_support']); ?>,
-                                              <?php echo number_format($agency_data['https_nosupport']); ?>],
+                                              <?php echo number_format($agency_data['https_nosupport']); ?>,<?php echo number_format($agency_data['https_na']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#00a65f',
                                                 '#97d1ff',
+                                                '#8168B3',
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['Compliant Websites','Non-Compliant Websites']
+                                        labels: ['Compliant Websites','Non-Compliant Websites','Data Not Available']
                                     },
 
                                     // Configuration options go here
@@ -617,7 +630,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                       <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                      <a href="/ideaact/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
@@ -963,7 +976,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-md-6 mb-2">
                                     <div class="explore">
-                                       <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                      <a href="/ideaact/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                             </div>
@@ -1034,7 +1047,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                       <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                      <a href="/ideaact/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
