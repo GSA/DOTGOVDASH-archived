@@ -91,7 +91,6 @@ $agencynode = node_load(arg(3));
 drupal_set_title($agencynode->title);
 $agency_data['agency_title'] = $agencynode->title;
  $pdf_file_name = '21st_Century_'.$agencynode->title.'.pdf';
- print 'hello' + $agency_data['access-valid-chart'];
 ?>
 
 <div class="idea-container">
@@ -171,13 +170,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 <div class="col-sm-6">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                   <h4 class="text-center chart-data-title">Total Number of Accessibility Issues </h4>
-                                  <div class="chart-container <?php print $agency_data['access-valid-chart'];?>" id="chart-1-ref">
-                                        <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
-                                    </div>
-                                    <div id="chart-1-legend-mobile" class="<?php print $agency_data['access-valid-chart'];?>"></div>
-                                    <div class="<?php print $agency_data['access-chart-zero'];?>">
-                                         <img src="/sites/all/modules/custom/idea_act/images/zero-chart.png" width="250" height="300" class="alternate-chart-responsive">
-                                    </div>
+                                    <?php print $agency_data['access-spot-checks-chart'];?>
                                 </div>
                             </div>
                             <div class="card-body relative-position row nmt-3">
@@ -186,8 +179,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                        <a href="/ideaact/agency-wide/report?field_web_agency_id_nid=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 legend-container <?php print $agency_data['access-valid-chart'];?>">
-                                    <div id="chart-1-legend"></div></div>
+                                <div class="col-sm-6 legend-container">
+                                    <div id="chart-1-legend"></div>
+                                </div>
                             </div>
 
                             <!-- script to render the pie chart -->
