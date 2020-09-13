@@ -299,12 +299,12 @@ $agency_data['agency_title'] = $agencynode->title;
                                             <tr>
                                               <td>USWDS code detected</td>
                                               <td><?php echo number_format($agency_data['uswds_compliant']); ?></td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['uswds_compliant'], $agency_data['uswds_tottracked'])?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['uswds_compliant'], $agency_data['no_of_websites'])?></td>
                                             </tr>
                                             <tr>
                                               <td>USWDS code not detected</td>
                                               <td><?php echo number_format($agency_data['uswds_noncompliant']); ?></td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['uswds_noncompliant'], $agency_data['uswds_tottracked'])?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['uswds_noncompliant'], $agency_data['no_of_websites'])?></td>
                                             </tr>
                                             <tr>
                                               <td>Data Not Available</td>
@@ -1023,12 +1023,12 @@ $agency_data['agency_title'] = $agencynode->title;
                                             <tr>
                                               <td>DAP Compliant</td>
                                               <td><?php echo number_format($agency_data['dap_compliant']); ?></td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['dap_compliant'], $agency_data['dap_tottracked'])?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['dap_compliant'], $agency_data['no_of_websites'])?></td>
                                             </tr>
                                             <tr>
                                               <td>DAP Non-Compliant</td>
                                               <td><?php echo number_format($agency_data['dap_noncompliant']); ?></td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['dap_noncompliant'], $agency_data['dap_tottracked'])?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['dap_noncompliant'], $agency_data['no_of_websites'])?></td>
                                             </tr>
                                             <tr>
                                               <td>Data Not Available</td>
