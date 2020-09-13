@@ -2661,10 +2661,10 @@ function archiveGovwideTrendData(){
             $search_notavailable += $searchresult->complnum;
     }
     print  " $websitenos - $agencynos - $avg_https -- $avg_dap -- $avg_mob_overall -- $avg_mob_perform -- $avg_mob_usab - $avg_sitespeed - $avg_ipv6 - $avg_dnssec -  $avg_rc4 - $avg_m15 - $ag_avrg_color_cont - $ag_avrg_miss_image - $ag_avrg_html_attr - $search_available - $search_notavailable - $avg_uswds ,$mobnew_poor_sites,$mobnew_improve_sites,$mobnew_good_sites,$mobnew_friendly_sites,$mobnew_unfriendly_sites,$dap_websites,$https_websites,$uswds_websites \n";
-    print "insert into custom_government_wide_archive values(NULL,CURDATE(),NOW(),$websitenos,$avg_https,$avg_dap,$avg_mob_overall,$avg_mob_usab,$avg_mob_perform,$avg_sitespeed,$avg_ipv6,$avg_dnssec,$avg_rc4,$avg_m15,$ag_avrg_color_cont,$ag_avrg_html_attr,$ag_avrg_miss_image,$search_available,$search_notavailable,$agencynos,$avg_uswds,$dap_websites,$https_websites,$uswds_websites) ON DUPLICATE KEY UPDATE    
-num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',num_of_agencies='$agencynos',search_available='$search_available',search_notavailable='$search_notavailable',average_uswds_score='$avg_uswds', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites',dap_websites='$dap_websites',https_websites='$https_websites',uswds_websites='$uswds_websites'";
+    print "insert into custom_government_wide_archive values(NULL,CURDATE(),NOW(),'$websitenos','$avg_https','$avg_dap','$avg_mob_overall','$avg_mob_usab','$avg_mob_perform','$avg_sitespeed','$avg_ipv6','$avg_dnssec','$avg_rc4','$avg_m15','$ag_avrg_color_cont','$ag_avrg_html_attr','$ag_avrg_miss_image','$search_available','$search_notavailable','$agencynos','$avg_uswds','$mobnew_good_sites','$mobnew_improve_sites','$mobnew_poor_sites','$mobnew_friendly_sites','$mobnew_unfriendly_sites','$dap_websites','$https_websites','$uswds_websites') ON DUPLICATE KEY UPDATE    
+num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',num_of_agencies='$agencynos',search_available='$search_available',search_notavailable='$search_notavailable',average_uswds_score='$avg_uswds', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites',dap_websites='$dap_websites',https_websites='$https_websites',uswds_websites='$uswds_websites' \n";
 //Update/Insert Archive record for current data sets
-    db_query("insert into custom_government_wide_archive values(NULL,CURDATE(),NOW(),$websitenos,$avg_https,$avg_dap,$avg_mob_overall,$avg_mob_usab,$avg_mob_perform,$avg_sitespeed,$avg_ipv6,$avg_dnssec,$avg_rc4,$avg_m15,$ag_avrg_color_cont,$ag_avrg_html_attr,$ag_avrg_miss_image,$search_available,$search_notavailable,$agencynos,$avg_uswds,$mobnew_good_sites,$mobnew_improve_sites,$mobnew_poor_sites,$mobnew_friendly_sites,$mobnew_unfriendly_sites,$dap_websites,$https_websites,$uswds_websites) ON DUPLICATE KEY UPDATE    
+    db_query("insert into custom_government_wide_archive values(NULL,CURDATE(),NOW(),'$websitenos','$avg_https','$avg_dap','$avg_mob_overall','$avg_mob_usab','$avg_mob_perform','$avg_sitespeed','$avg_ipv6','$avg_dnssec','$avg_rc4','$avg_m15','$ag_avrg_color_cont','$ag_avrg_html_attr','$ag_avrg_miss_image','$search_available','$search_notavailable','$agencynos','$avg_uswds','$mobnew_good_sites','$mobnew_improve_sites','$mobnew_poor_sites','$mobnew_friendly_sites','$mobnew_unfriendly_sites','$dap_websites','$https_websites','$uswds_websites') ON DUPLICATE KEY UPDATE    
 num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',num_of_agencies='$agencynos',search_available='$search_available',search_notavailable='$search_notavailable',average_uswds_score='$avg_uswds', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites',dap_websites='$dap_websites',https_websites='$https_websites',uswds_websites='$uswds_websites'");
 
 }
@@ -2699,6 +2699,10 @@ function archiveAgencywideTrendData(){
         $dap_websites = db_query("select count(field_dap_score_value)  as complnum from field_data_field_dap_score a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid and field_dap_score_value='100' group by field_dap_score_value", array(':agencyid' =>  $result->nid))->fetchField();
         $https_websites = db_query("select count(field_https_status_value)  as complnum from node a , field_data_field_https_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='https_dap_scan_information'  and field_https_status_value='Yes' group by field_https_status_value", array(':agencyid' =>  $result->nid))->fetchField();
         $uswds_websites = db_query("select count(field_uswds_score_value)  as complnum from field_data_field_uswds_score a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid and field_uswds_score_value='100' group by field_uswds_score_value", array(':agencyid' =>  $result->nid))->fetchField();
+        $uswds_websites = ($uswds_websites == '')?'NULL':$uswds_websites;
+        $dap_websites = ($dap_websites == '')?'NULL':$dap_websites;
+        $https_websites = ($https_websites == '')?'NULL':$https_websites;
+
 
         //Query to get Search data for an agency
         $searchresults = db_query("select field_search_status_value,count(field_search_status_value) as complnum from node a , field_data_field_search_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='website' group by field_search_status_value", array(':agencyid' => $result->nid));
@@ -2715,8 +2719,8 @@ function archiveAgencywideTrendData(){
         //  print  $result->nid."-- $result->title -- $websitenos - $avg_https\n";
         print  "$result->nid -- $result->title -- $websitenos - $avg_https -- $avg_dap -- $avg_mob_overall -- $avg_mob_perform -- $avg_mob_usab - $avg_sitespeed - $avg_ipv6 - $avg_dnssec -  $avg_rc4 - $avg_m15 - $ag_avrg_color_cont - $ag_avrg_miss_image - $ag_avrg_html_attr - $search_available - $search_notavailable - $ag_avrg_uswds_score,$mobnew_poor_sites,$mobnew_improve_sites,$mobnew_good_sites,$mobnew_friendly_sites,$mobnew_unfriendly_sites ,$dap_websites,$https_websites,$uswds_websites \n";
         if($websitenos != '0'){
-            print "insert into custom_agencywide_archive values(NULL,CURDATE(),NOW(),'$result->title','$result->nid',$websitenos,$avg_https,$avg_dap,$avg_mob_overall,$avg_mob_usab,$avg_mob_perform,$avg_sitespeed,$avg_ipv6,$avg_dnssec,$avg_rc4,$avg_m15,$ag_avrg_color_cont,$ag_avrg_html_attr,$ag_avrg_miss_image,$search_available,$search_notavailable,$ag_avrg_uswds_score,$dap_websites,$https_websites,$uswds_websites) ON DUPLICATE KEY UPDATE     num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',search_available='$search_available',search_notavailable='$search_notavailable', average_uswds_score='$ag_avrg_uswds_score', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites',dap_websites='$dap_websites',https_websites='$https_websites',uswds_websites='$uswds_websites' \n";
-            db_query("insert into custom_agencywide_archive values(NULL,CURDATE(),NOW(),'$result->title','$result->nid',$websitenos,$avg_https,$avg_dap,$avg_mob_overall,$avg_mob_usab,$avg_mob_perform,$avg_sitespeed,$avg_ipv6,$avg_dnssec,$avg_rc4,$avg_m15,$ag_avrg_color_cont,$ag_avrg_html_attr,$ag_avrg_miss_image,$search_available,$search_notavailable,$ag_avrg_uswds_score,$mobnew_good_sites,$mobnew_improve_sites,$mobnew_poor_sites,$mobnew_friendly_sites,$mobnew_unfriendly_sites,$dap_websites,$https_websites,$uswds_websites) ON DUPLICATE KEY UPDATE     num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',search_available='$search_available',search_notavailable='$search_notavailable', average_uswds_score='$ag_avrg_uswds_score', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites',dap_websites='$dap_websites',https_websites='$https_websites',uswds_websites='$uswds_websites'");
+            print "insert into custom_agencywide_archive values(NULL,CURDATE(),NOW(),'$result->title','$result->nid','$websitenos','$avg_https','$avg_dap','$avg_mob_overall','$avg_mob_usab','$avg_mob_perform','$avg_sitespeed','$avg_ipv6','$avg_dnssec','$avg_rc4','$avg_m15','$ag_avrg_color_cont','$ag_avrg_html_attr','$ag_avrg_miss_image','$search_available','$search_notavailable','$ag_avrg_uswds_score','$mobnew_good_sites','$mobnew_improve_sites','$mobnew_poor_sites','$mobnew_friendly_sites','$mobnew_unfriendly_sites','$dap_websites','$https_websites','$uswds_websites') ON DUPLICATE KEY UPDATE     num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',search_available='$search_available',search_notavailable='$search_notavailable', average_uswds_score='$ag_avrg_uswds_score', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites',dap_websites='$dap_websites',https_websites='$https_websites',uswds_websites='$uswds_websites' \n";
+            db_query("insert into custom_agencywide_archive values(NULL,CURDATE(),NOW(),'$result->title','$result->nid','$websitenos','$avg_https','$avg_dap','$avg_mob_overall','$avg_mob_usab','$avg_mob_perform','$avg_sitespeed','$avg_ipv6','$avg_dnssec','$avg_rc4','$avg_m15','$ag_avrg_color_cont','$ag_avrg_html_attr','$ag_avrg_miss_image','$search_available','$search_notavailable','$ag_avrg_uswds_score','$mobnew_good_sites','$mobnew_improve_sites','$mobnew_poor_sites','$mobnew_friendly_sites','$mobnew_unfriendly_sites',$dap_websites,$https_websites,$uswds_websites) ON DUPLICATE KEY UPDATE     num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',search_available='$search_available',search_notavailable='$search_notavailable', average_uswds_score='$ag_avrg_uswds_score', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites',dap_websites=$dap_websites,https_websites=$https_websites,uswds_websites=$uswds_websites");
 
         }
     }
@@ -2887,6 +2891,8 @@ function updateAccessibilityScanCustom($website,$webscanId){
                 }
                 $j += 1;
             }
+            $wnode->field_section_508_scan_node['und'][0]['target_id'] = $node->nid;
+
             node_object_prepare($wnode);
             if ($wnode = node_submit($wnode)) {
                 node_save($wnode);
@@ -3162,6 +3168,93 @@ function dateDifference($startdate,$enddate){
 // Print the result
     $datediff  = "$days days, $hours hours, $minutes minutes, $seconds seconds";
     return $datediff;
+}
+
+//Unpublish all website nodes and related scan nodes which are not in pulse. Also unpublish all agencies which are not in scan.
+
+function cleanupNodesAfterScan(){
+
+//Find all websites currently active and only publish those and their child nodes and unpublish others and their child nodes.
+    $query = db_query("select title,nid,status from node where type='website'");
+    $i = 1;
+    $j = 1;
+    $k = 1;
+    foreach ($query as $result) {
+        //Only if the website is recently captured and valid executive branch
+        $validwebsite = db_query("select domain from custom_pulse_https_data where domain=:website and branch='executive'", array(':website' => $result->title))->fetchField();
+        print "$i --".$result->title. "\n";
+        if($validwebsite) {
+            print "$j -- ".$result->title . "-".$result->nid."-".$result->status." is valid \n";
+            //Check if status is unpublished then publish the node
+            if($result->status == 0){
+                publishNode($result->nid);
+            }
+            //Find all scan ids tied to this website
+            $query1 = db_query("select a.*,b.status from field_data_field_website_id a , node b where  a.entity_id=b.nid and a.field_website_id_nid='".$result->nid."'");
+            foreach ($query1 as $result1) {
+                print $result->title." - ".$result1->bundle."-".$result1->entity_id." will be published\n";
+                //Check if status is unpublished then publish the node
+                if($result1->status == 0){
+                    publishNode($result1->entity_id);
+                }
+            }
+            $j += 1;
+        }
+        else{
+            print "$k -- invalid site --". $result->title . "-".$result->nid."  will be unpublished\n";
+            //Check if status is published then unpublish the node
+            if($result->status == 1){
+                unPublishNode($result->nid);
+            }
+            //Find all scan ids tied to this website
+            $query2 = db_query("select a.*,b.status from field_data_field_website_id a , node b where  a.entity_id=b.nid and a.field_website_id_nid='".$result->nid."'");
+            foreach ($query2 as $result2) {
+                print $result->title." - ".$result2->bundle."-".$result2->entity_id." will be unpublished\n";
+                //Check if status is published then unpublish the node
+                if($result2->status == 1){
+                    unPublishNode($result2->entity_id);
+                }
+            }
+            $k += 1;
+
+        }
+    $i += 1;
+    }
+
+    //Find all scan nodes which are orphaned or doesn't have a parent website id and unpublish them
+    $query13 = db_query("select nid,title,type from node a ,field_data_field_website_id b where type in ('site_speed_scan','508_scan_information','domain_scan_information','https_dap_scan_information','mobile_scan_information','uswds_scan') and a.nid=b.entity_id and a.status='1' and field_website_id_nid  not in (select nid from node where status='1')");
+    foreach ($query13 as $result13) {
+        print $result13->title." - ".$result13->type."-".$result13->nid." orpahaned nodes will be unpublished\n";
+        unPublishNode($result13->nid);
+    }
+    //Clean bad https domain
+    $query14 = db_query("select nid,title,type from node a where type in ('https_dap_scan_information') and status='1' and a.nid not in (select nid from node a ,field_data_field_website_id b where type in ('https_dap_scan_information') and a.nid=b.entity_id and a.status='1' and field_website_id_nid  in (select nid from node))");
+    foreach ($query14 as $result14) {
+        print $result14->title." - ".$result14->type."-".$result14->nid." orpahaned nodes will be unpublished\n";
+        unPublishNode($result14->nid);
+    }
+//Find all websites currently active and only publish those and their child nodes and unpublish others and their child nodes.
+    $query12 = db_query("select title,nid,status from node where type='agency'");
+    foreach ($query12 as $result12) {
+//Only if the agency is recently captured and valid executive branch agency
+        $validagency = db_query("select agency from custom_pulse_https_data where Agency=:agency and branch='executive'", array(':agency' => $result12->title))->fetchField();
+        if($validagency) {
+            print $result12->title . "-".$result12->nid."-".$result12->status." is valid \n";
+            //Check if status is unpublished then publish the node
+            if($result12->status == 0){
+                publishNode($result12->nid);
+            }
+        }
+        else{
+            print $result12->title . "-".$result12->nid."-".$result12->status." is in valid \n";
+            //Check if status is published then unpublish the node
+            if($result12->status == 1){
+                unPublishNode($result12->nid);
+            }
+
+        }
+    }
+
 }
 
 function unPublishNode($nid){
