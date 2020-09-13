@@ -470,7 +470,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             </tr>
                                             <tr>
                                               <td>Total</td>
-                                              <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
+                                              <td><?php echo number_format($agency_website_num); ?></td>
                                               <td>100%</td>
                                             </tr>
                                             </tbody>
