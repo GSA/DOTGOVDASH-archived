@@ -4,6 +4,7 @@ function ideaact_get_agencywide_data($agencyid){
   $agency_data = array();
   $agency_data['agencyid'] = $agencyid;
 
+  $agency_data['no_of_websites']=  db_query("SELECT num_of_websites FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   //Query to get USWDS for Agency
   $uswdsresults = db_query("select field_uswds_score_value,count(field_uswds_score_value)  as complnum from field_data_field_uswds_score a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid group by field_uswds_score_value", array(':agencyid' => $agencyid));
   foreach ($uswdsresults as $uswdsresult) {
@@ -89,7 +90,6 @@ function ideaact_get_agencywide_data($agencyid){
   $agency_data['mob_usab_friendly_nos'] = db_query("SELECT mob_usab_friendly FROM custom_agencywide_archive where date =(select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_data['mob_usab_notfriendly_nos'] = db_query("SELECT mob_usab_nonfriendly FROM custom_agencywide_archive where date=(select max(date) from custom_agencywide_archive)and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_data['total_websites'] = db_query("SELECT sum(num_of_websites) FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
-  $agency_data['no_of_websites']=  db_query("SELECT num_of_websites FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_data['total_non_na_websites'] = ($agency_data['mob_perf_good_nos']+ $agency_data['mob_perf_improve_nos']+ $agency_data['mob_perf_poor_nos']);
   $agency_data['usab_null'] = $agency_data['no_of_websites'] - ($agency_data['mob_usab_friendly_nos']+ $agency_data['mob_usab_notfriendly_nos']);
 
