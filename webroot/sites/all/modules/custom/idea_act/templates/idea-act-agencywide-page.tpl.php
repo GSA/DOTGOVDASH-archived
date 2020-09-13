@@ -308,8 +308,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                             </tr>
                                             <tr>
                                               <td>Data Not Available</td>
-                                              <td><?php echo number_format($agencydata['uswds_na']); ?></td>
-                                              <td><?=idea_act_applyDataPercentage($agencydata['uswds_na'],$agency_data['no_of_websites'])?></td>
+                                              <td><?php echo number_format($agency_data['uswds_na']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['uswds_na'],$agency_data['no_of_websites'])?></td>
                                             </tr>
                                             <tr>
                                               <td>Total</td>
@@ -455,13 +455,13 @@ $agency_data['agency_title'] = $agencynode->title;
                                             </tr>
                                             <tr>
                                               <td>HTTPS Non Compliant</td>
-                                              <td><?php echo number_format($agencydata['https_nosupport']); ?></td>
-                                              <td><?=idea_act_applyDataPercentage($agencydata['https_nosupport'],$agency_data['no_of_websites'])?></td>
+                                              <td><?php echo number_format($agency_data['https_nosupport']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['https_nosupport'],$agency_data['no_of_websites'])?></td>
                                             </tr>
                                             <tr>
                                               <td>Data Not Available</td>
-                                              <td><?php echo number_format($agencydata['https_na']); ?></td>
-                                              <td><?=idea_act_applyDataPercentage($agencydata['https_na'],$agency_data['no_of_websites'])?></td>
+                                              <td><?php echo number_format($agency_data['https_na']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['https_na'],$agency_data['no_of_websites'])?></td>
                                             </tr>
                                             <tr>
                                               <td>Total</td>
