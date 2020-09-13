@@ -1030,6 +1030,16 @@ $agency_data['agency_title'] = $agencynode->title;
                                               <td><?php echo number_format($agency_data['dap_noncompliant']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['dap_noncompliant'], $agency_data['dap_tottracked'])?></td>
                                             </tr>
+                                            <tr>
+                                              <td>Data Not Available</td>
+                                              <td><?php echo number_format($agency_data['dap_na']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['dap_na'],$agency_data['no_of_websites'])?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
+                                              <td>100%</td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -1037,10 +1047,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 <div class="col-md-6 mt-xs-1">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                   <h4 class="text-center chart-data-title"> DAP Websites Compliance</h4>
-                                    <div class="chart-container" id="chart-7-ref">
-                                        <canvas id="chart-7" width="250" height="300" aria-label="Charts" role="img"></canvas>
-                                    </div>
-                                  <div id="chart-7-legend-mobile"></div>
+                                  <?php print $agency_data['dap-chart'];?>
                                 </div>
                             </div>
 
@@ -1061,16 +1068,18 @@ $agency_data['agency_title'] = $agencynode->title;
                                         datasets: [{
                                             data: [
                                               <?php echo number_format($agency_data['dap_compliant']); ?>,
-                                              <?php echo number_format($agency_data['dap_noncompliant']); ?>],
+                                              <?php echo number_format($agency_data['dap_noncompliant']); ?>,
+                                              <?php echo number_format($agency_data['dap_na']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#de9738',
                                                 '#00a1be',
+                                                '#8168B3',
 
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['Compliant Websites','Non-Compliant Websites']
+                                        labels: ['Compliant Websites','Non-Compliant Websites','Data Not Available']
                                     },
 
                                     // Configuration options go here

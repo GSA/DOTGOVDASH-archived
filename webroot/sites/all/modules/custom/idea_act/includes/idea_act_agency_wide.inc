@@ -158,6 +158,21 @@ function ideaact_get_agencywide_data($agencyid){
       $agency_data['dap_noncompliant'] += $dapresult->complnum;
     $agency_data['dap_tottracked'] += $dapresult->complnum;
   }
+  $agency_data['dap_na']= $agency_data['no_of_websites'] -  $agency_data['dap_tottracked'];
+  #zero case graph
+  $agency_data['dap-chart'] = '';
+  if($agency_data['dap_compliant'] == 0 &&
+    $agency_data['dap_noncompliant'] == 0 &&
+    $agency_data['dap_na'] == 0) {
+    $agency_data['dap-chart'] = "<div class='text-center'>
+      <img src='/sites/all/modules/custom/idea_act/images/zero-chart.png' width='250' height='300' class='alternate-chart-responsive'>
+ </div>";
+  } else {
+    $agency_data['dap-chart'] = "<div class='chart-container' id='chart-7-ref'>
+    <canvas id='chart-gov7' width='250' height='300' aria-label='Charts' role='img'></canvas>
+</div>
+<div id='chart-7-legend-mobile'></div>";
+  }
   return $agency_data;
 }
 
