@@ -741,9 +741,7 @@ $agency_data['agency_title'] = $agencynode->title;
                               <div class="col-md-6 mb-2">
                                 <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                 <h4 class="text-center chart-data-title"> Mobile Performance Breakdown</h4>
-                                <?php print $agency_data['mob-perf-chart'];?>
-                                </div>
-                              </div>
+                              <?php print $agency_data['mob-perf-chart']; ?>
 
                                     <div class="table-responsive">
                                         <table>
@@ -758,28 +756,19 @@ $agency_data['agency_title'] = $agencynode->title;
                                             <tr>
                                               <td>Good</td>
                                               <td><?php echo number_format($agency_data['mob_perf_good_nos']); ?></td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_perf_good_nos'], $agency_data['no_of_websites'])?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_perf_good_nos'], $agency_data['total_non_na_websites'])?></td>
                                             </tr>
                                             <tr>
                                               <td>Needs Improvement</td>
                                               <td><?php echo number_format($agency_data['mob_perf_improve_nos']); ?></td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_perf_improve_nos'],$agency_data['no_of_websites'])?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_perf_improve_nos'],$agency_data['total_non_na_websites'])?></td>
                                             </tr>
                                             <tr>
                                               <td>Poor</td>
                                               <td><?php echo number_format($agency_data['mob_perf_poor_nos']); ?></td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_perf_poor_nos'], $agency_data['no_of_websites'])?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_perf_poor_nos'], $agency_data['total_non_na_websites'])?></td>
                                             </tr>
-                                            <tr>
-                                              <td>Data Not Available</td>
-                                              <td><?php echo number_format($agency_data['total_non_na_websites']); ?></td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['total_non_na_websites'], $agency_data['no_of_websites'])?></td>
-                                            </tr>
-                                            <tr>
-                                              <td>Total</td>
-                                              <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
-                                              <td>100%</td>
-                                            </tr>
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -791,18 +780,16 @@ $agency_data['agency_title'] = $agencynode->title;
                                                 datasets: [{
                                                     data: [<?php echo number_format($agency_data['mob_perf_good_nos']); ?>,
                                                       <?php echo number_format($agency_data['mob_perf_improve_nos']); ?>,
-                                                      <?php echo number_format($agency_data['mob_perf_poor_nos']); ?>,
-                                                      <?php echo number_format($agency_data['total_non_na_websites']); ?>],
+                                                      <?php echo number_format($agency_data['mob_perf_poor_nos']); ?>,],
                                                     borderWidth: 0,
                                                     backgroundColor: [
                                                         '#563eb6',
                                                         '#c95d00',
                                                         '#218967',
-                                                        '#8168B3',
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
-                                                labels: ['Good', 'Needs Improvement', 'Poor','Data Not Available']
+                                                labels: ['Good', 'Needs Improvement', 'Poor']
                                             },
 
                                             // Configuration options go here
@@ -862,9 +849,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 <div class="col-md-6 mt-xs-1">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                   <h4 class="text-center chart-data-title"> Mobile Usability Breakdown</h4>
-                                  <?php print $agency_data['mob-usab-chart'];?>
-                                 </div>
-                                </div>
+                                    <?php print $agency_data['mob-usab-chart']; ?>
                                     <div class="table-responsive">
                                         <table>
                                             <thead>
@@ -905,17 +890,15 @@ $agency_data['agency_title'] = $agencynode->title;
                                             data: {
                                                 datasets: [{
                                                     data: [<?php echo number_format($agency_data['mob_usab_friendly_nos']); ?>,
-                                                      <?php echo number_format($agency_data['mob_usab_notfriendly_nos']); ?>,
-                                                      <?php echo number_format($agency_data['usab_null']); ?>],
+                                                      <?php echo number_format($agency_data['mob_usab_notfriendly_nos']); ?>],
                                                     borderWidth: 0,
                                                     backgroundColor: [
                                                         '#8ea116',
                                                         '#007790',
-                                                        '#8168B3',
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
-                                                labels: ['Mobile Friendly', 'Not Mobile Friendly','Data Not Available']
+                                                labels: ['Mobile Friendly', 'Not Mobile Friendly']
                                             },
 
                                             // Configuration options go here
@@ -1083,7 +1066,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                     data: {
                                         datasets: [{
                                             data: [
-                                              <?php echo number_format($agency_data['dap_compliant']); ?>,
+                                            <?php echo number_format($agency_data['dap_compliant']); ?>,
                                               <?php echo number_format($agency_data['dap_noncompliant']); ?>,
                                               <?php echo number_format($agency_data['dap_na']); ?>],
                                             borderWidth: 0,
@@ -1160,5 +1143,3 @@ $agency_data['agency_title'] = $agencynode->title;
             </div>
         </div>
     </div>
-
-
