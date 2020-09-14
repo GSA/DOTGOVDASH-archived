@@ -890,12 +890,12 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <tr>
                                                 <td>Mobile Friendly</td>
                                                 <td><?php echo number_format($agencydata['friendly_nos']); ?></td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['friendly_nos'], $agencydata['friendly_nos']+$agencydata['nonfriendly_nos'])?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['friendly_nos'], $agency_website_num)?></td>
                                             </tr>
                                             <tr>
                                                 <td>Not Mobile Friendly</td>
                                                 <td><?php echo number_format($agencydata['nonfriendly_nos']); ?></td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['nonfriendly_nos'],$agencydata['friendly_nos']+$agencydata['nonfriendly_nos'])?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['nonfriendly_nos'],$agency_website_num)?></td>
                                             </tr>
                                             <tr>
                                               <td>Data Not Available</td>
@@ -1041,7 +1041,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 <td><?=idea_act_applyDataPercentage($agencydata['dap_noncompliant'], $agency_website_num)?></td>
                                             </tr>
                                             <tr>
-                                              <td>DAP Non-Compliant</td>
+                                              <td>Data Not Available</td>
                                               <td><?php echo number_format( $agencydata['dap_null']); ?></td>
                                               <td><?=idea_act_applyDataPercentage( $agencydata['dap_null'], $agency_website_num)?></td>
                                             </tr>
