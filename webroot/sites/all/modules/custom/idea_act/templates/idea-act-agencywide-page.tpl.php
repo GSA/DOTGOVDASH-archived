@@ -757,19 +757,28 @@ $agency_data['agency_title'] = $agencynode->title;
                                             <tr>
                                               <td>Good</td>
                                               <td><?php echo number_format($agency_data['mob_perf_good_nos']); ?></td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_perf_good_nos'], $agency_data['total_non_na_websites'])?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_perf_good_nos'], $agency_data['no_of_websites'])?></td>
                                             </tr>
                                             <tr>
                                               <td>Needs Improvement</td>
                                               <td><?php echo number_format($agency_data['mob_perf_improve_nos']); ?></td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_perf_improve_nos'],$agency_data['total_non_na_websites'])?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_perf_improve_nos'],$agency_data['no_of_websites'])?></td>
                                             </tr>
                                             <tr>
                                               <td>Poor</td>
                                               <td><?php echo number_format($agency_data['mob_perf_poor_nos']); ?></td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_perf_poor_nos'], $agency_data['total_non_na_websites'])?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_perf_poor_nos'], $agency_data['no_of_websites'])?></td>
                                             </tr>
-
+                                            <tr>
+                                              <td>Data Not Available</td>
+                                              <td><?php echo number_format($agency_data['total_non_na_websites']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['total_non_na_websites'], $agency_data['no_of_websites'])?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
+                                              <td>100%</td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -781,12 +790,14 @@ $agency_data['agency_title'] = $agencynode->title;
                                                 datasets: [{
                                                     data: [<?php echo number_format($agency_data['mob_perf_good_nos']); ?>,
                                                       <?php echo number_format($agency_data['mob_perf_improve_nos']); ?>,
-                                                      <?php echo number_format($agency_data['mob_perf_poor_nos']); ?>,],
+                                                      <?php echo number_format($agency_data['mob_perf_poor_nos']); ?>,
+                                                      <?php echo number_format($agency_data['total_non_na_websites']); ?>],
                                                     borderWidth: 0,
                                                     backgroundColor: [
                                                         '#563eb6',
                                                         '#c95d00',
                                                         '#218967',
+                                                        '#8168B3',
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -865,12 +876,22 @@ $agency_data['agency_title'] = $agencynode->title;
                                             <tr>
                                               <td>Mobile Friendly</td>
                                               <td><?php echo number_format($agency_data['mob_usab_friendly_nos']); ?></td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_usab_friendly_nos'], $agency_data['mob_usab_friendly_nos']+$agency_data['mob_usab_notfriendly_nos'])?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_usab_friendly_nos'], $agency_data['no_of_websites'])?></td>
                                             </tr>
                                             <tr>
                                               <td>Not Mobile Friendly</td>
                                               <td><?php echo number_format($agency_data['mob_usab_notfriendly_nos']); ?></td>
-                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_usab_notfriendly_nos'],$agency_data['mob_usab_friendly_nos']+$agency_data['mob_usab_notfriendly_nos'])?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['mob_usab_notfriendly_nos'],$agency_data['no_of_websites'])?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Data Not Available</td>
+                                              <td><?php echo number_format($agency_data['usab_null']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['usab_null'], $agency_data['no_of_websites'])?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
+                                              <td>100%</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -882,11 +903,13 @@ $agency_data['agency_title'] = $agencynode->title;
                                             data: {
                                                 datasets: [{
                                                     data: [<?php echo number_format($agency_data['mob_usab_friendly_nos']); ?>,
-                                                      <?php echo number_format($agency_data['mob_usab_notfriendly_nos']); ?>],
+                                                      <?php echo number_format($agency_data['mob_usab_notfriendly_nos']); ?>,
+                                                      <?php echo number_format($agency_data['usab_null']); ?>],
                                                     borderWidth: 0,
                                                     backgroundColor: [
                                                         '#8ea116',
                                                         '#007790',
+                                                        '#8168B3',
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
