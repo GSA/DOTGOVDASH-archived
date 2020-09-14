@@ -603,11 +603,19 @@ $agency_data['agency_title'] = $agencynode->title;
                                             </thead>
                                             <tbody>
                                             <?php
-                                            foreach ($agency_data['searchenginedata'] as $skey => $sval) {
-                                              $percent = round(($sval /  $agency_data['no_of_websites']) *100);
-                                              $percent =  ($percent < 1) ?  '< 1' : $percent;
-                                              print "<tr style='text-transform: capitalize;'><td>" . ucfirst($skey) . "</td><td> $sval</td>
+                                            if (count($agency_data['searchenginedata']) != ''){
+                                              foreach ($agency_data['searchenginedata'] as $skey => $sval) {
+                                                $percent = round(($sval /  $agency_data['no_of_websites']) *100);
+                                                $percent =  ($percent < 1) ?  '< 1' : $percent;
+                                                print "<tr style='text-transform: capitalize;'><td>" . ucfirst($skey) . "</td><td> $sval</td>
                                                 <td>$percent% </td></tr>";
+                                              }
+                                            }
+                                            else{
+                                              print ' <tr><td>Data Not Available</td>
+                                                           <td>-</td>
+                                                           <td>-</td>
+                                                      </tr>';
                                             }
                                             ?>
                                             </tbody>
