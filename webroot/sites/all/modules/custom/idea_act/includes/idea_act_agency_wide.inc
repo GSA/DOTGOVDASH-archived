@@ -106,14 +106,13 @@ function ideaact_get_agencywide_data($agencyid){
     <canvas id='chart-6' width='250' height='300' aria-label='Charts' role='img'></canvas>
 </div>
     <div class='legend-container'>
-         <div id='chart-5-legend'></div>
-    </div>";
+         <div id='chart-5-legend'></div>";
   }
 
   $agency_data['mob-usab-chart'] = '';
   if($agency_data['mob_usab_friendly_nos'] == 0 &&
     $agency_data['mob_usab_notfriendly_nos'] == 0 &&
-    $agency_data['usab_nul'] == 0) {
+    $agency_data['usab_null'] == 0) {
     $agency_data['mob-usab-chart'] = "<div class='text-center'>
       <img src='/sites/all/modules/custom/idea_act/images/zero-chart.png' width='250' height='300' class='alternate-chart-responsive'>
  </div>";
@@ -122,8 +121,7 @@ function ideaact_get_agencywide_data($agencyid){
     <canvas id='chart-5' width='250' height='300' aria-label='Charts' role='img'></canvas>
     </div>
     <div class='legend-container'>
-        <div id='chart-6-legend'></div>
-    </div>";
+        <div id='chart-6-legend'></div>";
   }
 
   //Query to get Search data for an agency

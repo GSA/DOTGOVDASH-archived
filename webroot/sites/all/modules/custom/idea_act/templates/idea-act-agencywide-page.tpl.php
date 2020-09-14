@@ -742,6 +742,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                 <h4 class="text-center chart-data-title"> Mobile Performance Breakdown</h4>
                                 <?php print $agency_data['mob-perf-chart'];?>
+                                </div>
                               </div>
 
                                     <div class="table-responsive">
@@ -801,7 +802,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
-                                                labels: ['Good', 'Needs Improvement', 'Poor']
+                                                labels: ['Good', 'Needs Improvement', 'Poor','Data Not Available']
                                             },
 
                                             // Configuration options go here
@@ -862,6 +863,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                   <h4 class="text-center chart-data-title"> Mobile Usability Breakdown</h4>
                                   <?php print $agency_data['mob-usab-chart'];?>
+                                 </div>
                                 </div>
                                     <div class="table-responsive">
                                         <table>
@@ -913,7 +915,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
-                                                labels: ['Mobile Friendly', 'Not Mobile Friendly']
+                                                labels: ['Mobile Friendly', 'Not Mobile Friendly','Data Not Available']
                                             },
 
                                             // Configuration options go here
