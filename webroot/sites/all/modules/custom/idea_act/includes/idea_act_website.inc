@@ -207,7 +207,7 @@ function ideaact_get_website_data($websiteid){
       $websitedata['htmlattri'] = $acesssresult->field_accessible_group_htmlattri_value;
       $websitedata['missingim'] = $acesssresult ->field_accessible_group_missingim_value;
       $websitedata['Accestext'] = 'This website' .  $websitedata['missingim'] . 'issues with missing image descriptions,' . $websitedata['htmlattri'] . 'issues with HTML attributes and' . $websitedata['colorcont'].'issues with color contrast.' ;
-      $websitedata['web-access-chart']  = "<div class='chart-container'><canvas id='chart-webhome' width='250' height='300' aria-label='Charts' role='img'></canvas></div><div class='legend-container'><div id='chart-1-legend'></div></div>";
+      $websitedata['web-access-chart']  = "<div class='chart-container' id ='chart-11-ref'><canvas id='chart-webhome' width='250' height='300' aria-label='Charts' role='img'></canvas></div><div class='legend-container'><div id='chart-1-legend'></div></div>";
     }
     $websitedata['id'] = "chart-1-legend";
     if(!is_redirect($websiteid)) {
