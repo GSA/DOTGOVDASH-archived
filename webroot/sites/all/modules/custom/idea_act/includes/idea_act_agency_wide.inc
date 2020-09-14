@@ -99,14 +99,13 @@ function ideaact_get_agencywide_data($agencyid){
     $agency_data['total_non_na_websites'] == 0 &&
     $agency_data['mob_perf_poor_nos'] == 0) {
     $agency_data['mob-perf-chart'] = "<div class='text-center'>
-      <img src='/sites/all/modules/custom/idea_act/images/zero-chart.png' width='250' height='300' class='alternate-chart-responsive'>
+      <img src='/sites/all/modules/custom/idea_act/images/zero-chart.png' width='250' height='250' class='alternate-chart-responsive'>
  </div>";
   } else {
-    $agency_data['mob-perf-chart'] = "<div class='chart-container' id='chart-5-ref'>
-    <canvas id='chart-6' width='250' height='300' aria-label='Charts' role='img'></canvas>
-</div>
-    <div class='legend-container'>
-         <div id='chart-5-legend'></div>";
+    $agency_data['mob-perf-chart'] = "<div class='chart-container' id='chart-5-ref'> <canvas id='chart-6' width='250' height='300' aria-label='Charts role='img'></canvas></div><div class='legend-container'><div id='chart-5-legend'></div></div>
+    ";
+
+
   }
 
   $agency_data['mob-usab-chart'] = '';
@@ -114,14 +113,15 @@ function ideaact_get_agencywide_data($agencyid){
     $agency_data['mob_usab_notfriendly_nos'] == 0 &&
     $agency_data['usab_null'] == 0) {
     $agency_data['mob-usab-chart'] = "<div class='text-center'>
-      <img src='/sites/all/modules/custom/idea_act/images/zero-chart.png' width='250' height='300' class='alternate-chart-responsive'>
+      <img src='/sites/all/modules/custom/idea_act/images/zero-chart.png' width='250' height='250' class='alternate-chart-responsive'>
  </div>";
   } else {
     $agency_data['mob-usab-chart'] = "<div class='chart-container' id='chart-6-ref'>
-    <canvas id='chart-5' width='250' height='300' aria-label='Charts' role='img'></canvas>
+        <canvas id='chart-5' width='250' height='300' aria-label='Charts' role='img'></canvas>
     </div>
     <div class='legend-container'>
-        <div id='chart-6-legend'></div>";
+        <div id='chart-6-legend'></div>
+    </div>";
   }
 
   //Query to get Search data for an agency
