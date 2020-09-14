@@ -31,7 +31,7 @@ function ideaact_get_agencywide_data($agencyid){
     $agency_data['uswds_noncompliant'] == 0 &&
     $agency_data['uswds_na'] == 0) {
     $agency_data['uswds-chart'] = "<div class='text-center'>
-      <img src='/sites/all/modules/custom/idea_act/images/zero-chart.png' width='250' height='300' class='alternate-chart-responsive'>
+      <img src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='250' height='250' class='alternate-chart-responsive'>
  </div>";
   } else {
     $agency_data['uswds-chart'] = "<div class='chart-container' id='chart-2-ref'>

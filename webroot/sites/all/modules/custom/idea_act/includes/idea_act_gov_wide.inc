@@ -70,6 +70,14 @@ function idea_act_getAllAgencyComplianceData(){
         $agencydata['dap_tottracked'] += $dapresult->complnum;
     }
     $agencydata['dap_null'] = $agencydata['total_websites']- ($agencydata['dap_compliant'] +$agencydata['dap_noncompliant']);
+
+    if($agencydata['dap_null'] != 0) {
+        $agencydata['dap_null_color'] = '#8168B3';
+        $agencydata['dap_null_label'] = 'Data Not Available';
+    } else {
+        $agencydata['dap_null_color'] = '';
+        $agencydata['dap_null_label'] = '';
+    }
     //Query to get DNSSEC data
     $dnsresults = db_query("select IFNULL(field_dnssec_compliance_value, 0) as field_dnssec_compliance_value, count(field_dnssec_compliance_value) as complnum from node a , field_data_field_dnssec_compliance b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and a.type='domain_scan_information'  group by field_dnssec_compliance_value", array());
     foreach ($dnsresults as $dnsresult) {
@@ -109,7 +117,13 @@ function idea_act_getAllAgencyComplianceData(){
         $agencydata['uswds_tottracked'] += $uswdsresult->complnum;
     }
   $agencydata['uswds_null'] = $agencydata['total_websites']- ($agencydata['uswds_compliant'] +$agencydata['uswds_noncompliant']);
-
+  if($agencydata['uswds_null'] != 0) {
+    $agencydata['uswds_null_color']  = '#8168B3';
+    $agencydata['uswds_null_label'] = 'Data Not Available';
+  } else {
+    $agencydata['uswds_null_color']  = '';
+    $agencydata['uswds_null_label'] = '';
+  }
 
   //Query to get Insecure protocol data
     $insecresults = db_query("select IFNULL(field_free_of_rc4_3des_and_sslv2_value, 0) as field_free_of_rc4_3des_and_sslv2_value, count(field_free_of_rc4_3des_and_sslv2_value) as complnum from node a , field_data_field_free_of_rc4_3des_and_sslv2 b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and a.type='https_dap_scan_information'  group by field_free_of_rc4_3des_and_sslv2_value", array());
@@ -196,6 +210,13 @@ function idea_act_getAllAgencyComplianceData(){
     }
   $agencydata['https_null'] = $agencydata['total_websites']- ($agencydata['https_support'] +$agencydata['https_nosupport']);
 
+  if($agencydata['https_null'] != 0) {
+    $agencydata['https_null_color'] = '#8168B3';
+    $agencydata['https_null_label'] = 'Data Not Available';
+  } else {
+    $agencydata['https_null_color'] = '';
+    $agencydata['https_null_label'] = '';
+  }
     //Query to get Preload status  data
     $preloadresults = db_query("select IFNULL(field_preload_status_value, 0) as field_preload_status_value, count(field_preload_status_value) as complnum from node a , field_data_field_preload_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and a.type='https_dap_scan_information'  group by field_preload_status_value", array());
     foreach ($preloadresults as $preloadresult) {
@@ -284,7 +305,23 @@ function idea_act_getAllAgencyComplianceData(){
   $agencydata['friendly_nos'] = $govwide_mob['mob_usab_friendly_nos'] ;
   $agencydata['nonfriendly_nos'] = $govwide_mob['mob_usab_notfriendly_nos'] ;
   $agencydata['usab_null']= $govwide_mob['usab_null'];
+
+  if($agencydata['usab_null'] != 0 ) {
+    $agencydata['usab_null_color'] = '#8168B3';
+    $agencydata['usab_null_label'] = 'Data Not Available';      
+  } else {
+    $agencydata['usab_null_color'] = '';
+    $agencydata['usab_null_label'] = '';  
+  }
   $agencydata['perf_null']= $govwide_mob['null'];
+
+  if($agencydata['perf_null'] != 0) {
+    $agencydata['perf_null_color'] = '#8168B3';
+    $agencydata['perf_null_label'] = 'Data Not Available';
+  } else {
+    $agencydata['perf_null_color'] = '';
+    $agencydata['perf_null_label'] = '';
+  }
 
   $govwide_mob['govwide_mob_bad'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='49' and entity_id in (SELECT node.nid AS nid
 FROM
