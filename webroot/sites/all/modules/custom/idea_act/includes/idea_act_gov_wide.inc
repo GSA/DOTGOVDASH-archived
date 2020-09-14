@@ -73,7 +73,7 @@ function idea_act_getAllAgencyComplianceData(){
     $agencydata['dap_null'] = $agencydata['total_websites']- ($agencydata['dap_compliant'] +$agencydata['dap_noncompliant']);
 
     if($agencydata['dap_null'] != 0) {
-        $agencydata['dap_null_color'] = '#8168B3';
+        $agencydata['dap_null_color'] = '#66364b';
         $agencydata['dap_null_label'] = 'Data Not Available';
     } else {
         $agencydata['dap_null_color'] = '';
@@ -119,7 +119,7 @@ function idea_act_getAllAgencyComplianceData(){
     }
   $agencydata['uswds_null'] = $agencydata['total_websites']- ($agencydata['uswds_compliant'] +$agencydata['uswds_noncompliant']);
   if($agencydata['uswds_null'] != 0) {
-    $agencydata['uswds_null_color']  = '#8168B3';
+    $agencydata['uswds_null_color']  = '#66364b';
     $agencydata['uswds_null_label'] = 'Data Not Available';
   } else {
     $agencydata['uswds_null_color']  = '';
@@ -212,7 +212,7 @@ function idea_act_getAllAgencyComplianceData(){
   $agencydata['https_null'] = $agencydata['total_websites']- ($agencydata['https_support'] +$agencydata['https_nosupport']);
 
   if($agencydata['https_null'] != 0) {
-    $agencydata['https_null_color'] = '#8168B3';
+    $agencydata['https_null_color'] = '#66364b';
     $agencydata['https_null_label'] = 'Data Not Available';
   } else {
     $agencydata['https_null_color'] = '';
@@ -308,7 +308,7 @@ function idea_act_getAllAgencyComplianceData(){
   $agencydata['usab_null']= $govwide_mob['usab_null'];
 
   if($agencydata['usab_null'] != 0 ) {
-    $agencydata['usab_null_color'] = '#8168B3';
+    $agencydata['usab_null_color'] = '#66364b';
     $agencydata['usab_null_label'] = 'Data Not Available';      
   } else {
     $agencydata['usab_null_color'] = '';
@@ -317,7 +317,7 @@ function idea_act_getAllAgencyComplianceData(){
   $agencydata['perf_null']= $govwide_mob['null'];
 
   if($agencydata['perf_null'] != 0) {
-    $agencydata['perf_null_color'] = '#8168B3';
+    $agencydata['perf_null_color'] = '#66364b';
     $agencydata['perf_null_label'] = 'Data Not Available';
   } else {
     $agencydata['perf_null_color'] = '';
@@ -489,7 +489,7 @@ function idea_act_avoid_null_color($data,$websites) {
         if($actual_percent < 1 && $actual_percent > 0) {
             $data_null_color = "";
         } else {
-            $data_null_color = "#8168B3";
+            $data_null_color = "#66364b";
         } 
     }
     return $data_null_color;

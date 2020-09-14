@@ -19,7 +19,7 @@ function ideaact_get_agencywide_data($agencyid){
 
   if($agency_data['uswds_na'] != 0) {
     $agency_data['uswds_na_label'] = 'Data Not Available';
-    $agency_data['uswds_na_color'] = '#8168B3';
+    $agency_data['uswds_na_color'] = '#66364b';
   } else {
     $agency_data['uswds_na_label'] = '';
     $agency_data['uswds_na_color'] = '';
@@ -53,7 +53,7 @@ function ideaact_get_agencywide_data($agencyid){
 
   $agency_data['https_na']= $agency_data['no_of_websites'] - ( $agency_data['https_support']+$agency_data['https_nosupport']);
   if($agency_data['https_na'] != 0) {
-    $agency_data['https_na_color'] = '#8168B3';
+    $agency_data['https_na_color'] = '#66364b';
     $agency_data['https_na_label'] = 'Data Not Available';
   } else {
     $agency_data['https_na_color'] = '';
@@ -108,7 +108,7 @@ function ideaact_get_agencywide_data($agencyid){
 
   if($agency_data['total_non_na_websites'] != 0) {
     $agency_data['total_non_na_websites_label'] ='Data Not Available';
-    $agency_data['total_non_na_websites_color'] ='#8168B3';
+    $agency_data['total_non_na_websites_color'] ='#66364b';
   } else {
     $agency_data['total_non_na_websites_label'] ='';
     $agency_data['total_non_na_websites_color'] ='';
@@ -118,7 +118,7 @@ function ideaact_get_agencywide_data($agencyid){
 
   if($agency_data['usab_null'] !=0) {
     $agency_data['usab_na_label'] ='Data Not Available';
-    $agency_data['usab_na_color'] ='#8168B3';
+    $agency_data['usab_na_color'] ='#66364b';
   } else {
     $agency_data['usab_na_label'] ='';
     $agency_data['usab_na_color'] ='';
@@ -223,7 +223,7 @@ function ideaact_get_agencywide_data($agencyid){
   $agency_data['dap_na']= $agency_data['no_of_websites'] -  $agency_data['dap_tottracked'];
   if($agency_data['dap_na'] !=0) {
     $agency_data['dap_label'] = 'Data Not Available';
-    $agency_data['dap_color'] = '#8168B3';
+    $agency_data['dap_color'] = '#66364b';
   } else {
     $agency_data['dap_label'] = '';
     $agency_data['dap_color'] = '';
