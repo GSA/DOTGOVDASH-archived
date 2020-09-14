@@ -513,16 +513,18 @@ $search_engine_data_for_agencygraph = "0,0";
                                         datasets: [{
                                             data: [<?php echo number_format($agencydata['https_support']); ?>,
                                                     <?php echo number_format($agencydata['https_nosupport']); ?>,
-                                              <?php echo number_format( $agencydata['https_null']); ?>],
+                                                    <?=idea_act_avoid_slice($agencydata['https_null'],$agency_website_num);?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#00a65f',
                                                 '#97d1ff',
-                                                '<?php print $agencydata['https_null_color']; ?>'
+                                                '<?=idea_act_avoid_null_color($agencydata['https_null'],$agency_website_num);?>'
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: [ 'Compliant Websites','Non-Compliant Websites','<?php print $agencydata['https_null_label']; ?>']
+                                        labels: [ 'Compliant Websites',
+                                                    'Non-Compliant Websites',
+                                                   '<?=idea_act_avoid_null_legend($agencydata['https_null'],$agency_website_num);?>']
                                     },
 
                                     // Configuration options go here

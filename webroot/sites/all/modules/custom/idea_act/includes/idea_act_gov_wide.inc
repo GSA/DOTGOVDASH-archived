@@ -412,19 +412,86 @@ function idea_act_lastScanDate(){
 }
 
 
+
 /*
  * Get Percentage
  */
 function idea_act_applyDataPercentage($data,$websites)
 {
-    $percent = round(($data / $websites) * 100);
+    $actual_percent = ($data / $websites) * 100;
+    $percent = round($actual_percent);
 
     if ($data != '') {
-        $dataPercentage = "$percent%";
+        if($actual_percent < 1 && $actual_percent > 0) {
+            $dataPercentage = "< 1%";
+        } else {
+            $dataPercentage = "$percent%";
+        } 
+       
     }
     else{
-        $dataPercentage = "0 %";
+        $dataPercentage = "0%";
     }
     return $dataPercentage;
 
 }
+
+
+/*
+ * Avoid chart slice when data is  0 < data < 1
+ */
+
+function idea_act_avoid_slice($data,$websites) {
+
+    $actual_percent = ($data / $websites) * 100;
+
+    if ($data != '') {
+        if($actual_percent < 1 && $actual_percent > 0) {
+            $chart_data = "0";
+        } else {
+            $chart_data = "$data";
+        } 
+    }
+
+    return $chart_data;
+
+}
+
+
+/*
+ * hide not available legend on zero and na case
+ */
+
+function idea_act_avoid_null_legend($data,$websites) {
+
+    $actual_percent = ($data / $websites) * 100;
+
+    if ($data != '') {
+        if($actual_percent < 1 && $actual_percent > 0) {
+            $data_null_label = "";
+        } else {
+            $data_null_label = "Not Available";
+        } 
+    }
+    return $data_null_label;
+}
+
+
+/*
+ * hide not available legend on zero and na case
+ */
+
+function idea_act_avoid_null_color($data,$websites) {
+
+    $actual_percent = ($data / $websites) * 100;
+
+    if ($data != '') {
+        if($actual_percent < 1 && $actual_percent > 0) {
+            $data_null_color = "";
+        } else {
+            $data_null_color = "#8168B3";
+        } 
+    }
+    return $data_null_color;
+}
+
