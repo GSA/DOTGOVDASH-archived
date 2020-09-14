@@ -49,7 +49,9 @@ function idea_act_govwideTrendData(){
 function idea_act_getAllAgencyComplianceData(){
     $agencydata = array();
 
-    //Query to get https data
+  $agencydata['total_websites'] = db_query("SELECT num_of_websites FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+
+  //Query to get https data
     $httpresults = db_query("select IFNULL(field_https_status_value, 0) as field_https_status_value, count(field_https_status_value) as complnum from node a , field_data_field_https_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and a.type='https_dap_scan_information' group by field_https_status_value", array());
     foreach ($httpresults as $httpresult) {
         if($httpresult->field_https_status_value == 'Yes')
@@ -67,7 +69,7 @@ function idea_act_getAllAgencyComplianceData(){
             $agencydata['dap_noncompliant'] += $dapresult->complnum;
         $agencydata['dap_tottracked'] += $dapresult->complnum;
     }
-
+    $agencydata['dap_null'] = $agencydata['total_websites']- ($agencydata['dap_compliant'] +$agencydata['dap_noncompliant']);
     //Query to get DNSSEC data
     $dnsresults = db_query("select IFNULL(field_dnssec_compliance_value, 0) as field_dnssec_compliance_value, count(field_dnssec_compliance_value) as complnum from node a , field_data_field_dnssec_compliance b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and a.type='domain_scan_information'  group by field_dnssec_compliance_value", array());
     foreach ($dnsresults as $dnsresult) {
@@ -269,16 +271,17 @@ function idea_act_getAllAgencyComplianceData(){
   $govwide_mob['mob_perf_poor_nos'] = db_query("SELECT mob_perf_poor FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
   $govwide_mob['mob_usab_friendly_nos'] = db_query("SELECT mob_usab_friendly FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
   $govwide_mob['mob_usab_notfriendly_nos'] = db_query("SELECT mob_usab_nonfriendly FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
-  $govwide_mob['total_websites'] = db_query("SELECT num_of_websites FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
   $govwide_mob['null'] = $govwide_mob['total_websites'] - ($govwide_mob['mob_perf_good_nos']+ $govwide_mob['mob_perf_improve_nos']+ $govwide_mob['mob_perf_poor_nos']);
   $govwide_mob['usab_null'] = $govwide_mob['total_websites'] - ($govwide_mob['mob_usab_friendly_nos']+ $govwide_mob['mob_usab_notfriendly_nos']);
 
-  $agencydata['total_non_na_websites'] =  $govwide_mob['mob_perf_good_nos']+ $govwide_mob['mob_perf_improve_nos']+ $govwide_mob['mob_perf_poor_nos'];
+  $agencydata['total_non_na_websites'] = $govwide_mob['mob_perf_good_nos']+ $govwide_mob['mob_perf_improve_nos']+ $govwide_mob['mob_perf_poor_nos'];
   $agencydata['poor_nos'] = $govwide_mob['mob_perf_poor_nos'] ;
   $agencydata['good_nos'] = $govwide_mob['mob_perf_good_nos'] ;
   $agencydata['improve_nos'] = $govwide_mob['mob_perf_improve_nos'] ;
   $agencydata['friendly_nos'] = $govwide_mob['mob_usab_friendly_nos'] ;
   $agencydata['nonfriendly_nos'] = $govwide_mob['mob_usab_notfriendly_nos'] ;
+  $agencydata['usab_null']= $govwide_mob['usab_null'];
+  $agencydata['perf_null']= $govwide_mob['null'];
 
   $govwide_mob['govwide_mob_bad'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='49' and entity_id in (SELECT node.nid AS nid
 FROM
