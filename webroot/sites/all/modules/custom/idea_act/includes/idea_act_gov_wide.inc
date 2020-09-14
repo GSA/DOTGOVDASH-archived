@@ -49,7 +49,8 @@ function idea_act_govwideTrendData(){
 function idea_act_getAllAgencyComplianceData(){
     $agencydata = array();
 
-  $agencydata['total_websites'] = db_query("SELECT num_of_websites FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+    //$agencydata['actual_total_websites']= db_query("SELECT num_of_websites FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+   $agencydata['total_websites']= db_query("select count(*) from node a, field_data_field_agency_branch b where a.type='website' and a.status ='1' and a.nid=b.entity_id and  b.field_agency_branch_value='executive'")->fetchField();
 
   //Query to get https data
     $httpresults = db_query("select IFNULL(field_https_status_value, 0) as field_https_status_value, count(field_https_status_value) as complnum from node a , field_data_field_https_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and a.type='https_dap_scan_information' group by field_https_status_value", array());
