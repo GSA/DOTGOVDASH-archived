@@ -23,7 +23,7 @@ $total_websites_count = $agency_data['actualdata']['total_websites_count'];
                         <h1>21st Century IDEA Act Report</h1>
                         <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
                     </div>
-                    <div class="col-md-2 col-md-offset-1 text-right dashboard-right">
+                    <div id="element-to-hide" data-html2canvas-ignore="true" class="col-md-2 col-md-offset-1 text-right dashboard-right">
                         <!-- <a href="#">
                             <img src="/sites/all/modules/custom/idea_act/images/question-icon.png" alt="question icon" class="question-icon" data-placement="left" data-toggle="tooltip" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
                         </a> -->
@@ -102,7 +102,7 @@ $total_websites_count = $agency_data['actualdata']['total_websites_count'];
                             <p class='number'>". $agency['websitenos'] ."</p>
                           </div></a>";
                           if ($count == 3) {
-                              print "</div><div class='row2 d-none' id='row-none'>";
+                              print "</div><div class='collapse' id='toggleRow'>";
                           }
                           $count++;
                         }
@@ -112,9 +112,8 @@ $total_websites_count = $agency_data['actualdata']['total_websites_count'];
                 </div>
 
                 <div class="explore text-center">
-                    <a class="btn btn-digital show-agencies" id="btn-explore" >Explore All</a>
+                    <a class="btn btn-digital show-agencies" id="btn-explore" data-toggle="collapse" data-target="#toggleRow" aria-expanded="false" aria-controls="toggleRow" >Explore All</a>
                 </div>
-               
                 </div>
             </div>
         </div>

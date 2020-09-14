@@ -113,13 +113,13 @@ $search_engine_data_for_agencygraph = "0,0";
                         <h1>Government-Wide - <span>21st Century IDEA Act Dashboard</span></h1>
                         <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
                     </div>
-                    <div class="col-sm-4 col-md-2 col-md-offset-1 text-right dashboard-right">
+                    <div id="element-to-hide" data-html2canvas-ignore="true" class="col-sm-4 col-md-2 col-md-offset-1 text-right dashboard-right">
                         <!-- <a class="btn disabled" href="#">
                             <img src="/sites/all/modules/custom/idea_act/images/question-icon.png" alt="question icon" class="question-icon"
                                  data-placement="left" data-toggle="tooltip"
                                  title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
                         </a> -->
-                       
+
                         <button class="button download-button" onclick="generatePDF('21st-gov-wide.pdf', 500, 736)" type="submit">Download</button>
                     </div>
                 </div>
@@ -158,7 +158,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <div><p class="card-description"><i><b>21st Century IDEA Act</b></i></p></div>
                                             <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
                                             <a class="pe-none" href="#"><b>Read More</b></a>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -167,7 +167,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                 <div class="info-icon" id="tooltip-container">
                                     <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div>                                   
+                                </div>
                                  <div class="col-sm-6 mt-xs-1 center-mb-2">
                                     <h4 class="chart-data-title">Average Accessibility Issues by Type Per Website</h4>
                                     <p>Average Color Contrast: <?=round($agencydata['ag_col_contrast'] / $agency_website_num, 1);?></p>
@@ -187,7 +187,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                        <a href="/test" class="btn btn-digital disabled">Explore</a>
+                                      <a href="/ideaact/govwide/report" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -217,7 +217,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     options: {
                                         // responsive: true,
                                         maintainAspectRatio: false,
-                                        
+
                                         title: {
                                             display: false,
                                             text: 'Total Number of Accessibility Issues for Websites',
@@ -226,7 +226,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                         },
                                         tooltips: {
                                             enabled: false,
-                                            custom: customChartTooltip('chart-1-ref','chartjs-tooltip1'),  
+                                            custom: customChartTooltip('chart-1-ref','chartjs-tooltip1'),
                                             yPadding: 10,
                                             xPadding: 10,
                                             caretPadding: 5,
@@ -272,7 +272,7 @@ $search_engine_data_for_agencygraph = "0,0";
                     </div>
                 </div>
             </div>
- 
+
             <div class="relative-position mb-2">
                 <div class="row">
                     <div class="col-sm-12">
@@ -295,8 +295,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                 <div class="info-icon" id="tooltip-container">
                                     <a  class="btn disabled" href="//github.com/18F/site-scanning-documentation/blob/main/scans/live/uswds.md" target="_blank"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div>     
-                                
+                                </div>
+
                                 <div class="col-md-6 uswds-table">
                                     <div class="table-responsive">
                                         <table>
@@ -311,12 +311,22 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <tr>
                                                 <td class="">USWDS code detected</td>
                                                 <td><?php echo number_format($agencydata['uswds_compliant']); ?></td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['uswds_compliant'], $agencydata['uswds_tottracked'])?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['uswds_compliant'], $agency_website_num)?></td>
                                             </tr>
                                             <tr>
                                                 <td class="">USWDS code not detected</td>
                                                 <td><?php echo number_format($agencydata['uswds_noncompliant']); ?></td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'])?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['uswds_noncompliant'], $agency_website_num)?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Data Not Available</td>
+                                              <td><?php echo number_format( $agencydata['uswds_null']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agencydata['uswds_null'],$agency_website_num)?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($agency_website_num); ?></td>
+                                              <td>100%</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -333,7 +343,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                        <a href="/test" class="btn btn-digital disabled">Explore</a>
+                                        <a href="/ideaact/govwide/report" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -346,15 +356,16 @@ $search_engine_data_for_agencygraph = "0,0";
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [<?php echo number_format($agencydata['uswds_compliant']); ?>, <?php echo number_format($agencydata['uswds_noncompliant']); ?>],
+                                            data: [<?php echo number_format($agencydata['uswds_compliant']); ?>, <?php echo number_format($agencydata['uswds_noncompliant']); ?>,<?php echo number_format( $agencydata['uswds_null']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#ed4878',
                                                 '#00699e',
+                                                '<?php print $agencydata['uswds_null_color']; ?>'
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['USWDS Code Detected', 'USWDS Code Not Detected']
+                                        labels: ['USWDS Code Detected', 'USWDS Code Not Detected','<?php print $agencydata['uswds_null_label']; ?>']
                                     },
 
                                     // Configuration options go here
@@ -371,7 +382,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                         },
                                         tooltips: {
                                             enabled: false,
-                                            custom: customChartTooltip('chart-2-ref','chartjs-tooltip2'),  
+                                            custom: customChartTooltip('chart-2-ref','chartjs-tooltip2'),
                                             yPadding: 10,
                                             xPadding: 10,
                                             caretPadding: 5,
@@ -441,28 +452,37 @@ $search_engine_data_for_agencygraph = "0,0";
                                 <div class="info-icon" id="tooltip-container">
                                     <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> HTTPS Data is collected through a custom scanner component of digital dashboard that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div> 
+                                </div>
                                 <div class="col-md-6">
                                     <div class="table-responsive">
                                         <table>
                                             <thead>
                                             <tr>
-                                                <th>Criteria</th>
-                                                <th>Compliant</th>
-                                                <th>Non-Compliant</th>
-
+                                              <th>Criteria</th>
+                                              <th>Websites</th>
+                                              <th>Percentage</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
+                                          <tbody>
                                             <tr>
-                                            <td><p style="display: flex;"><span class="text-nowrap">HTTPS Status</span><span class="custom-span">(Number of Websites)</span></p></td>
-                                                <td><?php echo number_format($agencydata['https_support']); ?></td>
-                                                <td><?php echo number_format($agencydata['https_nosupport']); ?></td>
+                                              <td>HTTPS Compliant</td>
+                                              <td><?php echo number_format($agencydata['https_support']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agencydata['https_support'], $agency_website_num)?></td>
                                             </tr>
                                             <tr>
-                                                <td>&nbsp;</td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['https_support'], $agency_website_num)?></td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['https_nosupport'], $agency_website_num)?></td>
+                                              <td>HTTPS Non Compliant</td>
+                                              <td><?php echo number_format($agencydata['https_nosupport']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agencydata['https_nosupport'],$agency_website_num)?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Data Not Available</td>
+                                              <td><?php echo number_format($agencydata['https_null']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agencydata['https_null'],$agency_website_num)?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($agency_website_num); ?></td>
+                                              <td>100%</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -470,7 +490,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                 <h4 class="text-center chart-data-title">HTTPS Websites Compliance</h4>
-                                    <div class="chart-container" id="chart-3-ref"> 
+                                    <div class="chart-container" id="chart-3-ref">
                                         <canvas id="chart-gov3" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
                                     <div id="chart-3-legend-mobile"></div>
@@ -479,7 +499,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                        <a href="/test" class="btn btn-digital disabled">Explore</a>
+                                      <a href="/ideaact/govwide/report" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -492,15 +512,19 @@ $search_engine_data_for_agencygraph = "0,0";
                                     data: {
                                         datasets: [{
                                             data: [<?php echo number_format($agencydata['https_support']); ?>,
-                                                    <?php echo number_format($agencydata['https_nosupport']); ?>],
+                                                    <?php echo number_format($agencydata['https_nosupport']); ?>,
+                                                    <?=idea_act_avoid_slice($agencydata['https_null'],$agency_website_num);?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#00a65f',
-                                                '#97d1ff'
+                                                '#97d1ff',
+                                                '<?=idea_act_avoid_null_color($agencydata['https_null'],$agency_website_num);?>'
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: [ 'Compliant Websites','Non-Compliant Websites']
+                                        labels: [ 'Compliant Websites',
+                                                    'Non-Compliant Websites',
+                                                   '<?=idea_act_avoid_null_legend($agencydata['https_null'],$agency_website_num);?>']
                                     },
 
                                     // Configuration options go here
@@ -585,8 +609,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                 <div class="info-icon" id="tooltip-container">
                                     <a class="btn disabled" data-toggle="tooltip" title="<span><p class='tt-text'> On-Site Search Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div>         
-                                
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="table-responsive">
                                         <table>
@@ -624,7 +648,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                        <a href="/test" class="btn btn-digital disabled">Explore</a>
+                                      <a href="/ideaact/govwide/report" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -636,7 +660,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [<?=($searchenginestatus['search_notavailable'] == "") ? 0 : $searchenginestatus['search_notavailable']?>, 
+                                            data: [<?=($searchenginestatus['search_notavailable'] == "") ? 0 : $searchenginestatus['search_notavailable']?>,
                                             <?=($searchenginestatus['search_available'] == "") ? 0 : $searchenginestatus['search_available']?>],
                                             borderWidth: 0,
                                             backgroundColor: [
@@ -729,8 +753,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                 <div class="info-icon" id="tooltip-container">
                                     <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Mobile Data is collected from Google API through a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div>    
-                                
+                                </div>
+
                                 <div class="col-md-6 mb-2">
                                 <h4 class="text-center chart-data-title">Mobile Performance Breakdown</h4>
 
@@ -741,10 +765,10 @@ $search_engine_data_for_agencygraph = "0,0";
                                         <div id="chart-5-legend"></div>
                                     </div>
                                     <div class="table-responsive">
-                                    
+
                                         <table>
                                             <thead>
-                                        
+
                                             <tr>
                                                 <th>Breakdown</th>
                                                 <th>Websites</th>
@@ -755,17 +779,27 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <tr>
                                                 <td>Good</td>
                                                 <td><?php echo number_format($agencydata['good_nos']); ?></td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['good_nos'], $agencydata['total_non_na_websites'])?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['good_nos'], $agency_website_num)?></td>
                                             </tr>
                                             <tr>
                                                 <td>Needs Improvement</td>
                                                 <td><?php echo number_format($agencydata['improve_nos']); ?></td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['improve_nos'],$agencydata['total_non_na_websites'])?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['improve_nos'],$agency_website_num)?></td>
                                             </tr>
                                             <tr>
                                                 <td>Poor</td>
                                                 <td><?php echo number_format($agencydata['poor_nos']); ?></td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['poor_nos'], $agencydata['total_non_na_websites'])?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['poor_nos'], $agency_website_num)?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Data Not Available</td>
+                                              <td><?php echo number_format($agencydata['perf_null']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agencydata['perf_null'], $agency_website_num)?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($agency_website_num); ?></td>
+                                              <td>100%</td>
                                             </tr>
 
                                             </tbody>
@@ -779,17 +813,18 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 datasets: [{
                                                     data: [<?php echo number_format($agencydata['good_nos']); ?>,
                                                             <?php echo number_format($agencydata['improve_nos']); ?>,
-                                                            <?php echo number_format($agencydata['poor_nos']); ?>,],
+                                                            <?php echo number_format($agencydata['poor_nos']); ?>,
+                                                      <?php echo number_format($agencydata['perf_null']); ?>],
                                                     borderWidth: 0,
                                                     backgroundColor: [
                                                         '#563eb6',
                                                         '#c95d00',
-                                                        '#218967'
-                                                        
+                                                        '#218967',
+                                                        '<?php print $agencydata['perf_null_color']; ?>',
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
-                                                labels: ['Good', 'Needs Improvement', 'Poor']
+                                                labels: ['Good', 'Needs Improvement', 'Poor','<?php print $agencydata['perf_null_label']; ?>']
                                             },
 
                                             // Configuration options go here
@@ -869,12 +904,22 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <tr>
                                                 <td>Mobile Friendly</td>
                                                 <td><?php echo number_format($agencydata['friendly_nos']); ?></td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['friendly_nos'], $agencydata['friendly_nos']+$agencydata['nonfriendly_nos'])?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['friendly_nos'], $agency_website_num)?></td>
                                             </tr>
                                             <tr>
                                                 <td>Not Mobile Friendly</td>
                                                 <td><?php echo number_format($agencydata['nonfriendly_nos']); ?></td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['nonfriendly_nos'],$agencydata['friendly_nos']+$agencydata['nonfriendly_nos'])?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['nonfriendly_nos'],$agency_website_num)?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Data Not Available</td>
+                                              <td><?php echo number_format($agencydata['usab_null']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agencydata['usab_null'], $agency_website_num)?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($agency_website_num); ?></td>
+                                              <td>100%</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -886,15 +931,17 @@ $search_engine_data_for_agencygraph = "0,0";
                                             data: {
                                                 datasets: [{
                                                     data: [<?php echo number_format($agencydata['friendly_nos']); ?>,
-                                                            <?php echo number_format($agencydata['nonfriendly_nos']); ?>],
+                                                            <?php echo number_format($agencydata['nonfriendly_nos']); ?>,
+                                                            <?php echo number_format($agencydata['usab_null']); ?>],
                                                     borderWidth: 0,
                                                     backgroundColor: [
                                                         '#8ea116',
                                                         '#007790',
+                                                        '<?php print $agencydata['usab_null_color']; ?>',
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
-                                                labels: ['Mobile Friendly', 'Not Mobile Friendly']
+                                                labels: ['Mobile Friendly', 'Not Mobile Friendly','<?php print $agencydata['usab_null_label']; ?>']
                                             },
 
                                             // Configuration options go here
@@ -953,7 +1000,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3 mt-sm-0">
                                 <div class="col-md-6 mb-2">
                                     <div class="explore">
-                                        <a href="/test" class="btn btn-digital disabled">Explore</a>
+                                      <a href="/ideaact/govwide/report" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                             </div>
@@ -984,8 +1031,8 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="info-icon" id="tooltip-container">
                                     <a class="btn disabled" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> DAP Overall Average Score : <?=$agency_dap_score?>%"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
-                                </div>  
-                                
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="table-responsive">
                                         <table>
@@ -1000,12 +1047,22 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <tr>
                                                 <td>DAP Compliant</td>
                                                 <td><?php echo number_format($agencydata['dap_compliant']); ?></td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['dap_compliant'], $agencydata['dap_tottracked'])?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['dap_compliant'],$agency_website_num)?></td>
                                             </tr>
                                             <tr>
                                                 <td>DAP Non-Compliant</td>
                                                 <td><?php echo number_format($agencydata['dap_noncompliant']); ?></td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['dap_noncompliant'], $agencydata['dap_tottracked'])?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['dap_noncompliant'], $agency_website_num)?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Data Not Available</td>
+                                              <td><?php echo number_format( $agencydata['dap_null']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage( $agencydata['dap_null'], $agency_website_num)?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($agency_website_num); ?></td>
+                                              <td>100%</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -1023,7 +1080,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                        <a href="/test" class="btn btn-digital disabled">Explore</a>
+                                      <a href="/ideaact/govwide/report" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -1036,15 +1093,17 @@ $search_engine_data_for_agencygraph = "0,0";
                                     data: {
                                         datasets: [{
                                             data: [<?php echo number_format($agencydata['dap_compliant']); ?>,
-                                                    <?php echo number_format($agencydata['dap_noncompliant']); ?>],
+                                                    <?php echo number_format($agencydata['dap_noncompliant']); ?>,
+                                              <?php echo $agencydata['dap_null']; ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#de9738',
-                                                '#00a1be'
+                                                '#00a1be',
+                                                '<?php print $agencydata['dap_null_color']; ?>'
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: [ 'Compliant Websites', 'Non-Compliant Websites']
+                                        labels: [ 'Compliant Websites', 'Non-Compliant Websites','<?php print $agencydata['dap_null_label'];?>']
                                     },
 
                                     // Configuration options go here
@@ -1058,7 +1117,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             caretPadding: 5,
                                             caretSize: 5,
                                             enabled: false,
-                                            custom: customChartTooltip('chart-7-ref','chartjs-tooltip7'),  
+                                            custom: customChartTooltip('chart-7-ref','chartjs-tooltip7'),
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                     var label = data.labels[tooltipItem.index];

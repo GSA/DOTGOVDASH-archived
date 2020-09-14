@@ -49,7 +49,10 @@ function idea_act_govwideTrendData(){
 function idea_act_getAllAgencyComplianceData(){
     $agencydata = array();
 
-    //Query to get https data
+    //$agencydata['actual_total_websites']= db_query("SELECT num_of_websites FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+   $agencydata['total_websites']= db_query("select count(*) from node a, field_data_field_agency_branch b where a.type='website' and a.status ='1' and a.nid=b.entity_id and  b.field_agency_branch_value='executive'")->fetchField();
+
+  //Query to get https data
     $httpresults = db_query("select IFNULL(field_https_status_value, 0) as field_https_status_value, count(field_https_status_value) as complnum from node a , field_data_field_https_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and a.type='https_dap_scan_information' group by field_https_status_value", array());
     foreach ($httpresults as $httpresult) {
         if($httpresult->field_https_status_value == 'Yes')
@@ -67,7 +70,15 @@ function idea_act_getAllAgencyComplianceData(){
             $agencydata['dap_noncompliant'] += $dapresult->complnum;
         $agencydata['dap_tottracked'] += $dapresult->complnum;
     }
+    $agencydata['dap_null'] = $agencydata['total_websites']- ($agencydata['dap_compliant'] +$agencydata['dap_noncompliant']);
 
+    if($agencydata['dap_null'] != 0) {
+        $agencydata['dap_null_color'] = '#66364b';
+        $agencydata['dap_null_label'] = 'Data Not Available';
+    } else {
+        $agencydata['dap_null_color'] = '';
+        $agencydata['dap_null_label'] = '';
+    }
     //Query to get DNSSEC data
     $dnsresults = db_query("select IFNULL(field_dnssec_compliance_value, 0) as field_dnssec_compliance_value, count(field_dnssec_compliance_value) as complnum from node a , field_data_field_dnssec_compliance b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and a.type='domain_scan_information'  group by field_dnssec_compliance_value", array());
     foreach ($dnsresults as $dnsresult) {
@@ -106,8 +117,16 @@ function idea_act_getAllAgencyComplianceData(){
             $agencydata['uswds_noncompliant'] += $uswdsresult->complnum;
         $agencydata['uswds_tottracked'] += $uswdsresult->complnum;
     }
+  $agencydata['uswds_null'] = $agencydata['total_websites']- ($agencydata['uswds_compliant'] +$agencydata['uswds_noncompliant']);
+  if($agencydata['uswds_null'] != 0) {
+    $agencydata['uswds_null_color']  = '#66364b';
+    $agencydata['uswds_null_label'] = 'Data Not Available';
+  } else {
+    $agencydata['uswds_null_color']  = '';
+    $agencydata['uswds_null_label'] = '';
+  }
 
-    //Query to get Insecure protocol data
+  //Query to get Insecure protocol data
     $insecresults = db_query("select IFNULL(field_free_of_rc4_3des_and_sslv2_value, 0) as field_free_of_rc4_3des_and_sslv2_value, count(field_free_of_rc4_3des_and_sslv2_value) as complnum from node a , field_data_field_free_of_rc4_3des_and_sslv2 b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and a.type='https_dap_scan_information'  group by field_free_of_rc4_3des_and_sslv2_value", array());
     foreach ($insecresults as $insecresult) {
         if($insecresult->field_free_of_rc4_3des_and_sslv2_value == '1')
@@ -190,7 +209,15 @@ function idea_act_getAllAgencyComplianceData(){
         else
             $agencydata['https_nosupport'] += $httpsresult->complnum;
     }
+  $agencydata['https_null'] = $agencydata['total_websites']- ($agencydata['https_support'] +$agencydata['https_nosupport']);
 
+  if($agencydata['https_null'] != 0) {
+    $agencydata['https_null_color'] = '#66364b';
+    $agencydata['https_null_label'] = 'Data Not Available';
+  } else {
+    $agencydata['https_null_color'] = '';
+    $agencydata['https_null_label'] = '';
+  }
     //Query to get Preload status  data
     $preloadresults = db_query("select IFNULL(field_preload_status_value, 0) as field_preload_status_value, count(field_preload_status_value) as complnum from node a , field_data_field_preload_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and a.type='https_dap_scan_information'  group by field_preload_status_value", array());
     foreach ($preloadresults as $preloadresult) {
@@ -269,16 +296,33 @@ function idea_act_getAllAgencyComplianceData(){
   $govwide_mob['mob_perf_poor_nos'] = db_query("SELECT mob_perf_poor FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
   $govwide_mob['mob_usab_friendly_nos'] = db_query("SELECT mob_usab_friendly FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
   $govwide_mob['mob_usab_notfriendly_nos'] = db_query("SELECT mob_usab_nonfriendly FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
-  $govwide_mob['total_websites'] = db_query("SELECT num_of_websites FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
-  $govwide_mob['null'] = $govwide_mob['total_websites'] - ($govwide_mob['mob_perf_good_nos']+ $govwide_mob['mob_perf_improve_nos']+ $govwide_mob['mob_perf_poor_nos']);
-  $govwide_mob['usab_null'] = $govwide_mob['total_websites'] - ($govwide_mob['mob_usab_friendly_nos']+ $govwide_mob['mob_usab_notfriendly_nos']);
+  $govwide_mob['null'] = $agencydata['total_websites'] - ($govwide_mob['mob_perf_good_nos']+ $govwide_mob['mob_perf_improve_nos']+ $govwide_mob['mob_perf_poor_nos']);
+  $govwide_mob['usab_null'] = $agencydata['total_websites'] - ($govwide_mob['mob_usab_friendly_nos']+ $govwide_mob['mob_usab_notfriendly_nos']);
 
-  $agencydata['total_non_na_websites'] =  $govwide_mob['mob_perf_good_nos']+ $govwide_mob['mob_perf_improve_nos']+ $govwide_mob['mob_perf_poor_nos'];
+  $agencydata['total_non_na_websites'] = $govwide_mob['mob_perf_good_nos']+ $govwide_mob['mob_perf_improve_nos']+ $govwide_mob['mob_perf_poor_nos'];
   $agencydata['poor_nos'] = $govwide_mob['mob_perf_poor_nos'] ;
   $agencydata['good_nos'] = $govwide_mob['mob_perf_good_nos'] ;
   $agencydata['improve_nos'] = $govwide_mob['mob_perf_improve_nos'] ;
   $agencydata['friendly_nos'] = $govwide_mob['mob_usab_friendly_nos'] ;
   $agencydata['nonfriendly_nos'] = $govwide_mob['mob_usab_notfriendly_nos'] ;
+  $agencydata['usab_null']= $govwide_mob['usab_null'];
+
+  if($agencydata['usab_null'] != 0 ) {
+    $agencydata['usab_null_color'] = '#66364b';
+    $agencydata['usab_null_label'] = 'Data Not Available';      
+  } else {
+    $agencydata['usab_null_color'] = '';
+    $agencydata['usab_null_label'] = '';  
+  }
+  $agencydata['perf_null']= $govwide_mob['null'];
+
+  if($agencydata['perf_null'] != 0) {
+    $agencydata['perf_null_color'] = '#66364b';
+    $agencydata['perf_null_label'] = 'Data Not Available';
+  } else {
+    $agencydata['perf_null_color'] = '';
+    $agencydata['perf_null_label'] = '';
+  }
 
   $govwide_mob['govwide_mob_bad'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='49' and entity_id in (SELECT node.nid AS nid
 FROM
@@ -368,19 +412,86 @@ function idea_act_lastScanDate(){
 }
 
 
+
 /*
  * Get Percentage
  */
 function idea_act_applyDataPercentage($data,$websites)
 {
-    $percent = round(($data / $websites) * 100);
+    $actual_percent = ($data / $websites) * 100;
+    $percent = round($actual_percent);
 
     if ($data != '') {
-        $dataPercentage = "$percent%";
+        if($actual_percent < 1 && $actual_percent > 0) {
+            $dataPercentage = "< 1%";
+        } else {
+            $dataPercentage = "$percent%";
+        } 
+       
     }
     else{
-        $dataPercentage = "0 %";
+        $dataPercentage = "0%";
     }
     return $dataPercentage;
 
 }
+
+
+/*
+ * Avoid chart slice when data is  0 < data < 1
+ */
+
+function idea_act_avoid_slice($data,$websites) {
+
+    $actual_percent = ($data / $websites) * 100;
+
+    if ($data != '') {
+        if($actual_percent < 1 && $actual_percent > 0) {
+            $chart_data = "0";
+        } else {
+            $chart_data = "$data";
+        } 
+    }
+
+    return $chart_data;
+
+}
+
+
+/*
+ * hide not available legend on zero and na case
+ */
+
+function idea_act_avoid_null_legend($data,$websites) {
+
+    $actual_percent = ($data / $websites) * 100;
+
+    if ($data != '') {
+        if($actual_percent < 1 && $actual_percent > 0) {
+            $data_null_label = "";
+        } else {
+            $data_null_label = "Not Available";
+        } 
+    }
+    return $data_null_label;
+}
+
+
+/*
+ * hide not available legend on zero and na case
+ */
+
+function idea_act_avoid_null_color($data,$websites) {
+
+    $actual_percent = ($data / $websites) * 100;
+
+    if ($data != '') {
+        if($actual_percent < 1 && $actual_percent > 0) {
+            $data_null_color = "";
+        } else {
+            $data_null_color = "#66364b";
+        } 
+    }
+    return $data_null_color;
+}
+
