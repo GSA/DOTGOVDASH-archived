@@ -17,6 +17,14 @@ function ideaact_get_agencywide_data($agencyid){
 
   $agency_data['uswds_na']= $agency_data['no_of_websites'] -  $agency_data['uswds_tottracked'];
 
+  if($agency_data['uswds_na'] != 0) {
+    $agency_data['uswds_na_label'] = 'Data Not Available';
+    $agency_data['uswds_na_color'] = '#8168B3';
+  } else {
+    $agency_data['uswds_na_label'] = '';
+    $agency_data['uswds_na_color'] = '';
+  }
+
   #zero case graph
   $agency_data['uswds-chart'] = '';
   if($agency_data['uswds_compliant'] == 0 &&
@@ -44,7 +52,13 @@ function ideaact_get_agencywide_data($agencyid){
   }
 
   $agency_data['https_na']= $agency_data['no_of_websites'] - ( $agency_data['https_support']+$agency_data['https_nosupport']);
-
+  if($agency_data['https_na'] != 0) {
+    $agency_data['https_na_color'] = '#8168B3';
+    $agency_data['https_na_label'] = 'Data Not Available';
+  } else {
+    $agency_data['https_na_color'] = '';
+    $agency_data['https_na_label'] = '';
+  }
   #zero case graph
   $agency_data['https-chart'] = '';
   if($agency_data['https_support'] == 0 &&
@@ -91,7 +105,24 @@ function ideaact_get_agencywide_data($agencyid){
   $agency_data['mob_usab_notfriendly_nos'] = db_query("SELECT mob_usab_nonfriendly FROM custom_agencywide_archive where date=(select max(date) from custom_agencywide_archive)and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_data['total_websites'] = db_query("SELECT sum(num_of_websites) FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_data['total_non_na_websites'] = $agency_data['no_of_websites']-($agency_data['mob_perf_good_nos']+ $agency_data['mob_perf_improve_nos']+ $agency_data['mob_perf_poor_nos']);
+
+  if($agency_data['total_non_na_websites'] != 0) {
+    $agency_data['total_non_na_websites_label'] ='Data Not Available';
+    $agency_data['total_non_na_websites_color'] ='#8168B3';
+  } else {
+    $agency_data['total_non_na_websites_label'] ='';
+    $agency_data['total_non_na_websites_color'] ='';
+  }
+
   $agency_data['usab_null'] = $agency_data['no_of_websites'] - ($agency_data['mob_usab_friendly_nos']+ $agency_data['mob_usab_notfriendly_nos']);
+
+  if($agency_data['usab_null'] !=0) {
+    $agency_data['usab_na_label'] ='Data Not Available';
+    $agency_data['usab_na_color'] ='#8168B3';
+  } else {
+    $agency_data['usab_na_label'] ='';
+    $agency_data['usab_na_color'] ='';
+  }
 
   $agency_data['mob-perf-chart'] = '';
   if($agency_data['mob_perf_good_nos'] == 0 &&
@@ -190,6 +221,15 @@ function ideaact_get_agencywide_data($agencyid){
     $agency_data['dap_tottracked'] += $dapresult->complnum;
   }
   $agency_data['dap_na']= $agency_data['no_of_websites'] -  $agency_data['dap_tottracked'];
+  if($agency_data['dap_na'] !=0) {
+    $agency_data['dap_label'] = 'Data Not Available';
+    $agency_data['dap_color'] = '#8168B3';
+  } else {
+    $agency_data['dap_label'] = '';
+    $agency_data['dap_color'] = '';
+
+  }
+
   #zero case graph
   $agency_data['dap-chart'] = '';
   if($agency_data['dap_compliant'] == 0 &&

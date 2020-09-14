@@ -348,11 +348,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                             backgroundColor: [
                                                 '#ed4878',
                                                 '#00699e',
-                                                '#8168B3',
+                                                '<?php print  $agency_data['uswds_na_color']; ?>',
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: [ 'USWDS Code Detected','USWDS Code Not Detected','Data Not Available']
+                                        labels: [ 'USWDS Code Detected','USWDS Code Not Detected','<?php print $agency_data['uswds_na_label']; ?>']
                                     },
 
                                     // Configuration options go here
@@ -500,11 +500,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                             backgroundColor: [
                                                 '#00a65f',
                                                 '#97d1ff',
-                                                '#8168B3',
+                                                '<?php print $agency_data['https_na_color']; ?>',
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['Compliant Websites','Non-Compliant Websites','Data Not Available']
+                                        labels: ['Compliant Websites','Non-Compliant Websites','<?php print $agency_data['https_na_label']; ?>']
                                     },
 
                                     // Configuration options go here
@@ -797,11 +797,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                                         '#563eb6',
                                                         '#c95d00',
                                                         '#218967',
-                                                        '#8168B3',
+                                                        '<?php print $agency_data['total_non_na_websites_color']; ?>',
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
-                                                labels: ['Good', 'Needs Improvement', 'Poor','Data Not Available']
+                                                labels: ['Good', 'Needs Improvement', 'Poor','<?php print $agency_data['total_non_na_websites_label']; ?>']
                                             },
 
                                             // Configuration options go here
@@ -908,11 +908,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                                     backgroundColor: [
                                                         '#8ea116',
                                                         '#007790',
-                                                        '#8168B3'
+                                                        '<?php print $agency_data['usab_na_color']; ?>'
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
-                                                labels: ['Mobile Friendly', 'Not Mobile Friendly','Data Not Available']
+                                                labels: ['Mobile Friendly', 'Not Mobile Friendly','<?php print $agency_data['usab_na_label']; ?>']
                                             },
 
                                             // Configuration options go here
@@ -1087,12 +1087,12 @@ $agency_data['agency_title'] = $agencynode->title;
                                             backgroundColor: [
                                                 '#de9738',
                                                 '#00a1be',
-                                                '#8168B3',
+                                                '<?php print $agency_data['dap_color']; ?>',
 
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['Compliant Websites','Non-Compliant Websites','Data Not Available']
+                                        labels: ['Compliant Websites','Non-Compliant Websites','<?php print $agency_data['dap_label'];?>']
                                     },
 
                                     // Configuration options go here
