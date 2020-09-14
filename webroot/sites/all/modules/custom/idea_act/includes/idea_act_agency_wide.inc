@@ -90,8 +90,41 @@ function ideaact_get_agencywide_data($agencyid){
   $agency_data['mob_usab_friendly_nos'] = db_query("SELECT mob_usab_friendly FROM custom_agencywide_archive where date =(select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_data['mob_usab_notfriendly_nos'] = db_query("SELECT mob_usab_nonfriendly FROM custom_agencywide_archive where date=(select max(date) from custom_agencywide_archive)and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_data['total_websites'] = db_query("SELECT sum(num_of_websites) FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
-  $agency_data['total_non_na_websites'] = ($agency_data['mob_perf_good_nos']+ $agency_data['mob_perf_improve_nos']+ $agency_data['mob_perf_poor_nos']);
+  $agency_data['total_non_na_websites'] = $agency_data['no_of_websites']-($agency_data['mob_perf_good_nos']+ $agency_data['mob_perf_improve_nos']+ $agency_data['mob_perf_poor_nos']);
   $agency_data['usab_null'] = $agency_data['no_of_websites'] - ($agency_data['mob_usab_friendly_nos']+ $agency_data['mob_usab_notfriendly_nos']);
+
+  $agency_data['mob-perf-chart'] = '';
+  if($agency_data['mob_perf_good_nos'] == 0 &&
+    $agency_data['mob_perf_improve_nos'] == 0 &&
+    $agency_data['total_non_na_websites'] == 0 &&
+    $agency_data['mob_perf_poor_nos'] == 0) {
+    $agency_data['mob-perf-chart'] = "<div class='text-center'>
+      <img src='/sites/all/modules/custom/idea_act/images/zero-chart.png' width='250' height='300' class='alternate-chart-responsive'>
+ </div>";
+  } else {
+    $agency_data['mob-perf-chart'] = "<div class='chart-container' id='chart-5-ref'>
+    <canvas id='chart-6' width='250' height='300' aria-label='Charts' role='img'></canvas>
+</div>
+    <div class='legend-container'>
+         <div id='chart-5-legend'></div>
+    </div>";
+  }
+
+  $agency_data['mob-usab-chart'] = '';
+  if($agency_data['mob_usab_friendly_nos'] == 0 &&
+    $agency_data['mob_usab_notfriendly_nos'] == 0 &&
+    $agency_data['usab_nul'] == 0) {
+    $agency_data['mob-usab-chart'] = "<div class='text-center'>
+      <img src='/sites/all/modules/custom/idea_act/images/zero-chart.png' width='250' height='300' class='alternate-chart-responsive'>
+ </div>";
+  } else {
+    $agency_data['mob-usab-chart'] = "<div class='chart-container' id='chart-6-ref'>
+    <canvas id='chart-5' width='250' height='300' aria-label='Charts' role='img'></canvas>
+    </div>
+    <div class='legend-container'>
+        <div id='chart-6-legend'></div>
+    </div>";
+  }
 
   //Query to get Search data for an agency
   $searchresults = db_query("select field_search_status_value,count(field_search_status_value) as complnum from node a , field_data_field_search_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='website' group by field_search_status_value", array(':agencyid' => $agencyid));

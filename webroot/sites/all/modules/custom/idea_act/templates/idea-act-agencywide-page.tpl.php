@@ -741,13 +741,8 @@ $agency_data['agency_title'] = $agencynode->title;
                               <div class="col-md-6 mb-2">
                                 <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                 <h4 class="text-center chart-data-title"> Mobile Performance Breakdown</h4>
-                                    <div class="chart-container" id="chart-5-ref">
-                                        <canvas id="chart-6" width="250" height="300" aria-label="Charts" role="img"></canvas>
-                                    </div>
-
-                                    <div class="legend-container">
-                                        <div id="chart-5-legend"></div>
-                                    </div>
+                                <?php print $agency_data['mob-perf-chart'];?>
+                              </div>
 
                                     <div class="table-responsive">
                                         <table>
@@ -855,12 +850,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                 <div class="col-md-6 mt-xs-1">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                   <h4 class="text-center chart-data-title"> Mobile Usability Breakdown</h4>
-                                    <div class="chart-container" id="chart-6-ref">
-                                        <canvas id="chart-5" width="250" height="300" aria-label="Charts" role="img"></canvas>
-                                    </div>
-                                    <div class="legend-container">
-                                        <div id="chart-6-legend"></div>
-                                    </div>
+                                  <?php print $agency_data['mob-usab-chart'];?>
+                                </div>
                                     <div class="table-responsive">
                                         <table>
                                             <thead>
