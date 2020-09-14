@@ -3218,7 +3218,7 @@ function cleanupNodesAfterScan(){
             $k += 1;
 
         }
-    $i += 1;
+        $i += 1;
     }
 
     //Find all scan nodes which are orphaned or doesn't have a parent website id and unpublish them
