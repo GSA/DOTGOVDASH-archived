@@ -57,7 +57,7 @@ function ideaact_get_website_data($websiteid){
   }
   else{
     $websitedata['uswdsstatus'] = 'Website Redirect - Metric Not Applicable';
-    $websitedata['uswdstext'] = 'The Metric is not applicable for this website (This website is a redirect).';
+    $websitedata['uswdstext'] = 'The metric is not applicable for this website (This website is a redirect).';
 
   }
 
@@ -80,7 +80,7 @@ function ideaact_get_website_data($websiteid){
   else{
     $websitedata['onsitestatus'] = 'Website Redirect - Metric Not Applicable';
     $websitedata['onsiteengine']='Not Applicable';
-    $websitedata['onsitetext'] = 'The Metric is not applicable for this website (This website is a redirect).';
+    $websitedata['onsitetext'] = 'The metric is not applicable for this website (This website is a redirect).';
   }
 
   #Security Information
@@ -196,7 +196,7 @@ function ideaact_get_website_data($websiteid){
     }
   }
   if($websitedata['mobileperf'] == 'Website Redirect - Metric Not Applicable' && $websitedata['mobileusab'] == "Website Redirect - Metric Not Applicable") {
-    $websitedata['mobtext'] = 'The Metric is not applicable for this website (This website is a redirect).';
+    $websitedata['mobtext'] = 'The metric is not applicable for this website (This website is a redirect).';
   }
 #Accessibility issues
     $acessresults = db_query("select c.field_accessible_group_colorcont_value,d.field_accessible_group_missingim_value,e.field_accessible_group_htmlattri_value from node a , field_data_field_website_id b , field_data_field_accessible_group_colorcont c,field_data_field_accessible_group_missingim d,field_data_field_accessible_group_htmlattri e  where a.type='508_scan_information' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and b.entity_id=d.entity_id and b.entity_id=e.entity_id and b.field_website_id_nid=:websiteid", array(':websiteid' => $websiteid));
@@ -232,7 +232,7 @@ function ideaact_get_website_data($websiteid){
 
     }
     else {
-      $websitedata['Accestext'] = 'The Metric is not applicable for this website (This website is a redirect).';
+      $websitedata['Accestext'] = 'The metric is not applicable for this website (This website is a redirect).';
       $websitedata['web-access-chart'] = "<div class='text-center'>
       <img src='/sites/all/modules/custom/idea_act/images/not-available-chart.png' width='250' height='250' class='alternate-chart-responsive'>
  </div>";
