@@ -1092,7 +1092,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                         datasets: [{
                                             data: [<?php echo number_format($agencydata['dap_compliant']); ?>,
                                                     <?php echo number_format($agencydata['dap_noncompliant']); ?>,
-                                              <?php echo number_format($agencydata['dap_null']); ?>],
+                                              <?php echo $agencydata['dap_null']; ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#de9738',
