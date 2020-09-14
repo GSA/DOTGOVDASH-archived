@@ -319,6 +319,11 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 <td><?=idea_act_applyDataPercentage($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'])?></td>
                                             </tr>
                                             <tr>
+                                              <td>Data Not Available</td>
+                                              <td><?php echo number_format( $agencydata['uswds_null']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage( $agencydata['uswds_null'],$agency_website_num)?></td>
+                                            </tr>
+                                            <tr>
                                               <td>Total</td>
                                               <td><?php echo number_format($websitenos); ?></td>
                                               <td>100%</td>
@@ -351,15 +356,16 @@ $search_engine_data_for_agencygraph = "0,0";
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [<?php echo number_format($agencydata['uswds_compliant']); ?>, <?php echo number_format($agencydata['uswds_noncompliant']); ?>],
+                                            data: [<?php echo number_format($agencydata['uswds_compliant']); ?>, <?php echo number_format($agencydata['uswds_noncompliant']); ?>,<?php echo number_format( $agencydata['uswds_null']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#ed4878',
                                                 '#00699e',
+                                                '#8168B3'
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['USWDS Code Detected', 'USWDS Code Not Detected']
+                                        labels: ['USWDS Code Detected', 'USWDS Code Not Detected','Data Not Available']
                                     },
 
                                     // Configuration options go here
@@ -469,6 +475,11 @@ $search_engine_data_for_agencygraph = "0,0";
                                               <td><?=idea_act_applyDataPercentage($agencydata['https_nosupport'],$agency_website_num)?></td>
                                             </tr>
                                             <tr>
+                                              <td>Data Not Available</td>
+                                              <td><?php echo number_format( $agencydata['https_null']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage( $agencydata['https_null'],$agency_website_num)?></td>
+                                            </tr>
+                                            <tr>
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_website_num); ?></td>
                                               <td>100%</td>
@@ -501,15 +512,17 @@ $search_engine_data_for_agencygraph = "0,0";
                                     data: {
                                         datasets: [{
                                             data: [<?php echo number_format($agencydata['https_support']); ?>,
-                                                    <?php echo number_format($agencydata['https_nosupport']); ?>],
+                                                    <?php echo number_format($agencydata['https_nosupport']); ?>,
+                                              <?php echo number_format( $agencydata['https_null']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#00a65f',
-                                                '#97d1ff'
+                                                '#97d1ff',
+                                                '#8168B3'
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: [ 'Compliant Websites','Non-Compliant Websites']
+                                        labels: [ 'Compliant Websites','Non-Compliant Websites','Data Not Available']
                                     },
 
                                     // Configuration options go here
@@ -890,12 +903,12 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <tr>
                                                 <td>Mobile Friendly</td>
                                                 <td><?php echo number_format($agencydata['friendly_nos']); ?></td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['friendly_nos'], $agencydata['friendly_nos']+$agencydata['nonfriendly_nos'])?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['friendly_nos'], $agency_website_num)?></td>
                                             </tr>
                                             <tr>
                                                 <td>Not Mobile Friendly</td>
                                                 <td><?php echo number_format($agencydata['nonfriendly_nos']); ?></td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['nonfriendly_nos'],$agencydata['friendly_nos']+$agencydata['nonfriendly_nos'])?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['nonfriendly_nos'],$agency_website_num)?></td>
                                             </tr>
                                             <tr>
                                               <td>Data Not Available</td>
@@ -1041,7 +1054,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 <td><?=idea_act_applyDataPercentage($agencydata['dap_noncompliant'], $agency_website_num)?></td>
                                             </tr>
                                             <tr>
-                                              <td>DAP Non-Compliant</td>
+                                              <td>Data Not Available</td>
                                               <td><?php echo number_format( $agencydata['dap_null']); ?></td>
                                               <td><?=idea_act_applyDataPercentage( $agencydata['dap_null'], $agency_website_num)?></td>
                                             </tr>

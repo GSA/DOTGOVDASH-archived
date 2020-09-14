@@ -108,8 +108,10 @@ function idea_act_getAllAgencyComplianceData(){
             $agencydata['uswds_noncompliant'] += $uswdsresult->complnum;
         $agencydata['uswds_tottracked'] += $uswdsresult->complnum;
     }
+  $agencydata['uswds_null'] = $agencydata['total_websites']- ($agencydata['uswds_compliant'] +$agencydata['uswds_noncompliant']);
 
-    //Query to get Insecure protocol data
+
+  //Query to get Insecure protocol data
     $insecresults = db_query("select IFNULL(field_free_of_rc4_3des_and_sslv2_value, 0) as field_free_of_rc4_3des_and_sslv2_value, count(field_free_of_rc4_3des_and_sslv2_value) as complnum from node a , field_data_field_free_of_rc4_3des_and_sslv2 b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and a.type='https_dap_scan_information'  group by field_free_of_rc4_3des_and_sslv2_value", array());
     foreach ($insecresults as $insecresult) {
         if($insecresult->field_free_of_rc4_3des_and_sslv2_value == '1')
@@ -192,6 +194,7 @@ function idea_act_getAllAgencyComplianceData(){
         else
             $agencydata['https_nosupport'] += $httpsresult->complnum;
     }
+  $agencydata['https_null'] = $agencydata['total_websites']- ($agencydata['https_support'] +$agencydata['https_nosupport']);
 
     //Query to get Preload status  data
     $preloadresults = db_query("select IFNULL(field_preload_status_value, 0) as field_preload_status_value, count(field_preload_status_value) as complnum from node a , field_data_field_preload_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and a.type='https_dap_scan_information'  group by field_preload_status_value", array());
@@ -271,8 +274,8 @@ function idea_act_getAllAgencyComplianceData(){
   $govwide_mob['mob_perf_poor_nos'] = db_query("SELECT mob_perf_poor FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
   $govwide_mob['mob_usab_friendly_nos'] = db_query("SELECT mob_usab_friendly FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
   $govwide_mob['mob_usab_notfriendly_nos'] = db_query("SELECT mob_usab_nonfriendly FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
-  $govwide_mob['null'] = $govwide_mob['total_websites'] - ($govwide_mob['mob_perf_good_nos']+ $govwide_mob['mob_perf_improve_nos']+ $govwide_mob['mob_perf_poor_nos']);
-  $govwide_mob['usab_null'] = $govwide_mob['total_websites'] - ($govwide_mob['mob_usab_friendly_nos']+ $govwide_mob['mob_usab_notfriendly_nos']);
+  $govwide_mob['null'] = $agencydata['total_websites'] - ($govwide_mob['mob_perf_good_nos']+ $govwide_mob['mob_perf_improve_nos']+ $govwide_mob['mob_perf_poor_nos']);
+  $govwide_mob['usab_null'] = $agencydata['total_websites'] - ($govwide_mob['mob_usab_friendly_nos']+ $govwide_mob['mob_usab_notfriendly_nos']);
 
   $agencydata['total_non_na_websites'] = $govwide_mob['mob_perf_good_nos']+ $govwide_mob['mob_perf_improve_nos']+ $govwide_mob['mob_perf_poor_nos'];
   $agencydata['poor_nos'] = $govwide_mob['mob_perf_poor_nos'] ;
