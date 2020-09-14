@@ -311,21 +311,21 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <tr>
                                                 <td class="">USWDS code detected</td>
                                                 <td><?php echo number_format($agencydata['uswds_compliant']); ?></td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['uswds_compliant'], $agencydata['uswds_tottracked'])?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['uswds_compliant'], $agency_website_num)?></td>
                                             </tr>
                                             <tr>
                                                 <td class="">USWDS code not detected</td>
                                                 <td><?php echo number_format($agencydata['uswds_noncompliant']); ?></td>
-                                                <td><?=idea_act_applyDataPercentage($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'])?></td>
+                                                <td><?=idea_act_applyDataPercentage($agencydata['uswds_noncompliant'], $agency_website_num)?></td>
                                             </tr>
                                             <tr>
                                               <td>Data Not Available</td>
                                               <td><?php echo number_format( $agencydata['uswds_null']); ?></td>
-                                              <td><?=idea_act_applyDataPercentage( $agencydata['uswds_null'],$agency_website_num)?></td>
+                                              <td><?=idea_act_applyDataPercentage($agencydata['uswds_null'],$agency_website_num)?></td>
                                             </tr>
                                             <tr>
                                               <td>Total</td>
-                                              <td><?php echo number_format($websitenos); ?></td>
+                                              <td><?php echo number_format($agency_website_num); ?></td>
                                               <td>100%</td>
                                             </tr>
                                             </tbody>
@@ -476,8 +476,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                             </tr>
                                             <tr>
                                               <td>Data Not Available</td>
-                                              <td><?php echo number_format( $agencydata['https_null']); ?></td>
-                                              <td><?=idea_act_applyDataPercentage( $agencydata['https_null'],$agency_website_num)?></td>
+                                              <td><?php echo number_format($agencydata['https_null']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agencydata['https_null'],$agency_website_num)?></td>
                                             </tr>
                                             <tr>
                                               <td>Total</td>
@@ -1093,7 +1093,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                         datasets: [{
                                             data: [<?php echo number_format($agencydata['dap_compliant']); ?>,
                                                     <?php echo number_format($agencydata['dap_noncompliant']); ?>,
-                                              <?php echo number_format( $agencydata['dap_null']); ?>],
+                                              <?php echo number_format($agencydata['dap_null']); ?>],
                                             borderWidth: 0,
                                             backgroundColor: [
                                                 '#de9738',
