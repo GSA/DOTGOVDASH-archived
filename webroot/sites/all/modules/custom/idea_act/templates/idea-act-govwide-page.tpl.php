@@ -361,11 +361,11 @@ $search_engine_data_for_agencygraph = "0,0";
                                             backgroundColor: [
                                                 '#ed4878',
                                                 '#00699e',
-                                                '#8168B3'
+                                                '<?php print $agencydata['uswds_null_color']; ?>'
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['USWDS Code Detected', 'USWDS Code Not Detected','Data Not Available']
+                                        labels: ['USWDS Code Detected', 'USWDS Code Not Detected','<?php print $agencydata['uswds_null_label']; ?>']
                                     },
 
                                     // Configuration options go here
@@ -518,11 +518,11 @@ $search_engine_data_for_agencygraph = "0,0";
                                             backgroundColor: [
                                                 '#00a65f',
                                                 '#97d1ff',
-                                                '#8168B3'
+                                                '<?php print $agencydata['https_null_color']; ?>'
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: [ 'Compliant Websites','Non-Compliant Websites','Data Not Available']
+                                        labels: [ 'Compliant Websites','Non-Compliant Websites','<?php print $agencydata['https_null_label']; ?>']
                                     },
 
                                     // Configuration options go here
@@ -818,12 +818,11 @@ $search_engine_data_for_agencygraph = "0,0";
                                                         '#563eb6',
                                                         '#c95d00',
                                                         '#218967',
-                                                        '#8168B3',
-
+                                                        '<?php print $agencydata['perf_null_color']; ?>',
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
-                                                labels: ['Good', 'Needs Improvement', 'Poor','Data Not Available']
+                                                labels: ['Good', 'Needs Improvement', 'Poor','<?php print $agencydata['perf_null_label']; ?>']
                                             },
 
                                             // Configuration options go here
@@ -936,11 +935,11 @@ $search_engine_data_for_agencygraph = "0,0";
                                                     backgroundColor: [
                                                         '#8ea116',
                                                         '#007790',
-                                                        '#8168B3',
+                                                        '<?php print $agencydata['usab_null_color']; ?>',
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
-                                                labels: ['Mobile Friendly', 'Not Mobile Friendly','Data Not Available']
+                                                labels: ['Mobile Friendly', 'Not Mobile Friendly','<?php print $agencydata['usab_null_label']; ?>']
                                             },
 
                                             // Configuration options go here
@@ -1098,11 +1097,11 @@ $search_engine_data_for_agencygraph = "0,0";
                                             backgroundColor: [
                                                 '#de9738',
                                                 '#00a1be',
-                                                '#8168B3'
+                                                '<?php print $agencydata['dap_null_color']; ?>'
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: [ 'Compliant Websites', 'Non-Compliant Websites','Data Not Available']
+                                        labels: [ 'Compliant Websites', 'Non-Compliant Websites','<?php print $agencydata['dap_null_label'];?>']
                                     },
 
                                     // Configuration options go here
