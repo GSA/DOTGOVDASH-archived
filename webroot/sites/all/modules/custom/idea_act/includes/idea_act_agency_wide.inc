@@ -165,7 +165,7 @@ function ideaact_get_agencywide_data($agencyid){
     $agency_data['dap_noncompliant'] == 0 &&
     $agency_data['dap_na'] == 0) {
     $agency_data['dap-chart'] = "<div class='text-center'>
-      <img src='/sites/all/modules/custom/idea_act/images/zero-percentage-chart.png' width='250' height='300' class='alternate-chart-responsive'>
+      <img src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='250' height='300' class='alternate-chart-responsive'>
  </div>";
   } else {
     $agency_data['dap-chart'] = "<div class='chart-container' id='chart-7-ref'>
