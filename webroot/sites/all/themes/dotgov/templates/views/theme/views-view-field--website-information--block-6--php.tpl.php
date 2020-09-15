@@ -89,13 +89,13 @@ $redirect_message = 'Website Redirect - Metric Not Applicable';
 $crit_text = '';
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] == "" || $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
-    $crit_text .= "Mobile Performance: Not Available\n";
+    $crit_text .= "Mobile Performance: Not Available<br>";
   } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 50 ) {
-    $crit_text .= "Mobile Performance: Poor\n";
+    $crit_text .= "Mobile Performance: Poor<br>";
   } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 90 ) {
-    $crit_text .= "Mobile Performance: Needs Improvement\n";
+    $crit_text .= "Mobile Performance: Needs Improvement<br>";
   } else {
-    $crit_text .= "Mobile Performance Good";
+    $crit_text .= "Mobile Performance: Good<br>";
   }
 } else {
   $crit_text .= "Mobile Performance: <span style=\"color:white;\">" . $redirect_message . "</span><br>";
