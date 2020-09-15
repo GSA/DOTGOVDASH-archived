@@ -386,7 +386,10 @@ $agency_data['agency_title'] = $agencynode->title;
                                         plugins: {
 
                                             labels: {
-                                                render: 'data',
+                                                 render: function (args) {
+                                                    var $convertedValue =  Math.round(((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100);
+                                                    return $convertedValue + '%';
+                                                },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
@@ -538,7 +541,10 @@ $agency_data['agency_title'] = $agencynode->title;
                                         plugins: {
 
                                             labels: {
-                                                render: 'data',
+                                                 render: function (args) {
+                                                    var $convertedValue =  Math.round(((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100);
+                                                    return $convertedValue + '%';
+                                                },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
@@ -694,7 +700,10 @@ $agency_data['agency_title'] = $agencynode->title;
                                         plugins: {
 
                                             labels: {
-                                                render: 'data',
+                                                 render: function (args) {
+                                                    var $convertedValue =  Math.round(((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100);
+                                                    return $convertedValue + '%';
+                                                },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
@@ -843,7 +852,10 @@ $agency_data['agency_title'] = $agencynode->title;
                                                 plugins: {
 
                                                     labels: {
-                                                        render: 'data',
+                                                         render: function (args) {
+                                                            var $convertedValue =  Math.round(((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100);
+                                                            return $convertedValue + '%';
+                                                        },
                                                         fontColor: '#102e54',
                                                         position: 'outside',
                                                         fontSize: 18,
@@ -954,7 +966,10 @@ $agency_data['agency_title'] = $agencynode->title;
                                                 plugins: {
 
                                                     labels: {
-                                                        render: 'data',
+                                                         render: function (args) {
+                                                            var $convertedValue =  Math.round(((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100);
+                                                            return $convertedValue + '%';
+                                                        },
                                                         fontColor: '#102e54',
                                                         position: 'outside',
                                                         fontSize: 18,
@@ -1134,7 +1149,10 @@ $agency_data['agency_title'] = $agencynode->title;
                                         plugins: {
 
                                             labels: {
-                                                render: 'data',
+                                                render: function (args) {
+                                                    var $convertedValue =  Math.round(((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100);
+                                                    return $convertedValue + '%';
+                                                },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
