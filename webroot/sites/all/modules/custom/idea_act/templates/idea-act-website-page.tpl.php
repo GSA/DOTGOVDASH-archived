@@ -187,7 +187,7 @@ drupal_set_title($websitedata['agencyname']);
                                     <a class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-6 nopadding">
                                     <!-- <div class="chart-container">
                                         <canvas id="chart-webhome" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
