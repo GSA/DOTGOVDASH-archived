@@ -782,9 +782,15 @@ function mobileFriendlyApidataNewAPI($data, $apiKey){
             $mobileFriendlyScore = "100";
             $mobileFriendlyPass = "1";
             $mobileImage = $api_result->screenshot->data;
-        } else {
+        }
+        elseif (trim($api_result->mobileFriendliness) == "NOT_MOBILE_FRIENDLY") {
             $mobileFriendlyScore = "0";
             $mobileFriendlyPass = "0";
+            $mobileImage = $api_result->screenshot->data;
+        }
+        else {
+            $mobileFriendlyScore = NULL;
+            $mobileFriendlyPass = NULL;
             $mobileImage = "";
         }
         $mobret['stat'] = $mobileFriendlyPass;
@@ -793,7 +799,14 @@ function mobileFriendlyApidataNewAPI($data, $apiKey){
         $mobret['returnstack'] = $api_content;
         return $mobret;
     }else{
-        return $api_content;
+        $mobileFriendlyScore = NULL;
+        $mobileFriendlyPass = NULL;
+        $mobileImage = "";
+        $mobret['stat'] = $mobileFriendlyPass;
+        $mobret['score'] = $mobileFriendlyScore;
+        $mobret['image'] = $mobileImage;
+        $mobret['returnstack'] = $api_content;
+        return $mobret;
     }
 }
 
