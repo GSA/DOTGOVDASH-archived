@@ -247,7 +247,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
-                                                textMargin: 12,
+                                                textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
                                         },
@@ -404,7 +404,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
-                                                textMargin: 12,
+                                                textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
                                         },
@@ -562,7 +562,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
-                                                textMargin: 12,
+                                                textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
                                         },
@@ -706,7 +706,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
-                                                textMargin: 12,
+                                                textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
                                         },
@@ -862,7 +862,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                         fontColor: '#102e54',
                                                         position: 'outside',
                                                         fontSize: 18,
-                                                        textMargin: 12,
+                                                        textMargin: 8,
                                                         fontStyle: 'bold',
                                                     }
                                                 },
@@ -977,7 +977,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                         fontColor: '#102e54',
                                                         position: 'outside',
                                                         fontSize: 18,
-                                                        textMargin: 12,
+                                                        textMargin: 8,
                                                         fontStyle: 'bold',
                                                     }
                                                 },
@@ -1140,7 +1140,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
-                                                textMargin: 12,
+                                                textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
                                         },
