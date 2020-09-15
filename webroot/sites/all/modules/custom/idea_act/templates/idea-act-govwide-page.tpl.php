@@ -175,7 +175,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     <p>Average Missing Image Description: <?=round($agencydata['ag_miss_image'] / $agency_website_num, 1);?></p>
                                     <p>(Note: website redirects are excluded)</p>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-6 nopadding">
                                 <h4 class="chart-data-title text-center">Total Number of Accessibility Issues for Websites</h4>
                                     <div class="chart-container" id="chart-1-ref">
                                         <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
@@ -400,7 +400,10 @@ $search_engine_data_for_agencygraph = "0,0";
                                         plugins: {
 
                                             labels: {
-                                                render: 'data',
+                                                render: function (args) {
+                                                    var $convertedValue =  Math.round(((args.value)/ <?php print $agency_website_num; ?>)*100);
+                                                    return $convertedValue + '%';
+                                                },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
@@ -558,7 +561,10 @@ $search_engine_data_for_agencygraph = "0,0";
                                         plugins: {
 
                                             labels: {
-                                                render: 'data',
+                                                render: function (args) {
+                                                    var $convertedValue =  Math.round(((args.value)/ <?php print $agency_website_num; ?>)*100);
+                                                    return $convertedValue + '%';
+                                                },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
@@ -702,7 +708,10 @@ $search_engine_data_for_agencygraph = "0,0";
                                         },
                                         plugins: {
                                             labels: {
-                                                render: 'data',
+                                                render: function (args) {
+                                                    var $convertedValue =  Math.round(((args.value)/ <?php print $agency_website_num; ?>)*100);
+                                                    return $convertedValue + '%';
+                                                },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
@@ -858,7 +867,10 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 plugins: {
 
                                                     labels: {
-                                                        render: 'data',
+                                                        render: function (args) {
+                                                            var $convertedValue =  Math.round(((args.value)/ <?php print $agency_website_num; ?>)*100);
+                                                            return $convertedValue + '%';
+                                                        },
                                                         fontColor: '#102e54',
                                                         position: 'outside',
                                                         fontSize: 18,
@@ -973,7 +985,10 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 },
                                                 plugins: {
                                                     labels: {
-                                                        render: 'data',
+                                                        render: function (args) {
+                                                            var $convertedValue =  Math.round(((args.value)/ <?php print $agency_website_num; ?>)*100);
+                                                            return $convertedValue + '%';
+                                                        },
                                                         fontColor: '#102e54',
                                                         position: 'outside',
                                                         fontSize: 18,
@@ -1136,7 +1151,10 @@ $search_engine_data_for_agencygraph = "0,0";
                                         plugins: {
 
                                             labels: {
-                                                render: 'data',
+                                                render: function (args) {
+                                                    var $convertedValue =  Math.round(((args.value)/ <?php print $agency_website_num; ?>)*100);
+                                                    return $convertedValue + '%';
+                                                },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
