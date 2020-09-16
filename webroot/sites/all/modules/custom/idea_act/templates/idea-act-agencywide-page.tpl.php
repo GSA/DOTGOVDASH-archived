@@ -314,7 +314,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                             <tr>
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
-                                              <td>100%</td>
+                                              <td>100%
+                                                <a data-toggle="tooltip" title="The percentages in above table are rounded to nearest integer. Therefore sometimes you may see sum of all percentages not matching 100.">*</a>
+                                              </td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -469,7 +471,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                             <tr>
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
-                                              <td>100%</td>
+                                              <td>100%
+                                                <a data-toggle="tooltip" title="The percentages in above table are rounded to nearest integer. Therefore sometimes you may see sum of all percentages not matching 100.">*</a>
+                                              </td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -793,7 +797,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                             <tr>
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
-                                              <td>100%</td>
+                                              <td>100%
+                                                <a data-toggle="tooltip" title="The percentages in above table are rounded to nearest integer. Therefore sometimes you may see sum of all percentages not matching 100.">*</a>
+                                              </td>
                                             </tr>
 
                                             </tbody>
@@ -910,7 +916,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                             <tr>
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
-                                              <td>100%</td>
+                                              <td>100%
+                                                <a data-toggle="tooltip" title="The percentages in above table are rounded to nearest integer. Therefore sometimes you may see sum of all percentages not matching 100.">*</a>
+                                              </td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -1074,7 +1082,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                             <tr>
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
-                                              <td>100%</td>
+                                              <td>100%
+                                                <a data-toggle="tooltip" title="The percentages in above table are rounded to nearest integer. Therefore sometimes you may see sum of all percentages not matching 100.">*</a>
+                                              </td>
                                             </tr>
                                             </tbody>
                                         </table>
