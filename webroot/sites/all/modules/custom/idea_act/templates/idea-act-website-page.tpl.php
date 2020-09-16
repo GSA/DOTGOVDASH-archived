@@ -113,55 +113,6 @@ drupal_set_title($websitedata['agencyname']);
                     </div>
                 </div>
             </div>
-<!--            <div class="relative-position mb-2 web-info">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-sm-6">-->
-<!--                        <div class="card card-default shadow">-->
-<!--                            <div class="card-header card-title">Website Information</div>-->
-<!--                            <div class="card-body card-5-7 clearfix">-->
-<!--                                <div class="card-left">-->
-<!--                                    <img class="dblock-center img-responsive" src="/sites/all/modules/custom/idea_act/images/geography.png" alt="geography" width="70">-->
-<!--                                </div>-->
-<!--                                <div class="card-right" style="min-height: 200px;">-->
-<!---->
-<!--                                    <ul class="list-unstyled">-->
-<!--                                        <li>ID: National Archives and Records Administration</li>-->
-<!--                                        <li>Site: Domain Scan 911commission.gov</li>-->
-<!--                                        <li>IP: 129.120.93.242</li>-->
-<!--                                        <li>DNS: 129.120.93.242</li>-->
-<!--                                        <li>Hosted At: Not Available</li>-->
-<!--                                        <li>Cloud Provider:Not Available</li>-->
-<!--                                        <li>Alexa Ranking: 0</li></ul>-->
-<!---->
-<!---->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-sm-6 mt-xs-1">-->
-<!--                        <div class="card card-default shadow">-->
-<!--                            <div class="card-header card-title">Certificate Information</div>-->
-<!--                            <div class="card-body card-5-7 clearfix">-->
-<!--                                <div class="card-left">-->
-<!--                                    <img class="dblock-center img-responsive" src="/sites/all/modules/custom/idea_act/images/cloud.png" alt="cloud" width="70">-->
-<!--                                </div>-->
-<!--                                <div class="card-right" style="min-height: 200px; ">-->
-<!--                                    <ul class="list-unstyled">-->
-<!--                                        <li>Common Name: Not Available</li>-->
-<!--                                        <li> Not Available</li>-->
-<!--                                        <li>Valid From: Not Available</li>-->
-<!--                                        <li>Valid To: Not Available</li>-->
-<!--                                        <li>Certificate Issuer: Not Available</li>-->
-<!--                                        <li>Certificate provider: Not Available</li>-->
-<!--                                        <li>Certificate Status: Not Available</li>-->
-<!--                                        <li>Certificate Chain: Not Available</li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
 
             <div class="relative-position mb-2">
                 <div class="row">
@@ -188,13 +139,7 @@ drupal_set_title($websitedata['agencyname']);
                                     </a>
                                 </div>
                                 <div class="col-sm-6 nopadding">
-                                    <!-- <div class="chart-container">
-                                        <canvas id="chart-webhome" width="250" height="300" aria-label="Charts" role="img"></canvas>
-                                    </div>
 
-                                    <div class="legend-container">
-                                        <div id="chart-1-legend"></div>
-                                    </div> -->
                                     <?php print  $websitedata['web-access-chart'];?>
                                     <script lang="javascript">
                                         var ctx = document.getElementById('chart-webhome').getContext('2d');
@@ -525,6 +470,60 @@ drupal_set_title($websitedata['agencyname']);
                     </div>
                 </div>
             </div>
+
+          <div class="relative-position mb-2">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="card card-default shadow">
+                  <div class="card-header row row-no-gutters">
+                    <div class="col-sm-12">
+                      <div class="col-sm-6">
+                        <div class="card-title">Digital Analytics</div>
+                      </div>
+                      <div class="col-sm-6 mt-xs-1">
+                        <div>
+                          <div><i><b>21st Century IDEA Act</b></i></div>
+                          <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                          <a href="#"><b>Read More</b></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body relative-position row">
+                    <div class="info-icon" id="tooltip-container">
+                      <a class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                      </a>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="table-responsive">
+                        <table>
+                          <thead>
+                          <tr>
+                            <th>Dap</th>
+                            <th>Status</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr>
+                            <td>Dap</td>
+                            <td><?php
+                              print $websitedata['dapstatus']?></td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 mt-xs-1">
+                      <p class="card-wi-desc" > <?= $websitedata['daptext'] ?></p>
+                    </div>
+                  </div>
+                  <div class="explore mb-2 px-2">
+                    <a href="/ideaact/govwide/website/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
     </div>
 </div>
