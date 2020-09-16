@@ -499,13 +499,13 @@ drupal_set_title($websitedata['agencyname']);
                         <table>
                           <thead>
                           <tr>
-                            <th>Dap</th>
+                            <th>DAP</th>
                             <th>Status</th>
                           </tr>
                           </thead>
                           <tbody>
                           <tr>
-                            <td>Dap</td>
+                            <td>DAP</td>
                             <td><?php
                               print $websitedata['dapstatus']?></td>
                           </tr>
@@ -514,7 +514,7 @@ drupal_set_title($websitedata['agencyname']);
                       </div>
                     </div>
                     <div class="col-sm-6 mt-xs-1">
-                      <p class="card-wi-desc" > <?= $websitedata['daptext'] ?></p>
+                      <p class="card-wi-desc" > <?= $websitedata['daptext']?>.</p>
                     </div>
                   </div>
                   <div class="explore mb-2 px-2">
