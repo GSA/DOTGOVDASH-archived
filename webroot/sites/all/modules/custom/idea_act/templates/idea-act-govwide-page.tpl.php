@@ -327,7 +327,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_website_num); ?></td>
                                               <td>100%
-                                                <a data-toggle="tooltip" title="The percentages in above table are rounded to nearest integer. Therefore sometimes you may see sum of all percentages not matching 100.">*</a>
+                                                <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a>
                                               </td>
                                             </tr>
                                             </tbody>
@@ -491,7 +491,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_website_num); ?></td>
                                               <td>100%
-                                                <a data-toggle="tooltip" title="The percentages in above table are rounded to nearest integer. Therefore sometimes you may see sum of all percentages not matching 100.">*</a>
+                                                <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a>
                                               </td>
                                             </tr>
                                             </tbody>
@@ -820,7 +820,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_website_num); ?></td>
                                               <td>100%
-                                                <a data-toggle="tooltip" title="The percentages in above table are rounded to nearest integer. Therefore sometimes you may see sum of all percentages not matching 100.">*</a>
+                                                <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a>
                                               </td>
                                             </tr>
 
@@ -948,7 +948,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_website_num); ?></td>
                                               <td>100%
-                                                <a data-toggle="tooltip" title="The percentages in above table are rounded to nearest integer. Therefore sometimes you may see sum of all percentages not matching 100.">*</a>
+                                                <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a>
                                               </td>
                                             </tr>
                                             </tbody>
@@ -1099,7 +1099,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_website_num); ?></td>
                                               <td>100%
-                                                <a data-toggle="tooltip" title="The percentages in above table are rounded to nearest integer. Therefore sometimes you may see sum of all percentages not matching 100.">*</a>
+                                                <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a>
                                               </td>
                                             </tr>
                                             </tbody>

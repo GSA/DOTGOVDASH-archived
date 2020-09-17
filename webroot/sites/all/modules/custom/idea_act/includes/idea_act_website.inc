@@ -261,7 +261,7 @@ function ideaact_get_website_data($websiteid){
   }
   else{
     $websitedata['dapstatus'] = 'Website Redirect - Metric Not Applicable';
-    $websitedata['daptext'] = 'The Metric is not applicable for this website (This website is a redirect)';
+    $websitedata['daptext'] = 'The metric is not applicable for this website (This website is a redirect)';
   }
   return $websitedata;
 }
