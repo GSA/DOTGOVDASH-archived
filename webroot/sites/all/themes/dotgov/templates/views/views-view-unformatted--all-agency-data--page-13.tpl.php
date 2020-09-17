@@ -114,7 +114,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                             <h2 class="pane-title"> Mobile Information </h2>
                           </div>
                           <div class="col-xs-2 nopadding">
-                            <div id="tooltip4" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">  <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
+                            <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
                               Mobile Data is collected from Google API through a scan that last ran on
                               <?php dotgov_common_lastScanDate();?>
                               </span>
@@ -207,7 +207,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                     <h2 class="pane-title">Accessibility Issues</h2>
                                 </div>
                                 <div class="col-xs-2 nopadding">
-                                    <div id="tooltip9" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">  <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br/>
+                                    <div id="tooltip9" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br/>
                     Accessibility Data is collected from pulse.gov website though a scan that last ran on
                                             <?php dotgov_common_lastScanDate();?>
                     </span> </div>
@@ -302,7 +302,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                     <h2 class="pane-title">DNSSEC Information</h2>
                                 </div>
                                 <div class="col-xs-2 nopadding">
-                                    <div id="tooltip5" class="infor"> <img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">  <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+                                    <div id="tooltip5" class="infor"> <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
                     DNSSEC Data is collected through a custom scanner component of dotgov dashboard that last ran on
                                             <?php dotgov_common_lastScanDate();?>
                     </span> </div>
@@ -452,7 +452,7 @@ print "$output4<br><div class='col-lg-12 text-center clearfix'><span style='colo
                                     <h2 class="pane-title"> On-Site Search Information </h2>
                                 </div>
                                 <div class="col-xs-2 nopadding">
-                                    <div id="tooltip5" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">  <span class="tooltiptext tooltip-left"> On-Site Search Data is collected through a custom scanner component of dotgov dashboard that last ran on
+                                    <div id="tooltip5" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"> On-Site Search Data is collected through a custom scanner component of dotgov dashboard that last ran on
                                             <?php dotgov_common_lastScanDate();?>
                     </span> </div>
                                 </div>
@@ -522,7 +522,7 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                     <h2 class="pane-title"> HTTPS Information </h2>
                                 </div>
                                 <div class="col-xs-2 nopadding">
-                                    <div id="tooltip2" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">  <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+                                    <div id="tooltip2" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
                     HTTPS Data is collected through a custom scanner component of digital dashboard that last ran on
                                             <?php dotgov_common_lastScanDate();?>
                     </span> </div>
@@ -681,7 +681,7 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                     <h2 class="pane-title">M-15-13 and BOD 18-01 Information</h2>
                                 </div>
                                 <div class="col-xs-2 nopadding">
-                                    <div id="tooltip7" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">  <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+                                    <div id="tooltip7" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
                     M-15-13 and BOD 18-01 Data is collected through a custom scanner component of dotgov dashboard that last ran on
                                             <?php dotgov_common_lastScanDate();?>
                     </span> </div>
@@ -829,7 +829,7 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                     <h2 class="pane-title"> IPV6 Information </h2>
                                 </div>
                                 <div class="col-xs-2">
-                                    <div id="tooltip6" class="infor"> <img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">  <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"> IPV6 Data is collected through a custom scanner component of dotgov dashboard that last ran on
+                                    <div id="tooltip6" class="infor"> <i class='icon glyphicon glyphicon-info-sign'>&nbsp</i> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"> IPV6 Data is collected through a custom scanner component of dotgov dashboard that last ran on
                                             <?php dotgov_common_lastScanDate();?>
                     </span> </div>
                                 </div>
@@ -981,7 +981,7 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                 </div>
                                 <div class="col-xs-2 nopadding">
                         <div id="tooltip3" class="infor">
-                           <img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon"> 
+                           <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
                            <span class="tooltiptext tooltip-left">
                            <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"><br>
                            DAP Overall Average Score :
@@ -1138,7 +1138,7 @@ print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: "
                         <h2 class="pane-title">Free of Insecure Protocols Information</h2>
                      </div>
                      <div class="col-xs-2 nopadding">
-                        <div id="tooltip8" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon"> 
+                        <div id="tooltip8" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
                            <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
                            Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate();?></span>
                         </div>
@@ -1283,7 +1283,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                 </div>
                                 <div class="col-xs-2 nopadding">
                         <div id="tooltip3" class="infor">
-                           <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon"> </a><span class="ext" aria-label="(link is external)"></span>
+                           <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
                         </div>
                      </div>
                      <br clear="all"/>
