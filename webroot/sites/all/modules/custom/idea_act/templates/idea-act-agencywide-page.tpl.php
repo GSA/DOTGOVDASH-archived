@@ -315,7 +315,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
                                               <td>100%
-                                                <a data-toggle="tooltip" title="The percentages in above table are rounded to nearest integer. Therefore sometimes you may see sum of all percentages not matching 100.">*</a>
+                                                <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a>
                                               </td>
                                             </tr>
                                             </tbody>
@@ -472,7 +472,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
                                               <td>100%
-                                                <a data-toggle="tooltip" title="The percentages in above table are rounded to nearest integer. Therefore sometimes you may see sum of all percentages not matching 100.">*</a>
+                                                <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a>
                                               </td>
                                             </tr>
                                             </tbody>
@@ -798,7 +798,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
                                               <td>100%
-                                                <a data-toggle="tooltip" title="The percentages in above table are rounded to nearest integer. Therefore sometimes you may see sum of all percentages not matching 100.">*</a>
+                                                <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a>
                                               </td>
                                             </tr>
 
@@ -917,7 +917,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
                                               <td>100%
-                                                <a data-toggle="tooltip" title="The percentages in above table are rounded to nearest integer. Therefore sometimes you may see sum of all percentages not matching 100.">*</a>
+                                                <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a>
                                               </td>
                                             </tr>
                                             </tbody>
@@ -1083,7 +1083,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
                                               <td>100%
-                                                <a data-toggle="tooltip" title="The percentages in above table are rounded to nearest integer. Therefore sometimes you may see sum of all percentages not matching 100.">*</a>
+                                                <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a>
                                               </td>
                                             </tr>
                                             </tbody>
