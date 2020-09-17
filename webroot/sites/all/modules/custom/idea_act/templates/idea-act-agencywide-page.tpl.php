@@ -703,20 +703,17 @@ $agency_data['agency_title'] = $agencynode->title;
                                                         var label = data.labels[tooltipItem.index];
                                                         var total = data.datasets[0].data.reduce(sumIt);
                                                         var val = data.datasets[0].data[tooltipItem.index];
-                                                        var $actualPercentage = (val/<?php print $agency_data['no_of_websites']; ?>)*100;
-                                                        var $convertedValue = $actualPercentage.toFixed(2);
-                                                        return label + ': ' + $convertedValue + '%';
+                                                        var actualPercentage = (val * 100 / total);
+                                                        return label + ': ' + actualPercentage.toFixed(2) + '%';
                                                     }
                                             }
                                         },
                                         plugins: {
-
                                             labels: {
                                                 render: function (args) {
-                                                    var $actualPercentage = ((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100;
-                                                    var $convertedValue = $actualPercentage.toFixed(2);
-                                                    return $convertedValue + '%';
+                                                    return  args.percentage + '%';
                                                 },
+                                                precision: 2,
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,

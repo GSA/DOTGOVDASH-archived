@@ -709,22 +709,20 @@ $search_engine_data_for_agencygraph = "0,0";
                                             custom: customChartTooltip('chart-4-ref','chartjs-tooltip4'),
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
-                                                    var label = data.labels[tooltipItem.index];
-                                                    var total = data.datasets[0].data.reduce(sumIt);
-                                                    var val = data.datasets[0].data[tooltipItem.index];
-                                                    var $actualPercentage = (val/<?php print $agency_website_num; ?>)*100;
-                                                    var $convertedValue = $actualPercentage.toFixed(2);
-                                                    return label + ': ' + $convertedValue + '%';
-                                                }
+                                                        var label = data.labels[tooltipItem.index];
+                                                        var total = data.datasets[0].data.reduce(sumIt);
+                                                        var val = data.datasets[0].data[tooltipItem.index];
+                                                        var actualPercentage = (val * 100 / total);
+                                                        return label + ': ' + actualPercentage.toFixed(2) + '%';
+                                                    }
                                             }
                                         },
                                         plugins: {
                                             labels: {
-                                               render: function (args) {
-                                                    var $actualPercentage = ((args.value)/ <?php print $agency_website_num; ?>)*100;
-                                                    var $convertedValue = $actualPercentage.toFixed(2);
-                                                    return $convertedValue + '%';
+                                                render: function (args) {
+                                                    return  args.percentage + '%';
                                                 },
+                                                precision: 2,
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
