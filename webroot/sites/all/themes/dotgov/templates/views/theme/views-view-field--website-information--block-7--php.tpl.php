@@ -60,9 +60,9 @@ dotgov_common_tooltip("tooltip5","id");
 <div class="col-xs-10">
     <h2 class="pane-title">DNSSEC Information</h2>
 </div>
-<div class="col-xs-2 nopadding">
+<div class="col-xs-2">
     <div id="tooltip5" class="infor">
-        <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+        <img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">
         <span class="tooltiptext tooltip-left">
           <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>DNSSEC Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?>
         </span>
