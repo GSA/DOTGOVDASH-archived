@@ -19,27 +19,27 @@ function idea_act_menu() {
     $items['ideaact/home/dashboard'] = array(
         'title' => "21st Century IDEA Act Home Page",
         'page callback' => 'idea_act_home_page',
-        'access callback' => TRUE,
+        'access callback' => 'user_is_logged_in_new',
         'type' => MENU_NORMAL_ITEM
     );
     $items['ideaact/govwide/dashboard'] = array(
         'title' => "21st Century IDEA Act Government Dashboard",
         'page callback' => 'idea_act_govwide_dashboard_page',
-        'access callback' => TRUE,
+        'access callback' => 'user_is_logged_in_new',
         'type' => MENU_NORMAL_ITEM
     );
     $items['ideaact/agencywide/dashboard/%'] = array(
         'title' => "21st Century IDEA Act Agency Dashboard",
         'page callback' => 'idea_act_agencywide_dashboard_page',
         'page arguments' => array(1),
-        'access callback' => TRUE,
+        'access callback' => 'user_is_logged_in_new',
         'type' => MENU_NORMAL_ITEM
     );
     $items['ideaact/website/dashboard/%'] = array(
         'title' => "21st Century IDEA Act Website Dashboard",
         'page callback' => 'idea_act_website_dashboard_page',
         'page arguments' => array(1),
-        'access callback' => TRUE,
+        'access callback' => 'user_is_logged_in_new',
         'type' => MENU_NORMAL_ITEM
     );
     return $items;
@@ -105,4 +105,11 @@ function idea_act_website_dashboard_page($websiteid) {
     $processed_vars['websiteid'] = $websiteid;
     $processed_vars['website_dashboard'] = "Test";
     return theme('website_dashboard_page', array('processed_vars' => $processed_vars));
+}
+
+/*
+ * User logged In check
+ */
+function user_is_logged_in_new() {
+    return (bool) $GLOBALS['user']->uid;
 }
