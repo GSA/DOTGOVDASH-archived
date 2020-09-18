@@ -499,15 +499,14 @@ drupal_set_title($websitedata['agencyname']);
                         <table>
                           <thead>
                           <tr>
-                            <th>DAP</th>
-                            <th>Status</th>
+                            <th scope="col" style="padding-right:50px">DAP</th>
+                            <th scope="col" style="padding-left:30px"> Status</th>
                           </tr>
                           </thead>
                           <tbody>
                           <tr>
-                            <td>DAP</td>
-                            <td><?php
-                              print $websitedata['dapstatus']?></td>
+                            <td>DAP  </td>
+                            <td style="padding-left:30px"><?php print $websitedata['dapstatus']?></td>
                           </tr>
                           </tbody>
                         </table>
