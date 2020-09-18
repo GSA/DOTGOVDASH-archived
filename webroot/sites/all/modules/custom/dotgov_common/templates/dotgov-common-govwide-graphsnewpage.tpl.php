@@ -77,7 +77,7 @@
                         <h2 class="pane-title"> Mobile Information </h2>
                       </div>
                       <div class="col-xs-2 nopadding">
-                        <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
+                        <div id="tooltip4" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon"> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
                               Mobile Data is collected from Google API through a scan that last ran on
                               <?php dotgov_common_lastScanDate();?>
                               </span>
@@ -170,7 +170,7 @@
                            <h2 class="pane-title">Accessibility Issues</h2>
                         </div>
                         <div class="col-xs-2 nopadding">
-                           <div id="tooltip9" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br/>
+                           <div id="tooltip9" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon"> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br/>
                               Accessibility Data is collected from pulse.gov website though a scan that last ran on
                               <?php dotgov_common_lastScanDate();?>
                               </span>
@@ -273,7 +273,7 @@
                         <h2 class="pane-title">DNSSEC Information</h2>
                      </div>
                      <div class="col-xs-2 nopadding">
-                        <div id="tooltip5" class="infor"> <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+                        <div id="tooltip5" class="infor"> <img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon"> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
                            DNSSEC Data is collected through a custom scanner component of dotgov dashboard that last ran on
                            <?php dotgov_common_lastScanDate();?>
                            </span>
@@ -426,7 +426,7 @@
                         <h2 class="pane-title"> On-Site Search Information </h2>
                      </div>
                      <div class="col-xs-2 nopadding">
-                        <div id="tooltip5" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                        <div id="tooltip5" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">
                            <span class="tooltiptext tooltip-left">
                            On-Site Search Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate();?> </span>
                         </div>
@@ -937,7 +937,7 @@
                      ?>
                      <div class="col-xs-2 nopadding">
                         <div id="tooltip3" class="infor">
-                           <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                           <img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">
                            <span class="tooltiptext tooltip-left">
                            <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"><br>
                            DAP Overall Average Score :
@@ -1233,8 +1233,7 @@
                      </div>
                      <div class="col-xs-2 nopadding">
                         <div id="tooltip10" class="infor">
-                           <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i
-                              class='icon glyphicon glyphicon-info-sign' style="padding-right: 4px;"></i></a>
+                           <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon"></a><span class="ext" aria-label="(link is external)"></span>
                         </div>
                      </div>
                      <br clear="all" />
