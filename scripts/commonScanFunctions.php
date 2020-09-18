@@ -1085,6 +1085,7 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
         $node->field_rc4_status['und'][0]['value'] = $result->rc4;
         $node->field_ssl_v2_from_pulse['und'][0]['value'] = $result->sslv2;
         $node->field_ssl_v3_from_pulse['und'][0]['value'] = $result->sslv3;
+        $redirectstat = $result->redirect;
         $node->field_redirect['und'][0]['value'] = $result->redirect;
         if($result->redirect == 'Yes')
             $node->field_redirect_url['und'][0]['value'] = getSiteRedirectDest($website['domain']);
@@ -1164,6 +1165,7 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
     $wnode->field_dap_score['und'][0]['value'] = $dapscore;
     $wnode->field_m15_13_compliance_score['und'][0]['value'] = $m15_score;
     $wnode->field_free_of_insecr_prot_score['und'][0]['value'] = $rc4_score;
+    $wnode->field_redirect['und'][0]['value'] = $redirectstat;
 
     //Save Tags to parent website
     if(!empty($tags)) {
