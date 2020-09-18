@@ -68,7 +68,7 @@ dotgov_common_tooltip("tooltip10","id");
 <div class="col-xs-2">
     <div id="tooltip3" class="infor">
         <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/live/uswds.md">    <img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">
-</a>
+</a><span class="ext" aria-label="(link is external)"></span>
     </div>
 </div>
 </div>
