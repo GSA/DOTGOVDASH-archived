@@ -60,7 +60,9 @@ dotgov_common_tooltip("tooltip9","id");
     <h2 class="pane-title">Accessibility Issues</h2>
 </div>
 <div class="col-xs-2 nopadding">
-    <div id="tooltip9" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+    <div id="tooltip9" class="infor">    
+        <img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">
+
         <span class="tooltiptext tooltip-left">
             <?php
                 if (!is_redirect(arg(1))) {

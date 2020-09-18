@@ -58,7 +58,9 @@
         <h2 class="pane-title">On-Site Search Information</h2>
     </div>
     <div class="col-xs-2 nopadding">
-        <div id="tooltip5" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+        <div id="tooltip5" class="infor">
+        <img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">
+
             <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
     On-Site Search Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate(); ?> </span>
         </div>
