@@ -57,7 +57,7 @@
     <div class="col-xs-10">
         <h2 class="pane-title">On-Site Search Information</h2>
     </div>
-    <div class="col-xs-2 nopadding">
+    <div class="col-xs-2">
         <div id="tooltip5" class="infor">
         <img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">
 
