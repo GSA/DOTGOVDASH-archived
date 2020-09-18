@@ -1466,12 +1466,12 @@ function updateMobileScanInfo($siteid,$webscanId,$website){
     $node->field_website_id['und'][0]['nid'] = $siteid;
     $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteid);
 
-    if($mobInfo['mobFriendlyErrorCode'] != '') {
-        $field_mobile_usability_score = NULL;
-    }
-    else{
-        $field_mobile_usability_score = round($mobInfo['mobFriendlyScore']);
-    }
+//    if($mobInfo['mobFriendlyErrorCode'] != '') {
+//        $field_mobile_usability_score = NULL;
+//    }
+//    else{
+        $field_mobile_usability_score = $mobInfo['mobFriendlyScore'];
+//    }
 
     $field_mobile_usability_result = ($mobInfo['mobFriendlyResult'] == 'true')?1:0;
     if($mobInfo['mobPerformErrorCode'] != '') {
