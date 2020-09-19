@@ -13,9 +13,12 @@ jQuery(document).ready(function ($) {
         var btn_text = $(this).text();
         if (btn_text == 'Explore All') {
           $(this).html("Collapse All");
+          $( ".row2").fadeIn(3000);
+
         }
         else {
           $(this).html("Explore All");
+          $( ".row2").fadeOut(2000);
         }
     });
 
