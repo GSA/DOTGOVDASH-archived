@@ -80,15 +80,32 @@
           jQuery( "#techstack" ).addClass( "split-column" );
       }
       var element = document.getElementById("main-container");
-      html2pdf()
-      .set({
-          filename: fileName + '.pdf',
-          jsPDF: {format:[pageWidth,pageHeight]},
-      })
-      .from(element)
-      .save().then(function () {
-        jQuery( "#techstack" ).removeClass( "split-column" );
-        });
+      // if width is less than than 768 px
+      if (jQuery(window).width() < 768) {   
+        html2pdf()
+        .set({
+            filename: fileName + '.pdf',
+            image: {type: 'jpeg', quality: 1},
+            html2canvas: {scale: 1, scrollX: 0, scrollY: 0, width: 900 },
+            jsPDF: {unit: 'in', format: 'A5', orientation: 'portrait'},
+        })
+        .from(element)
+        .save().then(function () {
+          jQuery( "#techstack" ).removeClass( "split-column" );
+          });
+      } else {
+        // if width is more than 768 px
+        html2pdf()
+          .set({
+              filename: fileName + '.pdf',
+              jsPDF: {format:[pageWidth,pageHeight]},
+          })
+          .from(element)
+          .save().then(function () {
+            jQuery( "#techstack" ).removeClass( "split-column" );
+            });
+      }
+    
     }
 </script>
 <div class="top-bar">
