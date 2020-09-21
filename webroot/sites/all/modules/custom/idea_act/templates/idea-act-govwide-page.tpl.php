@@ -246,8 +246,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 render: 'value',
                                                 fontColor: '#102e54',
                                                 position: 'outside',
-                                                fontSize: 10,
-                                                textMargin: 12,
+                                                fontSize: 18,
+                                                textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
                                         },
@@ -398,7 +398,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                     var $actualPercentage = (val/<?php print $agency_website_num; ?>)*100;
                                                     var $convertedValue = $actualPercentage.toFixed(2);
                                                     var $getDecimals = $convertedValue.substring(2);
-                                                    if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                    if($getDecimals == '0.00' || $getDecimals == '.00') {
                                                         return label + ': ' + Math.round($convertedValue) + '%';
                                                     }
                                                     else {
@@ -414,7 +414,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                     var $actualPercentage = ((args.value)/ <?php print $agency_website_num; ?>)*100;
                                                     var $convertedValue = $actualPercentage.toFixed(2);
                                                     var $getDecimals = $convertedValue.substring(2);
-                                                    if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                    if($getDecimals == '0.00' || $getDecimals == '.00') {
                                                         return Math.round($convertedValue) + '%';
                                                     }
                                                     else {
@@ -422,8 +422,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                                     }                                                },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
-                                                fontSize: 10,
-                                                textMargin: 12,
+                                                fontSize: 18,
+                                                textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
                                         },
@@ -575,7 +575,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                     var $actualPercentage = (val/<?php print $agency_website_num; ?>)*100;
                                                     var $convertedValue = $actualPercentage.toFixed(2);
                                                     var $getDecimals = $convertedValue.substring(2);
-                                                    if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                    if($getDecimals == '0.00' || $getDecimals == '.00') {
                                                         return label + ': ' + Math.round($convertedValue) + '%';
                                                     }
                                                     else {
@@ -590,7 +590,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                     var $actualPercentage = ((args.value)/ <?php print $agency_website_num; ?>)*100;
                                                     var $convertedValue = $actualPercentage.toFixed(2);
                                                     var $getDecimals = $convertedValue.substring(2);
-                                                    if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                    if($getDecimals == '0.00' || $getDecimals == '.00') {
                                                         return Math.round($convertedValue) + '%';
                                                     }
                                                     else {
@@ -599,8 +599,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
-                                                fontSize: 10,
-                                                textMargin: 12,
+                                                fontSize: 18,
+                                                textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
                                         },
@@ -736,7 +736,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                         var val = data.datasets[0].data[tooltipItem.index];
                                                         var $actualPercentage = (val * 100 / total).toFixed(2);
                                                         var $getDecimals = $actualPercentage.substring(2);
-                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                        if($getDecimals == '0.00' || $getDecimals == '.00') {
                                                             return label + ': ' + Math.round($actualPercentage) + '%';
                                                         }
                                                         else {
@@ -753,8 +753,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 precision: 2,
                                                 fontColor: '#102e54',
                                                 position: 'outside',
-                                                fontSize: 10,
-                                                textMargin: 12,
+                                                fontSize: 18,
+                                                textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
                                         },
@@ -905,7 +905,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                         var $convertedValue = $actualPercentage.toFixed(2);
                                                         // return label + ': ' + $convertedValue + '%';
                                                         var $getDecimals = $convertedValue.substring(2);
-                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                        if($getDecimals == '0.00' || $getDecimals == '.00') {
                                                             return label + ': ' + Math.round($convertedValue) + '%';
                                                         }
                                                         else {
@@ -921,7 +921,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                             var $actualPercentage = ((args.value)/ <?php print $agency_website_num; ?>)*100;
                                                             var $convertedValue = $actualPercentage.toFixed(2);
                                                             var $getDecimals = $convertedValue.substring(2);
-                                                            if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00' ) {
+                                                            if($getDecimals == '0.00' || $getDecimals == '.00' ) {
                                                                 return Math.round($convertedValue) + '%';
                                                             }
                                                             else {
@@ -930,8 +930,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                                         },
                                                         fontColor: '#102e54',
                                                         position: 'outside',
-                                                        fontSize: 10,
-                                                        textMargin: 12,
+                                                        fontSize: 18,
+                                                        textMargin: 8,
                                                         fontStyle: 'bold',
                                                     }
                                                 },
@@ -1041,7 +1041,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                         var $actualPercentage = (val/<?php print $agency_website_num; ?>)*100;
                                                         var $convertedValue = $actualPercentage.toFixed(2);
                                                         var $getDecimals = $convertedValue.substring(2);
-                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                        if($getDecimals == '0.00' || $getDecimals == '.00') {
                                                             return label + ': ' + Math.round($convertedValue) + '%';
                                                         }
                                                         else {
@@ -1056,7 +1056,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                             var $actualPercentage = ((args.value)/ <?php print $agency_website_num; ?>)*100;
                                                             var $convertedValue = $actualPercentage.toFixed(2);
                                                             var $getDecimals = $convertedValue.substring(2);
-                                                            if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                            if($getDecimals == '0.00' || $getDecimals == '.00') {
                                                                 return Math.round($convertedValue) + '%';
                                                             }
                                                             else {
@@ -1065,8 +1065,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                                         },
                                                         fontColor: '#102e54',
                                                         position: 'outside',
-                                                        fontSize: 10,
-                                                        textMargin: 12,
+                                                        fontSize: 18,
+                                                        textMargin: 8,
                                                         fontStyle: 'bold',
                                                     }
                                                 },
@@ -1217,7 +1217,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                         var $actualPercentage = (val/<?php print $agency_website_num; ?>)*100;
                                                         var $convertedValue = $actualPercentage.toFixed(2);
                                                         var $getDecimals = $convertedValue.substring(2);
-                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                        if($getDecimals == '0.00' || $getDecimals == '.00') {
                                                             return label + ': ' + Math.round($convertedValue) + '%';
                                                         }
                                                         else {
@@ -1238,7 +1238,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                     var $actualPercentage = ((args.value)/ <?php print $agency_website_num; ?>)*100;
                                                     var $convertedValue = $actualPercentage.toFixed(2);
                                                     var $getDecimals = $convertedValue.substring(2);
-                                                    if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                    if($getDecimals == '0.00' || $getDecimals == '.00') {
                                                         return Math.round($convertedValue) + '%';
                                                     }
                                                     else {
@@ -1246,8 +1246,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                                     }                                                },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
-                                                fontSize: 10,
-                                                textMargin: 12,
+                                                fontSize: 18,
+                                                textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
                                         },

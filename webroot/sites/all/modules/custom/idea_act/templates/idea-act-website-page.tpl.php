@@ -194,8 +194,8 @@ drupal_set_title($websitedata['agencyname']);
                                                         render: 'value',
                                                         fontColor: '#102e54',
                                                         position: 'outside',
-                                                        fontSize: 10,
-                                                        textMargin: 12,
+                                                        fontSize: 18,
+                                                        textMargin: 8,
                                                         fontStyle: 'bold',
                                                     }
                                                 },
