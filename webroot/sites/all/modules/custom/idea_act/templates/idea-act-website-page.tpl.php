@@ -321,7 +321,7 @@ drupal_set_title($websitedata['agencyname']);
                                               <td><?=$websitedata['EnforceHttps']?></td>
                                             </tr>
                                             <tr>
-                                              <td>Https Status</td>
+                                              <td>HTTPS Status</td>
                                               <td><?=$websitedata['HttpsStatus']?></td>
                                             </tr>
                                             </tbody>
