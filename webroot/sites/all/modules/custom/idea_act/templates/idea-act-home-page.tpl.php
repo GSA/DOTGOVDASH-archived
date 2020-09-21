@@ -91,7 +91,6 @@ $total_websites_count = $agency_data['actualdata']['total_websites_count'];
                 <h2 class="h2-title">Browse by Agencies</h2>          
                 <div class="row text-center browse-agencies">
                     <div class="row1">
-                    <!-- <div class="col-sm-12"> -->
                        <?php
                        $count = 0;
                         foreach ($agencies as $key => $agency) {
@@ -102,17 +101,16 @@ $total_websites_count = $agency_data['actualdata']['total_websites_count'];
                             <p class='number'>". $agency['websitenos'] ."</p>
                           </div></a>";
                           if ($count == 3) {
-                              print "</div><div class='collapse' id='toggleRow'>";
+                              print "</div><div class='row2' style='display:none;' id='row-none'>";
                           }
                           $count++;
                         }
                         ?>
                         </div>
-                    <!-- </div> -->
                 </div>
 
                 <div class="explore text-center">
-                    <a class="btn btn-digital show-agencies" id="btn-explore" data-toggle="collapse" data-target="#toggleRow" aria-expanded="false" aria-controls="toggleRow" >Explore All</a>
+                    <a class="btn btn-digital show-agencies" id="btn-explore" >Explore All</a>
                 </div>
                 </div>
             </div>

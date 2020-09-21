@@ -242,6 +242,27 @@ function ideaact_get_website_data($websiteid){
       <img  alt='na-chart' src='/sites/all/modules/custom/idea_act/images/not-available-chart.png' width='250' height='250' class='alternate-chart-responsive'>
  </div>";
     }
+
+  #Dap Information
+  if(!is_redirect($websiteid)) {
+
+    if ($wnode->field_dap_score['und'][0]['value'] == 0) {
+      $websitedata['dapstatus'] = 'Not Implemented';
+      $websitedata['daptext'] = 'This website does not have Digital Analytics Implemented';
+    }
+    if ($wnode->field_dap_score['und'][0]['value'] == 100) {
+      $websitedata['dapstatus'] = 'Implemented';
+      $websitedata['daptext'] = 'This website has Digital Analytics Implemented';
+    }
+    if ($wnode->field_dap_score['und'][0]['value'] == NULL || $wnode->field_dap_score['und'][0]['value'] == '') {
+      $websitedata['dapstatus'] = 'Data Not Available';
+      $websitedata['daptext'] = 'This website does not have available data for Digital Analytics';
+    }
+  }
+  else{
+    $websitedata['dapstatus'] = 'Website Redirect - Metric Not Applicable';
+    $websitedata['daptext'] = 'The metric is not applicable for this website (This website is a redirect)';
+  }
   return $websitedata;
 }
 

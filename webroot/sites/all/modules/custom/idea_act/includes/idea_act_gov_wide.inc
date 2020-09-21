@@ -309,10 +309,10 @@ function idea_act_getAllAgencyComplianceData(){
 
   if($agencydata['usab_null'] != 0 ) {
     $agencydata['usab_null_color'] = '#66364b';
-    $agencydata['usab_null_label'] = 'Data Not Available';      
+    $agencydata['usab_null_label'] = 'Data Not Available';
   } else {
     $agencydata['usab_null_color'] = '';
-    $agencydata['usab_null_label'] = '';  
+    $agencydata['usab_null_label'] = '';
   }
   $agencydata['perf_null']= $govwide_mob['null'];
 
@@ -419,15 +419,15 @@ function idea_act_lastScanDate(){
 function idea_act_applyDataPercentage($data,$websites)
 {
     $actual_percent = ($data / $websites) * 100;
-    $percent = round($actual_percent);
+    $percent = round($actual_percent,2);
 
     if ($data != '') {
         if($actual_percent < 1 && $actual_percent > 0) {
             $dataPercentage = "< 1%";
         } else {
             $dataPercentage = "$percent%";
-        } 
-       
+        }
+
     }
     else{
         $dataPercentage = "0%";
@@ -450,7 +450,7 @@ function idea_act_avoid_slice($data,$websites) {
             $chart_data = "0";
         } else {
             $chart_data = "$data";
-        } 
+        }
     }
 
     return $chart_data;
@@ -471,7 +471,7 @@ function idea_act_avoid_null_legend($data,$websites) {
             $data_null_label = "";
         } else {
             $data_null_label = "Not Available";
-        } 
+        }
     }
     return $data_null_label;
 }
@@ -490,7 +490,7 @@ function idea_act_avoid_null_color($data,$websites) {
             $data_null_color = "";
         } else {
             $data_null_color = "#66364b";
-        } 
+        }
     }
     return $data_null_color;
 }

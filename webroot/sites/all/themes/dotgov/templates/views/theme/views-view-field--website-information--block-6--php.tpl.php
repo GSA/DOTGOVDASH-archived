@@ -124,8 +124,8 @@ dotgov_common_tooltip("tooltip4","id");
 <div class="col-xs-10">
     <h2 class="pane-title"> Mobile Information </h2>
 </div>
-<div class="col-xs-2 nopadding" style="z-index: 3;">
-    <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+<div class="col-xs-2" style="z-index: 3;">
+    <div id="tooltip4" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">
         <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
           <?php print nl2br($crit_text);?></span>
     </div>

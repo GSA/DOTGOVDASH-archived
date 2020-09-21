@@ -175,7 +175,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     <p>Average Missing Image Description: <?=round($agencydata['ag_miss_image'] / $agency_website_num, 1);?></p>
                                     <p>(Note: website redirects are excluded)</p>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-6 nopadding">
                                 <h4 class="chart-data-title text-center">Total Number of Accessibility Issues for Websites</h4>
                                     <div class="chart-container" id="chart-1-ref">
                                         <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
@@ -247,7 +247,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
-                                                textMargin: 12,
+                                                textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
                                         },
@@ -326,7 +326,9 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <tr>
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_website_num); ?></td>
-                                              <td>100%</td>
+                                              <td>100%
+                                                <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a>
+                                              </td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -393,18 +395,35 @@ $search_engine_data_for_agencygraph = "0,0";
                                                     var label = data.labels[tooltipItem.index];
                                                     var total = data.datasets[0].data.reduce(sumIt);
                                                     var val = data.datasets[0].data[tooltipItem.index];
-                                                    return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                    var $actualPercentage = (val/<?php print $agency_website_num; ?>)*100;
+                                                    var $convertedValue = $actualPercentage.toFixed(2);
+                                                    var $getDecimals = $convertedValue.substring(2);
+                                                    if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                        return label + ': ' + Math.round($convertedValue) + '%';
+                                                    }
+                                                    else {
+                                                        return label + ': ' + $convertedValue + '%';
+                                                    }
                                                 }
                                             }
                                         },
                                         plugins: {
 
                                             labels: {
-                                                render: 'data',
+                                               render: function (args) {
+                                                    var $actualPercentage = ((args.value)/ <?php print $agency_website_num; ?>)*100;
+                                                    var $convertedValue = $actualPercentage.toFixed(2);
+                                                    var $getDecimals = $convertedValue.substring(2);
+                                                    if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                        return Math.round($convertedValue) + '%';
+                                                    }
+                                                    else {
+                                                        return $convertedValue + '%';
+                                                    }                                                },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
-                                                textMargin: 12,
+                                                textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
                                         },
@@ -482,7 +501,9 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <tr>
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_website_num); ?></td>
-                                              <td>100%</td>
+                                              <td>100%
+                                                <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a>
+                                              </td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -551,18 +572,35 @@ $search_engine_data_for_agencygraph = "0,0";
                                                     var label = data.labels[tooltipItem.index];
                                                     var total = data.datasets[0].data.reduce(sumIt);
                                                     var val = data.datasets[0].data[tooltipItem.index];
-                                                    return label + ': ' + Math.round( val * 100 / total) + '%';
-                                                }
+                                                    var $actualPercentage = (val/<?php print $agency_website_num; ?>)*100;
+                                                    var $convertedValue = $actualPercentage.toFixed(2);
+                                                    var $getDecimals = $convertedValue.substring(2);
+                                                    if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                        return label + ': ' + Math.round($convertedValue) + '%';
+                                                    }
+                                                    else {
+                                                        return label + ': ' + $convertedValue + '%';
+                                                    }                                                }
                                             }
                                         },
                                         plugins: {
 
                                             labels: {
-                                                render: 'data',
+                                               render: function (args) {
+                                                    var $actualPercentage = ((args.value)/ <?php print $agency_website_num; ?>)*100;
+                                                    var $convertedValue = $actualPercentage.toFixed(2);
+                                                    var $getDecimals = $convertedValue.substring(2);
+                                                    if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                        return Math.round($convertedValue) + '%';
+                                                    }
+                                                    else {
+                                                    return $convertedValue + '%';
+                                                    }
+                                                },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
-                                                textMargin: 12,
+                                                textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
                                         },
@@ -693,20 +731,30 @@ $search_engine_data_for_agencygraph = "0,0";
                                             custom: customChartTooltip('chart-4-ref','chartjs-tooltip4'),
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
-                                                    var label = data.labels[tooltipItem.index];
-                                                    var total = data.datasets[0].data.reduce(sumIt);
-                                                    var val = data.datasets[0].data[tooltipItem.index];
-                                                    return label + ': ' + Math.round( val * 100 / total) + '%';
-                                                }
+                                                        var label = data.labels[tooltipItem.index];
+                                                        var total = data.datasets[0].data.reduce(sumIt);
+                                                        var val = data.datasets[0].data[tooltipItem.index];
+                                                        var $actualPercentage = (val * 100 / total).toFixed(2);
+                                                        var $getDecimals = $actualPercentage.substring(2);
+                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                            return label + ': ' + Math.round($actualPercentage) + '%';
+                                                        }
+                                                        else {
+                                                            return label + ': ' + $actualPercentage + '%';
+                                                        }
+                                                    }
                                             }
                                         },
                                         plugins: {
                                             labels: {
-                                                render: 'data',
+                                                render: function (args) {
+                                                    return  args.percentage + '%';
+                                                },
+                                                precision: 2,
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
-                                                textMargin: 12,
+                                                textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
                                         },
@@ -799,7 +847,9 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <tr>
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_website_num); ?></td>
-                                              <td>100%</td>
+                                              <td>100%
+                                                <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a>
+                                              </td>
                                             </tr>
 
                                             </tbody>
@@ -848,21 +898,40 @@ $search_engine_data_for_agencygraph = "0,0";
                                                     custom: customChartTooltip('chart-5-ref','chartjs-tooltip5'),
                                                     callbacks: {
                                                         label: function(tooltipItem, data) {
-                                                            var label = data.labels[tooltipItem.index];
-                                                            var total = data.datasets[0].data.reduce(sumIt);
-                                                            var val = data.datasets[0].data[tooltipItem.index];
-                                                            return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                        var label = data.labels[tooltipItem.index];
+                                                        var total = data.datasets[0].data.reduce(sumIt);
+                                                        var val = data.datasets[0].data[tooltipItem.index];
+                                                        var $actualPercentage = (val/<?php print $agency_website_num; ?>)*100;
+                                                        var $convertedValue = $actualPercentage.toFixed(2);
+                                                        // return label + ': ' + $convertedValue + '%';
+                                                        var $getDecimals = $convertedValue.substring(2);
+                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                            return label + ': ' + Math.round($convertedValue) + '%';
                                                         }
+                                                        else {
+                                                            return label + ': ' + $convertedValue + '%';
+                                                        }
+                                                    }
                                                     }
                                                 },
                                                 plugins: {
 
                                                     labels: {
-                                                        render: 'data',
+                                                        render: function (args) {
+                                                            var $actualPercentage = ((args.value)/ <?php print $agency_website_num; ?>)*100;
+                                                            var $convertedValue = $actualPercentage.toFixed(2);
+                                                            var $getDecimals = $convertedValue.substring(2);
+                                                            if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00' ) {
+                                                                return Math.round($convertedValue) + '%';
+                                                            }
+                                                            else {
+                                                                return $convertedValue + '%';
+                                                            }
+                                                        },
                                                         fontColor: '#102e54',
                                                         position: 'outside',
                                                         fontSize: 18,
-                                                        textMargin: 12,
+                                                        textMargin: 8,
                                                         fontStyle: 'bold',
                                                     }
                                                 },
@@ -919,7 +988,9 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <tr>
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_website_num); ?></td>
-                                              <td>100%</td>
+                                              <td>100%
+                                                <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a>
+                                              </td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -964,20 +1035,38 @@ $search_engine_data_for_agencygraph = "0,0";
                                                     enabled: false,
                                                     custom: customChartTooltip('chart-6-ref','chartjs-tooltip6'),                                                    callbacks: {
                                                         label: function(tooltipItem, data) {
-                                                            var label = data.labels[tooltipItem.index];
-                                                            var total = data.datasets[0].data.reduce(sumIt);
-                                                            var val = data.datasets[0].data[tooltipItem.index];
-                                                            return label + ': ' + Math.round( val * 100 / total) + '%';
+                                                        var label = data.labels[tooltipItem.index];
+                                                        var total = data.datasets[0].data.reduce(sumIt);
+                                                        var val = data.datasets[0].data[tooltipItem.index];
+                                                        var $actualPercentage = (val/<?php print $agency_website_num; ?>)*100;
+                                                        var $convertedValue = $actualPercentage.toFixed(2);
+                                                        var $getDecimals = $convertedValue.substring(2);
+                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                            return label + ': ' + Math.round($convertedValue) + '%';
                                                         }
+                                                        else {
+                                                            return label + ': ' + $convertedValue + '%';
+                                                        }
+                                                    }
                                                     }
                                                 },
                                                 plugins: {
                                                     labels: {
-                                                        render: 'data',
+                                                        render: function (args) {
+                                                            var $actualPercentage = ((args.value)/ <?php print $agency_website_num; ?>)*100;
+                                                            var $convertedValue = $actualPercentage.toFixed(2);
+                                                            var $getDecimals = $convertedValue.substring(2);
+                                                            if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                                return Math.round($convertedValue) + '%';
+                                                            }
+                                                            else {
+                                                                return $convertedValue + '%';
+                                                            }
+                                                        },
                                                         fontColor: '#102e54',
                                                         position: 'outside',
                                                         fontSize: 18,
-                                                        textMargin: 12,
+                                                        textMargin: 8,
                                                         fontStyle: 'bold',
                                                     }
                                                 },
@@ -1062,7 +1151,9 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <tr>
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_website_num); ?></td>
-                                              <td>100%</td>
+                                              <td>100%
+                                                <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a>
+                                              </td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -1120,11 +1211,18 @@ $search_engine_data_for_agencygraph = "0,0";
                                             custom: customChartTooltip('chart-7-ref','chartjs-tooltip7'),
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
-                                                    var label = data.labels[tooltipItem.index];
-                                                    var total = data.datasets[0].data.reduce(sumIt);
-                                                    var val = data.datasets[0].data[tooltipItem.index];
-                                                    return label + ': ' + Math.round( val * 100 / total) + '%';
-                                                }
+                                                        var label = data.labels[tooltipItem.index];
+                                                        var total = data.datasets[0].data.reduce(sumIt);
+                                                        var val = data.datasets[0].data[tooltipItem.index];
+                                                        var $actualPercentage = (val/<?php print $agency_website_num; ?>)*100;
+                                                        var $convertedValue = $actualPercentage.toFixed(2);
+                                                        var $getDecimals = $convertedValue.substring(2);
+                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                            return label + ': ' + Math.round($convertedValue) + '%';
+                                                        }
+                                                        else {
+                                                            return label + ': ' + $convertedValue + '%';
+                                                        }                                                }
                                             }
                                         },
                                         title: {
@@ -1136,11 +1234,20 @@ $search_engine_data_for_agencygraph = "0,0";
                                         plugins: {
 
                                             labels: {
-                                                render: 'data',
+                                               render: function (args) {
+                                                    var $actualPercentage = ((args.value)/ <?php print $agency_website_num; ?>)*100;
+                                                    var $convertedValue = $actualPercentage.toFixed(2);
+                                                    var $getDecimals = $convertedValue.substring(2);
+                                                    if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
+                                                        return Math.round($convertedValue) + '%';
+                                                    }
+                                                    else {
+                                                        return $convertedValue + '%';
+                                                    }                                                },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 18,
-                                                textMargin: 12,
+                                                textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
                                         },
