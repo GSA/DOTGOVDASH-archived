@@ -199,10 +199,10 @@ function ideaact_get_website_data($websiteid){
     $websitedata['mobtext'] = 'The metric is not applicable for this website (This website is a redirect).';
   }
 #Accessibility issues
-    $acessresults = db_query("select c.field_accessible_group_colorcont_value,d.field_accessible_group_missingim_value,e.field_accessible_group_htmlattri_value from node a , field_data_field_website_id b , field_data_field_accessible_group_colorcont c,field_data_field_accessible_group_missingim d,field_data_field_accessible_group_htmlattri e  where a.type='508_scan_information' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and b.entity_id=d.entity_id and b.entity_id=e.entity_id and b.field_website_id_nid=:websiteid", array(':websiteid' => $websiteid));
+    $acessresults = db_query("select a.nid, c.field_accessible_group_colorcont_value,d.field_accessible_group_missingim_value,e.field_accessible_group_htmlattri_value from node a , field_data_field_website_id b , field_data_field_accessible_group_colorcont c,field_data_field_accessible_group_missingim d,field_data_field_accessible_group_htmlattri e  where a.type='508_scan_information' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and b.entity_id=c.entity_id and b.entity_id=d.entity_id and b.entity_id=e.entity_id and b.field_website_id_nid=:websiteid", array(':websiteid' => $websiteid));
     #Accessibility
     foreach ($acessresults as $acesssresult) {
-
+      $websitedata['access_id'] = $acesssresult->nid;
       $websitedata['colorcont']  = $acesssresult->field_accessible_group_colorcont_value;
       $websitedata['htmlattri'] = $acesssresult->field_accessible_group_htmlattri_value;
       $websitedata['missingim'] = $acesssresult ->field_accessible_group_missingim_value;
