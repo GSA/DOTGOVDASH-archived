@@ -382,7 +382,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                         var total = data.datasets[0].data.reduce(sumIt);
                                                         var val = data.datasets[0].data[tooltipItem.index];
                                                         var $actualPercentage = (val/<?php print $agency_data['no_of_websites']; ?>)*100;
-                                                        var $convertedValue = $actualPercentage.toFixed(2);                                                        
+                                                        var $convertedValue = $actualPercentage.toFixed(2);
                                                         var $getDecimals = $convertedValue.substring(2);
                                                         if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
                                                             return label + ': ' + Math.round($convertedValue) + '%';
@@ -555,7 +555,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                         var total = data.datasets[0].data.reduce(sumIt);
                                                         var val = data.datasets[0].data[tooltipItem.index];
                                                         var $actualPercentage = (val/<?php print $agency_data['no_of_websites']; ?>)*100;
-                                                        var $convertedValue = $actualPercentage.toFixed(2);                                                        
+                                                        var $convertedValue = $actualPercentage.toFixed(2);
                                                         var $getDecimals = $convertedValue.substring(2);
                                                         if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
                                                             return label + ': ' + Math.round($convertedValue) + '%';
@@ -666,13 +666,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 <div class="col-md-6 mt-xs-1">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                   <h4 class="text-center chart-data-title"> On-site Search Engine Breakdown </h4>
-                                  <div class="chart-container" id="chart-4-ref">
-                                      <?php $searchenginestatus = $agency_data['searchenginestatus'];
-                                      ?>
-                                        <canvas id="chart-gov-search" width="250" height="300" aria-label="Charts" role="img"></canvas>
-                                    </div>
-                                  <div id="chart-4-legend-mobile"></div>
-
+                                  <?php print $agency_data['search-chart'];?>
                                 </div>
                             </div>
 
@@ -914,7 +908,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                             }
                                                             else {
                                                                 return $convertedValue + '%';
-                                                            }   
+                                                            }
                                                         },
                                                         fontColor: '#102e54',
                                                         position: 'outside',
