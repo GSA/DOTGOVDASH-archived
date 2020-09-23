@@ -44,8 +44,12 @@
  */
 ?>
 <style>
-.height-175 { min-height: 175px !important; }
-.height-74 { min-height: 74px !important; }
+.height-175 { 
+  min-height: 175px !important; 
+}
+.height-74 { 
+  min-height: 74px !important; 
+}
 </style>
 <?php print $output; ?>
 <?php
