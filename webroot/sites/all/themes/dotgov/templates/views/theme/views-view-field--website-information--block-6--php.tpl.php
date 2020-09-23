@@ -45,7 +45,7 @@
 ?>
 <style>
 .height-175 { min-height: 175px !important; }
-.height-80 { min-height: 80px !important; }
+.height-74 { min-height: 74px !important; }
 </style>
 <?php print $output; ?>
 <?php
@@ -115,7 +115,7 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
   }
 } else {
   $heightChange = "height-175";
-  $height80 = "height-80";
+  $height80 = "height-74";
   $crit_text .= "Mobile Usability: <span style=\"color:white;\">" . $redirect_message . "</span><br>";
 }
 
