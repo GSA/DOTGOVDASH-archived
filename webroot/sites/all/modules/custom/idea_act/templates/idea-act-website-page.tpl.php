@@ -125,8 +125,8 @@ drupal_set_title($websitedata['agencyname']);
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                                            <div><i><b>Accessible - Accessible to Individuals with Disabilities</b></i></div>
+                                            <span class="fw-300">21st Century IDEA requires all executive branch public-facing websites and digital services to be accessible to individuals with disabilities. The three accessibility metrics presented in this report provide an initial spot check of some common web accessibility issues that can be discovered through automated scanning. This is an indicator only, and is not intended to be a comprehensive assessment of website accessibility. </span>
                                             <a href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
@@ -237,8 +237,8 @@ drupal_set_title($websitedata['agencyname']);
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                                            <div><i><b>Mobile-friendly - Fully Functional and Usable on Common Mobile Devices</b></i></div>
+                                            <span class="fw-300">21st Century IDEA requires all executive branch public-facing websites and digital services to be fully functional and usable on common mobile devices. This report uses automated scanning to deliver Mobile Performance and Mobile Usability assessment results for each .gov website.</span>
                                             <a href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
@@ -294,8 +294,8 @@ drupal_set_title($websitedata['agencyname']);
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                                            <div><i><b>Secure - Provided through an Industry Standard Secure Connection</b></i></div>
+                                            <span class="fw-300">21st Century IDEA requires all executive branch public-facing websites and digital services to have a secure connection. The report shows how many agency websites are <a href="https://https.cio.gov/">HTTPS</a> compliant.</span>
                                             <a href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
@@ -422,8 +422,8 @@ drupal_set_title($websitedata['agencyname']);
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                                            <div><i><b>Searchable - Contains a Search Function</b></i></div>
+                                            <span class="fw-300">21st Century IDEA requires all executive branch public-facing websites and digital services to have a search function that allows users to easily search content. This report provides a high-level view on how many websites have a search box (detectable through automated scanning), and provides a breakdown of specific on-site search products, where available. </span>
                                             <a href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
