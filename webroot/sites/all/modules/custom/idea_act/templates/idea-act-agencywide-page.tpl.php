@@ -593,7 +593,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                         <div>
                                             <div><i><b>Search - Contains a Search Function</b></i></div>
                                             <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a search function that allows users to easily search content. </span>
-                                            <a href="#"><b>Read More</b></a>
+                                            <a href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
