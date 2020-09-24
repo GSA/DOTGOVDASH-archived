@@ -707,13 +707,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                                         var total = data.datasets[0].data.reduce(sumIt);
                                                         var val = data.datasets[0].data[tooltipItem.index];
                                                         var $actualPercentage = (val * 100 / total).toFixed(2);
-                                                        var $getDecimals = $actualPercentage.substring(2);
-                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                            return label + ': ' + Math.round($actualPercentage) + '%';
-                                                        }
-                                                        else {
-                                                            return label + ': ' + $actualPercentage + '%';
-                                                        }
+                                                        return label + ': ' + Math.round($actualPercentage) + '%';
+
                                                     }
                                             }
                                         },
@@ -722,7 +717,6 @@ $search_engine_data_for_agencygraph = "0,0";
                                                 render: function (args) {
                                                     return  args.percentage + '%';
                                                 },
-                                                precision: 2,
                                                 fontColor: '#102e54',
                                                 position: 'outside',
                                                 fontSize: 16,
