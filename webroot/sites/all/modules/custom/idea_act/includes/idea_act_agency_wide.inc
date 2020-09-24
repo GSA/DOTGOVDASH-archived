@@ -158,7 +158,7 @@ function ideaact_get_agencywide_data($agencyid){
   $search_status_graph_output = theme('agencywide_searchstatus_page', array('$agency_data' => $agency_search_status));
   $agency_data['searchenginestatus_graph'] = $search_status_graph_output;
   #search zero graph
-  if($agency_data['search_available'] == 0) {
+  if($agency_search_status['search_available'] == 0) {
     $agency_data['search-chart'] = "<div class='text-center'>
       <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive'>
  </div>";
