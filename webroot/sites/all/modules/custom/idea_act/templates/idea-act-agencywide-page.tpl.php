@@ -109,7 +109,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                  title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
                         </a> -->
 
-                        <button class="button download-button" onclick="generatePDF( '<?= $pdf_file_name?>', 500,760)" type="submit">Download</button>
+                        <button class="button download-button" onclick="generatePDF( '<?= $pdf_file_name?>', 500,705)" type="submit">Download</button>
                     </div>
                 </div>
             </div>
