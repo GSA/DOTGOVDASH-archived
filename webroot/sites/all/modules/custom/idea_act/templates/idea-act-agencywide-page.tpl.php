@@ -273,8 +273,10 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                                            <div><i><b>Consistent - Consistent in Appearance</b></i></div>
+                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a consistent appearance. 
+                                            It also requires agencies to use this <a href="https://designsystem.digital.gov/maturity-model/">maturity model</a> to gauge compliance with these <a href="https://designsystem.digital.gov/website-standards/">website standards</a> via use of the <a href="https://designsystem.digital.gov/">U.S. Web Design System</a>. 
+                                            This report provides a high-level view of websites and agencies using the U.S. Web Design System (USWDS) code. </span>
                                             <a href="#"><b>Read More</b></a>
                                         </div>
                                     </div>
