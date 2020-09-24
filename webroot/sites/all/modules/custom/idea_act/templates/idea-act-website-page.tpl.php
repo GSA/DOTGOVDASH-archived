@@ -484,8 +484,8 @@ drupal_set_title($websitedata['agencyname']);
                       </div>
                       <div class="col-sm-6 mt-xs-1">
                         <div>
-                          <div><i><b>21st Century IDEA Act</b></i></div>
-                          <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
+                          <div><i><b>Digital Analytics - Designed around user needs with data-driven analysis influencing management and development decisions</b></i></div>
+                          <span class="fw-300">21st Century IDEA requires all executive branch public-facing websites and digital services to be designed around user needs with data-driven analysis. The report shows how many websites have implemented the DAP (Digital Analytics Program) code.</span>
                           <a href="#"><b>Read More</b></a>
                         </div>
                       </div>
