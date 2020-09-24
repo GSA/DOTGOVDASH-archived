@@ -60,7 +60,7 @@ function ideaact_get_agencywide_data($agencyid){
   #zero case graph
   $agency_data['https-chart'] = '';
   if($agency_data['https_support'] == 0) {
-    $agency_data['httpss-chart'] = "<div class='text-center'>
+    $agency_data['https-chart'] = "<div class='text-center'>
       <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive'>
  </div>";
   } else {
@@ -131,9 +131,7 @@ function ideaact_get_agencywide_data($agencyid){
   }
 
   $agency_data['mob-usab-chart'] = '';
-  if($agency_data['mob_usab_friendly_nos'] == 0 &&
-    $agency_data['mob_usab_notfriendly_nos'] == 0 &&
-    $agency_data['usab_null'] == 0) {
+  if($agency_data['mob_usab_friendly_nos'] == 0 ) {
     $agency_data['mob-usab-chart'] = "<div class='text-center'>
       <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive mobile-perf-zerochart'>
  </div>";
@@ -159,7 +157,6 @@ function ideaact_get_agencywide_data($agencyid){
 
   $search_status_graph_output = theme('agencywide_searchstatus_page', array('$agency_data' => $agency_search_status));
   $agency_data['searchenginestatus_graph'] = $search_status_graph_output;
-
   #search zero graph
   if($agency_data['search_available'] == 0) {
     $agency_data['search-chart'] = "<div class='text-center'>
@@ -248,28 +245,4 @@ function ideaact_get_agencywide_data($agencyid){
   }
   return $agency_data;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
