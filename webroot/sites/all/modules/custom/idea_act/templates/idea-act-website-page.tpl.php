@@ -219,7 +219,7 @@ drupal_set_title($websitedata['agencyname']);
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
-                              <a href="/ideaact/report/accessibility/website/<?=$websitedata['access_id'] ?>" class="btn btn-digital explore">Explore</a>
+                              <a href="/ideaact/report/accessibility/website/<?=$websitedata['access_id'] ?>" class= "btn btn-digital <?= $websitedata['explore_btn']?> ">Explore</a>
                             </div>
                         </div>
                     </div>
