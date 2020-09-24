@@ -209,6 +209,12 @@ function ideaact_get_website_data($websiteid){
       $websitedata['Accestext'] = 'This website' .  $websitedata['missingim'] . 'issues with missing image descriptions,' . $websitedata['htmlattri'] . 'issues with HTML attributes and' . $websitedata['colorcont'].'issues with color contrast.' ;
       $websitedata['web-access-chart']  = "<div class='chart-container' id ='chart-11-ref'><canvas id='chart-webhome' width='250' height='300' aria-label='Charts' role='img'></canvas></div><div class='legend-container'><div id='chart-1-legend'></div></div>";
     }
+  if(empty($acesssresult) || ( $websitedata['access_id'] == "" || null )){
+    $websitedata['explore_btn'] = 'disabled';
+  }
+  else{
+    $websitedata['explore_btn'] = 'explore';
+  }
     if(!is_redirect($websiteid) && !empty($acesssresult)) {
       if ($websitedata['colorcont'] == NULL || $websitedata['colorcont'] == '') {
         $websitedata['colorcont'] = 0;
