@@ -224,7 +224,7 @@ function ideaact_get_website_data($websiteid){
       }
       if ( $websitedata['colorcont'] == 0 && $websitedata['htmlattri'] == 0 &&   $websitedata['missingim'] == 0) {
         $websitedata['web-access-chart'] = "<div class='text-center'>
-        <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='250' height='250' class='alternate-chart-responsive'>
+        <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-issues-chart.png' width='250' height='250' class='alternate-chart-responsive'>
    </div>";
       }
       $websitedata['Accestext'] = 'This website has ' . $websitedata['missingim'] . ' issues with missing image descriptions, ' . $websitedata['htmlattri'] . ' issues with HTML attributes and ' . $websitedata['colorcont'] . ' issues with color contrast.';
