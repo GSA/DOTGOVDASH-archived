@@ -235,7 +235,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                               render: 'value',
                                               fontColor: '#102e54',
                                               position: 'outside',
-                                              fontSize: 18,
+                                              fontSize: 16,
                                               textMargin: 8,
                                               fontStyle: 'bold',
                                           }
@@ -384,14 +384,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                         var total = data.datasets[0].data.reduce(sumIt);
                                                         var val = data.datasets[0].data[tooltipItem.index];
                                                         var $actualPercentage = (val/<?php print $agency_data['no_of_websites']; ?>)*100;
-                                                        var $convertedValue = $actualPercentage.toFixed(2);
-                                                        var $getDecimals = $convertedValue.substring(2);
-                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                            return label + ': ' + Math.round($convertedValue) + '%';
-                                                        }
-                                                        else {
-                                                            return label + ': ' + $convertedValue + '%';
-                                                        }
+                                                        return label + ': ' + Math.round($actualPercentage) + '%';
                                                     }
                                             }
                                         },
@@ -400,19 +393,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                             labels: {
                                                 render: function (args) {
                                                         var $actualPercentage = ((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100;
-                                                        var $convertedValue = $actualPercentage.toFixed(2);
-                                                        // return $convertedValue + '%';
-                                                        var $getDecimals = $convertedValue.substring(2);
-                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                            return Math.round($convertedValue) + '%';
-                                                        }
-                                                        else {
-                                                            return $convertedValue + '%';
-                                                        }
+                                                        return Math.round($actualPercentage) + '%';
                                                     },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
-                                                fontSize: 18,
+                                                fontSize: 16,
                                                 textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
@@ -557,14 +542,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                         var total = data.datasets[0].data.reduce(sumIt);
                                                         var val = data.datasets[0].data[tooltipItem.index];
                                                         var $actualPercentage = (val/<?php print $agency_data['no_of_websites']; ?>)*100;
-                                                        var $convertedValue = $actualPercentage.toFixed(2);
-                                                        var $getDecimals = $convertedValue.substring(2);
-                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                            return label + ': ' + Math.round($convertedValue) + '%';
-                                                        }
-                                                        else {
-                                                            return label + ': ' + $convertedValue + '%';
-                                                        }
+                                                        return label + ': ' + Math.round($actualPercentage) + '%';
                                                     }
                                             }
                                         },
@@ -573,18 +551,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                             labels: {
                                                 render: function (args) {
                                                     var $actualPercentage = ((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100;
-                                                    var $convertedValue = $actualPercentage.toFixed(2);
-                                                    var $getDecimals = $convertedValue.substring(2);
-                                                    if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                        return Math.round($convertedValue) + '%';
-                                                    }
-                                                    else {
-                                                    return $convertedValue + '%';
-                                                    }
+                                                    return Math.round($actualPercentage) + '%';
                                                 },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
-                                                fontSize: 18,
+                                                fontSize: 16,
                                                 textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
@@ -743,7 +714,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                 precision: 2,
                                                 fontColor: '#102e54',
                                                 position: 'outside',
-                                                fontSize: 18,
+                                                fontSize: 16,
                                                 textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
@@ -885,15 +856,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                             var total = data.datasets[0].data.reduce(sumIt);
                                                             var val = data.datasets[0].data[tooltipItem.index];
                                                             var $actualPercentage = (val/<?php print $agency_data['no_of_websites']; ?>)*100;
-                                                            var $convertedValue = $actualPercentage.toFixed(2);
-                                                            // return label + ': ' + $convertedValue + '%';
-                                                            var $getDecimals = $convertedValue.substring(2);
-                                                            if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                                return label + ': ' + Math.round($convertedValue) + '%';
-                                                            }
-                                                            else {
-                                                                return label + ': ' + $convertedValue + '%';
-                                                            }
+                                                            return label + ': ' + Math.round($actualPercentage) + '%';
                                                         }
                                                     }
                                                 },
@@ -902,19 +865,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                                     labels: {
                                                         render: function (args) {
                                                             var $actualPercentage = ((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100;
-                                                            var $convertedValue = $actualPercentage.toFixed(2);
-                                                           // return $convertedValue + '%';
-                                                            var $getDecimals = $convertedValue.substring(2);
-                                                            if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00' ) {
-                                                                return Math.round($convertedValue) + '%';
-                                                            }
-                                                            else {
-                                                                return $convertedValue + '%';
-                                                            }
+                                                            return Math.round($actualPercentage) + '%';
                                                         },
                                                         fontColor: '#102e54',
                                                         position: 'outside',
-                                                        fontSize: 18,
+                                                        fontSize: 16,
                                                         textMargin: 8,
                                                         fontStyle: 'bold',
                                                     }
@@ -1018,15 +973,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                         var total = data.datasets[0].data.reduce(sumIt);
                                                         var val = data.datasets[0].data[tooltipItem.index];
                                                         var $actualPercentage = (val/<?php print $agency_data['no_of_websites']; ?>)*100;
-                                                        var $convertedValue = $actualPercentage.toFixed(2);
-                                                       //  return label + ': ' + $convertedValue + '%';
-                                                        var $getDecimals = $convertedValue.substring(2);
-                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                            return label + ': ' + Math.round($convertedValue) + '%';
-                                                        }
-                                                        else {
-                                                            return label + ': ' + $convertedValue + '%';
-                                                        }
+                                                        return label + ': ' + Math.round($actualPercentage) + '%';
                                                     }
                                                     }
                                                 },
@@ -1035,19 +982,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                                     labels: {
                                                         render: function (args) {
                                                             var $actualPercentage = ((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100;
-                                                            var $convertedValue = $actualPercentage.toFixed(2);
-                                                            //return $convertedValue + '%';
-                                                            var $getDecimals = $convertedValue.substring(2);
-                                                            if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                                return Math.round($convertedValue) + '%';
-                                                            }
-                                                            else {
-                                                                return $convertedValue + '%';
-                                                            }
+                                                            return Math.round($actualPercentage) + '%';
                                                         },
                                                         fontColor: '#102e54',
                                                         position: 'outside',
-                                                        fontSize: 18,
+                                                        fontSize: 16,
                                                         textMargin: 8,
                                                         fontStyle: 'bold',
                                                     }
@@ -1220,15 +1159,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                         var total = data.datasets[0].data.reduce(sumIt);
                                                         var val = data.datasets[0].data[tooltipItem.index];
                                                         var $actualPercentage = (val/<?php print $agency_data['no_of_websites']; ?>)*100;
-                                                        var $convertedValue = $actualPercentage.toFixed(2);
-                                                        // return label + ': ' + $convertedValue + '%';
-                                                        var $getDecimals = $convertedValue.substring(2);
-                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                            return label + ': ' + Math.round($convertedValue) + '%';
-                                                        }
-                                                        else {
-                                                            return label + ': ' + $convertedValue + '%';
-                                                        }
+                                                        return label + ': ' + Math.round($actualPercentage) + '%';
                                                 }
                                             }
                                         },
@@ -1237,19 +1168,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                             labels: {
                                                 render: function (args) {
                                                     var $actualPercentage = ((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100;
-                                                    var $convertedValue = $actualPercentage.toFixed(2);
-                                                    // return $convertedValue + '%';
-                                                    var $getDecimals = $convertedValue.substring(2);
-                                                    if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                        return Math.round($convertedValue) + '%';
-                                                    }
-                                                    else {
-                                                        return $convertedValue + '%';
-                                                    }
+                                                    return Math.round($actualPercentage) + '%';
                                                 },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
-                                                fontSize: 18,
+                                                fontSize: 16,
                                                 textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
