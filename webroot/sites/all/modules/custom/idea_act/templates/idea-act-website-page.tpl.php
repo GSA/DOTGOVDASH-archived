@@ -194,7 +194,7 @@ drupal_set_title($websitedata['agencyname']);
                                                         render: 'value',
                                                         fontColor: '#102e54',
                                                         position: 'outside',
-                                                        fontSize: 18,
+                                                        fontSize: 16,
                                                         textMargin: 8,
                                                         fontStyle: 'bold',
                                                     }
@@ -219,7 +219,7 @@ drupal_set_title($websitedata['agencyname']);
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
-                              <a href="/ideaact/govwide/website/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                              <a href="/ideaact/report/accessibility/website/<?=$websitedata['access_id'] ?>" class= "btn btn-digital <?= $websitedata['explore_btn']?> ">Explore</a>
                             </div>
                         </div>
                     </div>
@@ -369,7 +369,7 @@ drupal_set_title($websitedata['agencyname']);
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><i><b>USWDS - Consistent in Appearance</b></i></div>
-                                            <span class="fw-300">21st Century IDEA requires all executive branch public-facing websites and digital services to have a consistent appearance. </span>
+                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a consistent appearance. </span>
                                             <a href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
