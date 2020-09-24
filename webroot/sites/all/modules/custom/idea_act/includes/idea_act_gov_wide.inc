@@ -419,7 +419,7 @@ function idea_act_lastScanDate(){
 function idea_act_applyDataPercentage($data,$websites)
 {
     $actual_percent = ($data / $websites) * 100;
-    $percent = round($actual_percent,2);
+    $percent = round($actual_percent);
 
     if ($data != '') {
         if($actual_percent < 1 && $actual_percent > 0) {
