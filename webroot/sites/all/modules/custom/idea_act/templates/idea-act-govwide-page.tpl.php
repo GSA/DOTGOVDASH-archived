@@ -155,9 +155,9 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><p class="card-description"><i><b>21st Century IDEA Act</b></i></p></div>
-                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                            <a class="pe-none" href="#"><b>Read More</b></a>
+                                            <div><p class="card-description"><i><b>Accessibility Spot Checks - Accessible to Individuals with Disabilities</b></i></p></div>
+                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to be accessible to individuals with disabilities. </span>
+                                            <a href="/faq"><b>Read More</b></a>
 
                                         </div>
                                     </div>
@@ -284,9 +284,9 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><p class="card-description"><i><b>21st Century IDEA Act</b></i></p></div>
-                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                             <a class="pe-none" href="#"><b>Read More</b></a>
+                                            <div><p class="card-description"><i><b>USWDS - Consistent in Appearance</b></i></p></div>
+                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a consistent appearance. </span>
+                                            <a href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -460,9 +460,9 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><p class="card-description"><i><b>21st Century IDEA Act</b></i></p></div>
-                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                             <a class="pe-none" href="#"><b>Read More</b></a>
+                                            <div><p class="card-description"><i><b>Security - Provided through an Industry Standard Secure Connection</b></i></p></div>
+                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a secure connection. </span>
+                                            <a href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -636,9 +636,9 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><p class="card-description"><i><b>21st Century IDEA Act</b></i></p></div>
-                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                             <a class="pe-none" href="#"><b>Read More</b></a>
+                                            <div><p class="card-description"><i><b>Search - Contains a Search Function</b></i></p></div>
+                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a search function that allows users to easily search content. </span>
+                                            <a href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -790,9 +790,9 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><p class="card-description"><i><b>21st Century IDEA Act</b></i></p></div>
-                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                             <a class="pe-none" href="#"><b>Read More</b></a>
+                                            <div><p class="card-description"><i><b>Mobile - Fully Functional and Usable on Common Mobile Devices</b></i></p></div>
+                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to be fully functional and usable on common mobile devices. </span>
+                                            <a href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -1109,9 +1109,9 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><p class="card-description"><i><b>21st Century IDEA Act</b></i></p></div>
-                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                             <a class="pe-none" href="#"><b>Read More</b></a>
+                                            <div><p class="card-description"><i><b>Digital Analytics - Designed around user needs with data-driven analysis influencing management and development decisions</b></i></p></div>
+                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to be designed around user needs with data-driven analysis. </span>
+                                            <a href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
