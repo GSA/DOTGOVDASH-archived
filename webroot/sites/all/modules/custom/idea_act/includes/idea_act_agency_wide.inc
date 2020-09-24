@@ -84,7 +84,7 @@ function ideaact_get_agencywide_data($agencyid){
     $agency_data['ag_miss_image'] == 0 &&
     $agency_data['ag_html_attrib'] == 0) {
       $agency_data['access-spot-checks-chart'] = "<div class='text-center'>
-      <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive'>
+      <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-issues-chart.png' width='270' height='270' class='alternate-chart-responsive'>
  </div>";
   } else {
     $agency_data['access-spot-checks-chart'] = "<div class='chart-container' id='chart-1-ref'>
