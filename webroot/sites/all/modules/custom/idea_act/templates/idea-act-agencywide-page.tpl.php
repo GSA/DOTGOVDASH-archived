@@ -364,7 +364,7 @@ $agency_data['agency_title'] = $agencynode->title;
 
                                         title: {
                                             display: false,
-                                            text: 'USWDS Code Usage Breakdown for <?= $agency_data['agency_title']?> Websites',
+                                            text: 'USWDS Code Usage for <?= $agency_data['agency_title']?> Websites',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
@@ -449,8 +449,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                             <thead>
                                             <tr>
                                                 <th>Criteria</th>
-                                                <th>Compliant</th>
-                                                <th>Non-Compliant</th>
+                                                <th>Total</th>
+                                                <th>Percentage</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -678,7 +678,7 @@ $agency_data['agency_title'] = $agencynode->title;
 
                                         title: {
                                             display: false,
-                                            text: '<?= $agency_data['agency_title']?> On-site Search Engine Breakdown',
+                                            text: '<?= $agency_data['agency_title']?> On-site Search Engine',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
@@ -831,7 +831,7 @@ $agency_data['agency_title'] = $agencynode->title;
 
                                                 title: {
                                                     display: false,
-                                                    text: '<?= $agency_data['agency_title']?> Mobile Performance Breakdown',
+                                                    text: '<?= $agency_data['agency_title']?> Mobile Performance',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
                                                 },
@@ -948,7 +948,7 @@ $agency_data['agency_title'] = $agencynode->title;
 
                                                 title: {
                                                     display: false,
-                                                    text: '<?= $agency_data['agency_title']?> Mobile Usability Breakdown',
+                                                    text: '<?= $agency_data['agency_title']?> Mobile Usability',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
                                                 },
