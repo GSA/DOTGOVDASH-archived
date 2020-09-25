@@ -24,8 +24,8 @@
 ?>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <style>
-.mn-height-165 { min-height: 165px !important; }
-.mn-height-80 { min-height: 60px !important; }
+.mn-height-122 { min-height: 122px !important; }
+.mn-height-125 { min-height: 125px !important; }
 </style>
 
 <?php
@@ -98,12 +98,12 @@ dotgov_common_tooltip("tooltip9","id");
         <!-- <div id="access_chart" style="height:192px;">&nbsp</div> -->
     </div>
 <?php else: ?>
-    <div class="col-sm-12 mn-height-80 nopadding">
+    <div class="col-sm-12 mn-height-125 nopadding">
         Color Contrast: <span style="color:#a70000;"><?php print $redirect_message; ?></span><br>
         HTML Attribute: <span style="color:#a70000;"><?php print $redirect_message; ?></span><br>
         Missing Image Description: <span style="color:#a70000;"><?php print $redirect_message; ?></span>
     </div>
-    <div class="col-sm-12 mn-height-165">&nbsp;</div>
+    <div class="col-sm-12 mn-height-122">&nbsp;</div>
 <?php endif; ?>
 
 <div class="col-lg-12 clearfix report-buttons nopadding">

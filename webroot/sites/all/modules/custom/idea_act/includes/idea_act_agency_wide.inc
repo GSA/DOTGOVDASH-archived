@@ -120,29 +120,36 @@ function ideaact_get_agencywide_data($agencyid){
     $agency_data['usab_na_color'] ='';
   }
 
-  $agency_data['mob-perf-chart'] = '';
-  if($agency_data['mob_perf_good_nos'] == 0) {
-    $agency_data['mob-perf-chart'] = "<div class='text-center tool-tip-zero-na'>
-      <img alt='zero-chart'  src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive mobile-perf-zerochart'> <span class='tool-tip-zero-na-text'>Good: 0%</span>
+    $agency_data['mob-perf-chart'] = '';
+    if($agency_data['mob_perf_good_nos'] == 0 &&
+        $agency_data['mob_perf_improve_nos'] == 0 &&
+        $agency_data['total_non_na_websites'] == 0 &&
+        $agency_data['mob_perf_poor_nos'] == 0) {
+        $agency_data['mob-perf-chart'] = "<div class='text-center'>
+      <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='250' height='250' class='alternate-chart-responsive'>
  </div>";
-  } else {
-    $agency_data['mob-perf-chart'] = "<div class='chart-container' id='chart-5-ref'> <canvas id='chart-6' width='250' height='300' aria-label='Charts role='img'></canvas></div><div class='legend-container'><div id='chart-5-legend'></div></div>
+    } else {
+        $agency_data['mob-perf-chart'] = "<div class='chart-container' id='chart-5-ref'> <canvas id='chart-6' width='250' height='300' aria-label='Charts role='img'></canvas></div><div class='legend-container'><div id='chart-5-legend'></div></div>
     ";
-  }
 
-  $agency_data['mob-usab-chart'] = '';
-  if($agency_data['mob_usab_friendly_nos'] == 0 ) {
-    $agency_data['mob-usab-chart'] = "<div class='text-center tool-tip-zero-na'>
-      <img alt='zero-chart'  src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive mobile-perf-zerochart'><span class='tool-tip-zero-na-text'>Mobile Friendly: 0%</span>
+
+    }
+
+    $agency_data['mob-usab-chart'] = '';
+    if($agency_data['mob_usab_friendly_nos'] == 0 &&
+        $agency_data['mob_usab_notfriendly_nos'] == 0 &&
+        $agency_data['usab_null'] == 0) {
+        $agency_data['mob-usab-chart'] = "<div class='text-center'>
+      <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='250' height='250' class='alternate-chart-responsive'>
  </div>";
-  } else {
-    $agency_data['mob-usab-chart'] = "<div class='chart-container' id='chart-6-ref'>
+    } else {
+        $agency_data['mob-usab-chart'] = "<div class='chart-container' id='chart-6-ref'>
         <canvas id='chart-5' width='250' height='300' aria-label='Charts' role='img'></canvas>
     </div>
     <div class='legend-container'>
         <div id='chart-6-legend'></div>
     </div>";
-  }
+    }
 
   //Query to get Search data for an agency
   $searchresults = db_query("select field_search_status_value,count(field_search_status_value) as complnum from node a , field_data_field_search_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='website' group by field_search_status_value", array(':agencyid' => $agencyid));

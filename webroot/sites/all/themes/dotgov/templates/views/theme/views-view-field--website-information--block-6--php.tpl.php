@@ -44,11 +44,11 @@
  */
 ?>
 <style>
-.height-175 { 
-  min-height: 175px !important; 
+.height-170 { 
+  min-height: 170px !important; 
 }
-.height-74 { 
-  min-height: 74px !important; 
+.height-80 { 
+  min-height: 80px !important; 
 }
 </style>
 <?php print $output; ?>
@@ -118,8 +118,8 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
     $crit_text .= "Mobile Usability: Not Mobile Friendly";
   }
 } else {
-  $heightChange = "height-175";
-  $height80 = "height-74";
+  $heightChange = "height-170";
+  $height80 = "height-80";
   $crit_text .= "Mobile Usability: <span style=\"color:white;\">" . $redirect_message . "</span><br>";
 }
 
