@@ -7,9 +7,6 @@
         return total + num;
     }
 
-    function totalWebsites() {
-        return <?php print $agency_data['no_of_websites'] ?>;
-    }
     function customChartTooltip(chartId, toolTipId) {
         var customTooltip= function(tooltip) {
             // Tooltip Element
@@ -96,6 +93,12 @@ drupal_set_title($agencynode->title);
 $agency_data['agency_title'] = $agencynode->title;
  $pdf_file_name = '21st_Century_'.$agencynode->title.'.pdf';
 ?>
+
+<script>
+     function totalWebsites() {
+        return <?php print $agency_data['no_of_websites'] ?>;
+    }
+</script> 
 
 <div class="idea-container">
     <div class="row">
