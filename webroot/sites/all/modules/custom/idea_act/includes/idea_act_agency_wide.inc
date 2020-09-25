@@ -29,8 +29,11 @@ function ideaact_get_agencywide_data($agencyid){
   $agency_data['uswds-chart'] = '';
   if($agency_data['uswds_compliant'] == 0 ) {
     $agency_data['uswds-chart'] = "<div class='text-center tool-tip-zero-na'>
-      <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive'><span class='tool-tip-zero-na-text'>USWDS code detected: 0%</span>
- </div>";
+      <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive'><span class='tool-tip-zero-na-text'><img alt='bullet' src='/sites/all/modules/custom/idea_act/images/bullet.png'>USWDS code detected: 0%</span>
+ </div>
+ <div class='legend-container'><div id='chart-0-legend'><ul class='chart-0-legend'><li><span style='background-color:#EEEEEE'></span>USWDS Code Detected</li></ul></div>
+ </div> 
+ ";
   } else {
     $agency_data['uswds-chart'] = "<div class='chart-container' id='chart-2-ref'>
     <canvas id='chart-gov2' width='250' height='300' aria-label='Charts' role='img'></canvas>
@@ -61,8 +64,10 @@ function ideaact_get_agencywide_data($agencyid){
   $agency_data['https-chart'] = '';
   if($agency_data['https_support'] == 0) {
     $agency_data['https-chart'] = "<div class='text-center tool-tip-zero-na'>
-      <img alt='zero-chart'  src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive'><span class='tool-tip-zero-na-text'>Compliant Websites: 0%</span>
- </div>";
+      <img alt='zero-chart'  src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive'><span class='tool-tip-zero-na-text'><img alt='bullet' src='/sites/all/modules/custom/idea_act/images/bullet.png'>Compliant Websites: 0%</span>
+ </div>
+ <div class='legend-container'><div id='chart-0-legend'><ul class='chart-0-legend'><li><span style='background-color:#EEEEEE'></span>Compliant Websites</li></ul></div>
+ </div> ";
   } else {
     $agency_data['https-chart'] = "<div class='chart-container' id='chart-3-ref'>
     <canvas id='chart-gov3' width='250' height='300' aria-label='Charts' role='img'></canvas>
@@ -84,7 +89,9 @@ function ideaact_get_agencywide_data($agencyid){
     $agency_data['ag_miss_image'] == 0 &&
     $agency_data['ag_html_attrib'] == 0) {
       $agency_data['access-spot-checks-chart'] = "<div class='text-center tool-tip-zero-na'>
-      <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-issues-chart.png' width='270' height='270' class='alternate-chart-responsive'><span class='tool-tip-zero-na-text'>Accesibility Issues: 0</span>
+      <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-issues-chart.png' width='270' height='270' class='alternate-chart-responsive'><span class='tool-tip-zero-na-text'><img alt='bullet' src='/sites/all/modules/custom/idea_act/images/bullet.png'>Accesibility Issues: 0</span>
+ </div>
+ <div class='legend-container'><div id='chart-0-legend'><ul class='chart-0-legend'><li><span style='background-color:#EEEEEE'></span>Accessibility Issues</li></ul></div>
  </div>";
   } else {
     $agency_data['access-spot-checks-chart'] = "<div class='chart-container' id='chart-1-ref'>
@@ -125,8 +132,10 @@ function ideaact_get_agencywide_data($agencyid){
         $agency_data['mob_perf_improve_nos'] == 0 &&
         $agency_data['total_non_na_websites'] == 0 &&
         $agency_data['mob_perf_poor_nos'] == 0) {
-        $agency_data['mob-perf-chart'] = "<div class='text-center'>
-      <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='250' height='250' class='alternate-chart-responsive'>
+        $agency_data['mob-perf-chart'] = "<div class='text-center tool-tip-zero-na '>
+      <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='250' height='250' class='alternate-chart-responsive'><span class='tool-tip-zero-na-text' style='left: 3rem;'><img alt='bullet' src='/sites/all/modules/custom/idea_act/images/bullet.png'>Good: 0%</span>
+ </div>
+ <div class='legend-container'><div id='chart-0-legend'><ul class='chart-0-legend'><li><span style='background-color:#EEEEEE'></span>Good</li></ul></div>
  </div>";
     } else {
         $agency_data['mob-perf-chart'] = "<div class='chart-container' id='chart-5-ref'> <canvas id='chart-6' width='250' height='300' aria-label='Charts role='img'></canvas></div><div class='legend-container'><div id='chart-5-legend'></div></div>
@@ -139,8 +148,10 @@ function ideaact_get_agencywide_data($agencyid){
     if($agency_data['mob_usab_friendly_nos'] == 0 &&
         $agency_data['mob_usab_notfriendly_nos'] == 0 &&
         $agency_data['usab_null'] == 0) {
-        $agency_data['mob-usab-chart'] = "<div class='text-center'>
-      <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='250' height='250' class='alternate-chart-responsive'>
+        $agency_data['mob-usab-chart'] = "<div class='text-center tool-tip-zero-na '>
+      <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='250' height='250' class='alternate-chart-responsive'><span class='tool-tip-zero-na-text' style='left: 3rem;'><img alt='bullet' src='/sites/all/modules/custom/idea_act/images/bullet.png'>Mobile Friendly: 0%</span>
+ </div>
+ <div class='legend-container'><div id='chart-0-legend'><ul class='chart-0-legend'><li><span style='background-color:#EEEEEE'></span>Mobile Friendly</li></ul></div>
  </div>";
     } else {
         $agency_data['mob-usab-chart'] = "<div class='chart-container' id='chart-6-ref'>
@@ -167,7 +178,9 @@ function ideaact_get_agencywide_data($agencyid){
   #search zero graph
   if($agency_search_status['search_available'] == 0) {
     $agency_data['search-chart'] = "<div class='text-center tool-tip-zero-na    '>
-      <img alt='zero-chart'  src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive'><span class='tool-tip-zero-na-text'>Available: 0%</span>
+      <img alt='zero-chart'  src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive'><span class='tool-tip-zero-na-text'><img alt='bullet' src='/sites/all/modules/custom/idea_act/images/bullet.png'>Detected: 0%</span>
+ </div>
+ <div class='legend-container'><div id='chart-0-legend'><ul class='chart-0-legend'><li><span style='background-color:#EEEEEE'></span>Detected</li></ul></div>
  </div>";
   } else {
     $agency_data['search-chart'] = "<div class='chart-container' id='chart-4-ref'>
@@ -242,7 +255,9 @@ function ideaact_get_agencywide_data($agencyid){
   $agency_data['dap-chart'] = '';
   if($agency_data['dap_compliant'] == 0 ) {
     $agency_data['dap-chart'] = "<div class='text-center tool-tip-zero-na'>
-      <img alt='zero-chart'  src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive'><span class='tool-tip-zero-na-text'>Compliant Websites: 0%</span>
+      <img alt='zero-chart'  src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive'><span class='tool-tip-zero-na-text'><img alt='bullet' src='/sites/all/modules/custom/idea_act/images/bullet.png'>Compliant Websites: 0%</span>
+ </div>
+ <div class='legend-container'><div id='chart-0-legend'><ul class='chart-0-legend'><li><span style='background-color:#EEEEEE'></span>Compliant Websites</li></ul></div>
  </div>";
   } else {
     $agency_data['dap-chart'] = "<div class='chart-container' id='chart-7-ref'>
