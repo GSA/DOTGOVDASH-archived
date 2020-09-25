@@ -668,7 +668,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['Not Available', 'Available']
+                                        labels: ['Not Detected', 'Detected']
                                     },
 
                                     // Configuration options go here
