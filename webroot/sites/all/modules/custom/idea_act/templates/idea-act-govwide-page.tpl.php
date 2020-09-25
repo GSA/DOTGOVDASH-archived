@@ -155,7 +155,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><p class="card-description"><i><b>Accessibility Spot Checks - Accessible to Individuals with Disabilities</b></i></p></div>
+                                            <div><p class="card-description"><i><b>Accessible - Accessible to Individuals with Disabilities</b></i></p></div>
                                             <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to be accessible to individuals with disabilities. The three accessibility metrics presented in this report provide an initial spot check of some common web accessibility issues that can be discovered through automated scanning. This is an indicator only, and is not intended to be a comprehensive assessment of website accessibility. </span>
                                             <a href="/faq"><b>Read More</b></a>
                                             
@@ -284,7 +284,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><p class="card-description"><i><b>USWDS - Consistent in Appearance</b></i></p></div>
+                                            <div><p class="card-description"><i><b>Consistent - Consistent in Appearance</b></i></p></div>
                                             <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a consistent appearance. It also requires agencies to use this <a href="https://designsystem.digital.gov/maturity-model/" target="_blank"> maturity model</a> to gauge compliance with these <a href="https://designsystem.digital.gov/website-standards/" target="_blank">website standards</a> via use of the <a href="https://designsystem.digital.gov/" target="_blank">U.S. Web Design System</a>. This report provides a high-level view of websites and agencies using the U.S. Web Design System (USWDS) code. </span>
                                              <a href="/faq"><b>Read More</b></a>
                                         </div>
@@ -447,7 +447,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><p class="card-description"><i><b>Security - Provided through an Industry Standard Secure Connection</b></i></p></div>
+                                            <div><p class="card-description"><i><b>Secure - Provided through an Industry Standard Secure Connection</b></i></p></div>
                                             <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a secure connection. The report shows how many agency websites are <a href="https://https.cio.gov/" target="_blank"> HTTPS</a> compliant.</span>
                                             <a href="/faq"><b>Read More</b></a>
                                         </div>
@@ -609,7 +609,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><p class="card-description"><i><b>Search - Contains a Search Function</b></i></p></div>
+                                            <div><p class="card-description"><i><b>Searchable - Contains a Search Function</b></i></p></div>
                                             <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a search function that allows users to easily search content. This report provides a high-level view on how many websites have a search box (detectable through automated scanning), and provides a breakdown of specific on-site search products, where available. </span>
                                              <a href="/faq"><b>Read More</b></a>
                                         </div>
@@ -757,7 +757,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><p class="card-description"><i><b>Mobile - Fully Functional and Usable on Common Mobile Devices</b></i></p></div>
+                                            <div><p class="card-description"><i><b>Mobile-friendly - Fully Functional and Usable on Common Mobile Devices</b></i></p></div>
                                             <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to be fully functional and usable on common mobile devices. This report uses automated scanning to deliver Mobile Performance and Mobile Usability assessment results for each .gov website.</span>
                                             <a href="/faq"><b>Read More</b></a>
                                         </div>
