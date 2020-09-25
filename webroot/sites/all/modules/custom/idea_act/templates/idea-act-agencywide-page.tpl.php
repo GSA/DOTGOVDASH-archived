@@ -324,7 +324,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
-                                  <h4 class="text-center chart-data-title"> USWDS Code Usage of Websites</h4>
+                                  <h4 class="text-center chart-data-title"> USWDS Code Usage</h4>
                                   <?php print $agency_data['uswds-chart'];?>
                                 </div>
                             </div>
