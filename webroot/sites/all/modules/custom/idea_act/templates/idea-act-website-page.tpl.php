@@ -126,8 +126,8 @@ drupal_set_title($websitedata['agencyname']);
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><i><b>Accessible - Accessible to Individuals with Disabilities</b></i></div>
-                                            <span class="fw-300">21st Century IDEA requires all executive branch public-facing websites and digital services to be accessible to individuals with disabilities. The three accessibility metrics presented in this report provide an initial spot check of some common web accessibility issues that can be discovered through automated scanning. This is an indicator only, and is not intended to be a comprehensive assessment of website accessibility. </span>
-                                            <a href="/faq"><b>Read More</b></a>
+                                            <span class="fw-300 f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to be accessible to individuals with disabilities. The three accessibility metrics presented in this report provide an initial spot check of some common web accessibility issues that can be discovered through automated scanning. This is an indicator only, and is not intended to be a comprehensive assessment of website accessibility. </span>
+                                            <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -238,8 +238,8 @@ drupal_set_title($websitedata['agencyname']);
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><i><b>Mobile-friendly - Fully Functional and Usable on Common Mobile Devices</b></i></div>
-                                            <span class="fw-300">21st Century IDEA requires all executive branch public-facing websites and digital services to be fully functional and usable on common mobile devices. This report uses automated scanning to deliver Mobile Performance and Mobile Usability assessment results for each .gov website.</span>
-                                            <a href="/faq"><b>Read More</b></a>
+                                            <span class="fw-300 f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to be fully functional and usable on common mobile devices. This report uses automated scanning to deliver Mobile Performance and Mobile Usability assessment results for each .gov website.</span>
+                                            <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -295,8 +295,8 @@ drupal_set_title($websitedata['agencyname']);
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><i><b>Secure - Provided through an Industry Standard Secure Connection</b></i></div>
-                                            <span class="fw-300">21st Century IDEA requires all executive branch public-facing websites and digital services to have a secure connection. The report shows how many agency websites are <a href="https://https.cio.gov/" target="_blank"> HTTPS</a> compliant.</span>
-                                            <a href="/faq"><b>Read More</b></a>
+                                            <span class="fw-300 f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to have a secure connection. The report shows how many agency websites are <a href="https://https.cio.gov/" target="_blank"> HTTPS</a> compliant.</span>
+                                            <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -369,8 +369,8 @@ drupal_set_title($websitedata['agencyname']);
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><i><b>Consistent - Consistent in Appearance</b></i></div>
-                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a consistent appearance. It also requires agencies to use this <a href="https://designsystem.digital.gov/maturity-model/" target="_blank"> maturity model</a> to gauge compliance with these <a href="https://designsystem.digital.gov/website-standards/" target="_blank">website standards</a> via use of the <a href="https://designsystem.digital.gov/" target="_blank">U.S. Web Design System</a>. This report provides a high-level view of websites and agencies using the U.S. Web Design System (USWDS) code.  </span>
-                                            <a href="/faq"><b>Read More</b></a>
+                                            <span class="fw-300 f-12 font-italic card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a consistent appearance. It also requires agencies to use this <a href="https://designsystem.digital.gov/maturity-model/" target="_blank"> maturity model</a> to gauge compliance with these <a href="https://designsystem.digital.gov/website-standards/" target="_blank">website standards</a> via use of the <a href="https://designsystem.digital.gov/" target="_blank">U.S. Web Design System</a>. This report provides a high-level view of websites and agencies using the U.S. Web Design System (USWDS) code.  </span>
+                                            <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -423,8 +423,8 @@ drupal_set_title($websitedata['agencyname']);
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><i><b>Searchable - Contains a Search Function</b></i></div>
-                                            <span class="fw-300">21st Century IDEA requires all executive branch public-facing websites and digital services to have a search function that allows users to easily search content. This report provides a high-level view on how many websites have a search box (detectable through automated scanning), and provides a breakdown of specific on-site search products, where available.  </span>
-                                            <a href="/faq"><b>Read More</b></a>
+                                            <span class="fw-300 f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to have a search function that allows users to easily search content. This report provides a high-level view on how many websites have a search box (detectable through automated scanning), and provides a breakdown of specific on-site search products, where available.  </span>
+                                            <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -483,8 +483,8 @@ drupal_set_title($websitedata['agencyname']);
                       <div class="col-sm-6 mt-xs-1">
                         <div>
                           <div><i><b>User-Centric - Designed around user needs with data-driven analysis influencing management and development decisions</b></i></div>
-                          <span class="fw-300">21st Century IDEA requires all executive branch public-facing websites and digital services to be designed around user needs with data-driven analysis. The report shows how many websites have implemented the DAP (Digital Analytics Program) code. </span>
-                          <a href="/faq"><b>Read More</b></a>
+                          <span class="fw-300 f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to be designed around user needs with data-driven analysis. The report shows how many websites have implemented the DAP (Digital Analytics Program) code. </span>
+                          <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
                         </div>
                       </div>
                     </div>
