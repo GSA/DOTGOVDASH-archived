@@ -324,7 +324,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
-                                  <h4 class="text-center chart-data-title"> USWDS Code Usage Breakdown of Websites</h4>
+                                  <h4 class="text-center chart-data-title"> USWDS Code Usage of Websites</h4>
                                   <?php print $agency_data['uswds-chart'];?>
                                 </div>
                             </div>
@@ -636,7 +636,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
-                                  <h4 class="text-center chart-data-title"> On-site Search Engine Breakdown </h4>
+                                  <h4 class="text-center chart-data-title"> On-site Search Engine</h4>
                                   <?php print $agency_data['search-chart'];?>
                                 </div>
                             </div>
@@ -758,7 +758,7 @@ $agency_data['agency_title'] = $agencynode->title;
                               </div>
                               <div class="col-md-6 mb-2">
                                 <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
-                                <h4 class="text-center chart-data-title"> Mobile Performance Breakdown</h4>
+                                <h4 class="text-center chart-data-title"> Mobile Performance</h4>
                                 <?php print $agency_data['mob-perf-chart']; ?>
 
                                     <div class="table-responsive">
@@ -884,7 +884,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
-                                  <h4 class="text-center chart-data-title"> Mobile Usability Breakdown</h4>
+                                  <h4 class="text-center chart-data-title"> Mobile Usability</h4>
                                     <?php print $agency_data['mob-usab-chart']; ?>
                                     <div class="table-responsive">
                                         <table>
