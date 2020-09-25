@@ -335,7 +335,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                <h4 class="text-center chart-data-title">USWDS Code Usage Breakdown for Websites</h4>
+                                <h4 class="text-center chart-data-title">USWDS Code Usage for Websites</h4>
                                     <div class="chart-container" id="chart-2-ref">
                                         <canvas id="chart-gov2" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -378,7 +378,7 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                         title: {
                                             display: false,
-                                            text: 'USWDS Code Usage Breakdown for Websites',
+                                            text: 'USWDS Code Usage for Websites',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
@@ -646,7 +646,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
-                                <h4 class="text-center chart-data-title">On-site Search Engine Breakdown</h4>
+                                <h4 class="text-center chart-data-title">On-Site Search Presence</h4>
 
                                     <div class="chart-container" id="chart-4-ref">
                                     <?php $searchenginestatus = $agencydata['searchenginestatus'];
@@ -680,7 +680,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['Not Available', 'Available']
+                                        labels: ['Not Detected', 'Detected']
                                     },
 
                                     // Configuration options go here
@@ -691,7 +691,7 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                         title: {
                                             display: false,
-                                            text: 'On-site Search Engine Breakdown',
+                                            text: 'On-site Search Engine',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
@@ -771,7 +771,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                 </div>
 
                                 <div class="col-md-6 mb-2">
-                                <h4 class="text-center chart-data-title">Mobile Performance Breakdown</h4>
+                                <h4 class="text-center chart-data-title">Mobile Performance</h4>
 
                                     <div class="chart-container" id="chart-5-ref">
                                         <canvas id="chart-gov4" width="250" height="300" aria-label="Charts" role="img"></canvas>
@@ -852,7 +852,7 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                                 title: {
                                                     display: false,
-                                                    text: 'Mobile Performance Breakdown',
+                                                    text: 'Mobile Performance',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
                                                 },
@@ -904,7 +904,7 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                 </div>
                                 <div class="col-md-6 mt-xs-1 px-xs-0">
-                                <h4 class="text-center chart-data-title">Mobile Usability Breakdown</h4>
+                                <h4 class="text-center chart-data-title">Mobile Usability</h4>
 
                                     <div class="chart-container" id="chart-6-ref">
                                         <canvas id="chart-gov5" width="250" height="300" aria-label="Charts" role="img"></canvas>
@@ -975,7 +975,7 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                                 title: {
                                                     display: false,
-                                                    text: 'Mobile Usability Breakdown',
+                                                    text: 'Mobile Usability',
                                                     fontSize: 18,
                                                     fontColor: '#203b5f'
                                                 },
