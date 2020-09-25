@@ -465,7 +465,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             <thead>
                                             <tr>
                                               <th>Criteria</th>
-                                              <th>Websites</th>
+                                              <th>Total</th>
                                               <th>Percentage</th>
                                             </tr>
                                             </thead>
