@@ -209,6 +209,12 @@ function ideaact_get_website_data($websiteid){
       $websitedata['Accestext'] = 'This website' .  $websitedata['missingim'] . 'issues with missing image descriptions,' . $websitedata['htmlattri'] . 'issues with HTML attributes and' . $websitedata['colorcont'].'issues with color contrast.' ;
       $websitedata['web-access-chart']  = "<div class='chart-container' id ='chart-11-ref'><canvas id='chart-webhome' width='250' height='300' aria-label='Charts' role='img'></canvas></div><div class='legend-container'><div id='chart-1-legend'></div></div>";
     }
+  if(empty($acesssresult) || ( $websitedata['access_id'] == "" || null )){
+    $websitedata['explore_btn'] = 'disabled';
+  }
+  else{
+    $websitedata['explore_btn'] = 'explore';
+  }
     if(!is_redirect($websiteid) && !empty($acesssresult)) {
       if ($websitedata['colorcont'] == NULL || $websitedata['colorcont'] == '') {
         $websitedata['colorcont'] = 0;
@@ -223,23 +229,24 @@ function ideaact_get_website_data($websiteid){
 
       }
       if ( $websitedata['colorcont'] == 0 && $websitedata['htmlattri'] == 0 &&   $websitedata['missingim'] == 0) {
-        $websitedata['web-access-chart'] = "<div class='text-center'>
-        <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='250' height='250' class='alternate-chart-responsive'>
+        $websitedata['web-access-chart'] = "<div class='text-center tool-tip-zero-na'>
+        <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-issues-chart.png' width='250' height='250' class='alternate-chart-responsive'><span style='left: 5rem;' class='tool-tip-zero-na-text'>Accesibility Issues: 0</span>
    </div>";
       }
       $websitedata['Accestext'] = 'This website has ' . $websitedata['missingim'] . ' issues with missing image descriptions, ' . $websitedata['htmlattri'] . ' issues with HTML attributes and ' . $websitedata['colorcont'] . ' issues with color contrast.';
 
     }
     elseif(empty($acesssresult)){
-        $websitedata['web-access-chart'] = "<div class='text-center'>
-      <img alt='na-chart' src='/sites/all/modules/custom/idea_act/images/not-available-chart.png' width='250' height='250' class='alternate-chart-responsive'>
+        $websitedata['web-access-chart'] = "<div class='text-center tool-tip-zero-na
+        '>
+      <img alt='na-chart' src='/sites/all/modules/custom/idea_act/images/not-available-chart.png' width='250' height='250' class='alternate-chart-responsive'><span style='left: 5rem;' class='tool-tip-zero-na-text'>Data Not available</span>
  </div>";
         $websitedata['Accestext'] = "Data is Not Available for this website.";
     }
     else {
       $websitedata['Accestext'] = 'The metric is not applicable for this website (This website is a redirect).';
-      $websitedata['web-access-chart'] = "<div class='text-center'>
-      <img  alt='na-chart' src='/sites/all/modules/custom/idea_act/images/not-available-chart.png' width='250' height='250' class='alternate-chart-responsive'>
+      $websitedata['web-access-chart'] = "<div class='text-center tool-tip-zero-na'>
+      <img  alt='na-chart' src='/sites/all/modules/custom/idea_act/images/not-available-chart.png' width='250' height='250' class='alternate-chart-responsive'><span style='left: 5rem;' class='tool-tip-zero-na-text'>Data Not available</span>
  </div>";
     }
 

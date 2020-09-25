@@ -109,7 +109,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                  title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
                         </a> -->
 
-                        <button class="button download-button" onclick="generatePDF( '<?= $pdf_file_name?>', 500,760)" type="submit">Download</button>
+                        <button class="button download-button" onclick="generatePDF( '<?= $pdf_file_name?>', 500,705)" type="submit">Download</button>
                     </div>
                 </div>
             </div>
@@ -148,9 +148,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                            <a href="#"><b>Read More</b></a>
+                                            <div><i><b>Accessibility Spot Checks - Accessible to Individuals with Disabilities</b></i></div>
+                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to be accessible to individuals with disabilities. </span>
+                                            <a href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -235,7 +235,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                               render: 'value',
                                               fontColor: '#102e54',
                                               position: 'outside',
-                                              fontSize: 18,
+                                              fontSize: 16,
                                               textMargin: 8,
                                               fontStyle: 'bold',
                                           }
@@ -273,9 +273,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                            <a href="#"><b>Read More</b></a>
+                                            <div><i><b>USWDS - Consistent in Appearance</b></i></div>
+                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a consistent appearance. </span>
+                                            <a href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -382,14 +382,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                         var total = data.datasets[0].data.reduce(sumIt);
                                                         var val = data.datasets[0].data[tooltipItem.index];
                                                         var $actualPercentage = (val/<?php print $agency_data['no_of_websites']; ?>)*100;
-                                                        var $convertedValue = $actualPercentage.toFixed(2);                                                        
-                                                        var $getDecimals = $convertedValue.substring(2);
-                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                            return label + ': ' + Math.round($convertedValue) + '%';
-                                                        }
-                                                        else {
-                                                            return label + ': ' + $convertedValue + '%';
-                                                        }
+                                                        return label + ': ' + Math.round($actualPercentage) + '%';
                                                     }
                                             }
                                         },
@@ -398,19 +391,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                             labels: {
                                                 render: function (args) {
                                                         var $actualPercentage = ((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100;
-                                                        var $convertedValue = $actualPercentage.toFixed(2);
-                                                        // return $convertedValue + '%';
-                                                        var $getDecimals = $convertedValue.substring(2);
-                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                            return Math.round($convertedValue) + '%';
-                                                        }
-                                                        else {
-                                                            return $convertedValue + '%';
-                                                        }
+                                                        return Math.round($actualPercentage) + '%';
                                                     },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
-                                                fontSize: 18,
+                                                fontSize: 16,
                                                 textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
@@ -447,9 +432,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                            <a href="#"><b>Read More</b></a>
+                                            <div><i><b>Security - Provided through an Industry Standard Secure Connection</b></i></div>
+                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a secure connection. </span>
+                                            <a href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -555,14 +540,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                         var total = data.datasets[0].data.reduce(sumIt);
                                                         var val = data.datasets[0].data[tooltipItem.index];
                                                         var $actualPercentage = (val/<?php print $agency_data['no_of_websites']; ?>)*100;
-                                                        var $convertedValue = $actualPercentage.toFixed(2);                                                        
-                                                        var $getDecimals = $convertedValue.substring(2);
-                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                            return label + ': ' + Math.round($convertedValue) + '%';
-                                                        }
-                                                        else {
-                                                            return label + ': ' + $convertedValue + '%';
-                                                        }
+                                                        return label + ': ' + Math.round($actualPercentage) + '%';
                                                     }
                                             }
                                         },
@@ -571,18 +549,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                             labels: {
                                                 render: function (args) {
                                                     var $actualPercentage = ((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100;
-                                                    var $convertedValue = $actualPercentage.toFixed(2);
-                                                    var $getDecimals = $convertedValue.substring(2);
-                                                    if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                        return Math.round($convertedValue) + '%';
-                                                    }
-                                                    else {
-                                                    return $convertedValue + '%';
-                                                    }
+                                                    return Math.round($actualPercentage) + '%';
                                                 },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
-                                                fontSize: 18,
+                                                fontSize: 16,
                                                 textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
@@ -620,9 +591,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                            <a href="#"><b>Read More</b></a>
+                                            <div><i><b>Search - Contains a Search Function</b></i></div>
+                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a search function that allows users to easily search content. </span>
+                                            <a href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -666,13 +637,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 <div class="col-md-6 mt-xs-1">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                   <h4 class="text-center chart-data-title"> On-site Search Engine Breakdown </h4>
-                                  <div class="chart-container" id="chart-4-ref">
-                                      <?php $searchenginestatus = $agency_data['searchenginestatus'];
-                                      ?>
-                                        <canvas id="chart-gov-search" width="250" height="300" aria-label="Charts" role="img"></canvas>
-                                    </div>
-                                  <div id="chart-4-legend-mobile"></div>
-
+                                  <?php print $agency_data['search-chart'];?>
                                 </div>
                             </div>
 
@@ -692,7 +657,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                     type: 'doughnut',
                                     data: {
                                         datasets: [{
-                                            data: [<?=($searchenginestatus['search_notavailable'] == "") ? 0 : $searchenginestatus['search_notavailable']?>,
+                                            data: [
+                                                <?php $searchenginestatus = $agency_data['searchenginestatus'] ?>
+                                                <?=($searchenginestatus['search_notavailable'] == "") ? 0 : $searchenginestatus['search_notavailable']?>,
                                               <?=($searchenginestatus['search_available'] == "") ? 0 : $searchenginestatus['search_available']?>],
                                             borderWidth: 0,
                                             backgroundColor: [
@@ -729,13 +696,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                         var total = data.datasets[0].data.reduce(sumIt);
                                                         var val = data.datasets[0].data[tooltipItem.index];
                                                         var $actualPercentage = (val * 100 / total).toFixed(2);
-                                                        var $getDecimals = $actualPercentage.substring(2);
-                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                            return label + ': ' + Math.round($actualPercentage) + '%';
-                                                        }
-                                                        else {
-                                                            return label + ': ' + $actualPercentage + '%';
-                                                        }
+                                                        return label + ': ' + Math.round($actualPercentage) + '%';
                                                     }
                                             }
                                         },
@@ -744,10 +705,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                                 render: function (args) {
                                                     return  args.percentage + '%';
                                                 },
-                                                precision: 2,
                                                 fontColor: '#102e54',
                                                 position: 'outside',
-                                                fontSize: 18,
+                                                fontSize: 16,
                                                 textMargin: 8,
                                                 fontStyle: 'bold',
                                             }
@@ -784,9 +744,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                            <a href="#"><b>Read More</b></a>
+                                            <div><i><b>Mobile - Fully Functional and Usable on Common Mobile Devices</b></i></div>
+                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to be fully functional and usable on common mobile devices. </span>
+                                            <a href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -889,15 +849,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                             var total = data.datasets[0].data.reduce(sumIt);
                                                             var val = data.datasets[0].data[tooltipItem.index];
                                                             var $actualPercentage = (val/<?php print $agency_data['no_of_websites']; ?>)*100;
-                                                            var $convertedValue = $actualPercentage.toFixed(2);
-                                                            // return label + ': ' + $convertedValue + '%';
-                                                            var $getDecimals = $convertedValue.substring(2);
-                                                            if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                                return label + ': ' + Math.round($convertedValue) + '%';
-                                                            }
-                                                            else {
-                                                                return label + ': ' + $convertedValue + '%';
-                                                            }
+                                                            return label + ': ' + Math.round($actualPercentage) + '%';
                                                         }
                                                     }
                                                 },
@@ -906,19 +858,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                                     labels: {
                                                         render: function (args) {
                                                             var $actualPercentage = ((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100;
-                                                            var $convertedValue = $actualPercentage.toFixed(2);
-                                                           // return $convertedValue + '%';
-                                                            var $getDecimals = $convertedValue.substring(2);
-                                                            if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00' ) {
-                                                                return Math.round($convertedValue) + '%';
-                                                            }
-                                                            else {
-                                                                return $convertedValue + '%';
-                                                            }   
+                                                            return Math.round($actualPercentage) + '%';
                                                         },
                                                         fontColor: '#102e54',
                                                         position: 'outside',
-                                                        fontSize: 18,
+                                                        fontSize: 16,
                                                         textMargin: 8,
                                                         fontStyle: 'bold',
                                                     }
@@ -1022,15 +966,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                         var total = data.datasets[0].data.reduce(sumIt);
                                                         var val = data.datasets[0].data[tooltipItem.index];
                                                         var $actualPercentage = (val/<?php print $agency_data['no_of_websites']; ?>)*100;
-                                                        var $convertedValue = $actualPercentage.toFixed(2);
-                                                       //  return label + ': ' + $convertedValue + '%';
-                                                        var $getDecimals = $convertedValue.substring(2);
-                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                            return label + ': ' + Math.round($convertedValue) + '%';
-                                                        }
-                                                        else {
-                                                            return label + ': ' + $convertedValue + '%';
-                                                        }
+                                                        return label + ': ' + Math.round($actualPercentage) + '%';
                                                     }
                                                     }
                                                 },
@@ -1039,19 +975,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                                     labels: {
                                                         render: function (args) {
                                                             var $actualPercentage = ((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100;
-                                                            var $convertedValue = $actualPercentage.toFixed(2);
-                                                            //return $convertedValue + '%';
-                                                            var $getDecimals = $convertedValue.substring(2);
-                                                            if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                                return Math.round($convertedValue) + '%';
-                                                            }
-                                                            else {
-                                                                return $convertedValue + '%';
-                                                            }
+                                                            return Math.round($actualPercentage) + '%';
                                                         },
                                                         fontColor: '#102e54',
                                                         position: 'outside',
-                                                        fontSize: 18,
+                                                        fontSize: 16,
                                                         textMargin: 8,
                                                         fontStyle: 'bold',
                                                     }
@@ -1112,9 +1040,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300 card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                            <a href="#"><b>Read More</b></a>
+                                            <div><i><b>Digital Analytics - Designed around user needs with data-driven analysis influencing management and development decisions</b></i></div>
+                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to be designed around user needs with data-driven analysis. </span>
+                                            <a href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -1224,15 +1152,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                         var total = data.datasets[0].data.reduce(sumIt);
                                                         var val = data.datasets[0].data[tooltipItem.index];
                                                         var $actualPercentage = (val/<?php print $agency_data['no_of_websites']; ?>)*100;
-                                                        var $convertedValue = $actualPercentage.toFixed(2);
-                                                        // return label + ': ' + $convertedValue + '%';
-                                                        var $getDecimals = $convertedValue.substring(2);
-                                                        if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                            return label + ': ' + Math.round($convertedValue) + '%';
-                                                        }
-                                                        else {
-                                                            return label + ': ' + $convertedValue + '%';
-                                                        }
+                                                        return label + ': ' + Math.round($actualPercentage) + '%';
                                                 }
                                             }
                                         },
@@ -1241,19 +1161,11 @@ $agency_data['agency_title'] = $agencynode->title;
                                             labels: {
                                                 render: function (args) {
                                                     var $actualPercentage = ((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100;
-                                                    var $convertedValue = $actualPercentage.toFixed(2);
-                                                    // return $convertedValue + '%';
-                                                    var $getDecimals = $convertedValue.substring(2);
-                                                    if($getDecimals == '0.00' || $getDecimals == '.00' || $getDecimals == '00') {
-                                                        return Math.round($convertedValue) + '%';
-                                                    }
-                                                    else {
-                                                        return $convertedValue + '%';
-                                                    }
+                                                    return Math.round($actualPercentage) + '%';
                                                 },
                                                 fontColor: '#102e54',
                                                 position: 'outside',
-                                                fontSize: 18,
+                                                fontSize: 16,
                                                 textMargin: 8,
                                                 fontStyle: 'bold',
                                             }

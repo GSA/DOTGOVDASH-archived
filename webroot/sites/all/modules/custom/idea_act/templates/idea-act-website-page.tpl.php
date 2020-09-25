@@ -125,9 +125,9 @@ drupal_set_title($websitedata['agencyname']);
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                            <a href="#"><b>Read More</b></a>
+                                            <div><i><b>Accessibility Spot Checks - Accessible to Individuals with Disabilities</b></i></div>
+                                            <span class="fw-300">21st Century IDEA requires all executive branch public-facing websites and digital services to be accessible to individuals with disabilities. </span>
+                                            <a href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -194,7 +194,7 @@ drupal_set_title($websitedata['agencyname']);
                                                         render: 'value',
                                                         fontColor: '#102e54',
                                                         position: 'outside',
-                                                        fontSize: 18,
+                                                        fontSize: 16,
                                                         textMargin: 8,
                                                         fontStyle: 'bold',
                                                     }
@@ -219,7 +219,7 @@ drupal_set_title($websitedata['agencyname']);
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
-                              <a href="/ideaact/report/accessibility/website/<?=$websitedata['access_id'] ?>" class="btn btn-digital explore">Explore</a>
+                              <a href="/ideaact/report/accessibility/website/<?=$websitedata['access_id'] ?>" class= "btn btn-digital <?= $websitedata['explore_btn']?> ">Explore</a>
                             </div>
                         </div>
                     </div>
@@ -237,9 +237,9 @@ drupal_set_title($websitedata['agencyname']);
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                            <a href="#"><b>Read More</b></a>
+                                            <div><i><b>Mobile - Fully Functional and Usable on Common Mobile Devices</b></i></div>
+                                            <span class="fw-300">21st Century IDEA requires all executive branch public-facing websites and digital services to be fully functional and usable on common mobile devices. </span>
+                                            <a href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -294,9 +294,9 @@ drupal_set_title($websitedata['agencyname']);
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                            <a href="#"><b>Read More</b></a>
+                                            <div><i><b>Security - Provided through an Industry Standard Secure Connection</b></i></div>
+                                            <span class="fw-300">21st Century IDEA requires all executive branch public-facing websites and digital services to have a secure connection. </span>
+                                            <a href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -368,9 +368,9 @@ drupal_set_title($websitedata['agencyname']);
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                            <a href="#"><b>Read More</b></a>
+                                            <div><i><b>USWDS - Consistent in Appearance</b></i></div>
+                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a consistent appearance. </span>
+                                            <a href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -422,9 +422,9 @@ drupal_set_title($websitedata['agencyname']);
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
-                                            <div><i><b>21st Century IDEA Act</b></i></div>
-                                            <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                                            <a href="#"><b>Read More</b></a>
+                                            <div><i><b>Search - Contains a Search Function</b></i></div>
+                                            <span class="fw-300">21st Century IDEA requires all executive branch public-facing websites and digital services to have a search function that allows users to easily search content. </span>
+                                            <a href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -482,9 +482,9 @@ drupal_set_title($websitedata['agencyname']);
                       </div>
                       <div class="col-sm-6 mt-xs-1">
                         <div>
-                          <div><i><b>21st Century IDEA Act</b></i></div>
-                          <span class="fw-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</span>
-                          <a href="#"><b>Read More</b></a>
+                          <div><i><b>Digital Analytics - Designed around user needs with data-driven analysis influencing management and development decisions</b></i></div>
+                          <span class="fw-300">21st Century IDEA requires all executive branch public-facing websites and digital services to be designed around user needs with data-driven analysis. </span>
+                          <a href="/faq"><b>Read More</b></a>
                         </div>
                       </div>
                     </div>
