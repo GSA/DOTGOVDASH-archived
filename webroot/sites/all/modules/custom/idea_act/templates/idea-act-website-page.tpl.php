@@ -251,7 +251,7 @@ drupal_set_title($websitedata['agencyname']);
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Mobile Information</th>
@@ -308,7 +308,7 @@ drupal_set_title($websitedata['agencyname']);
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Criteria</th>
@@ -382,7 +382,7 @@ drupal_set_title($websitedata['agencyname']);
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>USWDS Checks</th>
@@ -436,7 +436,7 @@ drupal_set_title($websitedata['agencyname']);
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>On-site Search</th>
@@ -496,7 +496,7 @@ drupal_set_title($websitedata['agencyname']);
                     </div>
                     <div class="col-sm-6">
                       <div class="table-responsive">
-                        <table>
+                        <table class="idea-act-table">
                           <thead>
                           <tr>
                             <th scope="col" style="padding-right:50px">DAP</th>
