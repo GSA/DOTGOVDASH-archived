@@ -294,7 +294,7 @@ $agency_data['agency_title'] = $agencynode->title;
                               </div>
                               <div class="col-md-6">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Breakdown</th>
@@ -453,7 +453,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </a>
                               </div>                                      <div class="col-md-6">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Criteria</th>
@@ -614,7 +614,7 @@ $agency_data['agency_title'] = $agencynode->title;
                               </div>
                               <div class="col-md-6">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>On-Site Search Engine</th>
@@ -771,7 +771,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 <?php print $agency_data['mob-perf-chart']; ?>
 
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Breakdown</th>
@@ -897,7 +897,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                   <h4 class="text-center chart-data-title"> Mobile Usability</h4>
                                     <?php print $agency_data['mob-usab-chart']; ?>
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Breakdown</th>
@@ -1065,7 +1065,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </div>
                                 <div class="col-md-6">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Criteria</th>

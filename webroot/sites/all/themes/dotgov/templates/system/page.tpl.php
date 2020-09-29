@@ -76,6 +76,7 @@
 <script src="/sites/all/themes/dotgov/js/html2pdf.bundle.min.js"></script>
 <script type="text/javascript">
     function generatePDF(fileName, pageWidth, pageHeight, websiteInfoPage) {
+      jQuery("body").addClass("loading");
       if(websiteInfoPage) {
           jQuery( "#techstack" ).addClass( "split-column" );
       }
@@ -92,6 +93,7 @@
         .from(element)
         .save().then(function () {
           jQuery( "#techstack" ).removeClass( "split-column" );
+          jQuery("body").removeClass("loading");
           });
       } else {
         // if width is more than 768 px
@@ -103,6 +105,7 @@
           .from(element)
           .save().then(function () {
             jQuery( "#techstack" ).removeClass( "split-column" );
+            jQuery("body").removeClass("loading");
             });
       }
     

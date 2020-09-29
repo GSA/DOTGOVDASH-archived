@@ -299,7 +299,7 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                 <div class="col-md-6 uswds-table">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Breakdown</th>
@@ -461,7 +461,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                 </div>
                                 <div class="col-md-6">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                               <th>Criteria</th>
@@ -624,7 +624,7 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                 <div class="col-md-6">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>On-Site Search Engine</th>
@@ -781,7 +781,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="table-responsive">
 
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
 
                                             <tr>
@@ -913,7 +913,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                         <div id="chart-6-legend"></div>
                                     </div>
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Breakdown</th>
@@ -1062,7 +1062,7 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                 <div class="col-md-6">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Criteria</th>
