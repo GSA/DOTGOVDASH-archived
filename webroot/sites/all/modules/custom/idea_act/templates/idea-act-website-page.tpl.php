@@ -141,7 +141,7 @@ drupal_set_title($websitedata['agencyname']);
                                 <div class="col-sm-6 nopadding">
 
                                     <?php print  $websitedata['web-access-chart'];?>
-                                    <script lang="javascript">
+                                    <script language="javascript">
                                         var ctx = document.getElementById('chart-webhome').getContext('2d');
                                         var chart = new Chart(ctx, {
                                             type: 'doughnut',
