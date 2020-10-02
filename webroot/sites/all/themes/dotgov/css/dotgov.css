@@ -1692,6 +1692,31 @@ img.info-icon:hover {
 .view-uswds-data .view-filters {
     clear: both;
 }
+.overlay{
+	display: none;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	background: rgba(255,255,255,0.8) url("/sites/all/themes/dotgov/images/loader.gif") center no-repeat;
+}
+
+/* Turn off scrollbar when body element has the loading class */
+body.loading{
+	overflow: hidden;
+}
+/* Make spinner image visible when body element has the loading class */
+body.loading .overlay{
+	display: block;
+}
+
+p.download-report-desktop, p.download-report-mobile,
+div.download-report-desktop, div.download-report-mobile {
+	font-size: 14px !important;
+}
+
 /* media Queries*/
 @media (orientation: portrait) {
 	.full {
@@ -1781,7 +1806,83 @@ img.info-icon:hover {
 }
 
 @media only screen and (max-width: 767px) {
+	p.download-report-desktop, div.download-report-desktop {
+		display: none;
+	}
+	.dataTables_filter {
+		width: 100%;
+		float: left;
+		text-align: left;
+	}
+	.dataTables_filter label {
+		width: 100%;
+		padding: 5px;
+	}
+	.dataTables_filter input {
+		width: 100%;
+	}
+	
+	.paging_full_numbers {
+		display: flex !important;
+		flex-direction: row !important;
+		flex-wrap: wrap !important;
+		justify-content: center !important;
+		align-items: center !important;
+	}
+	a.next.paginate_button:after {
+		content: "›";
+		padding-left: 4px;
+	}
+	a.last.paginate_button:after {
+		content: "»";
+		padding-left: 4px;
+	}
+	a.previous.paginate_button:before {
+		content: "‹";
+		padding-right: 4px;
+	}
+	a.first.paginate_button:before {
+		content: "«";
+		padding-right: 4px;
+	}
+	a[title^="Go to page "] {
+		display: none !important;
+	}
+	li.pager-ellipsis.disabled {
+		display: none;
+	}
+	span a.paginate_button {
+		display: none !important;
+	}
 
+	/* Table responsive  */
+	th:first-child, td:first-child
+	{
+		position:sticky;
+		left:0px;
+		background-color:inherit;
+	}
+	thead tr th:first-child,
+	tbody tr td:first-child {
+		min-width: 10rem;
+		max-width: 13rem;
+		word-break: break-all;
+	}
+	.views-table tbody tr td:first-child {
+		background: #F5F5F5;
+	}
+
+	thead tr th:first-child {
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		background: linear-gradient(#547f99, #6f9ebb, #547f99);
+	}
+	.table-responsive > .table > thead > tr > th, .table-responsive > .table > tbody > tr > th, .table-responsive > .table > tfoot > tr > th, .table-responsive > .table > thead > tr > td, .table-responsive > .table > tbody > tr > td, .table-responsive > .table > tfoot > tr > td {
+		white-space: inherit !important;
+	}
+	a.paginate_button_disabled {
+		display: none;
+	}
+	/* End table responsive  */
 	.lastUnit {
 		display: block;
 		width: 100%;
@@ -2047,6 +2148,9 @@ img.info-icon:hover {
 }
 
 @media (min-width: 768px) {
+	p.download-report-mobile, div.download-report-mobile  {
+		display: none;
+	}
 	#navbar-collapse .navbar-nav {
 		float: none;
 		margin: 0;

@@ -6,6 +6,7 @@
     function sumIt(total, num) {
         return total + num;
     }
+
     function customChartTooltip(chartId, toolTipId) {
         var customTooltip= function(tooltip) {
             // Tooltip Element
@@ -93,6 +94,12 @@ $agency_data['agency_title'] = $agencynode->title;
  $pdf_file_name = '21st_Century_'.$agencynode->title.'.pdf';
 ?>
 
+<script>
+     function totalWebsites() {
+        return <?php print $agency_data['no_of_websites'] ?>;
+    }
+</script> 
+
 <div class="idea-container">
     <div class="row">
         <div class="col-lg-10 col-lg-offset-1">
@@ -109,7 +116,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                  title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
                         </a> -->
 
-                        <button class="button download-button" onclick="generatePDF( '<?= $pdf_file_name?>', 500,705)" type="submit">Download</button>
+                        <button class="button download-button" onclick="generatePDF( '<?= $pdf_file_name?>',400, 900)" type="submit">Download</button>
                     </div>
                 </div>
             </div>
@@ -149,8 +156,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><i><b>Accessible - Accessible to Individuals with Disabilities</b></i></div>
-                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to be accessible to individuals with disabilities. The three accessibility metrics presented in this report provide an initial spot check of some common web accessibility issues that can be discovered through automated scanning. This is an indicator only, and is not intended to be a comprehensive assessment of website accessibility.</span>
-                                            <a href="/faq"><b>Read More</b></a>
+                                            <span class="fw-300 card-description f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to be accessible to individuals with disabilities. The three accessibility metrics presented in this report provide an initial spot check of some common web accessibility issues that can be discovered through automated scanning. This is an indicator only, and is not intended to be a comprehensive assessment of website accessibility.</span>
+                                            <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -185,7 +192,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             </div>
 
                             <!-- script to render the pie chart -->
-                          <script lang="javascript">
+                          <script language="javascript">
                               var ctx = document.getElementById('chart-gov1').getContext('2d');
                               var chart = new Chart(ctx, {
                                   type: 'doughnut',
@@ -274,8 +281,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><i><b>Consistent - Consistent in Appearance</b></i></div>
-                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a consistent appearance. It also requires agencies to use this <a href="https://designsystem.digital.gov/maturity-model/" target="_blank"> maturity model</a> to gauge compliance with these <a href="https://designsystem.digital.gov/website-standards/" target="_blank">website standards</a> via use of the <a href="https://designsystem.digital.gov/" target="_blank">U.S. Web Design System</a>. This report provides a high-level view of websites and agencies using the U.S. Web Design System (USWDS) code.  </span>
-                                            <a href="/faq"><b>Read More</b></a>
+                                            <span class="fw-300 card-description f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to have a consistent appearance. It also requires agencies to use this <a href="https://designsystem.digital.gov/maturity-model/" target="_blank"> maturity model</a> to gauge compliance with these <a href="https://designsystem.digital.gov/website-standards/" target="_blank">website standards</a> via use of the <a href="https://designsystem.digital.gov/" target="_blank">U.S. Web Design System</a>. This report provides a high-level view of websites and agencies using the U.S. Web Design System (USWDS) code.  </span>
+                                            <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -287,7 +294,7 @@ $agency_data['agency_title'] = $agencynode->title;
                               </div>
                               <div class="col-md-6">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Breakdown</th>
@@ -339,7 +346,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             </div>
 
                             <!-- rendering chart container -->
-                            <script lang="javascript">
+                            <script language="javascript">
                                 var ctx = document.getElementById('chart-gov2').getContext('2d');
                                 var chart = new Chart(ctx, {
                                     type: 'doughnut',
@@ -379,9 +386,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                         var label = data.labels[tooltipItem.index];
-                                                        var total = data.datasets[0].data.reduce(sumIt);
+                                                        var total = totalWebsites();
                                                         var val = data.datasets[0].data[tooltipItem.index];
-                                                        var $actualPercentage = (val/<?php print $agency_data['no_of_websites']; ?>)*100;
+                                                        var $actualPercentage = (val / total)*100;
                                                         return label + ': ' + Math.round($actualPercentage) + '%';
                                                     }
                                             }
@@ -390,7 +397,8 @@ $agency_data['agency_title'] = $agencynode->title;
 
                                             labels: {
                                                 render: function (args) {
-                                                        var $actualPercentage = ((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100;
+                                                        var total = totalWebsites();
+                                                        var $actualPercentage = ((args.value)/ total)*100;
                                                         return Math.round($actualPercentage) + '%';
                                                     },
                                                 fontColor: '#102e54',
@@ -433,8 +441,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><i><b>Secure - Provided through an Industry Standard Secure Connection</b></i></div>
-                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a secure connection. The report shows how many agency websites are <a href="https://https.cio.gov/" target="_blank"> HTTPS</a> compliant.</span>
-                                            <a href="/faq"><b>Read More</b></a>
+                                            <span class="fw-300 card-description f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to have a secure connection. The report shows how many agency websites are <a href="https://https.cio.gov/" target="_blank"> HTTPS</a> compliant.</span>
+                                            <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -445,7 +453,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </a>
                               </div>                                      <div class="col-md-6">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Criteria</th>
@@ -496,7 +504,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                     <div id="chart-3-legend"></div></div>
                             </div>
 
-                            <script lang="javascript">
+                            <script language="javascript">
                                 var ctx = document.getElementById('chart-gov3').getContext('2d');
                                 var chart = new Chart(ctx, {
                                     type: 'doughnut',
@@ -537,9 +545,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                         var label = data.labels[tooltipItem.index];
-                                                        var total = data.datasets[0].data.reduce(sumIt);
+                                                        var total = totalWebsites();
                                                         var val = data.datasets[0].data[tooltipItem.index];
-                                                        var $actualPercentage = (val/<?php print $agency_data['no_of_websites']; ?>)*100;
+                                                        var $actualPercentage = (val/total)*100;
                                                         return label + ': ' + Math.round($actualPercentage) + '%';
                                                     }
                                             }
@@ -548,7 +556,8 @@ $agency_data['agency_title'] = $agencynode->title;
 
                                             labels: {
                                                 render: function (args) {
-                                                    var $actualPercentage = ((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100;
+                                                    var total = totalWebsites();
+                                                    var $actualPercentage = ((args.value)/ total)*100;
                                                     return Math.round($actualPercentage) + '%';
                                                 },
                                                 fontColor: '#102e54',
@@ -592,8 +601,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><i><b>Searchable - Contains a Search Function</b></i></div>
-                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a search function that allows users to easily search content. This report provides a high-level view on how many websites have a search box (detectable through automated scanning), and provides a breakdown of specific on-site search products, where available. </span>
-                                            <a href="/faq"><b>Read More</b></a>
+                                            <span class="fw-300 card-description f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to have a search function that allows users to easily search content. This report provides a high-level view on how many websites have a search box (detectable through automated scanning), and provides a breakdown of specific on-site search products, where available. </span>
+                                            <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -605,7 +614,7 @@ $agency_data['agency_title'] = $agencynode->title;
                               </div>
                               <div class="col-md-6">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>On-Site Search Engine</th>
@@ -651,7 +660,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                     <div id="chart-4-legend"></div></div>
                             </div>
 
-                            <script lang="javascript">
+                            <script language="javascript">
                                 var ctx = document.getElementById('chart-gov-search').getContext('2d');
                                 var chart = new Chart(ctx, {
                                     type: 'doughnut',
@@ -732,6 +741,8 @@ $agency_data['agency_title'] = $agencynode->title;
                     </div>
                 </div>
             </div>
+            <div class="html2pdf__page-break">                
+            </div>
 
             <div class="relative-position mb-2 mobile-requirements">
                 <div class="row">
@@ -745,8 +756,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><i><b>Mobile-friendly - Fully Functional and Usable on Common Mobile Devices</b></i></div>
-                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to be fully functional and usable on common mobile devices. This report uses automated scanning to deliver Mobile Performance and Mobile Usability assessment results for each .gov website.</span>
-                                            <a href="/faq"><b>Read More</b></a>
+                                            <span class="fw-300 card-description f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to be fully functional and usable on common mobile devices. This report uses automated scanning to deliver Mobile Performance and Mobile Usability assessment results for each .gov website.</span>
+                                            <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -762,7 +773,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 <?php print $agency_data['mob-perf-chart']; ?>
 
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Breakdown</th>
@@ -802,7 +813,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                             </tbody>
                                         </table>
                                     </div>
-                                    <script lang="javascript">
+                                    <script language="javascript">
                                         var ctx = document.getElementById('chart-6').getContext('2d');
                                         var chart = new Chart(ctx, {
                                             type: 'doughnut',
@@ -846,9 +857,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                                     callbacks: {
                                                         label: function(tooltipItem, data) {
                                                             var label = data.labels[tooltipItem.index];
-                                                            var total = data.datasets[0].data.reduce(sumIt);
+                                                            var total = totalWebsites();
                                                             var val = data.datasets[0].data[tooltipItem.index];
-                                                            var $actualPercentage = (val/<?php print $agency_data['no_of_websites']; ?>)*100;
+                                                            var $actualPercentage = (val/total)*100;
                                                             return label + ': ' + Math.round($actualPercentage) + '%';
                                                         }
                                                     }
@@ -857,7 +868,8 @@ $agency_data['agency_title'] = $agencynode->title;
 
                                                     labels: {
                                                         render: function (args) {
-                                                            var $actualPercentage = ((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100;
+                                                            var total = totalWebsites();
+                                                            var $actualPercentage = ((args.value)/ total)*100;
                                                             return Math.round($actualPercentage) + '%';
                                                         },
                                                         fontColor: '#102e54',
@@ -887,7 +899,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                   <h4 class="text-center chart-data-title"> Mobile Usability</h4>
                                     <?php print $agency_data['mob-usab-chart']; ?>
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Breakdown</th>
@@ -921,7 +933,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                             </tbody>
                                         </table>
                                     </div>
-                                    <script lang="javascript">
+                                    <script language="javascript">
                                         var ctx = document.getElementById('chart-5').getContext('2d');
                                         var chart = new Chart(ctx, {
                                             type: 'doughnut',
@@ -963,9 +975,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                                     callbacks: {
                                                         label: function(tooltipItem, data) {
                                                         var label = data.labels[tooltipItem.index];
-                                                        var total = data.datasets[0].data.reduce(sumIt);
+                                                        var total = totalWebsites();
                                                         var val = data.datasets[0].data[tooltipItem.index];
-                                                        var $actualPercentage = (val/<?php print $agency_data['no_of_websites']; ?>)*100;
+                                                        var $actualPercentage = (val/total)*100;
                                                         return label + ': ' + Math.round($actualPercentage) + '%';
                                                     }
                                                     }
@@ -974,7 +986,8 @@ $agency_data['agency_title'] = $agencynode->title;
 
                                                     labels: {
                                                         render: function (args) {
-                                                            var $actualPercentage = ((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100;
+                                                            var total = totalWebsites();
+                                                            var $actualPercentage = ((args.value)/ total)*100;
                                                             return Math.round($actualPercentage) + '%';
                                                         },
                                                         fontColor: '#102e54',
@@ -1041,8 +1054,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><i><b>User-Centric - Designed around user needs with data-driven analysis influencing management and development decisions</b></i></div>
-                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to be designed around user needs with data-driven analysis. The report shows how many websites have implemented the DAP (Digital Analytics Program) code. </span>
-                                            <a href="/faq"><b>Read More</b></a>
+                                            <span class="fw-300 card-description f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to be designed around user needs with data-driven analysis. The report shows how many websites have implemented the DAP (Digital Analytics Program) code. </span>
+                                            <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -1054,7 +1067,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </div>
                                 <div class="col-md-6">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Criteria</th>
@@ -1105,7 +1118,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 <div class="col-sm-6 legend-container">
                                     <div id="chart-7-legend"></div></div>
                             </div>
-                            <script lang="javascript">
+                            <script language="javascript">
                                 var ctx = document.getElementById('chart-gov7').getContext('2d');
                                 var chart = new Chart(ctx, {
                                     type: 'doughnut',
@@ -1149,9 +1162,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                             callbacks: {
                                                 label: function(tooltipItem, data) {
                                                         var label = data.labels[tooltipItem.index];
-                                                        var total = data.datasets[0].data.reduce(sumIt);
+                                                        var total = totalWebsites();
                                                         var val = data.datasets[0].data[tooltipItem.index];
-                                                        var $actualPercentage = (val/<?php print $agency_data['no_of_websites']; ?>)*100;
+                                                        var $actualPercentage = (val/total)*100;
                                                         return label + ': ' + Math.round($actualPercentage) + '%';
                                                 }
                                             }
@@ -1160,7 +1173,8 @@ $agency_data['agency_title'] = $agencynode->title;
 
                                             labels: {
                                                 render: function (args) {
-                                                    var $actualPercentage = ((args.value)/ <?php print $agency_data['no_of_websites']; ?>)*100;
+                                                    var total = totalWebsites();
+                                                    var $actualPercentage = ((args.value)/ total)*100;
                                                     return Math.round($actualPercentage) + '%';
                                                 },
                                                 fontColor: '#102e54',

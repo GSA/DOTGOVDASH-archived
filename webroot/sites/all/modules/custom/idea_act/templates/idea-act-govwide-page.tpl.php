@@ -120,7 +120,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                  title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
                         </a> -->
 
-                        <button class="button download-button" onclick="generatePDF('21st-gov-wide.pdf', 500, 730)" type="submit">Download</button>
+                        <button class="button download-button" onclick="generatePDF('21st-gov-wide.pdf', 400, 800)" type="submit">Download</button>
                     </div>
                 </div>
             </div>
@@ -156,8 +156,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><p class="card-description"><i><b>Accessible - Accessible to Individuals with Disabilities</b></i></p></div>
-                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to be accessible to individuals with disabilities. The three accessibility metrics presented in this report provide an initial spot check of some common web accessibility issues that can be discovered through automated scanning. This is an indicator only, and is not intended to be a comprehensive assessment of website accessibility. </span>
-                                            <a href="/faq"><b>Read More</b></a>
+                                            <span class="fw-300 card-description f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to be accessible to individuals with disabilities. The three accessibility metrics presented in this report provide an initial spot check of some common web accessibility issues that can be discovered through automated scanning. This is an indicator only, and is not intended to be a comprehensive assessment of website accessibility. </span>
+                                            <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
                                             
                                         </div>
                                     </div>
@@ -195,7 +195,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                 </div>
                             </div>
 
-                            <script lang="javascript">
+                            <script language="javascript">
                                 var ctx = document.getElementById('chart-gov1').getContext('2d');
                                 var chart = new Chart(ctx, {
                                     type: 'doughnut',
@@ -285,8 +285,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><p class="card-description"><i><b>Consistent - Consistent in Appearance</b></i></p></div>
-                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a consistent appearance. It also requires agencies to use this <a href="https://designsystem.digital.gov/maturity-model/" target="_blank"> maturity model</a> to gauge compliance with these <a href="https://designsystem.digital.gov/website-standards/" target="_blank">website standards</a> via use of the <a href="https://designsystem.digital.gov/" target="_blank">U.S. Web Design System</a>. This report provides a high-level view of websites and agencies using the U.S. Web Design System (USWDS) code. </span>
-                                             <a href="/faq"><b>Read More</b></a>
+                                            <span class="fw-300 card-description f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to have a consistent appearance. It also requires agencies to use this <a href="https://designsystem.digital.gov/maturity-model/" target="_blank"> maturity model</a> to gauge compliance with these <a href="https://designsystem.digital.gov/website-standards/" target="_blank">website standards</a> via use of the <a href="https://designsystem.digital.gov/" target="_blank">U.S. Web Design System</a>. This report provides a high-level view of websites and agencies using the U.S. Web Design System (USWDS) code. </span>
+                                             <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -299,7 +299,7 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                 <div class="col-md-6 uswds-table">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Breakdown</th>
@@ -352,7 +352,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     <div id="chart-2-legend"></div>
                                 </div>
                             </div>
-                            <script lang="javascript">
+                            <script language="javascript">
                                 var ctx = document.getElementById('chart-gov2').getContext('2d');
                                 var chart = new Chart(ctx, {
                                     type: 'doughnut',
@@ -448,8 +448,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><p class="card-description"><i><b>Secure - Provided through an Industry Standard Secure Connection</b></i></p></div>
-                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a secure connection. The report shows how many agency websites are <a href="https://https.cio.gov/" target="_blank"> HTTPS</a> compliant.</span>
-                                            <a href="/faq"><b>Read More</b></a>
+                                            <span class="fw-300 card-description f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to have a secure connection. The report shows how many agency websites are <a href="https://https.cio.gov/" target="_blank"> HTTPS</a> compliant.</span>
+                                            <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -461,11 +461,11 @@ $search_engine_data_for_agencygraph = "0,0";
                                 </div>
                                 <div class="col-md-6">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                               <th>Criteria</th>
-                                              <th>Websites</th>
+                                              <th>Total</th>
                                               <th>Percentage</th>
                                             </tr>
                                             </thead>
@@ -513,7 +513,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                 <div class="col-sm-6">
                                     <div id="chart-3-legend"></div></div>
                             </div>
-                            <script lang="javascript">
+                            <script language="javascript">
                                 var ctx = document.getElementById('chart-gov3').getContext('2d');
                                 var chart = new Chart(ctx, {
                                     type: 'doughnut',
@@ -610,8 +610,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><p class="card-description"><i><b>Searchable - Contains a Search Function</b></i></p></div>
-                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to have a search function that allows users to easily search content. This report provides a high-level view on how many websites have a search box (detectable through automated scanning), and provides a breakdown of specific on-site search products, where available. </span>
-                                             <a href="/faq"><b>Read More</b></a>
+                                            <span class="fw-300 card-description f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to have a search function that allows users to easily search content. This report provides a high-level view on how many websites have a search box (detectable through automated scanning), and provides a breakdown of specific on-site search products, where available. </span>
+                                             <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -624,7 +624,7 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                 <div class="col-md-6">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>On-Site Search Engine</th>
@@ -665,7 +665,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                 <div class="col-sm-6">
                                     <div id="chart-4-legend"></div></div>
                             </div>
-                            <script lang="javascript">
+                            <script language="javascript">
                                 var ctx = document.getElementById('chart-gov-search').getContext('2d');
                                 var chart = new Chart(ctx, {
                                     type: 'doughnut',
@@ -746,6 +746,8 @@ $search_engine_data_for_agencygraph = "0,0";
                 </div>
             </div>
 
+            <div class="html2pdf__page-break">                
+            </div>
             <div class="relative-position mb-2 mobile-requirements">
                 <div class="row">
                     <div class="col-sm-12">
@@ -758,8 +760,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><p class="card-description"><i><b>Mobile-friendly - Fully Functional and Usable on Common Mobile Devices</b></i></p></div>
-                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to be fully functional and usable on common mobile devices. This report uses automated scanning to deliver Mobile Performance and Mobile Usability assessment results for each .gov website.</span>
-                                            <a href="/faq"><b>Read More</b></a>
+                                            <span class="fw-300 card-description f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to be fully functional and usable on common mobile devices. This report uses automated scanning to deliver Mobile Performance and Mobile Usability assessment results for each .gov website.</span>
+                                            <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -781,7 +783,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </div>
                                     <div class="table-responsive">
 
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
 
                                             <tr>
@@ -822,7 +824,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             </tbody>
                                         </table>
                                     </div>
-                                    <script lang="javascript">
+                                    <script language="javascript">
                                         var ctx = document.getElementById('chart-gov4').getContext('2d');
                                         var chart = new Chart(ctx, {
                                             type: 'doughnut',
@@ -913,7 +915,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                         <div id="chart-6-legend"></div>
                                     </div>
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Breakdown</th>
@@ -947,7 +949,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             </tbody>
                                         </table>
                                     </div>
-                                    <script lang="javascript">
+                                    <script language="javascript">
                                         var ctx = document.getElementById('chart-gov5').getContext('2d');
                                         var chart = new Chart(ctx, {
                                             type: 'doughnut',
@@ -1048,8 +1050,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
                                             <div><p class="card-description"><i><b>User-Centric - Designed around user needs with data-driven analysis influencing management and development decisions</b></i></p></div>
-                                            <span class="fw-300 card-description">21st Century IDEA requires all executive branch public-facing websites and digital services to be designed around user needs with data-driven analysis. The report shows how many websites have implemented the DAP (Digital Analytics Program) code. </span>
-                                            <a href="/faq"><b>Read More</b></a>
+                                            <span class="fw-300 card-description f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to be designed around user needs with data-driven analysis. The report shows how many websites have implemented the DAP (Digital Analytics Program) code. </span>
+                                            <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
                                         </div>
                                     </div>
                                 </div>
@@ -1062,7 +1064,7 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                 <div class="col-md-6">
                                     <div class="table-responsive">
-                                        <table>
+                                        <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Criteria</th>
@@ -1115,7 +1117,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                 <div class="col-sm-6">
                                     <div id="chart-7-legend"></div></div>
                             </div>
-                            <script lang="javascript">
+                            <script language="javascript">
                                 var ctx = document.getElementById('chart-gov6').getContext('2d');
                                 var chart = new Chart(ctx, {
                                     type: 'doughnut',
