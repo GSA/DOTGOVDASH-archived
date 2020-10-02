@@ -120,7 +120,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                  title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
                         </a> -->
 
-                        <button class="button download-button" onclick="generatePDF('21st-gov-wide.pdf', 500, 730)" type="submit">Download</button>
+                        <button class="button download-button" onclick="generatePDF('21st-gov-wide.pdf', 400, 800)" type="submit">Download</button>
                     </div>
                 </div>
             </div>
@@ -746,6 +746,8 @@ $search_engine_data_for_agencygraph = "0,0";
                 </div>
             </div>
 
+            <div class="html2pdf__page-break">                
+            </div>
             <div class="relative-position mb-2 mobile-requirements">
                 <div class="row">
                     <div class="col-sm-12">

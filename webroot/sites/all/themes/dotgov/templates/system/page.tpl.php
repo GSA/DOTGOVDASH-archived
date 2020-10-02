@@ -73,10 +73,17 @@
  * @ingroup templates
  */
 ?>
+<style>
+  .page-break-margin {
+	  margin-bottom: 6rem !important;
+}
+  </style>
 <script src="/sites/all/themes/dotgov/js/html2pdf.bundle.min.js"></script>
 <script type="text/javascript">
     function generatePDF(fileName, pageWidth, pageHeight, websiteInfoPage) {
       jQuery("body").addClass("loading");
+      jQuery(".html2pdf__page-break").addClass("page-break-margin");
+
       if(websiteInfoPage) {
           jQuery( "#techstack" ).addClass( "split-column" );
       }
@@ -106,6 +113,8 @@
           .save().then(function () {
             jQuery( "#techstack" ).removeClass( "split-column" );
             jQuery("body").removeClass("loading");
+            jQuery(".html2pdf__page-break").removeClass("page-break-margin");
+          
             });
       }
     
