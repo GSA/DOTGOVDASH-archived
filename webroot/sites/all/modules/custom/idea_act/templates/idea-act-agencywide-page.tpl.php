@@ -192,7 +192,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             </div>
 
                             <!-- script to render the pie chart -->
-                          <script lang="javascript">
+                          <script language="javascript">
                               var ctx = document.getElementById('chart-gov1').getContext('2d');
                               var chart = new Chart(ctx, {
                                   type: 'doughnut',
@@ -346,7 +346,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             </div>
 
                             <!-- rendering chart container -->
-                            <script lang="javascript">
+                            <script language="javascript">
                                 var ctx = document.getElementById('chart-gov2').getContext('2d');
                                 var chart = new Chart(ctx, {
                                     type: 'doughnut',
@@ -504,7 +504,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                     <div id="chart-3-legend"></div></div>
                             </div>
 
-                            <script lang="javascript">
+                            <script language="javascript">
                                 var ctx = document.getElementById('chart-gov3').getContext('2d');
                                 var chart = new Chart(ctx, {
                                     type: 'doughnut',
@@ -660,7 +660,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                     <div id="chart-4-legend"></div></div>
                             </div>
 
-                            <script lang="javascript">
+                            <script language="javascript">
                                 var ctx = document.getElementById('chart-gov-search').getContext('2d');
                                 var chart = new Chart(ctx, {
                                     type: 'doughnut',
@@ -813,7 +813,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                             </tbody>
                                         </table>
                                     </div>
-                                    <script lang="javascript">
+                                    <script language="javascript">
                                         var ctx = document.getElementById('chart-6').getContext('2d');
                                         var chart = new Chart(ctx, {
                                             type: 'doughnut',
@@ -933,7 +933,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                             </tbody>
                                         </table>
                                     </div>
-                                    <script lang="javascript">
+                                    <script language="javascript">
                                         var ctx = document.getElementById('chart-5').getContext('2d');
                                         var chart = new Chart(ctx, {
                                             type: 'doughnut',
@@ -1118,7 +1118,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 <div class="col-sm-6 legend-container">
                                     <div id="chart-7-legend"></div></div>
                             </div>
-                            <script lang="javascript">
+                            <script language="javascript">
                                 var ctx = document.getElementById('chart-gov7').getContext('2d');
                                 var chart = new Chart(ctx, {
                                     type: 'doughnut',
