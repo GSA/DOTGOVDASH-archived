@@ -968,7 +968,7 @@ function getDnssecStatus($domain){
  */
 
 function getCustomIpv6Status($domain){
-    $ipv6com = "timeout 15 nslookup -q=aaaa $domain";
+    $ipv6com = "timeout 15 nslookup -q=aaaa $domain 205.171.2.65";
     $outp = array();
     $comret = "";
     execCommand("$ipv6com",$outp,$comret);
@@ -1027,7 +1027,7 @@ function getPulseData(){
     db_query("LOAD DATA LOCAL INFILE '".$domainsourcefile."' INTO TABLE `custom_current_federal_websites` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
     db_query("update custom_current_federal_websites set security_contact=NULL where security_contact='(blank)';");
     writeToLogs("Run script to generate https file and import to db",$logFile);
-    exec("cd ../scripts/custom_pulse_single_https/ && timeout 15 /usr/bin/python3.6 single_https.py --csvpath /tmp/current-federal.csv");
+    exec("cd ../scripts/custom_pulse_single_https/ && /usr/bin/python3.6 single_https.py --csvpath /tmp/current-federal.csv");
     shell_exec("/bin/cp -f ../scripts/custom_pulse_single_https/https_scan.csv /tmp/pulsehttp.csv");
     db_query("truncate table custom_pulse_https_data");
     db_query("LOAD DATA LOCAL INFILE '".$localhttpsfile."' INTO TABLE `custom_pulse_https_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
@@ -1036,7 +1036,7 @@ function getPulseData(){
     //file_put_contents("$localdapfile", file_get_contents("$pulsedapurl"));
     //This is the latest scan which uses GSA analytics api instead of pulse and generates a file at /tmp/pulsedap.csv
     writeToLogs("Run script to generate dap file and import to db",$logFile);
-   exec("timeout 15 /usr/bin/python3.6 ../scripts/custom_pulse_scanner_analytics/secondLevelDomain.py");
+   exec("/usr/bin/python3.6 ../scripts/custom_pulse_scanner_analytics/secondLevelDomain.py");
 
     db_query("truncate table custom_pulse_dap_data");
     db_query("LOAD DATA LOCAL INFILE '".$localdapfile."' INTO TABLE `custom_pulse_dap_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
