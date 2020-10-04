@@ -968,7 +968,7 @@ function getDnssecStatus($domain){
  */
 
 function getCustomIpv6Status($domain){
-    $ipv6com = "timeout 15 nslookup -q=aaaa $domain";
+    $ipv6com = "timeout 15 nslookup -q=aaaa $domain 205.171.2.65";
     $outp = array();
     $comret = "";
     execCommand("$ipv6com",$outp,$comret);
