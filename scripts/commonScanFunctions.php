@@ -2741,7 +2741,8 @@ function archiveGovwideTrendData(){
 
     $dap_websites = db_query("select count(a.title) as complnum from node a, field_data_field_dap_score b where a.nid=b.entity_id and a.status='1' and a.type='website' and b.field_dap_score_value='100'")->fetchField();
 
-    $redirect_websites = db_query("select count(a.title) as complnum from node a, field_data_field_dap_score b where a.nid=b.entity_id and a.status='1' and a.type='website' and b.field_dap_score_value='100'")->fetchField();
+    $redirect_websites = db_query("select count(a.title) as complnum from node a, field_data_field_redirect b where a.nid=b.entity_id and a.status='1' and a.type='website' and b.field_redirect_value='Yes'")->fetchField();
+
     $poc_websites = db_query("select count(a.field_website_security_poc_statu_value) as avg_value from field_data_field_website_security_poc_statu a , node b where a.entity_id=b.nid and b.type='website' and b.status='1' and a.field_website_security_poc_statu_value='1'")->fetchField();
 
     $https_websites = db_query("select count(field_https_status_value) as complnum from node a , field_data_field_https_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and a.type='https_dap_scan_information'  and field_https_status_value ='Yes' group by field_https_status_value")->fetchField();
@@ -2799,13 +2800,15 @@ function archiveAgencywideTrendData(){
         $https_websites = db_query("select count(field_https_status_value)  as complnum from node a , field_data_field_https_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='https_dap_scan_information'  and field_https_status_value='Yes' group by field_https_status_value", array(':agencyid' =>  $result->nid))->fetchField();
         $uswds_websites = db_query("select count(field_uswds_score_value)  as complnum from field_data_field_uswds_score a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid and field_uswds_score_value='100' group by field_uswds_score_value", array(':agencyid' =>  $result->nid))->fetchField();
 
-        $redirect_websites = db_query("select count(field_uswds_score_value)  as complnum from field_data_field_uswds_score a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid and field_uswds_score_value='100' group by field_uswds_score_value", array(':agencyid' =>  $result->nid))->fetchField();
+        $redirect_websites = db_query("select count(a.field_redirect_value)  as complnum from field_data_field_redirect a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid and a.field_redirect_value='Yes' group by a.field_redirect_value", array(':agencyid' =>  $result->nid))->fetchField();
         
-        $poc_websites = db_query("select count(a.field_website_security_poc_statu_value)  as complnum from field_data_field_website_security_poc_statu a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid='1' and a.field_website_security_poc_statu_value=:agencyid group by a.field_website_security_poc_statu_value", array(':agencyid' =>  $result->nid))->fetchField();
+        $poc_websites = db_query("select count(a.field_website_security_poc_statu_value)  as complnum from field_data_field_website_security_poc_statu a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid and a.field_website_security_poc_statu_value='1' group by a.field_website_security_poc_statu_value", array(':agencyid' =>  $result->nid))->fetchField();
 
         $uswds_websites = ($uswds_websites == '')?'NULL':$uswds_websites;
         $dap_websites = ($dap_websites == '')?'NULL':$dap_websites;
         $https_websites = ($https_websites == '')?'NULL':$https_websites;
+        $redirect_websites = ($redirect_websites == '')?'NULL':$redirect_websites;
+        $poc_websites = ($poc_websites == '')?'NULL':$poc_websites;
 
 
         //Query to get Search data for an agency
