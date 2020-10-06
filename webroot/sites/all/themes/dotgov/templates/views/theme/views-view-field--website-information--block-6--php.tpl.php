@@ -44,8 +44,12 @@
  */
 ?>
 <style>
-.height-175 { min-height: 175px !important; }
-.height-80 { min-height: 80px !important; }
+.height-170 { 
+  min-height: 170px !important; 
+}
+.height-80 { 
+  min-height: 80px !important; 
+}
 </style>
 <?php print $output; ?>
 <?php
@@ -88,14 +92,16 @@ if ($chartdata <= 50) {
 $redirect_message = 'Website Redirect - Metric Not Applicable';
 $crit_text = '';
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
-  if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] == "" || $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
-    $crit_text .= "Mobile Performance: Not Available\n";
-  } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 50 ) {
-    $crit_text .= "Mobile Performance: Poor\n";
-  } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 90 ) {
-    $crit_text .= "Mobile Performance: Needs Improvement\n";
+  if ( $row->_field_data['nid']['entity']->field_mobile_performance_status['und'][0]['value'] === NULL || $row->_field_data['nid']['entity']->field_mobile_performance_status['und'][0]['value'] === "") {
+    $crit_text .= "Mobile Performance: Not Available<br>";
+  } else if ( $row->_field_data['nid']['entity']->field_mobile_performance_status['und'][0]['value'] === "Poor") {
+    $crit_text .= "Mobile Performance: Poor<br>";
+  } else if ( $row->_field_data['nid']['entity']->field_mobile_performance_status['und'][0]['value'] === "Needs Improvement") {
+    $crit_text .= "Mobile Performance: Needs Improvement<br>";
+  } else if ( $row->_field_data['nid']['entity']->field_mobile_performance_status['und'][0]['value'] === "Good") {
+    $crit_text .= "Mobile Performance: Good<br>";
   } else {
-    $crit_text .= "Mobile Performance Good";
+    $crit_text .= "Mobile Performance: Not Available<br>";
   }
 } else {
   $crit_text .= "Mobile Performance: <span style=\"color:white;\">" . $redirect_message . "</span><br>";
@@ -112,7 +118,7 @@ if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
     $crit_text .= "Mobile Usability: Not Mobile Friendly";
   }
 } else {
-  $heightChange = "height-175";
+  $heightChange = "height-170";
   $height80 = "height-80";
   $crit_text .= "Mobile Usability: <span style=\"color:white;\">" . $redirect_message . "</span><br>";
 }
@@ -122,8 +128,8 @@ dotgov_common_tooltip("tooltip4","id");
 <div class="col-xs-10">
     <h2 class="pane-title"> Mobile Information </h2>
 </div>
-<div class="col-xs-2 nopadding" style="z-index: 3;">
-    <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+<div class="col-xs-2" style="z-index: 3;">
+    <div id="tooltip4" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">
         <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
           <?php print nl2br($crit_text);?></span>
     </div>
@@ -135,24 +141,32 @@ $chart_data_font = "10px";
 $performance_title = "Mobile Performance";
 $usability_title = "Mobile Usability";
 if (!is_redirect($row->field_field_website_id[0]['raw']['nid'])) {
-  if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] == "" || $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] === NULL) {
+  if ( $row->_field_data['nid']['entity']->field_mobile_performance_status['und'][0]['value'] === NULL || $row->_field_data['nid']['entity']->field_mobile_performance_status['und'][0]['value'] === "") {
     $performance_chart_data_text = "Not Available";
     $performance_chart_pie_title = "Not Available";
+    $performance_chart_data = "0";
     $performance_chart_color = "#ac0600";
-  } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 50 ) {
+  } else if ( $row->_field_data['nid']['entity']->field_mobile_performance_status['und'][0]['value'] === "Poor") {
     $performance_chart_data_text = "Poor";
     $performance_chart_pie_title = "Poor";
+    $performance_chart_data = intval($row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ]);
     $performance_chart_color = "#ac0600";
-  } else if ( $row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ] < 90 ) {
+  } else if ( $row->_field_data['nid']['entity']->field_mobile_performance_status['und'][0]['value'] === "Needs Improvement") {
     $performance_chart_data_text = "Needs Improvement";
     $performance_chart_pie_title = "Needs<br>Improvement";
+    $performance_chart_data = intval($row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ]);
     $performance_chart_color = "#654f00";
-  } else {
+  } else if ( $row->_field_data['nid']['entity']->field_mobile_performance_status['und'][0]['value'] === "Good") {
     $performance_chart_data_text = "Good";
     $performance_chart_pie_title = "Good";
+    $performance_chart_data = intval($row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ]);
     $performance_chart_color = "#29643a";
+  } else {
+    $performance_chart_data_text = "Not Available";
+    $performance_chart_pie_title = "Not Available";
+    $performance_chart_data = "0";
+    $performance_chart_color = "#ac0600";
   }
-  $performance_chart_data = intval($row->field_field_mobile_performance_score[ '0' ][ 'raw' ][ 'value' ]);
   print "$performance_title: $performance_chart_data_text<br>";
 } else {
   print "$performance_title: <span style=\"color:#a70000;\">" . $redirect_message . "</span><br>";
