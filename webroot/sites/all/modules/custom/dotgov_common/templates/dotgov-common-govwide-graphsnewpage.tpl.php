@@ -493,8 +493,8 @@
                   <div class="white-back">
                      <div class="panel-pane pane-views pane-website-information">
                         <?php
-                         echo trim(title('HTTPS'));
-                         echo trim(infoIcon("HTTPS Data is collected through a custom scanner component of digital dashboard that last ran on", "tooltip2", dotgov_common_lastScanDateStr()));
+                         echo trim(dotgov_common_title('HTTPS'));
+                         echo trim(dotgov_common_info_icon("HTTPS Data is collected through a custom scanner component of digital dashboard that last ran on", "tooltip2", dotgov_common_lastScanDateStr()));
                         ?>
                         <br clear="all"/>
                         <div class="pane-content">
@@ -503,7 +503,7 @@
                                  <div class="col-xs-12 height-wrap-first">
                                     <h5>HTTPS score breakdown</h5>
                                     <?php
-                                     echo trim(subtext("HTTPS", $agency_https_score, "The individual site score is based on several different metrics. See scoring methods for more info."));
+                                     echo trim(dotgov_common_subtext("HTTPS", $agency_https_score, "The individual site score is based on several different metrics. See scoring methods for more info."));
                                     ?>
                                     <div class="col-sm-12 col-lg-6 nopadding">
                                        <div id="https_chart">&nbsp;</div>
@@ -636,7 +636,7 @@
                                     ?>
                               </div>
                            </div>
-                           <?php echo trim(footer()); ?>
+                           <?php echo trim(dotgov_common_footer()); ?>
                         </div>
                      </div>
                   </div>
@@ -644,8 +644,8 @@
                <div class="col-xs-12 col-lg-4">
                   <div class="white-back">
                      <?php
-                       echo trim(title('M-15-13 and BOD 18-01'));
-                       echo trim(infoIcon("M-15-13 and BOD 18-01 Data is collected through a custom scanner component of dotgov dashboard that last ran on", "tooltip7", dotgov_common_lastScanDateStr()));
+                       echo trim(dotgov_common_title('M-15-13 and BOD 18-01'));
+                       echo trim(dotgov_common_info_icon("M-15-13 and BOD 18-01 Data is collected through a custom scanner component of dotgov dashboard that last ran on", "tooltip7", dotgov_common_lastScanDateStr()));
                      ?>
                      <br clear="all"/>
                      <div class="pane-content clearfix">
@@ -658,7 +658,7 @@
                                           <div class="col-xs-12 height-wrap-first">
                                              <h5>M-15-13 and BOD 18-01 score breakdown</h5>
                                              <?php
-                                              echo trim(subtext("Compliant with M-15-13 and BOD 18-01", $agency_m15_score, "The individual site score is 100 for compliant 0 for non-compliant", "col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding"));
+                                              echo trim(dotgov_common_subtext("Compliant with M-15-13 and BOD 18-01", $agency_m15_score, "The individual site score is 100 for compliant 0 for non-compliant", "col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding"));
                                              ?>
                                              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
                                                 <div id="m1513_chart">&nbsp;</div>
@@ -774,7 +774,7 @@
                                              ?>
                                        </div>
                                     </div>
-                                    <?php echo trim(footer()); ?>
+                                    <?php echo trim(dotgov_common_footer()); ?>
                                  </div>
                               </div>
                            </div>
@@ -785,8 +785,8 @@
                <div class="col-xs-12 col-lg-4">
                   <div class="white-back">
                      <?php
-                       echo trim(title('IPV6'));
-                       echo trim(infoIcon("IPV6 Data is collected through a custom scanner component of dotgov dashboard that last ran on", "tooltip6", dotgov_common_lastScanDateStr()));
+                       echo trim(dotgov_common_title('IPV6'));
+                       echo trim(dotgov_common_info_icon("IPV6 Data is collected through a custom scanner component of dotgov dashboard that last ran on", "tooltip6", dotgov_common_lastScanDateStr()));
                      ?>
                      <br clear="all"/>
                      <div class="pane-content clearfix">
@@ -800,7 +800,7 @@
                                              <div class="col-xs-12 height-wrap-first">
                                                 <h5>IPV6 score breakdown</h5>
                                                 <?php
-                                                  echo trim(subtext("IPV6", $agency_ipv6_score, "The individual site score is 100 for compliant 0 for non-compliant", "col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding"));
+                                                  echo trim(dotgov_common_subtext("IPV6", $agency_ipv6_score, "The individual site score is 100 for compliant 0 for non-compliant", "col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding"));
                                                 ?>
                                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding">
                                                    <div id="ipv6_chart">&nbsp;</div>
@@ -916,7 +916,7 @@
                                                 ?>
                                           </div>
                                        </div>
-                                       <?php echo trim(footer()); ?>
+                                       <?php echo trim(dotgov_common_footer()); ?>
                                     </div>
                                  </div>
                               </div>
@@ -933,7 +933,7 @@
                <div class="col-xs-12 col-lg-4">
                   <div class="white-back">
                      <?php
-                      echo trim(title("DAP"));
+                      echo trim(dotgov_common_title("DAP"));
                      ?>
                      <div class="col-xs-2 nopadding">
                         <div id="tooltip3" class="infor">
@@ -1081,15 +1081,15 @@
                               </div>
                            </div>
                         </div>
-                        <?php echo trim(footer()); ?>
+                        <?php echo trim(dotgov_common_footer()); ?>
                      </div>
                   </div>
                </div>
                <div class="col-xs-12 col-lg-4">
                   <div class="white-back">
                      <?php
-                       echo trim(title('Free of Insecure Protocols'));
-                       echo trim(infoIcon("Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner component of dotgov dashboard that last ran on", "tooltip8", dotgov_common_lastScanDateStr()));
+                       echo trim(dotgov_common_title('Free of Insecure Protocols'));
+                       echo trim(dotgov_common_info_icon("Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner component of dotgov dashboard that last ran on", "tooltip8", dotgov_common_lastScanDateStr()));
                      ?>
                      <br clear="all" />
                      <div class="pane-content clearfix">
@@ -1222,7 +1222,7 @@
                                  ?>
                            </div>
                         </div>
-                        <?php echo trim(footer()); ?>
+                        <?php echo trim(dotgov_common_footer()); ?>
                      </div>
                   </div>
                </div>
@@ -1328,7 +1328,7 @@
                            </div>
                         </div>
                      </div>
-                     <?php echo trim(footer("/website/all/uswds", "https://designsystem.digital.gov/maturity-model/", "/sites/all/themes/dotgov/images/DD-btn_learn-more1.png")); ?>
+                     <?php echo trim(dotgov_common_footer("/website/all/uswds", "https://designsystem.digital.gov/maturity-model/", "/sites/all/themes/dotgov/images/DD-btn_learn-more1.png")); ?>
                   </div>
                </div>
             </div>
