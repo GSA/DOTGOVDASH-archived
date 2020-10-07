@@ -43,7 +43,10 @@
  * @ingroup themeable
  */
 ?>
-
+<style>
+.height-175 { min-height: 175px !important; }
+.height-60 { min-height: 60px !important; }
+</style>
 <?php
 $crit_text = '';
 $redirect_message = 'Website Redirect - Metric Not Applicable';
@@ -60,9 +63,9 @@ dotgov_common_tooltip("tooltip3","id");
 <div class="col-xs-10">
     <h2 class="pane-title">DAP Information</h2>
 </div>
-<div class="col-xs-2 nopadding">
+<div class="col-xs-2">
     <div id="tooltip3" class="infor">
-        <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+        <img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">
         <span class="tooltiptext tooltip-left">
           <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"><br>
           <?php
@@ -118,7 +121,7 @@ if(!is_redirect(arg(1))) {
     $chartdata = $dapscore;
   }
 } else {
-  print '<div class="col-lg-12">';
+  print '<div class="col-lg-12 height-60">';
   print 'DAP Score: <span style="color:#a70000;">Website Redirect - Metric Not Applicable</span></br>';
   print 'DAP Status: <span style="color:#a70000;">Website Redirect - Metric Not Applicable</span></br>';
 }
@@ -139,6 +142,8 @@ if ($chartdata <= 50) {
   <div class="col-lg-6">
       <div id="dap_chart" style="width: 130px; height:130px; margin: 0 auto">&nbsp;</div>
   </div>
+<?php else: ?>
+<div class="col-sm-12 height-175"> &nbsp;</div>
 <?php endif; ?>
 
 <?php

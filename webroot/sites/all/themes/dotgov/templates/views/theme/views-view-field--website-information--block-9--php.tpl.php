@@ -22,6 +22,11 @@
  * the view is modified.
  */
 ?>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<style>
+.mn-height-122 { min-height: 122px !important; }
+.mn-height-125 { min-height: 125px !important; }
+</style>
 
 <?php
 $scanids = dotgov_common_siteAsocScanids(arg(1));
@@ -54,8 +59,10 @@ dotgov_common_tooltip("tooltip9","id");
 <div class="col-xs-10 nopadding">
     <h2 class="pane-title">Accessibility Issues</h2>
 </div>
-<div class="col-xs-2 nopadding">
-    <div id="tooltip9" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+<div class="col-xs-2">
+    <div id="tooltip9" class="infor">    
+        <img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">
+
         <span class="tooltiptext tooltip-left">
             <?php
                 if (!is_redirect(arg(1))) {
@@ -85,17 +92,18 @@ dotgov_common_tooltip("tooltip9","id");
         </ul>
             </div>
             <div class="col-xs-5">
-            <div id="access_chart" style="height: 110px;width: 110px;float: right;margin-top: -2px; "></div>
+            <div id="access_chart" style="height: 175px;width: 170px;margin-top: -33px;margin-left: calc(100% - 140px);"></div>
             </div>
-        </div>    
+        </div>
         <!-- <div id="access_chart" style="height:192px;">&nbsp</div> -->
-    </div> 
+    </div>
 <?php else: ?>
-    <div class="col-lg-12 nopadding" style="min-height: 235px;">
+    <div class="col-sm-12 mn-height-125 nopadding">
         Color Contrast: <span style="color:#a70000;"><?php print $redirect_message; ?></span><br>
         HTML Attribute: <span style="color:#a70000;"><?php print $redirect_message; ?></span><br>
         Missing Image Description: <span style="color:#a70000;"><?php print $redirect_message; ?></span>
     </div>
+    <div class="col-sm-12 mn-height-122">&nbsp;</div>
 <?php endif; ?>
 
 <div class="col-lg-12 clearfix report-buttons nopadding">
@@ -108,51 +116,39 @@ dotgov_common_tooltip("tooltip9","id");
     </p>
 </div>
 
-<script type="text/javascript">
-    Highcharts.chart('access_chart', {
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie'
-        },
-        title: {
-            text: ''
-        },
-        credits: {
-            enabled: false
-        },
-        legend:{
-            enabled: false
-           //width: 220
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: false
-                },
-                size: '101.78',
-                <?php if($showlegend == 1) print "showInLegend: true"; ?>
-            }
-        },
-        series: [{
-            name: 'Percentage',
-            colorByPoint: true,
-            data: [{
-                name: 'Color Contrast Issues',
-                y: <?php print_r(!emptyOrNull($colorcont) ? $colorcont : 0); ?>
-            }, {
-                name: 'HTML Attribute Issues',
-                y: <?php print_r(!emptyOrNull($htmlattri) ? $htmlattri : 0); ?>
-            }, {
-                name: 'Missing Image Description Issues',
-                y: <?php print_r(!emptyOrNull($missingim) ? $missingim : 0); ?>
-            }]
-        }]
-    });
+<script language="JavaScript">
+   google.charts.load('current', {'packages':['corechart']});
+   google.charts.setOnLoadCallback(drawChart);
+
+   function drawChart() {
+       var data = google.visualization.arrayToDataTable([
+           ['Type', 'Number'],
+           ['Color Contrast Issues',     <?php echo number_format($colorcont, 1, '.', ''); ?>],
+           ['HTML Attribute Issues',      <?php echo number_format($htmlattri, 1, '.', ''); ?>],
+           ['Missing Image Description Issues',  <?php echo number_format($missingim, 1, '.', ''); ?>]
+       ]);
+       var options = {
+           colors: ['#7cb5ec', '#434348', '#90ed7d'],
+           sliceVisibilityThreshold: 0,
+           dataLabels: {
+               enabled: true
+           },
+           showInLegend: true,
+           backgroundColor:"transparent",
+           chartArea:{top:30,width:'100%',height:'58%'},
+           legend:{position:'none',alignment:'center'}
+       };
+
+       var chart = new google.visualization.PieChart(document.getElementById('access_chart'));
+
+       chart.draw(data, options);
+         var svgTags = document.querySelectorAll('#piechart svg');
+         var c = document.createElement('canvas');
+         c.width = svgTags.clientWidth;
+         c.height = svgTags.clientHeight;
+         svgTags.parentNode.insertBefore(c, svgTags);
+         var div = document.createElement('div');
+         div.appendChild(svgTags);
+         canvg(c, div.innerHTML);
+   }
 </script>
