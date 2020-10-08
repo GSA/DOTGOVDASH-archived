@@ -243,11 +243,6 @@ body {
 	color: #ffffff;
 	min-height: 270px;
 }
-
-.split-column {
-	columns: 2 !important;
-	height: auto !important;
-}
 .page-homepage .pond-column .pond-column-inner .panel-pane.domain-information {
 	/*min-height: 160px;*/
 }
@@ -635,14 +630,14 @@ h2.pane-title a {
 	-moz-border-radius: 6px 0 6px 6px;
 	border-radius: 6px 0 6px 6px
 }
-.pane-trend-analysis-trends-dap h2.pane-title,
-.pane-trend-analysis-trends-dnssec h2.pane-title,
-.pane-trend-analysis-trends-ipv6 h2.pane-title,
-.pane-trend-analysis-trends-freerc4 h2.pane-title,
-.pane-trend-analysis-trends-m1513 h2.pane-title,
-.pane-trend-analysis-trends-accessible-chart h2.pane-title{
-	min-height: 70px;
-}
+/*.ui-accordion-content-active { height: auto !important; }
+section#block-favorites-0 {
+	width: 300px;
+	position: fixed;
+	top: 300px;
+	right: 10px;
+	background: #fff;
+}*/
 #block-favorites-0 h2.block-title {
 	font-weight: bold;
 	padding: 10px 5px;
@@ -1643,6 +1638,49 @@ table.dnssec-table td, table.dnssec-table th {
     box-shadow: 0rem 1rem 3rem 1rem grey;
 }
 
+ul.uswds,ul.access-issues  {
+	font-size: 12px;
+    margin-left: 16px;
+    line-height: 20px;
+}
+
+li.ud, li.und, 
+li.b-1, li.b-2,
+li.b-3
+ {
+	list-style: none;
+}
+
+li.und:before {
+	color: rgb(102, 116, 106);
+}
+
+li.ud:before {
+	color: rgb(138, 201, 156);
+}
+
+li.b-1:before {
+	color: #7BB4EC;
+}
+li.b-2:before {
+	color: #434448;
+}
+li.b-3:before {
+	color: #90ED7D;
+}
+
+li.ud:before, li.und:before,
+li.b-1:before, li.b-2:before, 
+li.b-3:before  {
+	content: "\2022";
+    font-size: 3.5em;
+    font-weight: bold;
+    display: inline-block;
+    margin-left: -0.65em;
+    position: absolute;
+    padding-left: 12px;
+}
+
 img.info-icon {
     opacity: .75;
     cursor: pointer;
@@ -1651,13 +1689,46 @@ img.info-icon {
 img.info-icon:hover {
     opacity: 1;
 }
+.view-uswds-data .view-filters {
+    clear: both;
+}
+.overlay{
+	display: none;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	background: rgba(255,255,255,0.8) url("sites/all/themes/dotgov/images/loader.gif") center no-repeat;
+}
+
+/* Turn off scrollbar when body element has the loading class */
+body.loading{
+	overflow: hidden;
+}
+/* Make spinner image visible when body element has the loading class */
+body.loading .overlay{
+	display: block;
+}
+
+p.download-report-desktop, p.download-report-mobile,
+div.download-report-desktop, div.download-report-mobile {
+	font-size: 14px !important;
+}
+
 /* media Queries*/
 @media (orientation: portrait) {
 	.full {
 		background-size: 200% auto;
 	}
 }
-
+@media screen and (max-width: 1023px) {
+	.view-uswds-data .views-widget-filter-title {
+		float: none;
+		max-width: 400px;
+	}
+}
 @media only screen and (max-width: 768px) {
 	.top-bar{
 		font-size:13px;
@@ -1735,7 +1806,83 @@ img.info-icon:hover {
 }
 
 @media only screen and (max-width: 767px) {
+	p.download-report-desktop, div.download-report-desktop {
+		display: none;
+	}
+	.dataTables_filter {
+		width: 100%;
+		float: left;
+		text-align: left;
+	}
+	.dataTables_filter label {
+		width: 100%;
+		padding: 5px;
+	}
+	.dataTables_filter input {
+		width: 100%;
+	}
+	
+	.paging_full_numbers {
+		display: flex !important;
+		flex-direction: row !important;
+		flex-wrap: wrap !important;
+		justify-content: center !important;
+		align-items: center !important;
+	}
+	a.next.paginate_button:after {
+		content: "›";
+		padding-left: 4px;
+	}
+	a.last.paginate_button:after {
+		content: "»";
+		padding-left: 4px;
+	}
+	a.previous.paginate_button:before {
+		content: "‹";
+		padding-right: 4px;
+	}
+	a.first.paginate_button:before {
+		content: "«";
+		padding-right: 4px;
+	}
+	a[title^="Go to page "] {
+		display: none !important;
+	}
+	li.pager-ellipsis.disabled {
+		display: none;
+	}
+	span a.paginate_button {
+		display: none !important;
+	}
 
+	/* Table responsive  */
+	th:first-child, td:first-child
+	{
+		position:sticky;
+		left:0px;
+		background-color:inherit;
+	}
+	thead tr th:first-child,
+	tbody tr td:first-child {
+		min-width: 10rem;
+		max-width: 13rem;
+		word-break: break-all;
+	}
+	.views-table tbody tr td:first-child {
+		background: #F5F5F5;
+	}
+
+	thead tr th:first-child {
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		background: linear-gradient(#547f99, #6f9ebb, #547f99);
+	}
+	.table-responsive > .table > thead > tr > th, .table-responsive > .table > tbody > tr > th, .table-responsive > .table > tfoot > tr > th, .table-responsive > .table > thead > tr > td, .table-responsive > .table > tbody > tr > td, .table-responsive > .table > tfoot > tr > td {
+		white-space: inherit !important;
+	}
+	a.paginate_button_disabled {
+		display: none;
+	}
+	/* End table responsive  */
 	.lastUnit {
 		display: block;
 		width: 100%;
@@ -1781,6 +1928,9 @@ img.info-icon:hover {
 	}
 	.grey-gradient{
 		height:auto !important;
+	}
+	.view-uswds-data .views-widget-filter-field_web_agency_id_nid {
+		float: none;
 	}
 }
 
@@ -1928,18 +2078,19 @@ img.info-icon:hover {
 @media (min-width: 769px) {
 	.ssl-info .scroll-ssl {
 		overflow: scroll;
-		max-height: 222px;
+		max-height: 225px;
 	}
 
 	.wi-domain-info , .wi-web-info, .wi-tech-info{
 		min-height: 300px !important;
 	}
-	.web-info-acc-issues .report-buttons {
-    	margin-top: 4px !important;
-	}
 	.wi-widget {
 		min-height: 375px;
 		max-height: 375px;
+	}
+
+	.web-info-acc-issues .report-buttons {
+    	margin-top: 4px !important;
 	}
 	.wi-https-info #https_chart {
 		margin-top: 44px;
@@ -1997,6 +2148,9 @@ img.info-icon:hover {
 }
 
 @media (min-width: 768px) {
+	p.download-report-mobile, div.download-report-mobile  {
+		display: none;
+	}
 	#navbar-collapse .navbar-nav {
 		float: none;
 		margin: 0;
@@ -2021,6 +2175,9 @@ img.info-icon:hover {
 	}
 	.navbar-default .navbar-nav > .last.active > a {
 		background: none;
+	}
+	div[class^="pane-trend-analysis-trends-"] h2.pane-title, div[class*=" pane-trend-analysis-trends-"] h2.pane-title {
+		min-height: 72px;
 	}
 
 }
@@ -2048,47 +2205,4 @@ img.info-icon:hover {
 		left: 10%;
 	}
 
-}
-
-ul.uswds,ul.access-issues  {
-	font-size: 12px;
-    margin-left: 16px;
-    line-height: 20px;
-}
-
-li.ud, li.und, 
-li.b-1, li.b-2,
-li.b-3
- {
-	list-style: none;
-}
-
-li.und:before {
-	color: rgb(102, 116, 106);
-}
-
-li.ud:before {
-	color: rgb(138, 201, 156);
-}
-
-li.b-1:before {
-	color: #7BB4EC;
-}
-li.b-2:before {
-	color: #434448;
-}
-li.b-3:before {
-	color: #90ED7D;
-}
-
-li.ud:before, li.und:before,
-li.b-1:before, li.b-2:before, 
-li.b-3:before  {
-	content: "\2022";
-    font-size: 3.5em;
-    font-weight: bold;
-    display: inline-block;
-    margin-left: -0.65em;
-    position: absolute;
-    padding-left: 12px;
 }
