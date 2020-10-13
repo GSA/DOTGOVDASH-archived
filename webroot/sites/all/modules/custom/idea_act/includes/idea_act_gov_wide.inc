@@ -16,6 +16,7 @@ function idea_act_govwideTrendData(){
     $avg_rc4 = round(db_query("select avg(a.field_free_of_insecr_prot_score_value) as avg_value from field_data_field_free_of_insecr_prot_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
     $avg_m15 = round(db_query("select avg(a.field_m15_13_compliance_score_value) as avg_value from field_data_field_m15_13_compliance_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
     $avg_uswds = round(db_query("select avg(a.field_uswds_score_value) as avg_value from field_data_field_uswds_score a , node b where a.entity_id=b.nid and b.type='website' and b.status='1'")->fetchField());
+    $avg_pocwebsites = round(db_query("select count(field_website_security_poc_statu_value) as avg_value from field_data_field_website_security_poc_statu a , node b where a.entity_id=b.nid and b.type='website' and b.status='1' and field_website_security_poc_statu_value='1'")->fetchField());
     // $govwide_mob['mob_usab_friendly_nos'] = db_query("SELECT mob_usab_friendly FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
     // $govwide_mob['mob_usab_notfriendly_nos'] = db_query("SELECT mob_usab_nonfriendly FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
     // $govwide_mob['mob_perf_good_nos'] = db_query("SELECT mob_perf_good FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
@@ -34,6 +35,8 @@ function idea_act_govwideTrendData(){
     $govwidewebsite['avg_dnssec'] = $avg_dnssec;
     $govwidewebsite['avg_rc4'] = $avg_rc4;
     $govwidewebsite['avg_m15'] = $avg_m15;
+    $govwidewebsite['avg_uswds'] = $avg_uswds;
+    $govwidewebsite['avg_poc'] = $avg_pocwebsites;
     // $agencydata['poor_nos'] = $govwide_mob['mob_perf_poor_nos'] ;
     // $agencydata['good_nos'] = $govwide_mob['mob_perf_good_nos'] ;
     // $agencydata['improve_nos'] = $govwide_mob['mob_perf_improve_nos'] ;
@@ -125,6 +128,16 @@ function idea_act_getAllAgencyComplianceData(){
     $agencydata['uswds_null_color']  = '';
     $agencydata['uswds_null_label'] = '';
   }
+
+    //Query to get POC data for Agency
+    $pocresults = db_query("select field_website_security_poc_statu_value,count(field_website_security_poc_statu_value)  as complnum from field_data_field_website_security_poc_statu a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' group by field_website_security_poc_statu_value");
+    foreach ($pocresults as $pocresult) {
+        if($pocresult->field_website_security_poc_statu_value == '1')
+            $agencydata['poc_present'] += $pocresult->complnum;
+        if($pocresult->field_website_security_poc_statu_value == '0')
+            $agencydata['poc_notpresent'] += $pocresult->complnum;
+        $agencydata['poc_tottracked'] += $pocresult->complnum;
+    }
 
   //Query to get Insecure protocol data
     $insecresults = db_query("select IFNULL(field_free_of_rc4_3des_and_sslv2_value, 0) as field_free_of_rc4_3des_and_sslv2_value, count(field_free_of_rc4_3des_and_sslv2_value) as complnum from node a , field_data_field_free_of_rc4_3des_and_sslv2 b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and a.type='https_dap_scan_information'  group by field_free_of_rc4_3des_and_sslv2_value", array());
