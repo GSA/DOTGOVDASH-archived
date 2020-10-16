@@ -607,12 +607,12 @@ $search_engine_data_for_agencygraph = "0,0";
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>Yes</td>
+                                                <td>POC Available</td>
                                                 <td><?php echo number_format($agencydata['poc_present']); ?></td>
                                                 <td><?=idea_act_applyDataPercentage($agencydata['poc_present'], $agency_website_num)?></td>
                                             </tr>
                                             <tr>
-                                                <td>No</td>
+                                                <td>POC Not Available</td>
                                                 <td><?php echo number_format($agencydata['poc_notpresent']); ?></td>
                                                 <td><?=idea_act_applyDataPercentage($agencydata['poc_notpresent'],$agency_website_num)?></td>
                                             </tr>
