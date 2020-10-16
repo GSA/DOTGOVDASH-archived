@@ -167,7 +167,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             </div>
                             <div class="card-body relative-position row">
                               <div class="info-icon" id="tooltip-container">
-                                <a class="btn" href="/faq#faq-What-is-Accessibility-Spot-Checks?" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                <a class="btn" href="/faq#faq-What-is-Accessibility-Spot-Checks?" data-toggle="tooltip" ><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                 </a>
                               </div>
                               <div class="col-sm-6 mt-xs-1">
@@ -292,7 +292,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             </div>
                             <div class="card-body relative-position row">
                               <div class="info-icon" id="tooltip-container">
-                                <a class="btn" href="/faq#faq-What-is-USWDS?" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                <a class="btn" href="/faq#faq-What-is-USWDS?" data-toggle="tooltip"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                 </a>
                               </div>
                               <div class="col-md-6">
@@ -452,7 +452,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             </div>
                             <div class="card-body relative-position row">
                               <div class="info-icon" id="tooltip-container">
-                                <a class="btn" href="/faq#faq-What-is-Security?" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                <a class="btn" href="/faq#faq-What-is-Security?" data-toggle="tooltip" ><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                 </a>
                               </div>
                               <div class="col-md-6 mb-2">
@@ -750,7 +750,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             </div>
                             <div class="card-body relative-position row">
                               <div class="info-icon" id="tooltip-container">
-                                <a class="btn" href="/faq#faq-What-is-Search?" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                <a class="btn" href="/faq#faq-What-is-Search?" data-toggle="tooltip" ><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                 </a>
                               </div>
                               <div class="col-md-6">
@@ -905,7 +905,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             </div>
                             <div class="card-body relative-position row">
                               <div class="info-icon" id="tooltip-container">
-                                <a class="btn" href="/faq#faq-What-is-Mobile?" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                <a class="btn" href="/faq#faq-What-is-Mobile?" data-toggle="tooltip" ><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                 </a>
                               </div>
                               <div class="col-md-6 mb-2">
@@ -1203,7 +1203,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                  <a class="btn" href="/faq#faq-What-is-the-Digital-Analytics-Program-(DAP)?"  data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                  <a class="btn" href="/faq#faq-What-is-the-Digital-Analytics-Program-(DAP)?"  data-toggle="tooltip" ><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                   </a>
                                 </div>
                                 <div class="col-md-6">

@@ -47,7 +47,7 @@ $total_websites_count = $agency_data['actualdata']['total_websites_count'];
             </div>
             <div class="requirements bg-white shadow relative-position">
                 <div class="info-icon" id="tooltip-container">
-                    <a  class="btn" href="/faq#faq-What-is-the-Modernization-Requirements?" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                    <a  class="btn" href="/faq#faq-What-is-the-Modernization-Requirements?" data-toggle="tooltip" > <img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                     </a>
                 </div>
                 <h2 class="h2-title">Modernization Requirements</h2>
@@ -85,7 +85,7 @@ $total_websites_count = $agency_data['actualdata']['total_websites_count'];
             </div>
             <div class="agencies bg-white shadow relative-position">
                 <div class="info-icon" id="tooltip-container">
-                    <a  class="btn" href="/faq#faq-What-are-the-Major-Agencies?"  data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                    <a  class="btn" href="/faq#faq-What-are-the-Major-Agencies?"  data-toggle="tooltip" > <img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                     </a>
                 </div>
                 <h2 class="h2-title">Browse by Agencies</h2>
