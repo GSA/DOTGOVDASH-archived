@@ -588,7 +588,7 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                 </div>
                                 <div class="col-md-6 mt-xs-1 px-xs-0">
-                                <h4 class="text-center chart-data-title">Websites security Point of Contact (POC)</h4>
+                                <h4 class="text-center chart-data-title">Website Security Point of Contact (POC)</h4>
 
                                     <div class="chart-container" id="chart-8-ref">
                                         <canvas id="chart-gov8" width="250" height="300" aria-label="Charts" role="img"></canvas>
@@ -600,19 +600,19 @@ $search_engine_data_for_agencygraph = "0,0";
                                         <table class="idea-act-table">
                                             <thead>
                                             <tr>
-                                                <th>Breakdown</th>
-                                                <th>Websites</th>
+                                                <th>Criteria</th>
+                                                <th>Total</th>
                                                 <th>Percentage</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>Provided</td>
+                                                <td>Yes</td>
                                                 <td><?php echo number_format($agencydata['poc_present']); ?></td>
                                                 <td><?=idea_act_applyDataPercentage($agencydata['poc_present'], $agency_website_num)?></td>
                                             </tr>
                                             <tr>
-                                                <td>Not Provided</td>
+                                                <td>No</td>
                                                 <td><?php echo number_format($agencydata['poc_notpresent']); ?></td>
                                                 <td><?=idea_act_applyDataPercentage($agencydata['poc_notpresent'],$agency_website_num)?></td>
                                             </tr>
@@ -637,8 +637,8 @@ $search_engine_data_for_agencygraph = "0,0";
                                                             <?php echo number_format($agencydata['poc_notpresent']); ?>],
                                                     borderWidth: 0,
                                                     backgroundColor: [
-                                                        '#8ea116',
-                                                        '#007790'
+                                                        '#745fe9',
+                                                        '#ddaa01'
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
