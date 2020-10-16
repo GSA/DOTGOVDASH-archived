@@ -165,7 +165,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a class="btn" href="/faq#faq-What-is-Accessibility-Spot-Checks?" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn" href="/faq#faq-What-is-Accessibility-Spot-Checks?" data-toggle="tooltip" ><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
                                  <div class="col-sm-6 mt-xs-1 center-mb-2">
@@ -293,8 +293,8 @@ $search_engine_data_for_agencygraph = "0,0";
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a  class="btn" href="/faq#faq-What-is-USWDS?" target="_blank"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
-                                    </a>
+                                  <a class="btn" href="/faq#faq-What-is-USWDS?" data-toggle="tooltip" ><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                  </a>
                                 </div>
 
                                 <div class="col-md-6 uswds-table">
@@ -456,7 +456,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a class="btn" href="/faq#faq-What-is-Security?" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> HTTPS Data is collected through a custom scanner component of digital dashboard that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn" href="/faq#faq-What-is-Security?" data-toggle="tooltip" ><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
                                 <div class="col-md-6">
@@ -618,7 +618,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a class="btn" href="/faq#faq-What-is-Search?" data-toggle="tooltip" title="<span><p class='tt-text'> On-Site Search Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn" href="/faq#faq-What-is-Search?" data-toggle="tooltip"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
 
@@ -766,7 +766,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a class="btn" href="/faq#faq-What-is-Mobile?" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Mobile Data is collected from Google API through a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn" href="/faq#faq-What-is-Mobile?" data-toggle="tooltip" ><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
 
@@ -1056,7 +1056,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             </div>
                             <div class="card-body relative-position row">
                             <div class="info-icon" id="tooltip-container">
-                                    <a class="btn" href="/faq#faq-What-is-Digital-Analytics?" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> DAP Overall Average Score : <?=$agency_dap_score?>%"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn" href="/faq#faq-What-is-Digital-Analytics?" data-toggle="tooltip"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
 
