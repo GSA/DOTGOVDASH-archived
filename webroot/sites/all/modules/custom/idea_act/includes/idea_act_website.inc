@@ -276,6 +276,21 @@ function ideaact_get_website_data($websiteid){
     $websitedata['dapstatus'] = 'Website Redirect - Metric Not Applicable';
     $websitedata['daptext'] = 'The metric is not applicable for this website (This website is a redirect)';
   }
-  return $websitedata;
+
+    $websitedata['poc_contact'] = '';
+    if($wnode->field_website_security_poc['und'][0]['value']) {
+      $websitedata['poc_contact'] = $wnode->field_website_security_poc['und'][0]['value'];
+      $websitedata['poc_description'] = "This website has a dedicated security POC. Please use" . $websitedata['poc_contact'] . " to contact the security poc of this website.";
+    } else {
+      $websitedata['poc_contact'] = 'Not Available';
+      $websitedata['poc_description'] = 'There is no security POC available for this website.';
+    }
+    $websitedata['poc_status'] = '';
+    if($wnode->field_website_security_poc_statu['und'][0]['value'] == 1) {
+      $websitedata['poc_status'] = 'Yes';
+    } else {
+      $websitedata['poc_status'] = 'No';
+    }
+    return $websitedata;
 }
 
