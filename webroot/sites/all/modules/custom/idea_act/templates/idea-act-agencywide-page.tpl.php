@@ -92,9 +92,6 @@ $agencynode = node_load(arg(3));
 drupal_set_title($agencynode->title);
 $agency_data['agency_title'] = $agencynode->title;
  $pdf_file_name = '21st_Century_'.$agencynode->title.'.pdf';
- print 'present ' + $agency_data['poc_present'] + '<br>';
-
- //print 'not present '+   $agency_data['poc_notpresent'];
 ?>
 
 <script>
@@ -580,7 +577,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
-                                  <h4 class="text-center chart-data-title"> Websites with Point of Contact (POC)</h4>
+                                  <h4 class="text-center chart-data-title"> Website Security Point of Contact (POC)</h4>
 
                                   <div class="chart-container" id="chart-8-ref">
                                         <canvas id="chart-8" width="250" height="300" aria-label="Charts" role="img"></canvas>
@@ -593,19 +590,19 @@ $agency_data['agency_title'] = $agencynode->title;
                                         <table class="idea-act-table">
                                             <thead>
                                             <tr>
-                                                <th>Breakdown</th>
-                                                <th>Websites</th>
+                                                <th>Criteria</th>
+                                                <th>Total</th>
                                                 <th>Percentage</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
-                                              <td>Provided</td>
+                                              <td>POC Available</td>
                                               <td><?php echo number_format($agency_data['poc_present']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['poc_present'], $agency_data['no_of_websites'])?></td>
                                             </tr>
                                             <tr>
-                                              <td>Not Provided</td>
+                                              <td>POC Not Available</td>
                                               <td><?php echo number_format($agency_data['poc_notpresent']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['poc_notpresent'],$agency_data['no_of_websites'])?></td>
                                             </tr>
@@ -631,9 +628,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                                      
                                                     borderWidth: 0,
                                                     backgroundColor: [
-                                                        '#8ea116',
-                                                        '#007790',
-                                                       
+                                                        '#745fe9',
+                                                        '#ddaa01'
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
