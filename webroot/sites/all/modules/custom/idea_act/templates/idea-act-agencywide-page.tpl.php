@@ -92,6 +92,9 @@ $agencynode = node_load(arg(3));
 drupal_set_title($agencynode->title);
 $agency_data['agency_title'] = $agencynode->title;
  $pdf_file_name = '21st_Century_'.$agencynode->title.'.pdf';
+ print 'present ' + $agency_data['poc_present'] + '<br>';
+
+ //print 'not present '+   $agency_data['poc_notpresent'];
 ?>
 
 <script>
@@ -429,17 +432,17 @@ $agency_data['agency_title'] = $agencynode->title;
                 </div>
             </div>
 
-            <div class="relative-position mb-2">
+            <div class="relative-position mb-2 mobile-requirements">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card card-default shadow">
                             <div class="card-header row row-no-gutters">
                                 <div class="col-sm-12">
                                     <div class="col-sm-6">
-                                        <div class="card-title">Websites with Security Requirements</div>
+                                        <div class="card-title">Websites Security Requirements</div>
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
-                                        <div>
+                                    <div>
                                             <div><i><b>Secure - Provided through an Industry Standard Secure Connection</b></i></div>
                                             <span class="fw-300 card-description f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to have a secure connection. The report shows how many agency websites are <a href="https://https.cio.gov/" target="_blank"> HTTPS</a> compliant.</span>
                                             <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
@@ -451,9 +454,17 @@ $agency_data['agency_title'] = $agencynode->title;
                               <div class="info-icon" id="tooltip-container">
                                 <a class="btn" href="/faq#faq-What-is-Security?" data-toggle="tooltip" title="<span><img width='150' height='100' class='tt-img' src='/sites/all/themes/dotgov/images/helpchart.png'><br><p class='tt-text'> Accessibility Data is collected from pulse.gov website though a scan that last ran on <?php idea_act_lastScanDate();?>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                 </a>
-                              </div>                                      <div class="col-md-6">
+                              </div>
+                              <div class="col-md-6 mb-2">
+                                 <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
+                                  <h4 class="text-center chart-data-title">HTTPS Websites Compliance</h4>
+                                  <?php print $agency_data['https-chart'];?>
+                                  <div class="legend-container">
+                                        <div id="chart-3-legend"></div>
+                                    </div>
+
                                     <div class="table-responsive">
-                                        <table class="idea-act-table">
+                                    <table class="idea-act-table">
                                             <thead>
                                             <tr>
                                                 <th>Criteria</th>
@@ -487,106 +498,236 @@ $agency_data['agency_title'] = $agencynode->title;
                                             </tbody>
                                         </table>
                                     </div>
+                                    <script language="javascript">
+                                        var ctx = document.getElementById('chart-gov3').getContext('2d');
+                                        var chart = new Chart(ctx, {
+                                            type: 'doughnut',
+                                            data: {
+                                                datasets: [{
+                                                    data: [<?php echo number_format($agency_data['https_support']); ?>,
+                                                    <?php echo number_format($agency_data['https_nosupport']); ?>,<?php echo number_format($agency_data['https_na']); ?>],
+                                                    borderWidth: 0,
+                                                    backgroundColor: [
+                                                        '#00a65f',
+                                                        '#97d1ff',
+                                                        '<?php print $agency_data['https_na_color']; ?>',
+                                                    ]
+                                                }],
+                                                // These labels appear in the legend and in the tooltips when hovering different arcs
+                                                labels: ['Compliant Websites','Non-Compliant Websites','<?php print $agency_data['https_na_label']; ?>']
+                                            },
+
+                                            // Configuration options go here
+                                            options: {
+                                                // responsive: true,
+                                                maintainAspectRatio: false,
+
+                                                title: {
+                                                    display: false,
+                                                    text: '<?= $agency_data['agency_title']?> HTTPS Websites Compliance',
+                                                    fontSize: 18,
+                                                    fontColor: '#203b5f'
+                                                },
+                                                tooltips: {
+                                                    yPadding: 10,
+                                                    xPadding: 10,
+                                                    caretPadding: 5,
+                                                    caretSize: 5,
+                                                    displayColors: false,
+                                                    enabled: false,
+                                                    custom: customChartTooltip('chart-3-ref','chartjs-tooltip3'),
+                                                    callbacks: {
+                                                        label: function(tooltipItem, data) {
+                                                                var label = data.labels[tooltipItem.index];
+                                                                var total = totalWebsites();
+                                                                var val = data.datasets[0].data[tooltipItem.index];
+                                                                var $actualPercentage = (val/total)*100;
+                                                                return label + ': ' + Math.round($actualPercentage) + '%';
+                                                            }
+                                                    }
+                                                },
+                                                plugins: {
+
+                                                    labels: {
+                                                        render: function (args) {
+                                                            var total = totalWebsites();
+                                                            var $actualPercentage = ((args.value)/ total)*100;
+                                                            return Math.round($actualPercentage) + '%';
+                                                        },
+                                                        fontColor: '#102e54',
+                                                        position: 'outside',
+                                                        fontSize: 16,
+                                                        textMargin: 8,
+                                                        fontStyle: 'bold',
+                                                    }
+                                                },
+                                                legend: {
+                                                    position: 'bottom',
+                                                    display: false,
+                                                    labels: {
+                                                        fontColor: 'rgb(0, 0, 0)',
+                                                        usePointStyle: true,
+                                                        pointStyle: String
+                                                    }
+                                                }
+                                            }
+                                        });
+                                        var myLegendContainer = document.getElementById("chart-3-legend");
+                                        myLegendContainer.innerHTML = chart.generateLegend();
+                                        var myLegendContainerMobile = document.getElementById("chart-3-legend-mobile");
+                                        myLegendContainerMobile.innerHTML = chart.generateLegend();
+                                    </script>
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
-                                  <h4 class="text-center chart-data-title">HTTPS Websites Compliance</h4>
-                                  <?php print $agency_data['https-chart'];?>
-                                </div>
-                            </div>
-                            <div class="card-body relative-position row nmt-3">
-                                <div class="col-sm-6">
-                                    <div class="explore mb-2">
-                                       <a href="/ideaact/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                  <h4 class="text-center chart-data-title"> Websites with Point of Contact (POC)</h4>
+
+                                  <div class="chart-container" id="chart-8-ref">
+                                        <canvas id="chart-8" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
-                                </div>
-                                <div class="col-sm-6 legend-container">
-                                    <div id="chart-3-legend"></div></div>
-                            </div>
+                                    <div class="legend-container">
+                                        <div id="chart-8-legend"></div>
+                                    </div>
+                                                                      
+                                    <div class="table-responsive">
+                                        <table class="idea-act-table">
+                                            <thead>
+                                            <tr>
+                                                <th>Breakdown</th>
+                                                <th>Websites</th>
+                                                <th>Percentage</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                              <td>Provided</td>
+                                              <td><?php echo number_format($agency_data['poc_present']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['poc_present'], $agency_data['no_of_websites'])?></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Not Provided</td>
+                                              <td><?php echo number_format($agency_data['poc_notpresent']); ?></td>
+                                              <td><?=idea_act_applyDataPercentage($agency_data['poc_notpresent'],$agency_data['no_of_websites'])?></td>
+                                            </tr>
+                                            
+                                            <tr>
+                                              <td>Total</td>
+                                              <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
+                                              <td>100%
+                                                <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a>
+                                              </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <script language="javascript">
+                                        var ctx = document.getElementById('chart-8').getContext('2d');
+                                        var chart = new Chart(ctx, {
+                                            type: 'doughnut',
+                                            data: {
+                                                datasets: [{
+                                                    data: [<?php echo number_format($agency_data['poc_present']); ?>,
+                                                      <?php echo number_format($agency_data['poc_notpresent']); ?>],
+                                                     
+                                                    borderWidth: 0,
+                                                    backgroundColor: [
+                                                        '#8ea116',
+                                                        '#007790',
+                                                       
+                                                    ]
+                                                }],
+                                                // These labels appear in the legend and in the tooltips when hovering different arcs
+                                                labels: ['Provided', 'Not Provided']
+                                            },
 
-                            <script language="javascript">
-                                var ctx = document.getElementById('chart-gov3').getContext('2d');
-                                var chart = new Chart(ctx, {
-                                    type: 'doughnut',
-                                    data: {
-                                        datasets: [{
-                                            data: [<?php echo number_format($agency_data['https_support']); ?>,
-                                              <?php echo number_format($agency_data['https_nosupport']); ?>,<?php echo number_format($agency_data['https_na']); ?>],
-                                            borderWidth: 0,
-                                            backgroundColor: [
-                                                '#00a65f',
-                                                '#97d1ff',
-                                                '<?php print $agency_data['https_na_color']; ?>',
-                                            ]
-                                        }],
-                                        // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['Compliant Websites','Non-Compliant Websites','<?php print $agency_data['https_na_label']; ?>']
-                                    },
+                                            // Configuration options go here
+                                            options: {
+                                                // responsive: true,
+                                                maintainAspectRatio: false,
 
-                                    // Configuration options go here
-                                    options: {
-                                        // responsive: true,
-                                        maintainAspectRatio: false,
-
-                                        title: {
-                                            display: false,
-                                            text: '<?= $agency_data['agency_title']?> HTTPS Websites Compliance',
-                                            fontSize: 18,
-                                            fontColor: '#203b5f'
-                                        },
-                                        tooltips: {
-                                            yPadding: 10,
-                                            xPadding: 10,
-                                            caretPadding: 5,
-                                            caretSize: 5,
-                                            displayColors: false,
-                                            enabled: false,
-                                            custom: customChartTooltip('chart-3-ref','chartjs-tooltip3'),
-                                            callbacks: {
-                                                label: function(tooltipItem, data) {
+                                                title: {
+                                                    display: false,
+                                                    text: '<?= $agency_data['agency_title']?>',
+                                                    fontSize: 18,
+                                                    fontColor: '#203b5f'
+                                                },
+                                                tooltips: {
+                                                    yPadding: 10,
+                                                    xPadding: 10,
+                                                    caretPadding: 5,
+                                                    caretSize: 5,
+                                                    displayColors: false,
+                                                    enabled: false,
+                                                    custom: customChartTooltip('chart-8-ref','chartjs-tooltip8'),
+                                                    callbacks: {
+                                                        label: function(tooltipItem, data) {
                                                         var label = data.labels[tooltipItem.index];
                                                         var total = totalWebsites();
                                                         var val = data.datasets[0].data[tooltipItem.index];
                                                         var $actualPercentage = (val/total)*100;
                                                         return label + ': ' + Math.round($actualPercentage) + '%';
                                                     }
-                                            }
-                                        },
-                                        plugins: {
-
-                                            labels: {
-                                                render: function (args) {
-                                                    var total = totalWebsites();
-                                                    var $actualPercentage = ((args.value)/ total)*100;
-                                                    return Math.round($actualPercentage) + '%';
+                                                    }
                                                 },
-                                                fontColor: '#102e54',
-                                                position: 'outside',
-                                                fontSize: 16,
-                                                textMargin: 8,
-                                                fontStyle: 'bold',
-                                            }
-                                        },
-                                        legend: {
-                                            position: 'bottom',
-                                            display: false,
-                                            labels: {
-                                                fontColor: 'rgb(0, 0, 0)',
-                                                usePointStyle: true,
-                                                pointStyle: String
-                                            }
-                                        }
-                                    }
-                                });
-                                var myLegendContainer = document.getElementById("chart-3-legend");
-                                myLegendContainer.innerHTML = chart.generateLegend();
-                                var myLegendContainerMobile = document.getElementById("chart-3-legend-mobile");
-                                myLegendContainerMobile.innerHTML = chart.generateLegend();
-                            </script>
+                                                plugins: {
 
+                                                    labels: {
+                                                        render: function (args) {
+                                                            var total = totalWebsites();
+                                                            var $actualPercentage = ((args.value)/ total)*100;
+                                                            return Math.round($actualPercentage) + '%';
+                                                        },
+                                                        fontColor: '#102e54',
+                                                        position: 'outside',
+                                                        fontSize: 16,
+                                                        textMargin: 8,
+                                                        fontStyle: 'bold',
+                                                    }
+                                                },
+                                                legend: {
+                                                    position: 'bottom',
+                                                    display: false,
+                                                    labels: {
+                                                        fontColor: 'rgb(0, 0, 0)',
+                                                        usePointStyle: true,
+                                                        pointStyle: String
+                                                    },
+                                                    legendCallback: function(chart) {
+                                                        var text = [];
+                                                        text.push('<ul class="' + chart.id + '-legend">');
+                                                        for (var i = 0; i < chart.data.datasets.length; i++) {
+                                                            text.push('<li><span style="background-color:' +
+                                                                chart.data.datasets[i].backgroundColor +
+                                                                '"></span>');
+                                                            if (chart.data.datasets[i].label) {
+                                                                text.push(chart.data.datasets[i].label);
+                                                            }
+                                                            text.push('</li>');
+                                                        }
+                                                        text.push('</ul>');
+                                                        return text.join('');
+                                                    }
+                                                }
+                                            }
+                                        });
+                                        var myLegendContainer = document.getElementById("chart-8-legend");
+                                        myLegendContainer.innerHTML = chart.generateLegend();
+                                    </script>
+                                </div>
+                            </div>
+
+                            <div class="card-body relative-position row nmt-3">
+                                <div class="col-md-6 mb-2">
+                                    <div class="explore">
+                                    <a href="/ideaact/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
             </div>
 
             <div class="relative-position mb-2">
