@@ -121,7 +121,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                  title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" />
                         </a> -->
 
-                        <button class="button download-button" onclick="generatePDF('21st-gov-wide.pdf', 400, 800)" type="submit">Download</button>
+                        <button class="button download-button" onclick="generatePDF('21st-gov-wide.pdf', 400, 900)" type="submit">Download</button>
                     </div>
                 </div>
             </div>
