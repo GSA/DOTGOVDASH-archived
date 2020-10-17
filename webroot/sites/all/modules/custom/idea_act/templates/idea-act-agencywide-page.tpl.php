@@ -578,10 +578,18 @@ $agency_data['agency_title'] = $agencynode->title;
                                 <div class="col-md-6 mt-xs-1">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                   <h4 class="text-center chart-data-title"> Website Security Point of Contact (POC)</h4>
-
-                                  <div class="chart-container" id="chart-8-ref">
-                                        <canvas id="chart-8" width="250" height="300" aria-label="Charts" role="img"></canvas>
-                                    </div>
+                                    <?php if(number_format($agency_data['poc_present']) != 0) {
+                                        print "<div class='chart-container' id='chart-8-ref'>
+                                                <canvas id='chart-8' width='250' height='300' aria-label='Charts' role='img'></canvas>
+                                                </div>
+                                                <div id='chart-8-legend-mobile'></div>";
+                                    } else {
+                                        print "<div class='text-center tool-tip-zero-na'>
+                                                <img alt='zero-chart'  src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive'><span class='tool-tip-zero-na-text'><img alt='bullet' src='/sites/all/modules/custom/idea_act/images/bullet.png'>Compliant Websites: 0%</span>
+                                                </div>
+                                                <div class='legend-container'><div id='chart-0-legend'><ul class='chart-0-legend'><li><span style='background-color:#EEEEEE'></span>Compliant Websites</li></ul></div>
+                                                </div>";
+                                    } ?>
                                     <div class="legend-container">
                                         <div id="chart-8-legend"></div>
                                     </div>
