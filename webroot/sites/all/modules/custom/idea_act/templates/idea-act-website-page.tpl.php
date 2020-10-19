@@ -377,7 +377,7 @@ drupal_set_title($websitedata['agencyname']);
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn" href="/faq#faq-What-is-Security?" data-toggle="tooltip"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
                                 <div class="col-sm-6">
@@ -394,14 +394,14 @@ drupal_set_title($websitedata['agencyname']);
                                               <td>Security POC Status</td>
                                               <td><?php print $websitedata['poc_status'] . "\t(".$websitedata['poc_contact'] . ")"; ?></td>
                                             </tr>
-                                            
+
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 mt-xs-1">
                                     <p class="card-wi-desc"><?php print $websitedata['poc_description']; ?> </p>
-                                    
+
                                 </div>
                             </div>
                             <div class="explore mb-2 px-2">
