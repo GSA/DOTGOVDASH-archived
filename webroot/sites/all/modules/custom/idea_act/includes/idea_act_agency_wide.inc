@@ -62,7 +62,7 @@ function ideaact_get_agencywide_data($agencyid){
     #zero case graph
     $agency_data['https-chart'] = '';
     if($agency_data['https_support'] == 0) {
-        $agency_data['https-chart'] = "<div class='text-center tool-tip-zero-na'>
+        $agency_data['https-chart'] = "<div class='text-center tool-tip-zero-na' style='margin-top: 3rem; margin-bottom: 2rem;'>
       <img alt='zero-chart'  src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive'><span class='tool-tip-zero-na-text'><img alt='bullet' src='/sites/all/modules/custom/idea_act/images/bullet.png'>Compliant Websites: 0%</span>
  </div>
  <div class='legend-container'><div id='chart-0-legend'><ul class='chart-0-legend'><li><span style='background-color:#EEEEEE'></span>Compliant Websites</li></ul></div>
