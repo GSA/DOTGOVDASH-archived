@@ -364,7 +364,7 @@ drupal_set_title($websitedata['agencyname']);
                             <div class="card-header row row-no-gutters">
                                 <div class="col-sm-12">
                                     <div class="col-sm-6">
-                                        <div class="card-title">Point of Contact Status</div>
+                                        <div class="card-title">Security Point of Contact (POC)</div>
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
                                         <div>
@@ -386,12 +386,12 @@ drupal_set_title($websitedata['agencyname']);
                                             <thead>
                                             <tr>
                                                 <th>Criteria</th>
-                                                <th>Availability</th>
+                                                <th>Status</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
-                                              <td>Security POC Status</td>
+                                              <td>Security POC</td>
                                               <td><?php print $websitedata['poc_status'] . "\t(".$websitedata['poc_contact'] . ")"; ?></td>
                                             </tr>
 
