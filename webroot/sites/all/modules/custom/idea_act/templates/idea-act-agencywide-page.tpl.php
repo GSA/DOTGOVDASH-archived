@@ -575,7 +575,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                         myLegendContainerMobile.innerHTML = chart.generateLegend();
                                     </script>
                                 </div>
-                                <div class="col-md-6 mt-xs-1">
+                                <div class="col-md-6 mt-xs-1" id="mobile-break">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                   <h4 class="text-center chart-data-title"> Website Security Point of Contact (POC)</h4>
                                     <?php if(number_format($agency_data['poc_present']) != 0) {
@@ -886,7 +886,7 @@ $agency_data['agency_title'] = $agencynode->title;
                     </div>
                 </div>
             </div>
-            <div class="html2pdf__page-break">                
+            <div class="html2pdf__page-break" id="desktop-break">                
             </div>
 
             <div class="relative-position mb-2 mobile-requirements">
@@ -1039,7 +1039,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                         myLegendContainer.innerHTML = chart.generateLegend();
                                     </script>
                                 </div>
-                                <div class="col-md-6 mt-xs-1">
+                                <div class="col-md-6 mt-xs-1" id="mobile-break">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                   <h4 class="text-center chart-data-title"> Mobile Usability</h4>
                                     <?php print $agency_data['mob-usab-chart']; ?>
