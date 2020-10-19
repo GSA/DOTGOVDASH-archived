@@ -584,10 +584,10 @@ $agency_data['agency_title'] = $agencynode->title;
                                                 </div>
                                                 <div id='chart-8-legend-mobile'></div>";
                                     } else {
-                                        print "<div class='text-center tool-tip-zero-na'>
-                                                <img alt='zero-chart'  src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive'><span class='tool-tip-zero-na-text'><img alt='bullet' src='/sites/all/modules/custom/idea_act/images/bullet.png'>Compliant Websites: 0%</span>
+                                        print "<div class='text-center tool-tip-zero-na' style='margin-top: 3rem; margin-bottom: 2rem;'>
+                                                <img alt='zero-chart' src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive'><span class='tool-tip-zero-na-text' style='left: 8rem;><img alt='bullet' src='/sites/all/modules/custom/idea_act/images/bullet.png'>Provided: 0%</span>
                                                 </div>
-                                                <div class='legend-container'><div id='chart-0-legend'><ul class='chart-0-legend'><li><span style='background-color:#EEEEEE'></span>Compliant Websites</li></ul></div>
+                                                <div class='legend-container'><div id='chart-0-legend'><ul class='chart-0-legend'><li><span style='background-color:#EEEEEE'></span>Provided</li></ul></div>
                                                 </div>";
                                     } ?>
                                     <div class="legend-container">
@@ -605,12 +605,12 @@ $agency_data['agency_title'] = $agencynode->title;
                                             </thead>
                                             <tbody>
                                             <tr>
-                                              <td>POC Available</td>
+                                              <td>Provided</td>
                                               <td><?php echo number_format($agency_data['poc_present']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['poc_present'], $agency_data['no_of_websites'])?></td>
                                             </tr>
                                             <tr>
-                                              <td>POC Not Available</td>
+                                              <td>Not Provided</td>
                                               <td><?php echo number_format($agency_data['poc_notpresent']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['poc_notpresent'],$agency_data['no_of_websites'])?></td>
                                             </tr>
