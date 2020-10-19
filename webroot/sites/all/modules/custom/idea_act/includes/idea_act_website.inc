@@ -287,9 +287,9 @@ function ideaact_get_website_data($websiteid){
     }
     $websitedata['poc_status'] = '';
     if($wnode->field_website_security_poc_statu['und'][0]['value'] == 1) {
-      $websitedata['poc_status'] = 'Yes';
+      $websitedata['poc_status'] = "Provided\t(".$websitedata['poc_contact'] . ")";
     } else {
-      $websitedata['poc_status'] = 'No';
+      $websitedata['poc_status'] = "Not Provided";
     }
     return $websitedata;
 }

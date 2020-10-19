@@ -392,7 +392,7 @@ drupal_set_title($websitedata['agencyname']);
                                             <tbody>
                                             <tr>
                                               <td>Security POC</td>
-                                              <td><?php print $websitedata['poc_status'] . "\t(".$websitedata['poc_contact'] . ")"; ?></td>
+                                              <td><?php print  $websitedata['poc_status']; ?></td>
                                             </tr>
 
                                             </tbody>
