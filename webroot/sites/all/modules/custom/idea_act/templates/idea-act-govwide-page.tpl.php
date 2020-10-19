@@ -587,7 +587,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </script>
 
                                 </div>
-                                <div class="col-md-6 mt-xs-1 px-xs-0">
+                                <div class="col-md-6 mt-xs-1 px-xs-0" id="mobile-break">
                                 <h4 class="text-center chart-data-title">Website Security Point of Contact (POC)</h4>
 
                                     <div class="chart-container" id="chart-8-ref">
@@ -863,7 +863,7 @@ $search_engine_data_for_agencygraph = "0,0";
                 </div>
             </div>
 
-            <div class="html2pdf__page-break">                
+            <div class="html2pdf__page-break" id="desktop-break">                
             </div>
             <div class="relative-position mb-2 mobile-requirements">
                 <div class="row">
@@ -1022,7 +1022,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     </script>
 
                                 </div>
-                                <div class="col-md-6 mt-xs-1 px-xs-0">
+                                <div class="col-md-6 mt-xs-1 px-xs-0"  id="mobile-break">
                                 <h4 class="text-center chart-data-title">Mobile Usability</h4>
 
                                     <div class="chart-container" id="chart-6-ref">
