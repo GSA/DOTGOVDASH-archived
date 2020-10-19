@@ -92,9 +92,6 @@ $agencynode = node_load(arg(3));
 drupal_set_title($agencynode->title);
 $agency_data['agency_title'] = $agencynode->title;
  $pdf_file_name = '21st_Century_'.$agencynode->title.'.pdf';
- print 'present ' + $agency_data['poc_present'] + '<br>';
-
- //print 'not present '+   $agency_data['poc_notpresent'];
 ?>
 
 <script>
@@ -580,11 +577,19 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </div>
                                 <div class="col-md-6 mt-xs-1">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
-                                  <h4 class="text-center chart-data-title"> Websites with Point of Contact (POC)</h4>
-
-                                  <div class="chart-container" id="chart-8-ref">
-                                        <canvas id="chart-8" width="250" height="300" aria-label="Charts" role="img"></canvas>
-                                    </div>
+                                  <h4 class="text-center chart-data-title"> Website Security Point of Contact (POC)</h4>
+                                    <?php if(number_format($agency_data['poc_present']) != 0) {
+                                        print "<div class='chart-container' id='chart-8-ref'>
+                                                <canvas id='chart-8' width='250' height='300' aria-label='Charts' role='img'></canvas>
+                                                </div>
+                                                <div id='chart-8-legend-mobile'></div>";
+                                    } else {
+                                        print "<div class='text-center tool-tip-zero-na'>
+                                                <img alt='zero-chart'  src='/sites/all/modules/custom/idea_act/images/zero-percent-chart.png' width='270' height='270' class='alternate-chart-responsive'><span class='tool-tip-zero-na-text'><img alt='bullet' src='/sites/all/modules/custom/idea_act/images/bullet.png'>Compliant Websites: 0%</span>
+                                                </div>
+                                                <div class='legend-container'><div id='chart-0-legend'><ul class='chart-0-legend'><li><span style='background-color:#EEEEEE'></span>Compliant Websites</li></ul></div>
+                                                </div>";
+                                    } ?>
                                     <div class="legend-container">
                                         <div id="chart-8-legend"></div>
                                     </div>
@@ -593,19 +598,19 @@ $agency_data['agency_title'] = $agencynode->title;
                                         <table class="idea-act-table">
                                             <thead>
                                             <tr>
-                                                <th>Breakdown</th>
-                                                <th>Websites</th>
+                                                <th>Criteria</th>
+                                                <th>Total</th>
                                                 <th>Percentage</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
-                                              <td>Provided</td>
+                                              <td>POC Available</td>
                                               <td><?php echo number_format($agency_data['poc_present']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['poc_present'], $agency_data['no_of_websites'])?></td>
                                             </tr>
                                             <tr>
-                                              <td>Not Provided</td>
+                                              <td>POC Not Available</td>
                                               <td><?php echo number_format($agency_data['poc_notpresent']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['poc_notpresent'],$agency_data['no_of_websites'])?></td>
                                             </tr>
@@ -631,9 +636,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                                      
                                                     borderWidth: 0,
                                                     backgroundColor: [
-                                                        '#8ea116',
-                                                        '#007790',
-                                                       
+                                                        '#745fe9',
+                                                        '#ddaa01'
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
