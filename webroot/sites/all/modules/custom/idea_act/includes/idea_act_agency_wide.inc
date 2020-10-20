@@ -271,7 +271,6 @@ function ideaact_get_agencywide_data($agencyid){
     //Query to get POC data for Agency
     $pocresults = db_query("select field_website_security_poc_statu_value,count(field_website_security_poc_statu_value)  as complnum from field_data_field_website_security_poc_statu a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid group by field_website_security_poc_statu_value", array(':agencyid' => $agencyid));
     foreach ($pocresults as $pocresult) {
-        dsm($pocresult);
         if($pocresult->field_website_security_poc_statu_value == '1')
             $agency_data['poc_present'] = $pocresult->complnum;
         if($pocresult->field_website_security_poc_statu_value == '0')
