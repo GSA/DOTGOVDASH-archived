@@ -90,15 +90,18 @@
       var element = document.getElementById("main-container");
       // if width is less than than 768 px
       if (jQuery(window).width() < 768) {   
+        jQuery("#desktop-break").removeClass(".html2pdf__page-break");
         html2pdf()
         .set({
             filename: fileName + '.pdf',
             image: {type: 'jpeg', quality: 1},
-            html2canvas: {scale: 1, scrollX: 0, scrollY: 0, width: 900 },
-            jsPDF: {unit: 'in', format: 'A5', orientation: 'portrait'},
+            html2canvas: {scale: 1, scrollX: 0, scrollY: 0, width: 1500 },
+            pagebreak: { before: '#mobile-break', avoid: 'canvas' },
+            jsPDF: {format:[400,900]},
         })
         .from(element)
         .save().then(function () {
+          jQuery("#desktop-break").addClass(".html2pdf__page-break");
           jQuery( "#techstack" ).removeClass( "split-column" );
           jQuery("body").removeClass("loading");
           });

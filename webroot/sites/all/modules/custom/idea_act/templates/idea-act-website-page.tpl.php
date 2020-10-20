@@ -135,7 +135,7 @@ drupal_set_title($websitedata['agencyname']);
 
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn" href="/faq#faq-What-is-Accessibility-Spot-Checks?" data-toggle="tooltip"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
                                 <div class="col-sm-6 nopadding">
@@ -246,7 +246,7 @@ drupal_set_title($websitedata['agencyname']);
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn" href="/faq#faq-What-is-Mobile?" data-toggle="tooltip"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
                                 <div class="col-sm-6">
@@ -303,7 +303,7 @@ drupal_set_title($websitedata['agencyname']);
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn" href="/faq#faq-What-is-Security?" data-toggle="tooltip"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
                                 <div class="col-sm-6">
@@ -364,6 +364,60 @@ drupal_set_title($websitedata['agencyname']);
                             <div class="card-header row row-no-gutters">
                                 <div class="col-sm-12">
                                     <div class="col-sm-6">
+                                        <div class="card-title">Security Point of Contact (POC)</div>
+                                    </div>
+                                    <div class="col-sm-6 mt-xs-1">
+                                        <div>
+                                            <div><i><b>Secure - Provided through an Industry Standard Secure Connection</b></i></div>
+                                            <span class="fw-300 f-12 font-italic">21st Century IDEA requires all executive branch public-facing websites and digital services to have a secure connection. The report shows how many agency websites are <a href="https://https.cio.gov/" target="_blank"> HTTPS</a> compliant.</span>
+                                            <a class="f-12 font-italic" href="/faq"><b>Read More</b></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body relative-position row">
+                                <div class="info-icon" id="tooltip-container">
+                                    <a class="btn" href="/faq#faq-What-is-Security?" data-toggle="tooltip"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    </a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="table-responsive">
+                                        <table class="idea-act-table">
+                                            <thead>
+                                            <tr>
+                                                <th>Criteria</th>
+                                                <th>Status</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                              <td>Security POC</td>
+                                              <td><?php print  $websitedata['poc_status']; ?></td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 mt-xs-1">
+                                    <p class="card-wi-desc"><?php print $websitedata['poc_description']; ?> </p>
+
+                                </div>
+                            </div>
+                            <div class="explore mb-2 px-2">
+                              <a href="/ideaact/govwide/website/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative-position mb-2">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card card-default shadow">
+                            <div class="card-header row row-no-gutters">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-6">
                                         <div class="card-title">USWDS Code Usage</div>
                                     </div>
                                     <div class="col-sm-6 mt-xs-1">
@@ -377,7 +431,7 @@ drupal_set_title($websitedata['agencyname']);
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn" href="/faq#faq-What-is-USWDS?" data-toggle="tooltip" ><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
                                 <div class="col-sm-6">
@@ -431,7 +485,7 @@ drupal_set_title($websitedata['agencyname']);
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                    <a class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                    <a class="btn" href="/faq#faq-What-is-Search?" data-toggle="tooltip"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                     </a>
                                 </div>
                                 <div class="col-sm-6">
@@ -491,7 +545,7 @@ drupal_set_title($websitedata['agencyname']);
                   </div>
                   <div class="card-body relative-position row">
                     <div class="info-icon" id="tooltip-container">
-                      <a class="btn disabled" data-toggle="tooltip" title="<span><img class='tt-img' src='/sites/all/modules/custom/idea_act/images/gov-logo.png'><br><p class='tt-text'>Info Line 1 <br>Info Line 2 <br>Info Line 3</p></span>"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                      <a class="btn" href="/faq#faq-What-is-the-Digital-Analytics-Program-(DAP)?"  data-toggle="tooltip"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                       </a>
                     </div>
                     <div class="col-sm-6">
