@@ -71,6 +71,9 @@ function ideaact_get_agencywide_data($agencyid){
         $agency_data['https-chart'] = "<div class='chart-container' id='chart-3-ref'>
     <canvas id='chart-gov3' width='250' height='300' aria-label='Charts' role='img'></canvas>
 </div>
+<div class='legend-container'>
+<div id='chart-3-legend'></div>
+</div>
 <div id='chart-3-legend-mobile'></div>";
 
     }
