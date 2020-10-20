@@ -456,10 +456,6 @@ $agency_data['agency_title'] = $agencynode->title;
                                  <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                   <h4 class="text-center chart-data-title">HTTPS Websites Compliance</h4>
                                   <?php print $agency_data['https-chart'];?>
-                                  <div class="legend-container">
-                                        <div id="chart-3-legend"></div>
-                                    </div>
-
                                     <div class="table-responsive">
                                     <table class="idea-act-table">
                                             <thead>
