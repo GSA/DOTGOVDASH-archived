@@ -283,7 +283,7 @@ function ideaact_get_website_data($websiteid){
       $websitedata['poc_description'] = "This website has a dedicated security POC. Please use " . $websitedata['poc_contact'] . " to contact the security POC of this website.";
     } else {
       $websitedata['poc_contact'] = 'Not Available';
-      $websitedata['poc_description'] = 'There is no security POC available for this website.';
+      $websitedata['poc_description'] = 'There is no Security POC available for this website.';
     }
     $websitedata['poc_status'] = '';
     if($wnode->field_website_security_poc_statu['und'][0]['value'] == 1) {
