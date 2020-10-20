@@ -456,10 +456,6 @@ $agency_data['agency_title'] = $agencynode->title;
                                  <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
                                   <h4 class="text-center chart-data-title">HTTPS Websites Compliance</h4>
                                   <?php print $agency_data['https-chart'];?>
-                                  <div class="legend-container">
-                                        <div id="chart-3-legend"></div>
-                                    </div>
-
                                     <div class="table-responsive">
                                     <table class="idea-act-table">
                                             <thead>
@@ -582,6 +578,9 @@ $agency_data['agency_title'] = $agencynode->title;
                                         print "<div class='chart-container' id='chart-8-ref'>
                                                 <canvas id='chart-8' width='250' height='300' aria-label='Charts' role='img'></canvas>
                                                 </div>
+                                                <div class='legend-container'>
+                                                <div id='chart-8-legend'></div>
+                                            </div>
                                                 <div id='chart-8-legend-mobile'></div>";
                                     } else {
                                         print "<div class='text-center tool-tip-zero-na' style='margin-top: 3rem; margin-bottom: 2rem;'>
@@ -590,9 +589,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                 <div class='legend-container'><div id='chart-0-legend'><ul class='chart-0-legend'><li><span style='background-color:#EEEEEE'></span>Provided</li></ul></div>
                                                 </div>";
                                     } ?>
-                                    <div class="legend-container">
-                                        <div id="chart-8-legend"></div>
-                                    </div>
+                                   
                                                                       
                                     <div class="table-responsive">
                                         <table class="idea-act-table">
