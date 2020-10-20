@@ -194,7 +194,8 @@ function ideaact_get_agencywide_data($agencyid){
 
 
     //Query to get Search Engine Name for an agency
-    $searchengines = db_query("select field_search_engine_name_value,count(field_search_engine_name_value) as complnum from node a , field_data_field_search_engine_name b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='website' group by field_search_engine_name_value", array(':agencyid' => $agencyid));
+    $searchengines = db_query("select field_search_engine_name_value,count(field_search_engine_name_value) as complnum from node a , field_data_field_search_engine_name b , field_data_field_web_agency_id c where a.status='1' and a.type=b.bundle and a.type=c.bundle and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='website' group by field_search_engine_name_value;
+", array(':agencyid' => $agencyid));
     $search_engine_data_for_agencygraph = "";
     $searchenginename = "";
     $searchengine_nos = "";
@@ -221,7 +222,7 @@ function ideaact_get_agencywide_data($agencyid){
 
 
     //Query to get Search data for an agency
-    $searchresults = db_query("select field_search_status_value,count(field_search_status_value) as complnum from node a , field_data_field_search_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='website' group by field_search_status_value", array(':agencyid' => $agencyid));
+    $searchresults = db_query("select field_search_status_value,count(field_search_status_value) as complnum from node a , field_data_field_search_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id  and a.type=b.bundle and a.type=c.bundle  and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='website' group by field_search_status_value", array(':agencyid' => $agencyid));
     $agency_search_status = array();
     foreach ($searchresults as $searchresult) {
         if($searchresult->field_search_status_value == '1')
