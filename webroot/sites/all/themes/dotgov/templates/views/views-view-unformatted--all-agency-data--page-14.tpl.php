@@ -48,6 +48,11 @@ foreach ($view->style_plugin->rendered_fields[0] as $key => $val) {
 
     if ($key == 'field_dap_score') {
         $agency_dap_score = $val;
+        if( $agency_dap_score == '*') {
+            $agency_dap_score = 0;
+        } else {
+            $agency_dap_score = $val;
+        }
     }
 
     if ($key == 'field_https_score') {
