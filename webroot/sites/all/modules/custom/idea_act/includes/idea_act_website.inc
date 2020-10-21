@@ -32,7 +32,7 @@ function ideaact_get_website_data($websiteid){
     </div>";
   } else {
     $websitedata['agency_header_info'] = "<div class='col-sm-12'>
-        <p class='fs-1-5 agency-overview-title' style='margin: 2rem;'><b>".$websitedata['agencyname']."</b></p>
+        <p class='fs-1-5 agency-overview-title' style='margin: 2rem .75rem;'><b>".$websitedata['agencyname']."</b></p>
     </div>";
   }
 
