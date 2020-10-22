@@ -118,9 +118,9 @@ function dotgov_breadcrumb($variables) {
       $getTextBetweenTags = getTextBetweenTags($breadcrumb[1], 'a');
       $breadcrumb[1] = '<a href="/website/' . get_website_id_nid(arg(1)) . '/information">' . $getTextBetweenTags . '</a>';
     }
-    elseif (arg(0) == 'website' && arg(1) == 'search' && arg(2) == 'reports') {
-      $breadcrumb[1] = 'Website On-Site Search Reports';
-    }
+    // elseif (arg(0) == 'website' && arg(1) == 'search' && arg(2) == 'reports') {
+    //   $breadcrumb[1] = 'Website On-Site Search Reports';
+    // }
     elseif (arg(0) == 'accessibilityreportalldomains') {
       $breadcrumb[1] = 'Website Level Accessibility Report';
     }
