@@ -545,7 +545,7 @@ drupal_set_title($websitedata['agencyname']);
                   </div>
                   <div class="card-body relative-position row">
                     <div class="info-icon" id="tooltip-container">
-                      <a class="btn" href="/faq#faq-What-is-the-Digital-Analytics-Program-(DAP)?"  data-toggle="tooltip"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                      <a class="btn" href="/faq#faq-What-is-Digital-Analytics?"  data-toggle="tooltip"><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                       </a>
                     </div>
                     <div class="col-sm-6">
