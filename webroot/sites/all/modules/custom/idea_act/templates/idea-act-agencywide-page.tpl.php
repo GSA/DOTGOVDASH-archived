@@ -589,8 +589,8 @@ $agency_data['agency_title'] = $agencynode->title;
                                                 <div class='legend-container'><div id='chart-0-legend'><ul class='chart-0-legend'><li><span style='background-color:#EEEEEE'></span>Provided</li></ul></div>
                                                 </div>";
                                     } ?>
-                                   
-                                                                      
+
+
                                     <div class="table-responsive">
                                         <table class="idea-act-table">
                                             <thead>
@@ -611,7 +611,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                               <td><?php echo number_format($agency_data['poc_notpresent']); ?></td>
                                               <td><?=idea_act_applyDataPercentage($agency_data['poc_notpresent'],$agency_data['no_of_websites'])?></td>
                                             </tr>
-                                            
+
                                             <tr>
                                               <td>Total</td>
                                               <td><?php echo number_format($agency_data['no_of_websites']); ?></td>
@@ -630,7 +630,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                                 datasets: [{
                                                     data: [<?php echo number_format($agency_data['poc_present']); ?>,
                                                       <?php echo number_format($agency_data['poc_notpresent']); ?>],
-                                                     
+
                                                     borderWidth: 0,
                                                     backgroundColor: [
                                                         '#745fe9',
@@ -883,7 +883,7 @@ $agency_data['agency_title'] = $agencynode->title;
                     </div>
                 </div>
             </div>
-            <div class="html2pdf__page-break" id="desktop-break">                
+            <div class="html2pdf__page-break" id="desktop-break">
             </div>
 
             <div class="relative-position mb-2 mobile-requirements">
@@ -1204,7 +1204,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             </div>
                             <div class="card-body relative-position row">
                                 <div class="info-icon" id="tooltip-container">
-                                  <a class="btn" href="/faq#faq-What-is-the-Digital-Analytics-Program-(DAP)?"  data-toggle="tooltip" ><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
+                                  <a class="btn" href="/faq#faq-What-is-Digital-Analytics?"  data-toggle="tooltip" ><img src="/sites/all/modules/custom/idea_act/images/info.png" alt="info">
                                   </a>
                                 </div>
                                 <div class="col-md-6">
