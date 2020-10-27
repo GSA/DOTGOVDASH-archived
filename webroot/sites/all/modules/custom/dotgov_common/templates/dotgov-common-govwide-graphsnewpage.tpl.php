@@ -62,6 +62,34 @@
    dotgov_common_tooltip("tooltip9", "id");
    dotgov_common_tooltip("tooltip8", "id");
    dotgov_common_tooltip("tooltip10", "id");
+   
+   $mobperf_arr = array($agencydata['poor_nos'], $agencydata['improve_nos'], $agencydata['good_nos']);
+   $mobperf_arr = dotgov_common_get_percentage($mobperf_arr, $agencydata['total_non_na_websites']);
+   $mobusab_arr = array($agencydata['friendly_nos'], $agencydata['nonfriendly_nos']);
+   $mobusab_arr = dotgov_common_get_percentage($mobusab_arr, $agencydata['friendly_nos']+$agencydata['nonfriendly_nos']);
+
+   $dnssec_arr = array($agencydata['dns_compliant'], $agencydata['dns_noncompliant']);
+   $dnssec_arr = dotgov_common_get_percentage($dnssec_arr, $agency_website_num);
+
+   $enfhttps_arr = array($agencydata['enfhttps_support'], $agencydata['enfhttps_nosupport']);
+   $enfhttps_arr = dotgov_common_get_percentage($enfhttps_arr, $agency_website_num);
+   $hsts_arr = array($agencydata['hsts_support'], $agencydata['hsts_nosupport']);
+   $hsts_arr = dotgov_common_get_percentage($hsts_arr, $agency_website_num);
+   $https_arr = array($agencydata['https_support'], $agencydata['https_nosupport']);
+   $https_arr = dotgov_common_get_percentage($https_arr, $agency_website_num);
+   $preload_arr = array($agencydata['preload_support'], $agencydata['preload_nosupport'], $agencydata['preload_readysupport']);
+   $preload_arr = dotgov_common_get_percentage($preload_arr, $agency_website_num);
+
+   $m15_arr = array($agencydata['m15_compliant'], $agencydata['m15_noncompliant']);
+   $m15_arr = dotgov_common_get_percentage($m15_arr, $agencydata['m15_tracked']);
+   $ipv6_arr = array($agencydata['ipv6_compliant'], $agencydata['ipv6_noncompliant']);
+   $ipv6_arr = dotgov_common_get_percentage($ipv6_arr, $agency_website_num);
+   $dap_arr = array($agencydata['dap_compliant'], $agencydata['dap_noncompliant']);
+   $dap_arr = dotgov_common_get_percentage($dap_arr, $agencydata['dap_tottracked']);
+   $insecprot_arr = array($agencydata['insec_compliant'], $agencydata['insec_noncompliant']);
+   $insecprot_arr = dotgov_common_get_percentage($insecprot_arr, $agencydata['free_tracked']);
+   $uswds_arr = array($agencydata['uswds_compliant'], $agencydata['uswds_noncompliant']);
+   $uswds_arr = dotgov_common_get_percentage($uswds_arr, $agencydata['uswds_tottracked']);
    ?>
 <?php //print_r($govwidedata);print_r($agencydata);  ?>
 <div class="row">
@@ -109,14 +137,14 @@
                                     <th style="background-color: #215393;color: white;"> Websites </th>
                                     <tr>
                                       <td>Poor</td>
-                                      <td><?=dotgov_common_applyDataColor($agencydata['poor_nos'], $agencydata['total_non_na_websites'], '#ae0100') ?>
+                                      <td><?=dotgov_common_getColor($agencydata['poor_nos'], '#ae0100', $mobperf_arr[0])?></td>
                                     <tr>
                                       <td>Needs Improvement</td>
-                                      <td><?=dotgov_common_applyDataColor($agencydata['improve_nos'],$agencydata['total_non_na_websites'], '#665000') ?>
+                                      <td><?=dotgov_common_getColor($agencydata['improve_nos'], '#665000', $mobperf_arr[1])?></td>
                                     </tr>
                                     <tr>
                                       <td>Good</td>
-                                      <td><?=dotgov_common_applyDataColor($agencydata['good_nos'], $agencydata['total_non_na_websites'], '#276437') ?>
+                                      <td><?=dotgov_common_getColor($agencydata['good_nos'], '#276437', $mobperf_arr[2])?></td>
                                     </tr>
                                   </table>
                                 </div>
@@ -136,11 +164,11 @@
                                     <th style="background-color: #215393;color: white;"> Websites </th>
                                     <tr>
                                       <td>Mobile Friendly</td>
-                                      <td><?=dotgov_common_applyDataColor($agencydata['friendly_nos'], $agencydata['friendly_nos']+$agencydata['nonfriendly_nos'], '#276437') ?>
+                                      <td><?=dotgov_common_getColor($agencydata['friendly_nos'], '#276437', $mobusab_arr[0])?></td>
                                     </tr>
                                     <tr>
                                       <td>Not Mobile Friendly</td>
-                                      <td><?=dotgov_common_applyDataColor($agencydata['nonfriendly_nos'],$agencydata['friendly_nos']+$agencydata['nonfriendly_nos'], '#ae0100') ?>
+                                      <td><?=dotgov_common_getColor($agencydata['nonfriendly_nos'], '#ae0100', $mobusab_arr[1])?></td>
                                     </tr>
                                   </table>
                                 </div>
@@ -294,11 +322,11 @@
                                                 <th style="background-color: #215393;color: white;">Websites</th>
                                                 <tr>
                                                    <td>DNSSEC Compliant Websites</td>
-                                                   <td><?=dotgov_common_applyDataColor($agencydata['dns_compliant'], $agency_website_num, '#29643a')?></td>
+                                                   <td><?=dotgov_common_getColor($agencydata['dns_compliant'], '#29643a', $dnssec_arr[0])?></td>
                                                 </tr>
                                                 <tr>
                                                    <td>DNSSEC Non Compliant Websites</td>
-                                                   <td><?=dotgov_common_applyDataColor($agencydata['dns_noncompliant'], $agency_website_num, '#ac0600')?></td>
+                                                   <td><?=dotgov_common_getColor($agencydata['dns_noncompliant'], '#ac0600', $dnssec_arr[1])?></td>
                                                 </tr>
                                              </table>
                                           </div>
@@ -601,27 +629,27 @@
                                     <th style="background-color: #215393;color: white">Non Supporting Websites </th>
                                     <tr>
                                        <td>Enforce HTTPS</td>
-                                       <td align="center"><?=dotgov_common_applyDataColor($agencydata['enfhttps_support'], $agency_website_num, '#29643a')?></td>
-                                       <td align="center"><?=dotgov_common_applyDataColor($agencydata['enfhttps_nosupport'], $agency_website_num, '#ac0600')?></td>
+                                       <td align="center"><?=dotgov_common_getColor($agencydata['enfhttps_support'], '#29643a', $enfhttps_arr[0])?></td>
+                                       <td align="center"><?=dotgov_common_getColor($agencydata['enfhttps_nosupport'], '#ac0600', $enfhttps_arr[1])?></td>
                                     </tr>
                                     <tr>
                                        <td>HSTS Status</td>
-                                       <td align="center"><?=dotgov_common_applyDataColor($agencydata['hsts_support'], $agency_website_num, '#29643a')?></td>
-                                       <td align="center"><?=dotgov_common_applyDataColor($agencydata['hsts_nosupport'], $agency_website_num, '#ac0600')?></td>
+                                       <td align="center"><?=dotgov_common_getColor($agencydata['hsts_support'], '#29643a', $hsts_arr[0])?></td>
+                                       <td align="center"><?=dotgov_common_getColor($agencydata['hsts_nosupport'], '#ac0600', $hsts_arr[1])?></td>
                                     </tr>
                                     <tr>
                                        <td>HTTPS Status</td>
-                                       <td align="center"><?=dotgov_common_applyDataColor($agencydata['https_support'], $agency_website_num, '#29643a')?></td>
-                                       <td align="center"><?=dotgov_common_applyDataColor($agencydata['https_nosupport'], $agency_website_num, '#ac0600')?></td>
+                                       <td align="center"><?=dotgov_common_getColor($agencydata['https_support'], '#29643a', $https_arr[0])?></td>
+                                       <td align="center"><?=dotgov_common_getColor($agencydata['https_nosupport'], '#ac0600', $https_arr[1])?></td>
                                     </tr>
                                     <tr>
                                        <td>Preload Status</td>
-                                       <td align="center"><?=dotgov_common_applyDataColor($agencydata['preload_support'], $agency_website_num, '#29643a')?></td>
-                                       <td align="center"><?=dotgov_common_applyDataColor($agencydata['preload_nosupport'], $agency_website_num, '#ac0600')?></td>
+                                       <td align="center"><?=dotgov_common_getColor($agencydata['preload_support'], '#29643a', $preload_arr[0])?></td>
+                                       <td align="center"><?=dotgov_common_getColor($agencydata['preload_nosupport'], '#ac0600', $preload_arr[1])?></td>
                                     </tr>
                                     <tr>
                                        <td>Preload Ready</td>
-                                       <td align="center"><?=dotgov_common_applyDataColor($agencydata['preload_readysupport'], $agency_website_num, '#29643a')?></td>
+                                       <td align="center"><?=dotgov_common_getColor($agencydata['preload_readysupport'], '#29643a', $preload_arr[2])?></td>
                                        <td align="center">NA</td>
                                     </tr>
                                  </table>
@@ -756,11 +784,11 @@
                                              <th style="background-color: #215393;color: white;"> Websites </th>
                                              <tr>
                                                 <td>M-15-13 and BOD 18-01 Compliant Websites </td>
-                                                <td><?=dotgov_common_applyDataColor($agencydata['m15_compliant'], $agencydata['m15_tracked'], '#29643a')?></td>
+                                                <td><?=dotgov_common_getColor($agencydata['m15_compliant'], '#29643a', $m15_arr[0])?></td>
                                              </tr>
                                              <tr>
                                                 <td>M-15-13 and BOD 18-01 Non Compliant Websites </td>
-                                                <td><?=dotgov_common_applyDataColor($agencydata['m15_noncompliant'], $agencydata['m15_tracked'], '#ac0600')?></td>
+                                                <td><?=dotgov_common_getColor($agencydata['m15_noncompliant'], '#ac0600', $m15_arr[1])?></td>
                                              </tr>
                                           </table>
                                           <span class="col-xs-12 text-center clearfix" style="font-size:10px;">(website redirects are excluded)</span>
@@ -898,11 +926,11 @@
                                                 <th style="background-color: #215393;color: white;"> Websites </th>
                                                 <tr width="100%">
                                                    <td>IPv6 Compliant Websites</td>
-                                                   <td><?=dotgov_common_applyDataColor($agencydata['ipv6_compliant'], $agency_website_num, '#29643a')?></td>
+                                                   <td><?=dotgov_common_getColor($agencydata['ipv6_compliant'], '#29643a', $ipv6_arr[0])?></td>
                                                 </tr>
                                                 <tr width="100%">
                                                    <td>IPv6 Non Compliant Websites</td>
-                                                   <td><?=dotgov_common_applyDataColor($agencydata['ipv6_noncompliant'], $agency_website_num, '#ac0600')?></td>
+                                                   <td><?=dotgov_common_getColor($agencydata['ipv6_noncompliant'], '#ac0600', $ipv6_arr[1])?></td>
                                                 </tr>
                                              </table>
                                              <span class="col-xs-12 text-center clearfix" style="font-size:10px;">(website redirects are excluded)</span>
@@ -1060,11 +1088,11 @@
                                        <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
                                        <tr>
                                           <td> DAP Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
-                                          <td><?=dotgov_common_applyDataColor($agencydata['dap_compliant'], $agencydata['dap_tottracked'], '#29643a')?></td>
+                                          <td><?=dotgov_common_getColor($agencydata['dap_compliant'], '#29643a', $dap_arr[0])?></td>
                                        </tr>
                                        <tr>
                                           <td>DAP Non Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
-                                          <td><?=dotgov_common_applyDataColor($agencydata['dap_noncompliant'], $agencydata['dap_tottracked'], '#ac0600')?></td>
+                                          <td><?=dotgov_common_getColor($agencydata['dap_noncompliant'], '#ac0600', $dap_arr[1])?></td>
                                        </tr>
                                     </table>
                                     <div class="col-xs-12 clearfix">
@@ -1204,11 +1232,11 @@
                                  <th style="background-color: #215393;color: white;"> Websites </th>
                                  <tr>
                                     <td>Websites Free of RC4/3DES and SSLv2/SSLv3 </td>
-                                    <td><?=dotgov_common_applyDataColor($agencydata['insec_compliant'], $agencydata['free_tracked'], '#29643a')?></td>
+                                    <td><?=dotgov_common_getColor($agencydata['insec_compliant'], '#29643a', $insecprot_arr[0])?></td>
                                  </tr>
                                  <tr>
                                     <td>Websites Not Free of RC4/3DES and SSLv2/SSLv3 </td>
-                                    <td><?=dotgov_common_applyDataColor($agencydata['insec_noncompliant'], $agencydata['free_tracked'], '#ac0600')?></td>
+                                    <td><?=dotgov_common_getColor($agencydata['insec_noncompliant'], '#ac0600', $insecprot_arr[1])?></td>
                                  </tr>
                               </table>
                               <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span>
@@ -1308,14 +1336,14 @@
                                        <td> Websites with USWDS code detected<font style="font-size: larger;font-color:blue;">
                                           </font>
                                        </td>
-                                       <td><?=dotgov_common_applyDataColor($agencydata['uswds_compliant'], $agencydata['uswds_tottracked'], '#66746a')?>
+                                       <td><?=dotgov_common_getColor($agencydata['uswds_compliant'], '#66746a', $uswds_arr[0])?></td>
                                        </td>
                                     </tr>
                                     <tr>
                                        <td>Websites without USWDS code detected<font style="font-size: larger;font-color:blue;">
                                           </font>
                                        </td>
-                                       <td><?=dotgov_common_applyDataColor($agencydata['uswds_noncompliant'], $agencydata['uswds_tottracked'], '#8ac99c')?>
+                                       <td><?=dotgov_common_getColor($agencydata['uswds_noncompliant'], '#8ac99c', $uswds_arr[1])?></td>
                                        </td>
                                     </tr>
                                  </table>
