@@ -76,10 +76,8 @@ $hsts_arr = array($agencydata['hsts_support'], $agencydata['hsts_nosupport']);
 $hsts_arr = dotgov_common_get_percentage($hsts_arr, $agency_website_num);
 $https_arr = array($agencydata['https_support'], $agencydata['https_nosupport']);
 $https_arr = dotgov_common_get_percentage($https_arr, $agency_website_num);
-$preload_arr = array($agencydata['preload_support'], $agencydata['preload_nosupport']);
+$preload_arr = array($agencydata['preload_support'], $agencydata['preload_nosupport'], $agencydata['preload_readysupport']);
 $preload_arr = dotgov_common_get_percentage($preload_arr, $agency_website_num);
-$preloadready_arr = array($agencydata['preload_readysupport']);
-$preloadready_arr = dotgov_common_get_percentage($preloadready_arr, $agency_website_num);
 
 $m15_arr = array($agencydata['m15_compliant'], $agencydata['m15_noncompliant']);
 $m15_arr = dotgov_common_get_percentage($m15_arr, $agencydata['m15_tracked']);
@@ -676,7 +674,7 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                                 </tr>
                                                 <tr>
                                                     <td>Preload Ready</td>
-                                                    <td align="center"><?=dotgov_common_getColor($agencydata['preload_readysupport'], '#29643a', $preloadready_arr[0])?></td>
+                                                    <td align="center"><?=dotgov_common_getColor($agencydata['preload_readysupport'], '#29643a', $preload_arr[2])?></td>
                                                     <td align="center">NA</td>
                                                 </tr>
                                             </table>
