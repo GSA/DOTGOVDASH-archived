@@ -1,0 +1,83 @@
+<?php
+/*
+* Digital Dashboard Dashboard Accessibility Module
+*/
+module_load_include('inc', 'accessibility', 'includes/dd_accessibility_common');
+
+
+
+/**
+ * Implements hook_menu().
+ */
+function dd_accessibility_menu() {
+    $items = [];
+    $items['accessibility/govwide/reports'] = array(
+        'title' => "Government-Wide Accessibility Report",
+        'page callback' => 'dd_accessibility_govwide_page',
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM
+    );
+    $items['accessibility/govwide/csvapi'] = array(
+        'title' => "Government-Wide Accessibility Report",
+        'page callback' => 'dd_accessibility_govwide_csvapi',
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM
+    );
+    $items['accessibility/govwide/jsonapi'] = array(
+        'title' => "Government-Wide Accessibility Report",
+        'page callback' => 'dd_accessibility_govwide_jsonapi',
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM
+    );
+    return $items;
+}
+
+function dd_accessibility_theme($existing, $type, $theme, $path) {
+    return array(
+        'dd_accessibility_govwide_report_page' => array(
+            'template' => 'accessibility-govwide--report-page',
+            'path' => drupal_get_path('module', 'dd_accessibility') . '/templates',
+        )
+    );
+}
+
+/*
+ * Accessibility API
+ */
+function dd_accessibility_govwide_page() {
+    $processed_vars['idea_home'] = "Test";
+    $processed_vars['actualdata'] = "again";
+    return theme('dd_accessibility_govwide_report_page', array('agency_data' => $processed_vars));
+}
+
+function dd_accessibility_govwide_csvapi(){
+    $query = db_query("select * from  custom_accessibility_issues");
+    print "\"website_id\",\"website_name\",\"agency_id\",\"agency_name\",\"scan_type\",\"wcag_code\",\"error_category\",\"typecode\",\"error_code\",\"error_message\",\"error_context\",\"error_selector\" \n";
+    foreach ($query as $result) {
+//        print "'".$result->website."','".$result->agency_name."','".$result->error_scan_type."','".$result->wcag_code."','".$result->error_cat."','".$result->error_typecode."','".$result->error_code."','".$result->error_message."','".$result->error_context."','".$result->error_selector."'".PHP_EOL;
+        print "\"".$result->website_id."\",\"".$result->website."\",\"".$result->agency_id."\",\"".$result->agency_name."\",\"".$result->error_scan_type."\",\"".$result->wcag_code."\",\"".$result->error_cat."\",\"".$result->error_typecode."\",\"".$result->error_code."\",\"".$result->error_message."\",\"".$result->error_context."\",\"".$result->error_selector."\"\n";
+    }
+    exit;
+}
+
+function dd_accessibility_govwide_jsonapi(){
+    $query = db_query("select * from  custom_accessibility_issues");
+    $return_arr = array();
+    foreach ($query as $result) {
+        $json_array['website_id'] = $result->website_id;
+        $json_array['website'] = $result->website;
+        $json_array['agency_id'] = $result->agency_id;
+        $json_array['agency_name'] = $result->agency_name;
+        $json_array['error_scan_type'] = $result->error_scan_type;
+        $json_array['wcag_code'] = $result->wcag_code;
+        $json_array['error_cat'] = $result->error_cat;
+        $json_array['error_typecode'] = $result->error_typecode;
+        $json_array['error_code'] = $result->error_code;
+        $json_array['error_message'] = $result->error_message;
+        $json_array['error_context'] = $result->error_context;
+        $json_array['error_selector'] = $result->error_selector;
+        array_push($return_arr,$json_array);
+    }
+    print json_encode($return_arr);
+    exit;
+}
