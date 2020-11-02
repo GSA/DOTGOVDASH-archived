@@ -1,14 +1,12 @@
 <html>
 <head>
     <title>Government Wide Accessibility Report</title>
-    <!-- external libs from cdnjs -->
     <script src="/sites/all/modules/custom/dd_accessibility/js/plotly-basic-latest.min.js"></script>
 
     <script type="text/javascript" src="/sites/all/modules/custom/dd_accessibility/js/jquery.min.js"></script>
     <script type="text/javascript" src="/sites/all/modules/custom/dd_accessibility/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/sites/all/modules/custom/dd_accessibility/js/papaparse.min.js"></script>
 
-    <!-- PivotTable.js libs from ../dist -->
     <link rel="stylesheet" type="text/css" href="/sites/all/modules/custom/dd_accessibility/css/pivot.css">
     <script type="text/javascript" src="/sites/all/modules/custom/dd_accessibility/js/pivot.js"></script>
     <script type="text/javascript" src="/sites/all/modules/custom/dd_accessibility/js/plotly_renderers.js"></script>
@@ -30,9 +28,6 @@
 if(arg(3) == "") {
     ?>
     <script type="text/javascript">
-
-        // This example loads the "Canadian Parliament 2012" dataset
-
         $(function () {
             var dataClass = $.pivotUtilities.SubtotalPivotData;
             var renderer = $.pivotUtilities.subtotal_renderers["Table With Subtotal"];
@@ -56,8 +51,6 @@ elseif(arg(3) == "2") {
     ?>
     <script type="text/javascript">
 
-        // This example loads the "Canadian Parliament 2012" dataset
-
         $(function () {
             var dataClass = $.pivotUtilities.SubtotalPivotData;
             var renderer = $.pivotUtilities.subtotal_renderers["Table With Subtotal"];
@@ -75,13 +68,11 @@ elseif(arg(3) == "2") {
             });
         });
     </script>
-<?
+<?php
 }
 elseif(arg(3) == "3") {
 ?>
     <script type="text/javascript">
-
-        // This example loads the "Canadian Parliament 2012" dataset
 
         $(function () {
             var dataClass = $.pivotUtilities.SubtotalPivotData;
@@ -103,14 +94,11 @@ elseif(arg(3) == "3") {
             });
         });
     </script>
-    <?
+    <?php
 }
     elseif(arg(3) == "4") {
     ?>
     <script type="text/javascript">
-
-        // This example loads the "Canadian Parliament 2012" dataset
-
         $(function () {
             var dataClass = $.pivotUtilities.SubtotalPivotData;
             var renderer = $.pivotUtilities.subtotal_renderers["Table With Subtotal"];
@@ -131,7 +119,7 @@ elseif(arg(3) == "3") {
             });
         });
     </script>
-    <?
+    <?php
 }
     elseif(arg(3) == "5") {
     ?>
@@ -159,13 +147,12 @@ elseif(arg(3) == "3") {
 
 
     </script>
-    <?
+    <?php
 }
     elseif(arg(3) == "6") {
     ?>
     <script type="text/javascript">
 
-        // This example loads the "Canadian Parliament 2012" dataset
 
         $(function () {
             var dataClass = $.pivotUtilities.SubtotalPivotData;
@@ -187,7 +174,7 @@ elseif(arg(3) == "3") {
             });
         });
     </script>
-    <?
+    <?php
 }
 ?>
 
