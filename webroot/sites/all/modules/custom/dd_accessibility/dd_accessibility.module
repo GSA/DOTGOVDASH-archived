@@ -85,6 +85,19 @@ function dd_accessibility_menu() {
         'access callback' => TRUE,
         'type' => MENU_NORMAL_ITEM
     );
+    $items['accessibility/agencywide/jsonapi/%'] = array(
+        'title' => "Agency-Wide Accessibility Report",
+        'page callback' => 'dd_accessibility_agencywide_jsonapi',
+        'page arguments' => array(1),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM
+    );
+    $items['accessibility/myagency/jsonapi'] = array(
+        'title' => "My Agency-Wide Accessibility Report",
+        'page callback' => 'dd_accessibility_myagency_jsonapi',
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM
+    );
     return $items;
 }
 
@@ -120,6 +133,60 @@ function dd_accessibility_govwide_csvapi(){
 
 function dd_accessibility_govwide_jsonapi(){
     $query = db_query("select * from  custom_accessibility_issues");
+    $return_arr = array();
+    global $wcag_testrule_ref;
+
+    foreach ($query as $result) {
+        $json_array['Website ID'] = $result->website_id;
+        $json_array['Website Name'] = $result->website;
+        $json_array['Agency ID'] = $result->agency_id;
+        $json_array['Agency Name'] = $result->agency_name;
+        $json_array['Rule Engine'] = $result->error_scan_type;
+        $json_array['WCAG Success Criteria'] = $wcag_testrule_ref[$result->error_code];
+        $json_array['ICT Group'] = $result->error_cat;
+        $json_array['Type Code'] = $result->error_typecode;
+        $json_array['Test Rule Name'] = $result->error_code."(".$result->error_scan_type.")";
+        $json_array['Error Message'] = $result->error_message;
+        $json_array['Error Context'] = $result->error_context;
+        $json_array['Error Selector'] = $result->error_selector;
+        array_push($return_arr,$json_array);
+    }
+    print json_encode($return_arr);
+    exit;
+}
+
+function dd_accessibility_agencywide_jsonapi($agencyid){
+    $agencyid = arg(3);
+    $query = db_query("select * from  custom_accessibility_issues where agency_id=:agencyid",array(":agencyid"=>$agencyid));
+    $return_arr = array();
+    global $wcag_testrule_ref;
+
+    foreach ($query as $result) {
+        $json_array['Website ID'] = $result->website_id;
+        $json_array['Website Name'] = $result->website;
+        $json_array['Agency ID'] = $result->agency_id;
+        $json_array['Agency Name'] = $result->agency_name;
+        $json_array['Rule Engine'] = $result->error_scan_type;
+        $json_array['WCAG Success Criteria'] = $wcag_testrule_ref[$result->error_code];
+        $json_array['ICT Group'] = $result->error_cat;
+        $json_array['Type Code'] = $result->error_typecode;
+        $json_array['Test Rule Name'] = $result->error_code."(".$result->error_scan_type.")";
+        $json_array['Error Message'] = $result->error_message;
+        $json_array['Error Context'] = $result->error_context;
+        $json_array['Error Selector'] = $result->error_selector;
+        array_push($return_arr,$json_array);
+    }
+    print json_encode($return_arr);
+    exit;
+}
+
+function dd_accessibility_myagency_jsonapi(){
+    //Find current user's agency id
+    global $user;
+    $user_data = user_load($user->uid);
+    $agencyid = $user_data->field_web_agency_id['und'][0]['nid'];
+
+    $query = db_query("select * from  custom_accessibility_issues where agency_id=:agencyid",array(":agencyid"=>$agencyid));
     $return_arr = array();
     global $wcag_testrule_ref;
 
