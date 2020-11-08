@@ -1,0 +1,390 @@
+body {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 14px;
+}
+
+/* AxisLabel */
+
+table.pvtTable .pvtAxisLabel {
+    white-space: nowrap;
+}
+
+table.pvtTable .pvtAxisLabel.expanded {
+    white-space: nowrap;
+    cursor: zoom-out !important;
+}
+
+table.pvtTable .pvtAxisLabel.collapsed {
+    white-space: nowrap;
+    cursor: zoom-in !important;
+}
+
+/* RowLabel */
+
+table.pvtTable tbody tr th.pvtRowLabel {
+    vertical-align: top !important;
+    white-space: nowrap !important;
+    /* background-color: white !important; */
+    /*border-width: 0px 0px thin 0px !important;*/
+}
+
+table.pvtTable tbody tr th.pvtRowLabel.rowexpanded {
+    cursor: zoom-out !important;
+}
+
+table.pvtTable tbody tr th.pvtRowLabel.rowcollapsed {
+    cursor: zoom-in !important;
+}
+
+/* RowLabelFiller */
+
+table.pvtTable .pvtRowLabelFiller {
+    background-color: white;
+    border-width: 0px 0px thin 0px !important;
+}
+
+/* RowSubtotal */
+
+table.pvtTable .pvtRowSubtotal {
+    font-weight: bold;
+}
+
+table.pvtTable tr td.pvtRowSubtotal.rowcollapsed {
+    background-color: #EFEFEF !important;
+}
+
+/* ColLabel */
+
+table.pvtTable thead tr th.pvtColLabel {
+    white-space: nowrap;
+}
+
+table.pvtTable thead tr th.pvtColLabel.colexpanded {
+    cursor: zoom-out !important;
+}
+
+table.pvtTable thead tr th.pvtColLabel.colcollapsed {
+    cursor: zoom-in !important;
+}
+
+/* ColLabelFiller */
+
+table.pvtTable .pvtColLabelFiller {
+    background-color: #EFEFEF !important;
+}
+
+/* ColSubtotal */
+
+table.pvtTable .pvtColSubtotal {
+    font-weight: bold;
+}
+
+table.pvtTable tr td.pvtColSubtotal {
+    background-color: #EFEFEF !important;
+}
+
+/*
+    *
+    * IMPORTANT: Please do not remove the lines below this point
+    *
+    */
+
+table.pvtTable tr .rowhide {
+    display: none;
+}
+
+table.pvtTable tr .colhide {
+    display: none;
+}
+
+.pvtTableContainer .pvtTablePageSection .paginate_button {
+    box-sizing: border-box;
+    display: inline-block;
+    min-width: 1.5em;
+    padding: 0.5em 1em;
+    margin-left: 2px;
+    text-align: center;
+    text-decoration: none !important;
+    cursor: pointer;
+    *cursor: hand;
+    color: #333 !important;
+    border: 1px solid transparent;
+    border-radius: 2px;
+}
+
+.pvtTableContainer .pvtTablePageSection .paginate_button.current, .pvtTableContainer .pvtTablePageSection .paginate_button.current:hover {
+    color: #333 !important;
+    border: 1px solid #979797;
+    background-color: #fff;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff), color-stop(100%, #dcdcdc));
+    background: -webkit-linear-gradient(top, #fff 0%, #dcdcdc 100%);
+    background: -moz-linear-gradient(top, #fff 0%, #dcdcdc 100%);
+    background: -ms-linear-gradient(top, #fff 0%, #dcdcdc 100%);
+    background: -o-linear-gradient(top, #fff 0%, #dcdcdc 100%);
+    background: linear-gradient(to bottom, #fff 0%, #dcdcdc 100%);
+}
+
+.pvtTablePageSection {
+    margin-top: 10px;
+}
+
+.pvtTableWrapper {
+    overflow-x: auto;
+    max-width: 95vw;
+    overflow-y: auto;
+}
+
+.pvtUi {
+    width: 100%;
+}
+
+.pvtTableSearchSection {
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.searchInput {
+    margin-left: 3px;
+    /* padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px; */
+}
+
+th.pvtColLabel.pvtSortable {
+    cursor: pointer !important;
+}
+
+th.pvtColLabel.pvtSortable.pvtSortDesc>div.pvtFixedHeader::after {
+    content: ' ↓';
+}
+
+th.pvtColLabel.pvtSortable.pvtSortAsc>div.pvtFixedHeader::after {
+    content: ' ↑';
+}
+
+table.pvtTable th {
+    position: sticky;
+    z-index: 81;
+}
+
+table.pvtTable th {
+    transform: translateZ(0);
+    /* fixes chrome glitch with z-index + position:sticky */
+}
+
+table.pvtTable th.pvtRowLabel, table.pvtTable th.pvtColLabel {
+    z-index: 80;
+}
+
+table.pvtTable {
+    /* border-collapse:separate;
+	box-sizing:border-box;
+    border-spacing:0; */
+    border-collapse: separate;
+    table-layout: fixed;
+    border-spacing: 0;
+}
+
+table.pvtTable th {
+    border: 0px;
+    box-sizing: border-box;
+    padding: 0px !important;
+    /* vertical-align: bottom !important; */
+    border-width: 0px!important;
+    z-index: 90;
+}
+
+table.pvtTable td {
+    border-top: 0px;
+    border-left: 0px;
+    box-sizing: border-box;
+}
+
+/* fixed headers styles */
+
+.pvtFixedHeaderOuterContainer {
+    border: 1px solid #CDCDCD;
+    overflow: auto;
+}
+
+.pvtFixedHeaderOuterContainer table.pvtTable {
+    border-collapse: separate;
+    box-sizing: border-box;
+    border-spacing: 0;
+}
+
+.pvtFixedHeaderOuterContainer table.pvtTable th {
+    border: 0px;
+    box-sizing: border-box;
+}
+
+.pvtFixedHeaderOuterContainer table.pvtTable td {
+    border-top: 0px;
+    border-left: 0px;
+    box-sizing: border-box;
+}
+
+table.pvtTable.pvtFixedHeader th {
+    padding: 0px !important;
+    vertical-align: bottom !important;
+    z-index: 90;
+}
+
+table.pvtTable.pvtFixedHeader th>div.pvtFixedHeader {
+    z-index: 101;
+    position: relative;
+    box-sizing: border-box;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    padding: 5px;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+table.pvtTable.pvtFixedHeader th.pvtColLabel>div.pvtFixedHeader, table.pvtTable.pvtFixedHeader th.pvtRowLabel>div.pvtFixedHeader {
+    z-index: 99;
+}
+
+.pvtFixedHeaderOuterContainer table.pvtTable:not(.pvtHasTotalsLastColumn) tr>th.pvtColLabel:last-child>div.pvtFixedHeader, .pvtFixedHeaderOuterContainer table.pvtTable.pvtHasTotalsLastColumn tr>th.pvtTotalLabel:not(:first-child)>div.pvtFixedHeader {
+    border-right-color: transparent;
+}
+
+.pvtFixedHeaderOuterContainer table.pvtTable tr>td:last-child {
+    border-right-color: transparent;
+}
+
+.pvtFixedHeaderOuterContainer table.pvtTable>tr:last-child>th>div.pvtFixedHeader, .pvtFixedHeaderOuterContainer table.pvtTable>*:last-child>tr:last-child>th>div.pvtFixedHeader, .pvtFixedHeaderOuterContainer table.pvtTable tr:last-child>td {
+    border-bottom-color: transparent;
+}
+
+.pvtStickyFixedHeader table.pvtTable.pvtFixedHeader th {
+    position: sticky;
+    z-index: 81;
+}
+
+.pvtStickyFixedHeader.pvtStickyChromeFixedHeader table.pvtTable.pvtFixedHeader th {
+    transform: translateZ(0);
+    /* fixes chrome glitch with z-index + position:sticky */
+}
+
+.pvtStickyFixedHeader table.pvtTable.pvtFixedHeader th>div.pvtFixedHeader {
+    z-index: 70;
+    position: static;
+}
+
+.pvtStickyFixedHeader table.pvtTable.pvtFixedHeader th.pvtRowLabel, .pvtStickyFixedHeader table.pvtTable.pvtFixedHeader th.pvtColLabel {
+    z-index: 80;
+}
+
+.pvtStickyFixedHeader.pvtLoading {
+    opacity: initial;
+}
+
+.pvtStickyFixedHeader.pvtLoading td, .pvtStickyFixedHeader.pvtLoading th>div.pvtFixedHeader {
+    color: silver !important;
+}
+
+/* pvtFixedHeadersOutdated used in non-smooth scroll-event based fixed headers (fallback for browsers without sticky support) */
+
+div.pvtFixedHeadersOutdated>table.pvtFixedHeader>tbody>tr>td>div.pvtFixedHeader, div.pvtFixedHeadersOutdated>table.pvtFixedHeader>tbody>tr>th>div.pvtFixedHeader, div.pvtFixedHeadersOutdated>table.pvtFixedHeader>thead>tr>th>div.pvtFixedHeader {
+    top: 0px !important;
+    left: 0px !important;
+}
+
+.pvtRendererArea{
+    width: 80% !important;
+}
+
+.alert-no-data{
+    text-align: center;
+    padding: 20px;
+    border: 1px solid rosybrown;
+}
+
+table.pvtTable{
+    /* border: 1px solid #CDCDCD; */
+    border-right: 1px solid #CDCDCD;
+}
+
+
+table.pvtTable thead tr th div {
+    background: linear-gradient(#547f99, #6f9ebb, #547f99);
+    color: #fff;
+}
+
+table.pvtTable tbody tr th, table.pvtTable thead tr th div, table.pvtTable tbody tr td {
+    border: none;
+}
+
+.pvtTable {
+    position: sticky !important;
+    top: 0;
+    z-index: 10;
+}
+
+.pvtTable thead th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+  bottom: 0;
+    font-size: 14px;
+    }
+
+.pvtHorizList, .pvtVertList, .pvtRows , .pvtRenderer, .pvtAggregator{
+    display: none;
+}
+
+
+table.pvtTable tbody tr th, table.pvtTable thead tr th {
+    background-color: transparent;
+}
+
+table.pvtTable tr:nth-child(2n+1) td, table.pvtTable tbody tr:nth-child(2n+1) th.pvtRowLabel div {
+    background: #f9f9f9;
+}
+
+table.pvtTable tbody tr:nth-child(even) th.pvtRowLabel div {
+    background: #fff;
+}
+
+table.pvtTable tbody tr td {
+    padding: 8px !important;
+    font-size: 14px;
+}
+
+th.pvtTotalLabel.rowTotal, th.pvtAxisLabel,th.pvtColLabel.colshow {
+    font-size: 14px;
+}
+
+table.pvtTable .pvtAxisLabel.expanded {
+     font-size: 14px;
+}
+
+.pvtVals {
+    display: none;
+}
+
+table.pvtTable .pvtAxisLabel {
+    font-size: 14px;
+}
+
+
+table.pvtTable.pvtFixedHeader th>div.pvtFixedHeader {
+    border: none !important;
+}
+
+/* .pvtTotalLabel {display: none; }
+.pvtTotal {display: none !important; }
+.pvtGrandTotal {display: none; } */
+
+
+
+.pvtTablePageSection {
+    display: none;
+}
