@@ -134,21 +134,15 @@
 
 
         if (globalFilterKey != "" && flatColKey.toLowerCase().indexOf(globalFilterKey) != -1 && !this._colKeys[flatColKey]) {
-          console.log(globalFilterKey);
           this._colKeys[flatColKey] = colKey;
-          localStorage.setItem("selectItemVal", globalFilterKey);
         }
 
         if (globalFilterKey != "" && flatRowKey.toLowerCase().indexOf(globalFilterKey) != -1 && !this._rowKeys[flatRowKey]) {
             this._rowKeys[flatRowKey] = rowKey;
-            console.log(globalFilterKey);
-            localStorage.setItem("selectItemVal", globalFilterKey);
         }
 
         //for last record update rowKeys and colKeys
         if (this.input[this.input.length - 1] === record) {
-          console.log(this);
-          //console.log(Object.keys(this.colTotals));
           if (globalSearchKey != "") {
             rowLen = Object.keys(this._rowKeys).length;
             colLen = Object.keys(this._colKeys).length;
@@ -1188,32 +1182,24 @@
         // }
         // searchSection.appendChild(searchInput);
 
-        searchSection.appendChild(createElement("span", "searchLabel", "Search"));
+        searchSection.appendChild(createElement("span", "searchLabel", "Search:"));
         searchInput1 = createElement("input", "searchInput", globalSearchKey, {
           type: "search"
         });
         searchInput1.value = globalSearchKey;
         searchInput1.onchange = function (event) {
           globalSearchKey = this.value.toLowerCase();
-          localStorage.setItem("selectItemVal", this.value);
           globalSearchValue = "";
           refresh();
         }
         searchSection.appendChild(searchInput1);
 
-        searchSection.appendChild(createElement("span", "filterLabel", "Agency"));
-        searchInput2 = createElement("select", "filterList", globalFilterKey, {
-          id: "searchItems"
-        });
-
-        searchInput2.value = globalFilterKey;
+        searchInput2 = document.getElementById("searchItems");
         searchInput2.onchange = function (event) {
           globalFilterKey = this.value.toLowerCase();
-          console.log(this.value);
           globalFilterValue = "";
           refresh();
         }
-        searchSection.appendChild(searchInput2);
 
 
         //add pagination elements

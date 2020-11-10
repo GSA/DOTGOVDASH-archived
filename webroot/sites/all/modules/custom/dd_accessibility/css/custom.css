@@ -309,93 +309,8 @@ table.pvtTable{
     border-right: 1px solid #CDCDCD;
 }
 
-/*
 table.pvtTable thead tr th div {
-    background: linear-gradient(#547f99, #6f9ebb, #547f99);
-    color: #fff;
-}
-
-table.pvtTable tbody tr th, table.pvtTable thead tr th div, table.pvtTable tbody tr td {
-    border: none;
-}
-
-.pvtTable {
-    position: sticky !important;
-    top: 0;
-    z-index: 10;
-}
-
-.pvtTable thead th {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-  bottom: 0;
-    font-size: 14px;
-    }
-
-.pvtHorizList, .pvtVertList, .pvtRows , .pvtRenderer, .pvtAggregator{
-    display: none;
-}
-
-
-table.pvtTable tbody tr th, table.pvtTable thead tr th {
-    background-color: transparent;
-}
-
-table.pvtTable tr:nth-child(2n+1) td, table.pvtTable tbody tr:nth-child(2n+1) th.pvtRowLabel div {
-    background: #f9f9f9;
-}
-
-table.pvtTable tbody tr:nth-child(even) th.pvtRowLabel div {
-    background: #fff;
-}
-
-table.pvtTable tbody tr td {
-    padding: 8px !important;
-    font-size: 14px;
-}
-
-th.pvtTotalLabel.rowTotal, th.pvtAxisLabel,th.pvtColLabel.colshow {
-    font-size: 14px;
-}
-
-table.pvtTable .pvtAxisLabel.expanded {
-     font-size: 14px;
-}
-
-.pvtVals {
-    display: none;
-}
-
-table.pvtTable .pvtAxisLabel {
-    font-size: 14px;
-}
-
-
-table.pvtTable.pvtFixedHeader th>div.pvtFixedHeader {
-    border: none !important;
-}
-
-
-
-.pvtTablePageSection {
-    display: none;
-}
-
-.pvtTableWrapper, table.pvtTable {
-    border: none;
-} */
-
-
-/* .pvtTotalLabel {display: none; }
-.pvtTotal {display: none !important; }
-.pvtGrandTotal {display: none; } */
-
-
-
-/* Table unnecessary css */
-  table.pvtTable thead tr th div {
-    background: linear-gradient(#547f99, #6f9ebb, #547f99) !important;
+  background: linear-gradient(#547f99, #6f9ebb, #547f99) !important;
 }
 
 .pvtUi tbody tr:first-child td{
@@ -406,38 +321,6 @@ td.pvtAxisContainer.pvtUnused.pvtVertList.ui-sortable,
 td.pvtAxisContainer.pvtRows.ui-sortable {
     display: none;
 }
-/*
-
-
-.pvtUi tbody tr:nth-child(2) td:first-child, .pvtUi tbody tr:nth-child(2) td:nth-child(2){
-    display: none;
-}
-
-.pvtTablePageSection {
-    display: none;
-}
-
- */
-/*
-
-
-.pvtFixedHeader, table.pvtTable tbody tr td {
-    border: none !important;
-}
-
-
-
-.pvtTableWrapper {
-    border: none;
-} */
-
-/* th.pvtRowLabel:nth-child(odd) {
-    background: #EFEFEF !important;
-}
-
-th.pvtRowLabel:nth-child(even) {
-    background: #fff;
-} */
 
 .pvtTable tbody tr th {
     height: 30px;
@@ -481,10 +364,6 @@ table.pvtTable tr:nth-child(2n+1) td, table.pvtTable tbody tr:nth-child(2n+1) th
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
-.pvtTableSearchSection {
-    display: flex;
-}
-
 
 .page-accessibility .region-content  {
   padding: 20px 15px;
@@ -495,6 +374,19 @@ table.pvtTable tr:nth-child(2n+1) td, table.pvtTable tbody tr:nth-child(2n+1) th
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+}
+
+
+.filterSection {
+  display: flex;
+  margin-bottom: -3rem;
+  margin-left: 3.5rem;
+  flex-direction: column;
+}
+
+.pvtTableSearchSection {
+  display: flex;
+  flex-direction: column;
 }
 
 .searchInput {
@@ -508,14 +400,20 @@ table.pvtTable tr:nth-child(2n+1) td, table.pvtTable tbody tr:nth-child(2n+1) th
   background-color: #fff;
   background-image: none;
   border: 1px solid #ccc;
+  width: fit-content;
+}
+
+.filterList {
+  width: fit-content;
 }
 
 
 .filterLabel {
-  margin-left: 4rem;
   margin-right: -2rem;
   padding-top: 4px;
   padding-right: 6px;
+  color: #333;
+  font-weight: bold;
 }
 
 .searchLabel {
@@ -535,7 +433,48 @@ th.pvtColLabel {
   max-width: 120px !important;
 }
 
-th.pvtColLabel .pvtFixedHeader {
+thead tr:first-child th.pvtColLabel .pvtFixedHeader {
   white-space: break-spaces;
   overflow-wrap: break-word;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+thead tr:first-child th.pvtAxisLabel .pvtFixedHeader, thead tr:nth-child(2) th.pvtAxisLabel .pvtFixedHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+thead tr:nth-child(2) th.pvtColLabel .pvtFixedHeader {
+  overflow-x: scroll;
+}
+
+#right {
+  position: absolute;
+  bottom: 30%;
+  right: 3%;
+  z-index: 99;
+  opacity: .5;
+}
+
+#left {
+  position: absolute;
+  bottom: 30%;
+  left: 61%;
+  z-index: 99;
+  opacity: .5;
+}
+
+#right:hover, #left:hover {
+  opacity: 1;
+}
+
+#right:focus, #left:focus {
+  outline: none;
+}
+
+.downloadReport {
+  float: right;
 }
