@@ -8,6 +8,8 @@
   var curPage = 1;
   var globalSearchValue = "";
   var globalSearchKey = "";
+  var globalFilterValue = "";
+  var globalFilterKey = "";
   var sortInfo = {
     colIndex: -1,
     colKey: '',
@@ -129,10 +131,24 @@
         if (globalSearchKey != "" && flatRowKey.toLowerCase().indexOf(globalSearchKey) != -1 && !this._rowKeys[flatRowKey]) {
             this._rowKeys[flatRowKey] = rowKey;
         }
-        
+
+
+        if (globalFilterKey != "" && flatColKey.toLowerCase().indexOf(globalFilterKey) != -1 && !this._colKeys[flatColKey]) {
+          console.log(globalFilterKey);
+          this._colKeys[flatColKey] = colKey;
+          localStorage.setItem("selectItemVal", globalFilterKey);
+        }
+
+        if (globalFilterKey != "" && flatRowKey.toLowerCase().indexOf(globalFilterKey) != -1 && !this._rowKeys[flatRowKey]) {
+            this._rowKeys[flatRowKey] = rowKey;
+            console.log(globalFilterKey);
+            localStorage.setItem("selectItemVal", globalFilterKey);
+        }
+
         //for last record update rowKeys and colKeys
         if (this.input[this.input.length - 1] === record) {
           console.log(this);
+          //console.log(Object.keys(this.colTotals));
           if (globalSearchKey != "") {
             rowLen = Object.keys(this._rowKeys).length;
             colLen = Object.keys(this._colKeys).length;
@@ -148,6 +164,24 @@
               }
             }
           }else if(globalSearchValue != ""){
+            this.rowKeys = Object.values(this._rowKeys);
+          }
+
+          if (globalFilterKey != "") {
+            rowLen = Object.keys(this._rowKeys).length;
+            colLen = Object.keys(this._colKeys).length;
+            if (rowLen == 0 && colLen == 0) {
+              this.rowKeys = [];
+              this.colKey = [];
+            } else {
+              if (rowLen) {
+                this.rowKeys = Object.values(this._rowKeys);
+              }
+              if (colLen) {
+                this.colKeys = Object.values(this._colKeys);
+              }
+            }
+          }else if(globalFilterKey != ""){
             this.rowKeys = Object.values(this._rowKeys);
           }
 
@@ -1154,17 +1188,33 @@
         // }
         // searchSection.appendChild(searchInput);
 
-        searchSection.appendChild(createElement("span", "", "Search"));
+        searchSection.appendChild(createElement("span", "searchLabel", "Search"));
         searchInput1 = createElement("input", "searchInput", globalSearchKey, {
           type: "search"
         });
         searchInput1.value = globalSearchKey;
         searchInput1.onchange = function (event) {
           globalSearchKey = this.value.toLowerCase();
+          localStorage.setItem("selectItemVal", this.value);
           globalSearchValue = "";
           refresh();
         }
         searchSection.appendChild(searchInput1);
+
+        searchSection.appendChild(createElement("span", "filterLabel", "Agency"));
+        searchInput2 = createElement("select", "filterList", globalFilterKey, {
+          id: "searchItems"
+        });
+
+        searchInput2.value = globalFilterKey;
+        searchInput2.onchange = function (event) {
+          globalFilterKey = this.value.toLowerCase();
+          console.log(this.value);
+          globalFilterValue = "";
+          refresh();
+        }
+        searchSection.appendChild(searchInput2);
+
 
         //add pagination elements
         paginateSection = createElement("div", "pvtTablePageSection");
@@ -1179,7 +1229,7 @@
             refresh();
           }
         }
-        
+
         paginatePrevBtn = createElement("a", "paginate_button", "Prev");
         paginateBtnWrapper.appendChild(paginatePrevBtn);
 
