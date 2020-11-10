@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Government-Wide Pivot Table</title>
+    <title>Agency-Wide Pivot Table</title>
     <meta charset="utf-8" />
 
     <!-- external libs from cdnjs -->
@@ -70,8 +70,8 @@
 
 <div class="tableHeader">
   <div class="downloadReport">
-    <a href="/accessibility/govwide/csvapi" target="_blank">RAW Data Download in CSV</a> &nbsp;|
-    <a href="/accessibility/govwide/jsonapi" target="_blank">RAW Data Download in JSON</a>
+    <a href="/accessibility/govwide/csvapi/" target="_blank">RAW Data Download in CSV</a> &nbsp;|
+    <a href="/accessibility/govwide/jsonapi/" target="_blank">RAW Data Download in JSON</a>
   </div>
 
   <div class="filterSection">
@@ -98,7 +98,7 @@
 
                     $("#output").pivotUI(mps, {
                         dataClass: dataClass,
-                        cols: ["Agency", "Website"],
+                        cols: ["Agency"],
                         rows: ["WCAG Success Criteria", "ICT Group", "Test Rule"],
                         renderers: renderers,
                         rendererName: "Table With Pagination",

@@ -8,6 +8,8 @@
   var curPage = 1;
   var globalSearchValue = "";
   var globalSearchKey = "";
+  var globalFilterValue = "";
+  var globalFilterKey = "";
   var sortInfo = {
     colIndex: -1,
     colKey: '',
@@ -129,10 +131,18 @@
         if (globalSearchKey != "" && flatRowKey.toLowerCase().indexOf(globalSearchKey) != -1 && !this._rowKeys[flatRowKey]) {
             this._rowKeys[flatRowKey] = rowKey;
         }
-        
+
+
+        if (globalFilterKey != "" && flatColKey.toLowerCase().indexOf(globalFilterKey) != -1 && !this._colKeys[flatColKey]) {
+          this._colKeys[flatColKey] = colKey;
+        }
+
+        if (globalFilterKey != "" && flatRowKey.toLowerCase().indexOf(globalFilterKey) != -1 && !this._rowKeys[flatRowKey]) {
+            this._rowKeys[flatRowKey] = rowKey;
+        }
+
         //for last record update rowKeys and colKeys
         if (this.input[this.input.length - 1] === record) {
-          console.log(this);
           if (globalSearchKey != "") {
             rowLen = Object.keys(this._rowKeys).length;
             colLen = Object.keys(this._colKeys).length;
@@ -151,37 +161,55 @@
             this.rowKeys = Object.values(this._rowKeys);
           }
 
+          if (globalFilterKey != "") {
+            rowLen = Object.keys(this._rowKeys).length;
+            colLen = Object.keys(this._colKeys).length;
+            if (rowLen == 0 && colLen == 0) {
+              this.rowKeys = [];
+              this.colKey = [];
+            } else {
+              if (rowLen) {
+                this.rowKeys = Object.values(this._rowKeys);
+              }
+              if (colLen) {
+                this.colKeys = Object.values(this._colKeys);
+              }
+            }
+          }else if(globalFilterKey != ""){
+            this.rowKeys = Object.values(this._rowKeys);
+          }
+
 
           //column sort logic
-          if (sortInfo.colIndex >= 0 && sortInfo.direction != 0) {
-            var f = [], d, a = sortInfo.direction, c = sortInfo.colIndex;
-            b = this;
-            b.sorted = !1;
-            var h = b.getRowKeys()
-              , e = b.getColKeys();
-            if (sortInfo.colKey !== JSON.stringify(e[c])) {
-              sortInfo.colIndex = -1;
-              sortInfo.direction = 0;
-              sortInfo.colKey = null;
-            } else {
-              for (d in h) {
-                var p = h[d];
-                var n = null != c ? e[c] : [];
-                n = b.getAggregator(p, n);
-                f.push({
-                  val: n.value(),
-                  key: p
-                })
-              }
-              f.sort(function (b, c) {
-                return a * $.pivotUtilities.naturalSort(b.val, c.val)
-              });
-              b.rowKeys = [];
-              for (d = 0; d < f.length; d++)
-                b.rowKeys.push(f[d].key);
-              b.sorted = !0
-            }
-          }
+          // if (sortInfo.colIndex >= 0 && sortInfo.direction != 0) {
+          //   var f = [], d, a = sortInfo.direction, c = sortInfo.colIndex;
+          //   b = this;
+          //   b.sorted = !1;
+          //   var h = b.getRowKeys()
+          //     , e = b.getColKeys();
+          //   if (sortInfo.colKey !== JSON.stringify(e[c])) {
+          //     sortInfo.colIndex = -1;
+          //     sortInfo.direction = 0;
+          //     sortInfo.colKey = null;
+          //   } else {
+          //     for (d in h) {
+          //       var p = h[d];
+          //       var n = null != c ? e[c] : [];
+          //       n = b.getAggregator(p, n);
+          //       f.push({
+          //         val: n.value(),
+          //         key: p
+          //       })
+          //     }
+          //     f.sort(function (b, c) {
+          //       return a * $.pivotUtilities.naturalSort(b.val, c.val)
+          //     });
+          //     b.rowKeys = [];
+          //     for (d = 0; d < f.length; d++)
+          //       b.rowKeys.push(f[d].key);
+          //     b.sorted = !0
+          //   }
+          // }
         }
 
         return results;
@@ -417,6 +445,7 @@
         if (col >= opts.collapseAt) {
           arrow = arrowCollapsed + " ";
           hClass = classCollapsed;
+          ah.th.setAttribute('root-node', '1');
           ah.clickStatus = clickStatusCollapsed;
           ah.onClick = expandAxis;
         }
@@ -1154,7 +1183,7 @@
         // }
         // searchSection.appendChild(searchInput);
 
-        searchSection.appendChild(createElement("span", "", "Search"));
+        searchSection.appendChild(createElement("span", "searchLabel", "Search:"));
         searchInput1 = createElement("input", "searchInput", globalSearchKey, {
           type: "search"
         });
@@ -1165,6 +1194,14 @@
           refresh();
         }
         searchSection.appendChild(searchInput1);
+
+        searchInput2 = document.getElementById("searchItems");
+        searchInput2.onchange = function (event) {
+          globalFilterKey = this.value.toLowerCase();
+          globalFilterValue = "";
+          refresh();
+        }
+
 
         //add pagination elements
         paginateSection = createElement("div", "pvtTablePageSection");
@@ -1179,7 +1216,7 @@
             refresh();
           }
         }
-        
+
         paginatePrevBtn = createElement("a", "paginate_button", "Prev");
         paginateBtnWrapper.appendChild(paginatePrevBtn);
 
@@ -1317,8 +1354,8 @@
           buildColTotals(tr, colAttrHeaders, rowAttrs, colAttrs, opts);
         }
         buildGrandTotal(tbody, tr, rowAttrs, colAttrs, opts);
-        collapseAxis(colAxisHeaders, opts.colSubtotalDisplay.collapseAt, colAttrs, opts.colSubtotalDisplay);
-        collapseAxis(rowAxisHeaders, opts.rowSubtotalDisplay.collapseAt, rowAttrs, opts.rowSubtotalDisplay);
+        //collapseAxis(colAxisHeaders, opts.colSubtotalDisplay.collapseAt, colAttrs, opts.colSubtotalDisplay);
+        //collapseAxis(rowAxisHeaders, opts.rowSubtotalDisplay.collapseAt, rowAttrs, opts.rowSubtotalDisplay);
         result.setAttribute("data-numrows", rowKeys.length);
         result.setAttribute("data-numcols", colKeys.length);
         result.style.display = "";
@@ -1641,7 +1678,14 @@
     0 != b.length && (c = c ? b.closest(".pvtFixedHeaderOuterContainer") : b.parent(),
       a = "object" === typeof a ? a : {},
       this.fixedHeaders && this.fixedHeaders.destroy(),
-      this.fixedHeaders = new PivotTableWrapper(c, b, !0 === a.smooth ? !0 : !1, !1 === a.rows ? !1 : !0, !1 === a.columns ? !1 : !0, a.disableByAreaFactor ? a.disableByAreaFactor : .5, !1 === a.useSticky ? !1 : !0))
+      // this.fixedHeaders = new PivotTableWrapper(c, b, !0 === a.smooth ? !0 : !1, !1 === a.rows ? !1 : !0, !1 === a.columns ? !1 : !0, a.disableByAreaFactor ? a.disableByAreaFactor : .5, !1 === a.useSticky ? !1 : !0))
+
+      this.fixedHeaders = new PivotTableWrapper(c, b, !0 === a.smooth ? !0 : !1, !1 === a.rows ? !1 : !0, !1 === a.columns ? !1 : !0, a.disableByAreaFactor ? a.disableByAreaFactor : .5, !1 === a.useSticky ? !1 : !0));
+
+
+      setTimeout(function(){
+        $("th[root-node='1']:first").click();
+      }, 1);
   };
 
   window.PivotTableExtensions.defaults = {
