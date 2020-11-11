@@ -80,7 +80,7 @@
       </select>
   </div>
 </div>
-        <div id="output" class="sticky" style="margin: 30px;"></div>
+        <div id="output" class="sticky agency-acess"></div>
 
 
         <script type="text/javascript">
@@ -92,6 +92,7 @@
                 var extension = new PivotTableExtensions;
                 var tabledata;
                 var flagVal = 0;
+                scrollTable();
 
                 $.getJSON(jsonUrl, function (mps) {
                     tabledata = mps;
@@ -113,8 +114,8 @@
                         },
                         onRefresh: function (pivotUIOptions, config) {
                             extension.initFixedHeaders($('table.pvtTable'));
-                            scrollTable();
                             getFilterList();
+                            colTotalLabel();
                         }
                     });
 
@@ -137,6 +138,10 @@
                     }, 500);
                 });
 
+                // Change col total Label
+                function colTotalLabel() {
+                  $( "th.pvtTotalLabel.colTotal .pvtFixedHeader" ).text( "Total Accessibility Issues" );
+                }
 
                 // Scroll Table
                 function scrollTable() {

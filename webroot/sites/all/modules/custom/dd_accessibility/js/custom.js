@@ -445,7 +445,6 @@
         if (col >= opts.collapseAt) {
           arrow = arrowCollapsed + " ";
           hClass = classCollapsed;
-          ah.th.setAttribute('root-node', '1');
           ah.clickStatus = clickStatusCollapsed;
           ah.onClick = expandAxis;
         }
@@ -454,6 +453,7 @@
         }
         ah.th = createElement("th", "pvtAxisLabel " + hClass, "" + arrow + ah.text);
         if (col < attrs.length - 1 && col < opts.disableFrom && !opts.disableExpandCollapse) {
+          ah.th.setAttribute('root-node', '1');
           ah.th.onclick = function (event) {
             event = event || window.event;
             return ah.onClick(axisHeaders, col, attrs, opts);
@@ -537,25 +537,25 @@
           }
 
           b = pivotData;
-          h.th.onclick = function (event) {
-            curPage = 1;
-            sortInfo.colIndex = $(this).attr('key-index');
-
-            if (sortInfo.colIndex < 0) {
-              return;
-            }
-            sortInfo.colKey = JSON.stringify(colKeys[sortInfo.colIndex]);
-
-            if (hasClass(this, "pvtSortDesc")) {
-              sortInfo.direction = 1;
-            } else if (hasClass(this, "pvtSortAsc")) {
-              sortInfo.direction = 0;
-            } else {
-              sortInfo.direction = -1;
-            }
-
-            refresh();
-          };
+          // h.th.onclick = function (event) {
+          //   curPage = 1;
+          //   sortInfo.colIndex = $(this).attr('key-index');
+          //
+          //   if (sortInfo.colIndex < 0) {
+          //     return;
+          //   }
+          //   sortInfo.colKey = JSON.stringify(colKeys[sortInfo.colIndex]);
+          //
+          //   if (hasClass(this, "pvtSortDesc")) {
+          //     sortInfo.direction = 1;
+          //   } else if (hasClass(this, "pvtSortAsc")) {
+          //     sortInfo.direction = 0;
+          //   } else {
+          //     sortInfo.direction = -1;
+          //   }
+          //
+          //   refresh();
+          // };
         }
 
         h.th.textContent = getHeaderText(h, colAttrs, opts.colSubtotalDisplay);
@@ -1354,8 +1354,8 @@
           buildColTotals(tr, colAttrHeaders, rowAttrs, colAttrs, opts);
         }
         buildGrandTotal(tbody, tr, rowAttrs, colAttrs, opts);
-        //collapseAxis(colAxisHeaders, opts.colSubtotalDisplay.collapseAt, colAttrs, opts.colSubtotalDisplay);
-        //collapseAxis(rowAxisHeaders, opts.rowSubtotalDisplay.collapseAt, rowAttrs, opts.rowSubtotalDisplay);
+        // collapseAxis(colAxisHeaders, opts.colSubtotalDisplay.collapseAt, colAttrs, opts.colSubtotalDisplay);
+        // collapseAxis(rowAxisHeaders, opts.rowSubtotalDisplay.collapseAt, rowAttrs, opts.rowSubtotalDisplay);
         result.setAttribute("data-numrows", rowKeys.length);
         result.setAttribute("data-numcols", colKeys.length);
         result.style.display = "";
