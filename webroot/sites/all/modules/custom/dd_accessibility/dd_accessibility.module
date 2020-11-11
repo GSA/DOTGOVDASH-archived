@@ -73,6 +73,18 @@ function dd_accessibility_menu() {
         'access callback' => TRUE,
         'type' => MENU_NORMAL_ITEM
     );
+    $items['accessibility/agencywide/reports'] = array(
+        'title' => "Agency-Wide Accessibility Report",
+        'page callback' => 'dd_accessibility_agencywide_page',
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM
+    );
+    $items['accessibility/myagency/reports'] = array(
+        'title' => "My Agency Accessibility Report",
+        'page callback' => 'dd_accessibility_myagency_page',
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM
+    );
     $items['accessibility/govwide/csvapi'] = array(
         'title' => "Government-Wide Accessibility Report",
         'page callback' => 'dd_accessibility_govwide_csvapi',
@@ -106,6 +118,14 @@ function dd_accessibility_theme($existing, $type, $theme, $path) {
         'dd_accessibility_govwide_report_page' => array(
             'template' => 'accessibility-govwide--report-page',
             'path' => drupal_get_path('module', 'dd_accessibility') . '/templates',
+          ),
+        'dd_accessibility_agencywide_report_page' => array(
+            'template' => 'accessibility-agencywide--report-page',
+            'path' => drupal_get_path('module', 'dd_accessibility') . '/templates',
+        ),
+        'dd_accessibility_myagency_report_page' => array(
+            'template' => 'accessibility-myagency--report-page',
+            'path' => drupal_get_path('module', 'dd_accessibility') . '/templates',
         )
     );
 }
@@ -117,6 +137,18 @@ function dd_accessibility_govwide_page() {
     $processed_vars['idea_home'] = "Test";
     $processed_vars['actualdata'] = "again";
     return theme('dd_accessibility_govwide_report_page', array('agency_data' => $processed_vars));
+}
+
+function dd_accessibility_agencywide_page() {
+    $processed_vars['idea_home'] = "Test";
+    $processed_vars['actualdata'] = "again";
+    return theme('dd_accessibility_agencywide_report_page', array('agency_data' => $processed_vars));
+}
+
+function dd_accessibility_myagency_page() {
+    $processed_vars['idea_home'] = "Test";
+    $processed_vars['actualdata'] = "again";
+    return theme('dd_accessibility_myagency_report_page', array('agency_data' => $processed_vars));
 }
 
 function dd_accessibility_govwide_csvapi(){
