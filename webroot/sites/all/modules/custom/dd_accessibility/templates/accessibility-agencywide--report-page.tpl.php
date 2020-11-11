@@ -92,6 +92,7 @@
                 var extension = new PivotTableExtensions;
                 var tabledata;
                 var flagVal = 0;
+                scrollTable();
 
                 $.getJSON(jsonUrl, function (mps) {
                     tabledata = mps;
@@ -113,7 +114,6 @@
                         },
                         onRefresh: function (pivotUIOptions, config) {
                             extension.initFixedHeaders($('table.pvtTable'));
-                            scrollTable();
                             getFilterList();
                             colTotalLabel();
                         }
