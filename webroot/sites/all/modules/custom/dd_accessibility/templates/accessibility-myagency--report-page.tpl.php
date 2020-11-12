@@ -99,7 +99,7 @@
 
                     $("#output").pivotUI(mps, {
                         dataClass: dataClass,
-                        cols: ["Agency", "Website"],
+                        cols: ["Website", "Agency"],
                         rows: ["WCAG Success Criteria", "ICT Group", "Test Rule"],
                         renderers: renderers,
                         rendererName: "Table With Pagination",
