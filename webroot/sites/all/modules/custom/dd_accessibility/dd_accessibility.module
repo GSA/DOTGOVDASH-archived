@@ -155,7 +155,7 @@ function dd_accessibility_govwide_csvapi(){
     global $wcag_testrule_ref;
 
     $query = db_query("select * from  custom_accessibility_issues");
-    print "\"Website ID\",\"Website Name\",\"Agency ID\",\"Agency Name\",\"Rule Engine\",\"WCAG Success Criteria\",\"ICT Group\",\"Type Code\",\"Test Rule Name\",\"Error Message\",\"Error Context\",\"Error Selector\" \n";
+    print "\"Website ID\",\"Website\",\"Agency ID\",\"Agency\",\"Rule Engine\",\"WCAG Success Criteria\",\"ICT Group\",\"Type Code\",\"Test Rule\",\"Error Message\",\"Error Context\",\"Error Selector\" \n";
     foreach ($query as $result) {
 //        print "'".$result->website."','".$result->agency_name."','".$result->error_scan_type."','".$result->wcag_code."','".$result->error_cat."','".$result->error_typecode."','".$result->error_code."','".$result->error_message."','".$result->error_context."','".$result->error_selector."'".PHP_EOL;
         print "\"".$result->website_id."\",\"".$result->website."\",\"".$result->agency_id."\",\"".$result->agency_name."\",\"".$result->error_scan_type."\",\"".$wcag_testrule_ref[$result->error_code]."\",\"".$result->error_cat."\",\"".$result->error_typecode."\",\"". $result->error_code."(".$result->error_scan_type.")"."\",\"".$result->error_message."\",\"".$result->error_context."\",\"".$result->error_selector."\"\n";
@@ -170,14 +170,14 @@ function dd_accessibility_govwide_jsonapi(){
 
     foreach ($query as $result) {
         $json_array['Website ID'] = $result->website_id;
-        $json_array['Website Name'] = $result->website;
+        $json_array['Website'] = $result->website;
         $json_array['Agency ID'] = $result->agency_id;
-        $json_array['Agency Name'] = $result->agency_name;
+        $json_array['Agency'] = $result->agency_name;
         $json_array['Rule Engine'] = $result->error_scan_type;
         $json_array['WCAG Success Criteria'] = $wcag_testrule_ref[$result->error_code];
         $json_array['ICT Group'] = $result->error_cat;
         $json_array['Type Code'] = $result->error_typecode;
-        $json_array['Test Rule Name'] = $result->error_code."(".$result->error_scan_type.")";
+        $json_array['Test Rule'] = $result->error_code."(".$result->error_scan_type.")";
         $json_array['Error Message'] = $result->error_message;
         $json_array['Error Context'] = $result->error_context;
         $json_array['Error Selector'] = $result->error_selector;
@@ -195,14 +195,14 @@ function dd_accessibility_agencywide_jsonapi($agencyid){
 
     foreach ($query as $result) {
         $json_array['Website ID'] = $result->website_id;
-        $json_array['Website Name'] = $result->website;
+        $json_array['Website'] = $result->website;
         $json_array['Agency ID'] = $result->agency_id;
-        $json_array['Agency Name'] = $result->agency_name;
+        $json_array['Agency'] = $result->agency_name;
         $json_array['Rule Engine'] = $result->error_scan_type;
         $json_array['WCAG Success Criteria'] = $wcag_testrule_ref[$result->error_code];
         $json_array['ICT Group'] = $result->error_cat;
         $json_array['Type Code'] = $result->error_typecode;
-        $json_array['Test Rule Name'] = $result->error_code."(".$result->error_scan_type.")";
+        $json_array['Test Rule'] = $result->error_code."(".$result->error_scan_type.")";
         $json_array['Error Message'] = $result->error_message;
         $json_array['Error Context'] = $result->error_context;
         $json_array['Error Selector'] = $result->error_selector;
@@ -224,14 +224,14 @@ function dd_accessibility_myagency_jsonapi(){
 
     foreach ($query as $result) {
         $json_array['Website ID'] = $result->website_id;
-        $json_array['Website Name'] = $result->website;
+        $json_array['Website'] = $result->website;
         $json_array['Agency ID'] = $result->agency_id;
-        $json_array['Agency Name'] = $result->agency_name;
+        $json_array['Agency'] = $result->agency_name;
         $json_array['Rule Engine'] = $result->error_scan_type;
         $json_array['WCAG Success Criteria'] = $wcag_testrule_ref[$result->error_code];
         $json_array['ICT Group'] = $result->error_cat;
         $json_array['Type Code'] = $result->error_typecode;
-        $json_array['Test Rule Name'] = $result->error_code."(".$result->error_scan_type.")";
+        $json_array['Test Rule'] = $result->error_code."(".$result->error_scan_type.")";
         $json_array['Error Message'] = $result->error_message;
         $json_array['Error Context'] = $result->error_context;
         $json_array['Error Selector'] = $result->error_selector;
@@ -239,4 +239,8 @@ function dd_accessibility_myagency_jsonapi(){
     }
     print json_encode($return_arr);
     exit;
+}
+function dd_accessibility_agency_name($agencyid){
+    $query = db_query("select agency FROM custom_agencywide_archive where agency_id=:agencyid limit 1", array(":agencyid"=>$agencyid))->fetchObject();
+    return $query->agency;
 }

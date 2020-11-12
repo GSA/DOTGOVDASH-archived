@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Government-Wide Pivot Table</title>
+    <title>My Agency Pivot Table</title>
     <meta charset="utf-8" />
 
     <!-- external libs from cdnjs -->
@@ -74,7 +74,7 @@
     <a href="/accessibility/govwide/jsonapi" target="_blank">RAW Data Download in JSON</a>
   </div>
 
-  <div class="filterSection">
+  <div class="filterSection" style="display: none;">
       <span class="filterLabel">Agency</span>
       <select class="filterList" id="searchItems">
       </select>
@@ -99,7 +99,7 @@
 
                     $("#output").pivotUI(mps, {
                         dataClass: dataClass,
-                        cols: ["Website", "Agency"],
+                        cols: ["Agency", "Website"],
                         rows: ["WCAG Success Criteria", "ICT Group", "Test Rule"],
                         renderers: renderers,
                         rendererName: "Table With Pagination",
@@ -136,6 +136,14 @@
                         //getFilterList();
 
                     }, 500);
+                    setTimeout(function() {
+                      <?php
+                      global $user;
+                      $user_data = user_load($user->uid);
+                      $agencyid = $user_data->field_web_agency_id['und'][0]['nid'];
+                      ?>
+                      $("#searchItems").val("<?php echo dd_accessibility_agency_name($agencyid);?>").change();
+                    }, 6000);
                 });
 
                 // Change col total Label
