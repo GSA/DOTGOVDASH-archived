@@ -240,3 +240,7 @@ function dd_accessibility_myagency_jsonapi(){
     print json_encode($return_arr);
     exit;
 }
+function dd_accessibility_agency_name($agencyid){
+    $query = db_query("select agency FROM custom_agencywide_archive where agency_id=:agencyid limit 1", array(":agencyid"=>$agencyid))->fetchObject();
+    return $query->agency;
+}
