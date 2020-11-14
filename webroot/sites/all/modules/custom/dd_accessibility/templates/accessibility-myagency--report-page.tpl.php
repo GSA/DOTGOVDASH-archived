@@ -70,8 +70,8 @@
 
 <div class="tableHeader">
   <div class="downloadReport">
-    <a href="/accessibility/govwide/csvapi" target="_blank">RAW Data Download in CSV</a> &nbsp;|
-    <a href="/accessibility/govwide/jsonapi" target="_blank">RAW Data Download in JSON</a>
+    <a href="/accessibility/myagency/csvapi" target="_blank">RAW Data Download in CSV</a> &nbsp;|
+    <a href="/accessibility/myagency/xlsapi" target="_blank">RAW Data Download in XLS</a>
   </div>
 
   <div class="filterSection" style="display: none;">
