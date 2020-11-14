@@ -32,6 +32,7 @@ writeToLogs("Collecting HTTPS and DAP data from Pulse",$logFile);
 //Get the latest reports from pulse accessibility to local.
 //This wont be executed anymore as pulse accessibility API site is down
 //updateAccessibleScanInfo($scanId);
+
 //Below are scans that are run individually for each site.
 
 $listWebsites = getSites();
@@ -55,13 +56,16 @@ foreach($listWebsites as $key=>$website){
 
 //Get the latest reports from pulse accessibility to local.
     writeToLogs("\nStart Accessibility Scan for ".$website['domain'],$logFile);
-    updateAccessibilityScanCustom($website['domain'],$scanId);
+   // updateAccessibilityScanCustom($website['domain'],$scanId);
+    updateAccessibilityScan_custom($website['domain'],$scanId);
 
 }
 cleanupNodesAfterScan();
 //After scan is done. Run the taxonomy processor. This will parse all taxonomy data and create/edit taxonomies and tag appropriate content.
 archiveGovwideTrendData();
 archiveAgencywideTrendData();
+access_archiveGovwideTrendData();
+access_archiveAgencyWideTrendData();
 
 $endTime = date("Y:m:d h:i:s");
 if($sendmail == "yes"){
