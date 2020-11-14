@@ -106,9 +106,9 @@ function runUswdsScan(){
  */
 function runAccessibilityNewCustomScan(){
     //run pa11y Scan
-    exec("timeout 15 ../tools/domain-scan/scan /tmp/current-federal.csv --scan=a11y --workers=50 --output=/tmp/");
+     exec("timeout 15 ../tools/domain-scan/scan /tmp/current-federal.csv --scan=a11y --workers=50 --output=/tmp/");
     db_query("truncate table custom_accessibility_issues");
-    db_query("LOAD DATA INFILE '/tmp/results/a11y.csv' INTO TABLE custom_accessibility_issues FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' (website,base_domain, domain_redirected_to,error_typecode,error_code,error_message,error_context,error_selector)");
+    db_query("LOAD DATA INFILE '/Users/ayaskantsahu/a11y.csv' INTO TABLE custom_accessibility_issues FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' (website,base_domain, domain_redirected_to,error_typecode,error_code,error_message,error_context,error_selector);");
 
     db_query("delete from custom_accessibility_issues where error_code not in ('WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.EmptyNoId','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.NoContent','aria-allowed-role','aria-hidden-focus','aria-input-field-name','aria-toggle-field-name','button-name','color-contrast','WCAG2AA.Principle1.Guideline1_4.1_4_3.G145','WCAG2AA.Principle1.Guideline1_4.1_4_3.G18','document-title','duplicate-id','WCAG2AA.Principle4.Guideline4_1.4_1_1.F77','empty-heading','WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.EmptyTitle','form-field-multiple-labels','frame-title','frame-title-unique','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired','WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2','html-has-lang','html-lang-valid','WCAG2AA.Principle2.Guideline2_4.2_4_1.H64.1','image-alt','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.IncorrectAttr','input-button-name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputButton.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputCheckbox.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputFile.Name','input-image-alt','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputImage.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputPassword.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputRadio.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name','label','WCAG2AA.Principle1.Guideline1_3.1_3_1.F68','WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable','link-name','list','listitem','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Li.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeadersAttrs','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeaderIds','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43,H63','WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.NoTitleEl','role-img-alt','scope-attr-valid','scrollable-region-focusable','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Select.Name','td-headers-attr','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Textarea.Name','WCAG2AA.Principle3.Guideline3_1.3_1_2.H58.1.Lang','valid-lan_g')");
     accessibility_new_updateTable();
@@ -121,11 +121,17 @@ function access_new_table_update($websites){
     $error_cat = $websites['category'];
     $wcag_code = $websites['wcag_ref'];
     $website_id = $websites['website_id'];
+    if(trim($website_id) == "")
+        $website_id = 'NULL';
     $code = $websites['code'];
     $agency_id = $websites['agency_id'];
+    if(trim($agency_id) == "")
+        $agency_id = 'NULL';
     $agency_name = $websites['agency_name'];
-    db_query("update custom_accessibility_issues set error_scan_type = '$error_scan_type',wcag_code='$wcag_code',error_cat='$error_cat',agency_id= '$agency_id',website_id='$website_id',agency_name = '$agency_name' where website='$website' and error_code = '$code'");
-    echo "access_table_update() -Test line";
+    print "update custom_accessibility_issues set error_scan_type = '$error_scan_type',wcag_code='$wcag_code',error_cat='$error_cat',agency_id= $agency_id,website_id=$website_id,agency_name = '$agency_name' where website='$website' and error_code = '$code' \n";
+    echo "access_table_update() - ".$websites['website']."\n";
+    db_query("update custom_accessibility_issues set error_scan_type = '$error_scan_type',wcag_code='$wcag_code',error_cat='$error_cat',agency_id= $agency_id,website_id=$website_id,agency_name = '$agency_name' where website='$website' and error_code = '$code'");
+
 }
 
 function findParentAgencyName($websiteid){
@@ -148,14 +154,14 @@ function accessibility_new_updateWebsite($domain)
     $websites['agency_id'] = findParentAgencyNode($websites['website_id']);
     $websites['agency_name'] = findParentAgencyName($websites['website_id']);
     $websites['website'] = $domain;
-    $accessibility_results = db_query("SELECT code,message,context,selector FROM custom_accessibility_data where domain = '$domain'");
+    $accessibility_results = db_query("SELECT error_code,error_message,error_context,error_selector FROM custom_accessibility_issues where website = '$domain'");
 
-    echo " accessibility_scan() -Test line";
+    echo " accessibility_scan() - Website scan ".$websites['website']. "\n";
     foreach ($accessibility_results as $result) {
-        $websites['code'] = $result->code;
-        $websites['message'] = $result->message;
-        $websites['context'] = $result->context;
-        $websites['selector'] = $result->selector;
+        $websites['code'] = $result->error_code;
+        $websites['message'] = $result->error_message;
+        $websites['context'] = $result->error_context;
+        $websites['selector'] = $result->error_selector;
 
         if ($websites['code'] == 'image-alt' || $websites['code'] == 'role-img-alt') {
 
@@ -1237,7 +1243,7 @@ function getPulseData(){
     //file_put_contents("$localdapfile", file_get_contents("$pulsedapurl"));
     //This is the latest scan which uses GSA analytics api instead of pulse and generates a file at /tmp/pulsedap.csv
     writeToLogs("Run script to generate dap file and import to db",$logFile);
-   exec("/usr/bin/python3.6 ../scripts/custom_pulse_scanner_analytics/secondLevelDomain.py");
+    exec("/usr/bin/python3.6 ../scripts/custom_pulse_scanner_analytics/secondLevelDomain.py");
 
     db_query("truncate table custom_pulse_dap_data");
     db_query("LOAD DATA LOCAL INFILE '".$localdapfile."' INTO TABLE `custom_pulse_dap_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
@@ -1399,7 +1405,7 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
     }
 
 
-        //Save Tags to parent website
+    //Save Tags to parent website
     if(!empty($tags)) {
         if(!empty($wnode->field_website_tags)){
             foreach($wnode->field_website_tags['und'] as $ctk  =>$ctval){
@@ -3002,7 +3008,7 @@ function archiveAgencywideTrendData(){
         $uswds_websites = db_query("select count(field_uswds_score_value)  as complnum from field_data_field_uswds_score a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid and field_uswds_score_value='100' group by field_uswds_score_value", array(':agencyid' =>  $result->nid))->fetchField();
 
         $redirect_websites = db_query("select count(a.field_redirect_value)  as complnum from field_data_field_redirect a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid and a.field_redirect_value='Yes' group by a.field_redirect_value", array(':agencyid' =>  $result->nid))->fetchField();
-        
+
         $poc_websites = db_query("select count(a.field_website_security_poc_statu_value)  as complnum from field_data_field_website_security_poc_statu a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid and a.field_website_security_poc_statu_value='1' group by a.field_website_security_poc_statu_value", array(':agencyid' =>  $result->nid))->fetchField();
 
         $uswds_websites = ($uswds_websites == '')?'NULL':$uswds_websites;
@@ -3578,7 +3584,7 @@ function updateAccessibilityScan_custom($website,$scanid)
     include("../scripts/configSettings.php");
     $start = microtime(true);
     $domain = $website;
-    $siteId = findNode($domain,website);
+    $siteId = findNode($domain,'website');
     if ($siteId != '') {
         //Check if the site is a redirect. If redirect dont run scan.
         $check_redirect = db_query("select redirect from custom_pulse_https_data where domain=:domain", array(':domain' => trim($website)))->fetchField();
@@ -3961,7 +3967,7 @@ function updateAccessibilityScan_custom($website,$scanid)
 
         }
         else{
-            print('Website is a redirect');
+            print('Website is a redirect \n');
         }
     }
 }
