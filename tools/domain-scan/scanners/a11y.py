@@ -133,7 +133,7 @@ headers = [
 
 
 def run_a11y_scan(domain):
-    command = [pa11y, domain, "--reporter", "json", "--level", "none", "--timeout", "300000"]
+    command = [pa11y, domain, "--reporter", "json", "--runner", "axe", "--runner", "htmlcs", "--level", "none", "--timeout", "300000"]
 
     if config:
         command += ["--config", config]
