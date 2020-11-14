@@ -20,7 +20,6 @@
     <!-- optional: mobile support with jqueryui-touch-punch -->
     <script type="text/javascript" src="/sites/all/modules/custom/dd_accessibility/js/jquery.ui.touch-punch.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         table.pvtTable tbody tr th.pvtRowLabel.rowexpanded {
             cursor: auto !important;
