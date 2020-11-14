@@ -78,9 +78,13 @@ function startScan(){
     //Run Accessbility Scan through Pa11y
     writeToLogs("Collecting Accessbility Data through Pa11y using domain scan tool",$logFile);
     runAccessibilityNewCustomScan();
+    $pa11yfiledata = file_get_contents("/tmp/results/a11y.csv");
+    $pa11yfile =  file_save_data($pa11yfiledata,file_default_scheme().'://accessibilityscan/'.pa11y_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
+
     $node->field_pulse_source_https_file['und'][0] = array('fid' => $httpsdatafile->fid,'display' => 1, 'description' => 'Pulse HTTPS scan source File');
     $node->field_pulse_source_analytics_fil['und'][0] = array('fid' => $dapdatafile->fid,'display' => 1, 'description' => 'Pulse DAP scan source File');
     $node->field_uswds_scan_file['und'][0] = array('fid' => $uswdsfile->fid,'display' => 1, 'description' => 'USWDS scan source File');
+    $node->field_accessibility_scan_file['und'][0] = array('fid' => $pa11yfile->fid,'display' => 1, 'description' => 'Pa11y scan source File');
     $node->field_nist_ipv6_data['und'][0] = array('fid' => $ipv6datafile->fid,'display' => 1, 'description' => 'NIST Ipv6 scan source File');
     node_object_prepare($node);
     if($node=node_submit($node)){
@@ -101,11 +105,10 @@ function runUswdsScan(){
  * Run New Custom Accessibility Scan
  */
 function runAccessibilityNewCustomScan(){
-    //run Scan
-    exec("timeout 15 ");
-    exec("../tools/domain-scan/scan /tmp/current-federal.csv --scan=a11y --workers=50 --output=/tmp/");
+    //run pa11y Scan
+    exec("timeout 15 ../tools/domain-scan/scan /tmp/current-federal.csv --scan=a11y --workers=50 --output=/tmp/");
     db_query("truncate table custom_accessibility_issues");
-    db_query("LOAD DATA INFILE '/tmp/Pa11y_axe.csv' INTO TABLE custom_accessibility_issues FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' (website,base_domain, domain_redirected_to,error_typecode,error_code,error_message,error_context,error_selector)");
+    db_query("LOAD DATA INFILE '/tmp/results/a11y.csv' INTO TABLE custom_accessibility_issues FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' (website,base_domain, domain_redirected_to,error_typecode,error_code,error_message,error_context,error_selector)");
 
     db_query("delete from custom_accessibility_issues where error_code not in ('WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.EmptyNoId','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.NoContent','aria-allowed-role','aria-hidden-focus','aria-input-field-name','aria-toggle-field-name','button-name','color-contrast','WCAG2AA.Principle1.Guideline1_4.1_4_3.G145','WCAG2AA.Principle1.Guideline1_4.1_4_3.G18','document-title','duplicate-id','WCAG2AA.Principle4.Guideline4_1.4_1_1.F77','empty-heading','WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.EmptyTitle','form-field-multiple-labels','frame-title','frame-title-unique','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired','WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2','html-has-lang','html-lang-valid','WCAG2AA.Principle2.Guideline2_4.2_4_1.H64.1','image-alt','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.IncorrectAttr','input-button-name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputButton.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputCheckbox.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputFile.Name','input-image-alt','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputImage.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputPassword.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputRadio.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name','label','WCAG2AA.Principle1.Guideline1_3.1_3_1.F68','WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable','link-name','list','listitem','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Li.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeadersAttrs','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeaderIds','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43,H63','WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.NoTitleEl','role-img-alt','scope-attr-valid','scrollable-region-focusable','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Select.Name','td-headers-attr','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Textarea.Name','WCAG2AA.Principle3.Guideline3_1.3_1_2.H58.1.Lang','valid-lan_g')");
     accessibility_new_updateTable();
