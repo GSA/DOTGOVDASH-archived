@@ -74,7 +74,7 @@
       </select>
   </div>
 </div>
-        <div id="output" class="sticky gov-agency-wide"></div>
+        <div id="output" class="sticky gov-my-agency-wide"></div>
 
 
         <script type="text/javascript">
