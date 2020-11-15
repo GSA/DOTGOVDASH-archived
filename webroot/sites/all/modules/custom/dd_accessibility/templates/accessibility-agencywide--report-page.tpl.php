@@ -69,8 +69,7 @@
 
 <div class="tableHeader">
   <div class="downloadReport">
-    <a href="/accessibility/agencywide/csvapi/" target="_blank">RAW Data Download in CSV</a> &nbsp;|
-    <a href="/accessibility/agencywide/xlsapi/" target="_blank">RAW Data Download in XLS</a>
+    <p>Download Accessibility Reports: <a href="/accessibility/agencywide/csvapi" target="_blank"> csv </a> | <a href="/accessibility/agencywide/xlsapi" target="_blank">xls</a></p>
   </div>
 
   <div class="filterSection">
