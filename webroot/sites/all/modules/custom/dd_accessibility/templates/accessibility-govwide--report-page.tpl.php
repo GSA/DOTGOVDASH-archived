@@ -34,11 +34,6 @@
             text-decoration: underline;
         }
 
-        .tableScroll .scroll {
-            width: 30px;
-            height: 40px;
-        }
-
         .tableScroll button {
             border: none;
             background: transparent;
@@ -79,7 +74,7 @@
       </select>
   </div>
 </div>
-        <div id="output" class="sticky"></div>
+        <div id="output" class="sticky gov-agency-wide"></div>
 
 
         <script type="text/javascript">
