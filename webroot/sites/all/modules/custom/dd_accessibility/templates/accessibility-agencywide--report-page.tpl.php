@@ -62,22 +62,34 @@
 </head>
 <body>
 
-    <div class="tableScroll">
-        <button id="left"> <img class="scroll" src="/sites/all/modules/custom/dd_accessibility/images/left-arrow.svg" /> </button>
-        <button id="right"><img class="scroll" src="/sites/all/modules/custom/dd_accessibility/images/right-arrow.svg" /> </button>
-    </div>
-
 <div class="tableHeader">
-  <div class="downloadReport">
-    <p>Download Accessibility Reports: <a href="/accessibility/agencywide/csvapi" target="_blank"> csv </a> | <a href="/accessibility/agencywide/xlsapi" target="_blank">xls</a></p>
-  </div>
-
+<div class="filterSearch">
   <div class="filterSection">
-      <span class="filterLabel">Agency</span>
-      <select class="filterList" id="searchItems">
+      <span class="filterLabel">Agency:</span>
+      <select class="filterList" id="filterItems">
       </select>
   </div>
+  <div class="text">
+      <p>Or</p>
+  </div>
+  <div class="searchSection">
+      <span class="searchBox searchLabel">Search:</span>
+      <input type="search" class="searchInput searchInputAlter" id="searchInput">
+  </div>
+  <div class="reset">
+    <button type="submit" id="resetSearch2" value="Reset" class="btn btn-default resetSearch">Reset</button>
+  </div>
 </div>
+<div class="downloadReport">
+    <p>Download Accessibility Reports: <a href="/accessibility/agencywide/csvapi" target="_blank"> csv </a> | <a href="/accessibility/agencywide/xlsapi" target="_blank">xls</a></p>
+</div>
+</div>
+<div class="tableScroll">
+    <button id="left"> <img class="scroll" src="/sites/all/modules/custom/dd_accessibility/images/left-arrow.svg" /> </button>
+    <button id="right"><img class="scroll" src="/sites/all/modules/custom/dd_accessibility/images/right-arrow.svg" /> </button>
+</div>
+
+
         <div id="output" class="sticky agency-wide"></div>
 
 
@@ -114,6 +126,7 @@
                             extension.initFixedHeaders($('table.pvtTable'));
                             getFilterList();
                             colTotalLabel();
+                            controlSearch();
                         }
                     });
 
@@ -139,6 +152,20 @@
                 // Change col total Label
                 function colTotalLabel() {
                   $( "th.pvtTotalLabel.colTotal .pvtFixedHeader" ).text( "Total Accessibility Issues" );
+                }
+
+                // toggle search and Filter actions
+                function controlSearch() {
+                  $( "#filterItems" ).change(function() {
+                    $( "#searchInput" ).prop("disabled", true)
+                    $("#searchInput").css("cursor", "not-allowed");
+                    $("#searchInput").css("opacity", "0.5");
+                  });
+
+                  $( "#searchInput" ).change(function() {
+                    $( "#filterItems" ).prop("disabled", true)
+                    $( "#filterItems" ).css("cursor", "not-allowed");
+                  });
                 }
 
                 // Scroll Table

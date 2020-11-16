@@ -1171,32 +1171,20 @@
 
         //add search elements
         searchSection = createElement("div", "pvtTableSearchSection");
-        // searchSection.appendChild(createElement("span", "", "Value Search "));
-        // searchInput = createElement("input", "searchInput", globalSearchValue, {
-        //   type: "search"
-        // });
-        // searchInput.value = globalSearchValue;
-        // searchInput.onchange = function (event) {
-        //   globalSearchValue = this.value;
-        //   globalSearchKey = "";
-        //   refresh();
-        // }
-        // searchSection.appendChild(searchInput);
-
-        searchSection.appendChild(createElement("span", "searchLabel", "Search:"));
-        searchInput1 = createElement("input", "searchInput", globalSearchKey, {
-          type: "search"
-        });
-        searchInput1.value = globalSearchKey;
+        searchInput1 = document.getElementById("searchInput");
         searchInput1.onchange = function (event) {
           globalSearchKey = this.value.toLowerCase();
           globalSearchValue = "";
           refresh();
         }
-        searchSection.appendChild(searchInput1);
 
-        searchInput2 = document.getElementById("searchItems");
+        $(".resetSearch").click(function(){
+          location.reload();
+        });
+
+        searchInput2 = document.getElementById("filterItems");
         searchInput2.onchange = function (event) {
+          console.log(this.value);
           globalFilterKey = this.value.toLowerCase();
           globalFilterValue = "";
           refresh();
