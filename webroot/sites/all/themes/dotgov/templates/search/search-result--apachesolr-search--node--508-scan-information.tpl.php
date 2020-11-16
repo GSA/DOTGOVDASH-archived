@@ -117,6 +117,6 @@ $access_results = dotgov_commmon_get_accessTerms($result[ 'node' ]->entity_id );
   </li>
 <?php
 foreach ( $access_results as $tkey => $tval ) {
-  print "<div class='taxotooltip'><li> <span class=\"label\" data-format=\"$tval\" style=\"margin-bottom:5px;background-color: #00A000\">$tval</span><span class=\"tooltiptext\">$tval</span></li></div>";
+  print "<div class='taxotooltip'><li> <span class=\"label\" data-format=\"$tval\" style=\"margin-bottom:5px;background-color: #048004\">$tval</span><span class=\"tooltiptext\">$tval</span></li></div>";
 }
 ?>
