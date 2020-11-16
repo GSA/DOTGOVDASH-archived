@@ -20,7 +20,6 @@
     <!-- optional: mobile support with jqueryui-touch-punch -->
     <script type="text/javascript" src="/sites/all/modules/custom/dd_accessibility/js/jquery.ui.touch-punch.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         table.pvtTable tbody tr th.pvtRowLabel.rowexpanded {
             cursor: auto !important;
@@ -70,8 +69,7 @@
 
 <div class="tableHeader">
   <div class="downloadReport">
-    <a href="/accessibility/govwide/csvapi/" target="_blank">RAW Data Download in CSV</a> &nbsp;|
-    <a href="/accessibility/govwide/jsonapi/" target="_blank">RAW Data Download in JSON</a>
+    <p>Download Accessibility Reports: <a href="/accessibility/agencywide/csvapi" target="_blank"> csv </a> | <a href="/accessibility/agencywide/xlsapi" target="_blank">xls</a></p>
   </div>
 
   <div class="filterSection">
@@ -80,7 +78,7 @@
       </select>
   </div>
 </div>
-        <div id="output" class="sticky agency-acess"></div>
+        <div id="output" class="sticky agency-wide"></div>
 
 
         <script type="text/javascript">

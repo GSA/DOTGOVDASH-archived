@@ -10,14 +10,17 @@ table.pvtTable .pvtAxisLabel {
 
 table.pvtTable .pvtAxisLabel.expanded {
     white-space: nowrap;
-    cursor: pointer !important;
+    /* cursor: pointer !important; */
 }
 
 table.pvtTable .pvtAxisLabel.collapsed {
     white-space: nowrap;
-    cursor: pointer !important;
+    /* cursor: pointer !important; */
 }
 
+table.pvtTable thead tr:last-child th:first-child:hover {
+    cursor: pointer !important;
+}
 /* RowLabel */
 
 table.pvtTable tbody tr th.pvtRowLabel {
@@ -32,7 +35,7 @@ table.pvtTable tbody tr th.pvtRowLabel.rowexpanded {
 }
 
 table.pvtTable tbody tr th.pvtRowLabel.rowcollapsed {
-    cursor: zoom-in !important;
+    cursor: pointer !important;
 }
 
 /* RowLabelFiller */
@@ -58,13 +61,13 @@ table.pvtTable thead tr th.pvtColLabel {
     white-space: nowrap;
 }
 
-table.pvtTable thead tr th.pvtColLabel.colexpanded {
+/* table.pvtTable thead tr th.pvtColLabel.colexpanded {
     cursor: zoom-out !important;
 }
 
 table.pvtTable thead tr th.pvtColLabel.colcollapsed {
     cursor: zoom-in !important;
-}
+} */
 
 /* ColLabelFiller */
 
@@ -129,14 +132,14 @@ table.pvtTable tr .colhide {
 
 .pvtTableWrapper {
     overflow-x: auto;
-    max-width: 96vw;
+    max-width: 95vw;
     overflow-y: auto;
     max-height: 40vw;
     margin-left: -5px;
 }
 
 .pvtUi {
-    width: 100%;
+    width: auto;
 }
 
 .pvtTableSearchSection {
@@ -296,7 +299,7 @@ div.pvtFixedHeadersOutdated>table.pvtFixedHeader>tbody>tr>td>div.pvtFixedHeader,
 }
 
 .pvtRendererArea{
-    width: 80% !important;
+    width: auto;
 }
 
 .alert-no-data{
@@ -444,7 +447,7 @@ thead tr:first-child th.pvtColLabel .pvtFixedHeader {
   overflow-wrap: break-word;
   display: flex;
   align-items: center;
-  justify-content: left;
+  justify-content: center;
 }
 
 thead tr:first-child th.pvtAxisLabel .pvtFixedHeader, thead tr:nth-child(2) th.pvtAxisLabel .pvtFixedHeader {
@@ -457,20 +460,31 @@ thead tr:nth-child(2) th.pvtColLabel .pvtFixedHeader {
   white-space: break-spaces;
   word-break: break-word;
   width: 120px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#right {
-  position: absolute;
-  bottom: 30%;
-  right: 2%;
-  z-index: 99;
-  opacity: .5;
+.tableScroll .scroll {
+    width: 30px;
+    height: 40px;
 }
 
-#left {
-  position: absolute;
-  bottom: 30%;
-  left: 61%;
+.tableScroll {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    right: 50%;
+    top: 200px;
+}
+
+.tableScroll button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+#right, #left  {
   z-index: 99;
   opacity: .5;
 }
@@ -487,6 +501,9 @@ thead tr:nth-child(2) th.pvtColLabel .pvtFixedHeader {
   float: right;
 }
 
+.downloadReport p {
+    font-size: 16px;
+}
 
 .pvtTable tbody tr td:last-child, .pvtTable thead tr:first-child th:last-child {
   display: none;
@@ -505,13 +522,41 @@ thead tr:nth-child(2) th.pvtColLabel .pvtFixedHeader {
 }
 
 td.pvtVal.pvtRowSubtotal.rowshow.colexpanded.colshow.rowexpanded {
-    background: #aea9a955;
+    background: linear-gradient(#cdd2d5, #dfe4e7, #c7cacd) !important;
 }
 
 table.pvtTable tbody tr th, table.pvtTable thead tr th {
   background-color: #f9f9f9;
 }
 
-th.pvtRowLabel.rowshow.rowexpanded[style*="left: 0px;"] .pvtFixedHeader {
-    background: #f5f5f5;
+
+table.pvtTable tbody tr th.rowexpanded, table.pvtTable thead tr th.rowexpanded {
+  background-color: #fff;
+}
+
+th.pvtRowLabel.rowshow.rowexpanded.rowcol0 .pvtFixedHeader {
+  background: linear-gradient(#cdd2d5, #dfe4e7, #c7cacd) !important;
+}
+
+.gov-my-agency-wide thead tr:first-child th.pvtColLabel .pvtFixedHeader {
+  word-break: break-word;
+}
+
+.gov-my-agency-wide th.pvtRowLabel.rowcol2 .pvtFixedHeader{
+  height: auto;
+  width: 275px !important;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: break-spaces;
+}
+
+.agency-wide th.pvtRowLabel.rowcol2 .pvtFixedHeader{
+  height: auto;
+  width: 275px !important;
+}
+
+.agency-wide thead tr:nth-child(2) th.pvtAxisLabel .pvtFixedHeader {
+    display: flex;
+    align-items: center;
+    justify-content: left;
 }
