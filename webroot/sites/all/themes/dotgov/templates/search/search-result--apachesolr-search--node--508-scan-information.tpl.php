@@ -64,7 +64,7 @@
  * @ingroup themeable
  */
 
-$access_results = dotgov_commmon_get_accessTerms($result[ 'node' ]->entity_id );
+$access_results = dotgov_commmon_get_accessTerms(6310);
 print_r ($access_results);
 
 ?>
