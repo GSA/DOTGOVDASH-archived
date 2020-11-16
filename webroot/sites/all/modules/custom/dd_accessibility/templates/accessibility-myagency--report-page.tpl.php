@@ -93,7 +93,7 @@
 
 
         <script type="text/javascript">
-            var jsonUrl = "/sites/default/files/accessibility_api/jsonapi.json";
+            var jsonUrl = "/accessibility/myagency/jsonapi";
             $(function () {
 
                 var dataClass = $.pivotUtilities.CustomPivotData;
@@ -145,14 +145,14 @@
                         //getFilterList();
 
                     }, 500);
-                    setTimeout(function() {
-                      <?php
-                      global $user;
-                      $user_data = user_load($user->uid);
-                      $agencyid = $user_data->field_web_agency_id['und'][0]['nid'];
-                      ?>
-                      $("#filterItems").val("<?php echo dd_accessibility_agency_name($agencyid);?>").change();
-                    }, 6000);
+                    // setTimeout(function() {
+                    //   <?php
+                    //   global $user;
+                    //   $user_data = user_load($user->uid);
+                    //   $agencyid = $user_data->field_web_agency_id['und'][0]['nid'];
+                    //   ?>
+                    //   $("#filterItems").val("<?php echo dd_accessibility_agency_name($agencyid);?>").change();
+                    // }, 6000);
                 });
 
                 // Change col total Label
@@ -224,13 +224,13 @@
                                 var fResult = result.last();
                                 var option = '';
                                 option += '<option value="' + fResult + '">' + fResult + '</option>';
-                                $('#filterItems').append(option);
+                                // $('#filterItems').append(option);
                             }
                         }
                     });
 
                     if(flagVal === 0)  {
-                        $('#filterItems').prepend('<option value="">-Any-</option>');
+                        // $('#filterItems').prepend('<option value="">-Any-</option>');
                         flagVal ++;
                     }
                 }
