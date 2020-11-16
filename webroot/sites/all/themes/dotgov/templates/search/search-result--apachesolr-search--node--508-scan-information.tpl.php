@@ -65,9 +65,41 @@
  */
 
 $access_results = dotgov_commmon_get_accessTerms($result[ 'node' ]->entity_id );
-print_r ($access_results);
-
 ?>
+  <style>
+    .taxotooltip {
+      position: relative;
+      display: inline-block;
+    }
+
+    .taxotooltip .tooltiptext {
+      visibility: hidden;
+      width: 120px;
+      background-color: black;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+      position: absolute;
+      z-index: 1;
+      bottom: 150%;
+      left: 50%;
+      margin-left: -60px;
+    }
+    .taxotooltip .tooltiptext::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: black transparent transparent transparent;
+    }
+    .taxotooltip:hover .tooltiptext {
+      visibility: visible;
+    }
+  </style>
 <li class="<?php print $classes; ?>"<?php print $attributes; ?>>
   <?php print render($title_prefix); ?>
   <h3 class="title"<?php print $title_attributes; ?>>
@@ -83,3 +115,8 @@ print_r ($access_results);
     <?php endif; ?>
   </div>
 </li>
+<?php
+foreach ( $access_results as $tkey => $tval ) {
+  print "<div class='taxotooltip'><li> <span class=\"label\" data-format=\"$tval\" style=\"margin-bottom:5px;background-color: #00A000\">$tval</span><span class=\"tooltiptext\">$tval</span></li></div>";
+}
+?>
