@@ -61,7 +61,7 @@ function startScan(){
     file_prepare_directory($pulsedir, FILE_CREATE_DIRECTORY);
     $httpfiledata = file_get_contents('/tmp/pulsehttp.csv', true);
     $dapfiledata = file_get_contents('/tmp/pulsedap.csv', true);
-    runUswdsScan();
+    # runUswdsScan();
     $uswdsfiledata = file_get_contents("/tmp/results/uswds2.csv");
     $uswdsfile =  file_save_data($uswdsfiledata,file_default_scheme().'://uswdsscan/'.uswds_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
 
@@ -77,7 +77,7 @@ function startScan(){
 
     //Run Accessbility Scan through Pa11y
     writeToLogs("Collecting Accessbility Data through Pa11y using domain scan tool",$logFile);
-    runAccessibilityNewCustomScan();
+    # runAccessibilityNewCustomScan();
     $pa11yfiledata = file_get_contents("/tmp/results/a11y.csv");
     $pa11yfile =  file_save_data($pa11yfiledata,file_default_scheme().'://accessibilityscan/'.pa11y_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
 
@@ -4027,7 +4027,7 @@ function updateAccessibilityScan_custom($website,$scanid)
                     } else {
                         $term1 = new STDClass();
                         $term1->name = $tag1;
-                        $term1->vid = 7;
+                        $term1->vid = 6;
                         if (!empty($term1->name)) {
                             taxonomy_term_save($term1);
 //                        $term = taxonomy_get_term_by_name($tag);
