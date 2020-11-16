@@ -4027,7 +4027,7 @@ function updateAccessibilityScan_custom($website,$scanid)
                     } else {
                         $term1 = new STDClass();
                         $term1->name = $tag1;
-                        $term1->vid = 6;
+                        $term1->vid = 7;
                         if (!empty($term1->name)) {
                             taxonomy_term_save($term1);
 //                        $term = taxonomy_get_term_by_name($tag);
