@@ -232,13 +232,13 @@
                                 var fResult = result.last();
                                 var option = '';
                                 option += '<option value="' + fResult + '">' + fResult + '</option>';
-                                $('#searchItems').append(option);
+                                $('#filterItems').append(option);
                             }
                         }
                     });
 
                     if(flagVal === 0)  {
-                        $('#searchItems').prepend('<option value="">-Any-</option>');
+                        $('#filterItems').prepend('<option value="">-Any-</option>');
                         flagVal ++;
                     }
                 }
