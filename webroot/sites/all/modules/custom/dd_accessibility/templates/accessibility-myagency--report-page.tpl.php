@@ -64,12 +64,12 @@
 
 <div class="tableHeader">
 <div class="filterSearch">
-  <div class="filterSection">
+  <div class="filterSection d-none">
       <span class="filterLabel">Agency:</span>
       <select class="filterList" id="filterItems">
       </select>
   </div>
-  <div class="text">
+  <div class="text d-none">
       <p>Or</p>
   </div>
   <div class="searchSection">
@@ -152,7 +152,7 @@
                       $user_data = user_load($user->uid);
                       $agencyid = $user_data->field_web_agency_id['und'][0]['nid'];
                       ?>
-                      $("#searchItems").val("<?php echo dd_accessibility_agency_name($agencyid);?>").change();
+                      $("#filterItems").val("<?php echo dd_accessibility_agency_name($agencyid);?>").change();
                     }, 6000);
                 });
 
