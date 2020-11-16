@@ -72,7 +72,7 @@
   <div class="text d-none">
       <p>Or</p>
   </div>
-  <div class="searchSection">
+  <div class="">
       <span class="searchBox searchLabel">Search:</span>
       <input type="search" class="searchInput searchInputAlter" id="searchInput">
   </div>
