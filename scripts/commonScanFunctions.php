@@ -106,9 +106,9 @@ function runUswdsScan(){
  */
 function runAccessibilityNewCustomScan(){
     //run pa11y Scan
-     exec("timeout 15 ../tools/domain-scan/scan /tmp/current-federal.csv --scan=a11y --workers=50 --output=/tmp/");
+    // exec("timeout 15 ../tools/domain-scan/scan /tmp/current-federal.csv --scan=a11y --workers=50 --output=/tmp/");
     db_query("truncate table custom_accessibility_issues");
-    db_query("LOAD DATA LOCAL INFILE '/tmp/results/a11y.csv' INTO TABLE custom_accessibility_issues FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' (website,base_domain, domain_redirected_to,error_typecode,error_code,error_message,error_context,error_selector);");
+    db_query("LOAD DATA INFILE '/Users/ayaskantsahu/a11y.csv' INTO TABLE custom_accessibility_issues FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' (website,base_domain, domain_redirected_to,error_typecode,error_code,error_message,error_context,error_selector);");
 
     db_query("delete from custom_accessibility_issues where error_code not in ('WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.EmptyNoId','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.NoContent','aria-allowed-role','aria-hidden-focus','aria-input-field-name','aria-toggle-field-name','button-name','color-contrast','WCAG2AA.Principle1.Guideline1_4.1_4_3.G145','WCAG2AA.Principle1.Guideline1_4.1_4_3.G18','document-title','duplicate-id','WCAG2AA.Principle4.Guideline4_1.4_1_1.F77','empty-heading','WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.EmptyTitle','form-field-multiple-labels','frame-title','frame-title-unique','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired','WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2','html-has-lang','html-lang-valid','WCAG2AA.Principle2.Guideline2_4.2_4_1.H64.1','image-alt','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.IncorrectAttr','input-button-name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputButton.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputCheckbox.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputFile.Name','input-image-alt','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputImage.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputPassword.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputRadio.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name','label','WCAG2AA.Principle1.Guideline1_3.1_3_1.F68','WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable','link-name','list','listitem','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Li.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeadersAttrs','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeaderIds','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43,H63','WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.NoTitleEl','role-img-alt','scope-attr-valid','scrollable-region-focusable','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Select.Name','td-headers-attr','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Textarea.Name','WCAG2AA.Principle3.Guideline3_1.3_1_2.H58.1.Lang','valid-lan_g')");
     accessibility_new_updateTable();
@@ -3958,7 +3958,91 @@ function updateAccessibilityScan_custom($website,$scanid)
 
             //      $node->field_accessibility_raw_scan['und'][0]['value'] = $errorlist;
 
+            $access_errors = db_query("select distinct error_cat from custom_accessibility_issues where website_id=:website", array('website' => $siteId));
+            foreach ($access_errors as $error) {
+                $ict_terms[] = $error->error_cat;
+            }
 
+
+            //Save Tags to parent website
+            if(!empty($ict_terms)) {
+                if(!empty($node->field_ict_group)){
+                    foreach($node->field_ict_group['und'] as $ctk  =>$ctval){
+                        $currentTerms[] = $ctval['tid'];
+                    }
+                    $crnTermCnt = count($currentTerms);
+                }
+
+                $i = 1;
+                foreach (array_unique($ict_terms) as $key => $tag) {
+                    if ($term = taxonomy_get_term_by_name($tag)) {
+                        $terms_array = array_keys($term);
+                        //Check if the term already assigned to the node
+                        if(!in_array($terms_array['0'],$currentTerms)){
+                            $node->field_ict_group['und'][$crnTermCnt+$i]['tid'] = $terms_array['0'];
+                        }
+                    } else {
+                        $term = new STDClass();
+                        $term->name = $tag;
+                        $term->vid = 6;
+                        if (!empty($term->name)) {
+                            taxonomy_term_save($term);
+//                        $term = taxonomy_get_term_by_name($tag);
+//                        foreach($term as $term_id){
+//                            $node->product_tags[LANGUAGE_NONE][$key]['tid'] = $term_id->tid;
+//                        }
+                            $node->field_ict_group['und'][$key]['tid'] = $term->tid;
+                        }
+                    }
+                    $i += 1;
+                }
+
+            }else{
+                $node->field_ict_group['und'] = NULL;
+            }
+
+
+            $code_errors = db_query("select distinct error_code from custom_accessibility_issues where website_id=:website", array('website' => $siteId));
+            foreach ($code_errors as $codeerror) {
+                $error_terms[] = $codeerror->error_code;
+            }
+
+            //Save Tags to parent website
+            if(!empty($error_terms)) {
+                if(!empty($node->field_error_code)){
+                    foreach($node->field_error_code['und'] as $ctk1  =>$ctval1){
+                        $currentTerms1[] = $ctval1['tid'];
+                    }
+                    $crnTermCnt1 = count($currentTerms1);
+                }
+
+                $j = 1;
+                foreach (array_unique($error_terms) as $key1 => $tag1) {
+                    if ($term1 = taxonomy_get_term_by_name($tag1)) {
+                        $terms_array1 = array_keys($term1);
+                        //Check if the term already assigned to the node
+                        if(!in_array($terms_array1['0'],$currentTerms1)){
+                            $node->field_error_code['und'][$crnTermCnt1+$j]['tid'] = $terms_array1['0'];
+                        }
+                    } else {
+                        $term1 = new STDClass();
+                        $term1->name = $tag1;
+                        $term1->vid = 6;
+                        if (!empty($term1->name)) {
+                            taxonomy_term_save($term1);
+//                        $term = taxonomy_get_term_by_name($tag);
+//                        foreach($term as $term_id){
+//                            $node->product_tags[LANGUAGE_NONE][$key]['tid'] = $term_id->tid;
+//                        }
+                            $node->field_error_code['und'][$key1]['tid'] = $term1->tid;
+                        }
+                    }
+                    $j += 1;
+                }
+
+            }else{
+                $node->field_error_code['und'] = NULL;
+            }
 
             node_object_prepare($node);
             if ($node = node_submit($node)) {
