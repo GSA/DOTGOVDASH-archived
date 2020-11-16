@@ -76,7 +76,7 @@
       <span class="searchBox searchLabel">Search:</span>
       <input type="search" class="searchInput searchInputAlter" id="searchInput">
   </div>
-  <div class="reset">
+  <div class="reset d-none">
     <button type="submit" id="resetSearch2" value="Reset" class="btn btn-default resetSearch">Reset</button>
   </div>
 </div>
@@ -125,7 +125,6 @@
                             extension.initFixedHeaders($('table.pvtTable'));
                             getFilterList();
                             colTotalLabel();
-                            controlSearch();
                         }
                     });
 
@@ -159,20 +158,6 @@
                 // Change col total Label
                 function colTotalLabel() {
                   $( "th.pvtTotalLabel.colTotal .pvtFixedHeader" ).text( "Total Accessibility Issues" );
-                }
-
-                // toggle search and Filter actions
-                function controlSearch() {
-                  $( "#filterItems" ).change(function() {
-                    $( "#searchInput" ).prop("disabled", true)
-                    $("#searchInput").css("cursor", "not-allowed");
-                    $("#searchInput").css("opacity", "0.5");
-                  });
-
-                  $( "#searchInput" ).change(function() {
-                    $( "#filterItems" ).prop("disabled", true)
-                    $( "#filterItems" ).css("cursor", "not-allowed");
-                  });
                 }
 
                 // Scroll Table
