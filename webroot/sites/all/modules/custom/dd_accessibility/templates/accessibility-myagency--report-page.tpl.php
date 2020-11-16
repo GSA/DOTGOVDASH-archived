@@ -69,8 +69,7 @@
 
 <div class="tableHeader">
   <div class="downloadReport">
-    <a href="/accessibility/myagency/csvapi" target="_blank">RAW Data Download in CSV</a> &nbsp;|
-    <a href="/accessibility/myagency/xlsapi" target="_blank">RAW Data Download in XLS</a>
+    <p>Download Accessibility Reports: <a href="/accessibility/myagency/csvapi" target="_blank"> csv </a> | <a href="/accessibility/myagency/xlsapi" target="_blank">xls</a></p>
   </div>
 
   <div class="filterSection" style="display: none;">
@@ -79,7 +78,7 @@
       </select>
   </div>
 </div>
-        <div id="output" class="sticky"></div>
+        <div id="output" class="sticky gov-my-agency-wide"></div>
 
 
         <script type="text/javascript">

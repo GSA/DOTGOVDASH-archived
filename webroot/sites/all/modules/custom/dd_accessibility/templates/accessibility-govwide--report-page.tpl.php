@@ -34,11 +34,6 @@
             text-decoration: underline;
         }
 
-        .tableScroll .scroll {
-            width: 30px;
-            height: 40px;
-        }
-
         .tableScroll button {
             border: none;
             background: transparent;
@@ -69,8 +64,7 @@
 
 <div class="tableHeader">
   <div class="downloadReport">
-    <a href="/accessibility/govwide/csvapi" target="_blank">RAW Data Download in CSV</a> &nbsp;|
-    <a href="/accessibility/govwide/xlsapi" target="_blank">RAW Data Download in XLS</a>
+    <p>Download Accessibility Reports: <a href="/accessibility/govwide/csvapi" target="_blank"> csv </a> | <a href="/accessibility/govwide/xlsapi" target="_blank">xls</a></p>
   </div>
 
   <div class="filterSection">
@@ -79,7 +73,7 @@
       </select>
   </div>
 </div>
-        <div id="output" class="sticky"></div>
+        <div id="output" class="sticky gov-my-agency-wide"></div>
 
 
         <script type="text/javascript">
