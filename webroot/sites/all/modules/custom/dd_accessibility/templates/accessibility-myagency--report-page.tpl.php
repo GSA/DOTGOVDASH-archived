@@ -6,7 +6,6 @@
     <meta charset="utf-8" />
 
     <!-- external libs from cdnjs -->
-    <script type="text/javascript" src="/sites/all/modules/custom/dd_accessibility/js/jquery.min.js"></script>
     <script type="text/javascript" src="/sites/all/modules/custom/dd_accessibility/js/jquery-ui.min.js"></script>
 
     <!-- PivotTable.js libs from ../dist -->
@@ -85,8 +84,8 @@
 </div>
 </div>
 <div class="tableScroll">
-    <button id="left"> <img class="scroll" src="/sites/all/modules/custom/dd_accessibility/images/left-arrow.svg" /> </button>
-    <button id="right"><img class="scroll" src="/sites/all/modules/custom/dd_accessibility/images/right-arrow.svg" /> </button>
+    <button id="left"> <img class="scroll" title="scroll-left" src="/sites/all/modules/custom/dd_accessibility/images/left-arrow.svg" /> </button>
+    <button id="right"><img class="scroll" title="scroll-right" src="/sites/all/modules/custom/dd_accessibility/images/right-arrow.svg" /> </button>
 </div>
 
         <div id="output" class="sticky gov-my-agency-wide"></div>
@@ -94,19 +93,19 @@
 
         <script type="text/javascript">
             var jsonUrl = "/accessibility/myagency/jsonapi";
-            $(function () {
+            jQuery(function () {
 
-                var dataClass = $.pivotUtilities.CustomPivotData;
-                var renderers = $.pivotUtilities.custom_renderers;
+                var dataClass = jQuery.pivotUtilities.CustomPivotData;
+                var renderers = jQuery.pivotUtilities.custom_renderers;
                 var extension = new PivotTableExtensions;
                 var tabledata;
                 var flagVal = 0;
                 scrollTable();
 
-                $.getJSON(jsonUrl, function (mps) {
+                jQuery.getJSON(jsonUrl, function (mps) {
                     tabledata = mps;
 
-                    $("#output").pivotUI(mps, {
+                    jQuery("#output").pivotUI(mps, {
                         dataClass: dataClass,
                         cols: ["Website", "Agency"],
                         rows: ["WCAG Success Criteria", "ICT Group", "Test Rule"],
@@ -122,23 +121,23 @@
 
                         },
                         onRefresh: function (pivotUIOptions, config) {
-                            extension.initFixedHeaders($('table.pvtTable'));
+                            extension.initFixedHeaders(jQuery('table.pvtTable'));
                             getFilterList();
                             colTotalLabel();
                         }
                     });
 
                     setTimeout(function () {
-                        let totalRowsLen = $(".pvtTable tbody tr").length;
+                        let totalRowsLen = jQuery(".pvtTable tbody tr").length;
                         let x = 0;
                         for(let i =0; i< totalRowsLen; i++) {
-                            if($(".pvtTable tbody tr.row"+i+"").length === 0) {
+                            if(jQuery(".pvtTable tbody tr.row"+i+"").length === 0) {
                                 break;
                             } else {
-                                let elmntLength = $(".pvtTable tbody tr.row"+i+"").length;
+                                let elmntLength = jQuery(".pvtTable tbody tr.row"+i+"").length;
                                 x = x + elmntLength;
-                                var elmnt = $(".pvtTable tbody tr").eq(x-1).find("th div").html();
-                                $(".pvtTable tbody tr").eq(x-1).find("th div").html("<a target='_blank' class='link' href='#'>" + elmnt + "</a>");
+                                var elmnt = jQuery(".pvtTable tbody tr").eq(x-1).find("th div").html();
+                                jQuery(".pvtTable tbody tr").eq(x-1).find("th div").html("<a target='_blank' class='link' href='#'>" + elmnt + "</a>");
                             }
                         }
 
@@ -147,31 +146,31 @@
                     }, 500);
                     // setTimeout(function() {
                     //   <?php
-                    //   global $user;
-                    //   $user_data = user_load($user->uid);
-                    //   $agencyid = $user_data->field_web_agency_id['und'][0]['nid'];
+                    //   global jQueryuser;
+                    //   jQueryuser_data = user_load(jQueryuser->uid);
+                    //   jQueryagencyid = jQueryuser_data->field_web_agency_id['und'][0]['nid'];
                     //   ?>
-                    //   $("#filterItems").val("<?php echo dd_accessibility_agency_name($agencyid);?>").change();
+                    //   jQuery("#filterItems").val("<?php echo dd_accessibility_agency_name(jQueryagencyid);?>").change();
                     // }, 6000);
                 });
 
                 // Change col total Label
                 function colTotalLabel() {
-                  $( "th.pvtTotalLabel.colTotal .pvtFixedHeader" ).text( "Total Accessibility Issues" );
+                  jQuery( "th.pvtTotalLabel.colTotal .pvtFixedHeader" ).text( "Total Accessibility Issues" );
                 }
 
                 // Scroll Table
                 function scrollTable() {
                     // scroll Right
-                    $("#right").click(function () {
-                        $('.pvtTableWrapper').animate({
+                    jQuery("#right").click(function () {
+                        jQuery('.pvtTableWrapper').animate({
                             scrollLeft: "+=400px"
                         }, "slow");
                     });
 
                     // scroll Left
-                    $("#left").click(function () {
-                        $('.pvtTableWrapper').animate({
+                    jQuery("#left").click(function () {
+                        jQuery('.pvtTableWrapper').animate({
                             scrollLeft: "-=400px"
                         }, "slow");
                     });
@@ -180,33 +179,33 @@
 
                 // to do fontResize
                 function fontResize() {
-                    $("#f-increase").click(function () {
-                        var fontSize = parseInt($(this).css("font-size"));
+                    jQuery("#f-increase").click(function () {
+                        var fontSize = parseInt(jQuery(this).css("font-size"));
                         fontSize = fontSize + 2 + "px";
-                        $('table.pvtTable tbody tr th, table.pvtTable thead tr th, .pvtVal').css({ 'font-size': fontSize });
+                        jQuery('table.pvtTable tbody tr th, table.pvtTable thead tr th, .pvtVal').css({ 'font-size': fontSize });
 
                     });
 
 
-                    $("#f-reset").click(function () {
-                        var fontSize = parseInt($(this).css("font-size"));
+                    jQuery("#f-reset").click(function () {
+                        var fontSize = parseInt(jQuery(this).css("font-size"));
                         fontSize = "12px";
-                        $('table.pvtTable tbody tr th, table.pvtTable thead tr th, .pvtVal').css({ 'font-size': fontSize });
+                        jQuery('table.pvtTable tbody tr th, table.pvtTable thead tr th, .pvtVal').css({ 'font-size': fontSize });
 
                     });
                 }
 
                 // To do
                 function loadAlert() {
-                    $(".pvtHorizList > .axis_1.ui-sortable-handle").click(function () {
-                        $(".pvtUi tbody tr:nth-child(2) td:first-child, .pvtUi tbody tr:nth-child(2) td:first-child div:nth-child(2) .pvtCheckContainer").show();
-                        $(".pvtUi tbody tr:nth-child(2) td:first-child div:nth-child(2) .pvtCheckContainer").show();
+                    jQuery(".pvtHorizList > .axis_1.ui-sortable-handle").click(function () {
+                        jQuery(".pvtUi tbody tr:nth-child(2) td:first-child, .pvtUi tbody tr:nth-child(2) td:first-child div:nth-child(2) .pvtCheckContainer").show();
+                        jQuery(".pvtUi tbody tr:nth-child(2) td:first-child div:nth-child(2) .pvtCheckContainer").show();
                     });
                 }
 
                 // Filter by Agency or Website
                 function getFilterList() {
-                    $.getJSON(jsonUrl, function (mps) {
+                    jQuery.getJSON(jsonUrl, function (mps) {
                         tableData = mps;
                         var lookup = {};
                         var items = tableData;
@@ -224,13 +223,13 @@
                                 var fResult = result.last();
                                 var option = '';
                                 option += '<option value="' + fResult + '">' + fResult + '</option>';
-                                // $('#filterItems').append(option);
+                                // jQuery('#filterItems').append(option);
                             }
                         }
                     });
 
                     if(flagVal === 0)  {
-                        // $('#filterItems').prepend('<option value="">-Any-</option>');
+                        // jQuery('#filterItems').prepend('<option value="">-Any-</option>');
                         flagVal ++;
                     }
                 }
