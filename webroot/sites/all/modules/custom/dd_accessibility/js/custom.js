@@ -1672,7 +1672,7 @@
 
 
       setTimeout(function(){
-        $("th[root-node='1']:first").click();
+        jQuery("th[root-node='1']:first").click();
       }, 1);
   };
 
