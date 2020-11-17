@@ -56,7 +56,7 @@ foreach($listWebsites as $key=>$website){
 
 //Get the latest reports from pulse accessibility to local.
     writeToLogs("\nStart Accessibility Scan for ".$website['domain'],$logFile);
-   // updateAccessibilityScanCustom($website['domain'],$scanId);
+    // updateAccessibilityScanCustom($website['domain'],$scanId);
     updateAccessibilityScan_custom($website['domain'],$scanId);
 
 }
@@ -64,6 +64,7 @@ cleanupNodesAfterScan();
 //After scan is done. Run the taxonomy processor. This will parse all taxonomy data and create/edit taxonomies and tag appropriate content.
 archiveGovwideTrendData();
 archiveAgencywideTrendData();
+dd_accessibility_govwide_jsonapi();
 access_archiveGovwideTrendData();
 access_archiveAgencyWideTrendData();
 
