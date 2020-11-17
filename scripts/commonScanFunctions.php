@@ -61,7 +61,7 @@ function startScan(){
     file_prepare_directory($pulsedir, FILE_CREATE_DIRECTORY);
     $httpfiledata = file_get_contents('/tmp/pulsehttp.csv', true);
     $dapfiledata = file_get_contents('/tmp/pulsedap.csv', true);
-    # runUswdsScan();
+    runUswdsScan();
     $uswdsfiledata = file_get_contents("/tmp/results/uswds2.csv");
     $uswdsfile =  file_save_data($uswdsfiledata,file_default_scheme().'://uswdsscan/'.uswds_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
 
@@ -77,7 +77,7 @@ function startScan(){
 
     //Run Accessbility Scan through Pa11y
     writeToLogs("Collecting Accessbility Data through Pa11y using domain scan tool",$logFile);
-    # runAccessibilityNewCustomScan();
+    runAccessibilityNewCustomScan();
     $pa11yfiledata = file_get_contents("/tmp/results/a11y.csv");
     $pa11yfile =  file_save_data($pa11yfiledata,file_default_scheme().'://accessibilityscan/'.pa11y_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
 
@@ -106,7 +106,7 @@ function runUswdsScan(){
  */
 function runAccessibilityNewCustomScan(){
     //run pa11y Scan
-    // exec("timeout 15 ../tools/domain-scan/scan /tmp/current-federal.csv --scan=a11y --workers=50 --output=/tmp/");
+    exec("timeout 15 ../tools/domain-scan/scan /tmp/current-federal.csv --scan=a11y --workers=50 --output=/tmp/");
     db_query("truncate table custom_accessibility_issues");
     db_query("LOAD DATA INFILE '/Users/ayaskantsahu/a11y.csv' INTO TABLE custom_accessibility_issues FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' (website,base_domain, domain_redirected_to,error_typecode,error_code,error_message,error_context,error_selector);");
 
