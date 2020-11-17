@@ -62,27 +62,38 @@
 </head>
 <body>
 
-    <div class="tableScroll">
-        <button id="left"> <img class="scroll" src="/sites/all/modules/custom/dd_accessibility/images/left-arrow.svg" /> </button>
-        <button id="right"><img class="scroll" src="/sites/all/modules/custom/dd_accessibility/images/right-arrow.svg" /> </button>
-    </div>
-
 <div class="tableHeader">
-  <div class="downloadReport">
-    <p>Download Accessibility Reports: <a href="/accessibility/myagency/csvapi" target="_blank"> csv </a> | <a href="/accessibility/myagency/xlsapi" target="_blank">xls</a></p>
-  </div>
-
-  <div class="filterSection" style="display: none;">
-      <span class="filterLabel">Agency</span>
-      <select class="filterList" id="searchItems">
+<div class="filterSearch">
+  <div class="filterSection d-none">
+      <span class="filterLabel">Agency:</span>
+      <select class="filterList" id="filterItems">
       </select>
   </div>
+  <div class="text d-none">
+      <p>Or</p>
+  </div>
+  <div class="">
+      <span class="searchBox searchLabel">Search:</span>
+      <input type="search" class="searchInput searchInputAlter" id="searchInput">
+  </div>
+  <div class="reset d-none">
+    <button type="submit" id="resetSearch2" value="Reset" class="btn btn-default resetSearch">Reset</button>
+  </div>
 </div>
+<div class="downloadReport">
+    <p>Download Accessibility Reports: <a href="/accessibility/myagency/csvapi" target="_blank"> csv </a> | <a href="/accessibility/myagency/xlsapi" target="_blank">xls</a></p>
+</div>
+</div>
+<div class="tableScroll">
+    <button id="left"> <img class="scroll" src="/sites/all/modules/custom/dd_accessibility/images/left-arrow.svg" /> </button>
+    <button id="right"><img class="scroll" src="/sites/all/modules/custom/dd_accessibility/images/right-arrow.svg" /> </button>
+</div>
+
         <div id="output" class="sticky gov-my-agency-wide"></div>
 
 
         <script type="text/javascript">
-            var jsonUrl = "/sites/default/files/accessibility_api/jsonapi.json";
+            var jsonUrl = "/accessibility/myagency/jsonapi";
             $(function () {
 
                 var dataClass = $.pivotUtilities.CustomPivotData;
@@ -134,14 +145,14 @@
                         //getFilterList();
 
                     }, 500);
-                    setTimeout(function() {
-                      <?php
-                      global $user;
-                      $user_data = user_load($user->uid);
-                      $agencyid = $user_data->field_web_agency_id['und'][0]['nid'];
-                      ?>
-                      $("#searchItems").val("<?php echo dd_accessibility_agency_name($agencyid);?>").change();
-                    }, 6000);
+                    // setTimeout(function() {
+                    //   <?php
+                    //   global $user;
+                    //   $user_data = user_load($user->uid);
+                    //   $agencyid = $user_data->field_web_agency_id['und'][0]['nid'];
+                    //   ?>
+                    //   $("#filterItems").val("<?php echo dd_accessibility_agency_name($agencyid);?>").change();
+                    // }, 6000);
                 });
 
                 // Change col total Label
@@ -213,13 +224,13 @@
                                 var fResult = result.last();
                                 var option = '';
                                 option += '<option value="' + fResult + '">' + fResult + '</option>';
-                                $('#searchItems').append(option);
+                                // $('#filterItems').append(option);
                             }
                         }
                     });
 
                     if(flagVal === 0)  {
-                        $('#searchItems').prepend('<option value="">-Any-</option>');
+                        // $('#filterItems').prepend('<option value="">-Any-</option>');
                         flagVal ++;
                     }
                 }
