@@ -109,7 +109,7 @@
                     jQuery("#output").pivotUI(mps, {
                         dataClass: dataClass,
                         cols: ["Agency"],
-                        rows: ["WCAG Success Criteria", "ICT Group", "Test Rule"],
+                        rows: ["WCAG Success Criteria", "Content Type", "Test Rule"],
                         renderers: renderers,
                         rendererName: "Table With Pagination",
                         rendererOptions: {
