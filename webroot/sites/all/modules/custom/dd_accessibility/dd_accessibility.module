@@ -217,7 +217,7 @@ function dd_accessibility_myagency_xlsapi(){
 
 function dd_accessibility_process_csv($query, $file_name) {
     global $wcag_testrule_ref;
-    $csvdata = "\"Website ID\",\"Website\",\"Agency ID\",\"Agency\",\"Rule Engine\",\"WCAG Success Criteria\",\"ICT Group\",\"Type Code\",\"Test Rule\",\"Error Message\",\"Error Context\",\"Error Selector\"\n";
+    $csvdata = "\"Website ID\",\"Website\",\"Agency ID\",\"Agency\",\"Rule Engine\",\"WCAG Success Criteria\",\"Content Type\",\"Type Code\",\"Test Rule\",\"Error Message\",\"Error Context\",\"Error Selector\"\n";
     foreach ($query as $result) {
         $csvdata .= "\"".$result->website_id."\",\"".$result->website."\",\"".$result->agency_id."\",\"".$result->agency_name."\",\"".$result->error_scan_type."\",\"".$wcag_testrule_ref[$result->error_code]."\",\"".$result->error_cat."\",\"".$result->error_typecode."\",\"".$result->error_code."(".$result->error_scan_type.")"."\",\"".dd_accessibility_escape_chars($result->error_message)."\",\"".dd_accessibility_escape_chars($result->error_context)."\",\"".dd_accessibility_escape_chars($result->error_selector)."\"\n";
     }
@@ -230,7 +230,7 @@ function dd_accessibility_process_csv($query, $file_name) {
 
 function dd_accessibility_process_xls($query, $file_name) {
     global $wcag_testrule_ref;
-    $xlsdata = "Website ID\tWebsite\tAgency ID\tAgency\tRule Engine\tWCAG Success Criteria\tICT Group\tType Code\tTest Rule\tError Message\tError Context\tError Selector\n";
+    $xlsdata = "Website ID\tWebsite\tAgency ID\tAgency\tRule Engine\tWCAG Success Criteria\tContent Type\tType Code\tTest Rule\tError Message\tError Context\tError Selector\n";
     foreach ($query as $result) {
         $xlsdata .= $result->website_id."\t".$result->website."\t".$result->agency_id."\t".$result->agency_name."\t".$result->error_scan_type."\t".$wcag_testrule_ref[$result->error_code]."\t".$result->error_cat."\t".$result->error_typecode."\t".$result->error_code."(".$result->error_scan_type.")"."\t".dd_accessibility_escape_chars($result->error_message)."\t".dd_accessibility_escape_chars($result->error_context)."\t".dd_accessibility_escape_chars($result->error_selector)."\n";
     }
@@ -266,7 +266,7 @@ function dd_accessibility_agencywide_jsonapi($agencyid){
         $json_array['Agency'] = $result->agency_name;
         $json_array['Rule Engine'] = $result->error_scan_type;
         $json_array['WCAG Success Criteria'] = $wcag_testrule_ref[$result->error_code];
-        $json_array['ICT Group'] = $result->error_cat;
+        $json_array['Content Type'] = $result->error_cat;
         $json_array['Type Code'] = $result->error_typecode;
         $json_array['Test Rule'] = $result->error_code."(".$result->error_scan_type.")";
         $json_array['Error Message'] = $result->error_message;
@@ -296,7 +296,7 @@ function dd_accessibility_myagency_jsonapi(){
         $json_array['Agency'] = $result->agency_name;
         $json_array['Rule Engine'] = $result->error_scan_type;
         $json_array['WCAG Success Criteria'] = $wcag_testrule_ref[$result->error_code];
-        $json_array['ICT Group'] = $result->error_cat;
+        $json_array['Content Type'] = $result->error_cat;
         $json_array['Type Code'] = $result->error_typecode;
         $json_array['Test Rule'] = $result->error_code."(".$result->error_scan_type.")";
         $json_array['Error Message'] = $result->error_message;
@@ -321,7 +321,7 @@ function dd_accessibility_govwide_jsonapi(){
         $json_array['Agency'] = $result->agency_name;
         $json_array['Rule Engine'] = $result->error_scan_type;
         $json_array['WCAG Success Criteria'] = $wcag_testrule_ref[$result->error_code];
-        $json_array['ICT Group'] = $result->error_cat;
+        $json_array['Content Type'] = $result->error_cat;
         $json_array['Type Code'] = $result->error_typecode;
         $json_array['Test Rule'] = $result->error_code."(".$result->error_scan_type.")";
         $json_array['Error Message'] = $result->error_message;
