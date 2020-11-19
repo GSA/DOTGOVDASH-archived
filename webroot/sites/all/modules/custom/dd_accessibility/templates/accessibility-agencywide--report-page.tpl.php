@@ -227,17 +227,21 @@
                                 Array.prototype.last = function () {
                                     return this[this.length - 1];
                                 };
-                                //console.log(result.last());
+                                
                                 var fResult = result.last();
-                                var option = '';
-                                option += '<option value="' + fResult + '">' + fResult + '</option>';
-                                jQuery('#filterItems').append(option);
+                                var ascending1 = result.sort((a, b) => a.localeCompare(b))
                             }
                         }
+                        jQuery("#filterItems").append(
+                            jQuery.map(ascending1, function(v,k){
+                                return jQuery("<option>").val(k).text(v);
+                            })
+                        );                        
+
                     });
 
                     if(flagVal === 0)  {
-                        jQuery('#filterItems').prepend('<option value="">-Any-</option>');
+                        jQuery('#filterItems').prepend('<option value="">- Any -</option>');
                         flagVal ++;
                     }
                 }
