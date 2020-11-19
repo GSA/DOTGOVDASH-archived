@@ -223,12 +223,17 @@
                                 Array.prototype.last = function () {
                                     return this[this.length - 1];
                                 };
+                                
                                 var fResult = result.last();
-                                var option = '';
-                                option += '<option value="' + fResult + '">' + fResult + '</option>';
-                                jQuery('#filterItems').append(option);
+                                var ascending1 = result.sort((a, b) => a.localeCompare(b))
                             }
                         }
+                        jQuery("#filterItems").append(
+                            jQuery.map(ascending1, function(v,k){
+                                return jQuery("<option>").val(k).text(v);
+                            })
+                        );                        
+
                     });
 
                     if(flagVal === 0)  {
