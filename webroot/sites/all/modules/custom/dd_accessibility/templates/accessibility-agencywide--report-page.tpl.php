@@ -72,8 +72,8 @@
       <p>Or</p>
   </div>
   <div class="searchSection">
-      <span class="searchBox searchLabel">Search:</span>
-      <input type="search" class="searchInput searchInputAlter" id="searchInput">
+      <label class="searchBox searchLabel">Search:
+      <input type="search" class="searchInput searchInputAlter" id="searchInput"></label>
   </div>
   <div class="reset">
     <button type="submit" id="resetSearch2" value="Reset" class="btn btn-default resetSearch">Reset</button>

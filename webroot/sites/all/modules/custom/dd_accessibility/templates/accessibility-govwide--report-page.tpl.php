@@ -67,8 +67,8 @@
       <p>Or</p>
   </div>
   <div class="searchSection">
-      <span class="searchBox searchLabel">Search:</span>
-      <input type="search" class="searchInput searchInputAlter" id="searchInput">
+      <label class="searchBox searchLabel">Search:
+      <input type="search" class="searchInput searchInputAlter" id="searchInput"></label>
   </div>
   <div class="reset">
     <button type="submit" id="resetSearch2" value="Reset" class="btn btn-default resetSearch">Reset</button>
@@ -223,7 +223,6 @@
                                 Array.prototype.last = function () {
                                     return this[this.length - 1];
                                 };
-                                //console.log(result.last());
                                 var fResult = result.last();
                                 var option = '';
                                 option += '<option value="' + fResult + '">' + fResult + '</option>';
