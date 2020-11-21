@@ -57,7 +57,7 @@ dotgov_common_tooltip("tooltip9","id");
 
 <div class="col-xs-12 nopadding clearfix">
 <div class="col-xs-10 nopadding">
-    <h2 class="pane-title">Accessibility Issues</h2>
+    <h2 class="pane-title">Accessibility Spot Checks</h2>
 </div>
 <div class="col-xs-2">
     <div id="tooltip9" class="infor">    
