@@ -231,7 +231,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                         <div class="white-back no-height">
                             <div class="panel-pane pane-views pane-website-information">
                                 <div class="col-xs-10 nopadding">
-                                    <h2 class="pane-title">Accessibility Spot Checks/h2>
+                                    <h2 class="pane-title">Accessibility Spot Checks</h2>
                                 </div>
                                 <div class="col-xs-2 nopadding">
                                     <div id="tooltip9" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">  <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br/>
