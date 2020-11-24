@@ -174,7 +174,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     <p>Average Color Contrast: <?=round($agencydata['ag_col_contrast'] / $agency_website_num, 1);?></p>
                                     <p>Average HTML Attribute: <?=round($agencydata['ag_html_attrib'] / $agency_website_num, 1);?></p>
                                     <p>Average Missing Image Description: <?=round($agencydata['ag_miss_image'] / $agency_website_num, 1);?></p>
-                                    <p>(Note: website redirects are excluded)</p>
+                                    <p>(Note: Website redirects are excluded. Accessibility Spot Checks include only Color Contrast, HTML Attributes and Missing Image Description Accessibility Issues)</p>
                                 </div>
                                 <div class="col-sm-6 nopadding">
                                 <h4 class="chart-data-title text-center">Total Number of Accessibility Issues for Websites</h4>
