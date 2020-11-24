@@ -899,15 +899,25 @@ function dotgov_common_get_percentage($arr,$websites) {
   arsort($c);
   $sum = array_sum($roundDown);
   reset($c);
-  while ($sum > 95 && $sum < 100) {
+  $executionLimit = 0;
+  while ($sum > 95 && $sum < 100 && $executionLimit < 50) {
     $val = current($c);
     for ($i = 0; $i < sizeof($roundDown); $i++) {
         if ($sum < 100 && $val === $decimals[$i]) {
           $roundDown[$i]++;
           $sum++;
         }
+        $executionLimit++;
     }
+    $executionLimit++;
     next($c);
+  }
+  if ($sum == 99 && sizeof($roundDown) == 2) {
+      if ($roundDown[0] ==  49) {
+          $roundDown[0]++;
+      } else {
+          $roundDown[1]++;
+      }
   }
   return $roundDown;
 }
