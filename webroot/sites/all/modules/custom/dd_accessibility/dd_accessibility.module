@@ -1,0 +1,335 @@
+<?php
+/*
+* Digital Dashboard Dashboard Accessibility Module
+*/
+module_load_include('inc', 'accessibility', 'includes/dd_accessibility_common');
+global $wcag_testrule_ref;
+$wcag_testrule_ref = array(
+    "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.EmptyNoId"=>"2.4.4 Link Purpose (In Context)",
+    "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.NoContent"=>"2.4.4 Link Purpose (In Context)",
+    "aria-allowed-role"=>"2.4.4 Link Purpose (In Context)",
+    "aria-hidden-focus"=>"1.3.1 Info and Relationships",
+    "aria-input-field-name"=>"1.3.1 Info and Relationships",
+    "aria-toggle-field-name"=>"1.3.1 Info and Relationships",
+    "button-name"=>"2.4.4 Link Purpose (In Context)",
+    "color-contrast"=>"1.4.3 Contrast (Minimum)",
+    "WCAG2AA.Principle1.Guideline1_4.1_4_3.G145"=>"1.4.3 Contrast (Minimum)",
+    "WCAG2AA.Principle1.Guideline1_4.1_4_3.G18"=>"1.4.3 Contrast (Minimum)",
+    "document-title"=>"2.4.2 Page Titled",
+    "duplicate-id"=>"4.1.1 Parsing",
+    "WCAG2AA.Principle4.Guideline4_1.4_1_1.F77"=>"4.1.1 Parsing",
+    "empty-heading"=>"1.3.1 Info and Relationships",
+    "WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.EmptyTitle"=>"2.4.2 Page Titled",
+    "form-field-multiple-labels"=>"1.3.1 Info and Relationships",
+    "frame-title"=>"4.1.2 Name, Role, Value",
+    "frame-title-unique"=>"4.1.2 Name, Role,Value",
+    "WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired"=>"1.3.1 Info and Relationships",
+    "WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2"=>"1.3.1 Info and Relationships",
+    "html-has-lang"=>"3.1.1 Language of Page",
+    "WCAG2AA.Principle3.Guideline3_1.3_1_1.H57.3.Lang"=>"3.1.1 Language of Page",
+    "html-lang-valid"=>"3.1.1 Language of Page",
+    "WCAG2AA.Principle2.Guideline2_4.2_4_1.H64.1"=>"4.1.2 Name, Role, Value",
+    "image-alt"=>"1.1.1 Non-text Content",
+    "WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.IncorrectAttr"=>"1.3.1 Info and Relationships",
+    "input-button-name"=>"2.4.4 Link Purpose (In Context)",
+    "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputButton.Name"=>"2.4.4 Link Purpose (In Context)",
+    "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputCheckbox.Name"=>"1.3.1 Info and Relationships",
+    "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputFile.Name"=>"1.3.1 Info and Relationships",
+    "input-image-alt"=>"2.4.4 Link Purpose (In Context)",
+    "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputImage.Name"=>"2.4.4 Link Purpose (In Context)",
+    "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputPassword.Name"=>"1.3.1 Info and Relationships",
+    "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputRadio.Name"=>"1.3.1 Info and Relationships",
+    "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name"=>"1.3.1 Info and Relationships",
+    "label"=>"1.3.1 Info and Relationships",
+    "WCAG2AA.Principle1.Guideline1_3.1_3_1.F68"=>"1.3.1 Info and Relationships",
+    "WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable"=>"1.3.1 Info and Relationships",
+    "link-name"=>"2.4.4 Link Purpose (In Context)",
+    "list"=>"2.4.4 Link Purpose (In Context)",
+    "listitem"=>"1.3.1 Info and Relationships",
+    "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Li.Name"=>"2.4.4 Link Purpose (In Context)",
+    "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name"=>"2.4.4 Link Purpose (In Context)",
+    "WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeadersAttrs"=>"1.3.1 Info and Relationships",
+    "WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeaderIds"=>"1.3.1 Info and Relationships",
+    "WCAG2AA.Principle1.Guideline1_3.1_3_1.H43,H63"=>"1.3.1 Info and Relationships",
+    "WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.NoTitleEl"=>"2.4.2 Page Titled",
+    "role-img-alt"=>"1.1.1 Non-text Content",
+    "scope-attr-valid"=>"1.3.1 Info and Relationships",
+    "scrollable-region-focusable"=>"2.1.1 Keyboard",
+    "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Select.Name"=>"1.3.1 Info and Relationships",
+    "td-headers-attr"=>"1.3.1 Info and Relationships",
+    "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Textarea.Name"=>"1.3.1 Info and Relationships",
+    "WCAG2AA.Principle3.Guideline3_1.3_1_2.H58.1.Lang"=>"3.1.1 Language of Page",
+    "valid-lang"=>"3.1.1 Language of Page",
+);
+
+/**
+ * Implements hook_menu().
+ */
+function dd_accessibility_menu() {
+    $items = [];
+    $items['accessibility/govwide/reports'] = array(
+        'title' => "Comprehensive Accessibility Government-Wide Website Report",
+        'page callback' => 'dd_accessibility_govwide_page',
+        'access callback' => 'user_is_logged_in_new',
+        'type' => MENU_NORMAL_ITEM
+    );
+    $items['accessibility/agencywide/reports'] = array(
+        'title' => "Comprehensive Accessibility Agency-Wide Report",
+        'page callback' => 'dd_accessibility_agencywide_page',
+        'access callback' => 'user_is_logged_in_new',
+        'type' => MENU_NORMAL_ITEM
+    );
+    $items['accessibility/myagency/reports'] = array(
+        'title' => "Comprehensive Accessibility My Agency Report",
+        'page callback' => 'dd_accessibility_myagency_page',
+        'access callback' => 'user_is_logged_in_new',
+        'type' => MENU_NORMAL_ITEM
+    );
+    $items['accessibility/govwide/csvapi'] = array(
+        'title' => "Government-Wide Accessibility Report CSV Download",
+        'page callback' => 'dd_accessibility_govwide_csvapi',
+        'access callback' => 'user_is_logged_in_new',
+        'type' => MENU_NORMAL_ITEM
+    );
+    $items['accessibility/govwide/xlsapi'] = array(
+        'title' => "Government-Wide Accessibility Report XLS Download",
+        'page callback' => 'dd_accessibility_govwide_xlsapi',
+        'access callback' => 'user_is_logged_in_new',
+        'type' => MENU_NORMAL_ITEM
+    );
+    $items['accessibility/agencywide/csvapi'] = array(
+        'title' => "Agency-Wide Accessibility Report CSV Download",
+        'page callback' => 'dd_accessibility_agencywide_csvapi',
+        'access callback' => 'user_is_logged_in_new',
+        'type' => MENU_NORMAL_ITEM
+    );
+    $items['accessibility/agencywide/xlsapi'] = array(
+        'title' => "Agency-Wide Accessibility Report XLS Download",
+        'page callback' => 'dd_accessibility_agencywide_xlsapi',
+        'access callback' => 'user_is_logged_in_new',
+        'type' => MENU_NORMAL_ITEM
+    );
+    $items['accessibility/myagency/csvapi'] = array(
+        'title' => "My Agency-Wide Accessibility Report CSV Download",
+        'page callback' => 'dd_accessibility_myagency_csvapi',
+        'access callback' => 'user_is_logged_in_new',
+        'type' => MENU_NORMAL_ITEM
+    );
+    $items['accessibility/myagency/xlsapi'] = array(
+        'title' => "My Agency-Wide Accessibility Report XLS Download",
+        'page callback' => 'dd_accessibility_myagency_xlsapi',
+        'access callback' => 'user_is_logged_in_new',
+        'type' => MENU_NORMAL_ITEM
+    );
+    $items['accessibility/agencywide/jsonapi/%'] = array(
+        'title' => "Agency-Wide Accessibility JSON API",
+        'page callback' => 'dd_accessibility_agencywide_jsonapi',
+        'page arguments' => array(1),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM
+    );
+    $items['accessibility/myagency/jsonapi'] = array(
+        'title' => "My Agency-Wide Accessibility Report JSON Api",
+        'page callback' => 'dd_accessibility_myagency_jsonapi',
+        'access callback' => 'user_is_logged_in_new',
+        'type' => MENU_NORMAL_ITEM
+    );
+    return $items;
+}
+
+function dd_accessibility_theme($existing, $type, $theme, $path) {
+    return array(
+        'dd_accessibility_govwide_report_page' => array(
+            'template' => 'accessibility-govwide--report-page',
+            'path' => drupal_get_path('module', 'dd_accessibility') . '/templates',
+        ),
+        'dd_accessibility_agencywide_report_page' => array(
+            'template' => 'accessibility-agencywide--report-page',
+            'path' => drupal_get_path('module', 'dd_accessibility') . '/templates',
+        ),
+        'dd_accessibility_myagency_report_page' => array(
+            'template' => 'accessibility-myagency--report-page',
+            'path' => drupal_get_path('module', 'dd_accessibility') . '/templates',
+        )
+    );
+}
+
+/*
+ * Accessibility API
+ */
+function dd_accessibility_govwide_page() {
+    $processed_vars['idea_home'] = "Test";
+    $processed_vars['actualdata'] = "again";
+    return theme('dd_accessibility_govwide_report_page', array('agency_data' => $processed_vars));
+}
+
+function dd_accessibility_agencywide_page() {
+    $processed_vars['idea_home'] = "Test";
+    $processed_vars['actualdata'] = "again";
+    return theme('dd_accessibility_agencywide_report_page', array('agency_data' => $processed_vars));
+}
+
+function dd_accessibility_myagency_page() {
+    $processed_vars['idea_home'] = "Test";
+    $processed_vars['actualdata'] = "again";
+    return theme('dd_accessibility_myagency_report_page', array('agency_data' => $processed_vars));
+}
+
+function dd_accessibility_govwide_csvapi(){
+    $query = db_query("select * from custom_accessibility_issues");
+    dd_accessibility_process_csv($query, "govwide_accessibility");
+
+}
+
+function dd_accessibility_govwide_xlsapi(){
+    $query = db_query("select * from custom_accessibility_issues");
+    dd_accessibility_process_xls($query, "govwide_accessibility");
+
+}
+
+function dd_accessibility_agencywide_csvapi(){
+    $query = db_query("select * from custom_accessibility_issues");
+    dd_accessibility_process_csv($query, "agencywide_accessibility");
+}
+
+function dd_accessibility_agencywide_xlsapi(){
+    $query = db_query("select * from custom_accessibility_issues");
+    dd_accessibility_process_xls($query, "agencywide_accessibility");
+}
+
+function dd_accessibility_myagency_csvapi(){
+    //Find current user's agency id
+    global $user;
+    $user_data = user_load($user->uid);
+    $agencyid = $user_data->field_web_agency_id['und'][0]['nid'];
+    $query = db_query("select * from  custom_accessibility_issues where agency_id=:agencyid",array(":agencyid"=>$agencyid));
+    dd_accessibility_process_csv($query, "myagency_accessibility");
+}
+
+function dd_accessibility_myagency_xlsapi(){
+    //Find current user's agency id
+    global $user;
+    $user_data = user_load($user->uid);
+    $agencyid = $user_data->field_web_agency_id['und'][0]['nid'];
+    $query = db_query("select * from custom_accessibility_issues where agency_id=:agencyid",array(":agencyid"=>$agencyid));
+    dd_accessibility_process_xls($query, "myagency_accessibility");
+}
+
+function dd_accessibility_process_csv($query, $file_name) {
+    global $wcag_testrule_ref;
+    $csvdata = "\"Website ID\",\"Website\",\"Agency ID\",\"Agency\",\"Rule Engine\",\"WCAG Success Criteria\",\"Content Type\",\"Type Code\",\"Test Rule\",\"Error Message\",\"Error Context\",\"Error Selector\"\n";
+    foreach ($query as $result) {
+        $csvdata .= "\"".$result->website_id."\",\"".$result->website."\",\"".$result->agency_id."\",\"".$result->agency_name."\",\"".$result->error_scan_type."\",\"".$wcag_testrule_ref[$result->error_code]."\",\"".$result->error_cat."\",\"".$result->error_typecode."\",\"".$result->error_code."(".$result->error_scan_type.")"."\",\"".dd_accessibility_escape_chars($result->error_message)."\",\"".dd_accessibility_escape_chars($result->error_context)."\",\"".dd_accessibility_escape_chars($result->error_selector)."\"\n";
+    }
+    header("Content-Description: File Transfer");
+    header("Content-Type: application/octet-stream");
+    header("Content-Disposition: attachment; filename=\"$file_name.csv\"");
+    print $csvdata;
+    exit;
+}
+
+function dd_accessibility_process_xls($query, $file_name) {
+    global $wcag_testrule_ref;
+    $xlsdata = "Website ID\tWebsite\tAgency ID\tAgency\tRule Engine\tWCAG Success Criteria\tContent Type\tType Code\tTest Rule\tError Message\tError Context\tError Selector\n";
+    foreach ($query as $result) {
+        $xlsdata .= $result->website_id."\t".$result->website."\t".$result->agency_id."\t".$result->agency_name."\t".$result->error_scan_type."\t".$wcag_testrule_ref[$result->error_code]."\t".$result->error_cat."\t".$result->error_typecode."\t".$result->error_code."(".$result->error_scan_type.")"."\t".dd_accessibility_escape_chars($result->error_message)."\t".dd_accessibility_escape_chars($result->error_context)."\t".dd_accessibility_escape_chars($result->error_selector)."\n";
+    }
+    header("Content-Description: File Transfer");
+    header("Content-type: application/vnd.ms-excel");
+    header("Content-Disposition: attachment; filename=\"$file_name.xls\"");
+    print $xlsdata;
+    exit;
+}
+
+function dd_accessibility_escape_chars($value){
+    $value = str_replace("\"", '\\"', $value);
+    $value = str_replace("\n", "\\n", $value);
+    $value = str_replace("\t", "\\t", $value);
+    return '"' . str_replace('"', '""', $value) . '"';
+}
+
+function dd_accessibility_agency_name($agencyid){
+    $query = db_query("select agency FROM custom_agencywide_archive where agency_id=:agencyid limit 1", array(":agencyid"=>$agencyid))->fetchObject();
+    return $query->agency;
+}
+
+function dd_accessibility_agencywide_jsonapi($agencyid){
+    $agencyid = arg(3);
+    $query = db_query("select * from  custom_accessibility_issues where agency_id=:agencyid",array(":agencyid"=>$agencyid));
+    $return_arr = array();
+    global $wcag_testrule_ref;
+
+    foreach ($query as $result) {
+        $json_array['Website ID'] = $result->website_id;
+        $json_array['Website'] = $result->website;
+        $json_array['Agency ID'] = $result->agency_id;
+        $json_array['Agency'] = $result->agency_name;
+        $json_array['Rule Engine'] = $result->error_scan_type;
+        $json_array['WCAG Success Criteria'] = $wcag_testrule_ref[$result->error_code];
+        $json_array['Content Type'] = $result->error_cat;
+        $json_array['Type Code'] = $result->error_typecode;
+        $json_array['Test Rule'] = $result->error_code."(".$result->error_scan_type.")";
+        $json_array['Error Message'] = $result->error_message;
+        $json_array['Error Context'] = $result->error_context;
+        $json_array['Error Selector'] = $result->error_selector;
+        array_push($return_arr,$json_array);
+    }
+    header('Content-Type: application/json');
+    print json_encode($return_arr);
+    exit;
+}
+
+function dd_accessibility_myagency_jsonapi(){
+    //Find current user's agency id
+    global $user;
+    $user_data = user_load($user->uid);
+    $agencyid = $user_data->field_web_agency_id['und'][0]['nid'];
+
+    $query = db_query("select * from  custom_accessibility_issues where agency_id=:agencyid",array(":agencyid"=>$agencyid));
+    $return_arr = array();
+    global $wcag_testrule_ref;
+
+    foreach ($query as $result) {
+        $json_array['Website ID'] = $result->website_id;
+        $json_array['Website'] = $result->website;
+        $json_array['Agency ID'] = $result->agency_id;
+        $json_array['Agency'] = $result->agency_name;
+        $json_array['Rule Engine'] = $result->error_scan_type;
+        $json_array['WCAG Success Criteria'] = $wcag_testrule_ref[$result->error_code];
+        $json_array['Content Type'] = $result->error_cat;
+        $json_array['Type Code'] = $result->error_typecode;
+        $json_array['Test Rule'] = $result->error_code."(".$result->error_scan_type.")";
+        $json_array['Error Message'] = $result->error_message;
+        $json_array['Error Context'] = $result->error_context;
+        $json_array['Error Selector'] = $result->error_selector;
+        array_push($return_arr,$json_array);
+    }
+    header('Content-Type: application/json');
+    print json_encode($return_arr);
+    exit;
+}
+
+function dd_accessibility_govwide_jsonapi(){
+    $query = db_query("select * from  custom_accessibility_issues");
+    $return_arr = array();
+    global $wcag_testrule_ref;
+
+    foreach ($query as $result) {
+        $json_array['Website ID'] = $result->website_id;
+        $json_array['Website'] = $result->website;
+        $json_array['Agency ID'] = $result->agency_id;
+        $json_array['Agency'] = $result->agency_name;
+        $json_array['Rule Engine'] = $result->error_scan_type;
+        $json_array['WCAG Success Criteria'] = $wcag_testrule_ref[$result->error_code];
+        $json_array['Content Type'] = $result->error_cat;
+        $json_array['Type Code'] = $result->error_typecode;
+        $json_array['Test Rule'] = $result->error_code."(".$result->error_scan_type.")";
+        $json_array['Error Message'] = $result->error_message;
+        $json_array['Error Context'] = $result->error_context;
+        $json_array['Error Selector'] = $result->error_selector;
+        array_push($return_arr,$json_array);
+    }
+    $jsondata = json_encode($return_arr);
+    $filename = "sites/default/files/accessibility_api/jsonapi.json";
+    file_put_contents($filename, $jsondata);
+}

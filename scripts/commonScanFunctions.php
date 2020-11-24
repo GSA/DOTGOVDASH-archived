@@ -42,6 +42,7 @@ function getSites()
  */
 
 function startScan(){
+    include("../scripts/configSettings.php");
     $date = date("m-d-Y");
     $scanstarttime = time();
     $node = new stdClass();
@@ -74,10 +75,16 @@ function startScan(){
     $ipv6filedata = file_get_contents('/tmp/nist_ipv6.html', true);
     $ipv6datafile = file_save_data($ipv6filedata,file_default_scheme().'://ipv6_nist_source/'.nist_ipv6.'_'.date("Y-m-d-h-i-s-a").'.html', FILE_EXISTS_REPLACE);
 
+    //Run Accessbility Scan through Pa11y
+    writeToLogs("Collecting Accessbility Data through Pa11y using domain scan tool",$logFile);
+    runAccessibilityNewCustomScan();
+    $pa11yfiledata = file_get_contents("/tmp/results/a11y.csv");
+    $pa11yfile =  file_save_data($pa11yfiledata,file_default_scheme().'://accessibilityscan/'.pa11y_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
 
     $node->field_pulse_source_https_file['und'][0] = array('fid' => $httpsdatafile->fid,'display' => 1, 'description' => 'Pulse HTTPS scan source File');
     $node->field_pulse_source_analytics_fil['und'][0] = array('fid' => $dapdatafile->fid,'display' => 1, 'description' => 'Pulse DAP scan source File');
     $node->field_uswds_scan_file['und'][0] = array('fid' => $uswdsfile->fid,'display' => 1, 'description' => 'USWDS scan source File');
+    $node->field_accessibility_scan_file['und'][0] = array('fid' => $pa11yfile->fid,'display' => 1, 'description' => 'Pa11y scan source File');
     $node->field_nist_ipv6_data['und'][0] = array('fid' => $ipv6datafile->fid,'display' => 1, 'description' => 'NIST Ipv6 scan source File');
     node_object_prepare($node);
     if($node=node_submit($node)){
@@ -94,6 +101,208 @@ function runUswdsScan(){
     exec("timeout 15 wget -O /tmp/results/uswds2.csv \"https://api.gsa.gov/technology/site-scanner/v1/scans/uswds2/csv/?domaintype=Federal%20Agency%20-%20Executive&api_key=6i0A3HhMw1FAmhXokiEWrpjfWqGztEtaodHxGFfj\"");
 }
 
+/*
+ * Run New Custom Accessibility Scan
+ */
+function runAccessibilityNewCustomScan(){
+    //run pa11y Scan
+    exec("timeout 15 ../tools/domain-scan/scan /tmp/current-federal.csv --scan=a11y --workers=50 --output=/tmp/");
+    db_query("truncate table custom_accessibility_issues");
+    db_query("LOAD DATA LOCAL INFILE '/tmp/results/a11y.csv' INTO TABLE custom_accessibility_issues FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' (website,base_domain, domain_redirected_to,error_typecode,error_code,error_message,error_context,error_selector);");
+
+    db_query("delete from custom_accessibility_issues where error_code not in ('WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.EmptyNoId','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.NoContent','aria-allowed-role','aria-hidden-focus','aria-input-field-name','aria-toggle-field-name','button-name','color-contrast','WCAG2AA.Principle1.Guideline1_4.1_4_3.G145','WCAG2AA.Principle1.Guideline1_4.1_4_3.G18','document-title','duplicate-id','WCAG2AA.Principle4.Guideline4_1.4_1_1.F77','empty-heading','WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.EmptyTitle','form-field-multiple-labels','frame-title','frame-title-unique','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired','WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2','html-has-lang','html-lang-valid','WCAG2AA.Principle2.Guideline2_4.2_4_1.H64.1','image-alt','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.IncorrectAttr','input-button-name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputButton.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputCheckbox.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputFile.Name','input-image-alt','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputImage.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputPassword.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputRadio.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name','label','WCAG2AA.Principle1.Guideline1_3.1_3_1.F68','WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable','link-name','list','listitem','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Li.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeadersAttrs','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeaderIds','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43,H63','WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.NoTitleEl','role-img-alt','scope-attr-valid','scrollable-region-focusable','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Select.Name','td-headers-attr','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Textarea.Name','WCAG2AA.Principle3.Guideline3_1.3_1_2.H58.1.Lang','valid-lan_g')");
+  accessibility_new_updateTable();
+
+}
+
+function access_new_table_update($websites){
+    $website = $websites['website'];
+    $error_scan_type =$websites['runner'];
+    $error_cat = $websites['category'];
+    $wcag_code = $websites['wcag_ref'];
+    $website_id = $websites['website_id'];
+    if(trim($website_id) == "")
+        $website_id = 'NULL';
+    $code = $websites['code'];
+    $agency_id = $websites['agency_id'];
+    if(trim($agency_id) == "")
+        $agency_id = 'NULL';
+    $agency_name = $websites['agency_name'];
+    print "update custom_accessibility_issues set error_scan_type = '$error_scan_type',wcag_code='$wcag_code',error_cat='$error_cat',agency_id= $agency_id,website_id=$website_id,agency_name = '$agency_name' where website='$website' and error_code = '$code' \n";
+    echo "access_table_update() - ".$websites['website']."\n";
+    db_query("update custom_accessibility_issues set error_scan_type = '$error_scan_type',wcag_code='$wcag_code',error_cat='$error_cat',agency_id= $agency_id,website_id=$website_id,agency_name = '$agency_name' where website='$website' and error_code = '$code'");
+
+}
+
+function findParentAgencyName($websiteid){
+    $agencyname = db_query("select field_parent_agency_name_value from field_data_field_parent_agency_name where entity_id=:entity_id", array(':entity_id' => $websiteid))->fetchField();
+
+    if (!empty($agencyname )) {
+        return $agencyname;
+    }
+    else{
+        return FALSE;
+    }
+}
+
+function accessibility_new_updateWebsite($domain)
+{
+  $websites = array();
+  $websites['website_id'] = findNode($domain, 'website');
+  $websites['agency_id'] = findParentAgencyNode($websites['website_id']);
+  $websites['agency_name'] = findParentAgencyName($websites['website_id']);
+  $websites['website'] = $domain;
+  $check_redirect =  db_query("select redirect from custom_pulse_https_data where domain=:domain", array(':domain' => trim($domain)))->fetchField();
+  if($check_redirect != 'Yes') {
+#read current-federal.csv and loop the below query over each table
+    $accessibility_results = db_query("SELECT error_code,error_message,error_context,error_selector FROM custom_accessibility_issues where website = '$domain'");
+    echo " accessibility_scan() - Website scan " . $websites['website'] . "\n";
+    foreach ($accessibility_results as $result) {
+      $websites['code'] = $result->error_code;
+      $websites['message'] = $result->error_message;
+      $websites['context'] = $result->error_context;
+      $websites['selector'] = $result->error_selector;
+
+      if ($websites['code'] == 'image-alt' || $websites['code'] == 'role-img-alt') {
+
+        $websites['category'] = 'Images';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '1.1.1 Non-text Content';
+      } elseif ($websites['code'] == 'aria-hidden-focus' || $websites['code'] == 'aria-input-field-name' || $websites['code'] == 'aria-toggle-field-name'
+        || $websites['code'] == 'form-field-multiple-labels' || $websites['code'] == 'label') {
+
+        $websites['category'] = 'Forms';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '1.3.1 Info and Relationships';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.F68' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeadersAttrs'
+        || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputCheckbox.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputFile.Name'
+        || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputPassword.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputRadio.Name'
+        || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name'
+        || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Select.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Textarea.Name') {
+
+        $websites['category'] = 'Forms';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '1.3.1 Info and Relationships';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43,H63'
+        || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.IncorrectAttr'
+        || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeaderIds' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeadersAttrs'
+      ) {
+
+        $websites['category'] = 'Tables';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '1.3.1 Info and Relationships';
+      } elseif ($websites['code'] == 'scope-attr-valid' || $websites['code'] == 'td-headers-attr') {
+
+        $websites['category'] = 'Tables';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '1.3.1 Info and Relationships';
+      } elseif ($websites['code'] == 'empty-heading' || $websites['code'] == 'listitem') {
+
+        $websites['category'] = 'Content Structure';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '1.3.1 Info and Relationships';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2') {
+
+        $websites['category'] = 'Content Structure';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '1.3.1 Info and Relationships';
+      } elseif ($websites['code'] == 'color-contrast') {
+
+        $websites['category'] = 'Contrast';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '1.4.3 Contrast (Minimum)';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle1.Guideline1_4.1_4_3.G145' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_4.1_4_3.G18') {
+
+        $websites['category'] = 'Contrast';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '1.4.3 Contrast (Minimum)';
+      } elseif ($websites['code'] == 'scrollable-region-focusable') {
+
+        $websites['category'] = 'Keyboard Access';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '2.1.1 Keyboard';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.EmptyTitle' || $websites['code'] == 'WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.NoTitleEl') {
+
+        $websites['category'] = 'Page Titles';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '2.4.2';
+      } elseif ($websites['code'] == 'document-title') {
+
+        $websites['category'] = 'Page Titles';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '2.4.2 Page Titled';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.EmptyNoId' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.NoContent'
+        || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputButton.Name'
+        || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputImage.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Li.Name'
+      ) {
+
+        $websites['category'] = 'Links and Buttons';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '2.4.4 Link Purpose (In Context)';
+      } elseif ($websites['code'] == 'aria-allowed-role' || $websites['code'] == 'button-name'
+        || $websites['code'] == 'input-button-name' || $websites['code'] == 'input-image-alt'
+        || $websites['code'] == 'link-name' || $websites['code'] == 'list'
+      ) {
+        $websites['category'] = 'Links and Buttons';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '2.4.4 Link Purpose (In Context)';
+      } elseif ($websites['code'] == 'html-has-lang' || $websites['code'] == 'html-lang-valid'
+        || $websites['code'] == 'valid-lang') {
+        $websites['category'] = 'Language';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '3.1.1 Language of Page';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle3.Guideline3_1.3_1_1.H57.3.Lang' || $websites['code'] == 'WCAG2AA.Principle3.Guideline3_1.3_1_2.H58.1.Lang'
+      ) {
+        $websites['category'] = 'Language';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '3.1.1 Language of Page';
+      } elseif ($websites['code'] == 'duplicate-id') {
+        $websites['category'] = 'Parsing';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '4.1.1 Parsing';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_1.F77') {
+        $websites['category'] = 'Parsing';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '4.1.1 Parsing';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle2.Guideline2_4.2_4_1.H64.1') {
+        $websites['category'] = 'Frames and iFrames';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '4.1.2 Name, Role, Value';
+      } elseif ($websites['code'] == 'frame-title-unique' || $websites['code'] == 'frame-title') {
+        $websites['category'] = 'Frames and iFrames';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '4.1.2 Name, Role, Value';
+      } else {
+
+        $websites['category'] = '';
+        $websites['runner'] = '';
+        $websites['wcag_ref'] = '';
+      }
+      access_new_table_update($websites);
+    }
+  }
+  else {
+    db_query("delete from custom_accessibility_issues where website=:domain", array(':domain' => trim($domain)));
+  }
+}
+
+function accessibility_new_updateTable()
+{
+    $first = false;
+    if (($handle = fopen('/tmp/current-federal.csv', "r")) !== FALSE) {
+        while (!feof($handle)) {
+            $data = fgetcsv($handle);
+            if (!$first) {
+                $first = true;
+                continue;
+            }
+            accessibility_new_updateWebsite($data[0]);
+        }
+
+        fclose($handle);
+
+    }
+}
 
 function updateUswdsScanInfo($webscanId){
     $csv = readCSV("/tmp/results/uswds2.csv");
@@ -1036,7 +1245,7 @@ function getPulseData(){
     //file_put_contents("$localdapfile", file_get_contents("$pulsedapurl"));
     //This is the latest scan which uses GSA analytics api instead of pulse and generates a file at /tmp/pulsedap.csv
     writeToLogs("Run script to generate dap file and import to db",$logFile);
-   exec("/usr/bin/python3.6 ../scripts/custom_pulse_scanner_analytics/secondLevelDomain.py");
+    exec("/usr/bin/python3.6 ../scripts/custom_pulse_scanner_analytics/secondLevelDomain.py");
 
     db_query("truncate table custom_pulse_dap_data");
     db_query("LOAD DATA LOCAL INFILE '".$localdapfile."' INTO TABLE `custom_pulse_dap_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
@@ -1198,7 +1407,7 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
     }
 
 
-        //Save Tags to parent website
+    //Save Tags to parent website
     if(!empty($tags)) {
         if(!empty($wnode->field_website_tags)){
             foreach($wnode->field_website_tags['und'] as $ctk  =>$ctval){
@@ -2801,7 +3010,7 @@ function archiveAgencywideTrendData(){
         $uswds_websites = db_query("select count(field_uswds_score_value)  as complnum from field_data_field_uswds_score a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid and field_uswds_score_value='100' group by field_uswds_score_value", array(':agencyid' =>  $result->nid))->fetchField();
 
         $redirect_websites = db_query("select count(a.field_redirect_value)  as complnum from field_data_field_redirect a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid and a.field_redirect_value='Yes' group by a.field_redirect_value", array(':agencyid' =>  $result->nid))->fetchField();
-        
+
         $poc_websites = db_query("select count(a.field_website_security_poc_statu_value)  as complnum from field_data_field_website_security_poc_statu a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid and a.field_website_security_poc_statu_value='1' group by a.field_website_security_poc_statu_value", array(':agencyid' =>  $result->nid))->fetchField();
 
         $uswds_websites = ($uswds_websites == '')?'NULL':$uswds_websites;
@@ -3368,6 +3577,605 @@ function cleanupNodesAfterScan(){
             }
 
         }
+    }
+
+}
+
+function updateAccessibilityScan_custom($website,$scanid)
+{
+    include("../scripts/configSettings.php");
+    $start = microtime(true);
+    $domain = $website;
+    $siteId = findNode($domain,'website');
+    if ($siteId != '') {
+        //Check if the site is a redirect. If redirect dont run scan.
+        $check_redirect = db_query("select redirect from custom_pulse_https_data where domain=:domain", array(':domain' => trim($website)))->fetchField();
+        if ($check_redirect != "Yes") {
+            $errorlist = db_query("select website_id,agency_id,agency_name,error_scan_type,wcag_code,error_cat,website,error_typecode,error_code,error_message,error_context,error_selector from custom_accessibility_issues where website=:website", array(':website' =>  $website));
+            $count = 0;
+            $field_axe_html_has_lang =0;
+            $imagealt =0;
+            $roleimgalt=0;
+            $ariahiddenfocus=0;
+            $ariainputfieldname=0;
+            $ariatogglefieldname=0;
+            $formfieldmultiplelabels=0;
+            $linkname=0;
+            $label=0;
+            $cntF68=0;
+            $cntH91InputCheckboxName=0;
+            $cntH91InputFileName=0;
+            $cntH91InputPasswordName=0;
+            $cntH91InputRadioName=0;
+            $cntH91InputTextName=0;
+            $cntH91SelectName=0;
+            $cntH91TextareaName=0;
+            $cntH43MissingHeadersAttrs=0;
+            $cntH393LayoutTable=0;
+            $cntH43HeadersRequired=0;
+            $cntH43IncorrectAttr=0;
+            $cntH43MissingHeaderIds=0;
+            $scopeattrvalid=0;
+            $cntH43H63=0;
+            $tdheadersattr=0;
+            $inputbuttonname=0;
+            $buttonname=0;
+            $inputimagealt=0;
+            $list=0;
+            $ariaallowedrole=0;
+            $emptyheading=0;
+            $cntlistitem=0;
+            $WCAG2AAPrinciple4Guideline4_14_1_2H91ButtonName=0;
+            $cntcolorcontrast=0;
+            $documenttitle=0;
+            $cntH422=0;
+            $cntH251EmptyTitle=0;
+            $cntH251NoTitleEl=0;
+            $scrollableregionfocusable=0;
+            $cntH91AEmptyNoId=0;
+            $cntH91ANoContent=0;
+            $frametitleunique=0;
+            $cntH91ButtonName=0;
+            $cntH91InputButtonName=0;
+            $cntH91InputImageName=0;
+            $H91LiName=0;
+            $htmllangvalid=0;
+            $duplicateid=0;
+            $H573Lang=0;
+            $cntH581Lang=0;
+            $cntvalidlang=0;
+            $cntF77=0;
+            $cntH641=0;
+            $frametitle=0;
+            $cntG145=0;
+            $cntG18=0;
+
+            foreach ($errorlist as $error ) {
+                $count++;
+                $website = $error->website;
+                $website_id = $error->website_id;
+                $agency_id = $error->agency_id;
+                $agency_name = $error->agency_name;
+                $error_scan_type = $error->error_scan_type;
+                $wcag_code = $error->wcag_code;
+                $error_cat = $error->error_cat;
+                $error_typecode = $error->error_typecode;
+                $error_code = $error->error_code;
+                $error_message = $error->error_message;
+                $error_context = $error->error_context;
+                $error_selector = $error->error_selector;
+                $error_json = json_encode($error);
+
+                if ($count != 0) {
+                    if ($error_code == 'html-has-lang') {
+                        $field_axe_html_has_lang++;
+                    }
+                    if ($error_code == 'image-alt') {
+                        $imagealt++;
+                    }
+                    if ($error_code == 'role-img-alt') {
+                        $roleimgalt++;
+                    }
+                    if ($error_code == 'aria-hidden-focus') {
+                        $ariahiddenfocus++;
+                    }
+                    if ($error_code == 'aria-input-field-name') {
+                        $ariainputfieldname++;
+                    }
+                    if ($error_code == 'aria-toggle-field-name') {
+                        $ariatogglefieldname++;
+                    }
+                    if ($error_code == 'form-field-multiple-labels') {
+                        $formfieldmultiplelabels++;
+                    }
+                    if ($error_code == 'label') {
+                        $label++;
+                    }
+                    if ($error_code == 'link-name') {
+                        $linkname++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name') {
+                        $WCAG2AAPrinciple4Guideline4_14_1_2H91ButtonName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.F68') {
+                        $cntF68++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeadersAttrs') {
+                        $cntH43MissingHeadersAttrs++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputCheckbox.Name') {
+                        $cntH91InputCheckboxName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputFile.Name') {
+                        $cntH91InputFileName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputPassword.Name') {
+                        $cntH91InputPasswordName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputRadio.Name') {
+                        $cntH91InputRadioName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name') {
+                        $cntH91InputTextName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Select.Name') {
+                        $cntH91SelectName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Textarea.Name') {
+                        $cntH91TextareaName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable') {
+                        $cntH393LayoutTable++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43,H63') {
+                        $cntH43H63++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired') {
+                        $cntH43HeadersRequired++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.IncorrectAttr') {
+                        $cntH43IncorrectAttr++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeaderIds') {
+                        $cntH43MissingHeaderIds++;
+                    }
+                    if ($error_code == 'scope-attr-valid') {
+                        $scopeattrvalid++;
+                    }
+                    if ($error_code == 'td-headers-attr') {
+                        $tdheadersattr++;
+                    }
+                    if ($error_code == 'empty-heading') {
+
+                        $emptyheading++;
+                    }
+                    if ($error_code == 'listitem') {
+                        $cntlistitem++;
+                    }
+                    if ($error_code == 'color-contrast') {
+                        $cntcolorcontrast++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2') {
+                        $cntH422++;
+                    }
+                    if ($error_code == 'scrollable-region-focusable') {
+                        $scrollableregionfocusable++;
+                    }
+                    if ($error_code == 'document-title') {
+                        $documenttitle++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.EmptyTitle') {
+                        $cntH251EmptyTitle++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.NoTitleEl') {
+                        $cntH251NoTitleEl++;
+                    }
+                    if ($error_code == 'aria-allowed-role') {
+                        $ariaallowedrole++;
+                    }
+                    if ($error_code == 'button-name') {
+                        $buttonname++;
+                    }
+                    if ($error_code == 'input-button-name') {
+                        $inputbuttonname++;
+                    }
+                    if ($error_code == 'input-image-alt') {
+                        $inputimagealt++;
+                    }
+                    if ($error_code == 'link-name') {
+                        $linkname++;
+                    }
+                    if ($error_code == 'list') {
+                        $list++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.EmptyNoId') {
+                        $cntH91AEmptyNoId++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.NoContent') {
+                        $cntH91ANoContent++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name') {
+                        $cntH91ButtonName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputButton.Name') {
+                        $cntH91InputButtonName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputImage.Name') {
+                        $cntH91InputImageName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Li.Name') {
+                        $H91LiName++;
+                    }
+                    if ($error_code == 'html-lang-valid') {
+                        $htmllangvalid++;
+                    }
+                    if ($error_code == 'duplicate-id') {
+                        $duplicateid++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle3.Guideline3_1.3_1_1.H57.3.Lang') {
+                        $H573Lang++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle3.Guideline3_1.3_1_2.H58.1.Lang') {
+                        $cntH581Lang++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_1.F77') {
+                        $cntF77++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle2.Guideline2_4.2_4_1.H64.1') {
+                        $cntH641++;
+                    }
+                    if ($error_code == 'frame-title-unique') {
+                        $frametitleunique++;
+                    }
+                    if ($error_code == 'frame-title') {
+                        $frametitle++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_4.1_4_3.G145') {
+                        $cntG145++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_4.1_4_3.G18') {
+                        $cntG18++;
+                    }
+                    if ($error_code == 'valid-lang') {
+                        $cntvalidlang++;
+                    }
+
+
+
+//        print($error_json);
+                }
+            }
+            $total_errors = $count;
+//      print($count);
+//      print("Total errors for" . $website . ' is ' . $total_errors);
+            $images =array($imagealt,$roleimgalt);
+            $parsing =array($duplicateid,$cntF77);
+            $pageTitles=array($documenttitle,$cntH251EmptyTitle,$cntH251NoTitleEl);
+            $linksnbuttons=array($ariaallowedrole,$H91LiName,$cntH91ButtonName,$cntH91InputButtonName,$cntH91InputImageName,$inputbuttonname,$buttonname,$cntH91InputImageName,$list,$inputimagealt,$linkname,$cntH91AEmptyNoId,$cntH91ANoContent,);
+            $language=array($H573Lang,$cntH581Lang,$htmllangvalid,$field_axe_html_has_lang,$cntvalidlang);
+            $keyboardAccess =array($scrollableregionfocusable);
+            $framesniFrames = array($frametitleunique,$frametitle,$cntH641);
+            $contrast = array($cntG145,$cntG18,$cntcolorcontrast);
+            $contentStructure =array($cntlistitem,$cntH422,$emptyheading);
+            $tables=array($cntH43H63,$cntH43MissingHeadersAttrs,$cntH43HeadersRequired,$cntH43MissingHeaderIds,$scopeattrvalid,$cntH393LayoutTable,$cntH43IncorrectAttr,$tdheadersattr);
+            $forms =array($ariahiddenfocus,$cntH91TextareaName,$cntH91InputPasswordName,$cntH91SelectName,$cntH91InputTextName,$cntH91InputRadioName,$ariatogglefieldname,$ariainputfieldname,$formfieldmultiplelabels,$label,$cntF68,$cntH91InputCheckboxName,$cntH91InputFileName,);
+
+
+            $date = date("m-d-Y");
+            $node = new stdClass();
+            $node->type = "508_scan_information";
+            $node->language = LANGUAGE_NONE;
+            $node->uid = "1";
+            $node->name = "admin";
+            $node->status = 1;
+            $node->title = "Accessibility Scan " . $website;
+            if (($nodeId = findNode($node->title, '508_scan_information')) != FALSE) {
+                echo "found node $node->title $nodeId";
+                $node->nid = $nodeId;
+            }
+            $node->promote = 0;
+
+            $node->field_web_scan_id['und'][0]['nid'] =$scanid;
+            $node->field_website_id['und'][0]['nid'] = $siteId;
+            $node->field_web_agency_id['und'][0]['nid'] = $agency_id;
+            $node->field_508_scan_time['und'][0]['value'] = time();
+
+            $node->field_axe_html_has_lang['und'][0]['value'] = $field_axe_html_has_lang;
+            $node->field_axe_image_alt['und'][0]['value'] = $imagealt;
+            $node->field_axe_role_img_alt['und'][0]['value'] = $roleimgalt;
+            $node->field_axe_aria_hidden_focus['und'][0]['value'] = $ariahiddenfocus;
+            $node->field_axe_aria_input_field_name['und'][0]['value'] = $ariainputfieldname;
+            $node->field_axe_aria_toggle_field_name['und'][0]['value'] = $ariatogglefieldname;
+            $node->field_axe_form_field_multiple_la['und'][0]['value'] = $formfieldmultiplelabels;
+            $node->field_axe_label['und'][0]['value'] = $label;
+            $node->field_axe_link_name['und'][0]['value'] = $linkname;
+            $node->field_hcs_h91_button_name['und'][0]['value'] = $WCAG2AAPrinciple4Guideline4_14_1_2H91ButtonName;
+            $node->field_axe_scope_attr_valid['und'][0]['value'] = $scopeattrvalid;
+            $node->field_axe_td_headers_attr['und'][0]['value'] = $tdheadersattr;
+            $node->field_hcs_h39_3_layouttable['und'][0]['value'] = $cntH393LayoutTable;
+            $node->field_hcs_h43_h63['und'][0]['value'] = $cntH43H63;
+            $node->field_hcs_h43_headersrequired['und'][0]['value'] = $cntH43HeadersRequired;
+            $node->field_hcs_h43_incorrectattr['und'][0]['value'] = $cntH43IncorrectAttr;
+            $node->field_hcs_h43_missingheaderids['und'][0]['value'] = $cntH43MissingHeaderIds;
+            $node->field_hcs_h43_missingheadersattr['und'][0]['value'] = $cntH43MissingHeadersAttrs;
+            $node->field_hcs_f68['und'][0]['value'] = $cntF68;
+            $node-> field_hcs_h91_inputfile_name['und'][0]['value'] = $cntH91InputFileName;
+            $node->field_hcs_h91_inputcheckbox_name['und'][0]['value'] = $cntH91InputCheckboxName;
+            $node->field_hcs_h91_inputpassword_name['und'][0]['value'] = $cntH91InputPasswordName;
+            $node->field_hcs_h91_inputradio_name['und'][0]['value'] = $cntH91InputRadioName;
+            $node->field_hcs_h91_inputtext_name['und'][0]['value'] = $cntH91InputTextName;
+            $node->field_hcs_h91_select_name['und'][0]['value'] = $cntH91SelectName;
+            $node->field_hcs_h91_textarea_name['und'][0]['value'] = $cntH91TextareaName;
+            $node->field_axe_color_contrast['und'][0]['value'] = $cntcolorcontrast;
+            $node->field_hcs_g145['und'][0]['value'] = $cntG145;
+            $node->field_hcs_g18['und'][0]['value'] = $cntG18;
+            $node->field_axe_empty_heading['und'][0]['value'] = $emptyheading;
+            $node->field_axe_listitem['und'][0]['value'] = $cntlistitem;
+            $node->field_hcs_h42_2['und'][0]['value'] = $cntH422 ;
+            $node->field_axe_frame_title['und'][0]['value'] = $frametitle;
+            $node->field_axe_frame_title_unique['und'][0]['value'] = $frametitleunique;
+            $node->field_hcs_h64_1['und'][0]['value'] = $cntH641;
+            $node->field_axe_scrollable_region_focu['und'][0]['value'] = $scrollableregionfocusable;
+            $node->field_axe_aria_allowed_role['und'][0]['value'] = $ariaallowedrole;
+            $node->field_axe_button_name['und'][0]['value'] = $buttonname;
+            $node->field_axe_input_button_name['und'][0]['value'] = $inputbuttonname;
+            $node->field_axe_link_name['und'][0]['value'] = $linkname;
+            $node->field_axe_list['und'][0]['value'] = $list;
+            $node->field_hcs_h91_a_emptynoid['und'][0]['value'] = $cntH91AEmptyNoId;
+            $node->field_hcs_h91_a_nocontent['und'][0]['value'] = $cntH91ANoContent;
+            $node->field_hcs_h91_button_name['und'][0]['value'] = $cntH91ButtonName;
+            $node->field_hcs_h91_inputbutton_name['und'][0]['value'] = $cntH91InputButtonName;
+            $node->field_hcs_h91_inputimage_name['und'][0]['value'] = $cntH91InputImageName;
+            $node->field_hcs_h91_li_name['und'][0]['value'] = $H91LiName;
+            $node->field_axe_document_title['und'][0]['value'] = $documenttitle;
+            $node->field_hcs_h25_1_emptytitle['und'][0]['value'] = $cntH251EmptyTitle;
+            $node->field_hcs_h25_1_notitleel['und'][0]['value'] = $cntH251NoTitleEl;
+            $node->field_axe_duplicate_id['und'][0]['value'] = $duplicateid;
+            $node->field_hcs_f77['und'][0]['value'] = $cntF77;
+            $node->field_hcs_h58_1_lang['und'][0]['value'] =$cntH581Lang;
+            $node->field_axe_html_lang_valid['und'][0]['value']=$htmllangvalid;
+            $node->field_axe_valid_lang['und'][0]['value']=$cntvalidlang;
+
+            $node->field_images_total['und'][0]['value']= array_sum($images);
+            $node->field_1_1_1_non_text_content_tot['und'][0]['value']=array_sum($images);
+            $node->field_parsing_total['und'][0]['value']=array_sum($parsing);
+            $node->field_4_1_1_parsing_total['und'][0]['value']=array_sum($parsing);
+            $node->field_page_titles_total['und'][0]['value']=array_sum($pageTitles);
+            $node->field_2_4_2_page_titled_total['und'][0]['value']=array_sum($pageTitles);
+            $node->field_links_and_buttons_total['und'][0]['value']=array_sum($linksnbuttons);
+            $node->field_2_4_4_link_purpose_in_cont['und'][0]['value']=array_sum($linksnbuttons);
+            $node->field_3_1_1_language_of_page_tot['und'][0]['value']=array_sum($language);
+            $node->field_language_total['und'][0]['value']=array_sum($language);
+            $node->field_keyboard_access_total['und'][0]['value']=array_sum($keyboardAccess);
+            $node->	field_2_1_1_keyboard_total['und'][0]['value']=array_sum($keyboardAccess);
+            $node->field_frames_and_iframes_total['und'][0]['value']=array_sum($framesniFrames);
+            $node->field_4_1_2_name_role_value_tota['und'][0]['value']=array_sum($framesniFrames);
+            $node->field_contrast_total['und'][0]['value']=array_sum($contrast);
+            $node->field_1_4_3_contrast_minimum_tot	['und'][0]['value']=array_sum($contrast);
+            $node->field_content_structure_total['und'][0]['value']=array_sum($contentStructure);
+            $node->field_tables_total['und'][0]['value']=array_sum($tables);
+            $node->	field_forms_total['und'][0]['value']=array_sum($forms);
+            $node->field_1_3_1info_and_relation_tot['und'][0]['value']=array_sum($contentStructure)+array_sum($tables)+array_sum($forms);
+
+
+            //      $node->field_accessibility_raw_scan['und'][0]['value'] = $errorlist;
+
+            $access_errors = db_query("select distinct error_cat from custom_accessibility_issues where website_id=:website", array('website' => $siteId));
+            foreach ($access_errors as $error) {
+                $ict_terms[] = $error->error_cat;
+            }
+
+
+            //Save Tags to parent website
+            if(!empty($ict_terms)) {
+                if(!empty($node->field_ict_group)){
+                    foreach($node->field_ict_group['und'] as $ctk  =>$ctval){
+                        $currentTerms[] = $ctval['tid'];
+                    }
+                    $crnTermCnt = count($currentTerms);
+                }
+
+                $i = 1;
+                foreach (array_unique($ict_terms) as $key => $tag) {
+                    if ($term = taxonomy_get_term_by_name($tag)) {
+                        $terms_array = array_keys($term);
+                        //Check if the term already assigned to the node
+                        if(!in_array($terms_array['0'],$currentTerms)){
+                            $node->field_ict_group['und'][$crnTermCnt+$i]['tid'] = $terms_array['0'];
+                        }
+                    } else {
+                        $term = new STDClass();
+                        $term->name = $tag;
+                        $term->vid = 6;
+                        if (!empty($term->name)) {
+                            taxonomy_term_save($term);
+//                        $term = taxonomy_get_term_by_name($tag);
+//                        foreach($term as $term_id){
+//                            $node->product_tags[LANGUAGE_NONE][$key]['tid'] = $term_id->tid;
+//                        }
+                            $node->field_ict_group['und'][$key]['tid'] = $term->tid;
+                        }
+                    }
+                    $i += 1;
+                }
+
+            }else{
+                $node->field_ict_group['und'] = NULL;
+            }
+
+
+            $code_errors = db_query("select distinct error_code from custom_accessibility_issues where website_id=:website", array('website' => $siteId));
+            foreach ($code_errors as $codeerror) {
+                $error_terms[] = $codeerror->error_code;
+            }
+
+            //Save Tags to parent website
+            if(!empty($error_terms)) {
+                if(!empty($node->field_error_code)){
+                    foreach($node->field_error_code['und'] as $ctk1  =>$ctval1){
+                        $currentTerms1[] = $ctval1['tid'];
+                    }
+                    $crnTermCnt1 = count($currentTerms1);
+                }
+
+                $j = 1;
+                foreach (array_unique($error_terms) as $key1 => $tag1) {
+                    if ($term1 = taxonomy_get_term_by_name($tag1)) {
+                        $terms_array1 = array_keys($term1);
+                        //Check if the term already assigned to the node
+                        if(!in_array($terms_array1['0'],$currentTerms1)){
+                            $node->field_error_code['und'][$crnTermCnt1+$j]['tid'] = $terms_array1['0'];
+                        }
+                    } else {
+                        $term1 = new STDClass();
+                        $term1->name = $tag1;
+                        $term1->vid = 6;
+                        if (!empty($term1->name)) {
+                            taxonomy_term_save($term1);
+//                        $term = taxonomy_get_term_by_name($tag);
+//                        foreach($term as $term_id){
+//                            $node->product_tags[LANGUAGE_NONE][$key]['tid'] = $term_id->tid;
+//                        }
+                            $node->field_error_code['und'][$key1]['tid'] = $term1->tid;
+                        }
+                    }
+                    $j += 1;
+                }
+
+            }else{
+                $node->field_error_code['und'] = NULL;
+            }
+
+            node_object_prepare($node);
+            if ($node = node_submit($node)) {
+                node_save($node);
+            }
+
+        }
+        else{
+            print('Website is a redirect \n');
+        }
+    }
+}
+
+# Run Custom Accessbility Scan
+//function runCustomAccessbilityScanNew($scanId){
+//    $first = false;
+//    if (($handle = fopen('/tmp/current-federal.csv', "r")) !== FALSE) {
+//        while (!feof($handle)) {
+//            $data = fgetcsv($handle);
+//            if (!$first) {
+//                $first = true;
+//                continue;
+//            }
+//            if($data[1]=='Federal Agency - Executive') {
+//                updateAccessibilityScan_custom($data[0]);
+//            }
+//        }
+//
+//        fclose($handle);
+//
+//    }
+//}
+
+/*
+ * Create Government Wide Snapshot for Archival and trend analysis purpose
+ */
+function access_archiveGovwideTrendData(){
+    //Find Number of published websites
+    $curdate = date("Y-m-d");
+    $websitenos = db_query("select count(*) from node where type='website' and status ='1'")->fetchField();
+    $agencynos = db_query("select count(*) from node a, field_data_field_agency_branch b where a.type='agency' and a.status ='1' and a.nid=b.entity_id and  b.field_agency_branch_value='executive'")->fetchField();
+
+    //Query to get Accessibility errors
+    $total_forms =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Forms'", array())->fetchField());
+
+    $total_images =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Images'", array())->fetchField());
+
+    $total_content_structure =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Content Structure'", array())->fetchField());
+    $total_tables =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Tables'", array())->fetchField());
+    $total_contrast =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Contrast'", array())->fetchField());
+    $total_keyboard_access =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Keyboard Access'", array())->fetchField());
+
+    $total_page_titles =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Page Titles'", array())->fetchField());
+
+    $total_language =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Language'", array())->fetchField());
+
+    $total_links_and_buttons =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Links and Buttons'", array())->fetchField());
+    $total_parsing =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Parsing'", array())->fetchField());
+    $total_frames_and_iframes =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Frames and iFrames'", array())->fetchField());
+
+
+    $total_nontext_content =$total_images ;
+    $total_info_and_relationships = $total_content_structure + $total_tables + $total_forms ;
+    $total__contrast_minimum =$total_contrast;
+    $total_keyboard =$total_keyboard_access;
+    $total_page_titled =$total_page_titles;
+    $total_link_purpose_incontext = $total_links_and_buttons;
+    $total_languae_of_page =$total_language;
+    $total_name_role_value =$total_frames_and_iframes;
+    $total_wcag_parsing =$total_parsing;
+
+
+
+//  print  ( $websitenos. '' .$agencynos . '' . $total_forms . '' . $total_images . '' . $total_content_structure . '' . $total_tables . '' . $total_contrast . '' .$total_keyboard_access . '' . $total_page_titles . '' . $total_language . '' . $total_links_and_buttons . '' . $total_parsing . '' .$total_frames_and_iframes);
+//  print "insert into custom_government_wide_archive values(NULL,CURDATE(),NOW(),'$websitenos','$ag_avrg_color_cont','$ag_avrg_html_attr','$ag_avrg_miss_image','$agencynos') ON DUPLICATE KEY UPDATE
+//num_of_websites='$websitenos',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',num_of_agencies='$agencynos' \n";
+
+//Update/Insert Archive record for current data sets
+    db_query("insert into custom_gov_wide_access_archive values(NULL,CURDATE(),NOW(),'$websitenos','$agencynos','$total_nontext_content','$total_info_and_relationships','$total__contrast_minimum','$total_keyboard','$total_page_titled',
+                    '$total_link_purpose_incontext','$total_languae_of_page','$total_wcag_parsing','$total_name_role_value','$total_images','$total_content_structure','$total_forms','$total_tables','$total_contrast','$total_keyboard_access',
+                    '$total_page_titles','$total_language','$total_links_and_buttons','$total_parsing','$total_frames_and_iframes') ON DUPLICATE KEY UPDATE
+                    num_of_websites='$websitenos',num_of_agencies='$agencynos',total_1_1_1_nontext_content	='$total_nontext_content',total_1_3_1_info_and_relationships='$total_info_and_relationships',total_1_4_3_contrastminimum='$total__contrast_minimum',total_2_1_1_keyboard='$total_keyboard',total_2_4_2_page_titled='$total_page_titled',
+                    total_2_4_3_link_purpose_incontext='$total_link_purpose_incontext',total_3_1_1_languae_of_page='$total_languae_of_page',total_4_1_1_parsing='$total_wcag_parsing',total_4_1_2_name_role_value='$total_name_role_value',total_images='$total_images',total_content_structure='$total_content_structure',total_forms='$total_forms',
+                    total_tables='$total_tables',total_contrast='$total_contrast',total_keyboard_access='$total_keyboard_access',total_page_titles='$total_page_titles',
+                    total_language ='$total_language',total_links_and_buttons='$total_links_and_buttons',total_parsing='$total_parsing',total_frames_and_iframes='$total_frames_and_iframes'");
+}
+
+function access_archiveAgencyWideTrendData(){
+    $query = db_query("select nid,title from node where type=:bundle", array(':bundle' => 'agency'));
+    $curdate = date("Y-m-d");
+    foreach ($query as $result) {
+        $websitenos = db_query("select count(*) from node a , field_data_field_web_agency_id b   where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => $result->nid))->fetchField();
+
+        //Query to get Accessibility errors
+        $total_agforms =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Forms' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+
+        $total_agimages =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Images' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+
+        $total_agcontent_structure =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Content Structure' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+        $total_agtables =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Tables' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+        $total_agcontrast =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Contrast' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+        $total_agkeyboard_access =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Keyboard Access' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+        $total_agpage_titles =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Page Titles' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+        $total_aglanguage =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Language' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+
+        $total_aglinks_and_buttons =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Links and Buttons' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+        $total_agparsing =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Parsing' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+        $total_agframes_and_iframes =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Frames and iFrames' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+
+
+
+        $total_agnontext_content =$total_agimages ;
+        $total_aginfo_and_relationships = $total_agcontent_structure + $total_agtables + $total_agforms ;
+        $total__agcontrast_minimum =$total_agcontrast;
+        $total_agkeyboard =$total_agkeyboard_access;
+        $total_agpage_titled =$total_agpage_titles;
+        $total_aglink_purpose_incontext = $total_aglinks_and_buttons;
+        $total_aglanguae_of_page =$total_aglanguage;
+        $total_agname_role_value =$total_agframes_and_iframes;
+        $total_agwcag_parsing =$total_agparsing;
+
+        if($websitenos != '0'){
+            db_query("insert into custom_agency_wide_access_archive values(NULL,CURDATE(),NOW(),'$websitenos','$result->title','$result->nid','$total_agnontext_content','$total_aginfo_and_relationships','$total__agcontrast_minimum','$total_agkeyboard','$total_agpage_titled',
+                    '$total_aglink_purpose_incontext','$total_aglanguae_of_page','$total_agwcag_parsing','$total_agname_role_value','$total_agimages','$total_agcontent_structure','$total_agforms','$total_agtables','$total_agcontrast','$total_agkeyboard_access',
+                    '$total_agpage_titles','$total_aglanguage','$total_aglinks_and_buttons','$total_agparsing','$total_agframes_and_iframes') ON DUPLICATE KEY UPDATE
+                    num_of_websites='$websitenos',agency='$result->title',agency_id='$result->nid',agtotal_1_1_1_nontext_content	='$total_agnontext_content',agtotal_1_3_1_info_and_relationships='$total_aginfo_and_relationships',agtotal_1_4_3_contrastminimum='$total__agcontrast_minimum',agtotal_2_1_1_keyboard='$total_agkeyboard',agtotal_2_4_2_page_titled='$total_agpage_titled',
+                    agtotal_2_4_3_link_purpose_incontext='$total_aglink_purpose_incontext',agtotal_3_1_1_languae_of_page='$total_aglanguae_of_page',agtotal_4_1_1_parsing='$total_agwcag_parsing',agtotal_4_1_2_name_role_value='$total_agname_role_value',agtotal_images='$total_agimages',agtotal_content_structure='$total_agcontent_structure',agtotal_forms='$total_agforms',
+                    agtotal_tables='$total_agtables',agtotal_contrast='$total_agcontrast',agtotal_keyboard_access='$total_agkeyboard_access',agtotal_page_titles='$total_agpage_titles',
+                    agtotal_language ='$total_aglanguage',agtotal_links_and_buttons='$total_aglinks_and_buttons',agtotal_parsing='$total_agparsing',agtotal_frames_and_iframes='$total_agframes_and_iframes'");
+        }
+
     }
 
 }
