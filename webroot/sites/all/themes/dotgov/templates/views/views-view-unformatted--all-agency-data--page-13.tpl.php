@@ -258,7 +258,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                                         <p>Average Missing Image Description:
                                                             <?=round($agencydata['ag_miss_image'] / $agency_website_num, 1);?>
                                                         </p>
-                                                        <span style="font-size:12px;">(Note: website redirects are excluded)</span></div>
+                                                        <span style="font-size:12px;">(Note: Website redirects are excluded. Accessibility Spot Checks include only Color Contrast, HTML Attributes and Missing Image Description Accessibility Issues)</span></div>
                                                 </div>
                                                 <div class="col-lg-6 grey-gradient second" style="height:200px;">
                                                     <div class ="col-md-12 col-lg-12 nopadding" >
