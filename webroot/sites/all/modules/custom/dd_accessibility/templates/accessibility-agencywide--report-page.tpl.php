@@ -72,8 +72,8 @@
       <p>Or</p>
   </div>
   <div class="searchSection">
-      <span class="searchBox searchLabel">Search:</span>
-      <input type="search" class="searchInput searchInputAlter" id="searchInput">
+      <label class="searchBox searchLabel">Search:
+      <input type="search" class="searchInput searchInputAlter" id="searchInput"></label>
   </div>
   <div class="reset">
     <button type="submit" id="resetSearch2" value="Reset" class="btn btn-default resetSearch">Reset</button>
@@ -220,24 +220,25 @@
                         var result = [];
                         for (var item, i = 0; item = items[i++];) {
                             var name = item["Agency"];
-
+                           
                             if (!(name in lookup)) {
                                 lookup[name] = 1;
                                 result.push(name);
                                 Array.prototype.last = function () {
                                     return this[this.length - 1];
                                 };
-                                //console.log(result.last());
+                                
                                 var fResult = result.last();
+                               
                                 var option = '';
-                                option += '<option value="' + fResult + '">' + fResult + '</option>';
+                                option += '<option value="' + fResult+ '">' + fResult + '</option>';
                                 jQuery('#filterItems').append(option);
                             }
                         }
                     });
 
                     if(flagVal === 0)  {
-                        jQuery('#filterItems').prepend('<option value="">-Any-</option>');
+                        jQuery('#filterItems').prepend('<option value="">- Any -</option>');
                         flagVal ++;
                     }
                 }

@@ -61,7 +61,7 @@ function startScan(){
     file_prepare_directory($pulsedir, FILE_CREATE_DIRECTORY);
     $httpfiledata = file_get_contents('/tmp/pulsehttp.csv', true);
     $dapfiledata = file_get_contents('/tmp/pulsedap.csv', true);
-    # runUswdsScan();
+    runUswdsScan();
     $uswdsfiledata = file_get_contents("/tmp/results/uswds2.csv");
     $uswdsfile =  file_save_data($uswdsfiledata,file_default_scheme().'://uswdsscan/'.uswds_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
 
@@ -77,7 +77,7 @@ function startScan(){
 
     //Run Accessbility Scan through Pa11y
     writeToLogs("Collecting Accessbility Data through Pa11y using domain scan tool",$logFile);
-    # runAccessibilityNewCustomScan();
+    runAccessibilityNewCustomScan();
     $pa11yfiledata = file_get_contents("/tmp/results/a11y.csv");
     $pa11yfile =  file_save_data($pa11yfiledata,file_default_scheme().'://accessibilityscan/'.pa11y_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
 
@@ -106,12 +106,12 @@ function runUswdsScan(){
  */
 function runAccessibilityNewCustomScan(){
     //run pa11y Scan
-    // exec("timeout 15 ../tools/domain-scan/scan /tmp/current-federal.csv --scan=a11y --workers=50 --output=/tmp/");
+    exec("timeout 15 ../tools/domain-scan/scan /tmp/current-federal.csv --scan=a11y --workers=50 --output=/tmp/");
     db_query("truncate table custom_accessibility_issues");
-    db_query("LOAD DATA INFILE '/Users/ayaskantsahu/a11y.csv' INTO TABLE custom_accessibility_issues FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' (website,base_domain, domain_redirected_to,error_typecode,error_code,error_message,error_context,error_selector);");
+    db_query("LOAD DATA LOCAL INFILE '/tmp/results/a11y.csv' INTO TABLE custom_accessibility_issues FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' (website,base_domain, domain_redirected_to,error_typecode,error_code,error_message,error_context,error_selector);");
 
     db_query("delete from custom_accessibility_issues where error_code not in ('WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.EmptyNoId','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.NoContent','aria-allowed-role','aria-hidden-focus','aria-input-field-name','aria-toggle-field-name','button-name','color-contrast','WCAG2AA.Principle1.Guideline1_4.1_4_3.G145','WCAG2AA.Principle1.Guideline1_4.1_4_3.G18','document-title','duplicate-id','WCAG2AA.Principle4.Guideline4_1.4_1_1.F77','empty-heading','WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.EmptyTitle','form-field-multiple-labels','frame-title','frame-title-unique','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired','WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2','html-has-lang','html-lang-valid','WCAG2AA.Principle2.Guideline2_4.2_4_1.H64.1','image-alt','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.IncorrectAttr','input-button-name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputButton.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputCheckbox.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputFile.Name','input-image-alt','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputImage.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputPassword.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputRadio.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name','label','WCAG2AA.Principle1.Guideline1_3.1_3_1.F68','WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable','link-name','list','listitem','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Li.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeadersAttrs','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeaderIds','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43,H63','WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.NoTitleEl','role-img-alt','scope-attr-valid','scrollable-region-focusable','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Select.Name','td-headers-attr','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Textarea.Name','WCAG2AA.Principle3.Guideline3_1.3_1_2.H58.1.Lang','valid-lan_g')");
-    accessibility_new_updateTable();
+  accessibility_new_updateTable();
 
 }
 
@@ -147,141 +147,143 @@ function findParentAgencyName($websiteid){
 
 function accessibility_new_updateWebsite($domain)
 {
-
-    $websites = array();
+  $websites = array();
+  $websites['website_id'] = findNode($domain, 'website');
+  $websites['agency_id'] = findParentAgencyNode($websites['website_id']);
+  $websites['agency_name'] = findParentAgencyName($websites['website_id']);
+  $websites['website'] = $domain;
+  $check_redirect =  db_query("select redirect from custom_pulse_https_data where domain=:domain", array(':domain' => trim($domain)))->fetchField();
+  if($check_redirect != 'Yes') {
 #read current-federal.csv and loop the below query over each table
-    $websites['website_id'] = findNode($domain, 'website');
-    $websites['agency_id'] = findParentAgencyNode($websites['website_id']);
-    $websites['agency_name'] = findParentAgencyName($websites['website_id']);
-    $websites['website'] = $domain;
     $accessibility_results = db_query("SELECT error_code,error_message,error_context,error_selector FROM custom_accessibility_issues where website = '$domain'");
-
-    echo " accessibility_scan() - Website scan ".$websites['website']. "\n";
+    echo " accessibility_scan() - Website scan " . $websites['website'] . "\n";
     foreach ($accessibility_results as $result) {
-        $websites['code'] = $result->error_code;
-        $websites['message'] = $result->error_message;
-        $websites['context'] = $result->error_context;
-        $websites['selector'] = $result->error_selector;
+      $websites['code'] = $result->error_code;
+      $websites['message'] = $result->error_message;
+      $websites['context'] = $result->error_context;
+      $websites['selector'] = $result->error_selector;
 
-        if ($websites['code'] == 'image-alt' || $websites['code'] == 'role-img-alt') {
+      if ($websites['code'] == 'image-alt' || $websites['code'] == 'role-img-alt') {
 
-            $websites['category'] = 'Images';
-            $websites['runner'] = 'axe-core 3.5';
-            $websites['wcag_ref'] = '1.1.1 Non-text Content';
-        } elseif ($websites['code'] == 'aria-hidden-focus' || $websites['code'] == 'aria-input-field-name' || $websites['code'] == 'aria-toggle-field-name'
-            || $websites['code'] == 'form-field-multiple-labels' || $websites['code'] == 'label') {
+        $websites['category'] = 'Images';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '1.1.1 Non-text Content';
+      } elseif ($websites['code'] == 'aria-hidden-focus' || $websites['code'] == 'aria-input-field-name' || $websites['code'] == 'aria-toggle-field-name'
+        || $websites['code'] == 'form-field-multiple-labels' || $websites['code'] == 'label') {
 
-            $websites['category'] = 'Forms';
-            $websites['runner'] = 'axe-core 3.5';
-            $websites['wcag_ref'] = '1.3.1 Info and Relationships';
-        } elseif ($websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.F68' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeadersAttrs'
-            || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputCheckbox.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputFile.Name'
-            || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputPassword.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputRadio.Name'
-            || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name'
-            || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Select.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Textarea.Name') {
+        $websites['category'] = 'Forms';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '1.3.1 Info and Relationships';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.F68' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeadersAttrs'
+        || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputCheckbox.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputFile.Name'
+        || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputPassword.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputRadio.Name'
+        || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name'
+        || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Select.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Textarea.Name') {
 
-            $websites['category'] = 'Forms';
-            $websites['runner'] = 'htmlcs 2.5.1';
-            $websites['wcag_ref'] = '1.3.1 Info and Relationships';
-        } elseif ($websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43,H63'
-            || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.IncorrectAttr'
-            || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeaderIds' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeadersAttrs'
-        ) {
+        $websites['category'] = 'Forms';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '1.3.1 Info and Relationships';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43,H63'
+        || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.IncorrectAttr'
+        || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeaderIds' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeadersAttrs'
+      ) {
 
-            $websites['category'] = 'Tables';
-            $websites['runner'] = 'htmlcs 2.5.1';
-            $websites['wcag_ref'] = '1.3.1 Info and Relationships';
-        } elseif ($websites['code'] == 'scope-attr-valid' || $websites['code'] == 'td-headers-attr') {
+        $websites['category'] = 'Tables';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '1.3.1 Info and Relationships';
+      } elseif ($websites['code'] == 'scope-attr-valid' || $websites['code'] == 'td-headers-attr') {
 
-            $websites['category'] = 'Tables';
-            $websites['runner'] = 'axe-core 3.5';
-            $websites['wcag_ref'] = '1.3.1 Info and Relationships';
-        } elseif ($websites['code'] == 'empty-heading' || $websites['code'] == 'listitem') {
+        $websites['category'] = 'Tables';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '1.3.1 Info and Relationships';
+      } elseif ($websites['code'] == 'empty-heading' || $websites['code'] == 'listitem') {
 
-            $websites['category'] = 'Content Structure';
-            $websites['runner'] = 'axe-core 3.5';
-            $websites['wcag_ref'] = '1.3.1 Info and Relationships';
-        } elseif ($websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2') {
+        $websites['category'] = 'Content Structure';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '1.3.1 Info and Relationships';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2') {
 
-            $websites['category'] = 'Content Structure';
-            $websites['runner'] = 'htmlcs 2.5.1';
-            $websites['wcag_ref'] = '1.3.1 Info and Relationships';
-        } elseif ($websites['code'] == 'color-contrast') {
+        $websites['category'] = 'Content Structure';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '1.3.1 Info and Relationships';
+      } elseif ($websites['code'] == 'color-contrast') {
 
-            $websites['category'] = 'Contrast';
-            $websites['runner'] = 'axe-core 3.5';
-            $websites['wcag_ref'] = '1.4.3 Contrast (Minimum)';
-        } elseif ($websites['code'] == 'WCAG2AA.Principle1.Guideline1_4.1_4_3.G145' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_4.1_4_3.G18') {
+        $websites['category'] = 'Contrast';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '1.4.3 Contrast (Minimum)';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle1.Guideline1_4.1_4_3.G145' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_4.1_4_3.G18') {
 
-            $websites['category'] = 'Contrast';
-            $websites['runner'] = 'htmlcs 2.5.1';
-            $websites['wcag_ref'] = '1.4.3 Contrast (Minimum)';
-        } elseif ($websites['code'] == 'scrollable-region-focusable') {
+        $websites['category'] = 'Contrast';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '1.4.3 Contrast (Minimum)';
+      } elseif ($websites['code'] == 'scrollable-region-focusable') {
 
-            $websites['category'] = 'Keyboard Access';
-            $websites['runner'] = 'axe-core 3.5';
-            $websites['wcag_ref'] = '2.1.1 Keyboard';
-        } elseif ($websites['code'] == 'WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.EmptyTitle' || $websites['code'] == 'WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.NoTitleEl') {
+        $websites['category'] = 'Keyboard Access';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '2.1.1 Keyboard';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.EmptyTitle' || $websites['code'] == 'WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.NoTitleEl') {
 
-            $websites['category'] = 'Page Titles';
-            $websites['runner'] = 'htmlcs 2.5.1';
-            $websites['wcag_ref'] = '2.4.2';
-        } elseif ($websites['code'] == 'document-title') {
+        $websites['category'] = 'Page Titles';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '2.4.2';
+      } elseif ($websites['code'] == 'document-title') {
 
-            $websites['category'] = 'Page Titles';
-            $websites['runner'] = 'axe-core 3.5';
-            $websites['wcag_ref'] = '2.4.2 Page Titled';
-        } elseif ($websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.EmptyNoId' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.NoContent'
-            || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputButton.Name'
-            || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputImage.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Li.Name'
-        ) {
+        $websites['category'] = 'Page Titles';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '2.4.2 Page Titled';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.EmptyNoId' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.NoContent'
+        || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputButton.Name'
+        || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputImage.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Li.Name'
+      ) {
 
-            $websites['category'] = 'Links and Buttons';
-            $websites['runner'] = 'htmlcs 2.5.1';
-            $websites['wcag_ref'] = '2.4.4 Link Purpose (In Context)';
-        } elseif ($websites['code'] == 'aria-allowed-role' || $websites['code'] == 'button-name'
-            || $websites['code'] == 'input-button-name' || $websites['code'] == 'input-image-alt'
-            || $websites['code'] == 'link-name' || $websites['code'] == 'list'
-        ) {
-            $websites['category'] = 'Links and Buttons';
-            $websites['runner'] = 'axe-core 3.5';
-            $websites['wcag_ref'] = '2.4.4 Link Purpose (In Context)';
-        } elseif ($websites['code'] == 'html-has-lang' || $websites['code'] == 'html-lang-valid'
-            || $websites['code'] == 'valid-lang') {
-            $websites['category'] = 'Language';
-            $websites['runner'] = 'axe-core 3.5';
-            $websites['wcag_ref'] = '3.1.1 Language of Page';
-        } elseif ($websites['code'] == 'WCAG2AA.Principle3.Guideline3_1.3_1_1.H57.3.Lang' || $websites['code'] == 'WCAG2AA.Principle3.Guideline3_1.3_1_2.H58.1.Lang'
-        ) {
-            $websites['category'] = 'Language';
-            $websites['runner'] = 'htmlcs 2.5.1';
-            $websites['wcag_ref'] = '3.1.1 Language of Page';
-        } elseif ($websites['code'] == 'duplicate-id') {
-            $websites['category'] = 'Parsing';
-            $websites['runner'] = 'axe-core 3.5';
-            $websites['wcag_ref'] = '4.1.1 Parsing';
-        } elseif ($websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_1.F77') {
-            $websites['category'] = 'Parsing';
-            $websites['runner'] = 'htmlcs 2.5.1';
-            $websites['wcag_ref'] = '4.1.1 Parsing';
-        }
-        elseif ($websites['code'] == 'WCAG2AA.Principle2.Guideline2_4.2_4_1.H64.1') {
-            $websites['category'] = 'Frames and iFrames';
-            $websites['runner'] = 'htmlcs 2.5.1';
-            $websites['wcag_ref'] = '4.1.2 Name, Role, Value';
-        }
-        elseif ($websites['code'] == 'frame-title-unique' || $websites['code'] == 'frame-title') {
-            $websites['category'] = 'Frames and iFrames';
-            $websites['runner'] = 'axe-core 3.5';
-            $websites['wcag_ref'] = '4.1.2 Name, Role, Value';
-        }else {
+        $websites['category'] = 'Links and Buttons';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '2.4.4 Link Purpose (In Context)';
+      } elseif ($websites['code'] == 'aria-allowed-role' || $websites['code'] == 'button-name'
+        || $websites['code'] == 'input-button-name' || $websites['code'] == 'input-image-alt'
+        || $websites['code'] == 'link-name' || $websites['code'] == 'list'
+      ) {
+        $websites['category'] = 'Links and Buttons';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '2.4.4 Link Purpose (In Context)';
+      } elseif ($websites['code'] == 'html-has-lang' || $websites['code'] == 'html-lang-valid'
+        || $websites['code'] == 'valid-lang') {
+        $websites['category'] = 'Language';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '3.1.1 Language of Page';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle3.Guideline3_1.3_1_1.H57.3.Lang' || $websites['code'] == 'WCAG2AA.Principle3.Guideline3_1.3_1_2.H58.1.Lang'
+      ) {
+        $websites['category'] = 'Language';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '3.1.1 Language of Page';
+      } elseif ($websites['code'] == 'duplicate-id') {
+        $websites['category'] = 'Parsing';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '4.1.1 Parsing';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_1.F77') {
+        $websites['category'] = 'Parsing';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '4.1.1 Parsing';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle2.Guideline2_4.2_4_1.H64.1') {
+        $websites['category'] = 'Frames and iFrames';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '4.1.2 Name, Role, Value';
+      } elseif ($websites['code'] == 'frame-title-unique' || $websites['code'] == 'frame-title') {
+        $websites['category'] = 'Frames and iFrames';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '4.1.2 Name, Role, Value';
+      } else {
 
-            $websites['category'] = '';
-            $websites['runner'] = '';
-            $websites['wcag_ref'] = '';
-        }
-        access_new_table_update($websites);
+        $websites['category'] = '';
+        $websites['runner'] = '';
+        $websites['wcag_ref'] = '';
+      }
+      access_new_table_update($websites);
     }
+  }
+  else {
+    db_query("delete from custom_accessibility_issues where website=:domain", array(':domain' => trim($domain)));
+  }
 }
 
 function accessibility_new_updateTable()
