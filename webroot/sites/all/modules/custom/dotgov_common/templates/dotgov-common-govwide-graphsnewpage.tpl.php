@@ -211,7 +211,7 @@
                                  <div class="view-empty clearfix">
                                     <div class="col-lg-6 grey-gradient" style="height:200px;">
                                        <div class ="col-md-12 col-lg-12 nopadding" >
-                                          <h5>Accessibility Spot Checks by Type</h5>
+                                          <h5>Accessibility Issues by Type</h5>
                                        </div>
                                        <div class="col-md-12 col-lg-12 nopadding" style="margin:27px 0;">
                                           <p>Average Color Contrast:
@@ -228,7 +228,7 @@
                                     </div>
                                     <div class="col-lg-6 grey-gradient second" style="height:200px;">
                                        <div class ="col-md-12 col-lg-12 nopadding" >
-                                          <h5>Average Accessibility Spot Checks by type Per website</h5>
+                                          <h5>Average Accessibility Issues by Type per Website</h5>
                                        </div>
                                        <div  class="clearfix"></div>
                                        <div id="piechart"></div>
