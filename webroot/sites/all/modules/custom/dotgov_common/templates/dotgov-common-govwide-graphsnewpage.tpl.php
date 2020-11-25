@@ -209,7 +209,7 @@
                            <div class="view-wrapper" style="min-height:290px;">
                               <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                                  <div class="view-empty clearfix">
-                                    <div class="col-lg-6 grey-gradient" style="height:200px;">
+                                    <div class="col-lg-6 grey-gradient" style="height:250px;">
                                        <div class ="col-md-12 col-lg-12 nopadding" >
                                           <h5>Accessibility Issues by Type</h5>
                                        </div>
@@ -226,7 +226,7 @@
                                           <span style="font-size:12px;">(Note: Website redirects are excluded. Accessibility Spot Checks include only Color Contrast, HTML Attributes and Missing Image Description Accessibility Issues)</span>
                                        </div>
                                     </div>
-                                    <div class="col-lg-6 grey-gradient second" style="height:200px;">
+                                    <div class="col-lg-6 grey-gradient second" style="height:250px;">
                                        <div class ="col-md-12 col-lg-12 nopadding" >
                                           <h5>Average Accessibility Issues by Type per Website</h5>
                                        </div>
