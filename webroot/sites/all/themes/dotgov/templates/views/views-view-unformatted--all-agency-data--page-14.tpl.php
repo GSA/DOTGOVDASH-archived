@@ -250,7 +250,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                     <div class="view-wrapper" style="min-height:285px;">
                                         <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                                             <div class="view-empty clearfix">
-                                                <div class="col-lg-6 grey-gradient" style="height:200px;">
+                                                <div class="col-lg-6 grey-gradient" style="height:250px;">
                                                     <div class ="col-md-12 col-lg-12 nopadding" >
                                                         <h5>Accessibility Issues by Type</h5>
                                                     </div>
@@ -266,7 +266,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                                         </p>
                                                         <span style="font-size:12px;">(Note: Website redirects are excluded. Accessibility Spot Checks include only Color Contrast, HTML Attributes and Missing Image Description Accessibility Issues)</span></div>
                                                 </div>
-                                                <div class="col-lg-6 grey-gradient second" style="height:200px;">
+                                                <div class="col-lg-6 grey-gradient second" style="height:250px;">
                                                     <div class ="col-md-12 col-lg-12 nopadding" >
                                                         <h5>Average Accessibility Issues by Type per Website</h5>
                                                     </div>
@@ -305,7 +305,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                                 <?php
 if (($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydata['ag_miss_image']) != 0) {
     print "<div class='col-lg-12 text-center clearfix'><span style='color:#29643a; font-size: 10px;font-style: italic;'>
-Above graph shows the breakdown of Accessibility Spot Checks by category</span></div>
+Above graph shows the breakdown of Accessibility Issues by category</span></div>
 ";
 }
 ?>
