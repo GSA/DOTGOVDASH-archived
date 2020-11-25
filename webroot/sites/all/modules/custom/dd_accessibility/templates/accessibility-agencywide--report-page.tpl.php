@@ -139,7 +139,7 @@
                                 let elmntLength = jQuery(".pvtTable tbody tr.row"+i+"").length;
                                 x = x + elmntLength;
                                 var elmnt = jQuery(".pvtTable tbody tr").eq(x-1).find("th div").html();
-                               // jQuery(".pvtTable tbody tr").eq(x-1).find("th div").html("<a target='_blank' class='link' href='https://www.google.com/'>" + elmnt + "</a>");
+                                jQuery(".pvtTable tbody tr").eq(x-1).find("th div").html("<a target='_blank' class='link' href='https://www.google.com/'>" + elmnt + "</a>");
                             }
                         }
 
