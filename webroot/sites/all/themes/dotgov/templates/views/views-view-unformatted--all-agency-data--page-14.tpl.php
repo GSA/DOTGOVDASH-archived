@@ -305,7 +305,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                                 <?php
 if (($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydata['ag_miss_image']) != 0) {
     print "<div class='col-lg-12 text-center clearfix'><span style='color:#29643a; font-size: 10px;font-style: italic;'>
-Above graph shows the breakdown of Accessibility Spot Checks by category</span></div>
+Above graph shows the breakdown of Accessibility Issues by category</span></div>
 ";
 }
 ?>
