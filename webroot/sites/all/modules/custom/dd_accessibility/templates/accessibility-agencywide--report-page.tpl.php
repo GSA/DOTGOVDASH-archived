@@ -130,6 +130,7 @@
                     });
 
                     setTimeout(function () {
+                        addImage();
                         let totalRowsLen = jQuery(".pvtTable tbody tr").length;
                         let x = 0;
                         for(let i =0; i< totalRowsLen; i++) {
@@ -151,6 +152,15 @@
                 // Change col total Label
                 function colTotalLabel() {
                   jQuery( "th.pvtTotalLabel.colTotal .pvtFixedHeader" ).text( "Total Accessibility Issues" );
+                }
+
+                // Add dummy image to fix WAVE issues
+                function addImage() {
+                    if( jQuery('.pvtTableWrapper .pvtTable thead tr:first-child th:first-child div.pvtFixedHeader').is(':empty') ) {
+                    jQuery( '.pvtTableWrapper .pvtTable thead tr:first-child th:first-child div.pvtFixedHeader' ).html( "<img alt='dummy-image' title='dummy-image' style='width:100%; height: 100%' src='/sites/all/modules/custom/dd_accessibility/images/dummy-image.png'>" );
+                    jQuery( '.pvtTableWrapper .pvtTable thead tr:last-child th:last-child div.pvtFixedHeader' ).html( "<img alt='dummy-image' title='dummy-image' style='width:100%; height: 100%' src='/sites/all/modules/custom/dd_accessibility/images/dummy-image.png'>" );
+                    jQuery( '.pvtTableWrapper .pvtTable tbody tr th:nth-child(2).rowshow.rowcollapsed div.pvtFixedHeader' ).html( "<img alt='dummy-image' title='dummy-image' style='width:100%; height: 100%' src='/sites/all/modules/custom/dd_accessibility/images/dummy-tbody.png'>" );
+                    }
                 }
 
                 // toggle search and Filter actions
@@ -181,33 +191,6 @@
                         jQuery('.pvtTableWrapper').animate({
                             scrollLeft: "-=400px"
                         }, "slow");
-                    });
-                }
-
-
-                // to do fontResize
-                function fontResize() {
-                    jQuery("#f-increase").click(function () {
-                        var fontSize = parseInt(jQuery(this).css("font-size"));
-                        fontSize = fontSize + 2 + "px";
-                        jQuery('table.pvtTable tbody tr th, table.pvtTable thead tr th, .pvtVal').css({ 'font-size': fontSize });
-
-                    });
-
-
-                    jQuery("#f-reset").click(function () {
-                        var fontSize = parseInt(jQuery(this).css("font-size"));
-                        fontSize = "12px";
-                        jQuery('table.pvtTable tbody tr th, table.pvtTable thead tr th, .pvtVal').css({ 'font-size': fontSize });
-
-                    });
-                }
-
-                // To do
-                function loadAlert() {
-                    jQuery(".pvtHorizList > .axis_1.ui-sortable-handle").click(function () {
-                        jQuery(".pvtUi tbody tr:nth-child(2) td:first-child, .pvtUi tbody tr:nth-child(2) td:first-child div:nth-child(2) .pvtCheckContainer").show();
-                        jQuery(".pvtUi tbody tr:nth-child(2) td:first-child div:nth-child(2) .pvtCheckContainer").show();
                     });
                 }
 
