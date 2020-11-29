@@ -811,8 +811,11 @@
           setTextContent(ah.th, " " + arrowCollapsed + " " + ah.text);
 
           ah.clickStatus = clickStatusCollapsed;
+          jQuery( '.pvtTableWrapper .pvtTable thead tr:first-child th:first-child div.pvtFixedHeader' ).html( "<img alt='dummy-image' title='dummy-image' style='width:100%; height: 100%' src='/sites/all/modules/custom/dd_accessibility/images/dummy-image.png'>" );
+          jQuery( '.pvtTableWrapper .pvtTable thead tr:last-child th:last-child div.pvtFixedHeader' ).html( "<img alt='dummy-image' title='dummy-image' style='width:100%; height: 100%' src='/sites/all/modules/custom/dd_accessibility/images/dummy-image.png'>" );
+          jQuery( '.pvtTableWrapper .pvtTable tbody tr th:nth-child(2).rowshow.rowcollapsed div.pvtFixedHeader' ).html( "<img class='tbody-image' alt='dummy-image' title='dummy-image' style='width:100%; height: 100%' src='/sites/all/modules/custom/dd_accessibility/images/dummy-tbody.png'>" );        
           results.push(ah.onClick = expandAxis);
-        }
+          }
         return results;
       };
       adjustAxisHeader = function (axisHeaders, col, opts) {
@@ -825,6 +828,7 @@
           // ah.th.textContent = " " + arrowExpanded + " " + ah.text;
           setTextContent(ah.th, " " + arrowExpanded + " " + ah.text);
           ah.clickStatus = clickStatusExpanded;
+          jQuery( '.pvtTableWrapper .pvtTable tbody tr th:nth-child(2).rowshow.rowexpanded div.pvtFixedHeader' ).html( "<img class='tbody-image' alt='dummy-image' title='dummy-image' style='width:100%; height: 100%' src='/sites/all/modules/custom/dd_accessibility/images/tbody-dummy-expanded.png'>" );
           return ah.onClick = collapseAxis;
         }
       };
