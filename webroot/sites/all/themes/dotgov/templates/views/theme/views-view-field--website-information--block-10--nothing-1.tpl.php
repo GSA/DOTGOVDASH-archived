@@ -71,7 +71,7 @@ elseif(trim($chartdata) == ''){
     $chartcolor = '#ac0600';
     $chartdatatext = 'Not Available';
     $chartdata = '0';
-    $chartdatafont = "12px";
+    $chartdatafont = "10px";
 }
 ?>
 <div class="sr-only">The graphic below indicates the level of M-15-13 and BOD 18-01 compliance, and this score is <?php echo $chartdata; ?>%.</div>

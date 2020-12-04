@@ -71,7 +71,7 @@ elseif(trim($chartdata) == ''){
     $chartcolor = '#ac0600';
     $chartdatatext = 'Not Available';
     $chartdata = '0';
-    $chartdatafont = "12px";
+    $chartdatafont = "10px";
 }
 ?>
 <div class="sr-only">The graphic below indicates the level of Free of RC4/3DES and SSLv2/SSLv3 compliance, and this score is <?php echo $chartdata; ?>%.</div>
