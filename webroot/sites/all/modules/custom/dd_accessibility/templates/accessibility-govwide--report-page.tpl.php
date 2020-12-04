@@ -93,6 +93,7 @@
                 var extension = new PivotTableExtensions;
                 var tabledata;
                 var flagVal = 0;
+                getFilterList();
                 scrollTable();
 
                 jQuery( ".searchInput" ).change(function() {
@@ -120,7 +121,6 @@
                         },
                         onRefresh: function (pivotUIOptions) {
                             extension.initFixedHeaders(jQuery('table.pvtTable'));
-                            getFilterList();
                             colTotalLabel();
                             controlSearch();
                         }
@@ -219,18 +219,23 @@
                            
                             if (!(name in lookup)) {
                                 lookup[name] = 1;
-                                result.push(name);
+                                if(name) {
+                                    result.push(name);
+                                }
                                 Array.prototype.last = function () {
                                     return this[this.length - 1];
                                 };
                                 
                                 var fResult = result.last();
-                               
-                                var option = '';
-                                option += '<option value="' + fResult+ '">' + fResult + '</option>';
-                                jQuery('#filterItems').append(option);
+                                var assending = result.sort((a, b) => a.localeCompare(b));                                
                             }
                         }
+
+                        jQuery('#filterItems').append(
+                            jQuery.map(assending, function(v,k){
+                                return jQuery("<option>").val(v).text(v);
+                            })
+                        );
                     });
 
                     if(flagVal === 0)  {
