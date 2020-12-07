@@ -1087,11 +1087,11 @@
                                        <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
                                        <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
                                        <tr>
-                                          <td> DAP Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
+                                          <td> DAP Compliant Websites</td>
                                           <td><?=dotgov_common_getColor($agencydata['dap_compliant'], '#29643a', $dap_arr[0])?></td>
                                        </tr>
                                        <tr>
-                                          <td>DAP Non Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
+                                          <td>DAP Non Compliant Websites</td>
                                           <td><?=dotgov_common_getColor($agencydata['dap_noncompliant'], '#ac0600', $dap_arr[1])?></td>
                                        </tr>
                                     </table>
