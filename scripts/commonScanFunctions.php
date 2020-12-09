@@ -62,7 +62,7 @@ function startScan(){
     $httpfiledata = file_get_contents('/tmp/pulsehttp.csv', true);
     $dapfiledata = file_get_contents('/tmp/pulsedap.csv', true);
     runUswdsScan();
-    $uswdsfiledata = file_get_contents("/tmp/results/uswds2.csv");
+    $uswdsfiledata = file_get_contents("/tmp/uswdsresults/results/uswds2.csv");
     $uswdsfile =  file_save_data($uswdsfiledata,file_default_scheme().'://uswdsscan/'.uswds_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
 
     $httpsdatafile = file_save_data($httpfiledata,file_default_scheme().'://pulsehttps/'.pulse_http_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
@@ -97,8 +97,8 @@ function startScan(){
 * Run USWDS Scan
 */
 function runUswdsScan(){
-    //exec("../tools/domain-scan/scan /tmp/current-federal.csv --scan=uswds2 --workers=50 --output=/tmp/");
-    exec("timeout 15 wget -O /tmp/results/uswds2.csv \"https://api.gsa.gov/technology/site-scanner/v1/scans/uswds2/csv/?domaintype=Federal%20Agency%20-%20Executive&api_key=6i0A3HhMw1FAmhXokiEWrpjfWqGztEtaodHxGFfj\"");
+    exec("../tools/domain-scan/scan /tmp/current-federal.csv --scan=uswds2 --workers=50 --output=/tmp/uswdsresults/");
+    //exec("timeout 15 wget -O /tmp/uswdsresults/results/uswds2.csv \"https://api.gsa.gov/technology/site-scanner/v1/scans/uswds2/csv/?domaintype=Federal%20Agency%20-%20Executive&api_key=6i0A3HhMw1FAmhXokiEWrpjfWqGztEtaodHxGFfj\"");
 }
 
 /*
@@ -305,7 +305,7 @@ function accessibility_new_updateTable()
 }
 
 function updateUswdsScanInfo($webscanId){
-    $csv = readCSV("/tmp/results/uswds2.csv");
+    $csv = readCSV("/tmp/uswdsresults/results/uswds2.csv");
 
     $i =1;
     $lineresult = "";
