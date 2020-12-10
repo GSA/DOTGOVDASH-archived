@@ -99,7 +99,7 @@ if(!is_redirect(arg(1))) {
     print "DAP Score: Not Available<br>";
     print "DAP Status: Not Available<br>";
     $chartdatatext = "Not Available";
-    $chartdatafont = "12px";
+    $chartdatafont = "10px";
     $chartdata = "0";
   }
   elseif($dapscore == '0') {
