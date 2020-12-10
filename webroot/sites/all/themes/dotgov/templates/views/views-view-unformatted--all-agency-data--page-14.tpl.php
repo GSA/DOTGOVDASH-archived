@@ -1123,11 +1123,11 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                                         <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
                                                         <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
                                                         <tr>
-                                                            <td> DAP Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
+                                                            <td> DAP Compliant Websites</td>
                                                             <td><?=dotgov_common_applyDataColor($agencydata['dap_compliant'], $agencydata['dap_tottracked'], '#29643a')?></td>
                                                         </tr>
                                                         <tr>
-                                                            <td>DAP Non Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
+                                                            <td>DAP Non Compliant Websites</td>
                                                             <td><?=dotgov_common_applyDataColor($agencydata['dap_noncompliant'], $agencydata['dap_tottracked'], '#ac0600')?></td>
                                                         </tr>
                                                     </table>
