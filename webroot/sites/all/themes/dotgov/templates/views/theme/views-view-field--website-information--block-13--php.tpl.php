@@ -81,7 +81,7 @@ foreach ($query as $result) {
     $uswdsscore = $result->field_uswds_score_value;
     $uswdsstat = $result->field_uswds_status_value;
 }
-$chartdatafont = "12px";
+$chartdatafont = "10px";
 ?>
 
 <div class="col-lg-12 clearfix nopadding">
