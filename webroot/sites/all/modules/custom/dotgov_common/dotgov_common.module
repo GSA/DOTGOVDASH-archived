@@ -182,18 +182,18 @@ function dotgov_commmon_get_techTerms($nid){
 
 }
 function dotgov_commmon_get_accessTerms($nid){	
-    $terms = array();	
-    $parentwebsiteid = db_query("select field_website_id_nid from field_data_field_website_id where entity_id=:entity_id",array('entity_id' =>$nid))->fetchField();	
-    if($parentwebsiteid!= "") {	
-        $access_errors = db_query("select distinct error_cat from custom_accessibility_issues where website_id=:website", array('website' => $parentwebsiteid));	
-        foreach ($access_errors as $error) {	
-            $terms[] = $error->error_cat;	
-        }	
-    }	
-    else{	
-        $terms = array();	
-    }	
-    return $terms;	
+    $terms = array();
+    $parentwebsiteid = db_query("select field_website_id_nid from field_data_field_website_id where entity_id=:entity_id",array('entity_id' =>$nid))->fetchField();
+    if($parentwebsiteid!= "") {
+        $access_errors = db_query("select distinct error_cat from custom_accessibility_issues where website_id=:website", array('website' => $parentwebsiteid));
+        foreach ($access_errors as $error) {
+            $terms[] = $error->error_cat;
+        }
+    }
+    else{
+        $terms = array();
+    }
+    return $terms;
 }
 /*
  * Get Apps Json Data
@@ -915,6 +915,13 @@ function dotgov_common_get_percentage($arr,$websites) {
     }
     $executionLimit++;
     next($c);
+  }
+  if ($sum == 99 && sizeof($roundDown) == 2) {
+      if ($roundDown[0] ==  49) {
+          $roundDown[0]++;
+      } else {
+          $roundDown[1]++;
+      }
   }
   return $roundDown;
 }
