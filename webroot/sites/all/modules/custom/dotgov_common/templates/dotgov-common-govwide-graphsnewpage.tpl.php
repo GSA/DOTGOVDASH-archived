@@ -63,10 +63,10 @@
    dotgov_common_tooltip("tooltip8", "id");
    dotgov_common_tooltip("tooltip10", "id");
    
-   $mobperf_arr = array($agencydata['poor_nos'], $agencydata['improve_nos'], $agencydata['good_nos']);
-   $mobperf_arr = dotgov_common_get_percentage($mobperf_arr, $agencydata['total_non_na_websites']);
-   $mobusab_arr = array($agencydata['friendly_nos'], $agencydata['nonfriendly_nos']);
-   $mobusab_arr = dotgov_common_get_percentage($mobusab_arr, $agencydata['friendly_nos']+$agencydata['nonfriendly_nos']);
+   $mobperf_arr = array($agencydata['good_nos'], $agencydata['improve_nos'], $agencydata['poor_nos'], $agencydata['data_na_nos']);
+   $mobperf_arr = dotgov_common_get_percentage($mobperf_arr, $agency_website_num);
+   $mobusab_arr = array($agencydata['friendly_nos'], $agencydata['nonfriendly_nos'], $agencydata['data_na_usab_nos']);
+   $mobusab_arr = dotgov_common_get_percentage($mobusab_arr, $agency_website_num);
 
    $dnssec_arr = array($agencydata['dns_compliant'], $agencydata['dns_noncompliant']);
    $dnssec_arr = dotgov_common_get_percentage($dnssec_arr, $agency_website_num);
@@ -123,10 +123,11 @@
                                   <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                     <h5>Mobile Performance Breakdown</h5>
                                   </div>
-                                  <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 12px"> <span class="dot low"></span>Poor <br/>
-                                    <span class="dot avg"></span>Needs Improvement <br/>
+                                  <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 12px">
                                     <span class="dot good"></span>Good<br/>
-                                    <!--                                                <span class="dot na"></span>NA-->
+                                    <span class="dot avg"></span>Needs Improvement <br/>
+                                    <span class="dot low"></span>Poor <br/>
+                                    <span class="dot na"></span>Data Not Available<br/>
                                   </div>
                                   <div class="col-lg-6 col-md-6 nopadding">
                                     <div id="piechart1" style="margin-top:-17px;height:140px;"></div>
@@ -136,15 +137,20 @@
                                     <th style="background-color: #215393;color: white;"> Breakdown </th>
                                     <th style="background-color: #215393;color: white;"> Websites </th>
                                     <tr>
-                                      <td>Poor</td>
-                                      <td><?=dotgov_common_getColor($agencydata['poor_nos'], '#ae0100', $mobperf_arr[0])?></td>
+                                      <td>Good</td>
+                                      <td><?=dotgov_common_getColor($agencydata['good_nos'], '#276437', $mobperf_arr[0])?></td>
+                                    </tr>
                                     <tr>
                                       <td>Needs Improvement</td>
                                       <td><?=dotgov_common_getColor($agencydata['improve_nos'], '#665000', $mobperf_arr[1])?></td>
                                     </tr>
                                     <tr>
-                                      <td>Good</td>
-                                      <td><?=dotgov_common_getColor($agencydata['good_nos'], '#276437', $mobperf_arr[2])?></td>
+                                      <td>Poor</td>
+                                      <td><?=dotgov_common_getColor($agencydata['poor_nos'], '#ae0100', $mobperf_arr[2])?></td>
+                                    </tr>
+                                    <tr>
+                                      <td>Data Not Available</td>
+                                      <td><?=dotgov_common_getColor($agencydata['data_na_nos'], '#337ab7', $mobperf_arr[3])?></td>
                                     </tr>
                                   </table>
                                 </div>
@@ -152,8 +158,10 @@
                                   <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                     <h5>Mobile Usability Breakdown
                                   </div>
-                                  <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 12px"> <span class="dot good"></span>Mobile Friendly <br/>
+                                  <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 12px">
+                                    <span class="dot good"></span>Mobile Friendly <br/>
                                     <span class="dot low"></span>Not Mobile Friendly <br/>
+                                    <span class="dot na"></span>Data Not Available <br/>
                                   </div>
                                   <div class="col-lg-6 col-md-6 nopadding">
                                     <div id="piechartusab" style="margin-top:-17px;height:140px;"></div>
@@ -169,6 +177,10 @@
                                     <tr>
                                       <td>Not Mobile Friendly</td>
                                       <td><?=dotgov_common_getColor($agencydata['nonfriendly_nos'], '#ae0100', $mobusab_arr[1])?></td>
+                                    </tr>
+                                    <tr>
+                                      <td>Data Not Available</td>
+                                      <td><?=dotgov_common_getColor($agencydata['data_na_usab_nos'], '#337ab7', $mobusab_arr[2])?></td>
                                     </tr>
                                   </table>
                                 </div>
