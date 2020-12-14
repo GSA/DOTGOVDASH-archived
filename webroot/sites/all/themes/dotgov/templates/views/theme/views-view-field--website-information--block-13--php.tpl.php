@@ -43,7 +43,14 @@
  * @ingroup themeable
  */
 ?>
-
+<style>
+    .mn-height-90 {
+        min-height: 90px !important;
+    }
+    .mn-height-150 {
+        min-height: 150px !important;
+    }
+</style>
 <?php
 $crit_text = '';
 $redirect_message = 'Website Redirect - Metric Not Applicable';
@@ -58,9 +65,10 @@ dotgov_common_tooltip("tooltip10","id");
 <div class="col-xs-10">
     <h2 class="pane-title">USWDS Code</h2>
 </div>
-<div class="col-xs-2 nopadding">
+<div class="col-xs-2">
     <div id="tooltip3" class="infor">
-        <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/live/uswds.md"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i></a>
+        <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/live/uswds.md">    <img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">
+</a><span class="ext" aria-label="(link is external)"></span>
     </div>
 </div>
 </div>
@@ -73,7 +81,7 @@ foreach ($query as $result) {
     $uswdsscore = $result->field_uswds_score_value;
     $uswdsstat = $result->field_uswds_status_value;
 }
-$chartdatafont = "12px";
+$chartdatafont = "10px";
 ?>
 
 <div class="col-lg-12 clearfix nopadding">
@@ -102,10 +110,10 @@ $chartdatafont = "12px";
       $chartdata = $uswdsscore;
     }
   } else {
-    print '<div class="col-lg-12">';
-    print 'USWDS Code: <span>Website Redirect - Metric Not Applicable</span></br>';
+    print '<div class="col-sm-12 mn-height-90">';
+    print '<p>USWDS Code: <span>Website Redirect - Metric Not Applicable</span></p><br>';
   }
-  print '<br><p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version</p>';
+  print '<p>The USWDS scan checks each domain for the use of U.S. Web Design System (USWDS) code and the code version</p>';
   ?>
 </div>
 
@@ -123,6 +131,8 @@ if ($chartdata <= 50) {
   <div class="col-lg-6">
       <div id="uswds_chart" style="width: 130px; height:130px; margin: 0 auto">&nbsp;</div>
   </div>
+<?php else: ?>
+<div class="col-sm-12 mn-height-150">&nbsp;</div>
 <?php endif; ?>
 
 </div>
