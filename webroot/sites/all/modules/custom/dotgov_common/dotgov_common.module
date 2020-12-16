@@ -115,16 +115,16 @@ function dotgov_common_lastScanDate(){
     print date("m/d/Y",$lastscantime + + (2 * 24 * 60 * 60));
 }
 
-/*	
- * Find Last scan date and return as str	
- */	
-function dotgov_common_lastScanDateStr(){	
-    $query = db_query("select nid,created from node where type='scans' order by nid desc limit 1");	
-    foreach ($query as $result) {	
-        $lastscantime = $result->created;	
-    }	
-    return date("m/d/Y",$lastscantime + + (2 * 24 * 60 * 60))."";	
-}	
+/*
+ * Find Last scan date and return as str
+ */
+function dotgov_common_lastScanDateStr(){
+    $query = db_query("select nid,created from node where type='scans' order by nid desc limit 1");
+    foreach ($query as $result) {
+        $lastscantime = $result->created;
+    }
+    return date("m/d/Y",$lastscantime + + (2 * 24 * 60 * 60))."";
+}
 
 /*
 * Hook Facet Alter
@@ -867,6 +867,57 @@ function dotgov_common_applyDataColor($data,$websites,$chartColor)
     }
     return $colordata;
 
+}
+
+/*
+ * Get percentage of each data point and account of percentage rounding error
+ */
+function dotgov_common_get_percentage($arr,$websites) {
+  $arrtotal = $websites;
+  for ($i = 0; $i < sizeof($arr); $i++)
+    $arr[$i] = $arr[$i] / $arrtotal * 100;
+  $roundDown = array();
+  $decimals = array();
+  foreach ($arr as $key => $value) {
+    $roundDown[] = floor($value);
+    $decimals[] = $value - floor($value);
+  }
+  $c = array_combine($roundDown, $decimals);
+  arsort($c);
+  $sum = array_sum($roundDown);
+  reset($c);
+  $executionLimit = 0;
+  while ($sum > 95 && $sum < 100 && $executionLimit < 50) {
+    $val = current($c);
+    for ($i = 0; $i < sizeof($roundDown); $i++) {
+        if ($sum < 100 && $val === $decimals[$i]) {
+          $roundDown[$i]++;
+          $sum++;
+        }
+        $executionLimit++;
+    }
+    $executionLimit++;
+    next($c);
+  }
+  if ($sum == 99 && sizeof($roundDown) == 2) {
+      if ($roundDown[0] ==  49) {
+          $roundDown[0]++;
+      } else {
+          $roundDown[1]++;
+      }
+  }
+  return $roundDown;
+}
+
+/*
+ * Get color data after percentage calculation
+ */
+function dotgov_common_getColor($data, $chartColor, $percent) {
+  if ($data != '')
+      $colordata = "<span style='color:$chartColor;font-weight:bold;'>$data ($percent %)</span>";
+  else
+      $colordata = "<span style='color:$chartColor;font-weight:bold;'>0 (0 %)</span>";
+  return $colordata;
 }
 
 /*

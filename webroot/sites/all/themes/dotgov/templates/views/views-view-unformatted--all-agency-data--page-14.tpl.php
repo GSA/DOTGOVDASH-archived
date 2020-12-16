@@ -1118,11 +1118,11 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                                         <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
                                                         <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
                                                         <tr>
-                                                            <td> DAP Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
+                                                            <td> DAP Compliant Websites</td>
                                                             <td><?=dotgov_common_applyDataColor($agencydata['dap_compliant'], $agencydata['dap_tottracked'], '#29643a')?></td>
                                                         </tr>
                                                         <tr>
-                                                            <td>DAP Non Compliant Websites<font style="font-size: larger;font-color:blue;">*</font></td>
+                                                            <td>DAP Non Compliant Websites</td>
                                                             <td><?=dotgov_common_applyDataColor($agencydata['dap_noncompliant'], $agencydata['dap_tottracked'], '#ac0600')?></td>
                                                         </tr>
                                                     </table>
@@ -1481,8 +1481,7 @@ if ($no_data == 1) {
                                                 <div class="view-button">
 
                                                     <div class="row col-xs-12 nopadding">
-                                                        <!--  <div class="col-xs-12 col-lg-6 text-right"><a class="" href="/technology-overview?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="143" height="30" alt=""/></a> </div>
-                                                                <!--<div class="col-xs-12 col-lg-6 text-left"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>-->
+                                                        
                                                     </div></div>
                                             </div>
                                         </div>
