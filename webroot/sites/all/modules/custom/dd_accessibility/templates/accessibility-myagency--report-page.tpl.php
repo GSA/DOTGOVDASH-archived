@@ -65,7 +65,7 @@
 <div class="filterSearch">
   <div class="filterSection d-none">
       <span class="filterLabel">Agency:</span>
-      <select class="filterList" id="filterItems">
+      <select class="filterList" id="filterItems" title="filter-agency" aria-label="select-agency">
       </select>
   </div>
   <div class="text d-none">
