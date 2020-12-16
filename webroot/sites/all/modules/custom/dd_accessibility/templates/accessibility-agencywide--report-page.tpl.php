@@ -126,9 +126,16 @@
                             extension.initFixedHeaders(jQuery('table.pvtTable'));
                             colTotalLabel();
                             controlSearch();
+                            setTableProperties();
                         }
                     });
 
+
+                   function setTableProperties() {
+                        jQuery('table.pvtUi').attr('role','presentation');
+                        jQuery('table.pvtUi, table.pvtTable').attr('title','acess-table');
+                    }
+                    
                     setTimeout(function () {
                         let totalRowsLen = jQuery(".pvtTable tbody tr").length;
                         let x = 0;
