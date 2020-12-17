@@ -151,7 +151,7 @@ if (strpos($title, 'Domain ') !== false) {
 
 <div class="main-container <?php print $container_class; ?>">
 
-      <a id="main-content"></a>
+      <div id="main-content"></div>
       <?php print render($title_prefix); ?>
       <?php if (!empty($title)): ?>
         <h1 class="page-header"><?php print $title;
