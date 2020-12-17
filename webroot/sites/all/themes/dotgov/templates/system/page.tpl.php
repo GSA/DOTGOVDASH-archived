@@ -226,7 +226,7 @@ Helping Federal Agencies Do Digital Better			</h2>
     <section<?php print $content_column_class; ?>>
       <!-- avoid breadcrump when pdf conversion in action -->
       <div id="element-to-hide" data-html2canvas-ignore="true"><?php if (!empty($breadcrumb)): print $breadcrumb; endif;?></div>
-      <a id="main-content"></a>
+      <div id="main-content"></div>
       <?php print render($title_prefix); ?>
       <?php if (!empty($title)): ?>
         <h1 class="page-header"><?php print $title; ?></h1>
