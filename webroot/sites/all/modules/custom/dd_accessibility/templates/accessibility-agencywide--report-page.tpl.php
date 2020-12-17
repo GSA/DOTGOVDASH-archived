@@ -65,7 +65,7 @@
 <div class="filterSearch">
   <div class="filterSection">
       <span class="filterLabel">Agency:</span>
-      <select class="filterList" id="filterItems">
+      <select class="filterList" id="filterItems" title="filter-agency" aria-label="select-agency">
       </select>
   </div>
   <div class="text">
@@ -101,6 +101,7 @@
                 var extension = new PivotTableExtensions;
                 var tabledata;
                 var flagVal = 0;
+                getFilterList();
                 scrollTable();
 
                 jQuery.getJSON(jsonUrl, function (mps) {
@@ -123,12 +124,18 @@
                         },
                         onRefresh: function (pivotUIOptions, config) {
                             extension.initFixedHeaders(jQuery('table.pvtTable'));
-                            getFilterList();
                             colTotalLabel();
                             controlSearch();
+                            setTableProperties();
                         }
                     });
 
+
+                   function setTableProperties() {
+                        jQuery('table.pvtUi').attr('role','presentation');
+                        jQuery('table.pvtUi, table.pvtTable').attr('title','acess-table');
+                    }
+                    
                     setTimeout(function () {
                         let totalRowsLen = jQuery(".pvtTable tbody tr").length;
                         let x = 0;
@@ -223,18 +230,23 @@
                            
                             if (!(name in lookup)) {
                                 lookup[name] = 1;
-                                result.push(name);
+                                if(name) {
+                                    result.push(name);
+                                }
                                 Array.prototype.last = function () {
                                     return this[this.length - 1];
                                 };
                                 
                                 var fResult = result.last();
-                               
-                                var option = '';
-                                option += '<option value="' + fResult+ '">' + fResult + '</option>';
-                                jQuery('#filterItems').append(option);
+                                var assending = result.sort((a, b) => a.localeCompare(b));                                
                             }
                         }
+
+                        jQuery('#filterItems').append(
+                            jQuery.map(assending, function(v,k){
+                                return jQuery("<option>").val(v).text(v);
+                            })
+                        );
                     });
 
                     if(flagVal === 0)  {
