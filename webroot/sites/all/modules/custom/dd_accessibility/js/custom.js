@@ -828,7 +828,7 @@
           // ah.th.textContent = " " + arrowExpanded + " " + ah.text;
           setTextContent(ah.th, " " + arrowExpanded + " " + ah.text);
           ah.clickStatus = clickStatusExpanded;
-          jQuery( '.pvtTableWrapper .pvtTable tbody tr th:nth-child(2).rowshow.rowexpanded div.pvtFixedHeader' ).html( "<img class='tbody-image' alt='dummy-image' title='dummy-image' style='width:100%; height: 100%' src='/sites/all/modules/custom/dd_accessibility/images/tbody-dummy-expanded.png'>" );
+          jQuery( '.pvtTableWrapper .pvtTable tbody tr th:nth-child(2).rowshow.rowexpanded div.pvtFixedHeader' ).html( "<img class='tbody-image negative-image' alt='dummy-image' title='dummy-image' style='width:100%; height: 100%' src='/sites/all/modules/custom/dd_accessibility/images/tbody-dummy-expanded.png'>" );
           return ah.onClick = collapseAxis;
         }
       };
