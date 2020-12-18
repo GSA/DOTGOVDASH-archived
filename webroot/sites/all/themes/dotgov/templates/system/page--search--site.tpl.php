@@ -158,7 +158,7 @@ else
 
 <div class="main-container <?php print $container_class; ?>">
 	<?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
-	<a id="main-content"></a>
+	<div id="main-content"></div>
 	<?php print render($title_prefix); ?>
 	<?php if (!empty($title)): ?>
 	<h1 class="page-header">
