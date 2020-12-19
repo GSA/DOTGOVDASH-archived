@@ -636,6 +636,11 @@
           if (!opts.rowSubtotalDisplay.disableExpandCollapse) {
             h.th.onclick = function (event) {
               event = event || window.event;
+              if(jQuery('#pvtTable tbody tr').length > 0) {
+                setTimeout(function () {
+                  ariaLabel();
+                }, 1500);
+              }
               return h.onClick(axisHeaders, h, opts.rowSubtotalDisplay);
             };
           }
@@ -664,6 +669,25 @@
         attrHeaders.push(h);
         return node.counter++;
       };
+      function ariaLabel() {
+        let totalTr = jQuery('#pvtTable tbody tr').length;
+        for(let i=0; i<totalTr; i++) {
+            let totalTheads = jQuery('#pvtTable tbody tr').eq(i).find("th").length;
+            for(let j =0; j<totalTheads; j++) {                            
+                if( jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).hasClass("expanded") ||
+                   jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).hasClass("rowexpanded")) {
+                    jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).attr("aria-label", "rowexpanded");
+                } 
+                console.log(jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).hasClass('rowcollapsed'));                            
+
+                if(jQuery('#pvtTable tbody tr').eq(0).find("th").eq(0).hasClass('collapsed') ||
+                   jQuery('#pvtTable tbody tr').eq(0).find("th").eq(0).hasClass('rowcollapsed')) {
+                    jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).attr("aria-label", "rowcollapsed");
+
+                } 
+            }                       
+        }                    
+      }
       getTableEventHandlers = function (value, rowKey, colKey, rowAttrs, colAttrs, opts) {
         var attr, event, eventHandlers, filters, handler, i, ref, ref1;
         if (!((ref = opts.table) != null ? ref.eventHandlers : void 0)) {
