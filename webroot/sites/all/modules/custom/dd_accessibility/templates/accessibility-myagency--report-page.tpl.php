@@ -132,8 +132,12 @@
                     });
 
 
-                   function setTableProperties() {
+                    function setTableProperties() {
                         jQuery('table.pvtUi').attr('role','presentation');
+                        jQuery(".pvtRenderer, .pvtAggregator").attr({
+                            title: 'filte-table',
+                            'aria-label': "select-filter"});
+
                         jQuery('table.pvtUi, table.pvtTable').attr('title','acess-table');
                     }
 
