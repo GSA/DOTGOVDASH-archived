@@ -249,7 +249,6 @@
                         var result = [];
                         for (var item, i = 0; item = items[i++];) {
                             var name = item["Agency"];
-                           
                             if (!(name in lookup)) {
                                 lookup[name] = 1;
                                 if(name) {
@@ -258,19 +257,16 @@
                                 Array.prototype.last = function () {
                                     return this[this.length - 1];
                                 };
-                                
                                 var fResult = result.last();
-                                var assending = result.sort((a, b) => a.localeCompare(b));                                
+                                //var assending = result.sort((a, b) => a.localeCompare(b));
                             }
                         }
-
                         jQuery('#filterItems').append(
-                            jQuery.map(assending, function(v,k){
+                            jQuery.map(result, function(v,k){
                                 return jQuery("<option>").val(v).text(v);
                             })
                         );
                     });
-
                     if(flagVal === 0)  {
                         jQuery('#filterItems').prepend('<option value="">- Any -</option>');
                         flagVal ++;
