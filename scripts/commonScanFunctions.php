@@ -97,7 +97,7 @@ function startScan(){
 * Run USWDS Scan
 */
 function runUswdsScan(){
-    exec("../tools/domain-scan/scan /tmp/current-federal.csv --scan=uswds2 --workers=50 --output=/tmp/uswdsresults/");
+    exec("../tools/domain-scan/scan /tmp/alldomains.csv --scan=uswds2 --workers=50 --output=/tmp/uswdsresults/");
     //exec("timeout 15 wget -O /tmp/uswdsresults/results/uswds2.csv \"https://api.gsa.gov/technology/site-scanner/v1/scans/uswds2/csv/?domaintype=Federal%20Agency%20-%20Executive&api_key=6i0A3HhMw1FAmhXokiEWrpjfWqGztEtaodHxGFfj\"");
 }
 
@@ -106,7 +106,7 @@ function runUswdsScan(){
  */
 function runAccessibilityNewCustomScan(){
     //run pa11y Scan
-    exec("timeout 15 ../tools/domain-scan/scan /tmp/current-federal.csv --scan=a11y --workers=50 --output=/tmp/");
+    exec("timeout 15 ../tools/domain-scan/scan /tmp/alldomains.csv --scan=a11y --workers=50 --output=/tmp/");
     db_query("truncate table custom_accessibility_issues");
     db_query("LOAD DATA LOCAL INFILE '/tmp/results/a11y.csv' INTO TABLE custom_accessibility_issues FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' (website,base_domain, domain_redirected_to,error_typecode,error_code,error_message,error_context,error_selector);");
 
@@ -289,7 +289,7 @@ function accessibility_new_updateWebsite($domain)
 function accessibility_new_updateTable()
 {
     $first = false;
-    if (($handle = fopen('/tmp/current-federal.csv', "r")) !== FALSE) {
+    if (($handle = fopen('/tmp/alldomains.csv', "r")) !== FALSE) {
         while (!feof($handle)) {
             $data = fgetcsv($handle);
             if (!$first) {
@@ -1240,7 +1240,7 @@ function getPulseData(){
     shell_exec("/bin/cp -f ../scripts/custom_pulse_single_https/https_scan.csv /tmp/pulsehttp.csv");
     db_query("truncate table custom_pulse_https_data");
     db_query("LOAD DATA LOCAL INFILE '".$localhttpsfile."' INTO TABLE `custom_pulse_https_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
-
+    exec("drush sql-query \"select domain from custom_pulse_https_data group by domain\" > /tmp/alldomains.csv");
     //Get Pulse dap data and enter to a temp table
     //file_put_contents("$localdapfile", file_get_contents("$pulsedapurl"));
     //This is the latest scan which uses GSA analytics api instead of pulse and generates a file at /tmp/pulsedap.csv
