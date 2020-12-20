@@ -454,10 +454,17 @@
         ah.th = createElement("th", "pvtAxisLabel " + hClass, "" + arrow + ah.text);
         if (col < attrs.length - 1 && col < opts.disableFrom && !opts.disableExpandCollapse) {
           ah.th.setAttribute('root-node', '1');
+          ah.th.setAttribute("tabindex", "0");
           ah.th.onclick = function (event) {
             event = event || window.event;
             return ah.onClick(axisHeaders, col, attrs, opts);
           };
+          ah.th.addEventListener("keydown", function(event) {
+            if (event.keyCode === 13) {
+              event.preventDefault();
+              return ah.onClick(axisHeaders, col, attrs, opts);
+            }
+          });
         }
         axisHeaders.ah.push(ah);
         return ah;
@@ -611,7 +618,7 @@
         }
         addClass(h.th, classRowShow + " row" + h.row + " rowcol" + h.col + " " + classRowExpanded);
         h.th.setAttribute("data-rownode", h.node);
-
+        h.th.setAttribute("tabindex", "0");
 
         if (h.col === rowAttrs.length - 1 && colAttrs.length !== 0) {
           h.th.colSpan = 2;
@@ -636,8 +643,19 @@
           if (!opts.rowSubtotalDisplay.disableExpandCollapse) {
             h.th.onclick = function (event) {
               event = event || window.event;
+              if(jQuery('#pvtTable tbody tr').length > 0) {
+                setTimeout(function () {
+                  ariaLabel();
+                }, 1500);
+              }
               return h.onClick(axisHeaders, h, opts.rowSubtotalDisplay);
             };
+            h.th.addEventListener("keydown", function(event) {
+              if (event.keyCode === 13) {
+                event.preventDefault();
+                return h.onClick(axisHeaders, h, opts.rowSubtotalDisplay);
+              }
+            });
           }
           h.sTh = createElement("th", "pvtRowLabel row" + h.row + " rowcol" + h.col + " " + classRowExpanded + " " + classRowShow);
           if (opts.rowSubtotalDisplay.hideOnExpand) {
@@ -664,6 +682,24 @@
         attrHeaders.push(h);
         return node.counter++;
       };
+      function ariaLabel() {
+        let totalTr = jQuery('#pvtTable tbody tr').length;
+        for(let i=0; i<totalTr; i++) {
+            let totalTheads = jQuery('#pvtTable tbody tr').eq(i).find("th").length;
+            for(let j =0; j<totalTheads; j++) {                            
+                if( jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).hasClass("expanded") ||
+                   jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).hasClass("rowexpanded")) {
+                    jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).attr("aria-label", "rowexpanded");
+                } 
+
+                if(jQuery('#pvtTable tbody tr').eq(0).find("th").eq(0).hasClass('collapsed') ||
+                   jQuery('#pvtTable tbody tr').eq(0).find("th").eq(0).hasClass('rowcollapsed')) {
+                    jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).attr("aria-label", "rowcollapsed");
+
+                } 
+            }                       
+        }                    
+      }
       getTableEventHandlers = function (value, rowKey, colKey, rowAttrs, colAttrs, opts) {
         var attr, event, eventHandlers, filters, handler, i, ref, ref1;
         if (!((ref = opts.table) != null ? ref.eventHandlers : void 0)) {
@@ -1188,7 +1224,6 @@
 
         searchInput2 = document.getElementById("filterItems");
         searchInput2.onchange = function (event) {
-          console.log(this.value);
           globalFilterKey = this.value.toLowerCase();
           globalFilterValue = "";
           refresh();
