@@ -258,11 +258,11 @@
                                     return this[this.length - 1];
                                 };
                                 var fResult = result.last();
-                                //var assending = result.sort((a, b) => a.localeCompare(b));
+                                var ascending = result.sort((a, b) => a.localeCompare(b));                                
                             }
                         }
                         jQuery('#filterItems').append(
-                            jQuery.map(result, function(v,k){
+                            jQuery.map(ascending, function(v,k){
                                 return jQuery("<option>").val(v).text(v);
                             })
                         );
