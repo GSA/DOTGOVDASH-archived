@@ -254,7 +254,7 @@
                         var result = [];
                         for (var item, i = 0; item = items[i++];) {
                             var name = item["Agency"];
-                           
+
                             if (!(name in lookup)) {
                                 lookup[name] = 1;
                                 if(name) {
@@ -265,12 +265,11 @@
                                 };
                                 
                                 var fResult = result.last();
-                                var assending = result.sort((a, b) => a.localeCompare(b));                                
+                                //var assending = result.sort((a, b) => a.localeCompare(b));
                             }
                         }
-
                         jQuery('#filterItems').append(
-                            jQuery.map(assending, function(v,k){
+                            jQuery.map(result, function(v,k){
                                 return jQuery("<option>").val(v).text(v);
                             })
                         );
