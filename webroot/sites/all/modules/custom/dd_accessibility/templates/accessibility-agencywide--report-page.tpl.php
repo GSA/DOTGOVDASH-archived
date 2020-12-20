@@ -247,38 +247,32 @@
 
                 // Filter by Agency or Website
                 function getFilterList() {
-                    jQuery.getJSON(jsonUrl, function (mps) {
+                    jQuery.getJSON(jsonUrl, function(mps) {
                         tableData = mps;
                         var lookup = {};
                         var items = tableData;
                         var result = [];
                         for (var item, i = 0; item = items[i++];) {
                             var name = item["Agency"];
-
                             if (!(name in lookup)) {
                                 lookup[name] = 1;
                                 if(name) {
                                     result.push(name);
                                 }
-                                Array.prototype.last = function () {
+                                Array.prototype.last = function() {
                                     return this[this.length - 1];
                                 };
-                                
                                 var fResult = result.last();
-                                var ascending = result.sort((a, b) => a.localeCompare(b));                                
+                                var ascending = result.sort((a, b) => a.localeCompare(b)); 
                             }
                         }
-
-                        jQuery('#filterItems').append(
-                            jQuery.map(ascending, function(v,k){
-                                return jQuery("<option>").val(v).text(v);
-                            })
-                        );
+                        jQuery('#filterItems').append(jQuery.map(ascending, function(v, k) {
+                            return jQuery("<option>").val(v).text(v);
+                        }));
                     });
-
-                    if(flagVal === 0)  {
+                    if (flagVal === 0) {
                         jQuery('#filterItems').prepend('<option value="">- Any -</option>');
-                        flagVal ++;
+                        flagVal++;
                     }
                     ariaLabel();
                 }
