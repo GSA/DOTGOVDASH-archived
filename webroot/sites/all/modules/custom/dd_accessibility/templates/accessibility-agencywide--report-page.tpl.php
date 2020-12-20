@@ -140,7 +140,7 @@
                             title: 'filte-table',
                             'aria-label': "select-filter"});
 
-                        jQuery('table.pvtUi, table.pvtTable').attr('title','acess-table');
+                        jQuery('table.pvtUi, table.pvtTable').attr('title','Agency Wide Accessibility table');
                     }
 
                     setTimeout(function () {
