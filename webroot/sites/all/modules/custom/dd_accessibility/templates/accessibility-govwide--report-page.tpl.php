@@ -97,7 +97,6 @@
                 scrollTable();
 
                 jQuery( ".searchInput" ).change(function() {
-                  console.log( "Handler for .change() called." );
                     jQuery( ".filterList" ).prop("disabled", true);
                 });
 
@@ -132,31 +131,16 @@
 
 
                    function setTableProperties() {
-                        jQuery('table.pvtUi').attr('role','presentation');
+                    jQuery('table.pvtUi').attr('role','presentation');
+                        jQuery(".pvtRenderer, .pvtAggregator").attr({
+                            title: 'filte-table',
+                            'aria-label': "select-filter"});
+
                         jQuery('table.pvtUi, table.pvtTable').attr('title','acess-table');
                     }
 
-                    function ariaLabel() {
-                    let totalTr = jQuery('#pvtTable tbody tr').length;
-                    for(let i=0; i<totalTr; i++) {
-                        let totalTheads = jQuery('#pvtTable tbody tr').eq(i).find("th").length;
-                        for(let j =0; j<totalTheads; j++) {                            
-                            if( jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).hasClass("expanded") ||
-                               jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).hasClass("rowexpanded")) {
-                                jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).attr("aria-label", "rowexpanded");
-                            } 
-                            console.log(jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).hasClass('rowcollapsed'));                            
-
-                            if(jQuery('#pvtTable tbody tr').eq(0).find("th").eq(0).hasClass('collapsed') ||
-                               jQuery('#pvtTable tbody tr').eq(0).find("th").eq(0).hasClass('rowcollapsed')) {
-                                jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).attr("aria-label", "rowcollapsed");
-
-                            } 
-                        }                       
-                    }                    
-                }
-
                     setTimeout(function () {
+                
                         let totalRowsLen = jQuery(".pvtTable tbody tr").length;
                         let x = 0;
                         for(let i =0; i< totalRowsLen; i++) {
@@ -180,6 +164,25 @@
                   jQuery( "th.pvtTotalLabel.colTotal .pvtFixedHeader" ).text( "Total Accessibility Issues" );
                 }
 
+                // Aria-label 
+                function ariaLabel() {
+                    let totalTr = jQuery('#pvtTable tbody tr').length;
+                    for(let i=0; i<totalTr; i++) {
+                        let totalTheads = jQuery('#pvtTable tbody tr').eq(i).find("th").length;
+                        for(let j =0; j<totalTheads; j++) {                            
+                            if( jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).hasClass("expanded") ||
+                               jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).hasClass("rowexpanded")) {
+                                jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).attr("aria-label", "rowexpanded");
+                            } 
+
+                            if(jQuery('#pvtTable tbody tr').eq(0).find("th").eq(0).hasClass('collapsed') ||
+                               jQuery('#pvtTable tbody tr').eq(0).find("th").eq(0).hasClass('rowcollapsed')) {
+                                jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).attr("aria-label", "rowcollapsed");
+
+                            } 
+                        }                       
+                    }                    
+                }
                 // toggle search and Filter actions
                 function controlSearch() {
                   jQuery( "#filterItems" ).change(function() {
