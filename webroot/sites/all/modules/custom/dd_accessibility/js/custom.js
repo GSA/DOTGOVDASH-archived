@@ -645,6 +645,7 @@
               event = event || window.event;
               if(jQuery('#pvtTable tbody tr').length > 0) {
                 setTimeout(function () {
+                  settheadariaLabel();
                   ariaLabel();
                 }, 1500);
               }
@@ -682,6 +683,27 @@
         attrHeaders.push(h);
         return node.counter++;
       };
+
+      function settheadariaLabel() {
+        let totalTr = jQuery('#pvtTable thead tr').length;
+        for(let i=0; i<totalTr; i++) {
+            let totalTheads = jQuery('#pvtTable thead tr').eq(i).find("th").length;
+            for(let j =0; j<totalTheads; j++) {                            
+                if( jQuery('#pvtTable thead tr').eq(i).find("th").eq(j).hasClass("expanded") ||
+                   jQuery('#pvtTable thead tr').eq(i).find("th").eq(j).hasClass("rowexpanded")) {
+                    jQuery('#pvtTable thead tr').eq(i).find("th").eq(j).find("div").attr("aria-label", "rowexpanded");
+                } 
+                console.log(jQuery('#pvtTable thead tr').eq(i).find("th").eq(j).hasClass('rowcollapsed'));                            
+
+                if(jQuery('#pvtTable thead tr').eq(i).find("th").eq(j).hasClass('collapsed') ||
+                   jQuery('#pvtTable thead tr').eq(i).find("th").eq(j).hasClass('rowcollapsed')) {
+                    jQuery('#pvtTable thead tr').eq(i).find("th").eq(j).find("div").attr("aria-label", "rowcollapsed");
+
+                } 
+            }                       
+        }                    
+     }
+
       function ariaLabel() {
         let totalTr = jQuery('#pvtTable tbody tr').length;
         for(let i=0; i<totalTr; i++) {
