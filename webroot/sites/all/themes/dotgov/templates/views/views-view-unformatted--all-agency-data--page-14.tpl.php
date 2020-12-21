@@ -96,6 +96,10 @@ foreach ($view->style_plugin->rendered_fields[0] as $key => $val) {
 $agencynode = node_load($curuserAgency);
 drupal_set_title($agencynode->title);
 
+$mobperf_arr = array($agencydata['good'], $agencydata['improve'], $agencydata['poor'], $agencydata['data_na']);
+$mobperf_arr = dotgov_common_get_percentage($mobperf_arr, $agency_website_num);
+$mobusab_arr = array($agencydata['friendly'], $agencydata['nonfriendly'], $agencydata['data_na_usab']);
+$mobusab_arr = dotgov_common_get_percentage($mobusab_arr, $agency_website_num);
 ?>
 <div class="download-pdf">
     <a href="#" onclick="generatePDF('All Agency report.pdf',600,1150,false)"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="Download Pdf">
@@ -166,10 +170,11 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                       <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                         <h5>Mobile Performance Breakdown</h5>
                                       </div>
-                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size:10px;"> <span class="dot low"></span>Poor <br/>
-                                        <span class="dot avg"></span>Needs Improvement <br/>
+                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size:10px;">
                                         <span class="dot good"></span>Good<br/>
-                                        <!--                                                <span class="dot na"></span>NA-->
+                                        <span class="dot avg"></span>Needs Improvement <br/>
+                                        <span class="dot low"></span>Poor <br/>
+                                        <span class="dot na"></span>Data Not Available<br/>
                                       </div>
                                       <div class="col-lg-6 col-md-6 nopadding">
                                         <div id="piechartmob" style="margin-top:-17px;height:140px;"></div>
@@ -179,16 +184,20 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                         <th style="background-color: #215393;color: white;"> Breakdown </th>
                                         <th style="background-color: #215393;color: white;"> Websites </th>
                                         <tr>
-                                          <td>Poor</td>
-                                          <td><?=dotgov_common_applyDataColor($agencydata['poor'], $agencydata['no_of_non_na__websites'], '#ae0100') ?>	
+                                          <td>Good</td>
+                                          <td><?=dotgov_common_getColor($agencydata['good'], '#276437', $mobperf_arr[0])?></td>
                                         </tr>
                                         <tr>
                                           <td>Needs Improvement</td>
-                                          <td><?=dotgov_common_applyDataColor($agencydata['improve'], $agencydata['no_of_non_na__websites'], '#665000') ?>
+                                          <td><?=dotgov_common_getColor($agencydata['improve'], '#665000', $mobperf_arr[1])?></td>
                                         </tr>
                                         <tr>
-                                          <td>Good</td>
-                                          <td><?=dotgov_common_applyDataColor($agencydata['good'], $agencydata['no_of_non_na__websites'], '#276437') ?>
+                                          <td>Poor</td>
+                                          <td><?=dotgov_common_getColor($agencydata['poor'], '#ae0100', $mobperf_arr[2])?></td>
+                                        </tr>
+                                        <tr>
+                                          <td>Data Not Available</td>
+                                          <td><?=dotgov_common_getColor($agencydata['data_na'], '#337ab7', $mobperf_arr[3])?></td>
                                         </tr>
                                       </table>
                                     </div>
@@ -196,7 +205,10 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                       <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                         <h5>Mobile Usability Breakdown
                                       </div>
-                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 10px"> <span class="dot good"></span>Mobile Friendly <br/>                                        <span class="dot low"></span>Not Mobile Friendly <br/>
+                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 10px">
+                                        <span class="dot good"></span>Mobile Friendly <br/>
+                                        <span class="dot low"></span>Not Mobile Friendly <br/>
+                                        <span class="dot na"></span>Data Not Available <br/>
                                       </div>
                                       <div class="col-lg-6 col-md-6 nopadding">
                                         <div id="piechartmobusab" style="margin-top:-17px;height:140px;"></div>
@@ -207,11 +219,15 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                         <th style="background-color: #215393;color: white;"> Websites </th>
                                         <tr>
                                           <td>Mobile Friendly</td>
-                                          <td><?=dotgov_common_applyDataColor($agencydata['friendly_nos'], $agencydata['friendly_nos']+$agencydata['nonfriendly_nos'], '#276437') ?>
+                                          <td><?=dotgov_common_getColor($agencydata['friendly'], '#276437', $mobusab_arr[0])?></td>
                                         </tr>
                                         <tr>
                                           <td>Not Mobile Friendly</td>
-                                          <td><?=dotgov_common_applyDataColor($agencydata['nonfriendly_nos'], $agencydata['friendly_nos']+$agencydata['nonfriendly_nos'], '#ae0100') ?>
+                                          <td><?=dotgov_common_getColor($agencydata['nonfriendly'], '#ae0100', $mobusab_arr[1])?></td>
+                                        </tr>
+                                        <tr>
+                                          <td>Data Not Available</td>
+                                          <td><?=dotgov_common_getColor($agencydata['data_na_usab'], '#337ab7', $mobusab_arr[2])?></td>
                                         </tr>
                                       </table>
                                     </div>
