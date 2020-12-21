@@ -123,7 +123,7 @@
                                   <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                     <h5>Mobile Performance Breakdown</h5>
                                   </div>
-                                  <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 12px"> <span class="dot low"></span>Poor <br/>	                                  <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 12px">
+                                  <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 12px"> <span class="dot low"></span>Poor <br/>
                                     <span class="dot avg"></span>Needs Improvement <br/>
                                     <span class="dot good"></span>Good<br/>
                                     <!--                                                <span class="dot na"></span>NA-->
