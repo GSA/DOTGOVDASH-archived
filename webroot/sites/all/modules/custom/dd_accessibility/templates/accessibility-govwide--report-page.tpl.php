@@ -132,12 +132,14 @@
 
 
                    function setTableProperties() {
-                    jQuery('table.pvtUi').attr('role','presentation');
+                        jQuery( "<tr style='visibility: hidden;position: absolute;'><th scope='row'>Empty Header</th></tr>" ).insertBefore( jQuery( "table.pvtUi > tr:first-child" ) );
+                        jQuery( "table.pvtUi > tr:nth-child(2)" ).addClass('d-none');
+                        jQuery('table.pvtUi').attr('title','Accessibility table renderer');
                         jQuery(".pvtRenderer, .pvtAggregator").attr({
                             title: 'filte-table',
                             'aria-label': "select-filter"});
 
-                        jQuery('table.pvtUi, table.pvtTable').attr('title','Government Wide Accessibility table');
+                        jQuery('table.pvtTable').attr('title','Government Wide Accessibility table');
                     }
 
                     setTimeout(function () {
