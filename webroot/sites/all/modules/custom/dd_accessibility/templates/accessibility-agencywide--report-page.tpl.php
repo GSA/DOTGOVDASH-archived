@@ -128,6 +128,7 @@
                             controlSearch();
                             setTableProperties();
                             setTimeout(function () {
+                                settheadariaLabel()
                                 ariaLabel();
                             }, 1000);
                         }
@@ -168,6 +169,27 @@
                   jQuery( "th.pvtTotalLabel.colTotal .pvtFixedHeader" ).text( "Total Accessibility Issues" );
                 }
 
+                // Set Table header aria Attr 
+                function settheadariaLabel() {
+                    let totalTr = jQuery('#pvtTable thead tr').length;
+                    for(let i=0; i<totalTr; i++) {
+                        let totalTheads = jQuery('#pvtTable thead tr').eq(i).find("th").length;
+                        for(let j =0; j<totalTheads; j++) {                            
+                            if( jQuery('#pvtTable thead tr').eq(i).find("th").eq(j).hasClass("expanded") ||
+                               jQuery('#pvtTable thead tr').eq(i).find("th").eq(j).hasClass("rowexpanded")) {
+                                jQuery('#pvtTable thead tr').eq(i).find("th").eq(j).find("div").attr("aria-label", "rowexpanded");
+                            } 
+                            console.log(jQuery('#pvtTable thead tr').eq(i).find("th").eq(j).hasClass('rowcollapsed'));                            
+
+                            if(jQuery('#pvtTable thead tr').eq(i).find("th").eq(j).hasClass('collapsed') ||
+                               jQuery('#pvtTable thead tr').eq(i).find("th").eq(j).hasClass('rowcollapsed')) {
+                                jQuery('#pvtTable thead tr').eq(i).find("th").eq(j).find("div").attr("aria-label", "rowcollapsed");
+
+                            } 
+                        }                       
+                    }                    
+                }
+
                 // Aria-label 
                 function ariaLabel() {
                     let totalTr = jQuery('#pvtTable tbody tr').length;
@@ -176,17 +198,18 @@
                         for(let j =0; j<totalTheads; j++) {                            
                             if( jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).hasClass("expanded") ||
                                jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).hasClass("rowexpanded")) {
-                                jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).attr("aria-label", "rowexpanded");
+                                jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).find("div").attr("aria-label", "rowexpanded");
                             } 
 
-                            if(jQuery('#pvtTable tbody tr').eq(0).find("th").eq(0).hasClass('collapsed') ||
-                               jQuery('#pvtTable tbody tr').eq(0).find("th").eq(0).hasClass('rowcollapsed')) {
-                                jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).attr("aria-label", "rowcollapsed");
+                            if(jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).hasClass('collapsed') ||
+                               jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).hasClass('rowcollapsed')) {
+                                jQuery('#pvtTable tbody tr').eq(i).find("th").eq(j).find("div").attr("aria-label", "rowcollapsed");
 
                             } 
                         }                       
                     }                    
                 }
+
                 // toggle search and Filter actions
                 function controlSearch() {
                   jQuery( "#filterItems" ).change(function() {
@@ -247,33 +270,38 @@
 
                 // Filter by Agency or Website
                 function getFilterList() {
-                    jQuery.getJSON(jsonUrl, function(mps) {
+                    jQuery.getJSON(jsonUrl, function (mps) {
                         tableData = mps;
                         var lookup = {};
                         var items = tableData;
                         var result = [];
                         for (var item, i = 0; item = items[i++];) {
                             var name = item["Agency"];
+                           
                             if (!(name in lookup)) {
                                 lookup[name] = 1;
                                 if(name) {
                                     result.push(name);
-                                }
-                                Array.prototype.last = function() {
-                                    return this[this.length - 1];
-                                };
-                                var fResult = result.last();
-                                var ascending = result.sort((a, b) => a.localeCompare(b)); 
+                                }                               
                             }
                         }
-                        jQuery('#filterItems').append(jQuery.map(ascending, function(v, k) {
-                            return jQuery("<option>").val(v).text(v);
-                        }));
+
+                        var fResult = result.sort(function (n1,n2) {
+                            return (n1.toLowerCase() > n2.toLowerCase()) ? 1 : -1;
+                        });
+
+                        jQuery('#filterItems').append(
+                            jQuery.map(fResult, function(v,k){
+                                return jQuery("<option>").val(v).text(v);
+                            })
+                        );
                     });
-                    if (flagVal === 0) {
+
+                    if(flagVal === 0)  {
                         jQuery('#filterItems').prepend('<option value="">- Any -</option>');
-                        flagVal++;
+                        flagVal ++;
                     }
+                    settheadariaLabel();
                     ariaLabel();
                 }
 
