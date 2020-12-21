@@ -134,8 +134,13 @@
 
 
                     function setTableProperties() {
-                        jQuery( "<tr style='visibility: hidden;position: absolute;'><th scope='row'>Empty Header</th></tr>" ).insertBefore( jQuery( "table.pvtUi > tr:first-child" ) );
-                        jQuery( "table.pvtUi > tr:nth-child(2)" ).addClass('d-none');
+                        // Disable below two lines in UAT
+                        jQuery( "<tr style='visibility: hidden;position: absolute;'><th scope='row'>Empty Header</th></tr>" ).insertBefore( jQuery( "table.pvtUi > tbody:first-child > tr:first-child" ) );
+                        jQuery( "table.pvtUi > tbody:first-child > tr:nth-child(2)" ).addClass('d-none');
+                        // Enable below in QA
+                        // jQuery( "<tr style='visibility: hidden;position: absolute;'><th scope='row'>Empty Header</th></tr>" ).insertBefore( jQuery( "table.pvtUi > tr:first-child" ) );
+                        // jQuery( "table.pvtUi > tr:nth-child(2)" ).addClass('d-none');
+                        jQuery('table.pvtUi').attr('title','Accessibility table renderer');
                         jQuery('table.pvtUi').attr('title','Accessibility table renderer');
                         jQuery(".pvtRenderer, .pvtAggregator").attr({
                             title: 'filte-table',
