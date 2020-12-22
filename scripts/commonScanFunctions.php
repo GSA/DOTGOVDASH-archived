@@ -42,6 +42,7 @@ function getSites()
  */
 
 function startScan(){
+    include("../scripts/configSettings.php");
     $date = date("m-d-Y");
     $scanstarttime = time();
     $node = new stdClass();
@@ -61,7 +62,7 @@ function startScan(){
     $httpfiledata = file_get_contents('/tmp/pulsehttp.csv', true);
     $dapfiledata = file_get_contents('/tmp/pulsedap.csv', true);
     runUswdsScan();
-    $uswdsfiledata = file_get_contents("/tmp/results/uswds2.csv");
+    $uswdsfiledata = file_get_contents("/tmp/uswdsresults/results/uswds2.csv");
     $uswdsfile =  file_save_data($uswdsfiledata,file_default_scheme().'://uswdsscan/'.uswds_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
 
     $httpsdatafile = file_save_data($httpfiledata,file_default_scheme().'://pulsehttps/'.pulse_http_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
@@ -74,10 +75,16 @@ function startScan(){
     $ipv6filedata = file_get_contents('/tmp/nist_ipv6.html', true);
     $ipv6datafile = file_save_data($ipv6filedata,file_default_scheme().'://ipv6_nist_source/'.nist_ipv6.'_'.date("Y-m-d-h-i-s-a").'.html', FILE_EXISTS_REPLACE);
 
+    //Run Accessbility Scan through Pa11y
+    writeToLogs("Collecting Accessbility Data through Pa11y using domain scan tool",$logFile);
+    runAccessibilityNewCustomScan();
+    $pa11yfiledata = file_get_contents("/tmp/results/a11y.csv");
+    $pa11yfile =  file_save_data($pa11yfiledata,file_default_scheme().'://accessibilityscan/'.pa11y_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
 
     $node->field_pulse_source_https_file['und'][0] = array('fid' => $httpsdatafile->fid,'display' => 1, 'description' => 'Pulse HTTPS scan source File');
     $node->field_pulse_source_analytics_fil['und'][0] = array('fid' => $dapdatafile->fid,'display' => 1, 'description' => 'Pulse DAP scan source File');
     $node->field_uswds_scan_file['und'][0] = array('fid' => $uswdsfile->fid,'display' => 1, 'description' => 'USWDS scan source File');
+    $node->field_accessibility_scan_file['und'][0] = array('fid' => $pa11yfile->fid,'display' => 1, 'description' => 'Pa11y scan source File');
     $node->field_nist_ipv6_data['und'][0] = array('fid' => $ipv6datafile->fid,'display' => 1, 'description' => 'NIST Ipv6 scan source File');
     node_object_prepare($node);
     if($node=node_submit($node)){
@@ -90,18 +97,223 @@ function startScan(){
 * Run USWDS Scan
 */
 function runUswdsScan(){
-    //exec("../tools/domain-scan/scan /tmp/current-federal.csv --scan=uswds2 --workers=50 --output=/tmp/");
-    exec("timeout 15 wget -O /tmp/results/uswds2.csv \"https://api.gsa.gov/technology/site-scanner/v1/scans/uswds2/csv/?domaintype=Federal%20Agency%20-%20Executive&api_key=6i0A3HhMw1FAmhXokiEWrpjfWqGztEtaodHxGFfj\"");
+    exec("../tools/domain-scan/scan /tmp/alldomains.csv --scan=uswds2 --workers=50 --output=/tmp/uswdsresults/");
+    //exec("timeout 15 wget -O /tmp/uswdsresults/results/uswds2.csv \"https://api.gsa.gov/technology/site-scanner/v1/scans/uswds2/csv/?domaintype=Federal%20Agency%20-%20Executive&api_key=6i0A3HhMw1FAmhXokiEWrpjfWqGztEtaodHxGFfj\"");
 }
 
+/*
+ * Run New Custom Accessibility Scan
+ */
+function runAccessibilityNewCustomScan(){
+    //run pa11y Scan
+    exec("timeout 15 ../tools/domain-scan/scan /tmp/alldomains.csv --scan=a11y --workers=50 --output=/tmp/");
+    db_query("truncate table custom_accessibility_issues");
+    db_query("LOAD DATA LOCAL INFILE '/tmp/results/a11y.csv' INTO TABLE custom_accessibility_issues FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' (website,base_domain, domain_redirected_to,error_typecode,error_code,error_message,error_context,error_selector);");
+
+    db_query("delete from custom_accessibility_issues where error_code not in ('WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.EmptyNoId','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.NoContent','aria-allowed-role','aria-hidden-focus','aria-input-field-name','aria-toggle-field-name','button-name','color-contrast','WCAG2AA.Principle1.Guideline1_4.1_4_3.G145','WCAG2AA.Principle1.Guideline1_4.1_4_3.G18','document-title','duplicate-id','WCAG2AA.Principle4.Guideline4_1.4_1_1.F77','empty-heading','WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.EmptyTitle','form-field-multiple-labels','frame-title','frame-title-unique','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired','WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2','html-has-lang','html-lang-valid','WCAG2AA.Principle2.Guideline2_4.2_4_1.H64.1','image-alt','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.IncorrectAttr','input-button-name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputButton.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputCheckbox.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputFile.Name','input-image-alt','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputImage.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputPassword.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputRadio.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name','label','WCAG2AA.Principle1.Guideline1_3.1_3_1.F68','WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable','link-name','list','listitem','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Li.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeadersAttrs','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeaderIds','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43,H63','WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.NoTitleEl','role-img-alt','scope-attr-valid','scrollable-region-focusable','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Select.Name','td-headers-attr','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Textarea.Name','WCAG2AA.Principle3.Guideline3_1.3_1_2.H58.1.Lang','valid-lan_g')");
+  accessibility_new_updateTable();
+
+}
+
+function access_new_table_update($websites){
+    $website = $websites['website'];
+    $error_scan_type =$websites['runner'];
+    $error_cat = $websites['category'];
+    $wcag_code = $websites['wcag_ref'];
+    $website_id = $websites['website_id'];
+    if(trim($website_id) == "")
+        $website_id = 'NULL';
+    $code = $websites['code'];
+    $agency_id = $websites['agency_id'];
+    if(trim($agency_id) == "")
+        $agency_id = 'NULL';
+    $agency_name = $websites['agency_name'];
+    print "update custom_accessibility_issues set error_scan_type = '$error_scan_type',wcag_code='$wcag_code',error_cat='$error_cat',agency_id= $agency_id,website_id=$website_id,agency_name = '$agency_name' where website='$website' and error_code = '$code' \n";
+    echo "access_table_update() - ".$websites['website']."\n";
+    db_query("update custom_accessibility_issues set error_scan_type = '$error_scan_type',wcag_code='$wcag_code',error_cat='$error_cat',agency_id= $agency_id,website_id=$website_id,agency_name = '$agency_name' where website='$website' and error_code = '$code'");
+
+}
+
+function findParentAgencyName($websiteid){
+    $agencyname = db_query("select field_parent_agency_name_value from field_data_field_parent_agency_name where entity_id=:entity_id", array(':entity_id' => $websiteid))->fetchField();
+
+    if (!empty($agencyname )) {
+        return $agencyname;
+    }
+    else{
+        return FALSE;
+    }
+}
+
+function accessibility_new_updateWebsite($domain)
+{
+  $websites = array();
+  $websites['website_id'] = findNode($domain, 'website');
+  $websites['agency_id'] = findParentAgencyNode($websites['website_id']);
+  $websites['agency_name'] = findParentAgencyName($websites['website_id']);
+  $websites['website'] = $domain;
+  $check_redirect =  db_query("select redirect from custom_pulse_https_data where domain=:domain", array(':domain' => trim($domain)))->fetchField();
+  if($check_redirect != 'Yes') {
+#read current-federal.csv and loop the below query over each table
+    $accessibility_results = db_query("SELECT error_code,error_message,error_context,error_selector FROM custom_accessibility_issues where website = '$domain'");
+    echo " accessibility_scan() - Website scan " . $websites['website'] . "\n";
+    foreach ($accessibility_results as $result) {
+      $websites['code'] = $result->error_code;
+      $websites['message'] = $result->error_message;
+      $websites['context'] = $result->error_context;
+      $websites['selector'] = $result->error_selector;
+
+      if ($websites['code'] == 'image-alt' || $websites['code'] == 'role-img-alt') {
+
+        $websites['category'] = 'Images';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '1.1.1 Non-text Content';
+      } elseif ($websites['code'] == 'aria-hidden-focus' || $websites['code'] == 'aria-input-field-name' || $websites['code'] == 'aria-toggle-field-name'
+        || $websites['code'] == 'form-field-multiple-labels' || $websites['code'] == 'label') {
+
+        $websites['category'] = 'Forms';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '1.3.1 Info and Relationships';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.F68' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeadersAttrs'
+        || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputCheckbox.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputFile.Name'
+        || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputPassword.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputRadio.Name'
+        || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name'
+        || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Select.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Textarea.Name') {
+
+        $websites['category'] = 'Forms';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '1.3.1 Info and Relationships';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43,H63'
+        || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.IncorrectAttr'
+        || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeaderIds' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeadersAttrs'
+      ) {
+
+        $websites['category'] = 'Tables';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '1.3.1 Info and Relationships';
+      } elseif ($websites['code'] == 'scope-attr-valid' || $websites['code'] == 'td-headers-attr') {
+
+        $websites['category'] = 'Tables';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '1.3.1 Info and Relationships';
+      } elseif ($websites['code'] == 'empty-heading' || $websites['code'] == 'listitem') {
+
+        $websites['category'] = 'Content Structure';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '1.3.1 Info and Relationships';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2') {
+
+        $websites['category'] = 'Content Structure';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '1.3.1 Info and Relationships';
+      } elseif ($websites['code'] == 'color-contrast') {
+
+        $websites['category'] = 'Contrast';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '1.4.3 Contrast (Minimum)';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle1.Guideline1_4.1_4_3.G145' || $websites['code'] == 'WCAG2AA.Principle1.Guideline1_4.1_4_3.G18') {
+
+        $websites['category'] = 'Contrast';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '1.4.3 Contrast (Minimum)';
+      } elseif ($websites['code'] == 'scrollable-region-focusable') {
+
+        $websites['category'] = 'Keyboard Access';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '2.1.1 Keyboard';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.EmptyTitle' || $websites['code'] == 'WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.NoTitleEl') {
+
+        $websites['category'] = 'Page Titles';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '2.4.2';
+      } elseif ($websites['code'] == 'document-title') {
+
+        $websites['category'] = 'Page Titles';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '2.4.2 Page Titled';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.EmptyNoId' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.NoContent'
+        || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputButton.Name'
+        || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputImage.Name' || $websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Li.Name'
+      ) {
+
+        $websites['category'] = 'Links and Buttons';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '2.4.4 Link Purpose (In Context)';
+      } elseif ($websites['code'] == 'aria-allowed-role' || $websites['code'] == 'button-name'
+        || $websites['code'] == 'input-button-name' || $websites['code'] == 'input-image-alt'
+        || $websites['code'] == 'link-name' || $websites['code'] == 'list'
+      ) {
+        $websites['category'] = 'Links and Buttons';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '2.4.4 Link Purpose (In Context)';
+      } elseif ($websites['code'] == 'html-has-lang' || $websites['code'] == 'html-lang-valid'
+        || $websites['code'] == 'valid-lang') {
+        $websites['category'] = 'Language';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '3.1.1 Language of Page';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle3.Guideline3_1.3_1_1.H57.3.Lang' || $websites['code'] == 'WCAG2AA.Principle3.Guideline3_1.3_1_2.H58.1.Lang'
+      ) {
+        $websites['category'] = 'Language';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '3.1.1 Language of Page';
+      } elseif ($websites['code'] == 'duplicate-id') {
+        $websites['category'] = 'Parsing';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '4.1.1 Parsing';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle4.Guideline4_1.4_1_1.F77') {
+        $websites['category'] = 'Parsing';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '4.1.1 Parsing';
+      } elseif ($websites['code'] == 'WCAG2AA.Principle2.Guideline2_4.2_4_1.H64.1') {
+        $websites['category'] = 'Frames and iFrames';
+        $websites['runner'] = 'htmlcs 2.5.1';
+        $websites['wcag_ref'] = '4.1.2 Name, Role, Value';
+      } elseif ($websites['code'] == 'frame-title-unique' || $websites['code'] == 'frame-title') {
+        $websites['category'] = 'Frames and iFrames';
+        $websites['runner'] = 'axe-core 3.5';
+        $websites['wcag_ref'] = '4.1.2 Name, Role, Value';
+      } else {
+
+        $websites['category'] = '';
+        $websites['runner'] = '';
+        $websites['wcag_ref'] = '';
+      }
+      access_new_table_update($websites);
+    }
+  }
+  else {
+    db_query("delete from custom_accessibility_issues where website=:domain", array(':domain' => trim($domain)));
+  }
+}
+
+function accessibility_new_updateTable()
+{
+    $first = false;
+    if (($handle = fopen('/tmp/alldomains.csv', "r")) !== FALSE) {
+        while (!feof($handle)) {
+            $data = fgetcsv($handle);
+            if (!$first) {
+                $first = true;
+                continue;
+            }
+            accessibility_new_updateWebsite($data[0]);
+        }
+
+        fclose($handle);
+
+    }
+}
 
 function updateUswdsScanInfo($webscanId){
-    $csv = readCSV("/tmp/results/uswds2.csv");
+    $csv = readCSV("/tmp/uswdsresults/results/uswds2.csv");
 
     $i =1;
     $lineresult = "";
     foreach($csv as $csval) {
         $hostname = "$csval[0]";
+        //Check if the site is a redirect. If redirect dont run scan.
+        $check_redirect =  db_query("select redirect from custom_pulse_https_data where domain=:domain", array(':domain' => trim($hostname)))->fetchField();
+
         $scan_stat_code = "$csval[13]";
         $custom_score = "$csval[15]";
         $uswds_version = "$csval[20]";
@@ -117,15 +329,20 @@ function updateUswdsScanInfo($webscanId){
         $uswds_tables = "$csval[14]";
         $usa_classes_detected = "$csval[16]";
         $uswds_incss_detected = "$csval[19]";
+        if($check_redirect != "Yes") {
+            if ($custom_score != "0") {
+                $uswds_status = "1";
+                $uswds_score = "100";
+            } else {
+                $uswds_status = "0";
+                $uswds_score = "0";
+            }
 
-        if ($custom_score != "0") {
-            $uswds_status = "1";
-            $uswds_score = "100";
-        } else {
-            $uswds_status = "0";
-            $uswds_score = "0";
         }
-
+        else{
+            $uswds_status = NULL;
+            $uswds_score = NULL;
+        }
         $lineresult = $api_url . " \n Domain,Base Domain,domain,status_code,usa_classes_detected,uswds_detected,usa_detected,flag_detected,flagincss_detected,sourcesansfont_detected,uswdsincss_detected,merriweatherfont_detected,publicsansfont_detected,uswdsversion,tables,total_score \n";
         $lineresult .= implode(",", $csval);
         $siteid = findNode($hostname, 'website');
@@ -782,9 +999,15 @@ function mobileFriendlyApidataNewAPI($data, $apiKey){
             $mobileFriendlyScore = "100";
             $mobileFriendlyPass = "1";
             $mobileImage = $api_result->screenshot->data;
-        } else {
+        }
+        elseif (trim($api_result->mobileFriendliness) == "NOT_MOBILE_FRIENDLY") {
             $mobileFriendlyScore = "0";
             $mobileFriendlyPass = "0";
+            $mobileImage = $api_result->screenshot->data;
+        }
+        else {
+            $mobileFriendlyScore = NULL;
+            $mobileFriendlyPass = NULL;
             $mobileImage = "";
         }
         $mobret['stat'] = $mobileFriendlyPass;
@@ -793,7 +1016,14 @@ function mobileFriendlyApidataNewAPI($data, $apiKey){
         $mobret['returnstack'] = $api_content;
         return $mobret;
     }else{
-        return $api_content;
+        $mobileFriendlyScore = NULL;
+        $mobileFriendlyPass = NULL;
+        $mobileImage = "";
+        $mobret['stat'] = $mobileFriendlyPass;
+        $mobret['score'] = $mobileFriendlyScore;
+        $mobret['image'] = $mobileImage;
+        $mobret['returnstack'] = $api_content;
+        return $mobret;
     }
 }
 
@@ -947,7 +1177,7 @@ function getDnssecStatus($domain){
  */
 
 function getCustomIpv6Status($domain){
-    $ipv6com = "timeout 15 nslookup -q=aaaa $domain";
+    $ipv6com = "timeout 15 nslookup -q=aaaa $domain 205.171.2.65";
     $outp = array();
     $comret = "";
     execCommand("$ipv6com",$outp,$comret);
@@ -993,17 +1223,29 @@ function getPulseData(){
     print "Import CSV";
     $localhttpsfile = "/tmp/pulsehttp.csv";
     $localdapfile = "/tmp/pulsedap.csv";
+    $domainsourcefile = "/tmp/current-federal.csv";
     $pulsehttpsurl = "https://pulse.cio.gov/data/domains/https.csv";
     $pulsedapurl = "https://pulse.cio.gov/data/hosts/analytics.csv";
     //Get Pulse https data and enter to a temp table
 //    file_put_contents("$localhttpsfile", file_get_contents("$pulsehttpsurl"));
+    //Run script to generate http data
+    //first download current-federal.csv from github
+    writeToLogs("Get Latest Websites list and import to database",$logFile);
+    shell_exec("timeout 15 wget https://raw.githubusercontent.com/GSA/data/master/dotgov-domains/current-federal.csv -O /tmp/current-federal.csv");
+    //Process data in to custom_current_federal_websites db table
+    db_query("LOAD DATA LOCAL INFILE '".$domainsourcefile."' INTO TABLE `custom_current_federal_websites` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
+    db_query("update custom_current_federal_websites set security_contact=NULL where security_contact='(blank)';");
+    writeToLogs("Run script to generate https file and import to db",$logFile);
+    exec("cd ../scripts/custom_pulse_single_https/ && /usr/bin/python3.6 single_https.py --csvpath /tmp/current-federal.csv");
+    shell_exec("/bin/cp -f ../scripts/custom_pulse_single_https/https_scan.csv /tmp/pulsehttp.csv");
     db_query("truncate table custom_pulse_https_data");
     db_query("LOAD DATA LOCAL INFILE '".$localhttpsfile."' INTO TABLE `custom_pulse_https_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
-
+    exec("drush sql-query \"select domain from custom_pulse_https_data group by domain\" > /tmp/alldomains.csv");
     //Get Pulse dap data and enter to a temp table
     //file_put_contents("$localdapfile", file_get_contents("$pulsedapurl"));
     //This is the latest scan which uses GSA analytics api instead of pulse and generates a file at /tmp/pulsedap.csv
-    shell_exec("timeout 15 /usr/bin/python3.6 ../scripts/custom_pulse_scanner_analytics/secondLevelDomain.py");
+    writeToLogs("Run script to generate dap file and import to db",$logFile);
+    exec("/usr/bin/python3.6 ../scripts/custom_pulse_scanner_analytics/secondLevelDomain.py");
 
     db_query("truncate table custom_pulse_dap_data");
     db_query("LOAD DATA LOCAL INFILE '".$localdapfile."' INTO TABLE `custom_pulse_dap_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
@@ -1072,27 +1314,32 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
         $node->field_rc4_status['und'][0]['value'] = $result->rc4;
         $node->field_ssl_v2_from_pulse['und'][0]['value'] = $result->sslv2;
         $node->field_ssl_v3_from_pulse['und'][0]['value'] = $result->sslv3;
+        $redirectstat = $result->redirect;
         $node->field_redirect['und'][0]['value'] = $result->redirect;
-        if($result->redirect == 'Yes')
+        if($redirectstat == 'Yes')
             $node->field_redirect_url['und'][0]['value'] = getSiteRedirectDest($website['domain']);
         $node->field_hsts_scan_time['und'][0]['value'] = (int)time();
         $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
         $node->field_website_id['und'][0]['nid'] = $siteid;
         $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteid);
-        if($result->dap == 'Yes') {
-            $dapstatus = 1;
-            $dapscore = '100';
+        if($redirectstat != 'Yes') {
+            if ($result->dap == 'Yes') {
+                $dapstatus = 1;
+                $dapscore = '100';
+            } elseif ($result->dap == 'No') {
+                $dapstatus = 0;
+                $dapscore = '0';
+            } else {
+                $dapstatus = NULL;
+                $dapscore = NULL;
+            }
+            $node->field_dap_status['und'][0]['value'] = $dapstatus;
+            $node->field_dap_score['und'][0]['value'] = $dapscore;
         }
-        elseif($result->dap == 'No') {
-            $dapstatus = 0;
-            $dapscore = '0';
+        else{
+            $node->field_dap_status['und'][0]['value'] = NULL;
+            $node->field_dap_score['und'][0]['value'] = NULL;
         }
-        else {
-            $dapstatus = NULL;
-            $dapscore = NULL;
-        }
-        $node->field_dap_status['und'][0]['value'] = $dapstatus;
-        $node->field_dap_score['und'][0]['value'] = $dapscore;
 
         $https_score = 0;
         if($result->HTTPS == 'Yes') {
@@ -1111,8 +1358,7 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
             $https_score += 10;
             $tags[] = 'PRELOAD';
         }
-        if($result->dap == 'Yes')
-            $tags[] = 'DAP';
+
         if($result->Compliant_mbod == 'Yes') {
             $tags[] = 'Compliant with M-15-13 and BOD 18-01';
             $m15_score = '100';
@@ -1148,9 +1394,18 @@ function updateHttpsDAPInfo($siteid,$webscanId,$website){
     //Save parent website node
     $wnode = node_load($siteid);
     $wnode->field_https_score['und'][0]['value'] = round($https_score);
-    $wnode->field_dap_score['und'][0]['value'] = $dapscore;
     $wnode->field_m15_13_compliance_score['und'][0]['value'] = $m15_score;
     $wnode->field_free_of_insecr_prot_score['und'][0]['value'] = $rc4_score;
+    $wnode->field_redirect['und'][0]['value'] = $redirectstat;
+    if($redirectstat == 'Yes'){
+        $tags[] = 'REDIRECT';
+        $wnode->field_dap_score['und'][0]['value'] = NULL;
+    }else{
+        $wnode->field_dap_score['und'][0]['value'] = $dapscore;
+        if($result->dap == 'Yes')
+            $tags[] = 'DAP';
+    }
+
 
     //Save Tags to parent website
     if(!empty($tags)) {
@@ -1446,129 +1701,142 @@ function updateMobileScanInfo($siteid,$webscanId,$website){
         $node->nid = $nodeId;
     }
     $node->promote = 0;
-    $mobInfo = getMobileApiDataPagespeedV5($website['domain']);
     //print_r($mobInfo);
     $node->body['und'][0]['value'] = '';
     $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
     $node->field_website_id['und'][0]['nid'] = $siteid;
     $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteid);
 
-    if($mobInfo['mobFriendlyErrorCode'] != '') {
-        $field_mobile_usability_score = NULL;
-    }
-    else{
-        $field_mobile_usability_score = round($mobInfo['mobFriendlyScore']);
-    }
+    //Load Parent website id
+    $wnode = node_load($siteid);
 
-    $field_mobile_usability_result = ($mobInfo['mobFriendlyResult'] == 'true')?1:0;
-    if($mobInfo['mobPerformErrorCode'] != '') {
-        $field_mobile_performance_score = NULL;
-    }
-    else{
-        $field_mobile_performance_score = round($mobInfo['mPScore']);
-    }
-    if(($mobInfo['mobFriendlyErrorCode'] != '') && ($mobInfo['mobPerformErrorCode'] != '')) {
-        $field_mobile_overall_score = NULL;
-    }
-    elseif(($mobInfo['mobFriendlyErrorCode'] != '') && ($mobInfo['mobPerformErrorCode'] == '')) {
-        $field_mobile_overall_score = round($mobInfo['mPScore']);
-    }
-    elseif(($mobInfo['mobFriendlyErrorCode'] == '') && ($mobInfo['mobPerformErrorCode'] != '')) {
-        $field_mobile_overall_score = round($mobInfo['mobFriendlyScore']);
-    }
-    else{
-        $field_mobile_overall_score = round(($mobInfo['mobFriendlyScore'] + $mobInfo['mPScore']) / 2);
-    }
-    if($field_mobile_performance_score == NULL)
-        $field_mobile_perf_status = NULL;
-    elseif(($field_mobile_performance_score >= "0") && ($field_mobile_performance_score <50)){
-        $field_mobile_perf_status = "Poor";
-    }
-    elseif(($field_mobile_performance_score >= "50") && ($field_mobile_performance_score <90)){
-        $field_mobile_perf_status = "Needs Improvement";
-    }
-    elseif(($field_mobile_performance_score >= "90") && ($field_mobile_performance_score <100)){
-        $field_mobile_perf_status = "Good";
-    }
-    if($field_mobile_usability_score == NULL)
-        $field_mobile_usab_status = NULL;
-    elseif($field_mobile_usability_score == "0"){
-        $field_mobile_usab_status = "Not Mobile Friendly";
-    }
-    elseif($field_mobile_usability_score == "100"){
-        $field_mobile_usab_status = "Mobile Friendly";
-        //Add tag if the site is mobile friendly
-        $tags[] = "MOBILE";
-    }
-    $node->field_mobile_usability_score['und'][0]['value'] = $field_mobile_usability_score;
-    $node->field_mobile_performance_score['und'][0]['value'] = $field_mobile_performance_score;
-    $node->field_mobile_overall_score['und'][0]['value'] = $field_mobile_overall_score;
-    $node->field_mobile_usability_report['und'][0] = $mobInfo['mobFriendlyFile'];
-    $node->field_mobile_performance_report['und'][0] = $mobInfo['mobPerformFile'];
-    $node->field_mobile_websnapshot['und'][0] = $mobInfo['mobSnapshotFile'];
-    $node->field_html_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['htmlResponseBytes'];
-    $node->field_text_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['textResponseBytes'];
-    $node->field_css_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['cssResponseBytes'];
-    $node->field_image_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['imageResponseBytes'];
-    $node->field_js_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['javascriptResponseBytes'];
-    $node->field_other_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['otherResponseBytes'];
-    $node->field_number_of_js_resources['und'][0]['value'] = $mobInfo['mPStats']['numberJsResources'];
-    $node->field_number_of_css_resources['und'][0]['value'] = $mobInfo['mPStats']['numberCssResources'];
-    $node->field_number_of_resources['und'][0]['value'] = $mobInfo['mPStats']['numberResources'];
-    $node->field_number_of_hosts['und'][0]['value'] = $mobInfo['mPStats']['numberHosts'];
-    $node->field_total_request_bytes['und'][0]['value'] = $mobInfo['mPStats']['totalRequestBytes'];
-    $node->field_number_of_static_resources['und'][0]['value'] = $mobInfo['mPStats']['numberStaticResources'];
+    //Check if the site is a redirect. If redirect dont run scan.
+    $check_redirect =  db_query("select redirect from custom_pulse_https_data where domain=:domain", array(':domain' => trim($website['domain'])))->fetchField();
+    if($check_redirect != "Yes") {
+        $mobInfo = getMobileApiDataPagespeedV5($website['domain']);
+//    if($mobInfo['mobFriendlyErrorCode'] != '') {
+//        $field_mobile_usability_score = NULL;
+//    }
+//    else{
+        $field_mobile_usability_score = $mobInfo['mobFriendlyScore'];
+//    }
 
-    $node->field_mobile_perf_error_code['und'][0]['value'] = $mobInfo['mobPerformErrorCode'];
-    $node->field_mobile_perf_error_message['und'][0]['value'] = $mobInfo['mobPerformErrorMessage'];
-    $node->field_mobile_usab_error_code['und'][0]['value'] = $mobInfo['mobFriendlyErrorCode'];
-    $node->field_mobile_usab_error_message['und'][0]['value'] = $mobInfo['mobFriendlyErrorMessage'];
-    $node->field_mobile_performance_status['und'][0]['value'] = $field_mobile_perf_status;
-    $node->field_mobile_usability_status['und'][0]['value'] = $field_mobile_usab_status;
+        $field_mobile_usability_result = ($mobInfo['mobFriendlyResult'] == 'true') ? 1 : 0;
+        if ($mobInfo['mobPerformErrorCode'] != '') {
+            $field_mobile_performance_score = NULL;
+        } else {
+            $field_mobile_performance_score = round($mobInfo['mPScore']);
+        }
+        if (($mobInfo['mobFriendlyErrorCode'] != '') && ($mobInfo['mobPerformErrorCode'] != '')) {
+            $field_mobile_overall_score = NULL;
+        } elseif (($mobInfo['mobFriendlyErrorCode'] != '') && ($mobInfo['mobPerformErrorCode'] == '')) {
+            $field_mobile_overall_score = round($mobInfo['mPScore']);
+        } elseif (($mobInfo['mobFriendlyErrorCode'] == '') && ($mobInfo['mobPerformErrorCode'] != '')) {
+            $field_mobile_overall_score = round($mobInfo['mobFriendlyScore']);
+        } else {
+            $field_mobile_overall_score = round(($mobInfo['mobFriendlyScore'] + $mobInfo['mPScore']) / 2);
+        }
+        if ($field_mobile_performance_score == NULL)
+            $field_mobile_perf_status = NULL;
+        elseif (($field_mobile_performance_score >= "0") && ($field_mobile_performance_score < 50)) {
+            $field_mobile_perf_status = "Poor";
+        } elseif (($field_mobile_performance_score >= "50") && ($field_mobile_performance_score < 90)) {
+            $field_mobile_perf_status = "Needs Improvement";
+        } elseif (($field_mobile_performance_score >= "90") && ($field_mobile_performance_score < 100)) {
+            $field_mobile_perf_status = "Good";
+        }
+        if ($field_mobile_usability_score == NULL)
+            $field_mobile_usab_status = NULL;
+        elseif ($field_mobile_usability_score == "0") {
+            $field_mobile_usab_status = "Not Mobile Friendly";
+        } elseif ($field_mobile_usability_score == "100") {
+            $field_mobile_usab_status = "Mobile Friendly";
+            //Add tag if the site is mobile friendly
+            $tags[] = "MOBILE";
+        }
+        $node->field_mobile_usability_score['und'][0]['value'] = $field_mobile_usability_score;
+        $node->field_mobile_performance_score['und'][0]['value'] = $field_mobile_performance_score;
+        $node->field_mobile_overall_score['und'][0]['value'] = $field_mobile_overall_score;
+        $node->field_mobile_usability_report['und'][0] = $mobInfo['mobFriendlyFile'];
+        $node->field_mobile_performance_report['und'][0] = $mobInfo['mobPerformFile'];
+        $node->field_mobile_websnapshot['und'][0] = $mobInfo['mobSnapshotFile'];
+        $node->field_html_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['htmlResponseBytes'];
+        $node->field_text_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['textResponseBytes'];
+        $node->field_css_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['cssResponseBytes'];
+        $node->field_image_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['imageResponseBytes'];
+        $node->field_js_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['javascriptResponseBytes'];
+        $node->field_other_response_bytes['und'][0]['value'] = $mobInfo['mPStats']['otherResponseBytes'];
+        $node->field_number_of_js_resources['und'][0]['value'] = $mobInfo['mPStats']['numberJsResources'];
+        $node->field_number_of_css_resources['und'][0]['value'] = $mobInfo['mPStats']['numberCssResources'];
+        $node->field_number_of_resources['und'][0]['value'] = $mobInfo['mPStats']['numberResources'];
+        $node->field_number_of_hosts['und'][0]['value'] = $mobInfo['mPStats']['numberHosts'];
+        $node->field_total_request_bytes['und'][0]['value'] = $mobInfo['mPStats']['totalRequestBytes'];
+        $node->field_number_of_static_resources['und'][0]['value'] = $mobInfo['mPStats']['numberStaticResources'];
+
+        $node->field_mobile_perf_error_code['und'][0]['value'] = $mobInfo['mobPerformErrorCode'];
+        $node->field_mobile_perf_error_message['und'][0]['value'] = $mobInfo['mobPerformErrorMessage'];
+        $node->field_mobile_usab_error_code['und'][0]['value'] = $mobInfo['mobFriendlyErrorCode'];
+        $node->field_mobile_usab_error_message['und'][0]['value'] = $mobInfo['mobFriendlyErrorMessage'];
+        $node->field_mobile_performance_status['und'][0]['value'] = $field_mobile_perf_status;
+        $node->field_mobile_usability_status['und'][0]['value'] = $field_mobile_usab_status;
 
 
 //    if($mobInfo['mobFriendlyResult'] == 'true'){
 //        $tags[] = "MOBILE";
 //    }
-    //Load Parent website id
-    $wnode = node_load($siteid);
 
-    $wnode->field_mobile_usability_score['und'][0]['value'] = $field_mobile_usability_score;
-    $wnode->field_mobile_performance_score['und'][0]['value'] = $field_mobile_performance_score;
-    $wnode->field_mobile_overall_score['und'][0]['value'] = $field_mobile_overall_score;
-    $wnode->field_mobile_performance_status['und'][0]['value'] = $field_mobile_perf_status;
-    $wnode->field_mobile_usability_status['und'][0]['value'] = $field_mobile_usab_status;
-    //Save Tags to parent website
-    if(!empty($tags)) {
-        if(!empty($wnode->field_website_tags)){
-            foreach($wnode->field_website_tags['und'] as $ctk  =>$ctval){
-                $currentTerms[] = $ctval['tid'];
-            }
-            $crnTermCnt = count($currentTerms);
-        }
-        $i = 1;
-        foreach (array_unique($tags) as $key => $tag) {
-            if ($term = taxonomy_get_term_by_name($tag)) {
-                $terms_array = array_keys($term);
-                //Check if the term already assigned to the node
-                if(!in_array($terms_array['0'],$currentTerms)){
-                    $wnode->field_website_tags['und'][$crnTermCnt+$i]['tid'] = $terms_array['0'];
+
+        $wnode->field_mobile_usability_score['und'][0]['value'] = $field_mobile_usability_score;
+        $wnode->field_mobile_performance_score['und'][0]['value'] = $field_mobile_performance_score;
+        $wnode->field_mobile_overall_score['und'][0]['value'] = $field_mobile_overall_score;
+        $wnode->field_mobile_performance_status['und'][0]['value'] = $field_mobile_perf_status;
+        $wnode->field_mobile_usability_status['und'][0]['value'] = $field_mobile_usab_status;
+        //Save Tags to parent website
+        if (!empty($tags)) {
+            if (!empty($wnode->field_website_tags)) {
+                foreach ($wnode->field_website_tags['und'] as $ctk => $ctval) {
+                    $currentTerms[] = $ctval['tid'];
                 }
-            } else {
-                $term = new STDClass();
-                $term->name = $tag;
-                $term->vid = 3;
-                if (!empty($term->name)) {
-                    taxonomy_term_save($term);
+                $crnTermCnt = count($currentTerms);
+            }
+            $i = 1;
+            foreach (array_unique($tags) as $key => $tag) {
+                if ($term = taxonomy_get_term_by_name($tag)) {
+                    $terms_array = array_keys($term);
+                    //Check if the term already assigned to the node
+                    if (!in_array($terms_array['0'], $currentTerms)) {
+                        $wnode->field_website_tags['und'][$crnTermCnt + $i]['tid'] = $terms_array['0'];
+                    }
+                } else {
+                    $term = new STDClass();
+                    $term->name = $tag;
+                    $term->vid = 3;
+                    if (!empty($term->name)) {
+                        taxonomy_term_save($term);
 //                        $term = taxonomy_get_term_by_name($tag);
 //                        foreach($term as $term_id){
 //                            $node->product_tags[LANGUAGE_NONE][$key]['tid'] = $term_id->tid;
 //                        }
-                    $wnode->field_website_tags['und'][$key]['tid'] = $term->tid;
+                        $wnode->field_website_tags['und'][$key]['tid'] = $term->tid;
+                    }
                 }
+                $i += 1;
             }
-            $i += 1;
         }
+    }
+    else{
+        //For redirected sites all are null
+        $node->field_mobile_performance_status['und'][0]['value'] = NULL;
+        $node->field_mobile_usability_status['und'][0]['value'] = NULL;
+        $node->field_mobile_usability_score['und'][0]['value'] = NULL;
+        $node->field_mobile_performance_score['und'][0]['value'] = NULL;
+        $node->field_mobile_overall_score['und'][0]['value'] = NULL;
+
+        $wnode->field_mobile_usability_score['und'][0]['value'] = NULL;
+        $wnode->field_mobile_performance_score['und'][0]['value'] = NULL;
+        $wnode->field_mobile_overall_score['und'][0]['value'] = NULL;
+        $wnode->field_mobile_performance_status['und'][0]['value'] = NULL;
+        $wnode->field_mobile_usability_status['und'][0]['value'] = NULL;
     }
     node_object_prepare($node);
     if ($node = node_submit($node)) {
@@ -1606,33 +1874,47 @@ function updateSiteScanInfo($siteid,$webscanId,$website){
         echo "found node $node->title $nodeId";
         $node->nid = $nodeId;
     }
-    $node->promote = 0;
-    $siteInfo = getSitePerformanceAPIdataV5($website['domain']);
-    //print_r($mobInfo);
-    $node->body['und'][0]['value'] = '';
-    $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
-    $node->field_website_id['und'][0]['nid'] = $siteid;
-    $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteid);
-    $node->field_site_speed_score['und'][0]['value'] = round($siteInfo['mPScore']);
-    $node->field_site_speed_report_location['und'][0] = $siteInfo['sitePerformFile'];
-    $node->field_website_desktop_snapshot['und'][0] = $siteInfo['siteSnapshotFile'];
-    $node->field_html_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['htmlResponseBytes'];
-    $node->field_text_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['textResponseBytes'];
-    $node->field_css_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['cssResponseBytes'];
-    $node->field_image_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['imageResponseBytes'];
-    $node->field_js_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['javascriptResponseBytes'];
-    $node->field_other_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['otherResponseBytes'];
-    $node->field_number_of_js_resources['und'][0]['value'] = $siteInfo['mPStats']['numberJsResources'];
-    $node->field_number_of_css_resources['und'][0]['value'] = $siteInfo['mPStats']['numberCssResources'];
-    $node->field_number_of_resources['und'][0]['value'] = $siteInfo['mPStats']['numberResources'];
-    $node->field_number_of_hosts['und'][0]['value'] = $siteInfo['mPStats']['numberHosts'];
-    $node->field_total_request_bytes['und'][0]['value'] = $siteInfo['mPStats']['totalRequestBytes'];
-    $node->field_number_of_static_resources['und'][0]['value'] = $siteInfo['mPStats']['numberStaticResources'];
-
 
     //Load Parent website id
     $wnode = node_load($siteid);
-    $wnode->field_site_speed_score['und'][0]['value'] = round($siteInfo['mPScore']);
+
+    $node->promote = 0;
+    //Check if the site is a redirect. If redirect dont run scan.
+    $check_redirect =  db_query("select redirect from custom_pulse_https_data where domain=:domain", array(':domain' => trim($website['domain'])))->fetchField();
+    if($check_redirect != "Yes") {
+        $siteInfo = getSitePerformanceAPIdataV5($website['domain']);
+        //print_r($mobInfo);
+        $node->body['und'][0]['value'] = '';
+        $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
+        $node->field_website_id['und'][0]['nid'] = $siteid;
+        $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteid);
+        $node->field_site_speed_score['und'][0]['value'] = round($siteInfo['mPScore']);
+        $node->field_site_speed_report_location['und'][0] = $siteInfo['sitePerformFile'];
+        $node->field_website_desktop_snapshot['und'][0] = $siteInfo['siteSnapshotFile'];
+        $node->field_html_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['htmlResponseBytes'];
+        $node->field_text_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['textResponseBytes'];
+        $node->field_css_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['cssResponseBytes'];
+        $node->field_image_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['imageResponseBytes'];
+        $node->field_js_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['javascriptResponseBytes'];
+        $node->field_other_response_bytes['und'][0]['value'] = $siteInfo['mPStats']['otherResponseBytes'];
+        $node->field_number_of_js_resources['und'][0]['value'] = $siteInfo['mPStats']['numberJsResources'];
+        $node->field_number_of_css_resources['und'][0]['value'] = $siteInfo['mPStats']['numberCssResources'];
+        $node->field_number_of_resources['und'][0]['value'] = $siteInfo['mPStats']['numberResources'];
+        $node->field_number_of_hosts['und'][0]['value'] = $siteInfo['mPStats']['numberHosts'];
+        $node->field_total_request_bytes['und'][0]['value'] = $siteInfo['mPStats']['totalRequestBytes'];
+        $node->field_number_of_static_resources['und'][0]['value'] = $siteInfo['mPStats']['numberStaticResources'];
+
+        $wnode->field_site_speed_score['und'][0]['value'] = round($siteInfo['mPScore']);
+
+    }
+    else{
+        //For rediect sites score is null
+        $node->field_site_speed_score['und'][0]['value'] = NULL;
+
+        $wnode->field_site_speed_score['und'][0]['value'] = NULL;
+
+    }
+
 
 
     node_object_prepare($node);
@@ -1887,6 +2169,15 @@ function updatePulseWebsiteInfo($csvfile){
 
             $node->body[$node->language][0]['value'] = $csval[1];
             $node->field_agency_branch[$node->language][0]['value'] = getBranchInfo($csval[3]);
+            $websitepoc = db_query("select security_contact from custom_current_federal_websites where domain=:domain limit 1", array(':domain' => strtoupper(trim($csval[0]))))->fetchField();
+            if((trim($websitepoc) != "") || ($websitepoc != NULL)){
+                $websitepocstat = "1";
+            }
+            else{
+                $websitepocstat = "0";
+            }
+            $node->field_website_security_poc[$node->language][0]['value'] = $websitepoc;
+            $node->field_website_security_poc_statu[$node->language][0]['value'] = $websitepocstat;
 
             //Check if the Agency exists if not create a new agency
             if(($agencyId = findNode($csval[3],'agency')) != FALSE){
@@ -1895,7 +2186,6 @@ function updatePulseWebsiteInfo($csvfile){
             }
 
             $node->field_parent_agency_name[$node->language][0]['value'] = $csval[3];
-
             $node->field_website_type[$node->language][0]['value'] = "full";
 
             $node->status = 1;   // (1 or 0): published or unpublished
@@ -2034,146 +2324,161 @@ function findCDNProvider($website){
  */
 
 function updateTechStackInfo($website){
-    //Associate field names with categories of technology
-    $varCatassoc = array("cms"=>"field_cms_applications",
-        "widgets"=>"field_widget_applications",
-        "analytics"=>"field_analytics_applications",
-        "font scripts"=>"field_font_script_applications",
-        "web servers"=>"field_web_server",
-        "cache tools"=>"field_cache_tools",
-        "javascript frameworks"=>"field_javascript_frameworks",
-        "programming languages"=>"field_programming_languages",
-        "advertising networks"=>"field_advertising_networks",
-        "blogs"=>"field_blog_applications",
-        "build ci systems"=>"field_build_ci_systems",
-        "captchas"=>"field_captcha_applications",
-        "cdn"=>"field_cdn_applications",
-        "comment systems"=>"field_comment_systems_applicatio",
-        "control systems"=>"field_control_systems_applicatio",
-        "crm"=>"field_crm_applications",
-        "database managers"=>"field_database_managers",
-        "databases"=>"field_databases",
-        "dev tools"=>"field_dev_tools",
-        "document management systems"=>"field_document_management_system",
-        "documentation tools"=>"field_documentation_tools",
-        "ecommerce"=>"field_ecommerce_applications",
-        "editors"=>"field_editor_applications",
-        "feed readers"=>"field_feed_readers",
-        "hosting panels"=>"field_hosting_panels",
-        "issue trackers"=>"field_issue_trackers",
-        "javascript graphics"=>"field_javascript_graphics_applic",
-        "landing page builders"=>"field_landing_page_builders",
-        "live chat"=>"field_live_chat_applications",
-        "lms"=>"field_lms_applications",
-        "maps"=>"field_maps_applications",
-        "marketing automation"=>"field_marketing_automation",
-        "media servers"=>"field_media_servers",
-        "message boards"=>"field_message_boards",
-        "miscellaneous"=>"field_miscellaneous_application",
-        "mobile frameworks"=>"field_mobile_frameworks",
-        "network devices"=>"field_network_devices",
-        "network storage"=>"field_network_storage",
-        "operating systems"=>"field_operating_systems",
-        "payment processors"=>"field_payment_processors",
-        "photo galleries"=>"field_photo_galleries",
-        "remote access"=>"field_remote_access",
-        "rich text editors"=>"field_rich_text_editors",
-        "search engines"=>"field_search_engines",
-        "tag managers"=>"field_tag_managers",
-        "video players"=>"field_video_players",
-        "web frameworks"=>"field_web_frameworks",
-        "web mail"=>"field_web_mail_applications",
-        "web server extensions"=>"field_web_server_extensions",
-        "wikis"=>"field_wiki_applications");
-    $weburl = "http://".$website;
-    //$command = "node index.js $weburl";
-    //$tsout = shell_exec("export npm_config_loglevel=silent;cd ../tools/wappalyzer/;$command");
-    $command = "timeout 15 node /usr/lib/node_modules/wappalyzer/index.js $weburl";
-    shell_exec("export npm_config_loglevel=silent");
-    $tsout = shell_exec("export npm_config_loglevel=silent;$command");
-    if (strpos($tsout, 'JQMIGRATE:') !== false) {
-        $tsout1 = explode(" version 1.4.1",$tsout);
-        $tsout = $tsout1[1];
-    }
-    $tsout = "[$tsout]";
-    $tsout2 = strstr($tsout,'[{"');
-    $tsout2 = str_replace('\'', '\\\'', $tsout2);
-    $tsout2 = str_replace("\\n","",$tsout2);
 
-    $tsobj = json_decode($tsout2);
-    $tags = array();
-    $k = 1;
-    foreach($tsobj[0]->applications as $tskey=>$tsobj){
-        //foreach($tsobj as $tskey=>$tsobj){
-        $tsAppname = $tsobj->name;
-        //$tsAppCat = $tsobj->categories[0];
-        $tsAppCat1 = (Array)$tsobj->categories[0];
-        $tsAppCat = array_values($tsAppCat1)[0];
-
-        //$tags[$tsAppCat] = array();
-        //if version is present append version to technology
-
-        if(trim($tsobj->version) != '') {
-            $tsAppname .= "_" . $tsobj->version;
-            //if (!in_array($tsAppname, $tags[$tsAppCat]))
-            $tags[strtolower($tsAppCat)][] = $tsAppname;
+    //Check if the site is a redirect. If redirect dont run scan.
+    $check_redirect =  db_query("select redirect from custom_pulse_https_data where domain=:domain", array(':domain' => trim($website)))->fetchField();
+    if($check_redirect != "Yes") {
+        //Associate field names with categories of technology
+        $varCatassoc = array("cms" => "field_cms_applications",
+            "widgets" => "field_widget_applications",
+            "analytics" => "field_analytics_applications",
+            "font scripts" => "field_font_script_applications",
+            "web servers" => "field_web_server",
+            "cache tools" => "field_cache_tools",
+            "javascript frameworks" => "field_javascript_frameworks",
+            "programming languages" => "field_programming_languages",
+            "advertising networks" => "field_advertising_networks",
+            "blogs" => "field_blog_applications",
+            "build ci systems" => "field_build_ci_systems",
+            "captchas" => "field_captcha_applications",
+            "cdn" => "field_cdn_applications",
+            "comment systems" => "field_comment_systems_applicatio",
+            "control systems" => "field_control_systems_applicatio",
+            "crm" => "field_crm_applications",
+            "database managers" => "field_database_managers",
+            "databases" => "field_databases",
+            "dev tools" => "field_dev_tools",
+            "document management systems" => "field_document_management_system",
+            "documentation tools" => "field_documentation_tools",
+            "ecommerce" => "field_ecommerce_applications",
+            "editors" => "field_editor_applications",
+            "feed readers" => "field_feed_readers",
+            "hosting panels" => "field_hosting_panels",
+            "issue trackers" => "field_issue_trackers",
+            "javascript graphics" => "field_javascript_graphics_applic",
+            "landing page builders" => "field_landing_page_builders",
+            "live chat" => "field_live_chat_applications",
+            "lms" => "field_lms_applications",
+            "maps" => "field_maps_applications",
+            "marketing automation" => "field_marketing_automation",
+            "media servers" => "field_media_servers",
+            "message boards" => "field_message_boards",
+            "miscellaneous" => "field_miscellaneous_application",
+            "mobile frameworks" => "field_mobile_frameworks",
+            "network devices" => "field_network_devices",
+            "network storage" => "field_network_storage",
+            "operating systems" => "field_operating_systems",
+            "payment processors" => "field_payment_processors",
+            "photo galleries" => "field_photo_galleries",
+            "remote access" => "field_remote_access",
+            "rich text editors" => "field_rich_text_editors",
+            "search engines" => "field_search_engines",
+            "tag managers" => "field_tag_managers",
+            "video players" => "field_video_players",
+            "web frameworks" => "field_web_frameworks",
+            "web mail" => "field_web_mail_applications",
+            "web server extensions" => "field_web_server_extensions",
+            "wikis" => "field_wiki_applications");
+        $weburl = "http://" . $website;
+        //$command = "node index.js $weburl";
+        //$tsout = shell_exec("export npm_config_loglevel=silent;cd ../tools/wappalyzer/;$command");
+        $command = "timeout 15 node /usr/lib/node_modules/wappalyzer/index.js $weburl";
+        shell_exec("export npm_config_loglevel=silent");
+        $tsout = shell_exec("export npm_config_loglevel=silent;$command");
+        if (strpos($tsout, 'JQMIGRATE:') !== false) {
+            $tsout1 = explode(" version 1.4.1", $tsout);
+            $tsout = $tsout1[1];
         }
+        $tsout = "[$tsout]";
+        $tsout2 = strstr($tsout, '[{"');
+        $tsout2 = str_replace('\'', '\\\'', $tsout2);
+        $tsout2 = str_replace("\\n", "", $tsout2);
 
-        $tags[strtolower($tsAppCat)][] = $tsobj->name;
-    }
-    //print_r($tags);
-    $curNodeid = findNode($website,'website');
-    $webnode = node_load($curNodeid);
-    $webnode->field_technology_scan_raw['und'][0]['value'] = $tsout2;
-    $cdnproviders = findCDNProvider("$website");
-    foreach($varCatassoc as $vkey=>$vval){
-        $webnode->{$vval} = array();
-        //print "$vkey -- $vval \n";
-    }
-    if(!empty($cdnproviders)){
-        $tags['cdn'] = array_values($cdnproviders);
-    }
-    print_r($tags);
-    foreach ($tags as $key => $tagarr) {
-        $i = 0;
-        foreach ($tagarr as $tkey => $tag) {
-            if(array_key_exists($key,$varCatassoc)){
-                //Check if term exists
-                if ($term = taxonomy_get_term_by_name($tag)) {
-                    $terms_array = array_keys($term);
+        $tsobj = json_decode($tsout2);
+        $tags = array();
+        $k = 1;
+        foreach ($tsobj[0]->applications as $tskey => $tsobj) {
+            //foreach($tsobj as $tskey=>$tsobj){
+            $tsAppname = $tsobj->name;
+            //$tsAppCat = $tsobj->categories[0];
+            $tsAppCat1 = (Array)$tsobj->categories[0];
+            $tsAppCat = array_values($tsAppCat1)[0];
 
-                    $webnode->{$varCatassoc["$key"]}['und'][$i]['tid'] = $terms_array['0'];
+            //$tags[$tsAppCat] = array();
+            //if version is present append version to technology
 
-                } else {
-                    //Create a new term and assign
-                    $term = new STDClass();
-                    $term->name = $tag;
-                    $term->vid = 2;
-                    if (!empty($term->name)) {
-                        taxonomy_term_save($term);
-                        $webnode->{$varCatassoc["$key"]}['und'][$i]['tid'] = $term->tid;
-                    }
-                }
-
+            if (trim($tsobj->version) != '') {
+                $tsAppname .= "_" . $tsobj->version;
+                //if (!in_array($tsAppname, $tags[$tsAppCat]))
+                $tags[strtolower($tsAppCat)][] = $tsAppname;
             }
-            $i += 1;
-        }
 
+            $tags[strtolower($tsAppCat)][] = $tsobj->name;
+        }
+        //print_r($tags);
+        $curNodeid = findNode($website, 'website');
+        $webnode = node_load($curNodeid);
+        $webnode->field_technology_scan_raw['und'][0]['value'] = $tsout2;
+        $cdnproviders = findCDNProvider("$website");
+        foreach ($varCatassoc as $vkey => $vval) {
+            $webnode->{$vval} = array();
+            //print "$vkey -- $vval \n";
+        }
+        if (!empty($cdnproviders)) {
+            $tags['cdn'] = array_values($cdnproviders);
+        }
+        print_r($tags);
+        foreach ($tags as $key => $tagarr) {
+            $i = 0;
+            foreach ($tagarr as $tkey => $tag) {
+                if (array_key_exists($key, $varCatassoc)) {
+                    //Check if term exists
+                    if ($term = taxonomy_get_term_by_name($tag)) {
+                        $terms_array = array_keys($term);
+
+                        $webnode->{$varCatassoc["$key"]}['und'][$i]['tid'] = $terms_array['0'];
+
+                    } else {
+                        //Create a new term and assign
+                        $term = new STDClass();
+                        $term->name = $tag;
+                        $term->vid = 2;
+                        if (!empty($term->name)) {
+                            taxonomy_term_save($term);
+                            $webnode->{$varCatassoc["$key"]}['und'][$i]['tid'] = $term->tid;
+                        }
+                    }
+
+                }
+                $i += 1;
+            }
+
+        }
+        //Assign Search Scan Results here to the domain
+        $query = db_query("select * from search_scan where domain=:domain", array(':domain' => $website));
+        foreach ($query as $result) {
+            if ($result->search_available == 'yes')
+                $search_available = 1;
+            elseif ($result->search_available == 'no')
+                $search_available = 0;
+            $webnode->field_search_engine_name['und'][0]['value'] = $result->type;
+            $webnode->field_search_status['und'][0]['value'] = $search_available;
+        }
+        //print_r($webnode->field_analytics_applications);
+        node_object_prepare($webnode);
+        if ($webnode = node_submit($webnode)) {
+            node_save($webnode);
+        }
     }
-    //Assign Search Scan Results here to the domain
-    $query = db_query("select * from search_scan where domain=:domain", array(':domain' => $website));
-    foreach ($query as $result) {
-        if($result->search_available == 'yes')
-            $search_available = 1;
-        elseif($result->search_available == 'no')
-            $search_available = 0;
-        $webnode->field_search_engine_name['und'][0]['value'] = $result->type;
-        $webnode->field_search_status['und'][0]['value'] = $search_available;
-    }
-    //print_r($webnode->field_analytics_applications);
-    node_object_prepare($webnode);
-    if ($webnode = node_submit($webnode)) {
-        node_save($webnode);
+    else{
+        $curNodeid = findNode($website, 'website');
+        $webnode = node_load($curNodeid);
+        $webnode->field_search_engine_name['und'][0]['value'] = NULL;
+        $webnode->field_search_status['und'][0]['value'] = NULL;
+        node_object_prepare($webnode);
+        if ($webnode = node_submit($webnode)) {
+            node_save($webnode);
+        }
     }
 }
 function recursive_array_search($needle,$haystack) {
@@ -2643,6 +2948,16 @@ function archiveGovwideTrendData(){
     $mobnew_friendly_sites =  db_query("select count(a.field_mobile_usability_status_value) from field_data_field_mobile_usability_status a, node b where  a.entity_id=b.nid  and b.type='website' and b.status=1 and a.field_mobile_usability_status_value='Mobile Friendly'")->fetchField();
     $mobnew_unfriendly_sites =  db_query("select count(a.field_mobile_usability_status_value) from field_data_field_mobile_usability_status a, node b where  a.entity_id=b.nid  and b.type='website' and b.status=1 and a.field_mobile_usability_status_value='Not Mobile Friendly'")->fetchField();
 
+    $dap_websites = db_query("select count(a.title) as complnum from node a, field_data_field_dap_score b where a.nid=b.entity_id and a.status='1' and a.type='website' and b.field_dap_score_value='100'")->fetchField();
+
+    $redirect_websites = db_query("select count(a.title) as complnum from node a, field_data_field_redirect b where a.nid=b.entity_id and a.status='1' and a.type='website' and b.field_redirect_value='Yes'")->fetchField();
+
+    $poc_websites = db_query("select count(a.field_website_security_poc_statu_value) as avg_value from field_data_field_website_security_poc_statu a , node b where a.entity_id=b.nid and b.type='website' and b.status='1' and a.field_website_security_poc_statu_value='1'")->fetchField();
+
+    $https_websites = db_query("select count(field_https_status_value) as complnum from node a , field_data_field_https_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and a.type='https_dap_scan_information'  and field_https_status_value ='Yes' group by field_https_status_value")->fetchField();
+
+    $uswds_websites = db_query("select count(field_uswds_score_value) as complnum from field_data_field_uswds_score a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and field_uswds_score_value='100' group by field_uswds_score_value")->fetchField();
+
     //Query to get Search data for govtwide
     $searchresults = db_query("select field_search_status_value,count(field_search_status_value) as complnum from node a , field_data_field_search_status b  where a.status='1' and a.nid=b.entity_id  and a.type='website' group by field_search_status_value");
     $agency_search_status = array();
@@ -2654,12 +2969,12 @@ function archiveGovwideTrendData(){
         if($searchresult->field_search_status_value == '0')
             $search_notavailable += $searchresult->complnum;
     }
-    print  " $websitenos - $agencynos - $avg_https -- $avg_dap -- $avg_mob_overall -- $avg_mob_perform -- $avg_mob_usab - $avg_sitespeed - $avg_ipv6 - $avg_dnssec -  $avg_rc4 - $avg_m15 - $ag_avrg_color_cont - $ag_avrg_miss_image - $ag_avrg_html_attr - $search_available - $search_notavailable - $avg_uswds ,$mobnew_poor_sites,$mobnew_improve_sites,$mobnew_good_sites,$mobnew_friendly_sites,$mobnew_unfriendly_sites \n";
-    print "insert into custom_government_wide_archive values(NULL,CURDATE(),NOW(),$websitenos,$avg_https,$avg_dap,$avg_mob_overall,$avg_mob_usab,$avg_mob_perform,$avg_sitespeed,$avg_ipv6,$avg_dnssec,$avg_rc4,$avg_m15,$ag_avrg_color_cont,$ag_avrg_html_attr,$ag_avrg_miss_image,$search_available,$search_notavailable,$agencynos,$avg_uswds) ON DUPLICATE KEY UPDATE    
-num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',num_of_agencies='$agencynos',search_available='$search_available',search_notavailable='$search_notavailable',average_uswds_score='$avg_uswds', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites'";
+    print  " $websitenos - $agencynos - $avg_https -- $avg_dap -- $avg_mob_overall -- $avg_mob_perform -- $avg_mob_usab - $avg_sitespeed - $avg_ipv6 - $avg_dnssec -  $avg_rc4 - $avg_m15 - $ag_avrg_color_cont - $ag_avrg_miss_image - $ag_avrg_html_attr - $search_available - $search_notavailable - $avg_uswds ,$mobnew_poor_sites,$mobnew_improve_sites,$mobnew_good_sites,$mobnew_friendly_sites,$mobnew_unfriendly_sites,$dap_websites,$https_websites,$uswds_websites , $redirect_websites, $poc_websites\n";
+    print "insert into custom_government_wide_archive values(NULL,CURDATE(),NOW(),'$websitenos','$avg_https','$avg_dap','$avg_mob_overall','$avg_mob_usab','$avg_mob_perform','$avg_sitespeed','$avg_ipv6','$avg_dnssec','$avg_rc4','$avg_m15','$ag_avrg_color_cont','$ag_avrg_html_attr','$ag_avrg_miss_image','$search_available','$search_notavailable','$agencynos','$avg_uswds','$mobnew_good_sites','$mobnew_improve_sites','$mobnew_poor_sites','$mobnew_friendly_sites','$mobnew_unfriendly_sites','$dap_websites','$https_websites','$uswds_websites') ON DUPLICATE KEY UPDATE    
+num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',num_of_agencies='$agencynos',search_available='$search_available',search_notavailable='$search_notavailable',average_uswds_score='$avg_uswds', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites',dap_websites='$dap_websites',https_websites='$https_websites',uswds_websites='$uswds_websites',poc_websites='$poc_websites',redirect_websites='$redirect_websites' \n";
 //Update/Insert Archive record for current data sets
-    db_query("insert into custom_government_wide_archive values(NULL,CURDATE(),NOW(),$websitenos,$avg_https,$avg_dap,$avg_mob_overall,$avg_mob_usab,$avg_mob_perform,$avg_sitespeed,$avg_ipv6,$avg_dnssec,$avg_rc4,$avg_m15,$ag_avrg_color_cont,$ag_avrg_html_attr,$ag_avrg_miss_image,$search_available,$search_notavailable,$agencynos,$avg_uswds,$mobnew_good_sites,$mobnew_improve_sites,$mobnew_poor_sites,$mobnew_friendly_sites,$mobnew_unfriendly_sites) ON DUPLICATE KEY UPDATE    
-num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',num_of_agencies='$agencynos',search_available='$search_available',search_notavailable='$search_notavailable',average_uswds_score='$avg_uswds', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites'");
+    db_query("insert into custom_government_wide_archive values(NULL,CURDATE(),NOW(),'$websitenos','$avg_https','$avg_dap','$avg_mob_overall','$avg_mob_usab','$avg_mob_perform','$avg_sitespeed','$avg_ipv6','$avg_dnssec','$avg_rc4','$avg_m15','$ag_avrg_color_cont','$ag_avrg_html_attr','$ag_avrg_miss_image','$search_available','$search_notavailable','$agencynos','$avg_uswds','$mobnew_good_sites','$mobnew_improve_sites','$mobnew_poor_sites','$mobnew_friendly_sites','$mobnew_unfriendly_sites','$dap_websites','$https_websites','$uswds_websites','$poc_websites','$redirect_websites') ON DUPLICATE KEY UPDATE    
+num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',num_of_agencies='$agencynos',search_available='$search_available',search_notavailable='$search_notavailable',average_uswds_score='$avg_uswds', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites',dap_websites='$dap_websites',https_websites='$https_websites',uswds_websites='$uswds_websites',poc_websites='$poc_websites',redirect_websites='$redirect_websites'");
 
 }
 
@@ -2690,6 +3005,21 @@ function archiveAgencywideTrendData(){
         $mobnew_friendly_sites =  db_query("select count(field_mobile_usability_status_value) from field_data_field_mobile_usability_status a, node b, field_data_field_web_agency_id c  where   b.nid=a.entity_id and c.entity_id=a.entity_id   and b.type='website' and b.status=1 and  b.type=c.bundle and field_mobile_usability_status_value='Mobile Friendly'  and c.field_web_agency_id_nid=:agencyid", array(':agencyid' =>  $result->nid))->fetchField();
         $mobnew_unfriendly_sites =  db_query("select count(field_mobile_usability_status_value) from field_data_field_mobile_usability_status a, node b, field_data_field_web_agency_id c  where   b.nid=a.entity_id and c.entity_id=a.entity_id   and b.type='website' and b.status=1 and  b.type=c.bundle and field_mobile_usability_status_value='Not Mobile Friendly' and c.field_web_agency_id_nid=:agencyid", array(':agencyid' =>  $result->nid))->fetchField();
 
+        $dap_websites = db_query("select count(field_dap_score_value)  as complnum from field_data_field_dap_score a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid and field_dap_score_value='100' group by field_dap_score_value", array(':agencyid' =>  $result->nid))->fetchField();
+        $https_websites = db_query("select count(field_https_status_value)  as complnum from node a , field_data_field_https_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='https_dap_scan_information'  and field_https_status_value='Yes' group by field_https_status_value", array(':agencyid' =>  $result->nid))->fetchField();
+        $uswds_websites = db_query("select count(field_uswds_score_value)  as complnum from field_data_field_uswds_score a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid and field_uswds_score_value='100' group by field_uswds_score_value", array(':agencyid' =>  $result->nid))->fetchField();
+
+        $redirect_websites = db_query("select count(a.field_redirect_value)  as complnum from field_data_field_redirect a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid and a.field_redirect_value='Yes' group by a.field_redirect_value", array(':agencyid' =>  $result->nid))->fetchField();
+
+        $poc_websites = db_query("select count(a.field_website_security_poc_statu_value)  as complnum from field_data_field_website_security_poc_statu a , node b, field_data_field_web_agency_id c where a.entity_id=b.nid and a.entity_id=c.entity_id  and c.bundle='website' and b.status='1' and c.field_web_agency_id_nid=:agencyid and a.field_website_security_poc_statu_value='1' group by a.field_website_security_poc_statu_value", array(':agencyid' =>  $result->nid))->fetchField();
+
+        $uswds_websites = ($uswds_websites == '')?'NULL':$uswds_websites;
+        $dap_websites = ($dap_websites == '')?'NULL':$dap_websites;
+        $https_websites = ($https_websites == '')?'NULL':$https_websites;
+        $redirect_websites = ($redirect_websites == '')?'NULL':$redirect_websites;
+        $poc_websites = ($poc_websites == '')?'NULL':$poc_websites;
+
+
         //Query to get Search data for an agency
         $searchresults = db_query("select field_search_status_value,count(field_search_status_value) as complnum from node a , field_data_field_search_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='website' group by field_search_status_value", array(':agencyid' => $result->nid));
         $agency_search_status = array();
@@ -2703,10 +3033,10 @@ function archiveAgencywideTrendData(){
         }
 
         //  print  $result->nid."-- $result->title -- $websitenos - $avg_https\n";
-        print  "$result->nid -- $result->title -- $websitenos - $avg_https -- $avg_dap -- $avg_mob_overall -- $avg_mob_perform -- $avg_mob_usab - $avg_sitespeed - $avg_ipv6 - $avg_dnssec -  $avg_rc4 - $avg_m15 - $ag_avrg_color_cont - $ag_avrg_miss_image - $ag_avrg_html_attr - $search_available - $search_notavailable - $ag_avrg_uswds_score,$mobnew_poor_sites,$mobnew_improve_sites,$mobnew_good_sites,$mobnew_friendly_sites,$mobnew_unfriendly_sites  \n";
+        print  "$result->nid -- $result->title -- $websitenos - $avg_https -- $avg_dap -- $avg_mob_overall -- $avg_mob_perform -- $avg_mob_usab - $avg_sitespeed - $avg_ipv6 - $avg_dnssec -  $avg_rc4 - $avg_m15 - $ag_avrg_color_cont - $ag_avrg_miss_image - $ag_avrg_html_attr - $search_available - $search_notavailable - $ag_avrg_uswds_score,$mobnew_poor_sites,$mobnew_improve_sites,$mobnew_good_sites,$mobnew_friendly_sites,$mobnew_unfriendly_sites ,$dap_websites,$https_websites,$uswds_websites \n";
         if($websitenos != '0'){
-            print "insert into custom_agencywide_archive values(NULL,CURDATE(),NOW(),'$result->title','$result->nid',$websitenos,$avg_https,$avg_dap,$avg_mob_overall,$avg_mob_usab,$avg_mob_perform,$avg_sitespeed,$avg_ipv6,$avg_dnssec,$avg_rc4,$avg_m15,$ag_avrg_color_cont,$ag_avrg_html_attr,$ag_avrg_miss_image,$search_available,$search_notavailable,$ag_avrg_uswds_score) ON DUPLICATE KEY UPDATE     num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',search_available='$search_available',search_notavailable='$search_notavailable', average_uswds_score='$ag_avrg_uswds_score', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites' \n";
-            db_query("insert into custom_agencywide_archive values(NULL,CURDATE(),NOW(),'$result->title','$result->nid',$websitenos,$avg_https,$avg_dap,$avg_mob_overall,$avg_mob_usab,$avg_mob_perform,$avg_sitespeed,$avg_ipv6,$avg_dnssec,$avg_rc4,$avg_m15,$ag_avrg_color_cont,$ag_avrg_html_attr,$ag_avrg_miss_image,$search_available,$search_notavailable,$ag_avrg_uswds_score,$mobnew_good_sites,$mobnew_improve_sites,$mobnew_poor_sites,$mobnew_friendly_sites,$mobnew_unfriendly_sites) ON DUPLICATE KEY UPDATE     num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',search_available='$search_available',search_notavailable='$search_notavailable', average_uswds_score='$ag_avrg_uswds_score', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites'");
+            print "insert into custom_agencywide_archive values(NULL,CURDATE(),NOW(),'$result->title','$result->nid','$websitenos','$avg_https','$avg_dap','$avg_mob_overall','$avg_mob_usab','$avg_mob_perform','$avg_sitespeed','$avg_ipv6','$avg_dnssec','$avg_rc4','$avg_m15','$ag_avrg_color_cont','$ag_avrg_html_attr','$ag_avrg_miss_image','$search_available','$search_notavailable','$ag_avrg_uswds_score','$mobnew_good_sites','$mobnew_improve_sites','$mobnew_poor_sites','$mobnew_friendly_sites','$mobnew_unfriendly_sites','$dap_websites','$https_websites','$uswds_websites') ON DUPLICATE KEY UPDATE     num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',search_available='$search_available',search_notavailable='$search_notavailable', average_uswds_score='$ag_avrg_uswds_score', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites',dap_websites='$dap_websites',https_websites='$https_websites',uswds_websites='$uswds_websites',poc_websites=$poc_websites,redirect_websites=$redirect_websites \n";
+            db_query("insert into custom_agencywide_archive values(NULL,CURDATE(),NOW(),'$result->title','$result->nid','$websitenos','$avg_https','$avg_dap','$avg_mob_overall','$avg_mob_usab','$avg_mob_perform','$avg_sitespeed','$avg_ipv6','$avg_dnssec','$avg_rc4','$avg_m15','$ag_avrg_color_cont','$ag_avrg_html_attr','$ag_avrg_miss_image','$search_available','$search_notavailable','$ag_avrg_uswds_score','$mobnew_good_sites','$mobnew_improve_sites','$mobnew_poor_sites','$mobnew_friendly_sites','$mobnew_unfriendly_sites',$dap_websites,$https_websites,$uswds_websites,$poc_websites,$redirect_websites) ON DUPLICATE KEY UPDATE     num_of_websites='$websitenos',average_https_score='$avg_https',average_dap_score='$avg_dap',average_mob_overall_score='$avg_mob_overall',average_mob_usab_score='$avg_mob_usab',average_mob_perfrml_score='$avg_mob_perform',average_sitespeed_score='$avg_sitespeed',average_ipv6_score='$avg_ipv6',average_dnssec_score='$avg_dnssec',average_rc4_score='$avg_rc4',average_m15_score='$avg_m15',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',search_available='$search_available',search_notavailable='$search_notavailable', average_uswds_score='$ag_avrg_uswds_score', mob_perf_good='$mobnew_good_sites',mob_perf_improve='$mobnew_improve_sites',mob_perf_poor='$mobnew_poor_sites',mob_usab_friendly='$mobnew_friendly_sites',mob_usab_nonfriendly='$mobnew_unfriendly_sites',dap_websites=$dap_websites,https_websites=$https_websites,uswds_websites=$uswds_websites,poc_websites=$poc_websites,redirect_websites=$redirect_websites");
 
         }
     }
@@ -2747,144 +3077,154 @@ function updateAccessibilityScanCustom($website,$webscanId){
     $domain = $website;
     $siteId = findNode($website,'website');
     if($siteId != '') {
-        $errorlist = extractAccessibilityErrors($domain);
-        print_r($errorlist);
-        $errorlist_decode = json_decode($errorlist);
-        if(count($errorlist_decode) != 0){
-            //  if ($domval['domain'] == 'inl.gov') {
-            //$allDomainNewArr[$domval['domain']]['errorlist'] = $domval['errorlist'];
-            //$allDomainNewArr[$domval['domain']]['errordetails'] = $allDomErrArr['data'][$domain];
-            $errorgroupTerms = array();
-            $totError = 0;
-            foreach ($errorlist_decode as $derror => $derrorval) {
-                $wcagCodearrOld = array();
+        //Check if the site is a redirect. If redirect dont run scan.
+        $check_redirect = db_query("select redirect from custom_pulse_https_data where domain=:domain", array(':domain' => trim($website)))->fetchField();
+        if ($check_redirect != "Yes") {
+            $errorlist = extractAccessibilityErrors($domain);
+            print_r($errorlist);
+            $errorlist_decode = json_decode($errorlist);
+            if (count($errorlist_decode) != 0) {
+                //  if ($domval['domain'] == 'inl.gov') {
+                //$allDomainNewArr[$domval['domain']]['errorlist'] = $domval['errorlist'];
+                //$allDomainNewArr[$domval['domain']]['errordetails'] = $allDomErrArr['data'][$domain];
+                $errorgroupTerms = array();
+                $totError = 0;
+                foreach ($errorlist_decode as $derror => $derrorval) {
+                    $wcagCodearrOld = array();
 
-                if ($derror == 'Color Contrast - Initial Findings')
-                    $cntColor = count($derrorval);
-                elseif ($derror == 'HTML Attribute - Initial Findings')
-                    $cntHTML = count($derrorval);
-                elseif ($derror == 'Missing Image Descriptions')
-                    $cntMissing = count($derrorval);
+                    if ($derror == 'Color Contrast - Initial Findings')
+                        $cntColor = count($derrorval);
+                    elseif ($derror == 'HTML Attribute - Initial Findings')
+                        $cntHTML = count($derrorval);
+                    elseif ($derror == 'Missing Image Descriptions')
+                        $cntMissing = count($derrorval);
 
-                if ($derrorval != 0) {
-                    $errorgroupTerms[] = $derror;
-                }
-                foreach($derrorval as $errorintk1=>$errorintv1) {
-//print_r($errorintv1);
-                    foreach($errorintv1 as $errorintk=>$errorintv) {
-                        if($errorintk == "code")
-                            $wcagCodearrOld[$errorintv] = $errorintv;
+                    if ($derrorval != 0) {
+                        $errorgroupTerms[] = $derror;
                     }
-                    $wcagCodearr[$derror] = $wcagCodearrOld;
+                    foreach ($derrorval as $errorintk1 => $errorintv1) {
+//print_r($errorintv1);
+                        foreach ($errorintv1 as $errorintk => $errorintv) {
+                            if ($errorintk == "code")
+                                $wcagCodearrOld[$errorintv] = $errorintv;
+                        }
+                        $wcagCodearr[$derror] = $wcagCodearrOld;
+                    }
                 }
-            }
-            $totError = $cntColor+$cntHTML+$cntMissing;
+                $totError = $cntColor + $cntHTML + $cntMissing;
 //print_r($errorlist_decode);
 //print_r($wcagCodearr);
 
-            //$agencyId = findNode($domval['agency'],'agency');
+                //$agencyId = findNode($domval['agency'],'agency');
 
-            //Create Accessibility Scanning Node
+                //Create Accessibility Scanning Node
 
-            $date = date("m-d-Y");
-            $node = new stdClass();
-            $node->type = "508_scan_information";
-            $node->language = LANGUAGE_NONE;
-            $node->uid = "1";
-            $node->name = "admin";
-            $node->status = 1;
-            $node->title = "Accessibility Scan " . $website;
-            if (($nodeId = findNode($node->title, '508_scan_information')) != FALSE) {
-                echo "found node $node->title $nodeId";
-                $node->nid = $nodeId;
-            }
-            $node->promote = 0;
-
-            $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
-            $node->field_website_id['und'][0]['nid'] = $siteId;
-            $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteId);
-            $node->field_508_scan_time['und'][0]['value'] = time();
-            $node->field_accessibility_raw_scan['und'][0]['value'] = $errorlist;
-            $node->field_accessible_group_colorcont['und'][0]['value'] = $cntColor;
-            $node->field_accessible_group_htmlattri['und'][0]['value'] = $cntHTML;
-            $node->field_accessible_group_missingim['und'][0]['value'] = $cntMissing;
-
-            node_object_prepare($node);
-            if ($node = node_submit($node)) {
-                node_save($node);
-            }
-
-            //Update Parent Website with required tagging info
-            //print_r($wcagCodearr[$domval['domain']]);
-
-            $wnode = node_load($siteId);
-            $wnode->field_accessibility_total_errors['und'][0]['value'] = $totError;
-            $j = 1;
-            $i = 1;
-
-            if(!empty($wnode->field_accessibility_errors)){
-                foreach($wnode->field_accessibility_errors['und'] as $etk  =>$etval){
-                    $currentTermsErr[] = $etval['tid'];
+                $date = date("m-d-Y");
+                $node = new stdClass();
+                $node->type = "508_scan_information";
+                $node->language = LANGUAGE_NONE;
+                $node->uid = "1";
+                $node->name = "admin";
+                $node->status = 1;
+                $node->title = "Accessibility Scan " . $website;
+                if (($nodeId = findNode($node->title, '508_scan_information')) != FALSE) {
+                    echo "found node $node->title $nodeId";
+                    $node->nid = $nodeId;
                 }
-                $crnTermCntErr = count($currentTermsErr);
-            }
+                $node->promote = 0;
 
-            if(!empty($wnode->field_accessibility_error_group)){
-                foreach($wnode->field_accessibility_error_group['und'] as $egtk  =>$egval){
-                    $currentTermsErrGrp[] = $egval['tid'];
+                $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
+                $node->field_website_id['und'][0]['nid'] = $siteId;
+                $node->field_web_agency_id['und'][0]['nid'] = findParentAgencyNode($siteId);
+                $node->field_508_scan_time['und'][0]['value'] = time();
+                $node->field_accessibility_raw_scan['und'][0]['value'] = $errorlist;
+                $node->field_accessible_group_colorcont['und'][0]['value'] = $cntColor;
+                $node->field_accessible_group_htmlattri['und'][0]['value'] = $cntHTML;
+                $node->field_accessible_group_missingim['und'][0]['value'] = $cntMissing;
+
+                node_object_prepare($node);
+                if ($node = node_submit($node)) {
+                    node_save($node);
                 }
-                $crnTermCntErrGrp = count($currentTermsErrGrp);
-            }
 
-            foreach($wcagCodearr as $tagkey => $tags) {
+                //Update Parent Website with required tagging info
+                //print_r($wcagCodearr[$domval['domain']]);
 
-                if ($eterm = taxonomy_get_term_by_name($tagkey)) {
-                    //print_r($eterm);
-                    //$wnode->field_accessibility_error_group['und'][$j]['tid'] = $eterm->tid;
-                    $terms_array = array_keys($eterm);
-                    //Check if the term already assigned to the node
-                    if(!in_array($terms_array['0'],$currentTermsErrGrp)){
-                        $wnode->field_accessibility_error_group['und'][$crnTermCntErrGrp+$j]['tid'] = $terms_array['0'];
+                $wnode = node_load($siteId);
+                $wnode->field_accessibility_total_errors['und'][0]['value'] = $totError;
+                $j = 1;
+                $i = 1;
+
+                if (!empty($wnode->field_accessibility_errors)) {
+                    foreach ($wnode->field_accessibility_errors['und'] as $etk => $etval) {
+                        $currentTermsErr[] = $etval['tid'];
                     }
-                } else {
-                    $eterm = new STDClass();
-                    $eterm->name = $tagkey;
-                    $eterm->vid = 5;
-                    if (!empty($eterm->name)) {
-                        taxonomy_term_save($eterm);
-                        $wnode->field_accessibility_error_group['und'][$j]['tid'] = $eterm->tid;
-                    }
+                    $crnTermCntErr = count($currentTermsErr);
                 }
 
-                foreach ($tags as $key => $tag) {
-                    $crnTermCntErr = $crnTermCntErr+$j;
-                    if ($term = taxonomy_get_term_by_name($tag)) {
-                        $terms_array_err = array_keys($term);
+                if (!empty($wnode->field_accessibility_error_group)) {
+                    foreach ($wnode->field_accessibility_error_group['und'] as $egtk => $egval) {
+                        $currentTermsErrGrp[] = $egval['tid'];
+                    }
+                    $crnTermCntErrGrp = count($currentTermsErrGrp);
+                }
+
+                foreach ($wcagCodearr as $tagkey => $tags) {
+
+                    if ($eterm = taxonomy_get_term_by_name($tagkey)) {
+                        //print_r($eterm);
+                        //$wnode->field_accessibility_error_group['und'][$j]['tid'] = $eterm->tid;
+                        $terms_array = array_keys($eterm);
                         //Check if the term already assigned to the node
-                        if(!in_array($terms_array_err['0'],$currentTermsErr)) {
-                            $wnode->field_accessibility_errors['und'][$crnTermCntErr]['tid'] = $terms_array_err['0'];
+                        if (!in_array($terms_array['0'], $currentTermsErrGrp)) {
+                            $wnode->field_accessibility_error_group['und'][$crnTermCntErrGrp + $j]['tid'] = $terms_array['0'];
                         }
                     } else {
-                        $term = new STDClass();
-                        $term->name = $tag;
-                        $term->vid = 4;
-                        if (!empty($term->name)) {
-                            taxonomy_term_save($term);
-                            $wnode->field_accessibility_errors['und'][$i]['tid'] = $term->tid;
+                        $eterm = new STDClass();
+                        $eterm->name = $tagkey;
+                        $eterm->vid = 5;
+                        if (!empty($eterm->name)) {
+                            taxonomy_term_save($eterm);
+                            $wnode->field_accessibility_error_group['und'][$j]['tid'] = $eterm->tid;
                         }
                     }
-                    $i += 1;
+
+                    foreach ($tags as $key => $tag) {
+                        $crnTermCntErr = $crnTermCntErr + $j;
+                        if ($term = taxonomy_get_term_by_name($tag)) {
+                            $terms_array_err = array_keys($term);
+                            //Check if the term already assigned to the node
+                            if (!in_array($terms_array_err['0'], $currentTermsErr)) {
+                                $wnode->field_accessibility_errors['und'][$crnTermCntErr]['tid'] = $terms_array_err['0'];
+                            }
+                        } else {
+                            $term = new STDClass();
+                            $term->name = $tag;
+                            $term->vid = 4;
+                            if (!empty($term->name)) {
+                                taxonomy_term_save($term);
+                                $wnode->field_accessibility_errors['und'][$i]['tid'] = $term->tid;
+                            }
+                        }
+                        $i += 1;
+                    }
+                    $j += 1;
                 }
-                $j += 1;
-            }
-            node_object_prepare($wnode);
-            if ($wnode = node_submit($wnode)) {
-                node_save($wnode);
-            }
+                $wnode->field_section_508_scan_node['und'][0]['target_id'] = $node->nid;
+
+                node_object_prepare($wnode);
+                if ($wnode = node_submit($wnode)) {
+                    node_save($wnode);
+                }
 
 
-            // }
+                // }
+            }
         }
+    }
+    else{
+        //Redirect sites dont have any data for accessbility
+
     }
     $end = microtime(true);
     writeToLogs("Accessibility scan for ".$domain." took " . ($end - $start) . "seconds.", $logFile);
@@ -2907,140 +3247,140 @@ function runSearchEngineScan(){
     $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b  where a.bundle=:bundle and b.nid=a.entity_id   and b.status='1'  order by title", array(':bundle' => 'website'));
     foreach ($query as $result) {
         print $result->title."";
-        if(!in_array($result->title,$ignore_domains)) {
-            if(in_array($result->title,$nonwww_domains)) {
-                $weburl = "http://" . trim($result->title);
-            }
-            else{
-                if(in_array($result->title,$httpsonly_domains)) {
-                    $weburl = "https://www." . trim($result->title);
+        //Check if the site is a redirect. If redirect dont run scan.
+        $check_redirect =  db_query("select redirect from custom_pulse_https_data where domain=:domain", array(':domain' => trim($result->title)))->fetchField();
+        if($check_redirect != "Yes") {
+            if (!in_array($result->title, $ignore_domains)) {
+                if (in_array($result->title, $nonwww_domains)) {
+                    $weburl = "http://" . trim($result->title);
+                } else {
+                    if (in_array($result->title, $httpsonly_domains)) {
+                        $weburl = "https://www." . trim($result->title);
+                    } else {
+                        $weburl = "http://www." . trim($result->title);
+                    }
                 }
-                else{
-                    $weburl = "http://www." . trim($result->title);
-                }
-            }
 //    if(($curl_stat_code != '') && ($curl_stat_code != '404')){
 //        $weburl = "http://".trim($result->title);
 //    }
 //    else{
 //        $weburl = "http://www.".trim($result->title);
 //    }
-            $curl_stat_code = trim(shell_exec("timeout 15 curl -I  --stderr /dev/null $weburl | head -1 | cut -d' ' -f2"));
+                $curl_stat_code = trim(shell_exec("timeout 15 curl -I  --stderr /dev/null $weburl | head -1 | cut -d' ' -f2"));
 
-            if ($curl_stat_code != '') {
-                //$html = shell_exec("curl -L -k --silent https://".trim($result->title));
-                //$html = shell_exec("wget  --no-check-certificate --trust-server-names -qO- --max-redirect=1 -T 5 -t 1 ".$weburl);
-                //$html = shell_exec("phantomjs ../scripts/phantomjs_website.js \"".$weburl."/\"");
-                if(in_array($result->title,$curl_domains)) {
-                    $html = shell_exec("timeout 15 curl -L -k --silent https://".trim($result->title));
-                }
-                else {
-                    $html = shell_exec("timeout 15 google-chrome --no-sandbox --headless --disable-gpu --dump-dom --ignore-certificate-errors --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36\"  --timeout=15000  \"" . $weburl . "/\"");
-                }
+                if ($curl_stat_code != '') {
+                    //$html = shell_exec("curl -L -k --silent https://".trim($result->title));
+                    //$html = shell_exec("wget  --no-check-certificate --trust-server-names -qO- --max-redirect=1 -T 5 -t 1 ".$weburl);
+                    //$html = shell_exec("phantomjs ../scripts/phantomjs_website.js \"".$weburl."/\"");
+                    if (in_array($result->title, $curl_domains)) {
+                        $html = shell_exec("timeout 15 curl -L -k --silent https://" . trim($result->title));
+                    } else {
+                        $html = shell_exec("timeout 15 google-chrome --no-sandbox --headless --disable-gpu --dump-dom --ignore-certificate-errors --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36\"  --timeout=15000  \"" . $weburl . "/\"");
+                    }
 
-                print_r($html);
-                $dom = new DomDocument;
-                $dom->preserveWhiteSpace = FALSE;
-                $dom->loadHTML($html);
-                $params = $dom->getElementsByTagName('form'); // Find Sections
-                $params1 = $dom->getElementsByTagName('input'); // Find Sections
-                if ($params->length == 0) {
-                    if ($params1->length != 0) {
-                        $params = $params1;
+                    print_r($html);
+                    $dom = new DomDocument;
+                    $dom->preserveWhiteSpace = FALSE;
+                    $dom->loadHTML($html);
+                    $params = $dom->getElementsByTagName('form'); // Find Sections
+                    $params1 = $dom->getElementsByTagName('input'); // Find Sections
+                    if ($params->length == 0) {
+                        if ($params1->length != 0) {
+                            $params = $params1;
+                        }
                     }
-                }
-                print_r($params1);
-                $l = 0;
-                $forms1 = array();
-                foreach ($params1 as $param1) {
-                    $forms1[$l][0] = $params1->item($l)->getAttribute('name');
-                    $forms1[$l][1] = $params1->item($l)->getAttribute('action');
-                    $forms1[$l][2] = $params1->item($l)->getAttribute('method');
-                    $forms1[$l][3] = $params1->item($l)->getAttribute('type');
-                    if(($forms1[$l][3] == 'text') || ($forms1[$l][3] == 'search')){
-                        $search_input_type = "text";
+                    print_r($params1);
+                    $l = 0;
+                    $forms1 = array();
+                    foreach ($params1 as $param1) {
+                        $forms1[$l][0] = $params1->item($l)->getAttribute('name');
+                        $forms1[$l][1] = $params1->item($l)->getAttribute('action');
+                        $forms1[$l][2] = $params1->item($l)->getAttribute('method');
+                        $forms1[$l][3] = $params1->item($l)->getAttribute('type');
+                        if (($forms1[$l][3] == 'text') || ($forms1[$l][3] == 'search')) {
+                            $search_input_type = "text";
+                        }
+                        $l++;
                     }
-                    $l++;
-                }
-                //If the source does have a form or input process these
-                if (($params->length != 0) && ($search_input_type == 'text')) {
-                    $k = 0;
-                    $forms = array();
-                    $searchtype = "";
-                    $ded_searchdomain = "";
-                    $search_avail = "";
-                    foreach ($params as $param) {
-                        $search_avail = "yes";
+                    //If the source does have a form or input process these
+                    if (($params->length != 0) && ($search_input_type == 'text')) {
+                        $k = 0;
                         $forms = array();
-                        $forms[$k][0] = $params->item($k)->getAttribute('name');
-                        $forms[$k][1] = $params->item($k)->getAttribute('action');
-                        $forms[$k][2] = $params->item($k)->getAttribute('method');
-                        if (strpos($html, 'usasearch') !== FALSE) {
-                            $searchtype = "search.usa.gov";
-                        } elseif (strpos($html, 'search.usa.gov') !== FALSE) {
-                            $searchtype = "search.usa.gov";
-                        }elseif (strpos($html, "cse.google.com") !== FALSE) {
-                            $searchtype = "google custom search";
-                        } elseif (strpos($forms[$k][1], 'search.usa.gov') !== FALSE) {
-                            $searchtype = "search.usa.gov";
-                        } elseif (strpos($forms[$k][1], 'google') !== FALSE) {
-                            $searchtype = "google search";
-                        } elseif (strpos($forms[$k][1], "search." . trim($result->title)) !== FALSE) {
-                            $searchtype = "search.usa.gov";
-                        } elseif (strpos($forms[$k][1], 'http') === FALSE) {
-                            $searchtype = "custom search";
-                            //In custom search append action urls and find if the search has solr
-                            $html_search = shell_exec("timeout 15 wget --no-check-certificate --trust-server-names -qO- --max-redirect=1 -T 5 -t 1 https://" . trim($result->title) . "/" . $forms[$k][1] . "?keys=test");
-                            //Check if the site is Drupal based by checking against tag 32
-                            $check_drupal =  db_query("select b.title from field_data_field_cms_applications a, node b where a.field_cms_applications_tid='32' and a.entity_id=b.nid and b.title=:title", array(':title' => trim($result->title)))->fetchField();
-                            //print $html_search;
-                            if (strpos($html_search, 'solr') !== FALSE) {
-                                $searchtype = "apache solr";
-                            }
-                            elseif($check_drupal != ''){
-                                $searchtype = "drupal core search";
-                            }
-                        }
-                        else{
-                            $check_drupal =  db_query("select b.title from field_data_field_cms_applications a, node b where a.field_cms_applications_tid='32' and a.entity_id=b.nid and b.title=:title", array(':title' => trim($result->title)))->fetchField();
-                            if($check_drupal != ''){
-                                $searchtype = "drupal core search";
-                            }else {
+                        $searchtype = "";
+                        $ded_searchdomain = "";
+                        $search_avail = "";
+                        foreach ($params as $param) {
+                            $search_avail = "yes";
+                            $forms = array();
+                            $forms[$k][0] = $params->item($k)->getAttribute('name');
+                            $forms[$k][1] = $params->item($k)->getAttribute('action');
+                            $forms[$k][2] = $params->item($k)->getAttribute('method');
+                            if (strpos($html, 'usasearch') !== FALSE) {
+                                $searchtype = "search.usa.gov";
+                            } elseif (strpos($html, 'search.usa.gov') !== FALSE) {
+                                $searchtype = "search.usa.gov";
+                            } elseif (strpos($html, "cse.google.com") !== FALSE) {
+                                $searchtype = "google custom search";
+                            } elseif (strpos($forms[$k][1], 'search.usa.gov') !== FALSE) {
+                                $searchtype = "search.usa.gov";
+                            } elseif (strpos($forms[$k][1], 'google') !== FALSE) {
+                                $searchtype = "google search";
+                            } elseif (strpos($forms[$k][1], "search." . trim($result->title)) !== FALSE) {
+                                $searchtype = "search.usa.gov";
+                            } elseif (strpos($forms[$k][1], 'http') === FALSE) {
                                 $searchtype = "custom search";
+                                //In custom search append action urls and find if the search has solr
+                                $html_search = shell_exec("timeout 15 wget --no-check-certificate --trust-server-names -qO- --max-redirect=1 -T 5 -t 1 https://" . trim($result->title) . "/" . $forms[$k][1] . "?keys=test");
+                                //Check if the site is Drupal based by checking against tag 32
+                                $check_drupal = db_query("select b.title from field_data_field_cms_applications a, node b where a.field_cms_applications_tid='32' and a.entity_id=b.nid and b.title=:title", array(':title' => trim($result->title)))->fetchField();
+                                //print $html_search;
+                                if (strpos($html_search, 'solr') !== FALSE) {
+                                    $searchtype = "apache solr";
+                                } elseif ($check_drupal != '') {
+                                    $searchtype = "drupal core search";
+                                }
+                            } else {
+                                $check_drupal = db_query("select b.title from field_data_field_cms_applications a, node b where a.field_cms_applications_tid='32' and a.entity_id=b.nid and b.title=:title", array(':title' => trim($result->title)))->fetchField();
+                                if ($check_drupal != '') {
+                                    $searchtype = "drupal core search";
+                                } else {
+                                    $searchtype = "custom search";
+                                }
                             }
-                        }
-                        if (strpos($forms[$k][1], trim($result->title)) !== FALSE) {
-                            $ded_searchdomain = "yes";
-                        } else {
-                            $ded_searchdomain = "no";
-                        }
+                            if (strpos($forms[$k][1], trim($result->title)) !== FALSE) {
+                                $ded_searchdomain = "yes";
+                            } else {
+                                $ded_searchdomain = "no";
+                            }
 
-                        db_query("replace into search_scan(domain,name,action,method,type,dedicated_search_domain,search_available) values( :title,:name,:action,:method,:type,:ddomain,:avail)", array(':title' => $result->title, ':name' => $params->item($k)->getAttribute('name'), ':action' => substr($params->item($k)->getAttribute('action'), 0, 255), ':method' => $params->item($k)->getAttribute('method'), ':type' => $searchtype, ':ddomain' => $ded_searchdomain, ':avail' => $search_avail));
-                        $k++;
+                            db_query("replace into search_scan(domain,name,action,method,type,dedicated_search_domain,search_available) values( :title,:name,:action,:method,:type,:ddomain,:avail)", array(':title' => $result->title, ':name' => $params->item($k)->getAttribute('name'), ':action' => substr($params->item($k)->getAttribute('action'), 0, 255), ':method' => $params->item($k)->getAttribute('method'), ':type' => $searchtype, ':ddomain' => $ded_searchdomain, ':avail' => $search_avail));
+                            $k++;
+                        }
+                    } elseif ((strpos($html, 'cse.google.com') !== FALSE)) {
+                        $search_avail = "yes";
+                        $type = "google custom search";
+                        db_query("replace into search_scan(domain,search_available,type) values( :title,:avail,:type)", array(':title' => $result->title, ':avail' => $search_avail, ':type' => $type));
+                    } elseif ((strpos($html, 'search.usa.gov') !== FALSE)) {
+                        $search_avail = "yes";
+                        $type = "search.usa.gov";
+                        db_query("replace into search_scan(domain,search_available,type) values( :title,:avail,:type)", array(':title' => $result->title, ':avail' => $search_avail, ':type' => $type));
+                    } else {
+                        $search_avail = "no";
+                        db_query("replace into search_scan(domain,search_available) values( :title,:avail)", array(':title' => $result->title, ':avail' => $search_avail));
                     }
-                } elseif ((strpos($html, 'cse.google.com') !== FALSE)) {
-                    $search_avail = "yes";
-                    $type = "google custom search";
-                    db_query("replace into search_scan(domain,search_available,type) values( :title,:avail,:type)", array(':title' => $result->title, ':avail' => $search_avail, ':type' => $type));
-                }
-                elseif ((strpos($html, 'search.usa.gov') !== FALSE)) {
-                    $search_avail = "yes";
-                    $type = "search.usa.gov";
-                    db_query("replace into search_scan(domain,search_available,type) values( :title,:avail,:type)", array(':title' => $result->title, ':avail' => $search_avail, ':type' => $type));
-                }
-                else {
-                    $search_avail = "no";
-                    db_query("replace into search_scan(domain,search_available) values( :title,:avail)", array(':title' => $result->title, ':avail' => $search_avail));
-                }
 
+                } else {
+                    print "Sorry website is unavailable \n";
+                    db_query("replace into search_scan(domain,search_available,domain_available) values( :title,:avail,:domavail)", array(':title' => $result->title, ':avail' => "no", ':domavail' => "no"));
+                }
             } else {
                 print "Sorry website is unavailable \n";
-                db_query("replace into search_scan(domain,search_available,domain_available) values( :title,:avail,:domavail)", array(':title' => $result->title, ':avail' => "no",':domavail' => "no"));
+                db_query("replace into search_scan(domain,search_available,domain_available) values( :title,:avail,:domavail)", array(':title' => $result->title, ':avail' => "no", ':domavail' => "no"));
             }
         }
         else{
             print "Sorry website is unavailable \n";
-            db_query("replace into search_scan(domain,search_available,domain_available) values( :title,:avail,:domavail)", array(':title' => $result->title, ':avail' => "no",':domavail' => "no"));
+            db_query("replace into search_scan(domain,search_available,domain_available) values( :title,:avail,:domavail)", array(':title' => $result->title, ':avail' => NULL, ':domavail' => "redirect"));
         }
     }
 
@@ -3152,6 +3492,692 @@ function dateDifference($startdate,$enddate){
 // Print the result
     $datediff  = "$days days, $hours hours, $minutes minutes, $seconds seconds";
     return $datediff;
+}
+
+//Unpublish all website nodes and related scan nodes which are not in pulse. Also unpublish all agencies which are not in scan.
+
+function cleanupNodesAfterScan(){
+
+//Find all websites currently active and only publish those and their child nodes and unpublish others and their child nodes.
+    $query = db_query("select title,nid,status from node where type='website'");
+    $i = 1;
+    $j = 1;
+    $k = 1;
+    foreach ($query as $result) {
+        //Only if the website is recently captured and valid executive branch
+        $validwebsite = db_query("select domain from custom_pulse_https_data where domain=:website and branch='executive'", array(':website' => $result->title))->fetchField();
+        print "$i --".$result->title. "\n";
+        if($validwebsite) {
+            print "$j -- ".$result->title . "-".$result->nid."-".$result->status." is valid \n";
+            //Check if status is unpublished then publish the node
+            if($result->status == 0){
+                publishNode($result->nid);
+            }
+            //Find all scan ids tied to this website
+            $query1 = db_query("select a.*,b.status from field_data_field_website_id a , node b where  a.entity_id=b.nid and a.field_website_id_nid='".$result->nid."'");
+            foreach ($query1 as $result1) {
+                print $result->title." - ".$result1->bundle."-".$result1->entity_id." will be published\n";
+                //Check if status is unpublished then publish the node
+                if($result1->status == 0){
+                    publishNode($result1->entity_id);
+                }
+            }
+            $j += 1;
+        }
+        else{
+            print "$k -- invalid site --". $result->title . "-".$result->nid."  will be unpublished\n";
+            //Check if status is published then unpublish the node
+            if($result->status == 1){
+                unPublishNode($result->nid);
+            }
+            //Find all scan ids tied to this website
+            $query2 = db_query("select a.*,b.status from field_data_field_website_id a , node b where  a.entity_id=b.nid and a.field_website_id_nid='".$result->nid."'");
+            foreach ($query2 as $result2) {
+                print $result->title." - ".$result2->bundle."-".$result2->entity_id." will be unpublished\n";
+                //Check if status is published then unpublish the node
+                if($result2->status == 1){
+                    unPublishNode($result2->entity_id);
+                }
+            }
+            $k += 1;
+
+        }
+        $i += 1;
+    }
+
+    //Find all scan nodes which are orphaned or doesn't have a parent website id and unpublish them
+    $query13 = db_query("select nid,title,type from node a ,field_data_field_website_id b where type in ('site_speed_scan','508_scan_information','domain_scan_information','https_dap_scan_information','mobile_scan_information','uswds_scan') and a.nid=b.entity_id and a.status='1' and field_website_id_nid  not in (select nid from node where status='1')");
+    foreach ($query13 as $result13) {
+        print $result13->title." - ".$result13->type."-".$result13->nid." orpahaned nodes will be unpublished\n";
+        unPublishNode($result13->nid);
+    }
+    //Clean bad https domain
+    $query14 = db_query("select nid,title,type from node a where type in ('https_dap_scan_information') and status='1' and a.nid not in (select nid from node a ,field_data_field_website_id b where type in ('https_dap_scan_information') and a.nid=b.entity_id and a.status='1' and field_website_id_nid  in (select nid from node))");
+    foreach ($query14 as $result14) {
+        print $result14->title." - ".$result14->type."-".$result14->nid." orpahaned nodes will be unpublished\n";
+        unPublishNode($result14->nid);
+    }
+//Find all websites currently active and only publish those and their child nodes and unpublish others and their child nodes.
+    $query12 = db_query("select title,nid,status from node where type='agency'");
+    foreach ($query12 as $result12) {
+//Only if the agency is recently captured and valid executive branch agency
+        $validagency = db_query("select agency from custom_pulse_https_data where Agency=:agency and branch='executive'", array(':agency' => $result12->title))->fetchField();
+        if($validagency) {
+            print $result12->title . "-".$result12->nid."-".$result12->status." is valid \n";
+            //Check if status is unpublished then publish the node
+            if($result12->status == 0){
+                publishNode($result12->nid);
+            }
+        }
+        else{
+            print $result12->title . "-".$result12->nid."-".$result12->status." is in valid \n";
+            //Check if status is published then unpublish the node
+            if($result12->status == 1){
+                unPublishNode($result12->nid);
+            }
+
+        }
+    }
+
+}
+
+function updateAccessibilityScan_custom($website,$scanid)
+{
+    include("../scripts/configSettings.php");
+    $start = microtime(true);
+    $domain = $website;
+    $siteId = findNode($domain,'website');
+    if ($siteId != '') {
+        //Check if the site is a redirect. If redirect dont run scan.
+        $check_redirect = db_query("select redirect from custom_pulse_https_data where domain=:domain", array(':domain' => trim($website)))->fetchField();
+        if ($check_redirect != "Yes") {
+            $errorlist = db_query("select website_id,agency_id,agency_name,error_scan_type,wcag_code,error_cat,website,error_typecode,error_code,error_message,error_context,error_selector from custom_accessibility_issues where website=:website", array(':website' =>  $website));
+            $count = 0;
+            $field_axe_html_has_lang =0;
+            $imagealt =0;
+            $roleimgalt=0;
+            $ariahiddenfocus=0;
+            $ariainputfieldname=0;
+            $ariatogglefieldname=0;
+            $formfieldmultiplelabels=0;
+            $linkname=0;
+            $label=0;
+            $cntF68=0;
+            $cntH91InputCheckboxName=0;
+            $cntH91InputFileName=0;
+            $cntH91InputPasswordName=0;
+            $cntH91InputRadioName=0;
+            $cntH91InputTextName=0;
+            $cntH91SelectName=0;
+            $cntH91TextareaName=0;
+            $cntH43MissingHeadersAttrs=0;
+            $cntH393LayoutTable=0;
+            $cntH43HeadersRequired=0;
+            $cntH43IncorrectAttr=0;
+            $cntH43MissingHeaderIds=0;
+            $scopeattrvalid=0;
+            $cntH43H63=0;
+            $tdheadersattr=0;
+            $inputbuttonname=0;
+            $buttonname=0;
+            $inputimagealt=0;
+            $list=0;
+            $ariaallowedrole=0;
+            $emptyheading=0;
+            $cntlistitem=0;
+            $WCAG2AAPrinciple4Guideline4_14_1_2H91ButtonName=0;
+            $cntcolorcontrast=0;
+            $documenttitle=0;
+            $cntH422=0;
+            $cntH251EmptyTitle=0;
+            $cntH251NoTitleEl=0;
+            $scrollableregionfocusable=0;
+            $cntH91AEmptyNoId=0;
+            $cntH91ANoContent=0;
+            $frametitleunique=0;
+            $cntH91ButtonName=0;
+            $cntH91InputButtonName=0;
+            $cntH91InputImageName=0;
+            $H91LiName=0;
+            $htmllangvalid=0;
+            $duplicateid=0;
+            $H573Lang=0;
+            $cntH581Lang=0;
+            $cntvalidlang=0;
+            $cntF77=0;
+            $cntH641=0;
+            $frametitle=0;
+            $cntG145=0;
+            $cntG18=0;
+
+            foreach ($errorlist as $error ) {
+                $count++;
+                $website = $error->website;
+                $website_id = $error->website_id;
+                $agency_id = $error->agency_id;
+                $agency_name = $error->agency_name;
+                $error_scan_type = $error->error_scan_type;
+                $wcag_code = $error->wcag_code;
+                $error_cat = $error->error_cat;
+                $error_typecode = $error->error_typecode;
+                $error_code = $error->error_code;
+                $error_message = $error->error_message;
+                $error_context = $error->error_context;
+                $error_selector = $error->error_selector;
+                $error_json = json_encode($error);
+
+                if ($count != 0) {
+                    if ($error_code == 'html-has-lang') {
+                        $field_axe_html_has_lang++;
+                    }
+                    if ($error_code == 'image-alt') {
+                        $imagealt++;
+                    }
+                    if ($error_code == 'role-img-alt') {
+                        $roleimgalt++;
+                    }
+                    if ($error_code == 'aria-hidden-focus') {
+                        $ariahiddenfocus++;
+                    }
+                    if ($error_code == 'aria-input-field-name') {
+                        $ariainputfieldname++;
+                    }
+                    if ($error_code == 'aria-toggle-field-name') {
+                        $ariatogglefieldname++;
+                    }
+                    if ($error_code == 'form-field-multiple-labels') {
+                        $formfieldmultiplelabels++;
+                    }
+                    if ($error_code == 'label') {
+                        $label++;
+                    }
+                    if ($error_code == 'link-name') {
+                        $linkname++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name') {
+                        $WCAG2AAPrinciple4Guideline4_14_1_2H91ButtonName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.F68') {
+                        $cntF68++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeadersAttrs') {
+                        $cntH43MissingHeadersAttrs++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputCheckbox.Name') {
+                        $cntH91InputCheckboxName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputFile.Name') {
+                        $cntH91InputFileName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputPassword.Name') {
+                        $cntH91InputPasswordName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputRadio.Name') {
+                        $cntH91InputRadioName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name') {
+                        $cntH91InputTextName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Select.Name') {
+                        $cntH91SelectName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Textarea.Name') {
+                        $cntH91TextareaName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable') {
+                        $cntH393LayoutTable++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43,H63') {
+                        $cntH43H63++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired') {
+                        $cntH43HeadersRequired++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.IncorrectAttr') {
+                        $cntH43IncorrectAttr++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeaderIds') {
+                        $cntH43MissingHeaderIds++;
+                    }
+                    if ($error_code == 'scope-attr-valid') {
+                        $scopeattrvalid++;
+                    }
+                    if ($error_code == 'td-headers-attr') {
+                        $tdheadersattr++;
+                    }
+                    if ($error_code == 'empty-heading') {
+
+                        $emptyheading++;
+                    }
+                    if ($error_code == 'listitem') {
+                        $cntlistitem++;
+                    }
+                    if ($error_code == 'color-contrast') {
+                        $cntcolorcontrast++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2') {
+                        $cntH422++;
+                    }
+                    if ($error_code == 'scrollable-region-focusable') {
+                        $scrollableregionfocusable++;
+                    }
+                    if ($error_code == 'document-title') {
+                        $documenttitle++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.EmptyTitle') {
+                        $cntH251EmptyTitle++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.NoTitleEl') {
+                        $cntH251NoTitleEl++;
+                    }
+                    if ($error_code == 'aria-allowed-role') {
+                        $ariaallowedrole++;
+                    }
+                    if ($error_code == 'button-name') {
+                        $buttonname++;
+                    }
+                    if ($error_code == 'input-button-name') {
+                        $inputbuttonname++;
+                    }
+                    if ($error_code == 'input-image-alt') {
+                        $inputimagealt++;
+                    }
+                    if ($error_code == 'link-name') {
+                        $linkname++;
+                    }
+                    if ($error_code == 'list') {
+                        $list++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.EmptyNoId') {
+                        $cntH91AEmptyNoId++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.NoContent') {
+                        $cntH91ANoContent++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name') {
+                        $cntH91ButtonName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputButton.Name') {
+                        $cntH91InputButtonName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputImage.Name') {
+                        $cntH91InputImageName++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Li.Name') {
+                        $H91LiName++;
+                    }
+                    if ($error_code == 'html-lang-valid') {
+                        $htmllangvalid++;
+                    }
+                    if ($error_code == 'duplicate-id') {
+                        $duplicateid++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle3.Guideline3_1.3_1_1.H57.3.Lang') {
+                        $H573Lang++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle3.Guideline3_1.3_1_2.H58.1.Lang') {
+                        $cntH581Lang++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle4.Guideline4_1.4_1_1.F77') {
+                        $cntF77++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle2.Guideline2_4.2_4_1.H64.1') {
+                        $cntH641++;
+                    }
+                    if ($error_code == 'frame-title-unique') {
+                        $frametitleunique++;
+                    }
+                    if ($error_code == 'frame-title') {
+                        $frametitle++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_4.1_4_3.G145') {
+                        $cntG145++;
+                    }
+                    if ($error_code == 'WCAG2AA.Principle1.Guideline1_4.1_4_3.G18') {
+                        $cntG18++;
+                    }
+                    if ($error_code == 'valid-lang') {
+                        $cntvalidlang++;
+                    }
+
+
+
+//        print($error_json);
+                }
+            }
+            $total_errors = $count;
+//      print($count);
+//      print("Total errors for" . $website . ' is ' . $total_errors);
+            $images =array($imagealt,$roleimgalt);
+            $parsing =array($duplicateid,$cntF77);
+            $pageTitles=array($documenttitle,$cntH251EmptyTitle,$cntH251NoTitleEl);
+            $linksnbuttons=array($ariaallowedrole,$H91LiName,$cntH91ButtonName,$cntH91InputButtonName,$cntH91InputImageName,$inputbuttonname,$buttonname,$cntH91InputImageName,$list,$inputimagealt,$linkname,$cntH91AEmptyNoId,$cntH91ANoContent,);
+            $language=array($H573Lang,$cntH581Lang,$htmllangvalid,$field_axe_html_has_lang,$cntvalidlang);
+            $keyboardAccess =array($scrollableregionfocusable);
+            $framesniFrames = array($frametitleunique,$frametitle,$cntH641);
+            $contrast = array($cntG145,$cntG18,$cntcolorcontrast);
+            $contentStructure =array($cntlistitem,$cntH422,$emptyheading);
+            $tables=array($cntH43H63,$cntH43MissingHeadersAttrs,$cntH43HeadersRequired,$cntH43MissingHeaderIds,$scopeattrvalid,$cntH393LayoutTable,$cntH43IncorrectAttr,$tdheadersattr);
+            $forms =array($ariahiddenfocus,$cntH91TextareaName,$cntH91InputPasswordName,$cntH91SelectName,$cntH91InputTextName,$cntH91InputRadioName,$ariatogglefieldname,$ariainputfieldname,$formfieldmultiplelabels,$label,$cntF68,$cntH91InputCheckboxName,$cntH91InputFileName,);
+
+
+            $date = date("m-d-Y");
+            $node = new stdClass();
+            $node->type = "508_scan_information";
+            $node->language = LANGUAGE_NONE;
+            $node->uid = "1";
+            $node->name = "admin";
+            $node->status = 1;
+            $node->title = "Accessibility Scan " . $website;
+            if (($nodeId = findNode($node->title, '508_scan_information')) != FALSE) {
+                echo "found node $node->title $nodeId";
+                $node->nid = $nodeId;
+            }
+            $node->promote = 0;
+
+            $node->field_web_scan_id['und'][0]['nid'] =$scanid;
+            $node->field_website_id['und'][0]['nid'] = $siteId;
+            $node->field_web_agency_id['und'][0]['nid'] = $agency_id;
+            $node->field_508_scan_time['und'][0]['value'] = time();
+
+            $node->field_axe_html_has_lang['und'][0]['value'] = $field_axe_html_has_lang;
+            $node->field_axe_image_alt['und'][0]['value'] = $imagealt;
+            $node->field_axe_role_img_alt['und'][0]['value'] = $roleimgalt;
+            $node->field_axe_aria_hidden_focus['und'][0]['value'] = $ariahiddenfocus;
+            $node->field_axe_aria_input_field_name['und'][0]['value'] = $ariainputfieldname;
+            $node->field_axe_aria_toggle_field_name['und'][0]['value'] = $ariatogglefieldname;
+            $node->field_axe_form_field_multiple_la['und'][0]['value'] = $formfieldmultiplelabels;
+            $node->field_axe_label['und'][0]['value'] = $label;
+            $node->field_axe_link_name['und'][0]['value'] = $linkname;
+            $node->field_hcs_h91_button_name['und'][0]['value'] = $WCAG2AAPrinciple4Guideline4_14_1_2H91ButtonName;
+            $node->field_axe_scope_attr_valid['und'][0]['value'] = $scopeattrvalid;
+            $node->field_axe_td_headers_attr['und'][0]['value'] = $tdheadersattr;
+            $node->field_hcs_h39_3_layouttable['und'][0]['value'] = $cntH393LayoutTable;
+            $node->field_hcs_h43_h63['und'][0]['value'] = $cntH43H63;
+            $node->field_hcs_h43_headersrequired['und'][0]['value'] = $cntH43HeadersRequired;
+            $node->field_hcs_h43_incorrectattr['und'][0]['value'] = $cntH43IncorrectAttr;
+            $node->field_hcs_h43_missingheaderids['und'][0]['value'] = $cntH43MissingHeaderIds;
+            $node->field_hcs_h43_missingheadersattr['und'][0]['value'] = $cntH43MissingHeadersAttrs;
+            $node->field_hcs_f68['und'][0]['value'] = $cntF68;
+            $node-> field_hcs_h91_inputfile_name['und'][0]['value'] = $cntH91InputFileName;
+            $node->field_hcs_h91_inputcheckbox_name['und'][0]['value'] = $cntH91InputCheckboxName;
+            $node->field_hcs_h91_inputpassword_name['und'][0]['value'] = $cntH91InputPasswordName;
+            $node->field_hcs_h91_inputradio_name['und'][0]['value'] = $cntH91InputRadioName;
+            $node->field_hcs_h91_inputtext_name['und'][0]['value'] = $cntH91InputTextName;
+            $node->field_hcs_h91_select_name['und'][0]['value'] = $cntH91SelectName;
+            $node->field_hcs_h91_textarea_name['und'][0]['value'] = $cntH91TextareaName;
+            $node->field_axe_color_contrast['und'][0]['value'] = $cntcolorcontrast;
+            $node->field_hcs_g145['und'][0]['value'] = $cntG145;
+            $node->field_hcs_g18['und'][0]['value'] = $cntG18;
+            $node->field_axe_empty_heading['und'][0]['value'] = $emptyheading;
+            $node->field_axe_listitem['und'][0]['value'] = $cntlistitem;
+            $node->field_hcs_h42_2['und'][0]['value'] = $cntH422 ;
+            $node->field_axe_frame_title['und'][0]['value'] = $frametitle;
+            $node->field_axe_frame_title_unique['und'][0]['value'] = $frametitleunique;
+            $node->field_hcs_h64_1['und'][0]['value'] = $cntH641;
+            $node->field_axe_scrollable_region_focu['und'][0]['value'] = $scrollableregionfocusable;
+            $node->field_axe_aria_allowed_role['und'][0]['value'] = $ariaallowedrole;
+            $node->field_axe_button_name['und'][0]['value'] = $buttonname;
+            $node->field_axe_input_button_name['und'][0]['value'] = $inputbuttonname;
+            $node->field_axe_link_name['und'][0]['value'] = $linkname;
+            $node->field_axe_list['und'][0]['value'] = $list;
+            $node->field_hcs_h91_a_emptynoid['und'][0]['value'] = $cntH91AEmptyNoId;
+            $node->field_hcs_h91_a_nocontent['und'][0]['value'] = $cntH91ANoContent;
+            $node->field_hcs_h91_button_name['und'][0]['value'] = $cntH91ButtonName;
+            $node->field_hcs_h91_inputbutton_name['und'][0]['value'] = $cntH91InputButtonName;
+            $node->field_hcs_h91_inputimage_name['und'][0]['value'] = $cntH91InputImageName;
+            $node->field_hcs_h91_li_name['und'][0]['value'] = $H91LiName;
+            $node->field_axe_document_title['und'][0]['value'] = $documenttitle;
+            $node->field_hcs_h25_1_emptytitle['und'][0]['value'] = $cntH251EmptyTitle;
+            $node->field_hcs_h25_1_notitleel['und'][0]['value'] = $cntH251NoTitleEl;
+            $node->field_axe_duplicate_id['und'][0]['value'] = $duplicateid;
+            $node->field_hcs_f77['und'][0]['value'] = $cntF77;
+            $node->field_hcs_h58_1_lang['und'][0]['value'] =$cntH581Lang;
+            $node->field_axe_html_lang_valid['und'][0]['value']=$htmllangvalid;
+            $node->field_axe_valid_lang['und'][0]['value']=$cntvalidlang;
+
+            $node->field_images_total['und'][0]['value']= array_sum($images);
+            $node->field_1_1_1_non_text_content_tot['und'][0]['value']=array_sum($images);
+            $node->field_parsing_total['und'][0]['value']=array_sum($parsing);
+            $node->field_4_1_1_parsing_total['und'][0]['value']=array_sum($parsing);
+            $node->field_page_titles_total['und'][0]['value']=array_sum($pageTitles);
+            $node->field_2_4_2_page_titled_total['und'][0]['value']=array_sum($pageTitles);
+            $node->field_links_and_buttons_total['und'][0]['value']=array_sum($linksnbuttons);
+            $node->field_2_4_4_link_purpose_in_cont['und'][0]['value']=array_sum($linksnbuttons);
+            $node->field_3_1_1_language_of_page_tot['und'][0]['value']=array_sum($language);
+            $node->field_language_total['und'][0]['value']=array_sum($language);
+            $node->field_keyboard_access_total['und'][0]['value']=array_sum($keyboardAccess);
+            $node->	field_2_1_1_keyboard_total['und'][0]['value']=array_sum($keyboardAccess);
+            $node->field_frames_and_iframes_total['und'][0]['value']=array_sum($framesniFrames);
+            $node->field_4_1_2_name_role_value_tota['und'][0]['value']=array_sum($framesniFrames);
+            $node->field_contrast_total['und'][0]['value']=array_sum($contrast);
+            $node->field_1_4_3_contrast_minimum_tot	['und'][0]['value']=array_sum($contrast);
+            $node->field_content_structure_total['und'][0]['value']=array_sum($contentStructure);
+            $node->field_tables_total['und'][0]['value']=array_sum($tables);
+            $node->	field_forms_total['und'][0]['value']=array_sum($forms);
+            $node->field_1_3_1info_and_relation_tot['und'][0]['value']=array_sum($contentStructure)+array_sum($tables)+array_sum($forms);
+
+
+            //      $node->field_accessibility_raw_scan['und'][0]['value'] = $errorlist;
+
+            $access_errors = db_query("select distinct error_cat from custom_accessibility_issues where website_id=:website", array('website' => $siteId));
+            foreach ($access_errors as $error) {
+                $ict_terms[] = $error->error_cat;
+            }
+
+
+            //Save Tags to parent website
+            if(!empty($ict_terms)) {
+                if(!empty($node->field_ict_group)){
+                    foreach($node->field_ict_group['und'] as $ctk  =>$ctval){
+                        $currentTerms[] = $ctval['tid'];
+                    }
+                    $crnTermCnt = count($currentTerms);
+                }
+
+                $i = 1;
+                foreach (array_unique($ict_terms) as $key => $tag) {
+                    if ($term = taxonomy_get_term_by_name($tag)) {
+                        $terms_array = array_keys($term);
+                        //Check if the term already assigned to the node
+                        if(!in_array($terms_array['0'],$currentTerms)){
+                            $node->field_ict_group['und'][$crnTermCnt+$i]['tid'] = $terms_array['0'];
+                        }
+                    } else {
+                        $term = new STDClass();
+                        $term->name = $tag;
+                        $term->vid = 6;
+                        if (!empty($term->name)) {
+                            taxonomy_term_save($term);
+//                        $term = taxonomy_get_term_by_name($tag);
+//                        foreach($term as $term_id){
+//                            $node->product_tags[LANGUAGE_NONE][$key]['tid'] = $term_id->tid;
+//                        }
+                            $node->field_ict_group['und'][$key]['tid'] = $term->tid;
+                        }
+                    }
+                    $i += 1;
+                }
+
+            }else{
+                $node->field_ict_group['und'] = NULL;
+            }
+
+
+            $code_errors = db_query("select distinct error_code from custom_accessibility_issues where website_id=:website", array('website' => $siteId));
+            foreach ($code_errors as $codeerror) {
+                $error_terms[] = $codeerror->error_code;
+            }
+
+            //Save Tags to parent website
+            if(!empty($error_terms)) {
+                if(!empty($node->field_error_code)){
+                    foreach($node->field_error_code['und'] as $ctk1  =>$ctval1){
+                        $currentTerms1[] = $ctval1['tid'];
+                    }
+                    $crnTermCnt1 = count($currentTerms1);
+                }
+
+                $j = 1;
+                foreach (array_unique($error_terms) as $key1 => $tag1) {
+                    if ($term1 = taxonomy_get_term_by_name($tag1)) {
+                        $terms_array1 = array_keys($term1);
+                        //Check if the term already assigned to the node
+                        if(!in_array($terms_array1['0'],$currentTerms1)){
+                            $node->field_error_code['und'][$crnTermCnt1+$j]['tid'] = $terms_array1['0'];
+                        }
+                    } else {
+                        $term1 = new STDClass();
+                        $term1->name = $tag1;
+                        $term1->vid = 6;
+                        if (!empty($term1->name)) {
+                            taxonomy_term_save($term1);
+//                        $term = taxonomy_get_term_by_name($tag);
+//                        foreach($term as $term_id){
+//                            $node->product_tags[LANGUAGE_NONE][$key]['tid'] = $term_id->tid;
+//                        }
+                            $node->field_error_code['und'][$key1]['tid'] = $term1->tid;
+                        }
+                    }
+                    $j += 1;
+                }
+
+            }else{
+                $node->field_error_code['und'] = NULL;
+            }
+
+            node_object_prepare($node);
+            if ($node = node_submit($node)) {
+                node_save($node);
+            }
+
+        }
+        else{
+            print('Website is a redirect \n');
+        }
+    }
+}
+
+# Run Custom Accessbility Scan
+//function runCustomAccessbilityScanNew($scanId){
+//    $first = false;
+//    if (($handle = fopen('/tmp/current-federal.csv', "r")) !== FALSE) {
+//        while (!feof($handle)) {
+//            $data = fgetcsv($handle);
+//            if (!$first) {
+//                $first = true;
+//                continue;
+//            }
+//            if($data[1]=='Federal Agency - Executive') {
+//                updateAccessibilityScan_custom($data[0]);
+//            }
+//        }
+//
+//        fclose($handle);
+//
+//    }
+//}
+
+/*
+ * Create Government Wide Snapshot for Archival and trend analysis purpose
+ */
+function access_archiveGovwideTrendData(){
+    //Find Number of published websites
+    $curdate = date("Y-m-d");
+    $websitenos = db_query("select count(*) from node where type='website' and status ='1'")->fetchField();
+    $agencynos = db_query("select count(*) from node a, field_data_field_agency_branch b where a.type='agency' and a.status ='1' and a.nid=b.entity_id and  b.field_agency_branch_value='executive'")->fetchField();
+
+    //Query to get Accessibility errors
+    $total_forms =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Forms'", array())->fetchField());
+
+    $total_images =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Images'", array())->fetchField());
+
+    $total_content_structure =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Content Structure'", array())->fetchField());
+    $total_tables =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Tables'", array())->fetchField());
+    $total_contrast =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Contrast'", array())->fetchField());
+    $total_keyboard_access =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Keyboard Access'", array())->fetchField());
+
+    $total_page_titles =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Page Titles'", array())->fetchField());
+
+    $total_language =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Language'", array())->fetchField());
+
+    $total_links_and_buttons =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Links and Buttons'", array())->fetchField());
+    $total_parsing =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Parsing'", array())->fetchField());
+    $total_frames_and_iframes =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Frames and iFrames'", array())->fetchField());
+
+
+    $total_nontext_content =$total_images ;
+    $total_info_and_relationships = $total_content_structure + $total_tables + $total_forms ;
+    $total__contrast_minimum =$total_contrast;
+    $total_keyboard =$total_keyboard_access;
+    $total_page_titled =$total_page_titles;
+    $total_link_purpose_incontext = $total_links_and_buttons;
+    $total_languae_of_page =$total_language;
+    $total_name_role_value =$total_frames_and_iframes;
+    $total_wcag_parsing =$total_parsing;
+
+
+
+//  print  ( $websitenos. '' .$agencynos . '' . $total_forms . '' . $total_images . '' . $total_content_structure . '' . $total_tables . '' . $total_contrast . '' .$total_keyboard_access . '' . $total_page_titles . '' . $total_language . '' . $total_links_and_buttons . '' . $total_parsing . '' .$total_frames_and_iframes);
+//  print "insert into custom_government_wide_archive values(NULL,CURDATE(),NOW(),'$websitenos','$ag_avrg_color_cont','$ag_avrg_html_attr','$ag_avrg_miss_image','$agencynos') ON DUPLICATE KEY UPDATE
+//num_of_websites='$websitenos',tot_color_contrast='$ag_avrg_color_cont',tot_html_attrib='$ag_avrg_html_attr',tot_missing_image='$ag_avrg_miss_image',num_of_agencies='$agencynos' \n";
+
+//Update/Insert Archive record for current data sets
+    db_query("insert into custom_gov_wide_access_archive values(NULL,CURDATE(),NOW(),'$websitenos','$agencynos','$total_nontext_content','$total_info_and_relationships','$total__contrast_minimum','$total_keyboard','$total_page_titled',
+                    '$total_link_purpose_incontext','$total_languae_of_page','$total_wcag_parsing','$total_name_role_value','$total_images','$total_content_structure','$total_forms','$total_tables','$total_contrast','$total_keyboard_access',
+                    '$total_page_titles','$total_language','$total_links_and_buttons','$total_parsing','$total_frames_and_iframes') ON DUPLICATE KEY UPDATE
+                    num_of_websites='$websitenos',num_of_agencies='$agencynos',total_1_1_1_nontext_content	='$total_nontext_content',total_1_3_1_info_and_relationships='$total_info_and_relationships',total_1_4_3_contrastminimum='$total__contrast_minimum',total_2_1_1_keyboard='$total_keyboard',total_2_4_2_page_titled='$total_page_titled',
+                    total_2_4_3_link_purpose_incontext='$total_link_purpose_incontext',total_3_1_1_languae_of_page='$total_languae_of_page',total_4_1_1_parsing='$total_wcag_parsing',total_4_1_2_name_role_value='$total_name_role_value',total_images='$total_images',total_content_structure='$total_content_structure',total_forms='$total_forms',
+                    total_tables='$total_tables',total_contrast='$total_contrast',total_keyboard_access='$total_keyboard_access',total_page_titles='$total_page_titles',
+                    total_language ='$total_language',total_links_and_buttons='$total_links_and_buttons',total_parsing='$total_parsing',total_frames_and_iframes='$total_frames_and_iframes'");
+}
+
+function access_archiveAgencyWideTrendData(){
+    $query = db_query("select nid,title from node where type=:bundle", array(':bundle' => 'agency'));
+    $curdate = date("Y-m-d");
+    foreach ($query as $result) {
+        $websitenos = db_query("select count(*) from node a , field_data_field_web_agency_id b   where a.type='website' and a.type=b.bundle and a.status ='1' and a.nid=b.entity_id and field_web_agency_id_nid=:agencyid",array(':agencyid' => $result->nid))->fetchField();
+
+        //Query to get Accessibility errors
+        $total_agforms =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Forms' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+
+        $total_agimages =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Images' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+
+        $total_agcontent_structure =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Content Structure' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+        $total_agtables =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Tables' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+        $total_agcontrast =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Contrast' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+        $total_agkeyboard_access =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Keyboard Access' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+        $total_agpage_titles =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Page Titles' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+        $total_aglanguage =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Language' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+
+        $total_aglinks_and_buttons =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Links and Buttons' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+        $total_agparsing =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Parsing' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+        $total_agframes_and_iframes =  round(db_query("select count(error_cat) as avg_value from custom_accessibility_issues where error_cat = 'Frames and iFrames' and agency_id=:agencyid", array(':agencyid' =>  $result->nid))->fetchField());
+
+
+
+        $total_agnontext_content =$total_agimages ;
+        $total_aginfo_and_relationships = $total_agcontent_structure + $total_agtables + $total_agforms ;
+        $total__agcontrast_minimum =$total_agcontrast;
+        $total_agkeyboard =$total_agkeyboard_access;
+        $total_agpage_titled =$total_agpage_titles;
+        $total_aglink_purpose_incontext = $total_aglinks_and_buttons;
+        $total_aglanguae_of_page =$total_aglanguage;
+        $total_agname_role_value =$total_agframes_and_iframes;
+        $total_agwcag_parsing =$total_agparsing;
+
+        if($websitenos != '0'){
+            db_query("insert into custom_agency_wide_access_archive values(NULL,CURDATE(),NOW(),'$websitenos','$result->title','$result->nid','$total_agnontext_content','$total_aginfo_and_relationships','$total__agcontrast_minimum','$total_agkeyboard','$total_agpage_titled',
+                    '$total_aglink_purpose_incontext','$total_aglanguae_of_page','$total_agwcag_parsing','$total_agname_role_value','$total_agimages','$total_agcontent_structure','$total_agforms','$total_agtables','$total_agcontrast','$total_agkeyboard_access',
+                    '$total_agpage_titles','$total_aglanguage','$total_aglinks_and_buttons','$total_agparsing','$total_agframes_and_iframes') ON DUPLICATE KEY UPDATE
+                    num_of_websites='$websitenos',agency='$result->title',agency_id='$result->nid',agtotal_1_1_1_nontext_content	='$total_agnontext_content',agtotal_1_3_1_info_and_relationships='$total_aginfo_and_relationships',agtotal_1_4_3_contrastminimum='$total__agcontrast_minimum',agtotal_2_1_1_keyboard='$total_agkeyboard',agtotal_2_4_2_page_titled='$total_agpage_titled',
+                    agtotal_2_4_3_link_purpose_incontext='$total_aglink_purpose_incontext',agtotal_3_1_1_languae_of_page='$total_aglanguae_of_page',agtotal_4_1_1_parsing='$total_agwcag_parsing',agtotal_4_1_2_name_role_value='$total_agname_role_value',agtotal_images='$total_agimages',agtotal_content_structure='$total_agcontent_structure',agtotal_forms='$total_agforms',
+                    agtotal_tables='$total_agtables',agtotal_contrast='$total_agcontrast',agtotal_keyboard_access='$total_agkeyboard_access',agtotal_page_titles='$total_agpage_titles',
+                    agtotal_language ='$total_aglanguage',agtotal_links_and_buttons='$total_aglinks_and_buttons',agtotal_parsing='$total_agparsing',agtotal_frames_and_iframes='$total_agframes_and_iframes'");
+        }
+
+    }
+
 }
 
 function unPublishNode($nid){

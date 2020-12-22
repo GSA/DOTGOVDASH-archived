@@ -1,3 +1,11 @@
+/**
+ * @file
+ * Global utilities.
+ *
+ */
+(function($, Drupal) {
+
+    'use strict';
 jQuery(document).ready(function ($) {
 //$('.page-search-site .breadcrumb span:nth-child(3)').html('<a href=/search/site>Data Discovery</a>');
 $( "#favorites-add-favorite-form .panel-body" ).removeClass( "fade collapsed" ).addClass( "in" );
@@ -90,3 +98,4 @@ $( ".facetapi-active" ).parents(".collapse").addClass( "in" );
 
 	$( ".facetapi-active" ).parent().css( "background-color","#f1c393" );
 });
+})(jQuery, Drupal);

@@ -34,14 +34,16 @@
              jQuery('#agency_acc_table').DataTable( {
                 responsive: true,
                 paging: false,
-dom: '<"toolbar">Bfrtip',
+dom: '<"download-report-desktop"><"div.download-report-mobile">Bfrtip',
         buttons: [
              {extend:'csv', text:'csv'}, {extend:'excel',text:'xls'}
         ]
             } );
 
-jQuery("div.toolbar").html('Download Agency Level Accessibility Report:');
-jQuery("div.toolbar").css('float','left');
+jQuery("div.download-report-desktop ").html('Download Agency Level Accessibility Report:');
+jQuery("div.download-report-desktop").css('float','left');
+jQuery("div.download-report-mobile").html('Download Test:');
+jQuery("div.download-report-mobile").css('float','left');
         } );
 
 

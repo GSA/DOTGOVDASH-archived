@@ -181,7 +181,20 @@ function dotgov_commmon_get_techTerms($nid){
     return $techInfo;
 
 }
-
+function dotgov_commmon_get_accessTerms($nid){	
+    $terms = array();
+    $parentwebsiteid = db_query("select field_website_id_nid from field_data_field_website_id where entity_id=:entity_id",array('entity_id' =>$nid))->fetchField();
+    if($parentwebsiteid!= "") {
+        $access_errors = db_query("select distinct error_cat from custom_accessibility_issues where website_id=:website", array('website' => $parentwebsiteid));
+        foreach ($access_errors as $error) {
+            $terms[] = $error->error_cat;
+        }
+    }
+    else{
+        $terms = array();
+    }
+    return $terms;
+}
 /*
  * Get Apps Json Data
  */
@@ -701,7 +714,7 @@ function dotgov_common_getAgencyComplianceData($agencyid){
 
     $agencydata['ag_access_chart'] = $agencyaccess_output;
 
-  $agency_mob['mob_perf_good_nos'] = db_query("SELECT mob_perf_good FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
+  $agency_mob['mob_perf_good_nos'] = db_query("SELECT mob_perf_good FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid limit 1",array(':agencyid' => $agencyid))->fetchField();
   $agency_mob['mob_perf_improve_nos'] = db_query("SELECT mob_perf_improve FROM custom_agencywide_archive where date =(select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_mob['mob_perf_poor_nos'] = db_query("SELECT mob_perf_poor FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_mob['mob_usab_friendly_nos'] = db_query("SELECT mob_usab_friendly FROM custom_agencywide_archive where date =(select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
@@ -844,7 +857,7 @@ function dotgov_common_getChartColordata($data,$websites)
         $colordata = "<span style='color:$chartcolor;font-weight:bold;'>$data ($percent %)</span>";
     }
     else{
-        $colordata = "<span style='color:#ac0600;font-weight:bold;'>0</span>";
+        $colordata = "<span style='color:#ac0600;font-weight:bold;'>0 %</span>";
     }
     return $colordata;
 
@@ -909,16 +922,16 @@ function dotgov_common_get_percentage($arr,$websites) {
   return $roundDown;
 }
 
-/*
- * Get color data after percentage calculation
- */
-function dotgov_common_getColor($data, $chartColor, $percent) {
-  if ($data != '')
-      $colordata = "<span style='color:$chartColor;font-weight:bold;'>$data ($percent %)</span>";
-  else
-      $colordata = "<span style='color:$chartColor;font-weight:bold;'>0 (0 %)</span>";
-  return $colordata;
-}
+ /*
+  * Get color data after percentage calculation
+  */
+ function dotgov_common_getColor($data, $chartColor, $percent) {
+   if ($data != '')
+       $colordata = "<span style='color:$chartColor;font-weight:bold;'>$data ($percent %)</span>";
+   else
+       $colordata = "<span style='color:$chartColor;font-weight:bold;'>0 (0 %)</span>";
+   return $colordata;
+ }
 
 /*
  * Get the chart
@@ -1238,6 +1251,7 @@ function dotgov_common_getAllAgencyComplianceData(){
   $agencydata['improve_nos'] = $govwide_mob['mob_perf_improve_nos'] ;
   $agencydata['friendly_nos'] = $govwide_mob['mob_usab_friendly_nos'] ;
   $agencydata['nonfriendly_nos'] = $govwide_mob['mob_usab_notfriendly_nos'] ;
+
 
   $govwide_mob['govwide_mob_bad'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='49' and entity_id in (SELECT node.nid AS nid
 FROM

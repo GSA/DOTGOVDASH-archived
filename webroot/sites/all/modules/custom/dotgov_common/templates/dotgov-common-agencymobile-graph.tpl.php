@@ -9,8 +9,6 @@ function drawChart1() {
         ['Poor',  <?php echo number_format($agencydata['mob_perf_poor_nos'],1, '.', ''); ?>],
         ['Needs Improvement',      <?php echo number_format($agencydata['mob_perf_improve_nos'],1, '.', '');?>],
         ['Good',  <?php echo number_format($agencydata['mob_perf_good_nos'],1, '.', ''); ?>],
-        //['NA',  <?php //echo number_format($agencydata['null'],1, '.', ''); ?>//]
-
     ]);
     var options = {
         colors: ['#ae0100', '#665000','#276437'],

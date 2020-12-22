@@ -49,7 +49,7 @@
   <div class="main-container <?php print $container_class; ?>">
     <div class="row">
       <section class="col-sm-12">
-        <a id="main-content"></a>
+        <div id="main-content"></div>
         <?php if (!empty($title)): ?>
           <h1 class="page-header"><?php print $title; ?></h1>
         <?php endif; ?>

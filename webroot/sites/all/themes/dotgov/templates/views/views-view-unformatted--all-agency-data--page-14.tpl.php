@@ -48,6 +48,11 @@ foreach ($view->style_plugin->rendered_fields[0] as $key => $val) {
 
     if ($key == 'field_dap_score') {
         $agency_dap_score = $val;
+        if( $agency_dap_score == '*') {
+            $agency_dap_score = 0;
+        } else {
+            $agency_dap_score = $val;
+        }
     }
 
     if ($key == 'field_https_score') {
@@ -90,6 +95,7 @@ foreach ($view->style_plugin->rendered_fields[0] as $key => $val) {
 
 $agencynode = node_load($curuserAgency);
 drupal_set_title($agencynode->title);
+
 ?>
 <div class="download-pdf">
     <a href="#" onclick="generatePDF('All Agency report.pdf',600,1150,false)"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="Download Pdf">
@@ -112,7 +118,7 @@ drupal_set_title($agencynode->title);
                                 <?php
 if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
     ?>
-                                    <img src="<?php print file_create_url($agencynode->field_agency_logo['und'][0]['uri']);?>" alt="<?=$agencynode->title?>">
+                                    <img width="100" src="<?php print file_create_url($agencynode->field_agency_logo['und'][0]['uri']);?>" alt="<?=$agencynode->title?>">
                                     <?php
 } else {
     print "&nbsp;";
@@ -142,7 +148,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                             <h2 class="pane-title"> Mobile Information </h2>
                           </div>
                           <div class="col-xs-2 nopadding">
-                            <div id="tooltip4" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
+                            <div id="tooltip4" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">  <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart_mobile.png" alt="Image for the color code"><br>
                               Mobile Data is collected from Google API through a scan that last ran on
                               <?php dotgov_common_lastScanDate();?>
                               </span>
@@ -174,7 +180,8 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                         <th style="background-color: #215393;color: white;"> Websites </th>
                                         <tr>
                                           <td>Poor</td>
-                                          <td><?=dotgov_common_applyDataColor($agencydata['poor'], $agencydata['no_of_non_na__websites'], '#ae0100') ?>
+                                          <td><?=dotgov_common_applyDataColor($agencydata['poor'], $agencydata['no_of_non_na__websites'], '#ae0100') ?>	
+                                        </tr>
                                         <tr>
                                           <td>Needs Improvement</td>
                                           <td><?=dotgov_common_applyDataColor($agencydata['improve'], $agencydata['no_of_non_na__websites'], '#665000') ?>
@@ -189,8 +196,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                       <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                         <h5>Mobile Usability Breakdown
                                       </div>
-                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 10px"> <span class="dot good"></span>Mobile Friendly <br/>
-                                        <span class="dot low"></span>Not Mobile Friendly <br/>
+                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 10px"> <span class="dot good"></span>Mobile Friendly <br/>                                        <span class="dot low"></span>Not Mobile Friendly <br/>
                                       </div>
                                       <div class="col-lg-6 col-md-6 nopadding">
                                         <div id="piechartmobusab" style="margin-top:-17px;height:140px;"></div>
@@ -232,10 +238,10 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                         <div class="white-back no-height">
                             <div class="panel-pane pane-views pane-website-information">
                                 <div class="col-xs-10 nopadding">
-                                    <h2 class="pane-title">Accessibility Issues</h2>
+                                    <h2 class="pane-title">Accessibility Spot Checks</h2>
                                 </div>
                                 <div class="col-xs-2 nopadding">
-                                    <div id="tooltip9" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br/>
+                                    <div id="tooltip9" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">  <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br/>
                     Accessibility Data is collected from pulse.gov website though a scan that last ran on
                                             <?php dotgov_common_lastScanDate();?>
                     </span> </div>
@@ -245,7 +251,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                     <div class="view-wrapper" style="min-height:285px;">
                                         <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                                             <div class="view-empty clearfix">
-                                                <div class="col-lg-6 grey-gradient" style="height:200px;">
+                                                <div class="col-lg-6 grey-gradient" style="height:250px;">
                                                     <div class ="col-md-12 col-lg-12 nopadding" >
                                                         <h5>Accessibility Issues by Type</h5>
                                                     </div>
@@ -259,11 +265,11 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                                         <p>Average Missing Image Description:
                                                             <?=round($agencydata['ag_miss_image'] / $agency_website_num, 1);?>
                                                         </p>
-                                                        <span style="font-size:12px;">(Note: website redirects are excluded)</span></div>
+                                                        <span style="font-size:12px;">(Note: Website redirects are excluded. Accessibility Spot Checks include only Color Contrast, HTML Attributes and Missing Image Description Accessibility Issues)</span></div>
                                                 </div>
-                                                <div class="col-lg-6 grey-gradient second" style="height:200px;">
+                                                <div class="col-lg-6 grey-gradient second" style="height:250px;">
                                                     <div class ="col-md-12 col-lg-12 nopadding" >
-                                                        <h5>Average Accessibility issues by type Per website</h5>
+                                                        <h5>Average Accessibility Issues by Type per Website</h5>
                                                     </div>
                                                     <div  class="clearfix"></div>
                                                     <div id="piechart"></div>
@@ -300,7 +306,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                                 <?php
 if (($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydata['ag_miss_image']) != 0) {
     print "<div class='col-lg-12 text-center clearfix'><span style='color:#29643a; font-size: 10px;font-style: italic;'>
-Above graph shows the breakdown of Accessibility issues by category</span></div>
+Above graph shows the breakdown of Accessibility Issues by category</span></div>
 ";
 }
 ?>
@@ -329,7 +335,7 @@ Above graph shows the breakdown of Accessibility issues by category</span></div>
                                     <h2 class="pane-title">DNSSEC Information</h2>
                                 </div>
                                 <div class="col-xs-2 nopadding">
-                                    <div id="tooltip5" class="infor"> <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+                                    <div id="tooltip5" class="infor"> <img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">  <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
                     DNSSEC Data is collected through a custom scanner component of dotgov dashboard that last ran on
                                             <?php dotgov_common_lastScanDate();?>
                     </span> </div>
@@ -477,7 +483,7 @@ print "$output4<br><div class='col-lg-12 text-center clearfix'><span style='colo
                                     <h2 class="pane-title"> On-Site Search Information </h2>
                                 </div>
                                 <div class="col-xs-2 nopadding">
-                                    <div id="tooltip5" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"> On-Site Search Data is collected through a custom scanner component of dotgov dashboard that last ran on
+                                  <div id="tooltip5" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">  <span class="tooltiptext tooltip-left"> On-Site Search Data is collected through a custom scanner component of dotgov dashboard that last ran on
                                             <?php dotgov_common_lastScanDate();?>
                     </span> </div>
                                 </div>
@@ -546,7 +552,7 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                     <h2 class="pane-title"> HTTPS Information </h2>
                                 </div>
                                 <div class="col-xs-2 nopadding">
-                                    <div id="tooltip2" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+                                    <div id="tooltip2" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">  <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
                     HTTPS Data is collected through a custom scanner component of digital dashboard that last ran on
                                             <?php dotgov_common_lastScanDate();?>
                     </span> </div>
@@ -704,7 +710,7 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                     <h2 class="pane-title">M-15-13 and BOD 18-01 Information</h2>
                                 </div>
                                 <div class="col-xs-2 nopadding">
-                                    <div id="tooltip7" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i> <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
+                                  <div id="tooltip7" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">  <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
                     M-15-13 and BOD 18-01 Data is collected through a custom scanner component of dotgov dashboard that last ran on
                                             <?php dotgov_common_lastScanDate();?>
                     </span> </div>
@@ -851,7 +857,7 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                     <h2 class="pane-title"> IPV6 Information </h2>
                                 </div>
                                 <div class="col-xs-2">
-                                    <div id="tooltip6" class="infor"> <i class='icon glyphicon glyphicon-info-sign'>&nbsp</i> <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"> IPV6 Data is collected through a custom scanner component of dotgov dashboard that last ran on
+                                    <div id="tooltip6" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">  <span class="tooltiptext tooltip-left"> <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"> IPV6 Data is collected through a custom scanner component of dotgov dashboard that last ran on
                                             <?php dotgov_common_lastScanDate();?>
                     </span> </div>
                                 </div>
@@ -1003,7 +1009,7 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                 </div>
                                 <div class="col-xs-2 nopadding">
                         <div id="tooltip3" class="infor">
-                           <i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                           <img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">
                            <span class="tooltiptext tooltip-left">
                            <img src="/sites/all/themes/dotgov/images/helpchart.png" alt="Image for the color code"><br>
                            DAP Overall Average Score :
@@ -1159,7 +1165,7 @@ print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: "
                         <h2 class="pane-title">Free of Insecure Protocols Information</h2>
                      </div>
                      <div class="col-xs-2 nopadding">
-                        <div id="tooltip8" class="infor"><i class='icon glyphicon glyphicon-info-sign'>&nbsp;</i>
+                        <div id="tooltip8" class="infor"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon">
                            <span class="tooltiptext tooltip-left"><img src="/sites/all/themes/dotgov/images/helpchart.png"  alt="Image for the color code" ><br>
                            Free of RC4/3DES and SSLv2/SSLv3 Data is collected through a custom scanner component of dotgov dashboard that last ran on <?php dotgov_common_lastScanDate();?></span>
                         </div>
@@ -1298,7 +1304,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                 </div>
                                 <div class="col-xs-2 nopadding">
                         <div id="tooltip3" class="infor">
-                           <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><i class='icon glyphicon glyphicon-info-sign' style="padding-right: 4px;"></i></a>
+                           <a href="https://github.com/18F/site-scanning-documentation/blob/master/scans/uswds.md"><img class="info-icon" src="/sites/all/themes/dotgov/images/info.png" width="20" alt="info icon"> </a><span class="ext" aria-label="(link is external)"></span>
                         </div>
                      </div>
                      <br clear="all"/>
@@ -1479,9 +1485,7 @@ if ($no_data == 1) {
                                                     </div>
                                                 </div>
                                                 <div class="view-button">
-
                                                     <div class="row col-xs-12 nopadding">
-                                                        
                                                     </div></div>
                                             </div>
                                         </div>

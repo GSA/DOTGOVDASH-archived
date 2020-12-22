@@ -73,22 +73,54 @@
  * @ingroup templates
  */
 ?>
+<style>
+  .page-break-margin {
+	  margin-bottom: 6rem !important;
+}
+  </style>
 <script src="/sites/all/themes/dotgov/js/html2pdf.bundle.min.js"></script>
 <script type="text/javascript">
     function generatePDF(fileName, pageWidth, pageHeight, websiteInfoPage) {
+      jQuery("body").addClass("loading");
+      jQuery(".html2pdf__page-break").addClass("page-break-margin");
+
       if(websiteInfoPage) {
           jQuery( "#techstack" ).addClass( "split-column" );
       }
       var element = document.getElementById("main-container");
-      html2pdf()
-      .set({
-          filename: fileName + '.pdf',
-          jsPDF: {format:[pageWidth,pageHeight]},
-      })
-      .from(element)
-      .save().then(function () {
-        jQuery( "#techstack" ).removeClass( "split-column" );
-        });
+      // if width is less than than 768 px
+      if (jQuery(window).width() < 768) {   
+        jQuery("#desktop-break").removeClass(".html2pdf__page-break");
+        html2pdf()
+        .set({
+            filename: fileName + '.pdf',
+            image: {type: 'jpeg', quality: 1},
+            html2canvas: {scale: 1, scrollX: 0, scrollY: 0, width: 1500 },
+            pagebreak: { before: '#mobile-break', avoid: 'canvas' },
+            jsPDF: {format:[400,900]},
+        })
+        .from(element)
+        .save().then(function () {
+          jQuery("#desktop-break").addClass(".html2pdf__page-break");
+          jQuery( "#techstack" ).removeClass( "split-column" );
+          jQuery("body").removeClass("loading");
+          });
+      } else {
+        // if width is more than 768 px
+        html2pdf()
+          .set({
+              filename: fileName + '.pdf',
+              jsPDF: {format:[pageWidth,pageHeight]},
+          })
+          .from(element)
+          .save().then(function () {
+            jQuery( "#techstack" ).removeClass( "split-column" );
+            jQuery("body").removeClass("loading");
+            jQuery(".html2pdf__page-break").removeClass("page-break-margin");
+          
+            });
+      }
+    
     }
 </script>
 <div class="top-bar">
@@ -192,9 +224,9 @@ Helping Federal Agencies Do Digital Better			</h2>
     <?php endif; ?>
 
     <section<?php print $content_column_class; ?>>
-
-      <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
-      <a id="main-content"></a>
+      <!-- avoid breadcrump when pdf conversion in action -->
+      <div id="element-to-hide" data-html2canvas-ignore="true"><?php if (!empty($breadcrumb)): print $breadcrumb; endif;?></div>
+      <div id="main-content"></div>
       <?php print render($title_prefix); ?>
       <?php if (!empty($title)): ?>
         <h1 class="page-header"><?php print $title; ?></h1>
