@@ -11,6 +11,7 @@ jQuery(document).ready(function ($) {
 $(".paginate_button ,.paginate_active").attr("role","link");
 
 $('#edit-date-of-scan-min').attr('title','Choose date range');
+$('.view_bookmark').attr({tabindex:0,role:'link'});
 $( "#favorites-add-favorite-form .panel-body" ).removeClass( "fade collapsed" ).addClass( "in" );
 $( "#edit-add-3-body" ).removeClass( "fade collapsed" ).addClass( "in" );
 
