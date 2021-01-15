@@ -2335,6 +2335,7 @@ function updateTechStackInfo($website){
             "font scripts" => "field_font_script_applications",
             "web servers" => "field_web_server",
             "cache tools" => "field_cache_tools",
+            "javascript libraries" => "field_javascript_frameworks",
             "javascript frameworks" => "field_javascript_frameworks",
             "programming languages" => "field_programming_languages",
             "advertising networks" => "field_advertising_networks",
@@ -2395,14 +2396,21 @@ function updateTechStackInfo($website){
         $tsout2 = str_replace("\\n", "", $tsout2);
 
         $tsobj = json_decode($tsout2);
+
+
+
         $tags = array();
         $k = 1;
-        foreach ($tsobj[0]->applications as $tskey => $tsobj) {
+        foreach ($tsobj[0]->technologies as $tskey => $tsobj) {
             //foreach($tsobj as $tskey=>$tsobj){
             $tsAppname = $tsobj->name;
             //$tsAppCat = $tsobj->categories[0];
             $tsAppCat1 = (Array)$tsobj->categories[0];
-            $tsAppCat = array_values($tsAppCat1)[0];
+//            $tsAppCat = array_values($tsAppCat1)[0];
+            $tsAppCat = $tsAppCat1['name'];
+            print_r($tsobj);
+            print "--- \n";
+
 
             //$tags[$tsAppCat] = array();
             //if version is present append version to technology
@@ -2480,15 +2488,6 @@ function updateTechStackInfo($website){
             node_save($webnode);
         }
     }
-}
-function recursive_array_search($needle,$haystack) {
-    foreach($haystack as $key=>$value) {
-        $current_key=$key;
-        if($needle===$value OR (is_array($value) && recursive_array_search($needle,$value) !== false)) {
-            return $current_key;
-        }
-    }
-    return false;
 }
 
 /*
