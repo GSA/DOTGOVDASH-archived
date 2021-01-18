@@ -3,11 +3,26 @@
     min-height:150px!important;
     height:auto!important;
 }
+
+.data-table-responsive {
+    overflow-x: auto;
+    min-height: 0.01%;
+}
+
+@media screen and (max-width: 767px) {
+    .data-table-responsive {
+        width: 100%;
+        margin-bottom: 15px;
+        overflow-y: hidden;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        border: 1px solid #ddd;
+    }
+}
 </style>
 
 <div class="view view-all-agency-data view-id-all_agency_data view-display-id-block_15 white-back no-height view-dom-id-149e4767a827975c222867424f37ca00">
     <div class="view-content">
-        <div class="table-responsive">
+        <div class="data-table-responsive">
             <table class="views-table cols-11 table table-hover table-striped">
                 <caption>Tabular Report</caption>
                 <thead>
