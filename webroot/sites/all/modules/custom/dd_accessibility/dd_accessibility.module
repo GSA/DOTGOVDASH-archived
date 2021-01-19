@@ -319,6 +319,8 @@ function dd_accessibility_myagency_jsonapi(){
 }
 
 function dd_accessibility_govwide_jsonapi(){
+    db_query("delete from custom_accessibility_issues where agency_id is NULL");
+
     $query = db_query("select * from  custom_accessibility_issues");
     $return_arr = array();
     global $wcag_testrule_ref;
