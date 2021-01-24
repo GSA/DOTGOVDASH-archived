@@ -123,18 +123,17 @@
                                   <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                     <h5>Mobile Performance Breakdown</h5>
                                   </div>
-                                  <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 12px">
-                                    <span class="dot good"></span>Good<br/>
+                                  <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 12px"> <span class="dot low"></span>Poor <br/>
                                     <span class="dot avg"></span>Needs Improvement <br/>
-                                    <span class="dot low"></span>Poor <br/>
-                                    <span class="dot na"></span>Data Not Available<br/>
+                                    <span class="dot good"></span>Good<br/>
+                                    <!--                                                <span class="dot na"></span>NA-->
                                   </div>
                                   <div class="col-lg-6 col-md-6 nopadding">
                                     <div id="piechart1" style="margin-top:-17px;height:140px;"></div>
                                     <?php print $agencydata['gov_mob_chart'];?>
                                   </div>
-                                  <table style="width:100%" aria-label="Mobile Performance Breakdown Table"> 
-                                  <th style="background-color: #215393;color: white;"> Breakdown </th>
+                                  <table style="width:100%">
+                                    <th style="background-color: #215393;color: white;"> Breakdown </th>
                                     <th style="background-color: #215393;color: white;"> Websites </th>
                                     <tr>
                                       <td>Poor</td>
