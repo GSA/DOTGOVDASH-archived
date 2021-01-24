@@ -152,7 +152,7 @@
                                   <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                     <h5>Mobile Usability Breakdown
                                   </div>
-                                  <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 12px">
+                                  <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 12px"> <span class="dot good"></span>Mobile Friendly <br/>
                                     <span class="dot low"></span>Not Mobile Friendly <br/>
                                   </div>
                                   <div class="col-lg-6 col-md-6 nopadding">
