@@ -123,17 +123,18 @@
                                   <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                     <h5>Mobile Performance Breakdown</h5>
                                   </div>
-                                  <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 12px"> <span class="dot low"></span>Poor <br/>
-                                    <span class="dot avg"></span>Needs Improvement <br/>
+                                  <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 12px">
                                     <span class="dot good"></span>Good<br/>
-                                    <!--                                                <span class="dot na"></span>NA-->
+                                    <span class="dot avg"></span>Needs Improvement <br/>
+                                    <span class="dot low"></span>Poor <br/>
+                                    <span class="dot na"></span>Data Not Available<br/>
                                   </div>
                                   <div class="col-lg-6 col-md-6 nopadding">
                                     <div id="piechart1" style="margin-top:-17px;height:140px;"></div>
                                     <?php print $agencydata['gov_mob_chart'];?>
                                   </div>
-                                  <table style="width:100%">
-                                    <th style="background-color: #215393;color: white;"> Breakdown </th>
+                                  <table style="width:100%" aria-label="Mobile Performance Breakdown Table"> 
+                                  <th style="background-color: #215393;color: white;"> Breakdown </th>
                                     <th style="background-color: #215393;color: white;"> Websites </th>
                                     <tr>
                                       <td>Poor</td>
@@ -152,14 +153,14 @@
                                   <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                     <h5>Mobile Usability Breakdown
                                   </div>
-                                  <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 12px"> <span class="dot good"></span>Mobile Friendly <br/>
+                                  <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 12px">
                                     <span class="dot low"></span>Not Mobile Friendly <br/>
                                   </div>
                                   <div class="col-lg-6 col-md-6 nopadding">
                                     <div id="piechartusab" style="margin-top:-17px;height:140px;"></div>
                                     <?php print $agencydata['gov_mob_usab_chart'];?>
                                   </div>
-                                  <table style="width:100%">
+                                  <table style="width:100%" aria-label="Mobile Usability Breakdown Table">
                                     <th style="background-color: #215393;color: white;"> Breakdown </th>
                                     <th style="background-color: #215393;color: white;"> Websites </th>
                                     <tr>
@@ -181,8 +182,8 @@
                           <br clear="all" />
                           <div class="view-button clearfix">
                             <div class="row text-center">
-                              <a class="" href="/mobile/report"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                              <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                              <a class="" title="Link for Mobile Performance and Mobile Usability full report" href="/mobile/report"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                              <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
                             </div>
                           </div>
                         </div>
@@ -282,8 +283,8 @@
                            </div>
                            <div class="view-button">
                               <div class="row text-center">
-                                 <a href="/accessibilityreportalldomains"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                 <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                                 <a href="/accessibilityreportalldomains" title="Link for Accessibility Issues full report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                 <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
                               </div>
                            </div>
                         </div>
@@ -317,7 +318,7 @@
                                        <div class="view-wrapper" style="min-height:325px">
                                           <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient" style="height:165px;">
                                              <h5>DNSSEC Score Breakdown</h5>
-                                             <table width="100%" class="dnssec-table">
+                                             <table width="100%" class="dnssec-table" aria-label="DNSSEC Score Breakdown Table">
                                                 <th style="background-color: #215393;color: white;">Breakdown</th>
                                                 <th style="background-color: #215393;color: white;">Websites</th>
                                                 <tr>
@@ -436,8 +437,8 @@
                                        </div>
                                        <div class="view-button">
                                           <div class="row text-center">
-                                             <a class="" href="/website/all/reports"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                             <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                                             <a class="" href="/website/all/reports" title="Link for DNSSEC Trend report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                             <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
                                           </div>
                                        </div>
                                     </div>
@@ -469,7 +470,7 @@
                                     <?php print $agencydata['searchengines_graph'];
                                        //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines</span>";
                                        ?>
-                                    <table style="width:100%">
+                                       <table style="width:100%" aria-label="On-Site Search Engine Status Table">
                                        <tr style="background-color: #215393;color: white;">
                                           <td>On-Site Search Engine</td>
                                           <td>&nbsp;Total</td>
@@ -487,7 +488,7 @@
                                        //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines by category</span>";
                                        $searchenginestatus = $agencydata['searchenginestatus'];
                                        ?>
-                                    <table>
+                                     <table  aria-label="On-Site Search Engine Breakdown Table">
                                        <tr style="background-color: #215393;color: white;">
                                           <td> On-Site Search Available</td>
                                           <td>On-Site Search Not Available</td>
@@ -505,8 +506,8 @@
                         </div>
                         <div class="view-button clearfix">
                            <div class="row text-center">
-                              <a class="" href="/website/search/reports"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                              <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                              <a class="" href="/website/search/reports" title="Link for On-Site Search report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                              <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
                            </div>
                         </div>
                      </div>
@@ -623,7 +624,7 @@
                                        </script>
                                     </div>
                                  </div>
-                                 <table width="100%">
+                                 <table width="100%" aria-label="HTTPS score breakdown Table">
                                     <th style="background-color: #215393;color: white;">Criteria</th>
                                     <th style="background-color: #215393;color: white">Supporting Websites </th>
                                     <th style="background-color: #215393;color: white">Non Supporting Websites </th>
@@ -664,7 +665,13 @@
                                     ?>
                               </div>
                            </div>
-                           <?php echo trim(dotgov_common_footer()); ?>
+
+                           <div class="view-button clearfix">
+                            <div class="row text-center">
+                              <a class="" title="Link for HTTPS Mobile Performance and Mobile Usability full report" href="/website/all/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                              <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                            </div>
+                          </div>
                         </div>
                      </div>
                   </div>
@@ -779,7 +786,7 @@
                                                 </script>
                                              </div>
                                           </div>
-                                          <table width="100%">
+                                          <table width="100%" aria-label="M-15-13 and BOD 18-01 score breakdown Table">
                                              <th style="background-color: #215393;color: white;"> Breakdown </th>
                                              <th style="background-color: #215393;color: white;"> Websites </th>
                                              <tr>
@@ -802,7 +809,12 @@
                                              ?>
                                        </div>
                                     </div>
-                                    <?php echo trim(dotgov_common_footer()); ?>
+                                    <div class="view-button clearfix">
+                                       <div class="row text-center">
+                                        <a class="" title="Link for M-15-13 and BOD full report" href="/website/all/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                          <a href="/improve-my-score" title="Link for  M-15-13 and BOD to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                                       </div>
+                                    </div>
                                  </div>
                               </div>
                            </div>
@@ -921,7 +933,8 @@
                                                    </script>
                                                 </div>
                                              </div>
-                                             <table width="100%">
+                                             <table width="100%" aria-label="IPV6 Score Breakdown Table">
+
                                                 <th style="background-color: #215393;color: white;"> Breakdown </th>
                                                 <th style="background-color: #215393;color: white;"> Websites </th>
                                                 <tr width="100%">
@@ -1083,7 +1096,7 @@
                                           </script>
                                        </div>
                                     </div>
-                                    <table style="width:100%;">
+                                    <table style="width:100%;" aria-label="DAP Information Breakdown Table">
                                        <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
                                        <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
                                        <tr>
@@ -1227,7 +1240,7 @@
                                     </script>
                                  </div>
                               </div>
-                              <table width="100%">
+                              <table width="100%" aria-label="Free of RC4/3DES and SSLv2/SSLv3 score breakdown Table">
                                  <th style="background-color: #215393;color: white;"> Breakdown </th>
                                  <th style="background-color: #215393;color: white;"> Websites </th>
                                  <tr>
@@ -1329,7 +1342,7 @@
                                        </script>
                                     </div>
                                  </div>
-                                 <table style="width:100%;">
+                                 <table style="width:100%;" aria-label="USWDS Code Table">
                                     <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
                                     <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
                                     <tr>
@@ -1356,7 +1369,12 @@
                            </div>
                         </div>
                      </div>
-                     <?php echo trim(dotgov_common_footer("/website/all/uswds", "https://designsystem.digital.gov/maturity-model/", "/sites/all/themes/dotgov/images/DD-btn_learn-more1.png")); ?>
+                     <div class="view-button clearfix">
+                        <div class="row text-center">
+                           <a class="" title="Link for USWDS full report" href="/website/all/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                           <a title="Link for USWDS to improve my score" href="https://designsystem.digital.gov/maturity-model/" target="_blank" rel="noopener noreferrer"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" alt="" width="" height="25"></a>              
+                        </div>
+                     </div>
                   </div>
                </div>
             </div>
