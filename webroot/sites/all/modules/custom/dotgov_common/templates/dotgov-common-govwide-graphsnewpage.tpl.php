@@ -132,7 +132,7 @@
                                     <div id="piechart1" style="margin-top:-17px;height:140px;"></div>
                                     <?php print $agencydata['gov_mob_chart'];?>
                                   </div>
-                                  <table style="width:100%">
+                                  <table style="width:100%"  aria-label="Mobile Performance Breakdown Table">
                                     <th style="background-color: #215393;color: white;"> Breakdown </th>
                                     <th style="background-color: #215393;color: white;"> Websites </th>
                                     <tr>
