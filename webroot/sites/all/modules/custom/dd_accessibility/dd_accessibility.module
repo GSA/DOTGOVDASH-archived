@@ -215,7 +215,9 @@ function dd_accessibility_myagency_xlsapi(){
     global $wcag_testrule_ref;
     $xlsdata = "Website ID\tWebsite\tAgency ID\tAgency\tRule Engine\tWCAG Success Criteria\tContent Type\tType Code\tTest Rule\tError Message\tError Context\tError Selector\n";
     foreach ($query as $result) {
-        $xlsdata .= $result->website_id."\t".$result->website."\t".$result->agency_id."\t".$result->agency_name."\t".$result->error_scan_type."\t".$wcag_testrule_ref[$result->error_code]."\t".$result->error_cat."\t".$result->error_typecode."\t".$result->error_code."(".$result->error_scan_type.")"."\t".dd_accessibility_escape_chars($result->error_message)."\t".dd_accessibility_escape_chars($result->error_context)."\t".dd_accessibility_escape_chars($result->error_selector)."\n";
+        if (!is_null($result->website_id) && !is_null($result->website) && !is_null($result->agency_id) && !is_null($result->agency_name)) {
+            $xlsdata .= $result->website_id."\t".$result->website."\t".$result->agency_id."\t".$result->agency_name."\t".$result->error_scan_type."\t".$wcag_testrule_ref[$result->error_code]."\t".$result->error_cat."\t".$result->error_typecode."\t".$result->error_code."(".$result->error_scan_type.")"."\t".dd_accessibility_escape_chars($result->error_message)."\t".dd_accessibility_escape_chars($result->error_context)."\t".dd_accessibility_escape_chars($result->error_selector)."\n";
+        }
     }
     header("Content-Description: File Transfer");
     header("Content-Type: application/octet-stream");
@@ -228,7 +230,9 @@ function dd_accessibility_process_csv($query, $file_name) {
     global $wcag_testrule_ref;
     $csvdata = "\"Website ID\",\"Website\",\"Agency ID\",\"Agency\",\"Rule Engine\",\"WCAG Success Criteria\",\"Content Type\",\"Type Code\",\"Test Rule\",\"Error Message\",\"Error Context\",\"Error Selector\"\n";
     foreach ($query as $result) {
-        $csvdata .= "\"".$result->website_id."\",\"".$result->website."\",\"".$result->agency_id."\",\"".$result->agency_name."\",\"".$result->error_scan_type."\",\"".$wcag_testrule_ref[$result->error_code]."\",\"".$result->error_cat."\",\"".$result->error_typecode."\",\"".$result->error_code."(".$result->error_scan_type.")"."\",\"".dd_accessibility_escape_chars($result->error_message)."\",\"".dd_accessibility_escape_chars($result->error_context)."\",\"".dd_accessibility_escape_chars($result->error_selector)."\"\n";
+        if (!is_null($result->website_id) && !is_null($result->website) && !is_null($result->agency_id) && !is_null($result->agency_name)) {
+            $csvdata .= "\"".$result->website_id."\",\"".$result->website."\",\"".$result->agency_id."\",\"".$result->agency_name."\",\"".$result->error_scan_type."\",\"".$wcag_testrule_ref[$result->error_code]."\",\"".$result->error_cat."\",\"".$result->error_typecode."\",\"".$result->error_code."(".$result->error_scan_type.")"."\",\"".dd_accessibility_escape_chars($result->error_message)."\",\"".dd_accessibility_escape_chars($result->error_context)."\",\"".dd_accessibility_escape_chars($result->error_selector)."\"\n";
+        }
     }
     header("Content-Description: File Transfer");
     header("Content-Type: application/octet-stream");
@@ -241,7 +245,9 @@ function dd_accessibility_process_xls($query, $file_name) {
     global $wcag_testrule_ref;
     $xlsdata = "Website ID\tWebsite\tAgency ID\tAgency\tRule Engine\tWCAG Success Criteria\tContent Type\tType Code\tTest Rule\tError Message\tError Context\tError Selector\n";
     foreach ($query as $result) {
-        $xlsdata .= $result->website_id."\t".$result->website."\t".$result->agency_id."\t".$result->agency_name."\t".$result->error_scan_type."\t".$wcag_testrule_ref[$result->error_code]."\t".$result->error_cat."\t".$result->error_typecode."\t".$result->error_code."(".$result->error_scan_type.")"."\t".dd_accessibility_escape_chars($result->error_message)."\t".dd_accessibility_escape_chars($result->error_context)."\t".dd_accessibility_escape_chars($result->error_selector)."\n";
+        if (!is_null($result->website_id) && !is_null($result->website) && !is_null($result->agency_id) && !is_null($result->agency_name)) {
+            $xlsdata .= $result->website_id."\t".$result->website."\t".$result->agency_id."\t".$result->agency_name."\t".$result->error_scan_type."\t".$wcag_testrule_ref[$result->error_code]."\t".$result->error_cat."\t".$result->error_typecode."\t".$result->error_code."(".$result->error_scan_type.")"."\t".dd_accessibility_escape_chars($result->error_message)."\t".dd_accessibility_escape_chars($result->error_context)."\t".dd_accessibility_escape_chars($result->error_selector)."\n";
+        }
     }
     header("Content-Description: File Transfer");
     header("Content-type: application/vnd.ms-excel");
