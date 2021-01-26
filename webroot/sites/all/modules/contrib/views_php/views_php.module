@@ -27,7 +27,9 @@ function views_php_check_access($php_access, $view_name, $display_id, $account =
   }
 
   if (!isset($function[$view_name . ':' . $display_id])) {
-    $function[$view_name . ':' . $display_id] = create_function('$view_name, $display_id, $account', $php_access . ';');
+    $function[$view_name . ':' . $display_id] = function ($view_name, $display_id, $account) use ($php_access) {
+      return eval($php_access . ';');
+    };
   }
 
   ob_start();
