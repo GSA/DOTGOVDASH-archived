@@ -102,7 +102,7 @@ function view_custom_table_add_custom_table_column_relationship_form($form, &$fo
   );
 
   $int_types = array('tinyint', 'smallint', 'mediumint', 'int', 'bigint');
-  $text_query = format_string('DESCRIBE { @table_name }', array('@table_name' => $table_name));
+  $text_query = format_string('DESCRIBE {@table_name}', array('@table_name' => $table_name));
   $query = db_query($text_query);
   foreach ($query as $row) {
     $row_type = explode('(', $row->Type);
@@ -285,7 +285,7 @@ function view_custom_table_custom_table_update_relations_form($form, &$form_stat
   );
 
   $int_types = array('tinyint', 'smallint', 'mediumint', 'int', 'bigint');
-  $text_query = format_string('DESCRIBE { @table_name }', array('@table_name' => $table_name));
+  $text_query = format_string('DESCRIBE {@table_name}', array('@table_name' => $table_name));
   $query = db_query($text_query);
   foreach ($query as $row) {
     $row_type = explode('(', $row->Type);
