@@ -1,0 +1,35 @@
+diff --git a/view_custom_table.admin.inc b/view_custom_table.admin.inc
+index 9a4004e..7522dd7 100644
+--- a/view_custom_table.admin.inc
++++ b/view_custom_table.admin.inc
+@@ -102,7 +102,7 @@ function view_custom_table_add_custom_table_column_relationship_form($form, &$fo
+   );
+ 
+   $int_types = array('tinyint', 'smallint', 'mediumint', 'int', 'bigint');
+-  $text_query = format_string('DESCRIBE { @table_name }', array('@table_name' => $table_name));
++  $text_query = format_string('DESCRIBE {@table_name}', array('@table_name' => $table_name));
+   $query = db_query($text_query);
+   foreach ($query as $row) {
+     $row_type = explode('(', $row->Type);
+@@ -285,7 +285,7 @@ function view_custom_table_custom_table_update_relations_form($form, &$form_stat
+   );
+ 
+   $int_types = array('tinyint', 'smallint', 'mediumint', 'int', 'bigint');
+-  $text_query = format_string('DESCRIBE { @table_name }', array('@table_name' => $table_name));
++  $text_query = format_string('DESCRIBE {@table_name}', array('@table_name' => $table_name));
+   $query = db_query($text_query);
+   foreach ($query as $row) {
+     $row_type = explode('(', $row->Type);
+diff --git a/view_custom_table.module b/view_custom_table.module
+index cbfe1f0..4a7b6b4 100644
+--- a/view_custom_table.module
++++ b/view_custom_table.module
+@@ -170,7 +170,7 @@ function view_custom_table_views_data() {
+ 
+       $data[$custom_table->table_name]['table']['group'] = t('Custom Table Views');
+ 
+-      $query = format_string('DESCRIBE { @table_name }', array('@table_name' => $custom_table->table_name));
++      $query = format_string('DESCRIBE {@table_name}', array('@table_name' => $custom_table->table_name));
+       $table = db_query($query);
+       foreach ($table as $column) {
+         $column_display_name = ucfirst($column->Field);
