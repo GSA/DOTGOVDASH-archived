@@ -37,9 +37,9 @@ function menu_update_v2_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -47,
+    'weight' => -46,
     'customized' => 1,
-    'parent_identifier' => 'main-menu_faq:node/4754',
+    'parent_identifier' => 'main-menu_faq:node/10110',
   );
   // Exported menu link: main-menu_accessibility-report:gov-wide-accessibility.
   $menu_links['main-menu_accessibility-report:gov-wide-accessibility'] = array(
@@ -67,7 +67,7 @@ function menu_update_v2_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -28,
+    'weight' => -27,
     'customized' => 1,
   );
   // Exported menu link: main-menu_accessibility:gov-wide-accessibility.
@@ -101,7 +101,7 @@ function menu_update_v2_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 1,
     'expanded' => 1,
-    'weight' => -33,
+    'weight' => -32,
     'customized' => 1,
   );
   // Exported menu link: main-menu_accessibility:my-agency-accessibility.
@@ -112,9 +112,10 @@ function menu_update_v2_menu_default_menu_links() {
     'link_title' => 'Accessibility',
     'options' => array(
       'attributes' => array(
-        'title' => 'My Agency Accessibility',
+        'title' => 'Accessibility',
       ),
       'alter' => TRUE,
+      'identifier' => 'main-menu_accessibility:my-agency-accessibility',
       'roles_for_menu' => array(
         'show' => array(
           12 => 12,
@@ -122,14 +123,13 @@ function menu_update_v2_menu_default_menu_links() {
         ),
         'hide' => array(),
       ),
-      'identifier' => 'main-menu_accessibility:my-agency-accessibility',
     ),
     'module' => 'menu',
     'hidden' => 0,
     'external' => 0,
     'has_children' => 1,
     'expanded' => 1,
-    'weight' => -32,
+    'weight' => -31,
     'customized' => 1,
   );
   // Exported menu link: main-menu_agency-wide-accessibility-report:agency-wide-accessibility-summary-new.
@@ -143,7 +143,6 @@ function menu_update_v2_menu_default_menu_links() {
         'title' => 'Agency-Wide Accessibility Report',
       ),
       'alter' => TRUE,
-      'identifier' => 'main-menu_agency-wide-accessibility-report:agency-wide-accessibility-summary-new',
       'roles_for_menu' => array(
         'show' => array(
           2 => 2,
@@ -152,13 +151,14 @@ function menu_update_v2_menu_default_menu_links() {
           1 => 1,
         ),
       ),
+      'identifier' => 'main-menu_agency-wide-accessibility-report:agency-wide-accessibility-summary-new',
     ),
     'module' => 'menu',
     'hidden' => 1,
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -29,
+    'weight' => -28,
     'customized' => 1,
   );
   // Exported menu link: main-menu_agency-wide-accessibility-spot-checks:agency-wide-accessibility-summary-new.
@@ -168,10 +168,6 @@ function menu_update_v2_menu_default_menu_links() {
     'router_path' => 'agency-wide-accessibility-summary-new',
     'link_title' => 'Agency-Wide Accessibility Spot Checks',
     'options' => array(
-      'attributes' => array(
-        'title' => 'Agency-Wide Accessibility Spot Checks',
-      ),
-      'alter' => TRUE,
       'roles_for_menu' => array(
         'show' => array(
           3 => 3,
@@ -179,6 +175,10 @@ function menu_update_v2_menu_default_menu_links() {
         ),
         'hide' => array(),
       ),
+      'attributes' => array(
+        'title' => 'Agency-Wide Accessibility Spot Checks',
+      ),
+      'alter' => TRUE,
       'identifier' => 'main-menu_agency-wide-accessibility-spot-checks:agency-wide-accessibility-summary-new',
     ),
     'module' => 'menu',
@@ -186,7 +186,7 @@ function menu_update_v2_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -13,
+    'weight' => -45,
     'customized' => 1,
     'parent_identifier' => 'main-menu_accessibility:gov-wide-accessibility',
   );
@@ -220,43 +220,9 @@ function menu_update_v2_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -45,
+    'weight' => -50,
     'customized' => 1,
     'parent_identifier' => 'main-menu_agency-wide:agency/all/data',
-  );
-  // Exported menu link: main-menu_agency-wide:agency/all/data.
-  $menu_links['main-menu_agency-wide:agency/all/data'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'agency/all/data',
-    'router_path' => 'agency/all/data',
-    'link_title' => 'Agency-Wide',
-    'options' => array(
-      'attributes' => array(
-        'title' => 'Agency-Wide Report',
-      ),
-      'alter' => TRUE,
-      'identifier' => 'main-menu_agency-wide:agency/all/data',
-      'roles_for_menu' => array(
-        'show' => array(
-          3 => 3,
-          13 => 13,
-          16 => 16,
-        ),
-        'hide' => array(
-          1 => 1,
-          12 => 12,
-          14 => 14,
-          15 => 15,
-        ),
-      ),
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 1,
-    'expanded' => 1,
-    'weight' => -46,
-    'customized' => 1,
   );
   // Exported menu link: main-menu_contact-us:mailto:dotgovdashboard@gsa.gov.
   $menu_links['main-menu_contact-us:mailto:dotgovdashboard@gsa.gov'] = array(
@@ -283,7 +249,7 @@ function menu_update_v2_menu_default_menu_links() {
     'external' => 1,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -50,
+    'weight' => -49,
     'customized' => 1,
     'parent_identifier' => 'main-menu_user-guide:node/4755',
   );
@@ -314,7 +280,7 @@ function menu_update_v2_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -25,
+    'weight' => -24,
     'customized' => 1,
   );
   // Exported menu link: main-menu_data-discovery:search/site/*.
@@ -345,7 +311,7 @@ function menu_update_v2_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 1,
-    'weight' => -24,
+    'weight' => -46,
     'customized' => 1,
   );
   // Exported menu link: main-menu_digital-dashboard-user-manual:node/4755.
@@ -374,131 +340,9 @@ function menu_update_v2_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -49,
+    'weight' => -48,
     'customized' => 1,
     'parent_identifier' => 'main-menu_user-guide:node/4755',
-  );
-  // Exported menu link: main-menu_expanded-accessibility-agency-wide-report:accessibility/agencywide/reports.
-  $menu_links['main-menu_expanded-accessibility-agency-wide-report:accessibility/agencywide/reports'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'accessibility/agencywide/reports',
-    'router_path' => 'accessibility/agencywide/reports',
-    'link_title' => 'Expanded Accessibility Agency-Wide Report',
-    'options' => array(
-      'attributes' => array(
-        'title' => 'Expanded Accessibility Agency-Wide Report',
-      ),
-      'alter' => TRUE,
-      'roles_for_menu' => array(
-        'show' => array(
-          3 => 3,
-          16 => 16,
-        ),
-        'hide' => array(),
-      ),
-      'identifier' => 'main-menu_expanded-accessibility-agency-wide-report:accessibility/agencywide/reports',
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -18,
-    'customized' => 1,
-    'parent_identifier' => 'main-menu_accessibility:gov-wide-accessibility',
-  );
-  // Exported menu link: main-menu_expanded-accessibility-government-wide-website-report:accessibility/govwide/reports.
-  $menu_links['main-menu_expanded-accessibility-government-wide-website-report:accessibility/govwide/reports'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'accessibility/govwide/reports',
-    'router_path' => 'accessibility/govwide/reports',
-    'link_title' => 'Expanded Accessibility Government-Wide Website Report',
-    'options' => array(
-      'attributes' => array(
-        'title' => 'Expanded Accessibility Government-Wide Website Report',
-      ),
-      'alter' => TRUE,
-      'roles_for_menu' => array(
-        'show' => array(
-          3 => 3,
-          13 => 13,
-          16 => 16,
-        ),
-        'hide' => array(),
-      ),
-      'identifier' => 'main-menu_expanded-accessibility-government-wide-website-report:accessibility/govwide/reports',
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -19,
-    'customized' => 1,
-    'parent_identifier' => 'main-menu_accessibility:gov-wide-accessibility',
-  );
-  // Exported menu link: main-menu_expanded-accessibility-my-agency-report:accessibility/myagency/reports.
-  $menu_links['main-menu_expanded-accessibility-my-agency-report:accessibility/myagency/reports'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'accessibility/myagency/reports',
-    'router_path' => 'accessibility/myagency/reports',
-    'link_title' => 'Expanded Accessibility My Agency Report',
-    'options' => array(
-      'attributes' => array(
-        'title' => 'Expanded Accessibility My Agency Report',
-      ),
-      'alter' => TRUE,
-      'roles_for_menu' => array(
-        'show' => array(
-          3 => 3,
-          16 => 16,
-        ),
-        'hide' => array(),
-      ),
-      'identifier' => 'main-menu_expanded-accessibility-my-agency-report:accessibility/myagency/reports',
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -17,
-    'customized' => 1,
-    'parent_identifier' => 'main-menu_accessibility:gov-wide-accessibility',
-  );
-  // Exported menu link: main-menu_faq:node/4754.
-  $menu_links['main-menu_faq:node/4754'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'node/4754',
-    'router_path' => 'node/%',
-    'link_title' => 'FAQ',
-    'options' => array(
-      'attributes' => array(
-        'title' => 'FAQ',
-      ),
-      'alter' => TRUE,
-      'roles_for_menu' => array(
-        'show' => array(
-          1 => 1,
-          2 => 2,
-          3 => 3,
-          12 => 12,
-          13 => 13,
-          14 => 14,
-          15 => 15,
-          16 => 16,
-        ),
-        'hide' => array(),
-      ),
-      'identifier' => 'main-menu_faq:node/4754',
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 1,
-    'expanded' => 1,
-    'weight' => -31,
-    'customized' => 1,
   );
   // Exported menu link: main-menu_government-wide-accessibility-report:gov-wide-accessibility-summary.
   $menu_links['main-menu_government-wide-accessibility-report:gov-wide-accessibility-summary'] = array(
@@ -511,7 +355,6 @@ function menu_update_v2_menu_default_menu_links() {
         'title' => 'Government-Wide Accessibility Report',
       ),
       'alter' => TRUE,
-      'identifier' => 'main-menu_government-wide-accessibility-report:gov-wide-accessibility-summary',
       'roles_for_menu' => array(
         'show' => array(
           2 => 2,
@@ -520,13 +363,14 @@ function menu_update_v2_menu_default_menu_links() {
           1 => 1,
         ),
       ),
+      'identifier' => 'main-menu_government-wide-accessibility-report:gov-wide-accessibility-summary',
     ),
     'module' => 'menu',
     'hidden' => 1,
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -27,
+    'weight' => -26,
     'customized' => 1,
   );
   // Exported menu link: main-menu_government-wide-accessibility-spot-checks:gov-wide-accessibility-summary.
@@ -536,10 +380,6 @@ function menu_update_v2_menu_default_menu_links() {
     'router_path' => 'gov-wide-accessibility-summary',
     'link_title' => 'Government-Wide Accessibility Spot Checks',
     'options' => array(
-      'attributes' => array(
-        'title' => 'Government-Wide Accessibility Spot Checks',
-      ),
-      'alter' => TRUE,
       'roles_for_menu' => array(
         'show' => array(
           3 => 3,
@@ -547,6 +387,10 @@ function menu_update_v2_menu_default_menu_links() {
         ),
         'hide' => array(),
       ),
+      'attributes' => array(
+        'title' => 'Government-Wide Accessibility Spot Checks',
+      ),
+      'alter' => TRUE,
       'identifier' => 'main-menu_government-wide-accessibility-spot-checks:gov-wide-accessibility-summary',
     ),
     'module' => 'menu',
@@ -554,7 +398,7 @@ function menu_update_v2_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -14,
+    'weight' => -46,
     'customized' => 1,
     'parent_identifier' => 'main-menu_accessibility:gov-wide-accessibility',
   );
@@ -589,76 +433,9 @@ Government-Wide Historical Scan Results',
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -49,
+    'weight' => -50,
     'customized' => 1,
     'parent_identifier' => 'main-menu_government-wide:overall/gov-wide-compliance',
-  );
-  // Exported menu link: main-menu_government-wide:overall/gov-wide-compliance.
-  $menu_links['main-menu_government-wide:overall/gov-wide-compliance'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'overall/gov-wide-compliance',
-    'router_path' => 'overall/gov-wide-compliance',
-    'link_title' => 'Government-Wide',
-    'options' => array(
-      'attributes' => array(
-        'title' => 'Government-Wide Report',
-      ),
-      'query' => array(
-        'field_web_agency_id_nid' => 'All',
-      ),
-      'alter' => TRUE,
-      'identifier' => 'main-menu_government-wide:overall/gov-wide-compliance',
-      'roles_for_menu' => array(
-        'show' => array(
-          3 => 3,
-          13 => 13,
-          14 => 14,
-          16 => 16,
-        ),
-        'hide' => array(
-          1 => 1,
-          12 => 12,
-          15 => 15,
-        ),
-      ),
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 1,
-    'expanded' => 1,
-    'weight' => -48,
-    'customized' => 1,
-  );
-  // Exported menu link: main-menu_historical-accessibility-reports:govtwide/accessibility-scan-history.
-  $menu_links['main-menu_historical-accessibility-reports:govtwide/accessibility-scan-history'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'govtwide/accessibility-scan-history',
-    'router_path' => 'govtwide/accessibility-scan-history',
-    'link_title' => 'Historical Accessibility Reports',
-    'options' => array(
-      'attributes' => array(
-        'title' => 'Historical Accessibility Reports',
-      ),
-      'alter' => TRUE,
-      'roles_for_menu' => array(
-        'show' => array(
-          3 => 3,
-          13 => 13,
-          16 => 16,
-        ),
-        'hide' => array(),
-      ),
-      'identifier' => 'main-menu_historical-accessibility-reports:govtwide/accessibility-scan-history',
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -11,
-    'customized' => 1,
-    'parent_identifier' => 'main-menu_accessibility:gov-wide-accessibility',
   );
   // Exported menu link: main-menu_improve-my-scores:node/7829.
   $menu_links['main-menu_improve-my-scores:node/7829'] = array(
@@ -691,9 +468,9 @@ Government-Wide Historical Scan Results',
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -49,
+    'weight' => -48,
     'customized' => 1,
-    'parent_identifier' => 'main-menu_faq:node/4754',
+    'parent_identifier' => 'main-menu_faq:node/10110',
   );
   // Exported menu link: main-menu_marketplace:node/4749.
   $menu_links['main-menu_marketplace:node/4749'] = array(
@@ -718,67 +495,6 @@ Government-Wide Historical Scan Results',
     'expanded' => 0,
     'weight' => -47,
     'customized' => 1,
-  );
-  // Exported menu link: main-menu_mobile:myagency/mobile/reports.
-  $menu_links['main-menu_mobile:myagency/mobile/reports'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'myagency/mobile/reports',
-    'router_path' => 'myagency/mobile/reports',
-    'link_title' => 'Mobile',
-    'options' => array(
-      'attributes' => array(
-        'title' => 'My Agency Mobile Report',
-      ),
-      'alter' => TRUE,
-      'identifier' => 'main-menu_mobile:myagency/mobile/reports',
-      'roles_for_menu' => array(
-        'show' => array(
-          12 => 12,
-          14 => 14,
-        ),
-        'hide' => array(
-          3 => 3,
-          13 => 13,
-          16 => 16,
-        ),
-      ),
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -35,
-    'customized' => 1,
-  );
-  // Exported menu link: main-menu_my-agency-accessibility-report:my-agency-accessibility.
-  $menu_links['main-menu_my-agency-accessibility-report:my-agency-accessibility'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'my-agency-accessibility',
-    'router_path' => 'my-agency-accessibility',
-    'link_title' => 'My Agency Accessibility Report',
-    'options' => array(
-      'attributes' => array(
-        'title' => 'My Agency Accessibility Report',
-      ),
-      'alter' => TRUE,
-      'identifier' => 'main-menu_my-agency-accessibility-report:my-agency-accessibility',
-      'roles_for_menu' => array(
-        'show' => array(
-          12 => 12,
-          14 => 14,
-        ),
-        'hide' => array(),
-      ),
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 1,
-    'weight' => -50,
-    'customized' => 1,
-    'parent_identifier' => 'main-menu_accessibility:my-agency-accessibility',
   );
   // Exported menu link: main-menu_my-agency:myagency_home.
   $menu_links['main-menu_my-agency:myagency_home'] = array(
@@ -808,7 +524,7 @@ Government-Wide Historical Scan Results',
     'external' => 0,
     'has_children' => 1,
     'expanded' => 1,
-    'weight' => -43,
+    'weight' => -42,
     'customized' => 1,
   );
   // Exported menu link: main-menu_my-websites:mywebsites.
@@ -841,7 +557,7 @@ Government-Wide Historical Scan Results',
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -40,
+    'weight' => -39,
     'customized' => 1,
   );
   // Exported menu link: main-menu_on-site-search-reports:website/search/reports.
@@ -865,7 +581,7 @@ Government-Wide Historical Scan Results',
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -48,
+    'weight' => -47,
     'customized' => 1,
     'parent_identifier' => 'main-menu_website-specific:website/all/reports',
   );
@@ -924,7 +640,7 @@ Government-Wide Historical Scan Results',
     'external' => 1,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -45,
+    'weight' => -44,
     'customized' => 1,
   );
   // Exported menu link: main-menu_scoring-methods:node/4752.
@@ -958,9 +674,9 @@ Government-Wide Historical Scan Results',
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -50,
+    'weight' => -49,
     'customized' => 1,
-    'parent_identifier' => 'main-menu_faq:node/4754',
+    'parent_identifier' => 'main-menu_faq:node/10110',
   );
   // Exported menu link: main-menu_sites-using-cdn:search/site.
   $menu_links['main-menu_sites-using-cdn:search/site'] = array(
@@ -991,7 +707,7 @@ Government-Wide Historical Scan Results',
     'external' => 0,
     'has_children' => 1,
     'expanded' => 1,
-    'weight' => -41,
+    'weight' => -40,
     'customized' => 1,
   );
   // Exported menu link: main-menu_technology-stack-report:technology-overview.
@@ -1024,38 +740,6 @@ Government-Wide Historical Scan Results',
     'customized' => 1,
     'parent_identifier' => 'main-menu_technology-usage:top_technology_usage',
   );
-  // Exported menu link: main-menu_technology-stack:myagency/technology-overview.
-  $menu_links['main-menu_technology-stack:myagency/technology-overview'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'myagency/technology-overview',
-    'router_path' => 'myagency/technology-overview',
-    'link_title' => 'Technology Stack',
-    'options' => array(
-      'attributes' => array(
-        'title' => 'Technology Stack Report',
-      ),
-      'alter' => TRUE,
-      'identifier' => 'main-menu_technology-stack:myagency/technology-overview',
-      'roles_for_menu' => array(
-        'show' => array(
-          12 => 12,
-          14 => 14,
-        ),
-        'hide' => array(
-          3 => 3,
-          13 => 13,
-          16 => 16,
-        ),
-      ),
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -36,
-    'customized' => 1,
-  );
   // Exported menu link: main-menu_technology-usage:top_technology_usage.
   $menu_links['main-menu_technology-usage:top_technology_usage'] = array(
     'menu_name' => 'main-menu',
@@ -1086,7 +770,7 @@ Government-Wide Historical Scan Results',
     'external' => 0,
     'has_children' => 1,
     'expanded' => 1,
-    'weight' => -38,
+    'weight' => -37,
     'customized' => 1,
   );
   // Exported menu link: main-menu_top-technology-stack-usage:top_technology_usage.
@@ -1115,7 +799,7 @@ Government-Wide Historical Scan Results',
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -44,
+    'weight' => -43,
     'customized' => 1,
   );
   // Exported menu link: main-menu_user-guide:node/4755.
@@ -1150,9 +834,9 @@ Government-Wide Historical Scan Results',
     'external' => 0,
     'has_children' => 0,
     'expanded' => 1,
-    'weight' => -48,
+    'weight' => -47,
     'customized' => 1,
-    'parent_identifier' => 'main-menu_faq:node/4754',
+    'parent_identifier' => 'main-menu_faq:node/10110',
   );
   // Exported menu link: main-menu_users:admin/people.
   $menu_links['main-menu_users:admin/people'] = array(
@@ -1195,7 +879,6 @@ Government-Wide Historical Scan Results',
         'title' => 'Website Accessibility Report',
       ),
       'alter' => TRUE,
-      'identifier' => 'main-menu_website-accessibility-report:accessibility-report-all-domains',
       'roles_for_menu' => array(
         'show' => array(
           2 => 2,
@@ -1204,13 +887,14 @@ Government-Wide Historical Scan Results',
           1 => 1,
         ),
       ),
+      'identifier' => 'main-menu_website-accessibility-report:accessibility-report-all-domains',
     ),
     'module' => 'menu',
     'hidden' => 1,
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -26,
+    'weight' => -25,
     'customized' => 1,
   );
   // Exported menu link: main-menu_website-accessibility-spot-checks:accessibility-report-all-domains.
@@ -1220,10 +904,6 @@ Government-Wide Historical Scan Results',
     'router_path' => 'accessibility-report-all-domains',
     'link_title' => 'Website Accessibility Spot Checks',
     'options' => array(
-      'attributes' => array(
-        'title' => 'Website Accessibility Spot Checks',
-      ),
-      'alter' => TRUE,
       'roles_for_menu' => array(
         'show' => array(
           3 => 3,
@@ -1231,6 +911,10 @@ Government-Wide Historical Scan Results',
         ),
         'hide' => array(),
       ),
+      'attributes' => array(
+        'title' => 'Website Accessibility Spot Checks',
+      ),
+      'alter' => TRUE,
       'identifier' => 'main-menu_website-accessibility-spot-checks:accessibility-report-all-domains',
     ),
     'module' => 'menu',
@@ -1238,7 +922,7 @@ Government-Wide Historical Scan Results',
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => 0,
+    'weight' => -43,
     'customized' => 1,
     'parent_identifier' => 'main-menu_accessibility:gov-wide-accessibility',
   );
@@ -1266,7 +950,7 @@ Government-Wide Historical Scan Results',
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -37,
+    'weight' => -36,
     'customized' => 1,
   );
   // Exported menu link: main-menu_website-specific-trend-analysis:trend-analysis-domains.
@@ -1299,73 +983,30 @@ Government-Wide Historical Scan Results',
     'customized' => 1,
     'parent_identifier' => 'main-menu_website-specific:website/all/reports',
   );
-  // Exported menu link: main-menu_website-specific:website/all/reports.
-  $menu_links['main-menu_website-specific:website/all/reports'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'website/all/reports',
-    'router_path' => 'website/all/reports',
-    'link_title' => 'Website-Specific',
-    'options' => array(
-      'attributes' => array(
-        'title' => 'Website-Specific Report',
-      ),
-      'alter' => TRUE,
-      'identifier' => 'main-menu_website-specific:website/all/reports',
-      'roles_for_menu' => array(
-        'show' => array(
-          3 => 3,
-          13 => 13,
-          16 => 16,
-        ),
-        'hide' => array(
-          12 => 12,
-          14 => 14,
-          15 => 15,
-        ),
-      ),
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 1,
-    'expanded' => 1,
-    'weight' => -39,
-    'customized' => 1,
-  );
 
   // Translatables
   // Included for use with string extractors like potx.
   t('Accessibility');
   t('Accessibility Guidance');
   t('Accessibility Report');
-  t('Agency-Wide');
   t('Agency-Wide Accessibility Report');
   t('Agency-Wide Accessibility Spot Checks');
   t('Agency-Wide Historical Scan Results');
   t('Contact Us');
   t('Data Discovery');
   t('Digital Dashboard User Manual');
-  t('Expanded Accessibility Agency-Wide Report');
-  t('Expanded Accessibility Government-Wide Website Report');
-  t('Expanded Accessibility My Agency Report');
-  t('FAQ');
-  t('Government-Wide');
   t('Government-Wide Accessibility Report');
   t('Government-Wide Accessibility Spot Checks');
   t('Government-Wide Historical Scan Results');
-  t('Historical Accessibility Reports');
   t('Improve My Scores');
   t('Marketplace');
-  t('Mobile');
   t('My Agency');
-  t('My Agency Accessibility Report');
   t('My Websites');
   t('On-Site Search Reports');
   t('Popular Reports');
   t('Pulse');
   t('Scoring Methods');
   t('Sites Using CDN');
-  t('Technology Stack');
   t('Technology Stack Report');
   t('Technology Usage');
   t('Top Technology Stack Usage');
@@ -1373,7 +1014,6 @@ Government-Wide Historical Scan Results',
   t('Users');
   t('Website Accessibility Report');
   t('Website Accessibility Spot Checks');
-  t('Website-Specific');
   t('Website-Specific Trend Analysis');
 
   return $menu_links;
