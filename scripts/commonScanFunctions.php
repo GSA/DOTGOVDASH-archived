@@ -3587,6 +3587,7 @@ function updateAccessibilityScan_custom($website,$scanid)
     $start = microtime(true);
     $domain = $website;
     $siteId = findNode($domain,'website');
+    $parentAgencyId = findParentAgencyNode($siteId);
     if ($siteId != '') {
         //Check if the site is a redirect. If redirect dont run scan.
         $check_redirect = db_query("select redirect from custom_pulse_https_data where domain=:domain", array(':domain' => trim($website)))->fetchField();
@@ -3877,7 +3878,7 @@ function updateAccessibilityScan_custom($website,$scanid)
 
             $node->field_web_scan_id['und'][0]['nid'] =$scanid;
             $node->field_website_id['und'][0]['nid'] = $siteId;
-            $node->field_web_agency_id['und'][0]['nid'] = $agency_id;
+            $node->field_web_agency_id['und'][0]['nid'] = $parentAgencyId;
             $node->field_508_scan_time['und'][0]['value'] = time();
 
             $node->field_axe_html_has_lang['und'][0]['value'] = $field_axe_html_has_lang;
