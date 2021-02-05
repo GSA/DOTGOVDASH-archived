@@ -121,9 +121,9 @@ function dotgov_breadcrumb($variables) {
     // elseif (arg(0) == 'website' && arg(1) == 'search' && arg(2) == 'reports') {
     //   $breadcrumb[1] = 'Website On-Site Search Reports';
     // }
-    elseif (arg(0) == 'accessibilityreportalldomains') {
-      $breadcrumb[1] = 'Website Level Accessibility Report';
-    }
+    // elseif (arg(0) == 'accessibilityreportalldomains') {
+    //   $breadcrumb[1] = 'Website Level Accessibility Report';
+    // }
     elseif (arg(0) == 'privacy-policy') {
       $breadcrumb[1] = 'Privacy Policy';
     }
