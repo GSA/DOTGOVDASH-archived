@@ -282,7 +282,7 @@
                            </div>
                            <div class="view-button">
                               <div class="row text-center">
-                                 <a href="/accessibilityreportalldomains" title="Link for Accessibility Issues full report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                 <a href="/accessibility-report-all-domains" title="Link for Accessibility Issues full report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
                                  <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
                               </div>
                            </div>
@@ -436,7 +436,7 @@
                                        </div>
                                        <div class="view-button">
                                           <div class="row text-center">
-                                             <a class="" href="/website/all/reports" title="Link for DNSSEC Trend report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                             <a class="" href="/website/all/uswds" title="Link for DNSSEC Trend report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
                                              <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
                                           </div>
                                        </div>
