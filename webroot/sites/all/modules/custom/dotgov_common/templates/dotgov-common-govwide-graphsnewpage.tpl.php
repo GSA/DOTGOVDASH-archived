@@ -436,7 +436,7 @@
                                        </div>
                                        <div class="view-button">
                                           <div class="row text-center">
-                                             <a class="" href="/website/all/uswds" title="Link for DNSSEC Trend report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                                             <a class="" href="/website/all/reports" title="Link for DNSSEC Trend report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
                                              <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
                                           </div>
                                        </div>
@@ -1370,7 +1370,7 @@
                      </div>
                      <div class="view-button clearfix">
                         <div class="row text-center">
-                           <a class="" title="Link for USWDS full report" href="/website/all/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
+                           <a class="" title="Link for USWDS full report" href="/website/all/uswds"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
                            <a title="Link for USWDS to improve my score" href="https://designsystem.digital.gov/maturity-model/" target="_blank" rel="noopener noreferrer"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" alt="" width="" height="25"></a>              
                         </div>
                      </div>
