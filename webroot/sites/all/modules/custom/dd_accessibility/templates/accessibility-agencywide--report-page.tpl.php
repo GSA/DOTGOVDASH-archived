@@ -65,10 +65,13 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="row">
-                <div class="col-md-4" style="display: flex;">
+                <div class="col-md-3" style="display: flex;">
                     <span class="filterLabel">Agency:</span>
                     <select class="filterList" id="filterItems" title="filter-agency" aria-label="select-agency">
                     </select>
+                </div>
+                <div class="col-xs-12 col-md-1">
+                    <p class="or">Or</p>
                 </div>
                 <div class="col-md-4 search-box">
                     <label class="searchBox searchLabel">Search:
@@ -91,6 +94,7 @@
         </div>
     </div>
 </div>
+
 
         <div id="output" class="sticky agency-wide"></div>
 
