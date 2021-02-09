@@ -60,20 +60,20 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="row">
-                <div class="col-md-3" style="display: flex;">
+                <div class="col-md-12" style="display: flex;">
                     <span class="filterLabel">Agency:</span>
                     <select class="filterList" id="filterItems" title="filter-agency" aria-label="select-agency">
                     </select>
                 </div>
-                <div class="col-xs-12 col-md-1">
-                    <p class="or">Or</p>
+                <div class="col-xs-12">
+                    <p class="or">OR</p>
                 </div>
-                <div class="col-md-4 search-box"> 
+                <div class="col-md-6 search-box">
                     <label class="searchBox searchLabel">Search:
                     <input type="search" class="searchInput searchInputAlter" id="searchInput"></label>
                     <button type="submit" id="resetSearch2" value="Reset" class="btn btn-default resetSearch">Reset</button>
                 </div>
-                <div class="col-md-4 link-download">    
+                <div class="col-md-6 link-download">    
                     <p>Download Accessibility Reports: <a href="/accessibility/govwide/csvapi" target="_blank"> csv </a> | <a href="/accessibility/govwide/xlsapi" target="_blank">xls</a></p>
                 </div>
             </div>
