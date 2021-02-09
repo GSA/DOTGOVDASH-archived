@@ -225,7 +225,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                               <div class="view-button clearfix">
                                 <div class="row text-center">
 <!--                                  <a class="" href="/website/mobile/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>-->
-                                  <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="30" alt=""/></a>
+                                  <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="30" alt="image-for-link"/></a>
                                 </div>
                               </div>
                             </div>
@@ -315,7 +315,7 @@ Above graph shows the breakdown of Accessibility Issues by category</span></div>
                                     </div>
                                     <div class="view-button">
                                         <div class="row col-xs-12 nopadding">
-                                            <div class="col-xs-12 col-lg-12 text-center"> <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>
+                                            <div class="col-xs-12 col-lg-12 text-center"> <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt="image-for-link"/></a> </div>
                                         </div>
 
                                     </div>
@@ -463,7 +463,7 @@ print "$output4<br><div class='col-lg-12 text-center clearfix'><span style='colo
 
 
                                                             <div class="row col-xs-12 nopadding">
-                                                                <div class="col-xs-12 col-lg-12 text-center"> <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>
+                                                                <div class="col-xs-12 col-lg-12 text-center"> <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt="image-for-link"/></a> </div>
                                                             </div>
 
                                                         </div>
@@ -533,7 +533,7 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                         </div>
                                     </div>
                                     <div class="view-button clearfix"><div class="row col-xs-12 nopadding">
-                                            <div class="col-xs-12 col-lg-12 text-center"> <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt=""/></a> </div>
+                                            <div class="col-xs-12 col-lg-12 text-center"> <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="245" height="30" alt="image-for-link"/></a> </div>
                                         </div>
                                     </div>
                                 </div>
