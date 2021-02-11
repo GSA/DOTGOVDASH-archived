@@ -890,40 +890,23 @@ function dotgov_common_applyDataColor($data,$websites,$chartColor)
  * Get percentage of each data point and account of percentage rounding error
  */
 function dotgov_common_get_percentage($arr,$websites) {
-  $arrtotal = array_sum($arr);
-  for ($i = 0; $i < sizeof($arr); $i++)
-    $arr[$i] = $arr[$i] / $arrtotal * 100;
-  $roundDown = array();
-  $decimals = array();
-  foreach ($arr as $key => $value) {
-    $roundDown[] = floor($value);
-    $decimals[] = $value - floor($value);
-  }
-  $c = array_combine($roundDown, $decimals);
-  arsort($c);
-  $sum = array_sum($roundDown);
-  reset($c);
-  $executionLimit = 0;
-  while ($sum > 95 && $sum < 100 && $executionLimit < 50) {
-    $val = current($c);
-    for ($i = 0; $i < sizeof($roundDown); $i++) {
-        if ($sum < 100 && $val === $decimals[$i]) {
-          $roundDown[$i]++;
-          $sum++;
+    for ($i = 0; $i < sizeof($arr); $i++) {
+        $actual_percent = ($arr[$i] / $websites) * 100;
+        $percent = round($actual_percent);
+
+        if ($arr[$i] != '') {
+            if($actual_percent < 1 && $actual_percent > 0) {
+                $dataPercentage = "< 1";
+            } else {
+                $dataPercentage = "$percent";
+            }
         }
-        $executionLimit++;
+        else{
+            $dataPercentage = "0";
+        }
+        $arr[$i] = $dataPercentage;
     }
-    $executionLimit++;
-    next($c);
-  }
-  if ($sum == 99 && sizeof($roundDown) == 2) {
-      if ($roundDown[0] ==  49) {
-          $roundDown[0]++;
-      } else {
-          $roundDown[1]++;
-      }
-  }
-  return $roundDown;
+    return $arr;
 }
 
  /*
@@ -1433,8 +1416,8 @@ function dotgov_common_footer($report_link = "/website/all/reports", $img_link =
 $footer = <<<TEMP
   <div class="view-button">
       <div class="row text-center">
-          <a class="$report_link" title="Link to get full report" href="$report_link"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-          <a title="Link to improve my score" href="$img_link"><img src="$img_src" width="" height="25" alt=""/></a>
+          <a class="$report_link" title="Link to get full report" href="$report_link"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+          <a title="Link to improve my score" href="$img_link"><img src="$img_src" width="" height="25" alt="image-for-link"/></a>
       </div>
   </div>
 TEMP;

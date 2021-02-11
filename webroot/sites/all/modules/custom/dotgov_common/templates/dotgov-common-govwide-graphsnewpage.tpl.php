@@ -135,7 +135,7 @@
                                   </div>
                                   <table style="width:100%" aria-label="Mobile Performance Breakdown Table"> 
                                     <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                    <th style="background-color: #215393;color: white;"> Websites </th>
+                                    <th style="background-color: #215393;color: white;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
                                     <tr>
                                       <td>Good</td>
                                       <td><?=dotgov_common_getColor($agencydata['good_nos'], '#276437', $mobperf_arr[0])?></td>
@@ -169,7 +169,7 @@
                                   </div>
                                   <table style="width:100%" aria-label="Mobile Usability Breakdown Table">
                                     <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                    <th style="background-color: #215393;color: white;"> Websites </th>
+                                    <th style="background-color: #215393;color: white;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
                                     <tr>
                                       <td>Mobile Friendly</td>
                                       <td><?=dotgov_common_getColor($agencydata['friendly_nos'], '#276437', $mobusab_arr[0])?></td>
@@ -193,8 +193,8 @@
                           <br clear="all" />
                           <div class="view-button clearfix">
                             <div class="row text-center">
-                              <a class="" title="Link for Mobile Performance and Mobile Usability full report" href="/mobile/report"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                              <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                              <a class="" title="Link for Mobile Performance and Mobile Usability full report" href="/mobile/report"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                              <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                             </div>
                           </div>
                         </div>
@@ -294,8 +294,8 @@
                            </div>
                            <div class="view-button">
                               <div class="row text-center">
-                                 <a href="/accessibilityreportalldomains" title="Link for Accessibility Issues full report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                 <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                                 <a href="/accessibility-report-all-domains" title="Link for Accessibility Issues full report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                 <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                               </div>
                            </div>
                         </div>
@@ -331,7 +331,7 @@
                                              <h5>DNSSEC Score Breakdown</h5>
                                              <table width="100%" class="dnssec-table" aria-label="DNSSEC Score Breakdown Table">
                                                 <th style="background-color: #215393;color: white;">Breakdown</th>
-                                                <th style="background-color: #215393;color: white;">Websites</th>
+                                                <th style="background-color: #215393;color: white;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
                                                 <tr>
                                                    <td>DNSSEC Compliant Websites</td>
                                                    <td><?=dotgov_common_getColor($agencydata['dns_compliant'], '#29643a', $dnssec_arr[0])?></td>
@@ -448,8 +448,8 @@
                                        </div>
                                        <div class="view-button">
                                           <div class="row text-center">
-                                             <a class="" href="/website/all/reports" title="Link for DNSSEC Trend report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                             <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                                             <a class="" href="/website/all/reports" title="Link for DNSSEC Trend report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                             <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                           </div>
                                        </div>
                                     </div>
@@ -517,8 +517,8 @@
                         </div>
                         <div class="view-button clearfix">
                            <div class="row text-center">
-                              <a class="" href="/website/search/reports" title="Link for On-Site Search report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                              <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                              <a class="" href="/website/search/reports" title="Link for On-Site Search report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                              <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                            </div>
                         </div>
                      </div>
@@ -638,7 +638,7 @@
                                  <table width="100%" aria-label="HTTPS score breakdown Table">
                                     <th style="background-color: #215393;color: white;">Criteria</th>
                                     <th style="background-color: #215393;color: white">Supporting Websites </th>
-                                    <th style="background-color: #215393;color: white">Non Supporting Websites </th>
+                                    <th style="background-color: #215393;color: white">Non Supporting Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a> </th>
                                     <tr>
                                        <td>Enforce HTTPS</td>
                                        <td align="center"><?=dotgov_common_getColor($agencydata['enfhttps_support'], '#29643a', $enfhttps_arr[0])?></td>
@@ -679,8 +679,8 @@
 
                            <div class="view-button clearfix">
                             <div class="row text-center">
-                              <a class="" title="Link for HTTPS Mobile Performance and Mobile Usability full report" href="/website/all/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                              <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                              <a class="" title="Link for HTTPS Mobile Performance and Mobile Usability full report" href="/website/all/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                              <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                             </div>
                           </div>
                         </div>
@@ -799,7 +799,7 @@
                                           </div>
                                           <table width="100%" aria-label="M-15-13 and BOD 18-01 score breakdown Table">
                                              <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                             <th style="background-color: #215393;color: white;"> Websites </th>
+                                             <th style="background-color: #215393;color: white;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
                                              <tr>
                                                 <td>M-15-13 and BOD 18-01 Compliant Websites </td>
                                                 <td><?=dotgov_common_getColor($agencydata['m15_compliant'], '#29643a', $m15_arr[0])?></td>
@@ -822,8 +822,8 @@
                                     </div>
                                     <div class="view-button clearfix">
                                        <div class="row text-center">
-                                        <a class="" title="Link for M-15-13 and BOD full report" href="/website/all/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                          <a href="/improve-my-score" title="Link for  M-15-13 and BOD to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                                        <a class="" title="Link for M-15-13 and BOD full report" href="/website/all/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                          <a href="/improve-my-score" title="Link for  M-15-13 and BOD to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                        </div>
                                     </div>
                                  </div>
@@ -947,7 +947,7 @@
                                              <table width="100%" aria-label="IPV6 Score Breakdown Table">
 
                                                 <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                                <th style="background-color: #215393;color: white;"> Websites </th>
+                                                <th style="background-color: #215393;color: white;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
                                                 <tr width="100%">
                                                    <td>IPv6 Compliant Websites</td>
                                                    <td><?=dotgov_common_getColor($agencydata['ipv6_compliant'], '#29643a', $ipv6_arr[0])?></td>
@@ -1109,7 +1109,7 @@
                                     </div>
                                     <table style="width:100%;" aria-label="DAP Information Breakdown Table">
                                        <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
-                                       <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
+                                       <th style="background-color: #215393;color: white;border: 1px;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a> </th>
                                        <tr>
                                           <td> DAP Compliant Websites</td>
                                           <td><?=dotgov_common_getColor($agencydata['dap_compliant'], '#29643a', $dap_arr[0])?></td>
@@ -1253,7 +1253,7 @@
                               </div>
                               <table width="100%" aria-label="Free of RC4/3DES and SSLv2/SSLv3 score breakdown Table">
                                  <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                 <th style="background-color: #215393;color: white;"> Websites </th>
+                                 <th style="background-color: #215393;color: white;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
                                  <tr>
                                     <td>Websites Free of RC4/3DES and SSLv2/SSLv3 </td>
                                     <td><?=dotgov_common_getColor($agencydata['insec_compliant'], '#29643a', $insecprot_arr[0])?></td>
@@ -1355,7 +1355,7 @@
                                  </div>
                                  <table style="width:100%;" aria-label="USWDS Code Table">
                                     <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
-                                    <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
+                                    <th style="background-color: #215393;color: white;border: 1px;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a> </th>
                                     <tr>
                                        <td> Websites with USWDS code detected<font style="font-size: larger;font-color:blue;">
                                           </font>
@@ -1382,8 +1382,8 @@
                      </div>
                      <div class="view-button clearfix">
                         <div class="row text-center">
-                           <a class="" title="Link for USWDS full report" href="/website/all/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                           <a title="Link for USWDS to improve my score" href="https://designsystem.digital.gov/maturity-model/" target="_blank" rel="noopener noreferrer"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" alt="" width="" height="25"></a>              
+                           <a class="" title="Link for USWDS full report" href="/website/all/uswds"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                           <a title="Link for USWDS to improve my score" href="https://designsystem.digital.gov/maturity-model/" target="_blank" rel="noopener noreferrer"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" alt="image-for-link" width="" height="25"></a>              
                         </div>
                      </div>
                   </div>
