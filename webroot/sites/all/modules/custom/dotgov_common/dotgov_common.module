@@ -717,8 +717,10 @@ function dotgov_common_getAgencyComplianceData($agencyid){
   $agency_mob['mob_perf_good_nos'] = db_query("SELECT mob_perf_good FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid limit 1",array(':agencyid' => $agencyid))->fetchField();
   $agency_mob['mob_perf_improve_nos'] = db_query("SELECT mob_perf_improve FROM custom_agencywide_archive where date =(select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_mob['mob_perf_poor_nos'] = db_query("SELECT mob_perf_poor FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
+  $agency_mob['mob_perf_data_na_nos'] = db_query("SELECT (num_of_websites - mob_perf_good - mob_perf_improve - mob_perf_poor) as data_na FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_mob['mob_usab_friendly_nos'] = db_query("SELECT mob_usab_friendly FROM custom_agencywide_archive where date =(select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_mob['mob_usab_notfriendly_nos'] = db_query("SELECT mob_usab_nonfriendly FROM custom_agencywide_archive where date=(select max(date) from custom_agencywide_archive)and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
+  $agency_mob['mob_usab_data_na_nos'] = db_query("SELECT (num_of_websites - mob_usab_friendly - mob_usab_nonfriendly) as data_na FROM custom_agencywide_archive where date=(select max(date) from custom_agencywide_archive)and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_mob['total_websites'] = db_query("SELECT sum(num_of_websites) FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_mob['no_of_websites']=  db_query("SELECT num_of_websites FROM custom_agencywide_archive where date = (select max(date) from custom_agencywide_archive) and agency_id = :agencyid",array(':agencyid' => $agencyid))->fetchField();
   $agency_mob['null'] = $agency_mob['no_of_websites'] - ($agency_mob['mob_perf_good_nos']+ $agency_mob['mob_perf_improve_nos']+ $agency_mob['mob_perf_poor_nos']);
@@ -728,8 +730,10 @@ function dotgov_common_getAgencyComplianceData($agencyid){
   $agencydata['good']=$agency_mob['mob_perf_good_nos'];
   $agencydata['improve']=$agency_mob['mob_perf_improve_nos'];
   $agencydata['poor']=$agency_mob['mob_perf_poor_nos'];
-  $agencydata['friendly_nos'] = $agency_mob['mob_usab_friendly_nos'] ;
-  $agencydata['nonfriendly_nos'] = $agency_mob['mob_usab_notfriendly_nos'] ;
+  $agencydata['data_na']=$agency_mob['mob_perf_data_na_nos'];
+  $agencydata['friendly'] = $agency_mob['mob_usab_friendly_nos'] ;
+  $agencydata['nonfriendly'] = $agency_mob['mob_usab_notfriendly_nos'] ;
+  $agencydata['data_na_usab']=$agency_mob['mob_usab_data_na_nos'];
   $agencydata['no_of_non_na__websites']= $agency_mob['mob_perf_good_nos']+ $agency_mob['mob_perf_improve_nos']+ $agency_mob['mob_perf_poor_nos'];
 
 //    $agency_mob['agency_mob_bad'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='49' and entity_id in (SELECT node.nid AS nid
@@ -1222,8 +1226,10 @@ function dotgov_common_getAllAgencyComplianceData(){
   $govwide_mob['mob_perf_good_nos'] = db_query("SELECT mob_perf_good FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
   $govwide_mob['mob_perf_improve_nos'] = db_query("SELECT mob_perf_improve FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
   $govwide_mob['mob_perf_poor_nos'] = db_query("SELECT mob_perf_poor FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+  $govwide_mob['mob_perf_data_na_nos'] = db_query("SELECT (num_of_websites - mob_perf_good - mob_perf_improve - mob_perf_poor) as mob_data_na FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
   $govwide_mob['mob_usab_friendly_nos'] = db_query("SELECT mob_usab_friendly FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
   $govwide_mob['mob_usab_notfriendly_nos'] = db_query("SELECT mob_usab_nonfriendly FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
+  $govwide_mob['mob_usab_data_na_nos'] = db_query("SELECT (num_of_websites - mob_usab_friendly - mob_usab_nonfriendly) as mob_data_na FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
   $govwide_mob['total_websites'] = db_query("SELECT num_of_websites FROM custom_government_wide_archive order by date desc limit 1")->fetchField();
   $govwide_mob['null'] = $govwide_mob['total_websites'] - ($govwide_mob['mob_perf_good_nos']+ $govwide_mob['mob_perf_improve_nos']+ $govwide_mob['mob_perf_poor_nos']);
   $govwide_mob['usab_null'] = $govwide_mob['total_websites'] - ($govwide_mob['mob_usab_friendly_nos']+ $govwide_mob['mob_usab_notfriendly_nos']);
@@ -1232,8 +1238,10 @@ function dotgov_common_getAllAgencyComplianceData(){
   $agencydata['poor_nos'] = $govwide_mob['mob_perf_poor_nos'] ;
   $agencydata['good_nos'] = $govwide_mob['mob_perf_good_nos'] ;
   $agencydata['improve_nos'] = $govwide_mob['mob_perf_improve_nos'] ;
+  $agencydata['data_na_nos'] = $govwide_mob['mob_perf_data_na_nos'] ;
   $agencydata['friendly_nos'] = $govwide_mob['mob_usab_friendly_nos'] ;
   $agencydata['nonfriendly_nos'] = $govwide_mob['mob_usab_notfriendly_nos'] ;
+  $agencydata['data_na_usab_nos'] = $govwide_mob['mob_usab_data_na_nos'] ;
 
 
   $govwide_mob['govwide_mob_bad'] = round(db_query("select count(field_mobile_overall_score_value) from field_data_field_mobile_overall_score where field_mobile_overall_score_value<='49' and entity_id in (SELECT node.nid AS nid
