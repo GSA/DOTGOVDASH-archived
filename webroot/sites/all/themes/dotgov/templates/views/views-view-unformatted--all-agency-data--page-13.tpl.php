@@ -173,7 +173,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                       </div>
                                       <table style="width:100%" aria-label="Mobile Performance Breakdown Table"> 
                                         <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                        <th style="background-color: #215393;color: white;"> Websites </th>
+                                        <th style="background-color: #215393;color: white;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
                                         <tr>
                                           <td>Good</td>
                                           <td><?=dotgov_common_getColor($agencydata['good'], '#276437', $mobperf_arr[0])?></td>
@@ -207,7 +207,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                       </div>
                                       <table style="width:100%" aria-label="Mobile Usability Breakdown Table">
                                         <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                        <th style="background-color: #215393;color: white;"> Websites </th>
+                                        <th style="background-color: #215393;color: white;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
                                         <tr>
                                           <td>Mobile Friendly</td>
                                           <td><?=dotgov_common_getColor($agencydata['friendly'], '#276437', $mobusab_arr[0])?></td>
@@ -361,7 +361,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                                                 <table width="100%" class="dnssec-table" aria-label="DNSSEC Score Breakdown Table">
 
                                                                     <th style="background-color: #215393;color: white;">Breakdown</th>
-                                                                    <th style="background-color: #215393;color: white;">Websites</th>
+                                                                    <th style="background-color: #215393;color: white;">Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
                                                                     <tr>
                                                                         <td>DNSSEC Compliant Websites</td>
                                                                         <td><?=dotgov_common_getColor($agencydata['dns_compliant'], '#29643a', $dnssec_arr[0])?></td>
@@ -665,7 +665,7 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                             <table width="100%" aria-label="HTTPS score breakdown Table">
                                                 <th style="background-color: #215393;color: white;">Criteria</th>
                                                 <th style="background-color: #215393;color: white">Supporting Websites </th>
-                                                <th style="background-color: #215393;color: white">Non Supporting Websites </th>
+                                                <th style="background-color: #215393;color: white">Non Supporting Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a> </th>
                                                 <tr>
                                                     <td>Enforce HTTPS</td>
                                                     <td align="center"><?=dotgov_common_getColor($agencydata['enfhttps_support'], '#29643a', $enfhttps_arr[0])?></td>
@@ -826,7 +826,7 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                                             <table width="100%" aria-label="M-15-13 and BOD 18-01 score breakdown Table">
 
                                                                 <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                                                <th style="background-color: #215393;color: white;"> Websites </th>
+                                                                <th style="background-color: #215393;color: white;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
                                                                 <tr>
                                                                     <td>M-15-13 and BOD 18-01 Compliant Websites </td>
                                                                     <td><?=dotgov_common_getColor($agencydata['m15_compliant'], '#29643a', $m15_arr[0])?></td>
@@ -974,7 +974,7 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                                                 <table width="100%" aria-label="IPV6 Score Breakdown Table">
 
                                                                     <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                                                    <th style="background-color: #215393;color: white;"> Websites </th>
+                                                                    <th style="background-color: #215393;color: white;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
                                                                     <tr width="100%">
                                                                         <td>IPv6 Compliant Websites</td>
                                                                         <td><?=dotgov_common_getColor($agencydata['ipv6_compliant'], '#29643a', $ipv6_arr[0])?></td>
@@ -1134,7 +1134,7 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                                     <table style="width:100%;" aria-label="DAP Information Breakdown Table">
 
                                                         <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
-                                                        <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
+                                                        <th style="background-color: #215393;color: white;border: 1px;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a> </th>
                                                         <tr>
                                                             <td> DAP Compliant Websites</td>
                                                             <td><?=dotgov_common_getColor($agencydata['dap_compliant'], '#29643a', $dap_arr[0])?></td>
@@ -1283,7 +1283,7 @@ print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: "
                                             <table width="100%" aria-label="Free of RC4/3DES and SSLv2/SSLv3 score breakdown Table">
 
                                                 <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                                <th style="background-color: #215393;color: white;"> Websites </th>
+                                                <th style="background-color: #215393;color: white;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
                                                 <tr>
                                                     <td>Websites Free of RC4/3DES and SSLv2/SSLv3 </td>
                                                     <td><?=dotgov_common_getColor($agencydata['insec_compliant'], '#29643a', $insecprot_arr[0])?></td>
@@ -1387,7 +1387,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                 <table style="width:100%;" aria-label="USWDS Code Table">
 
                                                     <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
-                                                    <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
+                                                    <th style="background-color: #215393;color: white;border: 1px;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a> </th>
                                                     <tr>
                                                         <td> Websites with USWDS code detected<font style="font-size: larger;font-color:blue;"></font></td>
                                                         <td><?=dotgov_common_getColor($agencydata['uswds_compliant'], '#66746a', $uswds_arr[0])?></td>
