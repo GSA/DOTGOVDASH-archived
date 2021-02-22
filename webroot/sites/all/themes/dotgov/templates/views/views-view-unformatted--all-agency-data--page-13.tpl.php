@@ -62,10 +62,10 @@ $agency_uswds_score = round(db_query("select avg(c.field_uswds_score_value) as a
 
 $agencynode = node_load(arg(1));
 
-$mobperf_arr = array($agencydata['poor'], $agencydata['improve'], $agencydata['good']);
-$mobperf_arr = dotgov_common_get_percentage($mobperf_arr, $agencydata['no_of_non_na__websites']);
-$mobusab_arr = array($agencydata['friendly_nos'], $agencydata['nonfriendly_nos']);
-$mobusab_arr = dotgov_common_get_percentage($mobusab_arr, $agencydata['friendly_nos']+$agencydata['nonfriendly_nos']);
+$mobperf_arr = array($agencydata['good'], $agencydata['improve'], $agencydata['poor'], $agencydata['data_na']);
+$mobperf_arr = dotgov_common_get_percentage($mobperf_arr, $agency_website_num);
+$mobusab_arr = array($agencydata['friendly'], $agencydata['nonfriendly'], $agencydata['data_na_usab']);
+$mobusab_arr = dotgov_common_get_percentage($mobusab_arr, $agency_website_num);
 
 $dnssec_arr = array($agencydata['dns_compliant'], $agencydata['dns_noncompliant']);
 $dnssec_arr = dotgov_common_get_percentage($dnssec_arr, $agency_website_num);
@@ -76,8 +76,10 @@ $hsts_arr = array($agencydata['hsts_support'], $agencydata['hsts_nosupport']);
 $hsts_arr = dotgov_common_get_percentage($hsts_arr, $agency_website_num);
 $https_arr = array($agencydata['https_support'], $agencydata['https_nosupport']);
 $https_arr = dotgov_common_get_percentage($https_arr, $agency_website_num);
-$preload_arr = array($agencydata['preload_support'], $agencydata['preload_nosupport'], $agencydata['preload_readysupport']);
+$preload_arr = array($agencydata['preload_support'], $agencydata['preload_nosupport']);
 $preload_arr = dotgov_common_get_percentage($preload_arr, $agency_website_num);
+$preloadready_arr = array($agencydata['preload_readysupport']);
+$preloadready_arr = dotgov_common_get_percentage($preloadready_arr, $agency_website_num);
 
 $m15_arr = array($agencydata['m15_compliant'], $agencydata['m15_noncompliant']);
 $m15_arr = dotgov_common_get_percentage($m15_arr, $agencydata['m15_tracked']);
@@ -159,27 +161,34 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                       <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                         <h5>Mobile Performance Breakdown</h5>
                                       </div>
-                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 10px;"> <span class="dot low"></span>Poor <br/>
+                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 10px;">
                                         <span class="dot good"></span>Good<br/>
-                                        <!--                                                <span class="dot na"></span>NA-->                                      </div>
+                                        <span class="dot avg"></span>Needs Improvement <br/>
+                                        <span class="dot low"></span>Poor <br/>
+                                        <span class="dot na"></span>Data Not Available<br/>
+                                      </div>
                                       <div class="col-lg-6 col-md-6 nopadding">
                                         <div id="piechartmob" style="margin-top:-17px;height:140px;"></div>
                                         <?php print $agencydata['ag_mob_chart'];?>
                                       </div>
-                                      <table style="width:100%">
+                                      <table style="width:100%" aria-label="Mobile Performance Breakdown Table"> 
                                         <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                        <th style="background-color: #215393;color: white;"> Websites </th>
+                                        <th style="background-color: #215393;color: white;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
                                         <tr>
-                                          <td>Poor</td>
-                                          <td><?=dotgov_common_getColor($agencydata['poor'], '#ae0100', $mobperf_arr[0])?></td>
+                                          <td>Good</td>
+                                          <td><?=dotgov_common_getColor($agencydata['good'], '#276437', $mobperf_arr[0])?></td>
                                         </tr>
                                         <tr>
                                           <td>Needs Improvement</td>
                                           <td><?=dotgov_common_getColor($agencydata['improve'], '#665000', $mobperf_arr[1])?></td>
                                         </tr>
                                         <tr>
-                                          <td>Good</td>
-                                          <td><?=dotgov_common_getColor($agencydata['good'], '#276437', $mobperf_arr[2])?></td>
+                                          <td>Poor</td>
+                                          <td><?=dotgov_common_getColor($agencydata['poor'], '#ae0100', $mobperf_arr[2])?></td>
+                                        </tr>
+                                        <tr>
+                                          <td>Data Not Available</td>
+                                          <td><?=dotgov_common_getColor($agencydata['data_na'], '#337ab7', $mobperf_arr[3])?></td>
                                         </tr>
                                       </table>
                                     </div>
@@ -187,24 +196,29 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                       <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                         <h5>Mobile Usability Breakdown
                                       </div>
-                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 10px"> <span class="dot good"></span>Mobile Friendly <br/>
+                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 10px">
                                         <span class="dot good"></span>Mobile Friendly <br/>
                                         <span class="dot low"></span>Not Mobile Friendly <br/>
+                                        <span class="dot na"></span>Data Not Available <br/>
                                       </div>
                                       <div class="col-lg-6 col-md-6 nopadding">
                                         <div id="piechartmobusab" style="margin-top:-17px;height:140px;"></div>
                                         <?php print $agencydata['ag_mob_usab_chart'];?>
                                       </div>
-                                      <table style="width:100%">
+                                      <table style="width:100%" aria-label="Mobile Usability Breakdown Table">
                                         <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                        <th style="background-color: #215393;color: white;"> Websites </th>
+                                        <th style="background-color: #215393;color: white;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
                                         <tr>
                                           <td>Mobile Friendly</td>
-                                          <td><?=dotgov_common_getColor($agencydata['friendly_nos'], '#276437', $mobusab_arr[0])?></td>
+                                          <td><?=dotgov_common_getColor($agencydata['friendly'], '#276437', $mobusab_arr[0])?></td>
                                         </tr>
                                         <tr>
                                           <td>Not Mobile Friendly</td>
-                                          <td><?=dotgov_common_getColor($agencydata['nonfriendly_nos'], '#ae0100', $mobusab_arr[1])?></td>	
+                                          <td><?=dotgov_common_getColor($agencydata['nonfriendly'], '#ae0100', $mobusab_arr[1])?></td>
+                                        </tr>
+                                        <tr>
+                                          <td>Data Not Available</td>
+                                          <td><?=dotgov_common_getColor($agencydata['data_na_usab'], '#337ab7', $mobusab_arr[2])?></td>
                                         </tr>
                                       </table>
                                     </div>
@@ -217,8 +231,8 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                               <br clear="all" />
                               <div class="view-button clearfix">
                                 <div class="row text-center">
-                                  <a class="" href="/website/mobile/reports?field_web_agency_id_nid=<?=arg(1)?>"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                  <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                                  <a class="" title="link for mobile performance full report" href="/website/mobile/reports?field_web_agency_id_nid=<?=arg(1)?>"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                  <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                 </div>
                               </div>
                             </div>
@@ -308,8 +322,8 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                     </div>
                                     <div class="view-button">
                                         <div class="row text-center">
-                                            <a href="/accessibilityreportalldomains?field_web_agency_id_nid_selective=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                            <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                                            <a title="link for accessiblity issues full report" href="/accessibilityreportalldomains?field_web_agency_id_nid_selective=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                            <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                         </div>
 
                                     </div>
@@ -344,10 +358,10 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                                         <div class="view-wrapper" style="min-height:325px">
                                                             <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient" style="height:165px;">
                                                                 <h5>DNSSEC Score Breakdown</h5>
-                                                                <table width="100%" class="dnssec-table">
+                                                                <table width="100%" class="dnssec-table" aria-label="DNSSEC Score Breakdown Table">
 
                                                                     <th style="background-color: #215393;color: white;">Breakdown</th>
-                                                                    <th style="background-color: #215393;color: white;">Websites</th>
+                                                                    <th style="background-color: #215393;color: white;">Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
                                                                     <tr>
                                                                         <td>DNSSEC Compliant Websites</td>
                                                                         <td><?=dotgov_common_getColor($agencydata['dns_compliant'], '#29643a', $dnssec_arr[0])?></td>
@@ -458,8 +472,8 @@ print "$output4<br><div class='col-lg-12 text-center clearfix'><span style='colo
 
 
                                                             <div class="row text-center">
-                                                                <a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                                                <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                                                                <a class="" title="link for DNSSEC full report" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                                                <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                                             </div>
 
                                                         </div>
@@ -493,7 +507,7 @@ print "$output4<br><div class='col-lg-12 text-center clearfix'><span style='colo
                                                     <?php print $agencydata['searchengines_graph'];
 //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines</span>";
 ?>
-                                                    <table style="width:100%">
+                                                    <table style="width:100%" aria-label="On-Site Search Engine Status Table">
                                                         <tr style="background-color: #215393;color: white;">
                                                             <td>On-Site Search Engine</td>
                                                             <td>&nbsp;Total</td>
@@ -512,7 +526,7 @@ foreach ($agencydata['searchenginedata'] as $skey => $sval) {
 //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines by category</span>";
 $searchenginestatus = $agencydata['searchenginestatus'];
 ?>
-                                                    <table>
+                                                    <table  aria-label="On-Site Search Engine Breakdown Table">
                                                         <tr style="background-color: #215393;color: white;">
                                                             <td> On-Site Search Available</td>
                                                             <td>On-Site Search Not Available</td>
@@ -529,8 +543,8 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                         </div>
                                     </div>
                                     <div class="view-button clearfix"><div class="row text-center">
-                                            <a class="" href="/website/search/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                            <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                                            <a class="" title="link for Search engine status full report" href="/website/search/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                            <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                         </div>
                                     </div>
                                 </div>
@@ -648,10 +662,10 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                                     </script>
                                                 </div>
                                             </div>
-                                            <table width="100%">
+                                            <table width="100%" aria-label="HTTPS score breakdown Table">
                                                 <th style="background-color: #215393;color: white;">Criteria</th>
                                                 <th style="background-color: #215393;color: white">Supporting Websites </th>
-                                                <th style="background-color: #215393;color: white">Non Supporting Websites </th>
+                                                <th style="background-color: #215393;color: white">Non Supporting Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a> </th>
                                                 <tr>
                                                     <td>Enforce HTTPS</td>
                                                     <td align="center"><?=dotgov_common_getColor($agencydata['enfhttps_support'], '#29643a', $enfhttps_arr[0])?></td>
@@ -674,7 +688,7 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                                 </tr>
                                                 <tr>
                                                     <td>Preload Ready</td>
-                                                    <td align="center"><?=dotgov_common_getColor($agencydata['preload_readysupport'], '#29643a', $preload_arr[2])?></td>
+                                                    <td align="center"><?=dotgov_common_getColor($agencydata['preload_readysupport'], '#29643a', $preloadready_arr[0])?></td>
                                                     <td align="center">NA</td>
                                                 </tr>
                                             </table>
@@ -692,8 +706,8 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                     </div>
                                     <div class="view-button">
                                         <div class="row text-center">
-                                            <a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                            <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                                            <a class="" title="link for htts trend full report" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                            <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                         </div>
                                     </div>
                                 </div>
@@ -809,10 +823,10 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                                                         );
                                                                     </script>
                                                                 </div></div>
-                                                            <table width="100%">
+                                                            <table width="100%" aria-label="M-15-13 and BOD 18-01 score breakdown Table">
 
                                                                 <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                                                <th style="background-color: #215393;color: white;"> Websites </th>
+                                                                <th style="background-color: #215393;color: white;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
                                                                 <tr>
                                                                     <td>M-15-13 and BOD 18-01 Compliant Websites </td>
                                                                     <td><?=dotgov_common_getColor($agencydata['m15_compliant'], '#29643a', $m15_arr[0])?></td>
@@ -836,8 +850,8 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                                     </div>
                                                     <div class="view-button">
                                                         <div class="row text-center">
-                                                            <a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                                            <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                                                            <a class="" title="link for  M-15-13 Trend full report" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                                            <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -957,10 +971,10 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                                                             );
                                                                         </script>
                                                                     </div></div>
-                                                                <table width="100%">
+                                                                <table width="100%" aria-label="IPV6 Score Breakdown Table">
 
                                                                     <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                                                    <th style="background-color: #215393;color: white;"> Websites </th>
+                                                                    <th style="background-color: #215393;color: white;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
                                                                     <tr width="100%">
                                                                         <td>IPv6 Compliant Websites</td>
                                                                         <td><?=dotgov_common_getColor($agencydata['ipv6_compliant'], '#29643a', $ipv6_arr[0])?></td>
@@ -981,8 +995,8 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                                         </div>
                                                         <div class="view-button">
                                                             <div class="row text-center">
-                                                                <a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                                                <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                                                                <a class="" title="link for IPv6 Trend full report" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                                                <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1117,10 +1131,10 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                                         </script>
                                                     </div>
                                                         </div>
-                                                    <table style="width:100%;">
+                                                    <table style="width:100%;" aria-label="DAP Information Breakdown Table">
 
                                                         <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
-                                                        <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
+                                                        <th style="background-color: #215393;color: white;border: 1px;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a> </th>
                                                         <tr>
                                                             <td> DAP Compliant Websites</td>
                                                             <td><?=dotgov_common_getColor($agencydata['dap_compliant'], '#29643a', $dap_arr[0])?></td>
@@ -1149,8 +1163,8 @@ print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: "
                                     </div>
                                     <div class="view-button">
                                         <div class="row text-center">
-                                            <a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                            <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                                            <a class="" title="link for DAP Trend full report" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                            <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                         </div>
                                     </div>
                                 </div>
@@ -1266,10 +1280,10 @@ print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: "
                                                 </script>
                                             </div>
                                                 </div>
-                                            <table width="100%">
+                                            <table width="100%" aria-label="Free of RC4/3DES and SSLv2/SSLv3 score breakdown Table">
 
                                                 <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                                <th style="background-color: #215393;color: white;"> Websites </th>
+                                                <th style="background-color: #215393;color: white;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
                                                 <tr>
                                                     <td>Websites Free of RC4/3DES and SSLv2/SSLv3 </td>
                                                     <td><?=dotgov_common_getColor($agencydata['insec_compliant'], '#29643a', $insecprot_arr[0])?></td>
@@ -1291,8 +1305,8 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                         </div>
                                     </div>
                                     <div class="row text-center">
-                                        <a class="" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""/></a>
-                                        <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a>
+                                        <a class="" title="link for Insecure Protocol Trend full report" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                        <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                     </div>
 
 
@@ -1370,10 +1384,10 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                 </script>
                                             </div>
 
-                                                <table style="width:100%;">
+                                                <table style="width:100%;" aria-label="USWDS Code Table">
 
                                                     <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
-                                                    <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
+                                                    <th style="background-color: #215393;color: white;border: 1px;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a> </th>
                                                     <tr>
                                                         <td> Websites with USWDS code detected<font style="font-size: larger;font-color:blue;"></font></td>
                                                         <td><?=dotgov_common_getColor($agencydata['uswds_compliant'], '#66746a', $uswds_arr[0])?></td>
@@ -1395,8 +1409,8 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                         </div>
                         <div class="view-button">
                                         <div class="row text-center">
-                                          <a class="" href="/website/all/uswds?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt=""></a>
-                                          <a href="https://designsystem.digital.gov/maturity-model/" target="_blank" rel="noopener noreferrer"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt=""></a>
+                                          <a class="" title="link for USWDS Code Usage full report" href="/website/all/uswds?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"></a>
+                                          <a title="link for learn more" href="https://designsystem.digital.gov/maturity-model/" target="_blank" rel="noopener noreferrer"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" width="" height="25" alt="image-for-link"></a>
                                        </div>
                               </div>
 
@@ -1500,7 +1514,7 @@ if ($no_data == 1) {
                                                   <div class="view-button">
 
                                                       <div class="row col-xs-12 nopadding">
-                                                          <div class="col-xs-12 col-lg-6 text-left" style="visibility: hidden"> <a href="/improve-my-score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt=""/></a> </div>
+                                                          <div class="col-xs-12 col-lg-6 text-left" style="visibility: hidden"> <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a> </div>
                                                       </div></div>
                                               </div>
                                           </div>

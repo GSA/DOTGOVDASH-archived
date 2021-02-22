@@ -61,31 +61,38 @@
 </head>
 <body>
 
-<div class="tableHeader">
-<div class="filterSearch">
-  <div class="filterSection">
-      <span class="filterLabel">Agency:</span>
-      <select class="filterList" id="filterItems" title="filter-agency" aria-label="select-agency">
-      </select>
-  </div>
-  <div class="text">
-      <p>Or</p>
-  </div>
-  <div class="searchSection">
-      <label class="searchBox searchLabel">Search:
-      <input type="search" class="searchInput searchInputAlter" id="searchInput"></label>
-  </div>
-  <div class="reset">
-    <button type="submit" id="resetSearch2" value="Reset" class="btn btn-default resetSearch">Reset</button>
-  </div>
-</div>
-<div class="downloadReport">
-    <p>Download Accessibility Reports: <a href="/accessibility/agencywide/csvapi" target="_blank"> csv </a> | <a href="/accessibility/agencywide/xlsapi" target="_blank">xls</a></p>
-</div>
-</div>
-<div class="tableScroll">
-    <button id="left"> <img class="scroll" title="scroll-left" src="/sites/all/modules/custom/dd_accessibility/images/left-arrow.svg" /> </button>
-    <button id="right"><img class="scroll" title="scroll-right" src="/sites/all/modules/custom/dd_accessibility/images/right-arrow.svg" /> </button>
+<div class="container-fluid access-table-controls">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-md-12" style="display: flex;">
+                    <span class="filterLabel">Agency:</span>
+                    <select class="filterList" id="filterItems" title="filter-agency" aria-label="select-agency">
+                    </select>
+                </div>
+                <div class="col-xs-12">
+                    <p class="or">OR</p>
+                </div>
+                <div class="col-md-6 search-box">
+                    <label class="searchBox searchLabel">Search:
+                    <input type="search" class="searchInput searchInputAlter" id="searchInput"></label>
+                    <button type="submit" id="resetSearch2" value="Reset" class="btn btn-default resetSearch">Reset</button>
+                </div>
+                <div class="col-md-6 link-download">    
+                    <p>Download Accessibility Reports: <a href="/accessibility/agencywide/csvapi" target="_blank"> csv </a> | <a href="/accessibility/agencywide/xlsapi" target="_blank">xls</a></p>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-md-12 tableScroll">
+                    <button id="left"> <img class="scroll" title="scroll-left" src="/sites/all/modules/custom/dd_accessibility/images/left-arrow.svg" /> </button>
+                    <button id="right"><img class="scroll" title="scroll-right" src="/sites/all/modules/custom/dd_accessibility/images/right-arrow.svg" /> </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -135,7 +142,7 @@
                     });
 
 
-                   function setTableProperties() {
+                    function setTableProperties() {
                         // Disable below two lines in UAT
                         jQuery( "<tr style='visibility: hidden;position: absolute;'><th scope='row'>Empty Header</th></tr>" ).insertBefore( jQuery( "table.pvtUi > tbody:first-child > tr:first-child" ) );
                         jQuery( "table.pvtUi > tbody:first-child > tr:nth-child(2)" ).addClass('d-none');
