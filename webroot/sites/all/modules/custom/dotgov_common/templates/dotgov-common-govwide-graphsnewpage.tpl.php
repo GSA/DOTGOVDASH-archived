@@ -154,7 +154,7 @@
                                     </tr>
                                     <tr>
                                       <td>Total</td>
-                                      <td><?=$agency_website_num;?> (100 %) <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></td>
+                                      <td><span style="font-weight:bold;"><?=$agency_website_num;?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                     </tr>
                                   </table>
                                 </div>
@@ -188,7 +188,7 @@
                                     </tr>
                                     <tr>
                                       <td>Total</td>
-                                      <td><?=$agency_website_num;?> (100 %) <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></td>
+                                      <td><span style="font-weight:bold;"><?=$agency_website_num;?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                     </tr>
                                   </table>
                                 </div>
@@ -339,7 +339,7 @@
                                              <h5>DNSSEC Score Breakdown</h5>
                                              <table width="100%" class="dnssec-table" aria-label="DNSSEC Score Breakdown Table">
                                                 <th style="background-color: #215393;color: white;">Breakdown</th>
-                                                <th style="background-color: #215393;color: white;"> Websites </th>
+                                                <th style="background-color: #215393;color: white;"> Websites</th>
                                                 <tr>
                                                    <td>DNSSEC Compliant Websites</td>
                                                    <td><?=dotgov_common_getColor($agencydata['dns_compliant'], '#29643a', $dnssec_arr[0])?></td>
@@ -350,7 +350,7 @@
                                                 </tr>
                                                 <tr>
                                                    <td>Total</td>
-                                                   <td><?=$agency_website_num;?> (100 %) <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></td>
+                                                   <td><span style="font-weight:bold;"><?=$agency_website_num;?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                                 </tr>
                                              </table>
                                           </div>
@@ -822,7 +822,7 @@
                                              </tr>
                                              <tr>
                                                 <td>Total</td>
-                                                <td><?=$agencydata['m15_compliant']+$agencydata['m15_noncompliant'];?> (100 %) <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></td>
+                                                <td><span style="font-weight:bold;"><?=$agencydata['m15_compliant']+$agencydata['m15_noncompliant'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                              </tr>
                                           </table>
                                           <span class="col-xs-12 text-center clearfix" style="font-size:10px;">(website redirects are excluded)</span>
@@ -963,7 +963,7 @@
                                              <table width="100%" aria-label="IPV6 Score Breakdown Table">
 
                                                 <th style="background-color: #215393;color: white;"> Breakdown </th>
-                                                <th style="background-color: #215393;color: white;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></th>
+                                                <th style="background-color: #215393;color: white;"> Websites </th>
                                                 <tr width="100%">
                                                    <td>IPv6 Compliant Websites</td>
                                                    <td><?=dotgov_common_getColor($agencydata['ipv6_compliant'], '#29643a', $ipv6_arr[0])?></td>
@@ -974,7 +974,7 @@
                                                 </tr>
                                                 <tr width="100%">
                                                    <td>Total</td>
-                                                   <td><?=$agency_website_num;?> (100 %) <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></td>
+                                                   <td><span style="font-weight:bold;"><?=$agency_website_num;?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                                 </tr>
                                              </table>
                                              <span class="col-xs-12 text-center clearfix" style="font-size:10px;">(website redirects are excluded)</span>
@@ -1140,7 +1140,7 @@
                                        </tr>
                                        <tr>
                                           <td>Total</td>
-                                          <td><?=$agencydata['dap_compliant'] + $agencydata['dap_noncompliant'];?> (100 %) <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></td>
+                                          <td><span style="font-weight:bold;"><?=$agencydata['dap_compliant'] + $agencydata['dap_noncompliant'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                        </tr>
                                     </table>
                                     <div class="col-xs-12 clearfix">
@@ -1288,7 +1288,7 @@
                                  </tr>
                                  <tr>
                                     <td>Total</td>
-                                    <td><?=$agencydata['insec_compliant'] + $agencydata['insec_noncompliant'];?> (100 %) <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></td>
+                                    <td><span style="font-weight:bold;"><?=$agencydata['insec_compliant'] + $agencydata['insec_noncompliant'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                  </tr>
                               </table>
                               <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span>
@@ -1383,7 +1383,7 @@
                                  </div>
                                  <table style="width:100%;" aria-label="USWDS Code Table">
                                     <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
-                                    <th style="background-color: #215393;color: white;border: 1px;"> Websites <a style="color:white;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a> </th>
+                                    <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
                                     <tr>
                                        <td> Websites with USWDS code detected<font style="font-size: larger;font-color:blue;">
                                           </font>
@@ -1400,7 +1400,7 @@
                                     </tr>
                                     <tr>
                                        <td>Total</td>
-                                       <td><?=$agencydata['uswds_compliant'] + $agencydata['uswds_noncompliant'];?> (100 %) <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></td>
+                                       <td><span style="font-weight:bold;"><?=$agencydata['uswds_compliant'] + $agencydata['uswds_noncompliant'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                     </tr>
                                  </table>
                                  <div class="col-xs-12 clearfix">
@@ -1415,7 +1415,7 @@
                      <div class="view-button clearfix">
                         <div class="row text-center">
                            <a class="" title="Link for USWDS full report" href="/website/all/uswds"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
-                           <a title="Link for USWDS to improve my score" href="https://designsystem.digital.gov/maturity-model/" target="_blank" rel="noopener noreferrer"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" alt="image-for-link" width="" height="25"></a>              
+                           <a title="Link for USWDS to improve my score" href="https://designsystem.digital.gov/maturity-model/" target="_blank" rel="noopener noreferrer"><img src="/sites/all/themes/dotgov/images/DD-btn_learn-more1.png" alt="image-for-link" width="" height="25"></a>
                         </div>
                      </div>
                   </div>
