@@ -180,7 +180,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                         <div id="piechartmob" style="margin-top:-17px;height:140px;"></div>
                                         <?php print $agencydata['ag_mob_chart'];?>
                                       </div>
-                                      <table style="width:100%" aria-label="Mobile Performance Breakdown Table"> 
+                                      <table style="width:100%" aria-label="Mobile Performance Breakdown Table">
                                         <th style="background-color: #215393;color: white;"> Breakdown </th>
                                         <th style="background-color: #215393;color: white;"> Websites </th>
                                         <tr>
@@ -201,7 +201,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                         </tr>
                                         <tr>
                                           <td>Total</td>
-                                          <td><?=$agency_website_num;?> (100 %) <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></td>
+                                          <td><span style="font-weight:bold;"><?=$agency_website_num;?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                         </tr>
                                       </table>
                                     </div>
@@ -235,7 +235,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                         </tr>
                                         <tr>
                                           <td>Total</td>
-                                          <td><?=$agency_website_num;?> (100 %) <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></td>
+                                          <td><span style="font-weight:bold;"><?=$agency_website_num;?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                         </tr>
                                       </table>
                                     </div>
@@ -377,7 +377,7 @@ Above graph shows the breakdown of Accessibility Issues by category</span></div>
                                                                 <table width="100%" class="dnssec-table" aria-label="DNSSEC Score Breakdown Table">
 
                                                                     <th style="background-color: #215393;color: white;">Breakdown</th>
-                                                                    <th style="background-color: #215393;color: white;">Websites </th>
+                                                                    <th style="background-color: #215393;color: white;">Websites</th>
                                                                     <tr>
                                                                         <td>DNSSEC Compliant Websites</td>
                                                                         <td><?=dotgov_common_applyDataColor($agencydata['dns_compliant'], $agency_website_num, '#29643a')?></td>
@@ -388,7 +388,7 @@ Above graph shows the breakdown of Accessibility Issues by category</span></div>
                                                                     </tr>
                                                                     <tr>
                                                                        <td>Total</td>
-                                                                       <td><?=$agency_website_num;?> (100 %) <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></td>
+                                                                       <td><span style="font-weight:bold;"><?=$agency_website_num;?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                                                     </tr>
                                                                 </table>
                                                             </div>
@@ -853,7 +853,7 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                                                 </tr>
                                                                 <tr>
                                                                    <td>Total</td>
-                                                                   <td><?=$agencydata['m15_compliant']+$agencydata['m15_noncompliant'];?> (100 %) <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></td>
+                                                                   <td><span style="font-weight:bold;"><?=$agencydata['m15_compliant']+$agencydata['m15_noncompliant'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                                                 </tr>
                                                             </table>
                                                             <span class="col-xs-12 text-center clearfix" style="font-size:10px;">(website redirects are excluded)</span>
@@ -1005,7 +1005,7 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                                                     </tr>
                                                                     <tr width="100%">
                                                                        <td>Total</td>
-                                                                       <td><?=$agency_website_num;?> (100 %) <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></td>
+                                                                       <td><span style="font-weight:bold;"><?=$agency_website_num;?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                                                     </tr>
                                                                 </table><span class="col-xs-12 text-center clearfix" style="font-size:10px;">(website redirects are excluded)</span></div>
                                                             <div class="row">
@@ -1169,7 +1169,7 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                                         </tr>
                                                         <tr>
                                                            <td>Total</td>
-                                                           <td><?=$agencydata['dap_compliant'] + $agencydata['dap_noncompliant'];?> (100 %) <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></td>
+                                                           <td><span style="font-weight:bold;"><?=$agencydata['dap_compliant'] + $agencydata['dap_noncompliant'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                                         </tr>
                                                     </table>
                                                     <div class="col-xs-12 clearfix">
@@ -1321,7 +1321,7 @@ print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: "
                                                 </tr>
                                                 <tr>
                                                    <td>Total</td>
-                                                   <td><?=$agencydata['insec_compliant'] + $agencydata['insec_noncompliant'];?> (100 %) <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></td>
+                                                   <td><span style="font-weight:bold;"><?=$agencydata['insec_compliant'] + $agencydata['insec_noncompliant'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                                 </tr>
                                             </table>
                                             <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span>
@@ -1423,7 +1423,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                     </tr>
                                                     <tr>
                                                        <td>Total</td>
-                                                       <td><?=$agencydata['uswds_compliant'] + $agencydata['uswds_noncompliant'];?> (100 %) <a data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></td>
+                                                       <td><span style="font-weight:bold;"><?=$agencydata['uswds_compliant'] + $agencydata['uswds_noncompliant'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                                     </tr>
                                                 </table>
                                                 <div class="col-xs-12 clearfix">
