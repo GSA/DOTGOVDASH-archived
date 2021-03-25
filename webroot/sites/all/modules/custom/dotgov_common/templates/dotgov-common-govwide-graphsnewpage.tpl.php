@@ -350,7 +350,7 @@
                                                 </tr>
                                                 <tr>
                                                    <td>Total</td>
-                                                   <td><span style="font-weight:bold;"><?=$agency_website_num;?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
+                                                   <td style="white-space: nowrap;"><span style="font-weight:bold;"><?=$agency_website_num;?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                                 </tr>
                                              </table>
                                           </div>
