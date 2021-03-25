@@ -335,7 +335,7 @@
                                  <div class="views-field views-field-nothing">
                                     <div class="field-content col-lg-12">
                                        <div class="view-wrapper" style="min-height:325px">
-                                          <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient" style="height:165px;">
+                                          <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient" style="height:200px;">
                                              <h5>DNSSEC Score Breakdown</h5>
                                              <table width="100%" class="dnssec-table" aria-label="DNSSEC Score Breakdown Table">
                                                 <th style="background-color: #215393;color: white;">Breakdown</th>
@@ -354,7 +354,7 @@
                                                 </tr>
                                              </table>
                                           </div>
-                                          <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient second" style="height:165px;">
+                                          <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient second" style="height:200px;">
                                              <h5>DNSSEC Overall Average Score :
                                                 <?=$agency_dnssec_score?>
                                                 %
