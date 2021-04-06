@@ -62,10 +62,10 @@ $agency_uswds_score = round(db_query("select avg(c.field_uswds_score_value) as a
 
 $agencynode = node_load(arg(1));
 
-$mobperf_arr = array($agencydata['poor'], $agencydata['improve'], $agencydata['good']);
-$mobperf_arr = dotgov_common_get_percentage($mobperf_arr, $agencydata['no_of_non_na__websites']);
-$mobusab_arr = array($agencydata['friendly_nos'], $agencydata['nonfriendly_nos']);
-$mobusab_arr = dotgov_common_get_percentage($mobusab_arr, $agencydata['friendly_nos']+$agencydata['nonfriendly_nos']);
+$mobperf_arr = array($agencydata['good'], $agencydata['improve'], $agencydata['poor'], $agencydata['data_na']);
+$mobperf_arr = dotgov_common_get_percentage($mobperf_arr, $agency_website_num);
+$mobusab_arr = array($agencydata['friendly'], $agencydata['nonfriendly'], $agencydata['data_na_usab']);
+$mobusab_arr = dotgov_common_get_percentage($mobusab_arr, $agency_website_num);
 
 $dnssec_arr = array($agencydata['dns_compliant'], $agencydata['dns_noncompliant']);
 $dnssec_arr = dotgov_common_get_percentage($dnssec_arr, $agency_website_num);
@@ -76,8 +76,10 @@ $hsts_arr = array($agencydata['hsts_support'], $agencydata['hsts_nosupport']);
 $hsts_arr = dotgov_common_get_percentage($hsts_arr, $agency_website_num);
 $https_arr = array($agencydata['https_support'], $agencydata['https_nosupport']);
 $https_arr = dotgov_common_get_percentage($https_arr, $agency_website_num);
-$preload_arr = array($agencydata['preload_support'], $agencydata['preload_nosupport'], $agencydata['preload_readysupport']);
+$preload_arr = array($agencydata['preload_support'], $agencydata['preload_nosupport']);
 $preload_arr = dotgov_common_get_percentage($preload_arr, $agency_website_num);
+$preloadready_arr = array($agencydata['preload_readysupport']);
+$preloadready_arr = dotgov_common_get_percentage($preloadready_arr, $agency_website_num);
 
 $m15_arr = array($agencydata['m15_compliant'], $agencydata['m15_noncompliant']);
 $m15_arr = dotgov_common_get_percentage($m15_arr, $agencydata['m15_tracked']);
@@ -155,56 +157,76 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                               <div class="view-wrapper-new clearfix">
                                 <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
                                   <div class="col-xs-12 clearfix">
-                                    <div class="views-field views-field-php-2 col-lg-6 nopadding grey-gradient" style="height:250px;">
+                                    <div class="views-field views-field-php-2 col-lg-6 nopadding grey-gradient" style="height:270px;">
                                       <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                         <h5>Mobile Performance Breakdown</h5>
                                       </div>
-                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 10px;"> <span class="dot low"></span>Poor <br/>
+                                      <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 10px;">
                                         <span class="dot good"></span>Good<br/>
-                                        <!--                                                <span class="dot na"></span>NA-->                                      </div>
+                                        <span class="dot avg"></span>Needs Improvement <br/>
+                                        <span class="dot low"></span>Poor <br/>
+                                        <span class="dot na"></span>Data Not Available<br/>
+                                      </div>
                                       <div class="col-lg-6 col-md-6 nopadding">
                                         <div id="piechartmob" style="margin-top:-17px;height:140px;"></div>
                                         <?php print $agencydata['ag_mob_chart'];?>
                                       </div>
-                                      <table style="width:100%">
+                                      <table style="width:100%" aria-label="Mobile Performance Breakdown Table"> 
                                         <th style="background-color: #215393;color: white;"> Breakdown </th>
                                         <th style="background-color: #215393;color: white;"> Websites </th>
                                         <tr>
-                                          <td>Poor</td>
-                                          <td><?=dotgov_common_getColor($agencydata['poor'], '#ae0100', $mobperf_arr[0])?></td>
+                                          <td>Good</td>
+                                          <td><?=dotgov_common_getColor($agencydata['good'], '#276437', $mobperf_arr[0])?></td>
                                         </tr>
                                         <tr>
                                           <td>Needs Improvement</td>
                                           <td><?=dotgov_common_getColor($agencydata['improve'], '#665000', $mobperf_arr[1])?></td>
                                         </tr>
                                         <tr>
-                                          <td>Good</td>
-                                          <td><?=dotgov_common_getColor($agencydata['good'], '#276437', $mobperf_arr[2])?></td>
+                                          <td>Poor</td>
+                                          <td><?=dotgov_common_getColor($agencydata['poor'], '#ae0100', $mobperf_arr[2])?></td>
+                                        </tr>
+                                        <tr>
+                                          <td>Data Not Available</td>
+                                          <td><?=dotgov_common_getColor($agencydata['data_na'], '#337ab7', $mobperf_arr[3])?></td>
+                                        </tr>
+                                        <tr>
+                                          <td>Total</td>
+                                          <td><span style="font-weight:bold;"><?=$agency_website_num;?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                         </tr>
                                       </table>
                                     </div>
-                                    <div class="col-xs-12 col-lg-6 nopadding grey-gradient second" style="height:250px;">
+                                    <div class="col-xs-12 col-lg-6 nopadding grey-gradient second" style="height:270px;">
                                       <div class ="col-md-12 col-lg-12" style="padding-left:10px;">
                                         <h5>Mobile Usability Breakdown
                                       </div>
                                       <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 10px">
                                         <span class="dot good"></span>Mobile Friendly <br/>
                                         <span class="dot low"></span>Not Mobile Friendly <br/>
+                                        <span class="dot na"></span>Data Not Available <br/>
                                       </div>
                                       <div class="col-lg-6 col-md-6 nopadding">
                                         <div id="piechartmobusab" style="margin-top:-17px;height:140px;"></div>
                                         <?php print $agencydata['ag_mob_usab_chart'];?>
                                       </div>
-                                      <table style="width:100%">
+                                      <table style="width:100%" aria-label="Mobile Usability Breakdown Table">
                                         <th style="background-color: #215393;color: white;"> Breakdown </th>
                                         <th style="background-color: #215393;color: white;"> Websites </th>
                                         <tr>
                                           <td>Mobile Friendly</td>
-                                          <td><?=dotgov_common_getColor($agencydata['friendly_nos'], '#276437', $mobusab_arr[0])?></td>
+                                          <td><?=dotgov_common_getColor($agencydata['friendly'], '#276437', $mobusab_arr[0])?></td>
                                         </tr>
                                         <tr>
                                           <td>Not Mobile Friendly</td>
-                                          <td><?=dotgov_common_getColor($agencydata['nonfriendly_nos'], '#ae0100', $mobusab_arr[1])?></td>	
+                                          <td><?=dotgov_common_getColor($agencydata['nonfriendly'], '#ae0100', $mobusab_arr[1])?></td>
+                                        </tr>
+                                        <tr>
+                                          <td>Data Not Available</td>
+                                          <td><?=dotgov_common_getColor($agencydata['data_na_usab'], '#337ab7', $mobusab_arr[2])?></td>
+                                        </tr>
+                                        <tr>
+                                          <td>Total</td>
+                                          <td><span style="font-weight:bold;"><?=$agency_website_num;?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                         </tr>
                                       </table>
                                     </div>
@@ -244,7 +266,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                     <div class="view-wrapper" style="min-height:290px;">
                                         <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                                             <div class="view-empty clearfix">
-                                                <div class="col-lg-6 grey-gradient" style="height:250px;">
+                                                <div class="col-lg-6 grey-gradient" style="height:270px;">
                                                     <div class ="col-md-12 col-lg-12 nopadding" >
                                                         <h5>Accessibility Issues by Type</h5>
                                                     </div>
@@ -260,7 +282,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                                         </p>
                                                         <span style="font-size:12px;">(Note: Website redirects are excluded. Accessibility Spot Checks include only Color Contrast, HTML Attributes and Missing Image Description Accessibility Issues)</span></div>
                                                 </div>
-                                                <div class="col-lg-6 grey-gradient second" style="height:250px;">
+                                                <div class="col-lg-6 grey-gradient second" style="height:270px;">
                                                     <div class ="col-md-12 col-lg-12 nopadding" >
                                                         <h5>Average Accessibility Issues by Type per Website</h5>
                                                     </div>
@@ -298,7 +320,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                                 </script>
                                                 <?php
                                                     if (($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydata['ag_miss_image']) != 0) {
-                                                        print "<div class='col-lg-12 text-center clearfix'><span style='color:#29643a; font-size: 10px;font-style: italic;'>
+                                                        print "<div class='col-lg-12 text-center clearfix'><br clear=\"all\" /><span style='color:#29643a; font-size: 10px;font-style: italic;'>
                                                     Above graph shows the breakdown of Accessibility Issues by category</span></div>
                                                     ";
                                                     }
@@ -347,7 +369,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                                                 <table width="100%" class="dnssec-table" aria-label="DNSSEC Score Breakdown Table">
 
                                                                     <th style="background-color: #215393;color: white;">Breakdown</th>
-                                                                    <th style="background-color: #215393;color: white;">Websites</th>
+                                                                    <th style="background-color: #215393;color: white;">Websites </th>
                                                                     <tr>
                                                                         <td>DNSSEC Compliant Websites</td>
                                                                         <td><?=dotgov_common_getColor($agencydata['dns_compliant'], '#29643a', $dnssec_arr[0])?></td>
@@ -355,6 +377,10 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                                                     <tr>
                                                                         <td>DNSSEC Non Compliant Websites</td>
                                                                         <td><?=dotgov_common_getColor($agencydata['dns_noncompliant'], '#ac0600', $dnssec_arr[1])?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                       <td>Total</td>
+                                                                       <td><span style="font-weight:bold;"><?=$agency_website_num;?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                                                     </tr>
                                                                 </table>
                                                             </div>
@@ -674,7 +700,7 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                                 </tr>
                                                 <tr>
                                                     <td>Preload Ready</td>
-                                                    <td align="center"><?=dotgov_common_getColor($agencydata['preload_readysupport'], '#29643a', $preload_arr[2])?></td>
+                                                    <td align="center"><?=dotgov_common_getColor($agencydata['preload_readysupport'], '#29643a', $preloadready_arr[0])?></td>
                                                     <td align="center">NA</td>
                                                 </tr>
                                             </table>
@@ -820,6 +846,10 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                                                 <tr>
                                                                     <td>M-15-13 and BOD 18-01 Non Compliant Websites </td>
                                                                     <td><?=dotgov_common_getColor($agencydata['m15_noncompliant'], '#ac0600', $m15_arr[1])?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                   <td>Total</td>
+                                                                   <td><span style="font-weight:bold;"><?=$agencydata['m15_compliant']+$agencydata['m15_noncompliant'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                                                 </tr>
                                                             </table>
                                                             <span class="col-xs-12 text-center clearfix" style="font-size:10px;">(website redirects are excluded)</span>
@@ -968,6 +998,10 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                                                     <tr width="100%">
                                                                         <td>IPv6 Non Compliant Websites</td>
                                                                         <td><?=dotgov_common_getColor($agencydata['ipv6_noncompliant'], '#ac0600', $ipv6_arr[1])?></td>
+                                                                    </tr>
+                                                                    <tr width="100%">
+                                                                       <td>Total</td>
+                                                                       <td><span style="font-weight:bold;"><?=$agency_website_num;?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                                                     </tr>
                                                                 </table><span class="col-xs-12 text-center clearfix" style="font-size:10px;">(website redirects are excluded)</span></div>
                                                             <div class="row">
@@ -1129,6 +1163,10 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                                             <td>DAP Non Compliant Websites</td>
                                                             <td><?=dotgov_common_getColor($agencydata['dap_noncompliant'], '#ac0600', $dap_arr[1])?></td>
                                                         </tr>
+                                                        <tr>
+                                                           <td>Total</td>
+                                                           <td><span style="font-weight:bold;"><?=$agencydata['dap_compliant'] + $agencydata['dap_noncompliant'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
+                                                        </tr>
                                                     </table>
                                                     <div class="col-xs-12 clearfix">
                                                         <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span> </div>
@@ -1278,6 +1316,10 @@ print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: "
                                                     <td>Websites Not Free of RC4/3DES and SSLv2/SSLv3 </td>
                                                     <td><?=dotgov_common_getColor($agencydata['insec_noncompliant'], '#ac0600', $insecprot_arr[1])?></td>
                                                 </tr>
+                                                <tr>
+                                                   <td>Total</td>
+                                                   <td><span style="font-weight:bold;"><?=$agencydata['insec_compliant'] + $agencydata['insec_noncompliant'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
+                                                </tr>
                                             </table>
                                             <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are excluded)</span>
                                         </div>
@@ -1381,6 +1423,10 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                                     <tr>
                                                         <td>Websites without USWDS code detected<font style="font-size: larger;font-color:blue;"></font></td>
                                                         <td><?=dotgov_common_getColor($agencydata['uswds_noncompliant'], '#8ac99c', $uswds_arr[1])?></td>
+                                                    </tr>
+                                                    <tr>
+                                                       <td>Total</td>
+                                                       <td><span style="font-weight:bold;"><?=$agencydata['uswds_compliant'] + $agencydata['uswds_noncompliant'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                                     </tr>
                                                 </table>
                                                 <div class="col-xs-12 clearfix">
