@@ -177,7 +177,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     <p>(Note: Website redirects are excluded. Accessibility Spot Checks include only Color Contrast, HTML Attributes and Missing Image Description Accessibility Issues)</p>
                                 </div>
                                 <div class="col-sm-6 nopadding">
-                                <h4 class="chart-data-title text-center">Total Number of Accessibility Issues for Websites</h4>
+                                <h4 class="chart-data-title text-center">Key Accessibility Errors</h4>
                                     <div class="chart-container" id="chart-1-ref">
                                         <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -211,7 +211,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['Color Contrast Issues', 'HTML Attribute Issues','Missing Image Description Issues']
+                                        labels: ['Color Contrast Issues', 'HTML Attribute Issues','Missing Image Description']
                                     },
 
                                     // Configuration options go here
@@ -221,7 +221,7 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                         title: {
                                             display: false,
-                                            text: 'Total Number of Accessibility Issues for Websites',
+                                            text: 'Key Accessibility Errors',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
