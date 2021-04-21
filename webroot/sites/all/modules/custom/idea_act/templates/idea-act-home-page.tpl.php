@@ -7,7 +7,7 @@
 
 <?php
 drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-drupal_set_title("21st Century IDEA Act Report");
+drupal_set_title("21st Century IDEA Report");
 $agencies = $agency_data['actualdata']['agency_data'];
 $total_websites_count = $agency_data['actualdata']['total_websites_count'];
 
@@ -20,8 +20,8 @@ $total_websites_count = $agency_data['actualdata']['total_websites_count'];
             <div class="row row-no-gutters">
                 <div class="col-md-12 dashboard-wrap">
                     <div class="col-md-9 dashboard-left">
-                        <h1>21st Century IDEA Act Report</h1>
-                        <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
+                        <h1>21st Century IDEA Report</h1>
+                        <p class="description">This page provides a snapshot of the 21st Century IDEA conformance across federal government executive branch public-facing websites.</p>
                     </div>
                     <div id="element-to-hide" data-html2canvas-ignore="true" class="col-md-2 col-md-offset-1 text-right dashboard-right">
                         <!-- <a href="#">
