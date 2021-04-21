@@ -106,8 +106,8 @@ $agency_data['agency_title'] = $agencynode->title;
             <div class="row row-no-gutters">
                 <div class="col-md-12 dashboard-wrap">
                     <div class="col-md-9 dashboard-left">
-                        <h1><?=$agencynode->title?> - <span>21st Century IDEA Act Dashboard</span></h1>
-                        <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
+                        <h1><?=$agencynode->title?> - <span>21st Century IDEA Dashboard</span></h1>
+                        <p class="description">This page provides a snapshot of the 21st Century IDEA conformance across federal government executive branch public-facing websites.</p>
                     </div>
                     <div id="element-to-hide" data-html2canvas-ignore="true" class="col-md-2 col-md-offset-1 text-right dashboard-right">
                         <!-- <a href="#">
