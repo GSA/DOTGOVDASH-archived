@@ -29,7 +29,7 @@ else
             },
             showInLegend: true,
             chartArea:{height:'50%',width:'100%'},
-            legend: 'none'
+            legend: 'left'
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart3'));
