@@ -94,7 +94,7 @@ $total_websites_count = $agency_data['actualdata']['total_websites_count'];
                        <?php
                        $count = 0;
                         foreach ($agencies as $key => $agency) {
-                            print "<a href=/ideaact/agencywide/dashboard/".$agency['nid']."><div class='col-sm-6 col-md-3 agency-info '>
+                            print "<a href=/idea/agencywide/dashboard/".$agency['nid']."><div class='col-sm-6 col-md-3 agency-info '>
                             <img class='agency-logo' src='" . $agency['url'] . "' alt='". $agency['title'] ."' />
                             <p class='agency-title'>". $agency['title'] ."</p>
                             <p><strong><i>Total Websites</i></strong></p>

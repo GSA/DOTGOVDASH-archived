@@ -183,7 +183,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                      <a href="/ideaact/report/accessibility/websites?field_web_agency_id_nid_selective=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                      <a href="/idea/report/accessibility/websites?field_web_agency_id_nid_selective=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
@@ -338,7 +338,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                      <a href="/ideaact/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                      <a href="/idea/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
@@ -720,7 +720,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-md-6 mb-2">
                                     <div class="explore">
-                                    <a href="/ideaact/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                    <a href="/idea/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                             </div>
@@ -795,7 +795,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                      <a href="/ideaact/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                      <a href="/idea/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
@@ -1174,7 +1174,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-md-6 mb-2">
                                     <div class="explore">
-                                      <a href="/ideaact/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                      <a href="/idea/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                             </div>
@@ -1254,7 +1254,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                      <a href="/ideaact/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                      <a href="/idea/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
