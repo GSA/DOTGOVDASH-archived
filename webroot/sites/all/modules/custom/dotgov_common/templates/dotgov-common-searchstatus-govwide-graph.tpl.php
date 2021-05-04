@@ -13,6 +13,7 @@
         var options = {
             title: 'Search Engine Status Breakdown',
             colors: ['#4caf50', '#f44336'],
+            backgroundColor: {fill:'transparent'},
             sliceVisibilityThreshold: 0,
             dataLabels: {
                 enabled: true

@@ -522,24 +522,6 @@ print "$output4<br><div class='col-lg-12 text-center clearfix'><span style='colo
                                             <div class="view-empty">
                                                 <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient pie-chart" >
                                                     <div id="piechart3"></div>
-                                                    <?php print $agencydata['searchengines_graph'];
-//print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines</span>";
-?>
-                                                    <table style="width:100%" aria-label="On-Site Search Engine Status Table">
-                                                        <tr style="background-color: #215393;color: white;">
-                                                            <td>On-Site Search Engine</td>
-                                                            <td>&nbsp;Total</td>
-                                                        </tr>
-                                                        <?php
-foreach ($agencydata['searchenginedata'] as $skey => $sval) {
-    print "<tr style='text-transform: capitalize;'><td>" . ucfirst($skey) . "</td><td align='center'>   $sval</td> </tr>";
-}
-?>
-                                                    </table>
-                                                </div>
-                                                <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient min-300 second bar-chart" >
-
-                                                    <div id="piechart2"></div>
                                                     <?php print $agencydata['searchenginestatus_graph'];
 //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines by category</span>";
 $searchenginestatus = $agencydata['searchenginestatus'];
@@ -553,7 +535,25 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                                             <td><?=($searchenginestatus['search_available'] == "") ? 0 : $searchenginestatus['search_available']?></td>
                                                             <td><?=($searchenginestatus['search_notavailable'] == "") ? 0 : $searchenginestatus['search_notavailable']?></td>
                                                         </tr>
-                                                    </table><span style="font-size:12px;">(Note: website redirects are excluded)</span> </div>
+                                                    </table><span style="font-size:12px;">(Note: website redirects are excluded)</span>
+                                                </div>
+                                                <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient min-300 second bar-chart" >
+
+                                                    <div id="piechart2"></div>
+                                                    <?php print $agencydata['searchengines_graph'];
+//print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines</span>";
+?>
+                                                    <table style="width:100%" aria-label="On-Site Search Engine Status Table">
+                                                        <tr style="background-color: #215393;color: white;">
+                                                            <td>On-Site Search Engine</td>
+                                                            <td>&nbsp;Total</td>
+                                                        </tr>
+                                                        <?php
+foreach ($agencydata['searchenginedata'] as $skey => $sval) {
+    print "<tr style='text-transform: capitalize;'><td>" . ucfirst($skey) . "</td><td align='center'>   $sval</td> </tr>";
+}
+?>
+                                                    </table></div>
                                             </div>
                                             <div class="clearfix">&nbsp;</div>
 
