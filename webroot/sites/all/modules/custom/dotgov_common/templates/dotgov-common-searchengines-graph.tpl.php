@@ -17,6 +17,7 @@ if(trim($search_engine_data_for_agencygraph) == "")
         var options = {
             title: 'On-Site Search Engine Breakdown',
             colors: ['#3f51b5', '#337ab7', '#ffc107', '#7cb5ec', '#795548', '#009688','#f44336'],
+            backgroundColor: {fill:'transparent'},
             chartArea: {width: '100%'},
             hAxis: {
                 minValue: 0

@@ -23,6 +23,7 @@ else
         var options = {
             title: 'On-Site Search Engine Status Breakdown',
             colors: ['#29633a', '#ac0600'],
+            backgroundColor: {fill:'transparent'},
             sliceVisibilityThreshold: 0,
             dataLabels: {
                 enabled: true
