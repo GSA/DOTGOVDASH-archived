@@ -1232,7 +1232,7 @@ function getPulseData(){
     //Run script to generate http data
     //first download current-federal.csv from github
     writeToLogs("Get Latest Websites list and import to database",$logFile);
-    shell_exec("timeout 15 wget https://raw.githubusercontent.com/GSA/data/master/dotgov-domains/current-federal.csv -O /tmp/current-federal.csv");
+    shell_exec("timeout 15 wget https://raw.githubusercontent.com/cisagov/dotgov-data/main/current-federal.csv -O /tmp/current-federal.csv");
     //Process data in to custom_current_federal_websites db table
     db_query("set global local_infile=true");
     db_query("LOAD DATA LOCAL INFILE '".$domainsourcefile."' INTO TABLE `custom_current_federal_websites` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
