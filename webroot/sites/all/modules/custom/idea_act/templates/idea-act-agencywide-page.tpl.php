@@ -176,7 +176,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </div>
                                 <div class="col-sm-6 nopadding">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
-                                  <h4 class="text-center chart-data-title">Total Number of Accessibility Issues </h4>
+                                  <h4 class="text-center chart-data-title">Key Accessibility Errors </h4>
                                     <?php print $agency_data['access-spot-checks-chart'];?>
                                 </div>
                             </div>
@@ -216,7 +216,7 @@ $agency_data['agency_title'] = $agencynode->title;
 
                                       title: {
                                           display: false,
-                                          text: 'Total Number of Accessibility Issues for <?= $agency_data['agency_title']?> Websites',
+                                          text: 'Key Accessibility Errors for <?= $agency_data['agency_title']?> Websites',
                                           fontSize: 18,
                                           fontColor: '#203b5f'
                                       },
