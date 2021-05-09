@@ -488,7 +488,10 @@
                         <div class="view-wrapper" style="min-height:350px">
                            <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                               <div class="view-empty">
-                                 <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient min-330 ie-chart" >
+                                 <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient min-330 pie-chart" >
+                                   <div class ="col-md-12 col-lg-12 nopadding" >
+                                      <h5>On-Site Search Engine Status Breakdown</h5>
+                                   </div>
                                     <div id="piechart3"></div>
                                     <?php print $agencydata['searchenginestatus_graph'];
                                        //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines by category</span>";
@@ -507,6 +510,9 @@
                                     <span style="font-size:12px;">(Note: website redirects are excluded)</span>
                                  </div>
                                  <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient min-330 second bar-chart" >
+                                   <div class ="col-md-12 col-lg-12 nopadding" >
+                                      <h5>On-Site Search Engine Breakdown</h5>
+                                   </div>
                                     <div id="piechart2"></div>
                                     <?php print $agencydata['searchengines_graph'];
                                        //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines</span>";
@@ -1380,32 +1386,32 @@
                                           }
                                        </script>
                                     </div>
-                                 </div>
-                                 <table style="width:100%;" aria-label="USWDS Code Table">
-                                    <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
-                                    <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
-                                    <tr>
-                                       <td> Websites with USWDS code detected<font style="font-size: larger;font-color:blue;">
-                                          </font>
-                                       </td>
-                                       <td><?=dotgov_common_getColor($agencydata['uswds_compliant'], '#66746a', $uswds_arr[0])?></td>
-                                       </td>
-                                    </tr>
-                                    <tr>
-                                       <td>Websites without USWDS code detected<font style="font-size: larger;font-color:blue;">
-                                          </font>
-                                       </td>
-                                       <td><?=dotgov_common_getColor($agencydata['uswds_noncompliant'], '#8ac99c', $uswds_arr[1])?></td>
-                                       </td>
-                                    </tr>
-                                    <tr>
-                                       <td>Total</td>
-                                       <td><span style="font-weight:bold;"><?=$agencydata['uswds_compliant'] + $agencydata['uswds_noncompliant'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
-                                    </tr>
-                                 </table>
-                                 <div class="col-xs-12 clearfix">
-                                    <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are
-                                    excluded)</span>
+                                    <table style="width:100%;" aria-label="USWDS Code Table">
+                                       <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
+                                       <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
+                                       <tr>
+                                          <td> Websites with USWDS code detected<font style="font-size: larger;font-color:blue;">
+                                             </font>
+                                          </td>
+                                          <td><?=dotgov_common_getColor($agencydata['uswds_compliant'], '#66746a', $uswds_arr[0])?></td>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td>Websites without USWDS code detected<font style="font-size: larger;font-color:blue;">
+                                             </font>
+                                          </td>
+                                          <td><?=dotgov_common_getColor($agencydata['uswds_noncompliant'], '#8ac99c', $uswds_arr[1])?></td>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td>Total</td>
+                                          <td><span style="font-weight:bold;"><?=$agencydata['uswds_compliant'] + $agencydata['uswds_noncompliant'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
+                                       </tr>
+                                    </table>
+                                    <div class="col-xs-12 clearfix">
+                                       <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are
+                                       excluded)</span>
+                                    </div>
                                  </div>
                               </div>
 
