@@ -156,7 +156,7 @@ drupal_set_title($websitedata['agencyname']);
                                                     ]
                                                 }],
                                                 // These labels appear in the legend and in the tooltips when hovering different arcs
-                                                labels: ['Color Contrast Issues', 'HTML Attribute Issues', 'Missing Image Desciption Issues']
+                                                labels: ['Color Contrast Issues', 'HTML Attribute Issues', 'Missing Image Description']
                                             },
 
                                             // Configuration options go here
