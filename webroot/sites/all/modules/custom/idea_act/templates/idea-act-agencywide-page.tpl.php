@@ -176,7 +176,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </div>
                                 <div class="col-sm-6 nopadding">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
-                                  <h4 class="text-center chart-data-title">Total Number of Accessibility Issues </h4>
+                                  <h4 class="text-center chart-data-title">Snapshot: 3 Key Accessibility Issues</h4>
                                     <?php print $agency_data['access-spot-checks-chart'];?>
                                 </div>
                             </div>
@@ -207,7 +207,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                           ]
                                       }],
                                       // These labels appear in the legend and in the tooltips when hovering different arcs
-                                      labels: ['Color Contrast Issues', 'HTML Attribute Issues','Missing Image Description Issues']
+                                      labels: ['Color Contrast Issues', 'HTML Attribute Issues','Missing Image Description']
                                   },
                                   // Configuration options go here
                                   options: {
