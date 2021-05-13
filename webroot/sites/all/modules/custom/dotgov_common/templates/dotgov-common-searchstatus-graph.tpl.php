@@ -21,7 +21,6 @@ else
             ['On-Site Search Not Available',      <?=$search_notavailable?>],
         ]);
         var options = {
-            title: 'On-Site Search Engine Status Breakdown',
             colors: ['#29633a', '#ac0600'],
             backgroundColor: {fill:'transparent'},
             sliceVisibilityThreshold: 0,
