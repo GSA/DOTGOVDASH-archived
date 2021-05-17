@@ -62,7 +62,7 @@
    dotgov_common_tooltip("tooltip9", "id");
    dotgov_common_tooltip("tooltip8", "id");
    dotgov_common_tooltip("tooltip10", "id");
-   
+
    $mobperf_arr = array($agencydata['good_nos'], $agencydata['improve_nos'], $agencydata['poor_nos'], $agencydata['data_na_nos']);
    $mobperf_arr = dotgov_common_get_percentage($mobperf_arr, $agency_website_num);
    $mobusab_arr = array($agencydata['friendly_nos'], $agencydata['nonfriendly_nos'], $agencydata['data_na_usab_nos']);
