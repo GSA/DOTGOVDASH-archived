@@ -17,8 +17,8 @@ else
 
         var data = google.visualization.arrayToDataTable([
             ['Type', 'Number'],
-            ['On-Site Search Available',     <?=$search_available?>],
-            ['On-Site Search Not Available',      <?=$search_notavailable?>],
+            ['On-Site Search Detected',     <?=$search_available?>],
+            ['On-Site Search Not Detected',      <?=$search_notavailable?>],
         ]);
         var options = {
             title: 'On-Site Search Engine Status Breakdown',
