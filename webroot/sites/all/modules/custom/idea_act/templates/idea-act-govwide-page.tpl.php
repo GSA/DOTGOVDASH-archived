@@ -177,7 +177,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     <p>(Note: Website redirects are excluded. Accessibility Spot Checks include only Color Contrast, HTML Attributes and Missing Image Description Accessibility Issues)</p>
                                 </div>
                                 <div class="col-sm-6 nopadding">
-                                <h4 class="chart-data-title text-center">Key Accessibility Errors</h4>
+                                <h4 class="chart-data-title text-center">Snapshot: 3 Key Accessibility Issues</h4>
                                     <div class="chart-container" id="chart-1-ref">
                                         <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -221,7 +221,7 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                         title: {
                                             display: false,
-                                            text: 'Key Accessibility Errors',
+                                            text: 'Snapshot: 3 Key Accessibility Issues',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },

@@ -20,8 +20,8 @@
         min-height: 295px;
     }
 
-    .min-300 {
-        min-height: 300px;
+    .min-330 {
+        min-height: 330px;
     }
 
 </style>
@@ -363,7 +363,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                             <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
                                                 <div class="views-field views-field-nothing">
                                                     <div class="field-content col-lg-12">
-                                                        <div class="view-wrapper" style="min-height:325px">
+                                                        <div class="view-wrapper" style="min-height:350px">
                                                             <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient" style="height:165px;">
                                                                 <h5>DNSSEC Score Breakdown</h5>
                                                                 <table width="100%" class="dnssec-table" aria-label="DNSSEC Score Breakdown Table">
@@ -511,10 +511,10 @@ print "$output4<br><div class='col-lg-12 text-center clearfix'><span style='colo
                                 </div>
                                 <br clear="all"/>
                                 <div class="pane-content">
-                                    <div class="view-wrapper" style="min-height:325px">
+                                    <div class="view-wrapper" style="min-height:350px">
                                         <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                                             <div class="view-empty">
-                                                <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient pie-chart" >
+                                                <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient min-330 pie-chart" >
                                                     <div class ="col-md-12 col-lg-12 nopadding" >
                                                        <h5>On-Site Search Engine Status Breakdown</h5>
                                                     </div>
@@ -534,7 +534,7 @@ $searchenginestatus = $agencydata['searchenginestatus'];
                                                         </tr>
                                                     </table><span style="font-size:12px;">(Note: website redirects are excluded)</span>
                                                 </div>
-                                                <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient min-300 second bar-chart" >
+                                                <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient min-330 second bar-chart" >
                                                     <div class ="col-md-12 col-lg-12 nopadding" >
                                                        <h5>On-Site Search Engine Breakdown</h5>
                                                     </div>
@@ -556,7 +556,7 @@ foreach ($agencydata['searchenginedata'] as $skey => $sval) {
                                             </div>
 
 
-
+                                            <div class="clearfix">&nbsp;</div>
                                         </div>
                                     </div>
                                     <div class="view-button clearfix"><div class="row text-center">

@@ -2,7 +2,7 @@ import requests, csv, sys, urllib3
 from datetime import datetime, timedelta
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-allDomains = "https://raw.githubusercontent.com/GSA/data/master/dotgov-domains/current-federal.csv" #source for domain list
+allDomains = "https://raw.githubusercontent.com/cisagov/dotgov-data/main/current-federal.csv"
 data = []
 
 #download csv file contents
