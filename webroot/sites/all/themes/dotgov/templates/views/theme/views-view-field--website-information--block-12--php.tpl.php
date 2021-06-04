@@ -71,9 +71,9 @@
 <div class="col-lg-6">
     <?php
     if($row->field_field_search_status['0']['raw']['value'] == "1") {
-      $searchscore = "Yes";
+      $searchscore = "Detected";
     } elseif($row->field_field_search_status['0']['raw']['value'] == "0") {
-      $searchscore = "No";
+      $searchscore = "Not Detected";
     } else {
       $searchscore = "NA";
     }
