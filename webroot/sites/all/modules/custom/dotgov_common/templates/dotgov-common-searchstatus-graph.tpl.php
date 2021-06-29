@@ -17,19 +17,19 @@ else
 
         var data = google.visualization.arrayToDataTable([
             ['Type', 'Number'],
-            ['On-Site Search Available',     <?=$search_available?>],
-            ['On-Site Search Not Available',      <?=$search_notavailable?>],
+            ['On-Site Search Detected',     <?=$search_available?>],
+            ['On-Site Search Not Detected',      <?=$search_notavailable?>],
         ]);
         var options = {
-            title: 'On-Site Search Engine Status Breakdown',
             colors: ['#29633a', '#ac0600'],
+            backgroundColor: {fill:'transparent'},
             sliceVisibilityThreshold: 0,
             dataLabels: {
                 enabled: true
             },
             showInLegend: true,
             chartArea:{height:'50%',width:'100%'},
-            legend: 'none'
+            legend: 'left'
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart3'));
@@ -37,4 +37,3 @@ else
         chart.draw(data, options);
     }
 </script>
-
