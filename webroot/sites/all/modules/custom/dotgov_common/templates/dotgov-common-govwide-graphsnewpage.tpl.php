@@ -19,8 +19,8 @@
    .min-295 {
    min-height: 295px;
    }
-   .min-300 {
-   min-height: 300px;
+   .min-330 {
+   min-height: 330px;
    }
 </style>
 <?php
@@ -62,7 +62,7 @@
    dotgov_common_tooltip("tooltip9", "id");
    dotgov_common_tooltip("tooltip8", "id");
    dotgov_common_tooltip("tooltip10", "id");
-   
+
    $mobperf_arr = array($agencydata['good_nos'], $agencydata['improve_nos'], $agencydata['poor_nos'], $agencydata['data_na_nos']);
    $mobperf_arr = dotgov_common_get_percentage($mobperf_arr, $agency_website_num);
    $mobusab_arr = array($agencydata['friendly_nos'], $agencydata['nonfriendly_nos'], $agencydata['data_na_usab_nos']);
@@ -334,7 +334,7 @@
                               <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
                                  <div class="views-field views-field-nothing">
                                     <div class="field-content col-lg-12">
-                                       <div class="view-wrapper" style="min-height:325px">
+                                       <div class="view-wrapper" style="min-height:350px">
                                           <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient" style="height:200px;">
                                              <h5>DNSSEC Score Breakdown</h5>
                                              <table width="100%" class="dnssec-table" aria-label="DNSSEC Score Breakdown Table">
@@ -485,11 +485,35 @@
                      </div>
                      <br clear="all" />
                      <div class="pane-content">
-                        <div class="view-wrapper" style="min-height:325px">
+                        <div class="view-wrapper" style="min-height:350px">
                            <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                               <div class="view-empty">
-                                 <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient pie-chart" >
+                                 <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient min-330 pie-chart" >
+                                   <div class ="col-md-12 col-lg-12 nopadding" >
+                                      <h5>On-Site Search Engine Status Breakdown</h5>
+                                   </div>
                                     <div id="piechart3"></div>
+                                    <?php print $agencydata['searchenginestatus_graph'];
+                                       //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines by category</span>";
+                                       $searchenginestatus = $agencydata['searchenginestatus'];
+                                       ?>
+                                     <table  aria-label="On-Site Search Engine Breakdown Table">
+                                       <tr style="background-color: #215393;color: white;">
+                                          <td> On-Site Search Detected</td>
+                                          <td>On-Site Search Not Detected</td>
+                                       </tr>
+                                       <tr>
+                                          <td><?=($searchenginestatus['search_available'] == "") ? 0 : $searchenginestatus['search_available']?></td>
+                                          <td><?=($searchenginestatus['search_notavailable'] == "") ? 0 : $searchenginestatus['search_notavailable']?></td>
+                                       </tr>
+                                    </table>
+                                    <span style="font-size:12px;">(Note: website redirects are excluded)</span>
+                                 </div>
+                                 <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient min-330 second bar-chart" >
+                                   <div class ="col-md-12 col-lg-12 nopadding" >
+                                      <h5>On-Site Search Engine Breakdown</h5>
+                                   </div>
+                                    <div id="piechart2"></div>
                                     <?php print $agencydata['searchengines_graph'];
                                        //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines</span>";
                                        ?>
@@ -504,24 +528,6 @@
                                           }
                                           ?>
                                     </table>
-                                 </div>
-                                 <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient min-300 second bar-chart" >
-                                    <div id="piechart2"></div>
-                                    <?php print $agencydata['searchenginestatus_graph'];
-                                       //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines by category</span>";
-                                       $searchenginestatus = $agencydata['searchenginestatus'];
-                                       ?>
-                                     <table  aria-label="On-Site Search Engine Breakdown Table">
-                                       <tr style="background-color: #215393;color: white;">
-                                          <td> On-Site Search Available</td>
-                                          <td>On-Site Search Not Available</td>
-                                       </tr>
-                                       <tr>
-                                          <td><?=($searchenginestatus['search_available'] == "") ? 0 : $searchenginestatus['search_available']?></td>
-                                          <td><?=($searchenginestatus['search_notavailable'] == "") ? 0 : $searchenginestatus['search_notavailable']?></td>
-                                       </tr>
-                                    </table>
-                                    <span style="font-size:12px;">(Note: website redirects are excluded)</span>
                                  </div>
                               </div>
                               <div class="clearfix">&nbsp;</div>
@@ -1380,32 +1386,32 @@
                                           }
                                        </script>
                                     </div>
-                                 </div>
-                                 <table style="width:100%;" aria-label="USWDS Code Table">
-                                    <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
-                                    <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
-                                    <tr>
-                                       <td> Websites with USWDS code detected<font style="font-size: larger;font-color:blue;">
-                                          </font>
-                                       </td>
-                                       <td><?=dotgov_common_getColor($agencydata['uswds_compliant'], '#66746a', $uswds_arr[0])?></td>
-                                       </td>
-                                    </tr>
-                                    <tr>
-                                       <td>Websites without USWDS code detected<font style="font-size: larger;font-color:blue;">
-                                          </font>
-                                       </td>
-                                       <td><?=dotgov_common_getColor($agencydata['uswds_noncompliant'], '#8ac99c', $uswds_arr[1])?></td>
-                                       </td>
-                                    </tr>
-                                    <tr>
-                                       <td>Total</td>
-                                       <td><span style="font-weight:bold;"><?=$agencydata['uswds_compliant'] + $agencydata['uswds_noncompliant'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
-                                    </tr>
-                                 </table>
-                                 <div class="col-xs-12 clearfix">
-                                    <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are
-                                    excluded)</span>
+                                    <table style="width:100%;" aria-label="USWDS Code Table">
+                                       <th style="background-color: #215393;color: white;border: 1px;"> Breakdown </th>
+                                       <th style="background-color: #215393;color: white;border: 1px;"> Websites </th>
+                                       <tr>
+                                          <td> Websites with USWDS code detected<font style="font-size: larger;font-color:blue;">
+                                             </font>
+                                          </td>
+                                          <td><?=dotgov_common_getColor($agencydata['uswds_compliant'], '#66746a', $uswds_arr[0])?></td>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td>Websites without USWDS code detected<font style="font-size: larger;font-color:blue;">
+                                             </font>
+                                          </td>
+                                          <td><?=dotgov_common_getColor($agencydata['uswds_noncompliant'], '#8ac99c', $uswds_arr[1])?></td>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td>Total</td>
+                                          <td><span style="font-weight:bold;"><?=$agencydata['uswds_compliant'] + $agencydata['uswds_noncompliant'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
+                                       </tr>
+                                    </table>
+                                    <div class="col-xs-12 clearfix">
+                                       <span class="text-center col-xs-12" style="font-size:10px;">(Note: website redirects are
+                                       excluded)</span>
+                                    </div>
                                  </div>
                               </div>
 

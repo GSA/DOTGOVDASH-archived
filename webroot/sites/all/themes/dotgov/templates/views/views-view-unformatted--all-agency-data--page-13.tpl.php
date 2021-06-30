@@ -20,8 +20,8 @@
         min-height: 295px;
     }
 
-    .min-300 {
-        min-height: 300px;
+    .min-330 {
+        min-height: 330px;
     }
 
 </style>
@@ -171,7 +171,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                         <div id="piechartmob" style="margin-top:-17px;height:140px;"></div>
                                         <?php print $agencydata['ag_mob_chart'];?>
                                       </div>
-                                      <table style="width:100%" aria-label="Mobile Performance Breakdown Table"> 
+                                      <table style="width:100%" aria-label="Mobile Performance Breakdown Table">
                                         <th style="background-color: #215393;color: white;"> Breakdown </th>
                                         <th style="background-color: #215393;color: white;"> Websites </th>
                                         <tr>
@@ -363,7 +363,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                             <div class="views-row views-row-1 views-row-odd views-row-first views-row-last row clearfix">
                                                 <div class="views-field views-field-nothing">
                                                     <div class="field-content col-lg-12">
-                                                        <div class="view-wrapper" style="min-height:325px">
+                                                        <div class="view-wrapper" style="min-height:350px">
                                                             <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient" style="height:165px;">
                                                                 <h5>DNSSEC Score Breakdown</h5>
                                                                 <table width="100%" class="dnssec-table" aria-label="DNSSEC Score Breakdown Table">
@@ -511,11 +511,34 @@ print "$output4<br><div class='col-lg-12 text-center clearfix'><span style='colo
                                 </div>
                                 <br clear="all"/>
                                 <div class="pane-content">
-                                    <div class="view-wrapper" style="min-height:325px">
+                                    <div class="view-wrapper" style="min-height:350px">
                                         <div class="view  view-display-id-block_9 view-dom-id-0e17f9248601bc7d12258e818483f4b0">
                                             <div class="view-empty">
-                                                <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient pie-chart" >
+                                                <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient min-330 pie-chart" >
+                                                    <div class ="col-md-12 col-lg-12 nopadding" >
+                                                       <h5>On-Site Search Engine Status Breakdown</h5>
+                                                    </div>
                                                     <div id="piechart3"></div>
+                                                    <?php print $agencydata['searchenginestatus_graph'];
+//print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines by category</span>";
+$searchenginestatus = $agencydata['searchenginestatus'];
+?>
+                                                    <table  aria-label="On-Site Search Engine Breakdown Table">
+                                                        <tr style="background-color: #215393;color: white;">
+                                                            <td> On-Site Search Detected</td>
+                                                            <td>On-Site Search Not Detected</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><?=($searchenginestatus['search_available'] == "") ? 0 : $searchenginestatus['search_available']?></td>
+                                                            <td><?=($searchenginestatus['search_notavailable'] == "") ? 0 : $searchenginestatus['search_notavailable']?></td>
+                                                        </tr>
+                                                    </table><span style="font-size:12px;">(Note: website redirects are excluded)</span>
+                                                </div>
+                                                <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient min-330 second bar-chart" >
+                                                    <div class ="col-md-12 col-lg-12 nopadding" >
+                                                       <h5>On-Site Search Engine Breakdown</h5>
+                                                    </div>
+                                                    <div id="piechart2"></div>
                                                     <?php print $agencydata['searchengines_graph'];
 //print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines</span>";
 ?>
@@ -529,29 +552,11 @@ foreach ($agencydata['searchenginedata'] as $skey => $sval) {
     print "<tr style='text-transform: capitalize;'><td>" . ucfirst($skey) . "</td><td align='center'>   $sval</td> </tr>";
 }
 ?>
-                                                    </table>
-                                                </div>
-                                                <div class="col-xs-12 col-md-12 col-lg-6 grey-gradient min-300 second bar-chart" >
-
-                                                    <div id="piechart2"></div>
-                                                    <?php print $agencydata['searchenginestatus_graph'];
-//print "<span style='color:#29643a; font-size: 12px;font-style: italic;'>Above graph shows the breakdown of On-Site Search Engines by category</span>";
-$searchenginestatus = $agencydata['searchenginestatus'];
-?>
-                                                    <table  aria-label="On-Site Search Engine Breakdown Table">
-                                                        <tr style="background-color: #215393;color: white;">
-                                                            <td> On-Site Search Available</td>
-                                                            <td>On-Site Search Not Available</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><?=($searchenginestatus['search_available'] == "") ? 0 : $searchenginestatus['search_available']?></td>
-                                                            <td><?=($searchenginestatus['search_notavailable'] == "") ? 0 : $searchenginestatus['search_notavailable']?></td>
-                                                        </tr>
-                                                    </table><span style="font-size:12px;">(Note: website redirects are excluded)</span> </div>
+                                                    </table></div>
                                             </div>
+
+
                                             <div class="clearfix">&nbsp;</div>
-
-
                                         </div>
                                     </div>
                                     <div class="view-button clearfix"><div class="row text-center">
