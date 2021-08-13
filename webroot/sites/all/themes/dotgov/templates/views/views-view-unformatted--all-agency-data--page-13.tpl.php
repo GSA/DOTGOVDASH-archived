@@ -62,10 +62,10 @@ $agency_uswds_score = round(db_query("select avg(c.field_uswds_score_value) as a
 
 $agencynode = node_load(arg(1));
 
-$mobperf_arr = array($agencydata['good'], $agencydata['improve'], $agencydata['poor'], $agencydata['data_na']);
-$mobperf_arr = dotgov_common_get_percentage($mobperf_arr, $agency_website_num);
-$mobusab_arr = array($agencydata['friendly'], $agencydata['nonfriendly'], $agencydata['data_na_usab']);
-$mobusab_arr = dotgov_common_get_percentage($mobusab_arr, $agency_website_num);
+$mobperf_arr = array($agencydata['good'], $agencydata['improve'], $agencydata['poor']);
+$mobperf_arr = dotgov_common_get_percentage($mobperf_arr, $agencydata['good']+$agencydata['improve']+$agencydata['poor']);
+$mobusab_arr = array($agencydata['friendly'], $agencydata['nonfriendly']);
+$mobusab_arr = dotgov_common_get_percentage($mobusab_arr, $agencydata['friendly']+$agencydata['nonfriendly']);
 
 $dnssec_arr = array($agencydata['dns_compliant'], $agencydata['dns_noncompliant']);
 $dnssec_arr = dotgov_common_get_percentage($dnssec_arr, $agency_website_num);
@@ -165,7 +165,6 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                         <span class="dot good"></span>Good<br/>
                                         <span class="dot avg"></span>Needs Improvement <br/>
                                         <span class="dot low"></span>Poor <br/>
-                                        <span class="dot na"></span>Data Not Available<br/>
                                       </div>
                                       <div class="col-lg-6 col-md-6 nopadding">
                                         <div id="piechartmob" style="margin-top:-17px;height:140px;"></div>
@@ -187,12 +186,8 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                           <td><?=dotgov_common_getColor($agencydata['poor'], '#ae0100', $mobperf_arr[2])?></td>
                                         </tr>
                                         <tr>
-                                          <td>Data Not Available</td>
-                                          <td><?=dotgov_common_getColor($agencydata['data_na'], '#337ab7', $mobperf_arr[3])?></td>
-                                        </tr>
-                                        <tr>
                                           <td>Total</td>
-                                          <td><span style="font-weight:bold;"><?=$agency_website_num;?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
+                                          <td><span style="font-weight:bold;"><?=$agencydata['good']+$agencydata['improve']+$agencydata['poor'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                         </tr>
                                       </table>
                                     </div>
@@ -203,7 +198,6 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                       <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 10px">
                                         <span class="dot good"></span>Mobile Friendly <br/>
                                         <span class="dot low"></span>Not Mobile Friendly <br/>
-                                        <span class="dot na"></span>Data Not Available <br/>
                                       </div>
                                       <div class="col-lg-6 col-md-6 nopadding">
                                         <div id="piechartmobusab" style="margin-top:-17px;height:140px;"></div>
@@ -221,12 +215,8 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                           <td><?=dotgov_common_getColor($agencydata['nonfriendly'], '#ae0100', $mobusab_arr[1])?></td>
                                         </tr>
                                         <tr>
-                                          <td>Data Not Available</td>
-                                          <td><?=dotgov_common_getColor($agencydata['data_na_usab'], '#337ab7', $mobusab_arr[2])?></td>
-                                        </tr>
-                                        <tr>
                                           <td>Total</td>
-                                          <td><span style="font-weight:bold;"><?=$agency_website_num;?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
+                                          <td><span style="font-weight:bold;"><?=$agencydata['friendly']+$agencydata['nonfriendly'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                         </tr>
                                       </table>
                                     </div>
@@ -235,7 +225,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                               </div>
                               <br clear="all" />
                               <div class='col-lg-12 text-center clearfix'><span style='color:#29643a; font-size: 10px;font-style: italic;'>
-                                       Above graphs show the breakdown of Mobile Performance and Mobile Usability</span></div>
+                                       Above graphs show the breakdown of Mobile Performance and Mobile Usability. The graphs and breakdowns only include websites that have data. <?=$agencydata['data_na'];?> websites do not have data for Mobile Performance and <?=$agencydata['nonfriendly'];?> websites do not have data for Mobile Usability.</span></div>
                               <br clear="all" />
                               <div class="view-button clearfix">
                                 <div class="row text-center">
@@ -320,7 +310,7 @@ if ($agencynode->field_agency_logo['und'][0]['uri'] != '') {
                                                 </script>
                                                 <?php
                                                     if (($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydata['ag_miss_image']) != 0) {
-                                                        print "<div class='col-lg-12 text-center clearfix'><br clear=\"all\" /><span style='color:#29643a; font-size: 10px;font-style: italic;'>
+                                                        print "<div class='col-lg-12 text-center clearfix'><br clear=\"all\" /><br clear=\"all\" /><span style='color:#29643a; font-size: 10px;font-style: italic;'>
                                                     Above graph shows the breakdown of Accessibility Issues by category</span></div>
                                                     ";
                                                     }
@@ -525,8 +515,8 @@ $searchenginestatus = $agencydata['searchenginestatus'];
 ?>
                                                     <table  aria-label="On-Site Search Engine Breakdown Table">
                                                         <tr style="background-color: #215393;color: white;">
-                                                            <td> On-Site Search Detected</td>
-                                                            <td>On-Site Search Not Detected</td>
+                                                            <td> On-Site Search Available</td>
+                                                            <td>On-Site Search Not Available</td>
                                                         </tr>
                                                         <tr>
                                                             <td><?=($searchenginestatus['search_available'] == "") ? 0 : $searchenginestatus['search_available']?></td>
