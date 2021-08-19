@@ -279,10 +279,25 @@
                                              div.appendChild(svgTags);
                                              canvg(c, div.innerHTML);
                                        }
+                                       window.onload = function() {
+                                        function myFunction(x) {
+                                          if (x.matches && !document.getElementById('new-br')) { //less than 1342 and no br. create br
+                                              var e = document.createElement('br');
+                                              e.setAttribute("id", "new-br");
+                                              e.setAttribute("clear", "all");
+                                              document.getElementById('br-height').insertBefore(e, document.getElementById('br-height').childNodes[2]);
+                                          } else if (document.getElementById('new-br')) { //greater than 1342 and br exists, remove it
+                                              document.getElementById('new-br').remove();
+                                          }
+                                        }
+                                        var x = window.matchMedia("(max-width: 1362px)");
+                                        myFunction(x); // Call listener function at run time
+                                        x.addListener(myFunction); // Attach listener function on state changes
+                                      }
                                     </script>
                                     <?php
                                        if (($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydata['ag_miss_image']) != 0) {
-                                          print "<div class='col-lg-12 text-center clearfix'><br clear=\"all\" /><br clear=\"all\" /><span style='color:#29643a; font-size: 10px;font-style: italic;'>
+                                          print "<div class='col-lg-12 text-center clearfix' id='br-height'><br clear=\"all\" /><br clear=\"all\" /><span style='color:#29643a; font-size: 10px;font-style: italic;'>
                                                                               Above graph shows the breakdown of Accessibility Issues by category</span></div>
                                                                               ";
                                        }
