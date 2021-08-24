@@ -63,10 +63,10 @@
    dotgov_common_tooltip("tooltip8", "id");
    dotgov_common_tooltip("tooltip10", "id");
 
-   $mobperf_arr = array($agencydata['good_nos'], $agencydata['improve_nos'], $agencydata['poor_nos'], $agencydata['data_na_nos']);
-   $mobperf_arr = dotgov_common_get_percentage($mobperf_arr, $agency_website_num);
-   $mobusab_arr = array($agencydata['friendly_nos'], $agencydata['nonfriendly_nos'], $agencydata['data_na_usab_nos']);
-   $mobusab_arr = dotgov_common_get_percentage($mobusab_arr, $agency_website_num);
+   $mobperf_arr = array($agencydata['good_nos'], $agencydata['improve_nos'], $agencydata['poor_nos']);
+   $mobperf_arr = dotgov_common_get_percentage($mobperf_arr, $agencydata['total_non_na_websites']);
+   $mobusab_arr = array($agencydata['friendly_nos'], $agencydata['nonfriendly_nos']);
+   $mobusab_arr = dotgov_common_get_percentage($mobusab_arr, $agencydata['friendly_nos']+$agencydata['nonfriendly_nos']);
 
    $dnssec_arr = array($agencydata['dns_compliant'], $agencydata['dns_noncompliant']);
    $dnssec_arr = dotgov_common_get_percentage($dnssec_arr, $agency_website_num);
@@ -127,7 +127,6 @@
                                     <span class="dot good"></span>Good<br/>
                                     <span class="dot avg"></span>Needs Improvement <br/>
                                     <span class="dot low"></span>Poor <br/>
-                                    <span class="dot na"></span>Data Not Available<br/>
                                   </div>
                                   <div class="col-lg-6 col-md-6 nopadding">
                                     <div id="piechart1" style="margin-top:-17px;height:140px;"></div>
@@ -149,12 +148,8 @@
                                       <td><?=dotgov_common_getColor($agencydata['poor_nos'], '#ae0100', $mobperf_arr[2])?></td>
                                     </tr>
                                     <tr>
-                                      <td>Data Not Available</td>
-                                      <td><?=dotgov_common_getColor($agencydata['data_na_nos'], '#337ab7', $mobperf_arr[3])?></td>
-                                    </tr>
-                                    <tr>
                                       <td>Total</td>
-                                      <td><span style="font-weight:bold;"><?=$agency_website_num;?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
+                                      <td><span style="font-weight:bold;"><?=$agencydata['total_non_na_websites'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                     </tr>
                                   </table>
                                 </div>
@@ -165,7 +160,6 @@
                                   <div class="col-lg-6 col-md-6" style="padding-right:0px;margin-top:15px;padding-left:10px;font-size: 12px">
                                     <span class="dot good"></span>Mobile Friendly <br/>
                                     <span class="dot low"></span>Not Mobile Friendly <br/>
-                                    <span class="dot na"></span>Data Not Available <br/>
                                   </div>
                                   <div class="col-lg-6 col-md-6 nopadding">
                                     <div id="piechartusab" style="margin-top:-17px;height:140px;"></div>
@@ -183,12 +177,8 @@
                                       <td><?=dotgov_common_getColor($agencydata['nonfriendly_nos'], '#ae0100', $mobusab_arr[1])?></td>
                                     </tr>
                                     <tr>
-                                      <td>Data Not Available</td>
-                                      <td><?=dotgov_common_getColor($agencydata['data_na_usab_nos'], '#337ab7', $mobusab_arr[2])?></td>
-                                    </tr>
-                                    <tr>
                                       <td>Total</td>
-                                      <td><span style="font-weight:bold;"><?=$agency_website_num;?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
+                                      <td><span style="font-weight:bold;"><?=$agencydata['friendly_nos']+$agencydata['nonfriendly_nos'];?> (100 %) <a style="position: absolute;" data-toggle="tooltip" title="Percentages may not total 100 due to rounding.">*</a></span></td>
                                     </tr>
                                   </table>
                                 </div>
@@ -197,7 +187,7 @@
                           </div>
                           <br clear="all" />
                           <div class='col-lg-12 text-center clearfix'><span style='color:#29643a; font-size: 10px;font-style: italic;'>
-                                       Above graphs show the breakdown of Mobile Performance and Mobile Usability</span></div>
+                                       Above graphs show the breakdown of Mobile Performance and Mobile Usability. The graphs and breakdowns only include websites that have data. <?=$agencydata['data_na_nos'];?> websites do not have data for Mobile Performance and <?=$agencydata['data_na_usab_nos'];?> websites do not have data for Mobile Usability.</span></div>
                           <br clear="all" />
                           <div class="view-button clearfix">
                             <div class="row text-center">
@@ -289,10 +279,25 @@
                                              div.appendChild(svgTags);
                                              canvg(c, div.innerHTML);
                                        }
+                                       window.onload = function() {
+                                        function myFunction(x) {
+                                          if (x.matches && !document.getElementById('new-br')) { //less than 1342 and no br. create br
+                                              var e = document.createElement('br');
+                                              e.setAttribute("id", "new-br");
+                                              e.setAttribute("clear", "all");
+                                              document.getElementById('br-height').insertBefore(e, document.getElementById('br-height').childNodes[2]);
+                                          } else if (document.getElementById('new-br')) { //greater than 1342 and br exists, remove it
+                                              document.getElementById('new-br').remove();
+                                          }
+                                        }
+                                        var x = window.matchMedia("(max-width: 1362px)");
+                                        myFunction(x); // Call listener function at run time
+                                        x.addListener(myFunction); // Attach listener function on state changes
+                                      }
                                     </script>
                                     <?php
                                        if (($agencydata['ag_col_contrast'] + $agencydata['ag_html_attrib'] + $agencydata['ag_miss_image']) != 0) {
-                                          print "<div class='col-lg-12 text-center clearfix'><br clear=\"all\" /><span style='color:#29643a; font-size: 10px;font-style: italic;'>
+                                          print "<div class='col-lg-12 text-center clearfix' id='br-height'><br clear=\"all\" /><br clear=\"all\" /><span style='color:#29643a; font-size: 10px;font-style: italic;'>
                                                                               Above graph shows the breakdown of Accessibility Issues by category</span></div>
                                                                               ";
                                        }
@@ -499,8 +504,8 @@
                                        ?>
                                      <table  aria-label="On-Site Search Engine Breakdown Table">
                                        <tr style="background-color: #215393;color: white;">
-                                          <td> On-Site Search Detected</td>
-                                          <td>On-Site Search Not Detected</td>
+                                          <td> On-Site Search Available</td>
+                                          <td>On-Site Search Not Available</td>
                                        </tr>
                                        <tr>
                                           <td><?=($searchenginestatus['search_available'] == "") ? 0 : $searchenginestatus['search_available']?></td>
