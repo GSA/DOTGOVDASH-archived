@@ -83,10 +83,17 @@ function cas_attributes_cas_user_presave(&$edit, $account) {
   if (!empty($mapping)) {
     // Get the users attributes.
     $user_attributes = cas_phpcas_attributes($data['cas']);
-//Assign the agency
-$result = db_query("SELECT n.nid FROM {node} n WHERE n.title LIKE :title AND n.type = :type", array(":title"=> '%' . db_like($user_attributes['Agency-Name']), ":type"=> 'agency'));
-$agencynid = $result->fetchField();
-$edit['field_web_agency_id']['und'][0]['nid'] = $agencynid;
+    //Assign the agency
+    if (strpos($user_attributes['Agency-Name'], '--') !== false) {
+      $agencyarr = explode("--",$user_attributes['Agency-Name']);
+      $agencyname = $agencyarr[0];
+    }
+    else{
+      $agencyname = $user_attributes['Agency-Name'];
+    }
+    $result = db_query("SELECT n.nid FROM {node} n WHERE n.title LIKE :title AND n.type = :type", array(":title"=> '%' . db_like($agencyname), ":type"=> 'agency'));
+    $agencynid = $result->fetchField();
+    $edit['field_web_agency_id']['und'][0]['nid'] = $agencynid;
 
     // Allow other modules to manipulate the attribute values.
     // Can't use module_invoke_all() because we need to pass byref.
@@ -107,8 +114,8 @@ $edit['field_web_agency_id']['und'][0]['nid'] = $agencynid;
         }
         else {
           $cas_user_roles[] = $user_attributes[$attribute];
-	 // split apart comma delimited MAX groups from GroupList attribute
-    	$cas_user_roles = array_merge($cas_user_roles, explode(",",$user_attributes[$attribute]));
+          // split apart comma delimited MAX groups from GroupList attribute
+          $cas_user_roles = array_merge($cas_user_roles, explode(",",$user_attributes[$attribute]));
         }
       }
     }
