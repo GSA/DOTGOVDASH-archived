@@ -22,7 +22,7 @@
 ?>
 	<h3>
 		<?php if (!empty($title) || !empty($caption)): ?>
-			<?php print $caption . $title; ?>
+			<?php print str_replace("Agency: ", "", $title); ?>
 		<?php endif; ?>
 	</h3>
 	<div class="section">
