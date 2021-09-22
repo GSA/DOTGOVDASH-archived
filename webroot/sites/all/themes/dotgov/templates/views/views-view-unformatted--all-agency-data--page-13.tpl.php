@@ -530,8 +530,8 @@ $searchenginestatus = $agencydata['searchenginestatus'];
 ?>
                                                     <table  aria-label="On-Site Search Engine Breakdown Table">
                                                         <tr style="background-color: #215393;color: white;">
-                                                            <td> On-Site Search Available</td>
-                                                            <td>On-Site Search Not Available</td>
+                                                            <td style="padding-right: 12px;"> On-Site Search Detected</td>
+                                                            <td>On-Site Search Not Detected</td>
                                                         </tr>
                                                         <tr>
                                                             <td><?=($searchenginestatus['search_available'] == "") ? 0 : $searchenginestatus['search_available']?></td>
