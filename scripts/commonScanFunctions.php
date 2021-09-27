@@ -3273,11 +3273,11 @@ function runSearchEngineScan(){
                     //$html = shell_exec("curl -L -k --silent https://".trim($result->title));
                     //$html = shell_exec("wget  --no-check-certificate --trust-server-names -qO- --max-redirect=1 -T 5 -t 1 ".$weburl);
                     //$html = shell_exec("phantomjs ../scripts/phantomjs_website.js \"".$weburl."/\"");
-                    if (in_array($result->title, $curl_domains)) {
+                  //  if (in_array($result->title, $curl_domains)) {
                         $html = shell_exec("timeout 15 curl -L -k --silent https://" . trim($result->title));
-                    } else {
-                        $html = shell_exec("timeout 15 google-chrome --no-sandbox --headless --disable-gpu --dump-dom --ignore-certificate-errors --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36\"  --timeout=15000  \"" . $weburl . "/\"");
-                    }
+//                    } else {
+//                        $html = shell_exec("timeout 15 google-chrome --no-sandbox --headless --disable-gpu --dump-dom --ignore-certificate-errors --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36\"  --timeout=15000  \"" . $weburl . "/\"");
+//                    }
 
                     print_r($html);
                     $dom = new DomDocument;
