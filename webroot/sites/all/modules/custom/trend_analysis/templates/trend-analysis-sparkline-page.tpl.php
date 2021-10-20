@@ -1,5 +1,5 @@
 <?php
-drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
+drupal_add_js("https://code.highcharts.com/modules/no-data-to-display.js");
 $score_arr = array('trends_ssl','trends_https','trends_mobile_spark','agency_mob');
 $agency_score_arr = array('agency_https','agency_dap','agency_dnssec','agency_ipv6','agency_m15','agency_rc4');
 $agency_color_arr = array('agency_mob','agency_https','agency_dap','agency_dnssec','agency_ipv6','agency_m15','agency_rc4');

@@ -1,5 +1,5 @@
 <?php
-drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
+drupal_add_js("https://code.highcharts.com/modules/no-data-to-display.js");
 ?>
 <div id="<?=$trend_vars['container']?>"  style="min-width: 300px; min-height: 300px; margin: 0 auto"></div>
 

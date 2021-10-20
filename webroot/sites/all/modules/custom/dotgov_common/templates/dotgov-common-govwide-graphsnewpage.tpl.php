@@ -26,7 +26,7 @@
 <?php
    global $base_url;
 
-   drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
+   drupal_add_js("https://code.highcharts.com/modules/no-data-to-display.jss");
    $labeldesc['avg_https'] = 'HTTPS Score';
    $labeldesc['avg_dap'] = 'DAP Score';
    $labeldesc['avg_mob_overall'] = 'Mobile Overall Score';

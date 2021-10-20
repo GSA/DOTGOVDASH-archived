@@ -29,7 +29,7 @@ $chartseries = array_values($chartdata);
 ?>
 
 <?php
-drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
+drupal_add_js("https://code.highcharts.com/modules/no-data-to-display.js");
 ?>
 <div class="download-pdf">
     <a href="#" onclick="generatePDF('Government wide page.pdf',600,1150,false)"><img src="/sites/all/themes/dotgov/images/pdf-download.svg" style="height: 40px;cursor: pointer;" alt="Download Pdf">

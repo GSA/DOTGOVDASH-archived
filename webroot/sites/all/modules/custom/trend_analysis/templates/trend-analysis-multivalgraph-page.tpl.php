@@ -1,5 +1,5 @@
 <?php
-drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
+drupal_add_js("https://code.highcharts.com/modules/no-data-to-display.js");
 if($trend_vars['blockname'] == 'trends_mobile_chart'){
     $charttitle = "Mobile Trend Analysis Chart";
     $series1name = 'Mobile Overall Score';
