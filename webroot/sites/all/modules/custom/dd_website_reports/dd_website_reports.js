@@ -35,7 +35,7 @@ Drupal.behaviors.myBehavior = {
 		}
 
 	});
-
+  $(".view-all-website-reports-new.view-display-id-page_1 .view-content table").tablesorter( {sortList: [[0,0], [1,0]]} ); 
 
   }
 };
