@@ -5,7 +5,7 @@ route = "/reports/site/data?"
 key = "api_key=CUluXOXEJqFO4Hqlt4YJpAlE8zua2rP3nUcIM2rZ"
 param = "&limit=1"
 
-CSV_URL = "https://raw.githubusercontent.com/GSA/data/master/dotgov-domains/current-federal.csv" #source for domain list
+CSV_URL = "https://raw.githubusercontent.com/cisagov/dotgov-data/main/current-federal.csv"
 
 #to collect one domain, will print output but not save to csv
 if len(sys.argv) == 2:

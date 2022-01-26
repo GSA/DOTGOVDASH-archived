@@ -76,7 +76,7 @@
 </script>
 <?php
 drupal_add_css("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-drupal_set_title("21st Century IDEA Act Government-Wide Dashboard");
+drupal_set_title("21st Century IDEA Government-Wide Dashboard");
 $no_of_agency = $govwidedata['actualdata']['agencynos'];
 $agency_website_num = $govwidedata['actualdata']['websitenos'];
 $agency_dap_score = $govwidedata['actualdata']['avg_dap'];
@@ -111,8 +111,8 @@ $search_engine_data_for_agencygraph = "0,0";
             <div class="row row-no-gutters">
                 <div class="col-sm-12 dashboard-wrap">
                     <div class="col-sm-8 col-md-9 dashboard-left">
-                        <h1>Government-Wide - <span>21st Century IDEA Act Dashboard</span></h1>
-                        <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
+                        <h1>Government-Wide - <span>21st Century IDEA Dashboard</span></h1>
+                        <p class="description">This page provides a snapshot of the 21st Century IDEA conformance across federal government executive branch public-facing websites.</p>
                     </div>
                     <div id="element-to-hide" data-html2canvas-ignore="true" class="col-sm-4 col-md-2 col-md-offset-1 text-right dashboard-right">
                         <!-- <a class="btn disabled" href="#">
@@ -177,7 +177,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                     <p>(Note: Website redirects are excluded. Accessibility Spot Checks include only Color Contrast, HTML Attributes and Missing Image Description Accessibility Issues)</p>
                                 </div>
                                 <div class="col-sm-6 nopadding">
-                                <h4 class="chart-data-title text-center">Total Number of Accessibility Issues for Websites</h4>
+                                <h4 class="chart-data-title text-center">Snapshot: 3 Key Accessibility Issues</h4>
                                     <div class="chart-container" id="chart-1-ref">
                                         <canvas id="chart-gov1" width="250" height="300" aria-label="Charts" role="img"></canvas>
                                     </div>
@@ -188,7 +188,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                      <a href="/ideaact/report/accessibility/websites" class="btn btn-digital explore">Explore</a>
+                                      <a href="/idea/report/accessibility/websites" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -211,7 +211,7 @@ $search_engine_data_for_agencygraph = "0,0";
                                             ]
                                         }],
                                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                                        labels: ['Color Contrast Issues', 'HTML Attribute Issues','Missing Image Description Issues']
+                                        labels: ['Color Contrast Issues', 'HTML Attribute Issues','Missing Image Description']
                                     },
 
                                     // Configuration options go here
@@ -221,7 +221,7 @@ $search_engine_data_for_agencygraph = "0,0";
 
                                         title: {
                                             display: false,
-                                            text: 'Total Number of Accessibility Issues for Websites',
+                                            text: 'Snapshot: 3 Key Accessibility Issues',
                                             fontSize: 18,
                                             fontColor: '#203b5f'
                                         },
@@ -346,7 +346,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                        <a href="/ideaact/govwide/report" class="btn btn-digital explore">Explore</a>
+                                        <a href="/idea/govwide/report" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -705,7 +705,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3 mt-sm-0">
                                 <div class="col-md-6 mb-2">
                                     <div class="explore">
-                                      <a href="/ideaact/govwide/report" class="btn btn-digital explore">Explore</a>
+                                      <a href="/idea/govwide/report" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                             </div>
@@ -776,7 +776,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                      <a href="/ideaact/govwide/report" class="btn btn-digital explore">Explore</a>
+                                      <a href="/idea/govwide/report" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -1146,7 +1146,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3 mt-sm-0">
                                 <div class="col-md-6 mb-2">
                                     <div class="explore">
-                                      <a href="/ideaact/govwide/report" class="btn btn-digital explore">Explore</a>
+                                      <a href="/idea/govwide/report" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                             </div>
@@ -1228,7 +1228,7 @@ $search_engine_data_for_agencygraph = "0,0";
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                      <a href="/ideaact/govwide/report" class="btn btn-digital explore">Explore</a>
+                                      <a href="/idea/govwide/report" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">

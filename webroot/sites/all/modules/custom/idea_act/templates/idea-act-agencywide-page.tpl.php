@@ -106,8 +106,8 @@ $agency_data['agency_title'] = $agencynode->title;
             <div class="row row-no-gutters">
                 <div class="col-md-12 dashboard-wrap">
                     <div class="col-md-9 dashboard-left">
-                        <h1><?=$agencynode->title?> - <span>21st Century IDEA Act Dashboard</span></h1>
-                        <p class="description">This page provides a snapshot of the 21st Century IDEA Act conformance across federal government executive branch public-facing websites.</p>
+                        <h1><?=$agencynode->title?> - <span>21st Century IDEA Dashboard</span></h1>
+                        <p class="description">This page provides a snapshot of the 21st Century IDEA conformance across federal government executive branch public-facing websites.</p>
                     </div>
                     <div id="element-to-hide" data-html2canvas-ignore="true" class="col-md-2 col-md-offset-1 text-right dashboard-right">
                         <!-- <a href="#">
@@ -176,14 +176,14 @@ $agency_data['agency_title'] = $agencynode->title;
                                 </div>
                                 <div class="col-sm-6 nopadding">
                                   <h4 class="text-center chart-data-title"> <?= $agency_data['agency_title']?> </h4>
-                                  <h4 class="text-center chart-data-title">Total Number of Accessibility Issues </h4>
+                                  <h4 class="text-center chart-data-title">Snapshot: 3 Key Accessibility Issues</h4>
                                     <?php print $agency_data['access-spot-checks-chart'];?>
                                 </div>
                             </div>
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                      <a href="/ideaact/report/accessibility/websites?field_web_agency_id_nid_selective=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                      <a href="/idea/report/accessibility/websites?field_web_agency_id_nid_selective=<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
@@ -207,7 +207,7 @@ $agency_data['agency_title'] = $agencynode->title;
                                           ]
                                       }],
                                       // These labels appear in the legend and in the tooltips when hovering different arcs
-                                      labels: ['Color Contrast Issues', 'HTML Attribute Issues','Missing Image Description Issues']
+                                      labels: ['Color Contrast Issues', 'HTML Attribute Issues','Missing Image Description']
                                   },
                                   // Configuration options go here
                                   options: {
@@ -338,7 +338,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                      <a href="/ideaact/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                      <a href="/idea/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
@@ -720,7 +720,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-md-6 mb-2">
                                     <div class="explore">
-                                    <a href="/ideaact/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                    <a href="/idea/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                             </div>
@@ -795,7 +795,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                      <a href="/ideaact/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                      <a href="/idea/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">
@@ -1174,7 +1174,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-md-6 mb-2">
                                     <div class="explore">
-                                      <a href="/ideaact/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                      <a href="/idea/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                             </div>
@@ -1254,7 +1254,7 @@ $agency_data['agency_title'] = $agencynode->title;
                             <div class="card-body relative-position row nmt-3">
                                 <div class="col-sm-6">
                                     <div class="explore mb-2">
-                                      <a href="/ideaact/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
+                                      <a href="/idea/agency-wide/agencyreport/<?=arg(3)?>" class="btn btn-digital explore">Explore</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 legend-container">

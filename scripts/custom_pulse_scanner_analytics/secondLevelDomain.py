@@ -2,7 +2,7 @@ import requests, csv, sys, urllib3
 from datetime import datetime, timedelta
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-allDomains = "https://raw.githubusercontent.com/GSA/data/master/dotgov-domains/current-federal.csv" #source for domain list
+allDomains = "https://raw.githubusercontent.com/cisagov/dotgov-data/main/current-federal.csv"
 data = []
 
 #download csv file contents
@@ -14,7 +14,7 @@ with requests.Session() as s:
     my_list.sort()
 n_list = [] #new list to include only executive agency domains
 for row in my_list:
-    if "Federal Agency - Executive".lower() == row[1].lower():
+    if "Federal - Executive".lower() == row[1].lower():
         n_list.append(row)
 # print(n_list)
 

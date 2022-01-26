@@ -1,5 +1,5 @@
 <?php
-$allDomains = file("https://raw.githubusercontent.com/GSA/data/master/dotgov-domains/current-federal.csv");
+$allDomains = file("https://raw.githubusercontent.com/cisagov/dotgov-data/main/current-federal.csv");
 $data = [];
 foreach ($allDomains as $line) {
   $data = str_getcsv($line);

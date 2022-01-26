@@ -107,7 +107,7 @@ function ideaact_get_website_data($websiteid){
       $websitedata['Freestatus'] = 'Data Not Available';
     }
 
-  $websitedata['EnforceHttps'] =$httpsnode -> field_enforce_https['und'][0]['value'];
+  $websitedata['EnforceHttps'] = ucfirst($httpsnode -> field_enforce_https['und'][0]['value']);
 
   if ($httpsnode -> field_enforce_https['und'][0]['value']== NULL || $httpsnode -> field_enforce_https['und'][0]['value']== ''){
     $websitedata['EnforceHttps'] = 'Data Not Available';
