@@ -14,7 +14,7 @@ with requests.Session() as s:
     my_list.sort()
 n_list = [] #new list to include only executive agency domains
 for row in my_list:
-    if "Federal Agency - Executive".lower() == row[1].lower():
+    if "Federal - Executive".lower() == row[1].lower():
         n_list.append(row)
 # print(n_list)
 
