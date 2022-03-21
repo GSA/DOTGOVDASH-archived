@@ -140,7 +140,7 @@ implements CAS_Request_RequestInterface
 
         // get the HTTP header with a callback
         curl_setopt($ch, CURLOPT_HEADERFUNCTION, array($this, '_curlReadHeaders'));
-        curl_setopt($ch, CURLOPT_PROXY, 'http://patchproxyr7.gsa.gov:3128');
+        //curl_setopt($ch, CURLOPT_PROXY, 'http://patchproxyr7.gsa.gov:3128');
 
 
         /*********************************************************
