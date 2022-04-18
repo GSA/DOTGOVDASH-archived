@@ -642,9 +642,9 @@ function dotgov_common_getAgencyComplianceData($agencyid){
     //Query to get Preload status  data
     $preloadresults = db_query("select field_preload_status_value,count(field_preload_status_value)  as complnum from node a , field_data_field_preload_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and c.field_web_agency_id_nid=:agencyid and a.type='https_dap_scan_information'  group by field_preload_status_value", array(':agencyid' => $agencyid));
     foreach ($preloadresults as $preloadresult) {
-        if($preloadresult->field_preload_status_value == 'Yes')
+        if(trim($preloadresult->field_preload_status_value) == 'Yes')
             $agencydata['preload_support'] += $preloadresult->complnum;
-        elseif($preloadresult->field_preload_status_value == 'Ready')
+        elseif(trim($preloadresult->field_preload_status_value) == 'Ready')
             $agencydata['preload_readysupport'] += $preloadresult->complnum;
         else
             $agencydata['preload_nosupport'] += $preloadresult->complnum;
@@ -1153,9 +1153,9 @@ function dotgov_common_getAllAgencyComplianceData(){
     //Query to get Preload status  data
     $preloadresults = db_query("select IFNULL(field_preload_status_value, 0) as field_preload_status_value, count(field_preload_status_value) as complnum from node a , field_data_field_preload_status b , field_data_field_web_agency_id c where a.status='1' and a.nid=b.entity_id and a.nid=c.entity_id and b.entity_id=c.entity_id and a.type='https_dap_scan_information'  group by field_preload_status_value", array());
     foreach ($preloadresults as $preloadresult) {
-        if($preloadresult->field_preload_status_value == 'Yes')
+        if(trim($preloadresult->field_preload_status_value) == 'Yes')
             $agencydata['preload_support'] += $preloadresult->complnum;
-        elseif($preloadresult->field_preload_status_value == 'Ready')
+        elseif(trim($preloadresult->field_preload_status_value) == 'Ready')
             $agencydata['preload_readysupport'] += $preloadresult->complnum;
         else
             $agencydata['preload_nosupport'] += $preloadresult->complnum;
