@@ -50,7 +50,10 @@ $outputorig =  	file_create_url($mobsnap['uri']);
 </div>
 
 <div class="col-xs-3 text-center"><h3>Website</h3>
-<p><?php print($row->field_body[0]['rendered']['#markup']); ?></p>
+<p><?php 
+  #print($row->field_body[0]['rendered']['#markup']); 
+  print($row->_field_data['nid']['entity']->title);
+  ?></p>
 </div>
 </div>
 
