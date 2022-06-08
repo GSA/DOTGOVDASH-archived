@@ -178,6 +178,6 @@ drupal_add_js("/sites/all/libraries/highcharts/modules/no-data-to-display.js");
          </div>
       </div>
       <div class="view-footer clearfix" style="margin-top:10px;">
-         <div class="field-content col-lg-6"> <a class="btn btn-primary" href="<?php echo $base_url; ?>/website/all/reports">Complete List </a>&nbsp;( Last scan date: <?=dotgov_common_lastScanDate()?> )</div>
+         <div class="field-content col-lg-6"> <a class="btn btn-primary" href="<?php echo $base_url; ?>/website/all/reports-new">Complete List </a>&nbsp;( Last scan date: <?=dotgov_common_lastScanDate()?> )</div>
       </div>
    </div>
