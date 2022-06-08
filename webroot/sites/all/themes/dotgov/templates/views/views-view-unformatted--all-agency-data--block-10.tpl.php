@@ -53,4 +53,4 @@ foreach($view->style_plugin->rendered_fields[0] as $key=>$val){
 </script>
 <div id="columnchart_material" ></div>
 <span class="field-content col-lg-12"><a href="/content/scoring-methods" title="" data-toggle="tooltip" class="infor" data-original-title="Click Here to see the scoring methods used to calculate the scores"><i class="icon glyphicon glyphicon-info-sign"></i><span class="sr-only">Click Here to see the scoring methods used to calculate the scores</span></a></span>
-<a id="link-all-reports" href="/website/all/reports">Complete List</a>
+<a id="link-all-reports" href="/website/all/reports-new">Complete List</a>
