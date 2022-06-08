@@ -89,6 +89,6 @@ $chartCritval = array_values($chartCrit);
 <h3><?=$agtit ;?></h3>
 <p>Average score of all <?=$totWebsites?> websites scanned</p>
 <div id="columnchart_material"></div>
-<a href="/website/all/reports" id="link-all-reports">Complete List</a> (Last Scan Date: <?=dotgov_common_lastScanDate()?>)</div>
+<a href="/website/all/reports-new" id="link-all-reports">Complete List</a> (Last Scan Date: <?=dotgov_common_lastScanDate()?>)</div>
 <span class="field-content col-lg-12"><a href="/content/scoring-methods" title="" data-toggle="tooltip" class="infor" data-original-title="Click Here to see the scoring methods used to calculate the scores"><i class="icon glyphicon glyphicon-info-sign"></i><span class="sr-only">Click Here to see the scoring methods used to calculate the scores</span></a></span>
 </div>
