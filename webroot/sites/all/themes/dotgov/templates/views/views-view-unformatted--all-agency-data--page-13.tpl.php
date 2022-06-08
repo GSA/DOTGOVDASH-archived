@@ -489,7 +489,7 @@ print "$output4<br><div class='col-lg-12 text-center clearfix'><span style='colo
 
 
                                                             <div class="row text-center">
-                                                                <a class="" title="link for DNSSEC full report" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                                                <a class="" title="link for DNSSEC full report" href="/website/all/reports-new?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
                                                                 <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                                             </div>
 
@@ -728,7 +728,7 @@ print "$output3 <span class='col-xs-12 text-center clearfix' style='color: " . d
                                     </div>
                                     <div class="view-button">
                                         <div class="row text-center">
-                                            <a class="" title="link for htts trend full report" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                            <a class="" title="link for htts trend full report" href="/website/all/reports-new?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
                                             <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                         </div>
                                     </div>
@@ -876,7 +876,7 @@ print "$output2 <span class='col-xs-12 text-center'style='color: " . dotgov_comm
                                                     </div>
                                                     <div class="view-button">
                                                         <div class="row text-center">
-                                                            <a class="" title="link for  M-15-13 Trend full report" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                                            <a class="" title="link for  M-15-13 Trend full report" href="/website/all/reports-new?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
                                                             <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                                         </div>
                                                     </div>
@@ -1025,7 +1025,7 @@ print "$output7 <span class='col-xs-12 nopadding text-center' style='color: " . 
                                                         </div>
                                                         <div class="view-button">
                                                             <div class="row text-center">
-                                                                <a class="" title="link for IPv6 Trend full report" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                                                <a class="" title="link for IPv6 Trend full report" href="/website/all/reports-new?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
                                                                 <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                                             </div>
                                                         </div>
@@ -1197,7 +1197,7 @@ print "$output6 <br><span class='col-xs-12 clearfix text-center' style='color: "
                                     </div>
                                     <div class="view-button">
                                         <div class="row text-center">
-                                            <a class="" title="link for DAP Trend full report" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                            <a class="" title="link for DAP Trend full report" href="/website/all/reports-new?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
                                             <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                         </div>
                                     </div>
@@ -1343,7 +1343,7 @@ print "$output5<br><span class='text-center col-xs-12 nopadding' style='color: "
                                         </div>
                                     </div>
                                     <div class="row text-center">
-                                        <a class="" title="link for Insecure Protocol Trend full report" href="/website/all/reports?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                        <a class="" title="link for Insecure Protocol Trend full report" href="/website/all/reports-new?field_web_agency_id_nid=<?=arg(1)?>"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
                                         <a href="/improve-my-score" title="link for improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                     </div>
 
