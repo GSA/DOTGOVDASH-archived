@@ -56,7 +56,7 @@
                 <tbody>
                 <tr class="odd views-row-first views-row-last">
                     <td class="views-field views-field-field-web-agency-id-1">
-                        <a href="/website/all/reports"><?=$govwidedata['actualdata']['websitenos']?></a>          </td>
+                        <a href="/website/all/reports-new"><?=$govwidedata['actualdata']['websitenos']?></a>          </td>
                     <td class="views-field views-field-field-web-agency-id-1">
                         <a href="/agency/all/data"><?=$govwidedata['actualdata']['agencynos']?></a>          </td>
                     <td class="views-field views-field-field-dap-score">
