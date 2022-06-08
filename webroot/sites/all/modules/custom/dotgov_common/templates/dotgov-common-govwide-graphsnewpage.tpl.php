@@ -465,7 +465,7 @@
                                        </div>
                                        <div class="view-button">
                                           <div class="row text-center">
-                                             <a class="" href="/website/all/reports" title="Link for DNSSEC Trend report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                             <a class="" href="/website/all/reports-new" title="Link for DNSSEC Trend report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
                                              <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                           </div>
                                        </div>
@@ -702,7 +702,7 @@
 
                            <div class="view-button clearfix">
                             <div class="row text-center">
-                              <a class="" title="Link for HTTPS Mobile Performance and Mobile Usability full report" href="/website/all/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                              <a class="" title="Link for HTTPS Mobile Performance and Mobile Usability full report" href="/website/all/reports-new"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
                               <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                             </div>
                           </div>
@@ -849,7 +849,7 @@
                                     </div>
                                     <div class="view-button clearfix">
                                        <div class="row text-center">
-                                        <a class="" title="Link for M-15-13 and BOD full report" href="/website/all/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                        <a class="" title="Link for M-15-13 and BOD full report" href="/website/all/reports-new"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
                                           <a href="/improve-my-score" title="Link for  M-15-13 and BOD to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                        </div>
                                     </div>
