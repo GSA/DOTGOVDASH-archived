@@ -56,11 +56,13 @@ foreach($listWebsites as $key=>$website){
 
 //Get the latest reports from pulse accessibility to local.
     writeToLogs("\nStart Accessibility Scan for ".$website['domain'],$logFile);
-    // updateAccessibilityScanCustom($website['domain'],$scanId);
+//Update All Accessibility Data
     updateAccessibilityScan_custom($website['domain'],$scanId);
+//Update Accessibility Spot check
+    updateAccessibilityScanCustom($website['domain'],$scanId);
 
 }
-cleanupNodesAfterScan();
+#cleanupNodesAfterScan();
 //After scan is done. Run the taxonomy processor. This will parse all taxonomy data and create/edit taxonomies and tag appropriate content.
 archiveGovwideTrendData();
 archiveAgencywideTrendData();
@@ -72,4 +74,4 @@ $endTime = date("Y:m:d h:i:s");
 if($sendmail == "yes"){
     sendGovtWideSummaryEmail($startTime,$endTime);
 }
-print "Finished Processing!\n";
+print"Finished Processing!\n";

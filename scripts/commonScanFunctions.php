@@ -17,7 +17,11 @@ function getSites()
 //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id and b.status='1' and a.entity_id >'1071'", array(':bundle' => 'website'));
     #$query = db_query("select a.field_website_id_nid as entity_id,c.title,d.body_value from field_data_field_website_id a , field_data_field_site_inspector_raw_out b , node c , field_data_body d where a.entity_id=b.entity_id and a.bundle='domain_scan_information' and a.field_website_id_nid=c.nid and c.nid=d.entity_id and b.field_site_inspector_raw_out_value like '%site-inspector 3.1.1%'");
     //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value not LIKE 'ice.gov' and b.title='gsa.gov' and b.nid=a.entity_id  and b.status='1'", array(':bundle' => 'website'));
-    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value not LIKE 'ice.gov' and b.nid=a.entity_id  and b.status='1'", array(':bundle' => 'website'));
+#    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value not LIKE 'ice.gov' and b.nid=a.entity_id  and b.status='1'", array(':bundle' => 'website'));
+#    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value not LIKE 'ice.gov' and b.nid=a.entity_id  and b.status='1'  and b.title in (select domain as title  from custom_current_federal_websites)", array(':bundle' => 'website'));
+$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b, field_data_field_web_agency_id c where a.bundle=:bundle and a.body_value not LIKE 'ice.gov' and b.nid=a.entity_id  and b.status='1' and c.field_web_agency_id_nid in ('31') and  b.nid=c.entity_id", array(':bundle' => 'website'));
+#$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b, field_data_field_web_agency_id c where a.bundle=:bundle and a.body_value not LIKE 'ice.gov' and b.nid=a.entity_id  and b.status='1' and c.field_web_agency_id_nid in ('31','51') and  b.nid=c.entity_id", array(':bundle' => 'website'));
+
 //    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id", array(':bundle' => 'website'));
 //$query = db_query("select b.field_website_id_nid entity_id,d.body_value,c.title from field_data_field_site_inspector_raw_out a , field_data_field_website_id b , node c , field_data_body d where a.field_site_inspector_raw_out_value like '%Error:%' and a.entity_id=b.entity_id and b.field_website_id_nid = c.nid and c.nid = d.entity_id");
 
@@ -63,21 +67,27 @@ function startScan(){
     $dapfiledata = file_get_contents('/tmp/pulsedap.csv', true);
     runUswdsScan();
     $uswdsfiledata = file_get_contents("/tmp/uswdsresults/results/uswds2.csv");
-    $uswdsfile =  file_save_data($uswdsfiledata,file_default_scheme().'://uswdsscan/'.uswds_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
+    $uswdsfile =  file_save_data($uswdsfiledata,file_default_scheme().'://uswdsscan/uswds_source_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
 
-    $httpsdatafile = file_save_data($httpfiledata,file_default_scheme().'://pulsehttps/'.pulse_http_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
-    $dapdatafile = file_save_data($dapfiledata,file_default_scheme().'://pulsedap/'.pulse_dap_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
+    $httpsdatafile = file_save_data($httpfiledata,file_default_scheme().'://pulsehttps/pulse_http_source_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
+    $dapdatafile = file_save_data($dapfiledata,file_default_scheme().'://pulsedap/pulse_dap_source_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
 
     //Get NIST Ipv6 data
     $ipv6dir = file_default_scheme().'://ipv6_nist_source';
     exec("timeout 15 wget --no-check-certificate -O /tmp/nist_ipv6.html https://usgv6-deploymon.antd.nist.gov/cgi-bin/generate-all.www");
     file_prepare_directory($ipv6dir, FILE_CREATE_DIRECTORY);
     $ipv6filedata = file_get_contents('/tmp/nist_ipv6.html', true);
-    $ipv6datafile = file_save_data($ipv6filedata,file_default_scheme().'://ipv6_nist_source/'.nist_ipv6.'_'.date("Y-m-d-h-i-s-a").'.html', FILE_EXISTS_REPLACE);
+    $ipv6datafile = file_save_data($ipv6filedata,file_default_scheme().'://ipv6_nist_source/nist_ipv6_'.date("Y-m-d-h-i-s-a").'.html', FILE_EXISTS_REPLACE);
 
     //Run Accessbility Scan through Pa11y
     writeToLogs("Collecting Accessbility Data through Pa11y using domain scan tool",$logFile);
+$time_start = microtime(true);
     runAccessibilityNewCustomScan();
+$time_end = microtime(true);
+
+//dividing with 60 will give the execution time in minutes otherwise seconds
+$execution_time = ($time_end - $time_start)/60;
+    writeToLogs("Accessibility Scan took time of $execution_time minutes to execute",$logFile);
     $pa11yfiledata = file_get_contents("/tmp/results/a11y.csv");
     $pa11yfile =  file_save_data($pa11yfiledata,file_default_scheme().'://accessibilityscan/'.pa11y_source.'_'.date("Y-m-d-h-i-s-a").'.csv', FILE_EXISTS_REPLACE);
 
@@ -97,7 +107,7 @@ function startScan(){
 * Run USWDS Scan
 */
 function runUswdsScan(){
-    exec("../tools/domain-scan/scan /tmp/alldomains.csv --scan=uswds2 --workers=50 --output=/tmp/uswdsresults/");
+    exec("pyenv local 3.6.4 && ../tools/domain-scan/scan /tmp/domainslist.csv --scan=uswds2 --workers=50 --output=/tmp/uswdsresults/");
     //exec("timeout 15 wget -O /tmp/uswdsresults/results/uswds2.csv \"https://api.gsa.gov/technology/site-scanner/v1/scans/uswds2/csv/?domaintype=Federal%20Agency%20-%20Executive&api_key=6i0A3HhMw1FAmhXokiEWrpjfWqGztEtaodHxGFfj\"");
 }
 
@@ -106,7 +116,7 @@ function runUswdsScan(){
  */
 function runAccessibilityNewCustomScan(){
     //run pa11y Scan
-    exec("timeout 15 ../tools/domain-scan/scan /tmp/alldomains.csv --scan=a11y --workers=50 --output=/tmp/");
+    //exec("pyenv local 3.6.4 && timeout 15 ../tools/domain-scan/scan /tmp/domainslist.csv --scan=a11y --workers=50 --output=/tmp/");
     db_query("truncate table custom_accessibility_issues");
     db_query("set global local_infile=true");
     db_query("LOAD DATA LOCAL INFILE '/tmp/results/a11y.csv' INTO TABLE custom_accessibility_issues FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' (website,base_domain, domain_redirected_to,error_typecode,error_code,error_message,error_context,error_selector);");
@@ -115,6 +125,25 @@ function runAccessibilityNewCustomScan(){
   accessibility_new_updateTable();
 
 }
+
+/*
+ * Run New Custom Accessibility Scan generated without domain scan tool
+ */
+function runAccessibilityNewCustomScan(){
+    //run pa11y Scan
+    //exec("pyenv local 3.6.4 && timeout 15 ../tools/domain-scan/scan /tmp/domainslist.csv --scan=a11y --workers=50 --output=/tmp/");
+    //New script to collect pa11y data though the docker pa11y
+    exec("drush scr ../scripts/runAcessibility.php >  /tmp/results/a11y.csv");
+    db_query("truncate table custom_accessibility_issues");
+    db_query("set global local_infile=true");
+    #db_query("LOAD DATA LOCAL INFILE '/tmp/results/a11y.csv' INTO TABLE custom_accessibility_issues FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' (website,base_domain, domain_redirected_to,error_typecode,error_code,error_message,error_context,error_selector);");
+    db_query("LOAD DATA LOCAL INFILE '/tmp/results/a11y.csv' INTO TABLE custom_accessibility_issues FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\n' (@website,@base_domain, @domain_redirected_to,@error_typecode,@err_type,@error_code,@error_message,@error_context,@error_selector) set website=@website,base_domain=@base_domain, domain_redirected_to=@domain_redirected_to,error_typecode=@error_typecode,error_code=@error_code,error_message=@error_message,error_context=@error_context,error_selector=@error_selector");
+
+    db_query("delete from custom_accessibility_issues where error_code not in ('WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.EmptyNoId','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.NoContent','aria-allowed-role','aria-hidden-focus','aria-input-field-name','aria-toggle-field-name','button-name','color-contrast','WCAG2AA.Principle1.Guideline1_4.1_4_3.G145','WCAG2AA.Principle1.Guideline1_4.1_4_3.G18','document-title','duplicate-id','WCAG2AA.Principle4.Guideline4_1.4_1_1.F77','empty-heading','WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.EmptyTitle','form-field-multiple-labels','frame-title','frame-title-unique','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired','WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2','html-has-lang','html-lang-valid','WCAG2AA.Principle2.Guideline2_4.2_4_1.H64.1','image-alt','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.IncorrectAttr','input-button-name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputButton.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputCheckbox.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputFile.Name','input-image-alt','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputImage.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputPassword.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputRadio.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name','label','WCAG2AA.Principle1.Guideline1_3.1_3_1.F68','WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable','link-name','list','listitem','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Li.Name','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeadersAttrs','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.MissingHeaderIds','WCAG2AA.Principle1.Guideline1_3.1_3_1.H43,H63','WCAG2AA.Principle2.Guideline2_4.2_4_2.H25.1.NoTitleEl','role-img-alt','scope-attr-valid','scrollable-region-focusable','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Select.Name','td-headers-attr','WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Textarea.Name','WCAG2AA.Principle3.Guideline3_1.3_1_2.H58.1.Lang','valid-lan_g')");
+  accessibility_new_updateTable();
+
+}
+
 
 function access_new_table_update($websites){
     $website = $websites['website'];
@@ -290,7 +319,7 @@ function accessibility_new_updateWebsite($domain)
 function accessibility_new_updateTable()
 {
     $first = false;
-    if (($handle = fopen('/tmp/alldomains.csv', "r")) !== FALSE) {
+    if (($handle = fopen('/tmp/domainslist.csv', "r")) !== FALSE) {
         while (!feof($handle)) {
             $data = fgetcsv($handle);
             if (!$first) {
@@ -519,7 +548,7 @@ function getSiteRedirectDest($domain){
 
 function getSSLInfo($domain){
     $sslinfo = array();
-    $output = shell_exec("timeout 15 python3.6 -m sslyze --regular --http_headers $domain");
+    $output = shell_exec("pyenv local 3.6.4 && timeout 15 python -m sslyze --regular --http_headers $domain");
     $sslinfo['raw'] = $output;
     $outputarr = explode("*",$output);
     foreach($outputarr as $val){
@@ -658,7 +687,7 @@ function getSSLInfo($domain){
             $sslinfo['sesre_client_secure'] = $sesre_client_secure;
         }
         //Extract Certificate Basic Information
-        if (strpos($val, 'Certificate Basic Information:') !== false) {
+        //if (strpos($val, 'Certificate Basic Information:') !== false) {
             $certinfo = explode(PHP_EOL, $val);
             foreach($certinfo as $certinfoval) {
                 if (preg_match('/Common Name:(?s)(.*)/', $certinfoval,$match1)) {
@@ -693,7 +722,7 @@ function getSSLInfo($domain){
             $sslinfo['sigalgorithm'] = $sigalgorithm;
             $sslinfo['pkeyalgorithm'] = $pkeyalgorithm;
             $sslinfo['sanname'] = $sanname;
-        }
+       // }
         //Extract Trust Certificate Information
         if (strpos($val, 'Certificate - Trust:') !== false) {
             $trustcertinfo = explode(PHP_EOL, $val);
@@ -1227,30 +1256,42 @@ function getPulseData(){
     $domainsourcefile = "/tmp/current-federal.csv";
     $pulsehttpsurl = "https://pulse.cio.gov/data/domains/https.csv";
     $pulsedapurl = "https://pulse.cio.gov/data/hosts/analytics.csv";
+    //Define all the source files. Main urls, Army Urls and Subdomains
+    //$allSourceUrls = array("https://b81c0de9f2cd4c6a090c2882f5f7e3e70bbf003d@raw.githubusercontent.com/GSA/DOTGOVDASH/master/custom_domains.csv","https://b81c0de9f2cd4c6a090c2882f5f7e3e70bbf003d@raw.githubusercontent.com/GSA/DOTGOVDASH/master/subdomain_source.csv","https://raw.githubusercontent.com/cisagov/dotgov-data/main/current-federal.csv");
+    exec("cd /web/e04tcm-dtgvscan.ent.ds.gsa.gov/git/DOTGOV_MASTER/DOTGOVDASH && git pull");
+    $allSourceUrls = array("/web/e04tcm-dtgvscan.ent.ds.gsa.gov/git/DOTGOV_MASTER/DOTGOVDASH/custom_domains.csv","/web/e04tcm-dtgvscan.ent.ds.gsa.gov/git/DOTGOV_MASTER/DOTGOVDASH/subdomain_source.csv","https://raw.githubusercontent.com/cisagov/dotgov-data/main/current-federal.csv");
+
     //Get Pulse https data and enter to a temp table
 //    file_put_contents("$localhttpsfile", file_get_contents("$pulsehttpsurl"));
     //Run script to generate http data
     //first download current-federal.csv from github
     writeToLogs("Get Latest Websites list and import to database",$logFile);
-    shell_exec("timeout 15 wget https://raw.githubusercontent.com/cisagov/dotgov-data/main/current-federal.csv -O /tmp/current-federal.csv");
+    //shell_exec("timeout 15 wget https://raw.githubusercontent.com/cisagov/dotgov-data/main/current-federal.csv -O /tmp/current-federal.csv");
+
+    joinFiles($allSourceUrls,"/tmp/current-federal.csv");
     //Process data in to custom_current_federal_websites db table
     db_query("set global local_infile=true");
-    db_query("LOAD DATA LOCAL INFILE '".$domainsourcefile."' INTO TABLE `custom_current_federal_websites` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
+    db_query("truncate table custom_current_federal_websites");
+    db_query("LOAD DATA LOCAL INFILE '".$domainsourcefile."' INTO TABLE `custom_current_federal_websites` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\n' ignore 1 lines");
     db_query("update custom_current_federal_websites set security_contact=NULL where security_contact='(blank)';");
+    //generate plain domain list file
+  exec("echo  \"select domain as '' from custom_current_federal_websites\"|drush sql-cli > /tmp/domainslist.csv ");
+  exec("sed -i '/^$/d' /tmp/domainslist.csv");
     writeToLogs("Run script to generate https file and import to db",$logFile);
-    exec("cd ../scripts/custom_pulse_single_https/ && /usr/bin/python3.6 single_https.py --csvpath /tmp/current-federal.csv");
+    exec("cd ../scripts/custom_pulse_single_https/ && pyenv local 3.6.4 && python single_https.py --csvpath /tmp/current-federal.csv");
     shell_exec("/bin/cp -f ../scripts/custom_pulse_single_https/https_scan.csv /tmp/pulsehttp.csv");
     db_query("truncate table custom_pulse_https_data");
-    db_query("LOAD DATA LOCAL INFILE '".$localhttpsfile."' INTO TABLE `custom_pulse_https_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
-    exec("drush sql-query \"select domain from custom_pulse_https_data group by domain\" > /tmp/alldomains.csv");
+    db_query("LOAD DATA LOCAL INFILE '".$localhttpsfile."' INTO TABLE `custom_pulse_https_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\n' ignore 1 lines");
+    #exec("drush sql-query \"select domain from custom_pulse_https_data group by domain\" > /tmp/alldomains.csv");
     //Get Pulse dap data and enter to a temp table
     //file_put_contents("$localdapfile", file_get_contents("$pulsedapurl"));
     //This is the latest scan which uses GSA analytics api instead of pulse and generates a file at /tmp/pulsedap.csv
     writeToLogs("Run script to generate dap file and import to db",$logFile);
-    exec("/usr/bin/python3.6 ../scripts/custom_pulse_scanner_analytics/secondLevelDomain.py");
+    exec("php -q ../scripts/custom_pulse_scanner_analytics/analytics.php > /tmp/pulsedap.csv");
+    //exec("/usr/bin/python3.6 ../scripts/custom_pulse_scanner_analytics/secondLevelDomain.py");
 
     db_query("truncate table custom_pulse_dap_data");
-    db_query("LOAD DATA LOCAL INFILE '".$localdapfile."' INTO TABLE `custom_pulse_dap_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ignore 1 lines");
+    db_query("LOAD DATA LOCAL INFILE '".$localdapfile."' INTO TABLE `custom_pulse_dap_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\n' ignore 1 lines");
     db_query("update custom_pulse_https_data a , custom_pulse_dap_data b set a.dap=b.dap where a.domain=b.domain");
 
     //Update branch information since pulse is not giving that data any more
@@ -1541,8 +1582,12 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
     $node->field_uses_secure_cookies['und'][0]['value'] = ($siInfo['secure_cookie'] == '')?0:1;
     $node->field_site_inspector_raw_out['und'][0]['value'] = $siInfo['raw'];
 
-    if(($ipv6nistret == '') || ($ipv6nistret == '0'))
-        $node->field_ipv6_compliance['und'][0]['value'] = 0;
+//IPv6 logic will change now to add customscan. If  ipv6 address captured though custom scan is not null we mark it compliant
+    if(($ipv6nistret == '') || ($ipv6nistret == '0')){
+ 	$node->field_ipv6_compliance['und'][0]['value'] = 0;
+         if(trim($ipv6custret['address']) != '')
+       		$node->field_ipv6_compliance['und'][0]['value'] = 1;
+	}
     else
         $node->field_ipv6_compliance['und'][0]['value'] = 1;
 
@@ -1597,7 +1642,8 @@ function updateDomainSSLInfo($siteid,$webscanId,$website){
         $sslScore += 15;
         $tags[] = 'TLSV1.2';
     }
-    if($ipv6nistret == '1') {
+    #if($ipv6nistret == '1') {
+    if($node->field_ipv6_compliance['und'][0]['value'] == '1') {
         $tags[] = 'IPV6';
         $wnode->field_ipv6_score['und'][0]['value'] = '100';
     }
@@ -2385,7 +2431,8 @@ function updateTechStackInfo($website){
         $weburl = "http://" . $website;
         //$command = "node index.js $weburl";
         //$tsout = shell_exec("export npm_config_loglevel=silent;cd ../tools/wappalyzer/;$command");
-        $command = "timeout 15 node /usr/lib/node_modules/wappalyzer/index.js $weburl";
+        #$command = "timeout 15 node /usr/lib/node_modules/wappalyzer/index.js $weburl";
+        $command = "timeout 15 /root/.npm-packages/bin/wappalyzer $weburl";
         shell_exec("export npm_config_loglevel=silent");
         $tsout = shell_exec("export npm_config_loglevel=silent;$command");
         if (strpos($tsout, 'JQMIGRATE:') !== false) {
@@ -3048,7 +3095,9 @@ function archiveAgencywideTrendData(){
  * Extract Accessibility Info
  */
 function extractAccessibilityErrors($domain){
-    $comOut = shell_exec("timeout 15 /usr/bin/pa11y --ignore 'warning;notice' --reporter json https://".$domain);
+    #$comOut = shell_exec("timeout 15 /usr/bin/pa11y --ignore 'warning;notice' --reporter json https://".$domain);
+	//If pa11y command works no need too use below docker version and comment below line and uncomment above
+    $comOut = shell_exec("timeout 15  docker run --rm dcycle/pa11y:1  --ignore 'warning;notice' --reporter json ".$domain);
     $decodedJson =  json_decode($comOut);
     $errorArr = array();
     foreach ($decodedJson as $stObj){
@@ -3245,9 +3294,9 @@ function runSearchEngineScan(){
     writeToLogs("Get List of websites to Run Search Scan On",$logFile);
 //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b  where a.bundle=:bundle and b.nid=a.entity_id  and b.title not in (select domain from search_scan_copy)  and b.status='1' and b.title='911.gov' order by title", array(':bundle' => 'website'));
 //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b  where a.bundle=:bundle and b.nid=a.entity_id   and b.status='1' and b.title not in (select domain from search_scan) order by title", array(':bundle' => 'website'));
-    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b  where a.bundle=:bundle and b.nid=a.entity_id   and b.status='1'  order by title", array(':bundle' => 'website'));
+    #$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b  where a.bundle=:bundle and b.nid=a.entity_id   and b.status='1'  order by title", array(':bundle' => 'website'));
+    $query = db_query("select domain as title  from custom_current_federal_websites");
     foreach ($query as $result) {
-        print $result->title."";
         //Check if the site is a redirect. If redirect dont run scan.
         $check_redirect =  db_query("select redirect from custom_pulse_https_data where domain=:domain", array(':domain' => trim($result->title)))->fetchField();
         if($check_redirect != "Yes") {
@@ -3261,6 +3310,7 @@ function runSearchEngineScan(){
                         $weburl = "http://www." . trim($result->title);
                     }
                 }
+	$weburl = str_replace("www.www.","www.",$weburl);
 //    if(($curl_stat_code != '') && ($curl_stat_code != '404')){
 //        $weburl = "http://".trim($result->title);
 //    }
@@ -3279,7 +3329,7 @@ function runSearchEngineScan(){
 //                        $html = shell_exec("timeout 15 google-chrome --no-sandbox --headless --disable-gpu --dump-dom --ignore-certificate-errors --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36\"  --timeout=15000  \"" . $weburl . "/\"");
 //                    }
 
-                    print_r($html);
+         //           print_r($html);
                     $dom = new DomDocument;
                     $dom->preserveWhiteSpace = FALSE;
                     $dom->loadHTML($html);
@@ -3290,7 +3340,7 @@ function runSearchEngineScan(){
                             $params = $params1;
                         }
                     }
-                    print_r($params1);
+          //          print_r($params1);
                     $l = 0;
                     $forms1 = array();
                     foreach ($params1 as $param1) {
@@ -4199,4 +4249,29 @@ function publishNode($nid){
     // re-save the node
     node_save($node);
     print "Published ".$node->title." ".$node->nid." of type ".$node->type."\n";
+}
+//Function merges all csv files .appends second and sub sequent files by removing first line
+function joinFiles(array $files, $result) {
+  if(!is_array($files)) {
+    throw new Exception('`$files` must be an array');
+  }
+
+  $wH = fopen($result, "w+");
+  $i = 1;
+  foreach($files as $file) {
+    $fh = fopen($file, "r");
+    if($i > 1)
+    fgetcsv($fh,10000,",");
+    while(!feof($fh)) {
+      fwrite($wH, fgets($fh));
+    }
+    fclose($fh);
+    unset($fh);
+    //fwrite($wH, "\n"); //usually last line doesn't have a newline
+    $i++;
+  }
+  fclose($wH);
+  unset($wH);
+  // Uncomment the below lines if you need only to run the scan on first 20 lines by deleting the rest of the lines.
+#  exec("sed -i '1,70!d' $result");  
 }
