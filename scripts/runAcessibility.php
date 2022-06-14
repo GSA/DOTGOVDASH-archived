@@ -18,7 +18,8 @@ if(trim($data[0]) != ''){
 $domain = "https://".strtolower($data[0]);
 #shell_exec("timeout 15  docker run --rm dcycle/pa11y:1  --runner htmlcs --runner axe --ignore 'warning;notice' --reporter csv ".$domain."  |tail -n +2 >> access.csv");
 //Actual command output comes as 
-exec("timeout 15  docker run --rm dcycle/pa11y:1  --runner htmlcs --runner axe --ignore 'warning;notice' --reporter csv ".$domain."  |tail -n +2",$output);
+$output = array();
+exec("timeout 15  docker run --rm dcycle/pa11y:1  --runner htmlcs --runner axe --ignore 'warning;notice;color-contrast' --reporter csv ".$domain."  |tail -n +2",$output);
 foreach($output as $key=>$val){
 print "$data[0],$data[0],$data[0],1,$val\n";
 }

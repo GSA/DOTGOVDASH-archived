@@ -82,7 +82,7 @@ function startScan(){
     //Run Accessbility Scan through Pa11y
     writeToLogs("Collecting Accessbility Data through Pa11y using domain scan tool",$logFile);
 $time_start = microtime(true);
-    runAccessibilityNewCustomScan();
+    runAccessibilityNewCustomScan_nodomainscan();
 $time_end = microtime(true);
 
 //dividing with 60 will give the execution time in minutes otherwise seconds
@@ -129,7 +129,7 @@ function runAccessibilityNewCustomScan(){
 /*
  * Run New Custom Accessibility Scan generated without domain scan tool
  */
-function runAccessibilityNewCustomScan(){
+function runAccessibilityNewCustomScan_nodomainscan(){
     //run pa11y Scan
     //exec("pyenv local 3.6.4 && timeout 15 ../tools/domain-scan/scan /tmp/domainslist.csv --scan=a11y --workers=50 --output=/tmp/");
     //New script to collect pa11y data though the docker pa11y
@@ -146,6 +146,7 @@ function runAccessibilityNewCustomScan(){
 
 
 function access_new_table_update($websites){
+    $id= $websites['id'];
     $website = $websites['website'];
     $error_scan_type =$websites['runner'];
     $error_cat = $websites['category'];
@@ -158,9 +159,9 @@ function access_new_table_update($websites){
     if(trim($agency_id) == "")
         $agency_id = 'NULL';
     $agency_name = $websites['agency_name'];
-    print "update custom_accessibility_issues set error_scan_type = '$error_scan_type',wcag_code='$wcag_code',error_cat='$error_cat',agency_id= $agency_id,website_id=$website_id,agency_name = '$agency_name' where website='$website' and error_code = '$code' \n";
+    print "update custom_accessibility_issues set error_scan_type = '$error_scan_type',wcag_code='$wcag_code',error_cat='$error_cat',agency_id= $agency_id,website_id=$website_id,agency_name = '$agency_name' where website='$website' and error_code = '$code' and id='$id'\n";
     echo "access_table_update() - ".$websites['website']."\n";
-    db_query("update custom_accessibility_issues set error_scan_type = '$error_scan_type',wcag_code='$wcag_code',error_cat='$error_cat',agency_id= $agency_id,website_id=$website_id,agency_name = '$agency_name' where website='$website' and error_code = '$code'");
+    db_query("update custom_accessibility_issues set error_scan_type = '$error_scan_type',wcag_code='$wcag_code',error_cat='$error_cat',agency_id= $agency_id,website_id=$website_id,agency_name = '$agency_name' where website='$website' and error_code = '$code' and id = '$id'");
 
 }
 
@@ -185,9 +186,10 @@ function accessibility_new_updateWebsite($domain)
   $check_redirect =  db_query("select redirect from custom_pulse_https_data where domain=:domain", array(':domain' => trim($domain)))->fetchField();
   if($check_redirect != 'Yes') {
 #read current-federal.csv and loop the below query over each table
-    $accessibility_results = db_query("SELECT error_code,error_message,error_context,error_selector FROM custom_accessibility_issues where website = '$domain'");
+    $accessibility_results = db_query("SELECT id,error_code,error_message,error_context,error_selector FROM custom_accessibility_issues where website = '$domain'");
     echo " accessibility_scan() - Website scan " . $websites['website'] . "\n";
     foreach ($accessibility_results as $result) {
+      $websites['id'] = $result->id;
       $websites['code'] = $result->error_code;
       $websites['message'] = $result->error_message;
       $websites['context'] = $result->error_context;
