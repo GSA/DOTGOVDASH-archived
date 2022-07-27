@@ -17,9 +17,9 @@ function getSites()
 //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id and b.status='1' and a.entity_id >'1071'", array(':bundle' => 'website'));
     #$query = db_query("select a.field_website_id_nid as entity_id,c.title,d.body_value from field_data_field_website_id a , field_data_field_site_inspector_raw_out b , node c , field_data_body d where a.entity_id=b.entity_id and a.bundle='domain_scan_information' and a.field_website_id_nid=c.nid and c.nid=d.entity_id and b.field_site_inspector_raw_out_value like '%site-inspector 3.1.1%'");
     //$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value not LIKE 'ice.gov' and b.title='gsa.gov' and b.nid=a.entity_id  and b.status='1'", array(':bundle' => 'website'));
-#    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value not LIKE 'ice.gov' and b.nid=a.entity_id  and b.status='1'", array(':bundle' => 'website'));
+   $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value not LIKE 'ice.gov' and b.nid=a.entity_id  and b.status='1'", array(':bundle' => 'website'));
 #    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and a.body_value not LIKE 'ice.gov' and b.nid=a.entity_id  and b.status='1'  and b.title in (select domain as title  from custom_current_federal_websites)", array(':bundle' => 'website'));
-$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b, field_data_field_web_agency_id c where a.bundle=:bundle and a.body_value not LIKE 'ice.gov' and b.nid=a.entity_id  and b.status='1' and c.field_web_agency_id_nid in ('31') and  b.nid=c.entity_id", array(':bundle' => 'website'));
+#$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b, field_data_field_web_agency_id c where a.bundle=:bundle and a.body_value not LIKE 'ice.gov' and b.nid=a.entity_id  and b.status='1' and c.field_web_agency_id_nid in ('31') and  b.nid=c.entity_id", array(':bundle' => 'website'));
 #$query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b, field_data_field_web_agency_id c where a.bundle=:bundle and a.body_value not LIKE 'ice.gov' and b.nid=a.entity_id  and b.status='1' and c.field_web_agency_id_nid in ('31','51') and  b.nid=c.entity_id", array(':bundle' => 'website'));
 
 //    $query = db_query("select a.entity_id,a.body_value,b.title from field_data_body a , node b where a.bundle=:bundle and b.nid=a.entity_id", array(':bundle' => 'website'));
@@ -481,6 +481,209 @@ function updateUswdsScanInfo($webscanId){
     }
 }
 
+/*
+ *New API data captured from https://open.gsa.gov/api/site-scanning-api/ at https://api.gsa.gov/technology/site-scanning/data/weekly-snapshot.csv gsa_new_api_data
+ */
+function updateUswdsScanInfo_NewApi($webscanId){
+    $csv = readCSV("/tmp/uswdsresults/results/uswds2.csv");
+    db_query("truncate table gsa_new_api_data");
+    shell_exec("timeout 15 wget https://api.gsa.gov/technology/site-scanning/data/weekly-snapshot.csv -O /tmp/gsa_new_api.csv");
+    db_query("LOAD DATA LOCAL INFILE '/tmp/gsa_new_api.csv' INTO TABLE `gsa_new_api_data` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\n' ignore 1 lines");
+    db_query("delete from gsa_new_api_data where target_url not in (select domain from custom_pulse_https_data)");
+    $i =1;
+    $lineresult = "";
+    $query = db_query("select * from  gsa_new_api_data");
+    foreach ($query as $result) {
+        $tags = array();
+   // foreach($csv as $csval) {
+        $hostname = trim($result->target_url);
+        //Check if the site is a redirect. If redirect dont run scan.
+        $check_redirect =  db_query("select redirect from custom_pulse_https_data where domain=:domain", array(':domain' => trim($hostname)))->fetchField();
+
+        $scan_stat_code = "200";
+        $uswds_detected = 0;
+        $usa_detected = 0;
+        $uswds_status = 0;
+        $uswds_score = 0;
+        $uswds_version = $result->uswds_version." , ".$result->uswds_semantic_version;
+print "**".$result->uswds_count."**";
+        if(($result->uswds_count == 0) || ($result->uswds_count == NULL) ) {
+            $uswds_detected = 0;
+        }
+        else{
+            $uswds_detected = 1;
+        }
+print "**".$uswds_detected."**";
+
+        if($result->uswds_usa_classes == 0 || $result->uswds_usa_classes == NULL ) {
+            $usa_detected = 0;
+        }
+        else{
+            $usa_detected = 1;
+        }
+        $api_url = "";
+        $api_update_date = "";
+        $uswds_flag_detected = $uswds_detected;
+        if($result->uswds_string_in_css == 0 || $result->uswds_string_in_css == NULL) {
+            $uswds_flagincss_detected = 0;
+        }
+        else{
+            $uswds_flagincss_detected = 1;
+        }
+        if($result->uswds_merriweather_font == 0 || $result->uswds_merriweather_font == NULL) {
+        $uswds_mwfont_detected = 0;
+        }
+        else{
+            $uswds_mwfont_detected = 1;
+        }
+        if($result->uswds_publicsans_font == 0 || $result->uswds_publicsans_font == NULL) {
+            $uswds_psfont_detected = 0;
+        }
+        else{
+            $uswds_psfont_detected = 1;
+        }
+        if($result->uswds_source_sans_font == 0 || $result->uswds_source_sans_font == NULL) {
+            $uswds_ssfont_detected = 0;
+        }
+        else{
+            $uswds_ssfont_detected = 1;
+        }
+        if($result->uswds_tables == 0 || $result->uswds_tables == NULL) {
+            $uswds_tables = 0;
+        }
+        else{
+            $uswds_tables = 1;
+        }
+        $usa_classes_detected = $usa_detected;
+        if($result->uswds_inline_css == 0 || $result->uswds_inline_css == NULL) {
+            $uswds_incss_detected = 0;
+        }
+        else{
+            $uswds_incss_detected = 1;
+        }
+        if($check_redirect != "Yes") {
+            if ($uswds_detected != "0") {
+                $uswds_status = "1";
+                $uswds_score = "100";
+            } else {
+                $uswds_status = "0";
+                $uswds_score = "0";
+            }
+
+        }
+        else{
+            $uswds_status = NULL;
+            $uswds_score = NULL;
+        }
+        $all_fields =  db_query("select concat_ws(`target_url`,',',`target_url_domain`,',',`final_url`,',',`final_url_domain`,',',`final_url_mimetype`,',',`final_url_live`,',',`target_url_redirects`,',',`final_url_same_domain`,',',`final_url_same_website`,',',`target_url_agency_owner`,',',`target_url_bureau_owner`,',',`target_url_branch`,',',`final_url_status_code`,',',`target_url_404_test`,',',`target_url_agency_code`,',',`target_url_bureau_code`,',',`scan_date`,',',`primary_scan_status`,',',`not_found_scan_status`,',',`robots_txt_scan_status`,',',`sitemap_xml_scan_status`,',',`dns_scan_status`,',',`dns_ipv6`,',',`source_list_federal_domains`,',',`source_list_dap`,',',`source_list_pulse`,',',`uswds_favicon`,',',`uswds_favicon_in_css`,',',`uswds_merriweather_font`,',',`uswds_publicsans_font`,',',`uswds_source_sans_font`,',',`uswds_tables`,',',`uswds_count`,',',`uswds_usa_classes`,',',`uswds_inline_css`,',',`uswds_string`,',',`uswds_string_in_css`,',',`uswds_semantic_version`,',',`uswds_version`,',',`og_article_published_final_url`,',',`og_article_modified_final_url`,',',`og_title_final_url`,',',`og_description_final_url`,',',`main_element_present_final_url`,',',`robots_txt_final_url`,',',`robots_txt_detected`,',',`robots_txt_final_url_live`,',',`robots_txt_target_url_redirects`,',',`robots_txt_final_url_status_code`,',',`robots_txt_final_url_mimetype`,',',`robots_txt_final_url_filesize_in_bytes`,',',`robots_txt_crawl_delay`,',',`robots_txt_sitemap_locations`,',',`sitemap_xml_final_url`,',',`sitemap_xml_detected`,',',`sitemap_xml_final_url_live`,',',`sitemap_xml_target_url_redirects`,',',`sitemap_xml_final_url_status_code`,',',`sitemap_xml_final_url_mimetype`,',',`sitemap_xml_final_url_filesize_in_bytes`,',',`sitemap_xml_count`,',',`sitemap_xml_pdf_count`,',',`third_party_service_domains`,',',`third_party_service_count`,',',`login_detected`,',',`dap_detected_final_url`,',',`dap_parameters_final_url`,',',`dap_parameters_final_url.agency`,',',`dap_parameters_final_url.Enhlink_1`,',',`dap_parameters_final_url.PUA`,',',`dap_parameters_final_url.Sdor`,',',`dap_parameters_final_url.UA-123020795-1`,',',`dap_parameters_final_url.UA-27610928-1`,',',`dap_parameters_final_url._`,',',`dap_parameters_final_url._hsfp`,',',`dap_parameters_final_url._hstc`,',',`dap_parameters_final_url.agency_1`,',',`dap_parameters_final_url.agency_2`,',',`dap_parameters_final_url.autotracker`,',',`dap_parameters_final_url.cto`,',',`dap_parameters_final_url.dclink`,',',`dap_parameters_final_url.enhlink`,',',`dap_parameters_final_url.exts`,',',`dap_parameters_final_url.fedagencydim`,',',`dap_parameters_final_url.forcessl`,',',`dap_parameters_final_url.hssc`,',',`dap_parameters_final_url.optout`,',',`dap_parameters_final_url.p`,',',`dap_parameters_final_url.palagencydim`,',',`dap_parameters_final_url.palinteractiontypedim`,',',`dap_parameters_final_url.palsubagencydim`,',',`dap_parameters_final_url.paltopicdim`,',',`dap_parameters_final_url.palversiondim`,',',`dap_parameters_final_url.parallelcd`,',',`dap_parameters_final_url.pua_1`,',',`dap_parameters_final_url.sdor_1`,',',`dap_parameters_final_url.siteplatform`,',',`dap_parameters_final_url.sitetopic`,',',`dap_parameters_final_url.sp`,',',`dap_parameters_final_url.sp-q`,',',`dap_parameters_final_url.sub-agency`,',',`dap_parameters_final_url.subagency`,',',`dap_parameters_final_url.sub­agency`,',',`dap_parameters_final_url.tsitetopic`,',',`dap_parameters_final_url.v`,',',`dap_parameters_final_url.vcto`,',',`dap_parameters_final_url.ver`,',',`dap_parameters_final_url.yt`) as concat from gsa_new_api_data where target_url=:domain", array(':domain' => trim($hostname)))->fetchField();
+
+        //$lineresult = $api_url . " \n Domain,Base Domain,domain,status_code,usa_classes_detected,uswds_detected,usa_detected,flag_detected,flagincss_detected,sourcesansfont_detected,uswdsincss_detected,merriweatherfont_detected,publicsansfont_detected,uswdsversion,tables,total_score \n $hostname, $hostname, $hostname,$uswds_status,  $usa_detected";
+        $lineresult =  "target_url,target_url_domain,final_url,final_url_domain,final_url_mimetype,final_url_live,target_url_redirects,final_url_same_domain,final_url_same_website,target_url_agency_owner,target_url_bureau_owner,target_url_branch,final_url_status_code,target_url_404_test,target_url_agency_code,target_url_bureau_code,scan_date,primary_scan_status,not_found_scan_status,robots_txt_scan_status,sitemap_xml_scan_status,dns_scan_status,dns_ipv6,source_list_federal_domains,source_list_dap,source_list_pulse,uswds_favicon,uswds_favicon_in_css,uswds_merriweather_font,uswds_publicsans_font,uswds_source_sans_font,uswds_tables,uswds_count,uswds_usa_classes,uswds_inline_css,uswds_string,uswds_string_in_css,uswds_semantic_version,uswds_version,og_article_published_final_url,og_article_modified_final_url,og_title_final_url,og_description_final_url,main_element_present_final_url,robots_txt_final_url,robots_txt_detected,robots_txt_final_url_live,robots_txt_target_url_redirects,robots_txt_final_url_status_code,robots_txt_final_url_mimetype,robots_txt_final_url_filesize_in_bytes,robots_txt_crawl_delay,robots_txt_sitemap_locations,sitemap_xml_final_url,sitemap_xml_detected,sitemap_xml_final_url_live,sitemap_xml_target_url_redirects,sitemap_xml_final_url_status_code,sitemap_xml_final_url_mimetype,sitemap_xml_final_url_filesize_in_bytes,sitemap_xml_count,sitemap_xml_pdf_count,third_party_service_domains,third_party_service_count,login_detected,dap_detected_final_url,dap_parameters_final_url,dap_parameters_final_url.agency,dap_parameters_final_url.Enhlink_1,dap_parameters_final_url.PUA,dap_parameters_final_url.Sdor,dap_parameters_final_url.UA-123020795-1,dap_parameters_final_url.UA-27610928-1,dap_parameters_final_url._,dap_parameters_final_url._hsfp,dap_parameters_final_url._hstc,dap_parameters_final_url.agency_1,dap_parameters_final_url.agency_2,dap_parameters_final_url.autotracker,dap_parameters_final_url.cto,dap_parameters_final_url.dclink,dap_parameters_final_url.enhlink,dap_parameters_final_url.exts,dap_parameters_final_url.fedagencydim,dap_parameters_final_url.forcessl,dap_parameters_final_url.hssc,dap_parameters_final_url.optout,dap_parameters_final_url.p,dap_parameters_final_url.palagencydim,dap_parameters_final_url.palinteractiontypedim,dap_parameters_final_url.palsubagencydim,dap_parameters_final_url.paltopicdim,dap_parameters_final_url.palversiondim,dap_parameters_final_url.parallelcd,dap_parameters_final_url.pua_1,dap_parameters_final_url.sdor_1,dap_parameters_final_url.siteplatform,dap_parameters_final_url.sitetopic,dap_parameters_final_url.sp,dap_parameters_final_url.sp-q,dap_parameters_final_url.sub-agency,dap_parameters_final_url.subagency,dap_parameters_final_url.sub­agency,dap_parameters_final_url.tsitetopic,dap_parameters_final_url.v,dap_parameters_final_url.vcto,dap_parameters_final_url.ver,dap_parameters_final_url.yt \n $all_fields";
+        //$lineresult .= implode(",", $csval);
+        $siteid = findNode($hostname, 'website');
+        if (trim($siteid) != "") {
+            //Load Parent website id
+            $wnode = node_load($siteid);
+
+            $tags = array();
+            $start = microtime(true);
+            $date = date("m-d-Y");
+            $node = new stdClass();
+            $node->type = "uswds_scan";
+            $node->language = LANGUAGE_NONE;
+            $node->uid = "1";
+            $node->name = "admin";
+            $node->status = 1;
+            $node->title = "USWDS Scan " . $hostname;
+            if (($nodeId = findNode($node->title, 'uswds_scan')) != FALSE) {
+                echo "found node $node->title $nodeId";
+                $node->nid = $nodeId;
+            }
+            $node->promote = 0;
+            $node->body['und'][0]['value'] = $lineresult;
+            $node->field_uswds_status['und'][0]['value'] = $uswds_status;
+            $node->field_uswds_score['und'][0]['value'] = $uswds_score;
+            $node->field_uswds_scan_web_status_code['und'][0]['value'] = $scan_stat_code;
+            $node->field_uswds_usa_detected['und'][0]['value'] = $usa_detected;
+            $node->field_uswds_detected['und'][0]['value'] = $uswds_detected;
+            $node->field_uswds_version['und'][0]['value'] = $uswds_version;
+            $node->field_uswds_api_url['und'][0]['value'] = $api_url;
+            $node->field_uswds_api_scan_time['und'][0]['value'] = $api_update_date;
+            $node->field_uswds_flag_detected['und'][0]['value'] = $uswds_flag_detected;
+            $node->field_uswds_flagin_css_detected['und'][0]['value'] = $uswds_flagincss_detected;
+            $node->field_uswds_marriweather_font_de['und'][0]['value'] = $uswds_mwfont_detected;
+            $node->field_uswds_public_sans_font_det['und'][0]['value'] = $uswds_psfont_detected;
+            $node->field_uswds_source_san_font_det['und'][0]['value'] = $uswds_ssfont_detected;
+            $node->field_uswds_tables['und'][0]['value'] = $uswds_tables;
+            $node->field_uswds_usa_classes_detected['und'][0]['value'] = $usa_classes_detected;
+            $node->field_uswds_incss_detected['und'][0]['value'] = $uswds_incss_detected;
+            $node->field_uswds_total_custom_score['und'][0]['value'] = $uswds_score;
+
+            $node->field_website_id['und'][0]['nid'] = $siteid;
+            $node->field_web_agency_id['und'][0]['nid'] = $wnode->field_web_agency_id['und'][0]['nid'];
+            $node->field_web_scan_id['und'][0]['nid'] = $webscanId;
+
+            node_object_prepare($node);
+            if ($node = node_submit($node)) {
+                node_save($node);
+            }
+            if($uswds_score == "100") {
+                $tags[] = "USWDS";
+            }
+            //Save Tags to parent website
+            if(!empty($tags)) {
+                if(!empty($wnode->field_website_tags)){
+                    foreach($wnode->field_website_tags['und'] as $ctk  =>$ctval){
+                        $currentTerms[] = $ctval['tid'];
+                    }
+                    $crnTermCnt = count($currentTerms);
+                }
+                $i = 1;
+                foreach (array_unique($tags) as $key => $tag) {
+                    if ($term = taxonomy_get_term_by_name($tag)) {
+                        $terms_array = array_keys($term);
+                        //Check if the term already assigned to the node
+                        if(!in_array($terms_array['0'],$currentTerms)){
+                            $wnode->field_website_tags['und'][$crnTermCnt+$i]['tid'] = $terms_array['0'];
+                        }
+                    } else {
+                        $term = new STDClass();
+                        $term->name = $tag;
+                        $term->vid = 3;
+                        if (!empty($term->name)) {
+                            taxonomy_term_save($term);
+//                        $term = taxonomy_get_term_by_name($tag);
+//                        foreach($term as $term_id){
+//                            $node->product_tags[LANGUAGE_NONE][$key]['tid'] = $term_id->tid;
+//                        }
+                            $wnode->field_website_tags['und'][$key]['tid'] = $term->tid;
+                        }
+                    }
+                    $i += 1;
+                }
+            }
+
+            $wnode->field_uswds_score['und'][0]['value'] = $uswds_score;
+
+            //Update Parent Website Node
+            $wnode->field_uswds_scan_node['und'][0]['target_id'] = $node->nid;
+            node_object_prepare($wnode);
+            if ($wnode = node_submit($wnode)) {
+                node_save($wnode);
+            }
+
+            print "$hostname -- $siteid , $scan_stat_code , $uswds_score , $uswds_status , $uswds_score \n";
+
+            $end = microtime(true);
+            print "USWDS scan for " . $hostname . " took " . ($end - $start) . ' seconds';
+
+        }
+        else{
+            print "Parent Domain $hostname is not tracked in DD currently \n";
+        }
+    }
+}
+
 
 /*
  * Run pageres command to generate website snapshots
@@ -550,7 +753,7 @@ function getSiteRedirectDest($domain){
 
 function getSSLInfo($domain){
     $sslinfo = array();
-    $output = shell_exec("pyenv local 3.6.4 && timeout 15 python -m sslyze --regular --http_headers $domain");
+    $output = shell_exec("pyenv local 3.6.4 && python -m sslyze --regular --http_headers $domain");
     $sslinfo['raw'] = $output;
     $outputarr = explode("*",$output);
     foreach($outputarr as $val){

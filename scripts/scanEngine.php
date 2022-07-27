@@ -26,7 +26,8 @@ writeToLogs("Starting Scan",$logFile);
 $scanId = startScan();
 //Start USWDS Scan
 writeToLogs("Collect USWDS Data through a full scan",$logFile);
-updateUswdsScanInfo($scanId);
+#updateUswdsScanInfo($scanId);
+updateUswdsScanInfo_NewApi($scanId);
 //Below are the full scans run for all websites at once. DAP and HTTPS info are collected from pulse site at once for perforamnce optimization
 writeToLogs("Collecting HTTPS and DAP data from Pulse",$logFile);
 //Get the latest reports from pulse accessibility to local.
@@ -62,7 +63,7 @@ foreach($listWebsites as $key=>$website){
     updateAccessibilityScanCustom($website['domain'],$scanId);
 
 }
-#cleanupNodesAfterScan();
+cleanupNodesAfterScan();
 //After scan is done. Run the taxonomy processor. This will parse all taxonomy data and create/edit taxonomies and tag appropriate content.
 archiveGovwideTrendData();
 archiveAgencywideTrendData();
