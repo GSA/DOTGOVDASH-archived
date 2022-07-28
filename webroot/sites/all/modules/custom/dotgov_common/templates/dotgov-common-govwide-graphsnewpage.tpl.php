@@ -69,7 +69,7 @@
    $mobusab_arr = dotgov_common_get_percentage($mobusab_arr, $agencydata['friendly_nos']+$agencydata['nonfriendly_nos']);
 
    $dnssec_arr = array($agencydata['dns_compliant'], $agencydata['dns_noncompliant']);
-   $dnssec_arr = dotgov_common_get_percentage($dnssec_arr, $agency_website_num);
+   $dnssec_arr = dotgov_common_get_percentage($dnssec_arr, ($agencydata['dns_compliant']+$agencydata['dns_noncompliant']));
 
    $enfhttps_arr = array($agencydata['enfhttps_support'], $agencydata['enfhttps_nosupport']);
    $enfhttps_arr = dotgov_common_get_percentage($enfhttps_arr, $agency_website_num);
@@ -83,7 +83,7 @@
    $m15_arr = array($agencydata['m15_compliant'], $agencydata['m15_noncompliant']);
    $m15_arr = dotgov_common_get_percentage($m15_arr, $agencydata['m15_tracked']);
    $ipv6_arr = array($agencydata['ipv6_compliant'], $agencydata['ipv6_noncompliant']);
-   $ipv6_arr = dotgov_common_get_percentage($ipv6_arr, $agency_website_num);
+   $ipv6_arr = dotgov_common_get_percentage($ipv6_arr, ($agencydata['ipv6_compliant']+$agencydata['ipv6_noncompliant']));
    $dap_arr = array($agencydata['dap_compliant'], $agencydata['dap_noncompliant']);
    $dap_arr = dotgov_common_get_percentage($dap_arr, $agencydata['dap_tottracked']);
    $insecprot_arr = array($agencydata['insec_compliant'], $agencydata['insec_noncompliant']);
@@ -465,7 +465,7 @@
                                        </div>
                                        <div class="view-button">
                                           <div class="row text-center">
-                                             <a class="" href="/website/all/reports-new" title="Link for DNSSEC Trend report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                             <a class="" href="/website/all/reports" title="Link for DNSSEC Trend report"><img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
                                              <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                           </div>
                                        </div>
@@ -702,7 +702,7 @@
 
                            <div class="view-button clearfix">
                             <div class="row text-center">
-                              <a class="" title="Link for HTTPS Mobile Performance and Mobile Usability full report" href="/website/all/reports-new"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                              <a class="" title="Link for HTTPS Mobile Performance and Mobile Usability full report" href="/website/all/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
                               <a href="/improve-my-score" title="Link to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                             </div>
                           </div>
@@ -849,7 +849,7 @@
                                     </div>
                                     <div class="view-button clearfix">
                                        <div class="row text-center">
-                                        <a class="" title="Link for M-15-13 and BOD full report" href="/website/all/reports-new"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
+                                        <a class="" title="Link for M-15-13 and BOD full report" href="/website/all/reports"> <img src="/sites/all/themes/dotgov/images/DD-btn_full_report.png" width="" height="25" alt="image-for-link"/></a>
                                           <a href="/improve-my-score" title="Link for  M-15-13 and BOD to improve my score"><img src="/sites/all/themes/dotgov/images/DD-btn_imp_scores.png" width="" height="25" alt="image-for-link"/></a>
                                        </div>
                                     </div>
