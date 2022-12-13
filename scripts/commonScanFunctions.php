@@ -507,7 +507,8 @@ function updateUswdsScanInfo_NewApi($webscanId){
         $uswds_score = 0;
         $uswds_version = $result->uswds_version." , ".$result->uswds_semantic_version;
 print "**".$result->uswds_count."**";
-        if(($result->uswds_count == 0) || ($result->uswds_count == NULL) ) {
+       # if(($result->uswds_count == 0) || ($result->uswds_count == NULL) ) {
+         if(trim($result->uswds_version) == 'true'){
             $uswds_detected = 0;
         }
         else{
